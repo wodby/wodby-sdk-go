@@ -28,7 +28,7 @@ codegen:
 			-i ./swagger.json \
 			-l go \
 			-o ./pkg \
-			-D packageName=wodby-api
+			-D packageName=client
 	sudo chown -R $(UID) ./
 	rm -f ./pkg/.travis.yml \
 		./pkg/git_push.sh \
