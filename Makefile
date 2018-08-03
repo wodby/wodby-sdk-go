@@ -8,11 +8,10 @@ UID ?= $(shell id -u)
 API_BRANCH = $(shell cat ./.wodby-api/BRANCH)
 API_VERSION = $(shell cat ./.wodby-api/VERSION)
 
-default: none
+default: build
 
-none:
-	@echo 'Target not specified'
-.PHONY: none
+build: clean codegen
+.PHONY: build
 
 export API_BRANCH
 export API_VERSION
@@ -35,3 +34,9 @@ codegen:
 		./pkg/git_push.sh \
 		./pkg/.gitignore
 .PHONY: codegen
+
+clean:
+	mv ./pkg/.swagger-codegen-ignore ./
+	rm -rf ./codegen.jar ./pkg/*
+	mv ./.swagger-codegen-ignore ./pkg/
+.PHONY: clean
