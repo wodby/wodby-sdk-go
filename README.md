@@ -4,7 +4,7 @@
  
  Edit a template instead "tpl/readme.tpl.md".
  
- Automatically generated at 2018-08-03 04:01:29.817642097 +0000 UTC.
+ Automatically generated at 2018-08-03 05:50:59.938348531 +0000 UTC.
  
 -->
 # Wodby SDK Go
