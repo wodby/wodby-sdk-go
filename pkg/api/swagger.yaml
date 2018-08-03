@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  description: "Documentation https://docs.wodby.com/dev\nGitHub https://github.com/wodby/wodby-api\n"
+  description: "API documentation https://docs.wodby.com/dev."
   version: "3.0.x"
   title: "Wodby API (beta)"
 host: "api.wodby.com"
