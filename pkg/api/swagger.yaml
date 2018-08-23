@@ -2,8 +2,8 @@
 swagger: "2.0"
 info:
   description: "API documentation https://docs.wodby.com/dev."
-  version: "3.0.x"
-  title: "Wodby API (beta)"
+  version: "3.x"
+  title: "Wodby API"
 host: "api.wodby.com"
 basePath: "/api/v3"
 schemes:
@@ -13,49 +13,6 @@ consumes:
 produces:
 - "application/json"
 paths:
-  /orgs:
-    get:
-      tags:
-      - "Organization"
-      description: "Retrieve organizations"
-      operationId: "getOrgs"
-      parameters:
-      - name: "name"
-        in: "query"
-        description: "Organization name"
-        required: false
-        type: "string"
-        x-exportParamName: "Name"
-      responses:
-        200:
-          description: ""
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Org"
-      security:
-      - ApiKeyAuth: []
-  /orgs/{id}:
-    get:
-      tags:
-      - "Organization"
-      description: "Retrieve organization"
-      operationId: "getOrg"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Organization ID"
-        required: true
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: "#/definitions/Org"
-      security:
-      - ApiKeyAuth: []
   /apps:
     get:
       tags:
@@ -144,6 +101,208 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/ResponseTask"
+      security:
+      - ApiKeyAuth: []
+  /backups:
+    get:
+      tags:
+      - "Backup"
+      description: "Retrieve backups by instance"
+      operationId: "getBackups"
+      parameters:
+      - name: "org_id"
+        in: "query"
+        description: "Organization ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "OrgId"
+      - name: "instance_id"
+        in: "query"
+        description: "Instance ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "InstanceId"
+      - name: "server_id"
+        in: "query"
+        description: "Server ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "ServerId"
+      - name: "type"
+        in: "query"
+        description: "Backup type"
+        required: false
+        type: "string"
+        x-exportParamName: "Type_"
+      - name: "status"
+        in: "query"
+        description: "Backup status"
+        required: false
+        type: "string"
+        x-exportParamName: "Status"
+      - name: "days"
+        in: "query"
+        description: "Get backups for N days"
+        required: false
+        type: "integer"
+        x-exportParamName: "Days"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Backup"
+      security:
+      - ApiKeyAuth: []
+  /backups/{id}:
+    get:
+      tags:
+      - "Backup"
+      description: "Retrieve backup"
+      operationId: "getBackup"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Backup ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Backup"
+      security:
+      - ApiKeyAuth: []
+  /domains:
+    get:
+      tags:
+      - "Domain"
+      description: "Retrieve domains"
+      operationId: "getDomains"
+      parameters:
+      - name: "org_id"
+        in: "query"
+        description: "Organization ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "OrgId"
+      - name: "instance_id"
+        in: "query"
+        description: "Instance ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "InstanceId"
+      - name: "server_id"
+        in: "query"
+        description: "Server ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "ServerId"
+      - name: "status"
+        in: "query"
+        description: "Domain status"
+        required: false
+        type: "string"
+        x-exportParamName: "Status"
+      - name: "type"
+        in: "query"
+        description: "Domain type"
+        required: false
+        type: "string"
+        x-exportParamName: "Type_"
+      - name: "name"
+        in: "query"
+        description: "Domain name"
+        required: false
+        type: "string"
+        x-exportParamName: "Name"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Domain"
+      security:
+      - ApiKeyAuth: []
+  /domains/{id}:
+    get:
+      tags:
+      - "Domain"
+      description: "Retrieve domain"
+      operationId: "getDomain"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Domain ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Domain"
+      security:
+      - ApiKeyAuth: []
+  /git-repo:
+    get:
+      tags:
+      - "Git repository"
+      description: "Retrieve git repositories"
+      operationId: "getGitRepos"
+      parameters:
+      - name: "org_id"
+        in: "query"
+        description: "Organization ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "OrgId"
+      - name: "name"
+        in: "query"
+        description: "Git repository name"
+        required: false
+        type: "string"
+        x-exportParamName: "Name"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GitRepo"
+      security:
+      - ApiKeyAuth: []
+  /git-repo/{id}:
+    get:
+      tags:
+      - "Git repository"
+      description: "Retrieve git repository"
+      operationId: "getGitRepo"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Git repository ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/GitRepo"
       security:
       - ApiKeyAuth: []
   /instances:
@@ -311,6 +470,142 @@ paths:
             $ref: "#/definitions/ResponseTask"
       security:
       - ApiKeyAuth: []
+  /orgs:
+    get:
+      tags:
+      - "Organization"
+      description: "Retrieve organizations"
+      operationId: "getOrgs"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Organization name"
+        required: false
+        type: "string"
+        x-exportParamName: "Name"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Org"
+      security:
+      - ApiKeyAuth: []
+  /orgs/{id}:
+    get:
+      tags:
+      - "Organization"
+      description: "Retrieve organization"
+      operationId: "getOrg"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Organization ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Org"
+      security:
+      - ApiKeyAuth: []
+  /servers:
+    get:
+      tags:
+      - "Server"
+      description: "Retrieve servers"
+      operationId: "getServers"
+      parameters:
+      - name: "org_id"
+        in: "query"
+        description: "Organization ID"
+        required: false
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "OrgId"
+      - name: "name"
+        in: "query"
+        description: "Server name"
+        required: false
+        type: "string"
+        x-exportParamName: "Name"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Server"
+      security:
+      - ApiKeyAuth: []
+  /servers/{id}:
+    get:
+      tags:
+      - "Server"
+      description: "Retrieve server"
+      operationId: "getServer"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Server ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Server"
+      security:
+      - ApiKeyAuth: []
+  /stacks:
+    get:
+      tags:
+      - "Stack"
+      description: "Retrieve stacks"
+      operationId: "getStacks"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Organization ID"
+        required: false
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Stack"
+      security:
+      - ApiKeyAuth: []
+  /stacks/{id}:
+    get:
+      tags:
+      - "Stack"
+      description: "Retrieve stack"
+      operationId: "getStack"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Stack ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Stack"
+      security:
+      - ApiKeyAuth: []
   /tasks:
     get:
       tags:
@@ -368,301 +663,6 @@ paths:
             $ref: "#/definitions/Task"
       security:
       - ApiKeyAuth: []
-  /stacks:
-    get:
-      tags:
-      - "Stack"
-      description: "Retrieve stacks"
-      operationId: "getStacks"
-      parameters:
-      - name: "id"
-        in: "query"
-        description: "Organization ID"
-        required: false
-        type: "string"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Stack"
-      security:
-      - ApiKeyAuth: []
-  /stacks/{id}:
-    get:
-      tags:
-      - "Stack"
-      description: "Retrieve stack"
-      operationId: "getStack"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Stack ID"
-        required: true
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: "#/definitions/Stack"
-      security:
-      - ApiKeyAuth: []
-  /git-repo:
-    get:
-      tags:
-      - "Git repository"
-      description: "Retrieve git repositories"
-      operationId: "getGitRepos"
-      parameters:
-      - name: "org_id"
-        in: "query"
-        description: "Organization ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "OrgId"
-      - name: "name"
-        in: "query"
-        description: "Git repository name"
-        required: false
-        type: "string"
-        x-exportParamName: "Name"
-      responses:
-        200:
-          description: ""
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/GitRepo"
-      security:
-      - ApiKeyAuth: []
-  /git-repo/{id}:
-    get:
-      tags:
-      - "Git repository"
-      description: "Retrieve git repository"
-      operationId: "getGitRepo"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Git repository ID"
-        required: true
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: "#/definitions/GitRepo"
-      security:
-      - ApiKeyAuth: []
-  /servers:
-    get:
-      tags:
-      - "Server"
-      description: "Retrieve servers"
-      operationId: "getServers"
-      parameters:
-      - name: "org_id"
-        in: "query"
-        description: "Organization ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "OrgId"
-      - name: "name"
-        in: "query"
-        description: "Server name"
-        required: false
-        type: "string"
-        x-exportParamName: "Name"
-      responses:
-        200:
-          description: ""
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Server"
-      security:
-      - ApiKeyAuth: []
-  /servers/{id}:
-    get:
-      tags:
-      - "Server"
-      description: "Retrieve server"
-      operationId: "getServer"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Server ID"
-        required: true
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: "#/definitions/Server"
-      security:
-      - ApiKeyAuth: []
-  /domains:
-    get:
-      tags:
-      - "Domain"
-      description: "Retrieve domains"
-      operationId: "getDomains"
-      parameters:
-      - name: "org_id"
-        in: "query"
-        description: "Organization ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "OrgId"
-      - name: "instance_id"
-        in: "query"
-        description: "Instance ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "InstanceId"
-      - name: "server_id"
-        in: "query"
-        description: "Server ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "ServerId"
-      - name: "status"
-        in: "query"
-        description: "Domain status"
-        required: false
-        type: "string"
-        x-exportParamName: "Status"
-      - name: "type"
-        in: "query"
-        description: "Domain type"
-        required: false
-        type: "string"
-        x-exportParamName: "Type_"
-      - name: "name"
-        in: "query"
-        description: "Domain name"
-        required: false
-        type: "string"
-        x-exportParamName: "Name"
-      responses:
-        200:
-          description: ""
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Domain"
-      security:
-      - ApiKeyAuth: []
-  /domains/{id}:
-    get:
-      tags:
-      - "Domain"
-      description: "Retrieve domain"
-      operationId: "getDomain"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Domain ID"
-        required: true
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: "#/definitions/Domain"
-      security:
-      - ApiKeyAuth: []
-  /backups:
-    get:
-      tags:
-      - "Backup"
-      description: "Retrieve backups by instance"
-      operationId: "getBackups"
-      parameters:
-      - name: "org_id"
-        in: "query"
-        description: "Organization ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "OrgId"
-      - name: "instance_id"
-        in: "query"
-        description: "Instance ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "InstanceId"
-      - name: "server_id"
-        in: "query"
-        description: "Server ID"
-        required: false
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "ServerId"
-      - name: "type"
-        in: "query"
-        description: "Backup type"
-        required: false
-        type: "string"
-        x-exportParamName: "Type_"
-      - name: "status"
-        in: "query"
-        description: "Backup status"
-        required: false
-        type: "string"
-        x-exportParamName: "Status"
-      - name: "days"
-        in: "query"
-        description: "Get backups for N days"
-        required: false
-        type: "integer"
-        x-exportParamName: "Days"
-      responses:
-        200:
-          description: ""
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Backup"
-      security:
-      - ApiKeyAuth: []
-  /backups/{id}:
-    get:
-      tags:
-      - "Backup"
-      description: "Retrieve backup"
-      operationId: "getBackup"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Backup ID"
-        required: true
-        type: "string"
-        format: "uuid"
-        x-exportParamName: "Id"
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: "#/definitions/Backup"
-      security:
-      - ApiKeyAuth: []
   /user:
     get:
       tags:
@@ -683,230 +683,6 @@ securityDefinitions:
     name: "X-API-KEY"
     in: "header"
 definitions:
-  User:
-    type: "object"
-    required:
-    - "created"
-    - "email"
-    - "id"
-    - "name"
-    - "updated"
-    properties:
-      id:
-        type: "string"
-      name:
-        type: "string"
-      email:
-        type: "string"
-      first_name:
-        type: "string"
-      last_name:
-        type: "string"
-      created:
-        type: "integer"
-      updated:
-        type: "integer"
-    title: "User"
-    example:
-      id: "id"
-      first_name: "first_name"
-      updated: 6
-      created: 0
-      email: "email"
-      name: "name"
-      last_name: "last_name"
-  Org:
-    type: "object"
-    required:
-    - "created"
-    - "id"
-    - "name"
-    - "status"
-    - "title"
-    - "updated"
-    properties:
-      id:
-        type: "string"
-      title:
-        type: "string"
-      name:
-        type: "string"
-      status:
-        type: "string"
-        enum:
-        - "ok"
-        - "error"
-        - "creating"
-        - "updating"
-        - "deleting"
-      created:
-        type: "integer"
-      updated:
-        type: "integer"
-    title: "Org"
-    example:
-      id: "id"
-      title: "title"
-      updated: 6
-      created: 0
-      status: "ok"
-      name: "name"
-  Task:
-    type: "object"
-    required:
-    - "created"
-    - "id"
-    - "org_id"
-    - "status"
-    - "title"
-    - "ttl"
-    - "updated"
-    properties:
-      id:
-        type: "string"
-      title:
-        type: "string"
-      org_id:
-        type: "string"
-      status:
-        type: "string"
-        enum:
-        - "waiting"
-        - "in_progress"
-        - "done"
-        - "failed"
-        - "canceled"
-      start:
-        type: "integer"
-      end:
-        type: "integer"
-      ttl:
-        type: "integer"
-      created:
-        type: "integer"
-      updated:
-        type: "integer"
-    title: "Task"
-    example:
-      org_id: "org_id"
-      id: "id"
-      title: "title"
-      updated: 5
-      created: 5
-      start: 0
-      status: "waiting"
-      ttl: 1
-      end: 6
-  Stack:
-    type: "object"
-    required:
-    - "created"
-    - "id"
-    - "org_id"
-    - "services"
-    - "title"
-    - "updated"
-    properties:
-      id:
-        type: "string"
-      title:
-        type: "string"
-      version:
-        type: "string"
-      revision_number:
-        type: "integer"
-      services:
-        type: "array"
-        items:
-          $ref: "#/definitions/StackService"
-      org_id:
-        type: "string"
-      created:
-        type: "integer"
-      updated:
-        type: "integer"
-    title: "Stack"
-    example:
-      org_id: "org_id"
-      id: "id"
-      services:
-      - id: "id"
-        title: "title"
-        name: "name"
-        docker_image: "docker_image"
-        type_title: "type_title"
-        type: "type"
-      - id: "id"
-        title: "title"
-        name: "name"
-        docker_image: "docker_image"
-        type_title: "type_title"
-        type: "type"
-      title: "title"
-      revision_number: 0
-      updated: 1
-      created: 6
-      version: "version"
-  StackService:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-      title:
-        type: "string"
-      name:
-        type: "string"
-      docker_image:
-        type: "string"
-      type:
-        type: "string"
-      type_title:
-        type: "string"
-    title: "StackService"
-    example:
-      id: "id"
-      title: "title"
-      name: "name"
-      docker_image: "docker_image"
-      type_title: "type_title"
-      type: "type"
-  GitRepo:
-    type: "object"
-    required:
-    - "created"
-    - "id"
-    - "org_id"
-    - "status"
-    - "title"
-    - "updated"
-    properties:
-      id:
-        type: "string"
-      title:
-        type: "string"
-      url:
-        type: "string"
-      org_id:
-        type: "string"
-      status:
-        type: "string"
-        enum:
-        - "ok"
-        - "error"
-        - "creating"
-        - "deleting"
-      created:
-        type: "integer"
-      updated:
-        type: "integer"
-    example:
-      org_id: "org_id"
-      id: "id"
-      title: "title"
-      updated: 6
-      created: 0
-      status: "ok"
-      url: "url"
   App:
     type: "object"
     required:
@@ -918,15 +694,15 @@ definitions:
     - "title"
     - "updated"
     properties:
-      id:
+      created:
+        type: "integer"
+      git_repo_id:
         type: "string"
-      title:
+      id:
         type: "string"
       name:
         type: "string"
       org_id:
-        type: "string"
-      git_repo_id:
         type: "string"
       status:
         type: "string"
@@ -935,8 +711,8 @@ definitions:
         - "error"
         - "creating"
         - "deleting"
-      created:
-        type: "integer"
+      title:
+        type: "string"
       updated:
         type: "integer"
     title: "Application"
@@ -945,68 +721,61 @@ definitions:
       id: "id"
       title: "title"
       updated: 6
-      created: 0
       status: "ok"
+      created: 0
       name: "name"
       git_repo_id: "git_repo_id"
-  Instance:
+  Backup:
     type: "object"
     required:
-    - "app_id"
     - "created"
     - "id"
-    - "name"
+    - "instance_id"
     - "org_id"
     - "status"
-    - "title"
+    - "type"
     - "updated"
     properties:
+      created:
+        type: "integer"
+      eta:
+        type: "integer"
       id:
         type: "string"
-      name:
+      instance_id:
         type: "string"
-      title:
-        type: "string"
-      type:
-        $ref: "#/definitions/InstanceType"
       org_id:
         type: "string"
-      app_id:
-        type: "string"
-      git_repo_id:
-        type: "string"
+      spent:
+        type: "integer"
       status:
         type: "string"
         enum:
         - "ok"
-        - "unreachable"
         - "error"
+        - "waiting"
         - "creating"
-        - "updating"
+        - "restoring"
         - "deleting"
-      created:
-        type: "integer"
+      type:
+        type: "string"
+        enum:
+        - "system"
+        - "daily"
+        - "manual"
       updated:
         type: "integer"
-    title: "Instance"
+    title: "Backup"
     example:
       org_id: "org_id"
       id: "id"
-      title: "title"
-      updated: 6
-      created: 0
+      eta: 6
+      updated: 5
       status: "ok"
-      name: "name"
-      app_id: "app_id"
-      git_repo_id: "git_repo_id"
-      type: {}
-  InstanceType:
-    type: "string"
-    title: "Instance Type"
-    enum:
-    - "dev"
-    - "stage"
-    - "prod"
+      created: 0
+      type: "system"
+      spent: 1
+      instance_id: "instance_id"
   Domain:
     type: "object"
     required:
@@ -1019,35 +788,37 @@ definitions:
     - "type"
     - "updated"
     properties:
-      id:
-        type: "string"
-      name:
-        type: "string"
-      org_id:
-        type: "string"
-      instance_id:
-        type: "string"
+      created:
+        type: "integer"
       enabled:
-        type: "boolean"
-      primary:
-        type: "boolean"
-      protected:
-        type: "boolean"
-      indexed:
-        type: "boolean"
-      ssl:
-        type: "boolean"
-      ssl_required:
-        type: "boolean"
-      ssl_custom:
         type: "boolean"
       hsts:
         type: "boolean"
       hsts_subdomains:
         type: "boolean"
-      redirect_to_www:
+      id:
+        type: "string"
+      indexed:
+        type: "boolean"
+      instance_id:
+        type: "string"
+      name:
+        type: "string"
+      org_id:
+        type: "string"
+      primary:
+        type: "boolean"
+      protected:
         type: "boolean"
       redirect_to_non_www:
+        type: "boolean"
+      redirect_to_www:
+        type: "boolean"
+      ssl:
+        type: "boolean"
+      ssl_custom:
+        type: "boolean"
+      ssl_required:
         type: "boolean"
       status:
         type: "string"
@@ -1063,8 +834,6 @@ definitions:
         enum:
         - "technical"
         - "user"
-      created:
-        type: "integer"
       updated:
         type: "integer"
     title: "Domain"
@@ -1072,8 +841,8 @@ definitions:
       enabled: true
       status: "ok"
       indexed: true
-      redirect_to_non_www: true
       ssl: true
+      redirect_to_non_www: true
       hsts: true
       type: "technical"
       hsts_subdomains: true
@@ -1088,7 +857,7 @@ definitions:
       ssl_required: true
       ssl_custom: true
       instance_id: "instance_id"
-  Server:
+  GitRepo:
     type: "object"
     required:
     - "created"
@@ -1097,15 +866,10 @@ definitions:
     - "status"
     - "title"
     - "updated"
-    - "version"
     properties:
+      created:
+        type: "integer"
       id:
-        type: "string"
-      title:
-        type: "string"
-      ip_address:
-        type: "string"
-      version:
         type: "string"
       org_id:
         type: "string"
@@ -1116,75 +880,117 @@ definitions:
         - "error"
         - "creating"
         - "deleting"
-        - "updating"
-        - "disabled"
-        - "unreachable"
-        - "initializing"
-      created:
-        type: "integer"
+      title:
+        type: "string"
       updated:
         type: "integer"
-    title: "Server"
+      url:
+        type: "string"
     example:
       org_id: "org_id"
       id: "id"
-      ip_address: "ip_address"
       title: "title"
       updated: 6
-      created: 0
       status: "ok"
-      version: "version"
-  Backup:
+      created: 0
+      url: "url"
+  Instance:
+    type: "object"
+    required:
+    - "app_id"
+    - "created"
+    - "id"
+    - "name"
+    - "org_id"
+    - "status"
+    - "title"
+    - "updated"
+    properties:
+      app_id:
+        type: "string"
+      created:
+        type: "integer"
+      git_repo_id:
+        type: "string"
+      id:
+        type: "string"
+      name:
+        type: "string"
+      new_version:
+        type: "string"
+      org_id:
+        type: "string"
+      status:
+        type: "string"
+        enum:
+        - "ok"
+        - "unreachable"
+        - "error"
+        - "creating"
+        - "updating"
+        - "deleting"
+      title:
+        type: "string"
+      type:
+        $ref: "#/definitions/InstanceType"
+      updated:
+        type: "integer"
+    title: "Instance"
+    example:
+      org_id: "org_id"
+      new_version: "new_version"
+      id: "id"
+      title: "title"
+      updated: 6
+      status: "ok"
+      created: 0
+      name: "name"
+      app_id: "app_id"
+      git_repo_id: "git_repo_id"
+      type: {}
+  InstanceType:
+    type: "string"
+    title: "Instance Type"
+    enum:
+    - "dev"
+    - "stage"
+    - "prod"
+  Org:
     type: "object"
     required:
     - "created"
     - "id"
-    - "instance_id"
-    - "org_id"
+    - "name"
     - "status"
-    - "type"
+    - "title"
     - "updated"
     properties:
+      created:
+        type: "integer"
       id:
         type: "string"
-      type:
+      name:
         type: "string"
-        enum:
-        - "system"
-        - "daily"
-        - "manual"
-      org_id:
-        type: "string"
-      instance_id:
-        type: "string"
-      eta:
-        type: "integer"
-      spent:
-        type: "integer"
       status:
         type: "string"
         enum:
         - "ok"
         - "error"
-        - "waiting"
         - "creating"
-        - "restoring"
+        - "updating"
         - "deleting"
-      created:
-        type: "integer"
+      title:
+        type: "string"
       updated:
         type: "integer"
-    title: "Backup"
+    title: "Org"
     example:
-      org_id: "org_id"
       id: "id"
-      eta: 0
-      updated: 5
-      created: 1
+      title: "title"
+      updated: 6
       status: "ok"
-      spent: 6
-      type: "system"
-      instance_id: "instance_id"
+      created: 0
+      name: "name"
   RequestAppCreate:
     type: "object"
     required:
@@ -1193,32 +999,6 @@ definitions:
     - "server_id"
     - "stack_id"
     properties:
-      org_id:
-        $ref: "#/definitions/Uuid"
-      title:
-        type: "string"
-      name:
-        type: "string"
-        pattern: "^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$"
-      stack_id:
-        type: "string"
-      docroot:
-        type: "string"
-      sitename:
-        type: "string"
-      server_id:
-        $ref: "#/definitions/Uuid"
-      instance_type:
-        $ref: "#/definitions/InstanceType"
-      instance_name:
-        type: "string"
-        pattern: "^[a-z0-9][a-z0-9-]{0,18}[a-z0-9]$"
-      instance_title:
-        type: "string"
-      services:
-        type: "array"
-        items:
-          $ref: "#/definitions/RequestAppCreate_services"
       deployment_type:
         type: "string"
         enum:
@@ -1226,10 +1006,36 @@ definitions:
         - "git"
         - "ci"
         default: "vanilla"
-      post_deployment:
-        type: "boolean"
+      docroot:
+        type: "string"
       git:
         $ref: "#/definitions/RequestAppCreate_git"
+      instance_name:
+        type: "string"
+        pattern: "^[a-z0-9][a-z0-9-]{0,18}[a-z0-9]$"
+      instance_title:
+        type: "string"
+      instance_type:
+        $ref: "#/definitions/InstanceType"
+      name:
+        type: "string"
+        pattern: "^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$"
+      org_id:
+        $ref: "#/definitions/Uuid"
+      post_deployment:
+        type: "boolean"
+      server_id:
+        $ref: "#/definitions/Uuid"
+      services:
+        type: "array"
+        items:
+          $ref: "#/definitions/RequestAppCreate_services"
+      sitename:
+        type: "string"
+      stack_id:
+        type: "string"
+      title:
+        type: "string"
     example:
       instance_type: {}
       server_id: null
@@ -1244,11 +1050,11 @@ definitions:
       sitename: "sitename"
       git:
         tree_ish: "tree_ish"
-        repo_id: null
+        repo_id: {}
       instance_name: "instance_name"
       instance_title: "instance_title"
       stack_id: "stack_id"
-      org_id: {}
+      org_id: null
       title: "title"
       name: "name"
       post_deployment: true
@@ -1263,19 +1069,19 @@ definitions:
     properties:
       app_id:
         $ref: "#/definitions/Uuid"
-      server_id:
-        $ref: "#/definitions/Uuid"
-      type:
-        $ref: "#/definitions/InstanceType"
+      git:
+        $ref: "#/definitions/RequestInstanceCreate_git"
       name:
         type: "string"
         pattern: "^[a-z0-9][a-z0-9-]{0,18}[a-z0-9]$"
-      title:
-        type: "string"
       post_deployment:
         type: "boolean"
-      git:
-        $ref: "#/definitions/RequestInstanceCreate_git"
+      server_id:
+        $ref: "#/definitions/Uuid"
+      title:
+        type: "string"
+      type:
+        $ref: "#/definitions/InstanceType"
     example:
       server_id: null
       title: "title"
@@ -1316,10 +1122,10 @@ definitions:
         id: "id"
         title: "title"
         updated: 5
-        created: 5
-        start: 0
         status: "waiting"
-        ttl: 1
+        start: 1
+        created: 0
+        ttl: 5
         end: 6
   ResponseTaskApp:
     type: "object"
@@ -1337,8 +1143,8 @@ definitions:
         id: "id"
         title: "title"
         updated: 6
-        created: 0
         status: "ok"
+        created: 0
         name: "name"
         git_repo_id: "git_repo_id"
       task:
@@ -1346,10 +1152,10 @@ definitions:
         id: "id"
         title: "title"
         updated: 5
-        created: 5
-        start: 0
         status: "waiting"
-        ttl: 1
+        start: 1
+        created: 0
+        ttl: 5
         end: 6
   ResponseTaskInstance:
     type: "object"
@@ -1367,40 +1173,225 @@ definitions:
         id: "id"
         title: "title"
         updated: 5
-        created: 5
-        start: 0
         status: "waiting"
-        ttl: 1
+        start: 1
+        created: 0
+        ttl: 5
         end: 6
       instance:
         org_id: "org_id"
+        new_version: "new_version"
         id: "id"
         title: "title"
         updated: 6
-        created: 0
         status: "ok"
+        created: 0
         name: "name"
         app_id: "app_id"
         git_repo_id: "git_repo_id"
         type: {}
-  Uuid:
-    type: "string"
-  RequestAppCreate_services:
+  Server:
+    type: "object"
     required:
-    - "name"
+    - "created"
+    - "id"
+    - "org_id"
+    - "status"
+    - "title"
+    - "updated"
+    - "version"
     properties:
+      created:
+        type: "integer"
+      id:
+        type: "string"
+      ip_address:
+        type: "string"
+      org_id:
+        type: "string"
+      status:
+        type: "string"
+        enum:
+        - "ok"
+        - "error"
+        - "creating"
+        - "deleting"
+        - "updating"
+        - "disabled"
+        - "unreachable"
+        - "initializing"
+      title:
+        type: "string"
+      updated:
+        type: "integer"
+      version:
+        type: "string"
+    title: "Server"
+    example:
+      org_id: "org_id"
+      id: "id"
+      title: "title"
+      ip_address: "ip_address"
+      updated: 6
+      status: "ok"
+      created: 0
+      version: "version"
+  Stack:
+    type: "object"
+    required:
+    - "created"
+    - "id"
+    - "org_id"
+    - "services"
+    - "title"
+    - "updated"
+    properties:
+      created:
+        type: "integer"
+      id:
+        type: "string"
+      new_version:
+        type: "string"
+      org_id:
+        type: "string"
+      revision_number:
+        type: "integer"
+      services:
+        type: "array"
+        items:
+          $ref: "#/definitions/StackService"
+      title:
+        type: "string"
+      updated:
+        type: "integer"
+      version:
+        type: "string"
+    title: "Stack"
+    example:
+      org_id: "org_id"
+      new_version: "new_version"
+      id: "id"
+      title: "title"
+      services:
+      - id: "id"
+        title: "title"
+        name: "name"
+        docker_image: "docker_image"
+        type_title: "type_title"
+        type: "type"
+      - id: "id"
+        title: "title"
+        name: "name"
+        docker_image: "docker_image"
+        type_title: "type_title"
+        type: "type"
+      revision_number: 6
+      updated: 1
+      created: 0
+      version: "version"
+  StackService:
+    type: "object"
+    properties:
+      docker_image:
+        type: "string"
+      id:
+        type: "string"
       name:
         type: "string"
-        example: "http-server"
-      implementation:
+      title:
         type: "string"
-        example: "nginx-1-15"
-      enable:
-        type: "boolean"
+      type:
+        type: "string"
+      type_title:
+        type: "string"
+    title: "StackService"
     example:
-      implementation: "nginx-1-15"
-      name: "http-server"
-      enable: true
+      id: "id"
+      title: "title"
+      name: "name"
+      docker_image: "docker_image"
+      type_title: "type_title"
+      type: "type"
+  Task:
+    type: "object"
+    required:
+    - "created"
+    - "id"
+    - "org_id"
+    - "status"
+    - "title"
+    - "ttl"
+    - "updated"
+    properties:
+      created:
+        type: "integer"
+      end:
+        type: "integer"
+      id:
+        type: "string"
+      org_id:
+        type: "string"
+      start:
+        type: "integer"
+      status:
+        type: "string"
+        enum:
+        - "waiting"
+        - "in_progress"
+        - "done"
+        - "failed"
+        - "canceled"
+      title:
+        type: "string"
+      ttl:
+        type: "integer"
+      updated:
+        type: "integer"
+    title: "Task"
+    example:
+      org_id: "org_id"
+      id: "id"
+      title: "title"
+      updated: 5
+      status: "waiting"
+      start: 1
+      created: 0
+      ttl: 5
+      end: 6
+  User:
+    type: "object"
+    required:
+    - "created"
+    - "email"
+    - "id"
+    - "name"
+    - "updated"
+    properties:
+      created:
+        type: "integer"
+      email:
+        type: "string"
+      first_name:
+        type: "string"
+      id:
+        type: "string"
+      last_name:
+        type: "string"
+      name:
+        type: "string"
+      updated:
+        type: "integer"
+    title: "User"
+    example:
+      id: "id"
+      first_name: "first_name"
+      updated: 6
+      email: "email"
+      created: 0
+      name: "name"
+      last_name: "last_name"
+  Uuid:
+    type: "string"
   RequestAppCreate_git:
     required:
     - "repo_id"
@@ -1412,7 +1403,23 @@ definitions:
         description: "Commit, branch or tag"
     example:
       tree_ish: "tree_ish"
-      repo_id: null
+      repo_id: {}
+  RequestAppCreate_services:
+    required:
+    - "name"
+    properties:
+      enable:
+        type: "boolean"
+      implementation:
+        type: "string"
+        example: "nginx-1-15"
+      name:
+        type: "string"
+        example: "http-server"
+    example:
+      implementation: "nginx-1-15"
+      name: "http-server"
+      enable: true
   RequestInstanceCreate_git:
     properties:
       tree_ish:
