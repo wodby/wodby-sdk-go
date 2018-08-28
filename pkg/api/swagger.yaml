@@ -1,8 +1,8 @@
 ---
 swagger: "2.0"
 info:
-  description: "API documentation https://docs.wodby.com/dev."
-  version: "3.0.0"
+  description: "Developers knowledge base https://wodby.com/docs/dev."
+  version: "3.x"
   title: "Wodby API"
 host: "api.wodby.com"
 basePath: "/api/v3"
