@@ -13,7 +13,7 @@ info:
     \ made over HTTPS. Calls made over plain HTTP will fail. API requests without\
     \ authentication will also fail.\n\nExample of authenticated request:\n```\ncurl\
     \ https://api.wodby.com/api/v3/user -H 'X-API-KEY: YOUR_API_KEY'\n```\n"
-  version: "3.x"
+  version: "3.0.2"
   title: "Wodby API Reference"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
