@@ -5,16 +5,12 @@ SWAGGER_CODEGEN_URL = http://central.maven.org/maven2/io/swagger/swagger-codegen
 SWAGGER_CODEGEN_JAVA_OPTS = -Xmx1024M -DapiTests=false -DmodelTests=false
 MAVEN_VER = 3-jdk-7-alpine
 UID ?= $(shell id -u)
-API_BRANCH = $(shell cat ./.wodby-api/BRANCH)
-API_VERSION = $(shell cat ./.wodby-api/VERSION)
 
 default: build
 
 build: clean codegen
 .PHONY: build
 
-export API_BRANCH
-export API_VERSION
 update-readme:
 	gotpl ./tpl/readme.tpl.md > README.md
 .PHONY: update-readme
