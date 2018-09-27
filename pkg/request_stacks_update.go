@@ -9,8 +9,7 @@
 
 package client
 
-type RequestInstanceCreateGit struct {
+type RequestStacksUpdate struct {
 
-	// Commit, branch or tag
-	TreeIsh string `json:"tree_ish,omitempty"`
+	Stacks []string `json:"stacks"`
 }

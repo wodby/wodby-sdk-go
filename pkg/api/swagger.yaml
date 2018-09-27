@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.5"
+  version: "3.0.6"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -375,6 +375,27 @@ paths:
             $ref: "#/definitions/ResponseTaskInstance"
       security:
       - ApiKeyAuth: []
+  /instances/upgrade:
+    post:
+      tags:
+      - "Instance"
+      description: "Upgrade instances"
+      operationId: "upgradeInstances"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestInstancesUpgrade"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
+      security:
+      - ApiKeyAuth: []
   /instances/{id}:
     get:
       tags:
@@ -464,6 +485,27 @@ paths:
         schema:
           $ref: "#/definitions/RequestInstanceDeployCodebase"
         x-exportParamName: "Data"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
+      security:
+      - ApiKeyAuth: []
+  /instances/{id}/upgrade:
+    post:
+      tags:
+      - "Instance"
+      description: "Upgrade instance"
+      operationId: "upgradeInstance"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Instance ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
       responses:
         200:
           description: ""
@@ -571,12 +613,13 @@ paths:
       description: "Retrieve stacks"
       operationId: "getStacks"
       parameters:
-      - name: "id"
+      - name: "org_id"
         in: "query"
         description: "Organization ID"
         required: false
         type: "string"
-        x-exportParamName: "Id"
+        format: "uuid"
+        x-exportParamName: "OrgId"
       responses:
         200:
           description: ""
@@ -584,6 +627,27 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Stack"
+      security:
+      - ApiKeyAuth: []
+  /stacks/update:
+    post:
+      tags:
+      - "Stack"
+      description: "Update official stacks from upstream"
+      operationId: "updateStacksFromUpstream"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestStacksUpdate"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
       security:
       - ApiKeyAuth: []
   /stacks/{id}:
@@ -605,6 +669,27 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/Stack"
+      security:
+      - ApiKeyAuth: []
+  /stacks/{id}/update:
+    post:
+      tags:
+      - "Stack"
+      description: "Update official stack from upstream"
+      operationId: "updateStackFromUpstream"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Stack ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
       security:
       - ApiKeyAuth: []
   /tasks:
@@ -699,12 +784,18 @@ definitions:
         type: "integer"
       git_repo_id:
         type: "string"
+        title: "UUID or empty"
+        pattern: "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})?$"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       name:
         type: "string"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       status:
         type: "string"
         enum:
@@ -743,10 +834,16 @@ definitions:
         type: "integer"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       instance_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       spent:
         type: "integer"
       status:
@@ -799,14 +896,20 @@ definitions:
         type: "boolean"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       indexed:
         type: "boolean"
       instance_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       name:
         type: "string"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       primary:
         type: "boolean"
       protected:
@@ -872,6 +975,8 @@ definitions:
         type: "integer"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       org_id:
         type: "string"
       status:
@@ -909,18 +1014,24 @@ definitions:
     properties:
       app_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       created:
         type: "integer"
       git_repo_id:
         type: "string"
+        title: "UUID or empty"
+        pattern: "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})?$"
+      has_new_version:
+        type: "boolean"
       id:
         type: "string"
       name:
         type: "string"
-      new_version:
-        type: "string"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       status:
         type: "string"
         enum:
@@ -939,7 +1050,6 @@ definitions:
     title: "Instance"
     example:
       org_id: "org_id"
-      new_version: "new_version"
       id: "id"
       title: "title"
       updated: 6
@@ -949,6 +1059,7 @@ definitions:
       app_id: "app_id"
       git_repo_id: "git_repo_id"
       type: {}
+      has_new_version: true
   InstanceType:
     type: "string"
     title: "Instance Type"
@@ -970,6 +1081,8 @@ definitions:
         type: "integer"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       name:
         type: "string"
       status:
@@ -1022,11 +1135,15 @@ definitions:
         type: "string"
         pattern: "^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$"
       org_id:
-        $ref: "#/definitions/Uuid"
+        type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       post_deployment:
         type: "boolean"
       server_id:
-        $ref: "#/definitions/Uuid"
+        type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       services:
         type: "array"
         items:
@@ -1035,11 +1152,13 @@ definitions:
         type: "string"
       stack_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       title:
         type: "string"
     example:
       instance_type: {}
-      server_id: null
+      server_id: "server_id"
       services:
       - implementation: "nginx-1-15"
         name: "http-server"
@@ -1051,11 +1170,11 @@ definitions:
       sitename: "sitename"
       git:
         tree_ish: "tree_ish"
-        repo_id: {}
+        repo_id: "repo_id"
       instance_name: "instance_name"
       instance_title: "instance_title"
       stack_id: "stack_id"
-      org_id: null
+      org_id: "org_id"
       title: "title"
       name: "name"
       post_deployment: true
@@ -1069,7 +1188,9 @@ definitions:
     - "type"
     properties:
       app_id:
-        $ref: "#/definitions/Uuid"
+        type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       git:
         $ref: "#/definitions/RequestInstanceCreate_git"
       name:
@@ -1078,19 +1199,21 @@ definitions:
       post_deployment:
         type: "boolean"
       server_id:
-        $ref: "#/definitions/Uuid"
+        type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       title:
         type: "string"
       type:
         $ref: "#/definitions/InstanceType"
     example:
-      server_id: null
+      server_id: "server_id"
       title: "title"
       name: "name"
       post_deployment: true
       git:
         tree_ish: "tree_ish"
-      app_id: {}
+      app_id: "app_id"
       type: {}
   RequestInstanceDeploy:
     type: "object"
@@ -1110,6 +1233,136 @@ definitions:
       post_deployment: true
       git:
         tree_ish: "tree_ish"
+  RequestInstancesUpgrade:
+    type: "object"
+    required:
+    - "instances"
+    properties:
+      instances:
+        type: "array"
+        items:
+          type: "string"
+          title: "UUID"
+          pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        maxItems: 50
+        minItems: 1
+    example:
+      instances:
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+      - "instances"
+  RequestStacksUpdate:
+    type: "object"
+    required:
+    - "stacks"
+    properties:
+      stacks:
+        type: "array"
+        items:
+          type: "string"
+          title: "UUID"
+          pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        maxItems: 50
+        minItems: 1
+    example:
+      stacks:
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
+      - "stacks"
   ResponseTask:
     type: "object"
     required:
@@ -1181,7 +1434,6 @@ definitions:
         end: 6
       instance:
         org_id: "org_id"
-        new_version: "new_version"
         id: "id"
         title: "title"
         updated: 6
@@ -1191,6 +1443,7 @@ definitions:
         app_id: "app_id"
         git_repo_id: "git_repo_id"
         type: {}
+        has_new_version: true
   Server:
     type: "object"
     required:
@@ -1206,10 +1459,16 @@ definitions:
         type: "integer"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       ip_address:
         type: "string"
+        title: "IP v4 address or empty"
+        pattern: "^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       status:
         type: "string"
         enum:
@@ -1251,10 +1510,17 @@ definitions:
         type: "integer"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       new_version:
         type: "string"
+        title: "Semantic version or empty"
+        pattern: "^(([0-9]|[1-9][0-9]*)\\.([0-9]|[1-9][0-9]*)\\.([0-9]|[1-9][0-9]*)(?:-([0-9A-Za-z-]+(?:\\\
+          .[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?)?$"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       revision_number:
         type: "integer"
       services:
@@ -1267,6 +1533,9 @@ definitions:
         type: "integer"
       version:
         type: "string"
+        title: "Semantic version or empty"
+        pattern: "^(([0-9]|[1-9][0-9]*)\\.([0-9]|[1-9][0-9]*)\\.([0-9]|[1-9][0-9]*)(?:-([0-9A-Za-z-]+(?:\\\
+          .[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?)?$"
     title: "Stack"
     example:
       org_id: "org_id"
@@ -1276,16 +1545,32 @@ definitions:
       services:
       - id: "id"
         title: "title"
+        default: true
         name: "name"
-        docker_image: "docker_image"
-        type_title: "type_title"
-        type: "type"
+        implementations:
+        - title: "title"
+          default: true
+          name: "name"
+          docker_image: "docker_image"
+        - title: "title"
+          default: true
+          name: "name"
+          docker_image: "docker_image"
+        required: true
       - id: "id"
         title: "title"
+        default: true
         name: "name"
-        docker_image: "docker_image"
-        type_title: "type_title"
-        type: "type"
+        implementations:
+        - title: "title"
+          default: true
+          name: "name"
+          docker_image: "docker_image"
+        - title: "title"
+          default: true
+          name: "name"
+          docker_image: "docker_image"
+        required: true
       revision_number: 6
       updated: 1
       created: 0
@@ -1293,26 +1578,55 @@ definitions:
   StackService:
     type: "object"
     properties:
-      docker_image:
-        type: "string"
+      default:
+        type: "boolean"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      implementations:
+        type: "array"
+        items:
+          $ref: "#/definitions/StackServiceImplementation"
       name:
         type: "string"
+      required:
+        type: "boolean"
       title:
-        type: "string"
-      type:
-        type: "string"
-      type_title:
         type: "string"
     title: "StackService"
     example:
       id: "id"
       title: "title"
+      default: true
+      name: "name"
+      implementations:
+      - title: "title"
+        default: true
+        name: "name"
+        docker_image: "docker_image"
+      - title: "title"
+        default: true
+        name: "name"
+        docker_image: "docker_image"
+      required: true
+  StackServiceImplementation:
+    type: "object"
+    properties:
+      default:
+        type: "boolean"
+      docker_image:
+        type: "string"
+      name:
+        type: "string"
+      title:
+        type: "string"
+    title: "StackService"
+    example:
+      title: "title"
+      default: true
       name: "name"
       docker_image: "docker_image"
-      type_title: "type_title"
-      type: "type"
   Task:
     type: "object"
     required:
@@ -1330,8 +1644,12 @@ definitions:
         type: "integer"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       org_id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       start:
         type: "integer"
       status:
@@ -1376,6 +1694,8 @@ definitions:
         type: "string"
       id:
         type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       last_name:
         type: "string"
       name:
@@ -1391,20 +1711,20 @@ definitions:
       created: 0
       name: "name"
       last_name: "last_name"
-  Uuid:
-    type: "string"
   RequestAppCreate_git:
     required:
     - "repo_id"
     properties:
       repo_id:
-        $ref: "#/definitions/Uuid"
+        type: "string"
+        title: "UUID"
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       tree_ish:
         type: "string"
         description: "Commit, branch or tag"
     example:
       tree_ish: "tree_ish"
-      repo_id: {}
+      repo_id: "repo_id"
   RequestAppCreate_services:
     required:
     - "name"

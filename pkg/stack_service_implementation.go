@@ -9,8 +9,13 @@
 
 package client
 
-type RequestInstanceCreateGit struct {
+type StackServiceImplementation struct {
 
-	// Commit, branch or tag
-	TreeIsh string `json:"tree_ish,omitempty"`
+	Default_ bool `json:"default,omitempty"`
+
+	DockerImage string `json:"docker_image,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Title string `json:"title,omitempty"`
 }

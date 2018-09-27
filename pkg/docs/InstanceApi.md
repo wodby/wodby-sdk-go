@@ -10,6 +10,8 @@ Method | HTTP request | Description
 [**DeployInstanceCodebase**](InstanceApi.md#DeployInstanceCodebase) | **Post** /instances/{id}/deploy-codebase | 
 [**GetInstance**](InstanceApi.md#GetInstance) | **Get** /instances/{id} | 
 [**GetInstances**](InstanceApi.md#GetInstances) | **Get** /instances | 
+[**UpgradeInstance**](InstanceApi.md#UpgradeInstance) | **Post** /instances/{id}/upgrade | 
+[**UpgradeInstances**](InstanceApi.md#UpgradeInstances) | **Post** /instances/upgrade | 
 
 
 # **CreateInstance**
@@ -197,6 +199,62 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]Instance**](Instance.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **UpgradeInstance**
+> ResponseTask UpgradeInstance(ctx, id)
+
+
+Upgrade instance
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **id** | [**string**](.md)| Instance ID | 
+
+### Return type
+
+[**ResponseTask**](ResponseTask.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **UpgradeInstances**
+> ResponseTask UpgradeInstances(ctx, data)
+
+
+Upgrade instances
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **data** | [**RequestInstancesUpgrade**](RequestInstancesUpgrade.md)|  | 
+
+### Return type
+
+[**ResponseTask**](ResponseTask.md)
 
 ### Authorization
 
