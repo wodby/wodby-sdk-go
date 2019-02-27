@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.7"
+  version: "3.0.8"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -1022,6 +1022,8 @@ definitions:
         type: "string"
         title: "UUID or empty"
         pattern: "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})?$"
+      git_repo_target:
+        type: "string"
       has_new_version:
         type: "boolean"
       id:
@@ -1052,6 +1054,7 @@ definitions:
       org_id: "org_id"
       id: "id"
       title: "title"
+      git_repo_target: "git_repo_target"
       updated: 6
       status: "ok"
       created: 0
@@ -1436,6 +1439,7 @@ definitions:
         org_id: "org_id"
         id: "id"
         title: "title"
+        git_repo_target: "git_repo_target"
         updated: 6
         status: "ok"
         created: 0

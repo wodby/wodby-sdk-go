@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **AppId** | **string** |  | [default to null]
 **Created** | **int32** |  | [default to null]
 **GitRepoId** | **string** |  | [optional] [default to null]
+**GitRepoTarget** | **string** |  | [optional] [default to null]
 **HasNewVersion** | **bool** |  | [optional] [default to null]
 **Id** | **string** |  | [default to null]
 **Name** | **string** |  | [default to null]
