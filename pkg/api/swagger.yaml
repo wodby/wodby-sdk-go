@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.8"
+  version: "3.0.9"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -102,6 +102,25 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/ResponseTask"
+      security:
+      - ApiKeyAuth: []
+  /apps/{id}/drush-aliases:
+    get:
+      tags:
+      - "Application"
+      description: "Retrieve Drupal application`s instances Drush aliases"
+      operationId: "getAppDrushAliases"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Application ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: "Drush aliases in YAML format"
       security:
       - ApiKeyAuth: []
   /backups:
