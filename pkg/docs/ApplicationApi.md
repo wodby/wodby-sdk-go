@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAppDrushAliases**
-> GetAppDrushAliases(ctx, id)
+> string GetAppDrushAliases(ctx, id)
 
 
 Retrieve Drupal application`s instances Drush aliases
@@ -110,7 +110,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 

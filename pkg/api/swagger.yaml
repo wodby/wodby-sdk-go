@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.9"
+  version: "3.0.10"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -121,6 +121,8 @@ paths:
       responses:
         200:
           description: "Drush aliases in YAML format"
+          schema:
+            type: "string"
       security:
       - ApiKeyAuth: []
   /backups:
