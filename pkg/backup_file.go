@@ -9,23 +9,19 @@
 
 package client
 
-type Backup struct {
+type BackupFile struct {
 
 	Created int32 `json:"created"`
 
-	Files *BackupFiles `json:"files,omitempty"`
+	MirroredUrl string `json:"mirrored_url,omitempty"`
 
-	Id string `json:"id"`
-
-	InstanceId string `json:"instance_id"`
-
-	OrgId string `json:"org_id"`
+	Name string `json:"name"`
 
 	Spent int32 `json:"spent,omitempty"`
 
 	Status string `json:"status"`
 
-	Type_ string `json:"type"`
-
 	Updated int32 `json:"updated"`
+
+	Url string `json:"url,omitempty"`
 }
