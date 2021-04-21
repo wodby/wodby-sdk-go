@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Id** | **string** |  | [default to null]
 **Name** | **string** |  | [default to null]
 **OrgId** | **string** |  | [default to null]
+**StackId** | **string** |  | [default to null]
 **Status** | **string** |  | [default to null]
 **Title** | **string** |  | [default to null]
 **Updated** | **int32** |  | [default to null]
