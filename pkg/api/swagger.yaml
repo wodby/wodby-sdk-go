@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.14"
+  version: "3.0.15"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -1062,6 +1062,9 @@ definitions:
     - "id"
     - "name"
     - "org_id"
+    - "server_id"
+    - "stack_id"
+    - "stack_rev_id"
     - "status"
     - "title"
     - "updated"
@@ -1085,6 +1088,15 @@ definitions:
       org_id:
         type: "string"
         title: "UUID"
+      server_id:
+        type: "string"
+        title: "UUID"
+      stack_id:
+        type: "string"
+        title: "UUID"
+      stack_rev_id:
+        type: "string"
+        title: "UUID"
       status:
         type: "string"
         enum:
@@ -1102,18 +1114,21 @@ definitions:
         type: "integer"
     title: "Instance"
     example:
-      org_id: "org_id"
+      server_id: "server_id"
+      stack_rev_id: "stack_rev_id"
+      status: "ok"
+      type: {}
+      stack_id: "stack_id"
+      has_new_version: true
       id: "id"
+      org_id: "org_id"
       title: "title"
       git_repo_target: "git_repo_target"
       updated: 6
-      status: "ok"
       created: 0
       name: "name"
       app_id: "app_id"
       git_repo_id: "git_repo_id"
-      type: {}
-      has_new_version: true
   InstanceType:
     type: "string"
     title: "Instance Type"
@@ -1480,18 +1495,21 @@ definitions:
         ttl: 5
         end: 6
       instance:
-        org_id: "org_id"
+        server_id: "server_id"
+        stack_rev_id: "stack_rev_id"
+        status: "ok"
+        type: {}
+        stack_id: "stack_id"
+        has_new_version: true
         id: "id"
+        org_id: "org_id"
         title: "title"
         git_repo_target: "git_repo_target"
         updated: 6
-        status: "ok"
         created: 0
         name: "name"
         app_id: "app_id"
         git_repo_id: "git_repo_id"
-        type: {}
-        has_new_version: true
   Server:
     type: "object"
     required:
