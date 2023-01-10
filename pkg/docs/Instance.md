@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **OrgId** | **string** |  | [default to null]
 **ServerId** | **string** |  | [default to null]
 **StackId** | **string** |  | [default to null]
-**StackRevId** | **string** |  | [default to null]
+**StackRevNumber** | **int32** |  | [default to null]
 **Status** | **string** |  | [default to null]
 **Title** | **string** |  | [default to null]
 **Type_** | [***InstanceType**](InstanceType.md) |  | [optional] [default to null]

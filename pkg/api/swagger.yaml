@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.15"
+  version: "3.0.16"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -1064,7 +1064,7 @@ definitions:
     - "org_id"
     - "server_id"
     - "stack_id"
-    - "stack_rev_id"
+    - "stack_rev_number"
     - "status"
     - "title"
     - "updated"
@@ -1094,9 +1094,8 @@ definitions:
       stack_id:
         type: "string"
         title: "UUID"
-      stack_rev_id:
-        type: "string"
-        title: "UUID"
+      stack_rev_number:
+        type: "integer"
       status:
         type: "string"
         enum:
@@ -1115,8 +1114,8 @@ definitions:
     title: "Instance"
     example:
       server_id: "server_id"
-      stack_rev_id: "stack_rev_id"
       status: "ok"
+      stack_rev_number: 6
       type: {}
       stack_id: "stack_id"
       has_new_version: true
@@ -1124,7 +1123,7 @@ definitions:
       org_id: "org_id"
       title: "title"
       git_repo_target: "git_repo_target"
-      updated: 6
+      updated: 1
       created: 0
       name: "name"
       app_id: "app_id"
@@ -1496,8 +1495,8 @@ definitions:
         end: 6
       instance:
         server_id: "server_id"
-        stack_rev_id: "stack_rev_id"
         status: "ok"
+        stack_rev_number: 6
         type: {}
         stack_id: "stack_id"
         has_new_version: true
@@ -1505,7 +1504,7 @@ definitions:
         org_id: "org_id"
         title: "title"
         git_repo_target: "git_repo_target"
-        updated: 6
+        updated: 1
         created: 0
         name: "name"
         app_id: "app_id"
