@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **GitRepoTarget** | **string** |  | [optional] [default to null]
 **HasNewVersion** | **bool** |  | [optional] [default to null]
 **Id** | **string** |  | [default to null]
+**LastDeploy** | **int32** |  | [default to null]
 **Name** | **string** |  | [default to null]
 **OrgId** | **string** |  | [default to null]
 **ServerId** | **string** |  | [default to null]

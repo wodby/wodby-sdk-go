@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/dev"
-  version: "3.0.16"
+  version: "3.0.17"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -1060,6 +1060,7 @@ definitions:
     - "app_id"
     - "created"
     - "id"
+    - "last_deploy"
     - "name"
     - "org_id"
     - "server_id"
@@ -1083,6 +1084,8 @@ definitions:
         type: "boolean"
       id:
         type: "string"
+      last_deploy:
+        type: "integer"
       name:
         type: "string"
       org_id:
@@ -1114,8 +1117,9 @@ definitions:
     title: "Instance"
     example:
       server_id: "server_id"
+      last_deploy: 6
       status: "ok"
-      stack_rev_number: 6
+      stack_rev_number: 1
       type: {}
       stack_id: "stack_id"
       has_new_version: true
@@ -1123,7 +1127,7 @@ definitions:
       org_id: "org_id"
       title: "title"
       git_repo_target: "git_repo_target"
-      updated: 1
+      updated: 5
       created: 0
       name: "name"
       app_id: "app_id"
@@ -1495,8 +1499,9 @@ definitions:
         end: 6
       instance:
         server_id: "server_id"
+        last_deploy: 6
         status: "ok"
-        stack_rev_number: 6
+        stack_rev_number: 1
         type: {}
         stack_id: "stack_id"
         has_new_version: true
@@ -1504,7 +1509,7 @@ definitions:
         org_id: "org_id"
         title: "title"
         git_repo_target: "git_repo_target"
-        updated: 1
+        updated: 5
         created: 0
         name: "name"
         app_id: "app_id"
