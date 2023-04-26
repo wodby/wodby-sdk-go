@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **ServerId** | **string** |  | [default to null]
 **StackId** | **string** |  | [default to null]
 **StackRevNumber** | **int32** |  | [default to null]
+**StackVersion** | **string** |  | [default to null]
 **Status** | **string** |  | [default to null]
 **Title** | **string** |  | [default to null]
 **Type_** | [***InstanceType**](InstanceType.md) |  | [optional] [default to null]
