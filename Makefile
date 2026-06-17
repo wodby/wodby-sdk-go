@@ -17,7 +17,7 @@ update-readme:
 
 codegen:
 	[ -f ./codegen.jar ] || wget -nv "$(SWAGGER_CODEGEN_URL)" -O ./codegen.jar
-	docker run -it --rm \
+	docker run --rm \
 		-v "$(PWD)":/gen \
 		-w /gen \
 		maven:"$(MAVEN_VER)" java $(SWAGGER_CODEGEN_JAVA_OPTS) -jar ./codegen.jar generate \
