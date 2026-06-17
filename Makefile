@@ -1,9 +1,7 @@
 -include .env version
 
-SWAGGER_CODEGEN_VER = 2.3.1
-SWAGGER_CODEGEN_URL = https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/$(SWAGGER_CODEGEN_VER)/swagger-codegen-cli-$(SWAGGER_CODEGEN_VER).jar
-SWAGGER_CODEGEN_JAVA_OPTS = -Xmx1024M -DapiTests=false -DmodelTests=false
-MAVEN_VER = 3-jdk-7-alpine
+OPENAPI_GENERATOR_VER = v7.10.0
+OPENAPI_GENERATOR_IMAGE = openapitools/openapi-generator-cli:$(OPENAPI_GENERATOR_VER)
 UID ?= $(shell id -u)
 
 default: build
@@ -16,15 +14,14 @@ update-readme:
 .PHONY: update-readme
 
 codegen:
-	[ -f ./codegen.jar ] || wget -nv "$(SWAGGER_CODEGEN_URL)" -O ./codegen.jar
 	docker run --rm \
 		-v "$(PWD)":/gen \
 		-w /gen \
-		maven:"$(MAVEN_VER)" java $(SWAGGER_CODEGEN_JAVA_OPTS) -jar ./codegen.jar generate \
+		"$(OPENAPI_GENERATOR_IMAGE)" generate \
 			-i ./swagger.json \
-			-l go \
+			-g go \
 			-o ./pkg \
-			-D packageName=client
+			--additional-properties=packageName=client
 	sudo chown -R $(UID) ./
 	rm -f ./pkg/.travis.yml \
 		./pkg/git_push.sh \
@@ -32,7 +29,7 @@ codegen:
 .PHONY: codegen
 
 clean:
-	mv ./pkg/.swagger-codegen-ignore ./
+	mv ./pkg/.openapi-generator-ignore ./
 	rm -rf ./codegen.jar ./pkg/*
-	mv ./.swagger-codegen-ignore ./pkg/
+	mv ./.openapi-generator-ignore ./pkg/
 .PHONY: clean
