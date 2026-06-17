@@ -4,12 +4,83 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AppsByNameNameGet**](AppsAPI.md#AppsByNameNameGet) | **Get** /apps/by-name/{name} | Get app by name
 [**AppsGet**](AppsAPI.md#AppsGet) | **Get** /apps | List apps
 [**AppsIdDelete**](AppsAPI.md#AppsIdDelete) | **Delete** /apps/{id} | Delete app
 [**AppsIdGet**](AppsAPI.md#AppsIdGet) | **Get** /apps/{id} | Get app
 [**AppsIdPut**](AppsAPI.md#AppsIdPut) | **Put** /apps/{id} | Update app
 [**AppsPost**](AppsAPI.md#AppsPost) | **Post** /apps | Create app
 
+
+
+## AppsByNameNameGet
+
+> App AppsByNameNameGet(ctx, name).OrgId(orgId).Execute()
+
+Get app by name
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	name := "name_example" // string | 
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.AppsByNameNameGet(context.Background(), name).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.AppsByNameNameGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AppsByNameNameGet`: App
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.AppsByNameNameGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAppsByNameNameGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**App**](App.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## AppsGet

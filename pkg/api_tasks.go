@@ -23,6 +23,408 @@ import (
 // TasksAPIService TasksAPI service
 type TasksAPIService service
 
+type ApiTasksGetRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	scope *string
+	orgId *int32
+	projectIds *string
+	withoutOrigin *bool
+	statuses *string
+	search *string
+	appId *int32
+	appInstanceId *int32
+	stackId *int32
+	databaseId *int32
+	clusterId *int32
+	serviceId *int32
+	integrationId *int32
+	providerId *int32
+	page *int32
+	pageSize *int32
+}
+
+func (r ApiTasksGetRequest) Scope(scope string) ApiTasksGetRequest {
+	r.scope = &scope
+	return r
+}
+
+func (r ApiTasksGetRequest) OrgId(orgId int32) ApiTasksGetRequest {
+	r.orgId = &orgId
+	return r
+}
+
+// Comma-separated project ids
+func (r ApiTasksGetRequest) ProjectIds(projectIds string) ApiTasksGetRequest {
+	r.projectIds = &projectIds
+	return r
+}
+
+func (r ApiTasksGetRequest) WithoutOrigin(withoutOrigin bool) ApiTasksGetRequest {
+	r.withoutOrigin = &withoutOrigin
+	return r
+}
+
+// Comma-separated task statuses
+func (r ApiTasksGetRequest) Statuses(statuses string) ApiTasksGetRequest {
+	r.statuses = &statuses
+	return r
+}
+
+func (r ApiTasksGetRequest) Search(search string) ApiTasksGetRequest {
+	r.search = &search
+	return r
+}
+
+func (r ApiTasksGetRequest) AppId(appId int32) ApiTasksGetRequest {
+	r.appId = &appId
+	return r
+}
+
+func (r ApiTasksGetRequest) AppInstanceId(appInstanceId int32) ApiTasksGetRequest {
+	r.appInstanceId = &appInstanceId
+	return r
+}
+
+func (r ApiTasksGetRequest) StackId(stackId int32) ApiTasksGetRequest {
+	r.stackId = &stackId
+	return r
+}
+
+func (r ApiTasksGetRequest) DatabaseId(databaseId int32) ApiTasksGetRequest {
+	r.databaseId = &databaseId
+	return r
+}
+
+func (r ApiTasksGetRequest) ClusterId(clusterId int32) ApiTasksGetRequest {
+	r.clusterId = &clusterId
+	return r
+}
+
+func (r ApiTasksGetRequest) ServiceId(serviceId int32) ApiTasksGetRequest {
+	r.serviceId = &serviceId
+	return r
+}
+
+func (r ApiTasksGetRequest) IntegrationId(integrationId int32) ApiTasksGetRequest {
+	r.integrationId = &integrationId
+	return r
+}
+
+func (r ApiTasksGetRequest) ProviderId(providerId int32) ApiTasksGetRequest {
+	r.providerId = &providerId
+	return r
+}
+
+// Page number, defaults to 1
+func (r ApiTasksGetRequest) Page(page int32) ApiTasksGetRequest {
+	r.page = &page
+	return r
+}
+
+// Page size, defaults to 30
+func (r ApiTasksGetRequest) PageSize(pageSize int32) ApiTasksGetRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiTasksGetRequest) Execute() (*TasksResponse, *http.Response, error) {
+	return r.ApiService.TasksGetExecute(r)
+}
+
+/*
+TasksGet List tasks
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiTasksGetRequest
+*/
+func (a *TasksAPIService) TasksGet(ctx context.Context) ApiTasksGetRequest {
+	return ApiTasksGetRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return TasksResponse
+func (a *TasksAPIService) TasksGetExecute(r ApiTasksGetRequest) (*TasksResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TasksResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksGet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tasks"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
+	}
+	if r.orgId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orgId", r.orgId, "form", "")
+	}
+	if r.projectIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "projectIds", r.projectIds, "form", "")
+	}
+	if r.withoutOrigin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "withoutOrigin", r.withoutOrigin, "form", "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "form", "")
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.appId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "appId", r.appId, "form", "")
+	}
+	if r.appInstanceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "appInstanceId", r.appInstanceId, "form", "")
+	}
+	if r.stackId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stackId", r.stackId, "form", "")
+	}
+	if r.databaseId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "databaseId", r.databaseId, "form", "")
+	}
+	if r.clusterId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "clusterId", r.clusterId, "form", "")
+	}
+	if r.serviceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "serviceId", r.serviceId, "form", "")
+	}
+	if r.integrationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "integrationId", r.integrationId, "form", "")
+	}
+	if r.providerId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["accessTokenHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-ACCESS-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTasksIdCancelPostRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	id int32
+}
+
+func (r ApiTasksIdCancelPostRequest) Execute() (*OperationResult, *http.Response, error) {
+	return r.ApiService.TasksIdCancelPostExecute(r)
+}
+
+/*
+TasksIdCancelPost Cancel task
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiTasksIdCancelPostRequest
+*/
+func (a *TasksAPIService) TasksIdCancelPost(ctx context.Context, id int32) ApiTasksIdCancelPostRequest {
+	return ApiTasksIdCancelPostRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return OperationResult
+func (a *TasksAPIService) TasksIdCancelPostExecute(r ApiTasksIdCancelPostRequest) (*OperationResult, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OperationResult
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksIdCancelPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tasks/{id}/cancel"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["accessTokenHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-ACCESS-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiTasksIdGetRequest struct {
 	ctx context.Context
 	ApiService *TasksAPIService
@@ -87,6 +489,146 @@ func (a *TasksAPIService) TasksIdGetExecute(r ApiTasksIdGetRequest) (*Task, *htt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["accessTokenHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-ACCESS-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTasksIdRepeatPostRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	id int32
+	repeatTaskRequest *RepeatTaskRequest
+}
+
+func (r ApiTasksIdRepeatPostRequest) RepeatTaskRequest(repeatTaskRequest RepeatTaskRequest) ApiTasksIdRepeatPostRequest {
+	r.repeatTaskRequest = &repeatTaskRequest
+	return r
+}
+
+func (r ApiTasksIdRepeatPostRequest) Execute() (*OperationResult, *http.Response, error) {
+	return r.ApiService.TasksIdRepeatPostExecute(r)
+}
+
+/*
+TasksIdRepeatPost Repeat task
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiTasksIdRepeatPostRequest
+*/
+func (a *TasksAPIService) TasksIdRepeatPost(ctx context.Context, id int32) ApiTasksIdRepeatPostRequest {
+	return ApiTasksIdRepeatPostRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return OperationResult
+func (a *TasksAPIService) TasksIdRepeatPostExecute(r ApiTasksIdRepeatPostRequest) (*OperationResult, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OperationResult
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksIdRepeatPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tasks/{id}/repeat"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.repeatTaskRequest == nil {
+		return localVarReturnValue, nil, reportError("repeatTaskRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.repeatTaskRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

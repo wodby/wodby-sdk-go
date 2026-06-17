@@ -22,11 +22,51 @@ func Test_client_AppBuildsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test AppBuildsAPIService AppBuildsFromCiPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AppBuildsAPI.AppBuildsFromCiPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AppBuildsAPIService AppBuildsGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.AppBuildsAPI.AppBuildsGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppBuildsAPIService AppBuildsIdDeployPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.AppBuildsAPI.AppBuildsIdDeployPost(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppBuildsAPIService AppBuildsIdDockerRegistryCredentialsGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.AppBuildsAPI.AppBuildsIdDockerRegistryCredentialsGet(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -41,6 +81,20 @@ func Test_client_AppBuildsAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.AppBuildsAPI.AppBuildsIdGet(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppBuildsAPIService AppBuildsIdVoidPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.AppBuildsAPI.AppBuildsIdVoidPost(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

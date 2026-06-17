@@ -4,12 +4,86 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AppInstancesByNameAppNameInstanceNameGet**](AppInstancesAPI.md#AppInstancesByNameAppNameInstanceNameGet) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
 [**AppInstancesGet**](AppInstancesAPI.md#AppInstancesGet) | **Get** /app-instances | List app instances
 [**AppInstancesIdDelete**](AppInstancesAPI.md#AppInstancesIdDelete) | **Delete** /app-instances/{id} | Delete app instance
 [**AppInstancesIdGet**](AppInstancesAPI.md#AppInstancesIdGet) | **Get** /app-instances/{id} | Get app instance
 [**AppInstancesIdPut**](AppInstancesAPI.md#AppInstancesIdPut) | **Put** /app-instances/{id} | Update app instance
 [**AppInstancesPost**](AppInstancesAPI.md#AppInstancesPost) | **Post** /app-instances | Create app instance
 
+
+
+## AppInstancesByNameAppNameInstanceNameGet
+
+> AppInstance AppInstancesByNameAppNameInstanceNameGet(ctx, appName, instanceName).OrgId(orgId).Execute()
+
+Get app instance by app and instance name
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	appName := "appName_example" // string | 
+	instanceName := "instanceName_example" // string | 
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.AppInstancesByNameAppNameInstanceNameGet(context.Background(), appName, instanceName).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.AppInstancesByNameAppNameInstanceNameGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AppInstancesByNameAppNameInstanceNameGet`: AppInstance
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.AppInstancesByNameAppNameInstanceNameGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appName** | **string** |  | 
+**instanceName** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAppInstancesByNameAppNameInstanceNameGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**AppInstance**](AppInstance.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## AppInstancesGet

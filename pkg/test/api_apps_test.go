@@ -22,6 +22,20 @@ func Test_client_AppsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test AppsAPIService AppsByNameNameGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		resp, httpRes, err := apiClient.AppsAPI.AppsByNameNameGet(context.Background(), name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AppsAPIService AppsGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

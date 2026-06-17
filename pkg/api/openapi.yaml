@@ -15,13 +15,20 @@ tags:
 - name: projects
 - name: apps
 - name: app-instances
+- name: app-services
 - name: app-deployments
 - name: app-builds
 - name: clusters
 - name: databases
 - name: integrations
+- name: integration-kinds
+- name: providers
+- name: services
+- name: stacks
 - name: backups
+- name: imports
 - name: tasks
+- name: task-steps
 - name: app-routes
 - name: envs
 paths:
@@ -288,6 +295,33 @@ paths:
       summary: Create app
       tags:
       - apps
+  /apps/by-name/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: App
+      summary: Get app by name
+      tags:
+      - apps
   /apps/{id}:
     delete:
       parameters:
@@ -420,6 +454,40 @@ paths:
       summary: Create app instance
       tags:
       - app-instances
+  /app-instances/by-name/{appName}/{instanceName}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: appName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: instanceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstance'
+          description: App instance
+      summary: Get app instance by app and instance name
+      tags:
+      - app-instances
   /app-instances/{id}:
     delete:
       parameters:
@@ -492,6 +560,100 @@ paths:
       summary: Update app instance
       tags:
       - app-instances
+  /app-services:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppService'
+                type: array
+          description: List of app services
+      summary: List app services
+      tags:
+      - app-services
+  /app-services/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppService'
+          description: App service
+      summary: Get app service
+      tags:
+      - app-services
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppServiceInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppService'
+          description: Updated app service
+      summary: Update app service
+      tags:
+      - app-services
+  /app-services/{id}/actions/{name}:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Action task result
+      summary: Run app service action
+      tags:
+      - app-services
   /app-deployments:
     get:
       parameters:
@@ -547,6 +709,24 @@ paths:
       summary: Create deployment
       tags:
       - app-deployments
+  /app-deployments/from-ci:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentFromCIInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeployment'
+          description: Created deployment
+      summary: Create deployment from CI
+      tags:
+      - app-deployments
   /app-deployments/{id}:
     get:
       parameters:
@@ -565,6 +745,26 @@ paths:
                 $ref: '#/components/schemas/AppDeployment'
           description: Deployment
       summary: Get deployment
+      tags:
+      - app-deployments
+  /app-deployments/{id}/redeploy:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeployment'
+          description: Created deployment
+      summary: Redeploy deployment
       tags:
       - app-deployments
   /app-builds:
@@ -624,6 +824,24 @@ paths:
       summary: Create build
       tags:
       - app-builds
+  /app-builds/from-ci:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBuildFromCIInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBuild'
+          description: Created build
+      summary: Create build from CI
+      tags:
+      - app-builds
   /app-builds/{id}:
     get:
       parameters:
@@ -642,6 +860,66 @@ paths:
                 $ref: '#/components/schemas/AppBuild'
           description: Build
       summary: Get build
+      tags:
+      - app-builds
+  /app-builds/{id}/docker-registry-credentials:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DockerRegistryCredentials'
+          description: Docker registry credentials
+      summary: Get Docker registry credentials for build
+      tags:
+      - app-builds
+  /app-builds/{id}/deploy:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeployment'
+          description: Created deployment
+      summary: Deploy build
+      tags:
+      - app-builds
+  /app-builds/{id}/void:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBuild'
+          description: Updated build
+      summary: Void build images
       tags:
       - app-builds
   /clusters:
@@ -970,6 +1248,274 @@ paths:
       summary: Get integration by name
       tags:
       - integrations
+  /integrations/{id}/scopes:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/IntegrationScope'
+                type: array
+          description: Integration scopes
+      summary: List integration scopes
+      tags:
+      - integrations
+  /integrations/{id}/remote-git-repos:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RemoteGitRepo'
+                type: array
+          description: Remote Git repositories
+      summary: List remote Git repositories
+      tags:
+      - integrations
+  /integrations/{id}/remote-git-repo-branches:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: remoteGitRepoId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: Branch names
+      summary: List remote Git repository branches
+      tags:
+      - integrations
+  /integrations/{id}/remote-git-repo-tags:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: remoteGitRepoId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: Tag names
+      summary: List remote Git repository tags
+      tags:
+      - integrations
+  /integrations/{id}/kube-regions:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GenericObject'
+                type: array
+          description: Kubernetes regions
+      summary: List Kubernetes regions
+      tags:
+      - integrations
+  /integrations/{id}/kube-zones:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GenericObject'
+                type: array
+          description: Kubernetes zones
+      summary: List Kubernetes zones
+      tags:
+      - integrations
+  /integrations/{id}/kube-machine-types:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: location
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GenericObject'
+                type: array
+          description: Kubernetes machine types
+      summary: List Kubernetes machine types
+      tags:
+      - integrations
+  /integrations/{id}/kube-versions:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: location
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/KubeVersion'
+                type: array
+          description: Kubernetes versions
+      summary: List Kubernetes versions
+      tags:
+      - integrations
+  /integrations/{id}/kube-settings:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericObject'
+          description: Kubernetes settings
+      summary: Get Kubernetes settings
+      tags:
+      - integrations
+  /integrations/{id}/storage-buckets:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: Bucket names
+      summary: List storage buckets
+      tags:
+      - integrations
+  /integrations/{id}/storage-classes:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: Storage class names
+      summary: List storage classes
+      tags:
+      - integrations
   /integrations/{id}:
     delete:
       parameters:
@@ -1015,6 +1561,530 @@ paths:
       summary: Update integration
       tags:
       - integrations
+  /integration-kinds/{id}/database-types:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabaseType'
+                type: array
+          description: Database types
+      summary: List database types
+      tags:
+      - integration-kinds
+  /integration-kinds/{id}/database-regions:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: dbType
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: version
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: ha
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GenericObject'
+                type: array
+          description: Database regions
+      summary: List database regions
+      tags:
+      - integration-kinds
+  /integration-kinds/{id}/database-versions:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: dbType
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabaseVersion'
+                type: array
+          description: Database versions
+      summary: List database versions
+      tags:
+      - integration-kinds
+  /integration-kinds/{id}/database-machine-types:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: dbType
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: version
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: ha
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - explode: true
+        in: query
+        name: region
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: zone
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GenericObject'
+                type: array
+          description: Database machine types
+      summary: List database machine types
+      tags:
+      - integration-kinds
+  /integration-kinds/{id}/database-settings:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: dbType
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericObject'
+          description: Database settings
+      summary: Get database settings
+      tags:
+      - integration-kinds
+  /providers:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: excludePublic
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvidersResponse'
+          description: Providers response
+      summary: List providers
+      tags:
+      - providers
+  /providers/by-name/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+          description: Provider
+      summary: Get provider by name
+      tags:
+      - providers
+  /provider-revisions/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderRevision'
+          description: Provider revision
+      summary: Get provider revision
+      tags:
+      - providers
+  /services:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServicesResponse'
+          description: Services response
+      summary: List services
+      tags:
+      - services
+  /services/by-name/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: revNumber
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: Service
+      summary: Get service by name
+      tags:
+      - services
+  /services/{name}/link-candidates:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GenericObject'
+                type: array
+          description: Service link candidates
+      summary: List service link candidates
+      tags:
+      - services
+  /service-revisions/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceRevision'
+          description: Service revision
+      summary: Get service revision
+      tags:
+      - services
+  /stacks:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StacksResponse'
+          description: Stacks response
+      summary: List stacks
+      tags:
+      - stacks
+  /stacks/by-name/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: revNumber
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Stack
+      summary: Get stack by name
+      tags:
+      - stacks
+  /stack-revisions/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackRevision'
+          description: Stack revision
+      summary: Get stack revision
+      tags:
+      - stacks
+  /stack-revisions/{id}/services:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackService'
+                type: array
+          description: Stack services
+      summary: List stack services
+      tags:
+      - stacks
   /backups:
     get:
       parameters:
@@ -1102,6 +2172,221 @@ paths:
       summary: Get backup
       tags:
       - backups
+  /imports:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: appServiceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseDbId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Import'
+                type: array
+          description: List of imports
+      summary: List imports
+      tags:
+      - imports
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewImportInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Import task result
+      summary: Create import
+      tags:
+      - imports
+  /imports/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Import'
+          description: Import
+      summary: Get import
+      tags:
+      - imports
+  /tasks:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - project_and_org
+          - org_only
+          - user_only
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: withoutOrigin
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Comma-separated task statuses
+        explode: true
+        in: query
+        name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: appId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: stackId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: clusterId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: serviceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: integrationId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: providerId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TasksResponse'
+          description: Tasks response
+      summary: List tasks
+      tags:
+      - tasks
   /tasks/{id}:
     get:
       parameters:
@@ -1122,6 +2407,92 @@ paths:
       summary: Get task
       tags:
       - tasks
+  /tasks/{id}/cancel:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Cancel result
+      summary: Cancel task
+      tags:
+      - tasks
+  /tasks/{id}/repeat:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepeatTaskRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Repeat task result
+      summary: Repeat task
+      tags:
+      - tasks
+  /task-steps/{id}/logs:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskStepLogs'
+          description: Task step logs
+      summary: Get task step logs
+      tags:
+      - task-steps
+  /task-steps/{id}/log-url:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/URLResponse'
+          description: Task step log URL
+      summary: Get task step log URL
+      tags:
+      - task-steps
   /app-routes:
     get:
       parameters:
@@ -1354,6 +2725,14 @@ components:
       schema:
         type: integer
       style: form
+    OrgIdOptional:
+      explode: true
+      in: query
+      name: orgId
+      required: false
+      schema:
+        type: integer
+      style: form
     ProjectIds:
       description: Comma-separated project ids
       explode: true
@@ -1362,6 +2741,22 @@ components:
       required: false
       schema:
         type: string
+      style: form
+    Search:
+      explode: true
+      in: query
+      name: search
+      required: false
+      schema:
+        type: string
+      style: form
+    RevNumber:
+      explode: true
+      in: query
+      name: revNumber
+      required: false
+      schema:
+        type: integer
       style: form
     Page:
       description: "Page number, defaults to 1"
@@ -1407,7 +2802,23 @@ components:
       schema:
         type: integer
       style: form
+    AppIdOptional:
+      explode: true
+      in: query
+      name: appId
+      required: false
+      schema:
+        type: integer
+      style: form
     ClusterId:
+      explode: true
+      in: query
+      name: clusterId
+      required: false
+      schema:
+        type: integer
+      style: form
+    ClusterIdOptional:
       explode: true
       in: query
       name: clusterId
@@ -1431,6 +2842,63 @@ components:
       required: false
       schema:
         type: integer
+      style: form
+    IntegrationIdOptional:
+      explode: true
+      in: query
+      name: integrationId
+      required: false
+      schema:
+        type: integer
+      style: form
+    ServiceIdOptional:
+      explode: true
+      in: query
+      name: serviceId
+      required: false
+      schema:
+        type: integer
+      style: form
+    RemoteGitRepoId:
+      explode: true
+      in: query
+      name: remoteGitRepoId
+      required: true
+      schema:
+        type: string
+      style: form
+    Location:
+      explode: true
+      in: query
+      name: location
+      required: true
+      schema:
+        type: string
+      style: form
+    DbType:
+      explode: true
+      in: query
+      name: dbType
+      required: true
+      schema:
+        type: string
+      style: form
+    DatabaseVersion:
+      explode: true
+      in: query
+      name: version
+      required: true
+      schema:
+        type: string
+      style: form
+    HighAvailability:
+      explode: true
+      in: query
+      name: ha
+      required: false
+      schema:
+        default: false
+        type: boolean
       style: form
     AppInstanceId:
       explode: true
@@ -2443,6 +3911,953 @@ components:
       - type
       - updatedAt
       type: object
+    Provider:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        public: true
+        name: name
+        revId: 6
+        id: 0
+        title: title
+        orgId: 1
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        public:
+          type: boolean
+        revId:
+          type: integer
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - orgId
+      - public
+      - revId
+      - status
+      - title
+      - updatedAt
+      type: object
+    ProviderRevision:
+      example:
+        number: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        providerId: 1
+        manifest:
+          key: ""
+        name: name
+        id: 0
+        title: title
+        version: version
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        number:
+          type: integer
+        version:
+          type: string
+        providerId:
+          type: integer
+        manifest:
+          additionalProperties: true
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - number
+      - providerId
+      - title
+      - version
+      type: object
+    ProvidersResponse:
+      example:
+        nextPage: 5
+        totalCount: 5
+        items:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          public: true
+          name: name
+          revId: 6
+          id: 0
+          title: title
+          orgId: 1
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          public: true
+          name: name
+          revId: 6
+          id: 0
+          title: title
+          orgId: 1
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Provider'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    Service:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        external: true
+        public: true
+        latestRevNumber: 1
+        name: name
+        revId: 6
+        id: 0
+        title: title
+        type: type
+        orgId: 5
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        external:
+          type: boolean
+        public:
+          type: boolean
+        revId:
+          type: integer
+        latestRevNumber:
+          type: integer
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - external
+      - id
+      - latestRevNumber
+      - name
+      - orgId
+      - public
+      - revId
+      - status
+      - title
+      - type
+      - updatedAt
+      type: object
+    ServiceRevision:
+      example:
+        number: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        external: true
+        manifest:
+          key: ""
+        name: name
+        id: 0
+        title: title
+        type: type
+        serviceId: 1
+        version: version
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        external:
+          type: boolean
+        number:
+          type: integer
+        version:
+          type: string
+        serviceId:
+          type: integer
+        manifest:
+          additionalProperties: true
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - external
+      - id
+      - name
+      - number
+      - serviceId
+      - title
+      - type
+      - version
+      type: object
+    ServicesResponse:
+      example:
+        nextPage: 2
+        totalCount: 5
+        items:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          external: true
+          public: true
+          latestRevNumber: 1
+          name: name
+          revId: 6
+          id: 0
+          title: title
+          type: type
+          orgId: 5
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          external: true
+          public: true
+          latestRevNumber: 1
+          name: name
+          revId: 6
+          id: 0
+          title: title
+          type: type
+          orgId: 5
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Service'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    Stack:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        public: true
+        latestRevNumber: 1
+        name: name
+        icon: icon
+        revId: 6
+        id: 0
+        title: title
+        orgId: 5
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        icon:
+          type: string
+        status:
+          type: string
+        public:
+          type: boolean
+        revId:
+          type: integer
+        latestRevNumber:
+          type: integer
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - icon
+      - id
+      - latestRevNumber
+      - name
+      - orgId
+      - public
+      - revId
+      - status
+      - title
+      - updatedAt
+      type: object
+    StackRevision:
+      example:
+        number: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        manifest: manifest
+        draft: true
+        stackId: 1
+        name: name
+        icon: icon
+        id: 0
+        title: title
+        version: version
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        icon:
+          type: string
+        number:
+          type: integer
+        draft:
+          type: boolean
+        version:
+          type: string
+        stackId:
+          type: integer
+        manifest:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - draft
+      - icon
+      - id
+      - manifest
+      - name
+      - number
+      - stackId
+      - title
+      - version
+      type: object
+    StackService:
+      example:
+        replicas: 6
+        serviceRevTitle: serviceRevTitle
+        main: true
+        buildSourceRemoteRepoId: buildSourceRemoteRepoId
+        title: title
+        type: type
+        required: true
+        serviceRevId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        buildSourceIntegrationId: 5
+        name: name
+        disabled: true
+        id: 0
+        serviceRevName: serviceRevName
+        serviceRevVersion: serviceRevVersion
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        main:
+          type: boolean
+        disabled:
+          type: boolean
+        required:
+          type: boolean
+        replicas:
+          type: integer
+        serviceRevId:
+          type: integer
+        serviceRevName:
+          type: string
+        serviceRevTitle:
+          type: string
+        serviceRevVersion:
+          type: string
+        buildSourceIntegrationId:
+          nullable: true
+          type: integer
+        buildSourceRemoteRepoId:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - disabled
+      - id
+      - main
+      - name
+      - replicas
+      - required
+      - serviceRevId
+      - serviceRevName
+      - serviceRevTitle
+      - serviceRevVersion
+      - title
+      - type
+      - updatedAt
+      type: object
+    StacksResponse:
+      example:
+        nextPage: 2
+        totalCount: 5
+        items:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          public: true
+          latestRevNumber: 1
+          name: name
+          icon: icon
+          revId: 6
+          id: 0
+          title: title
+          orgId: 5
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          public: true
+          latestRevNumber: 1
+          name: name
+          icon: icon
+          revId: 6
+          id: 0
+          title: title
+          orgId: 5
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Stack'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    AppService:
+      example:
+        needsRebuild: true
+        replicas: 6
+        main: true
+        title: title
+        type: type
+        version: version
+        required: true
+        appInstanceId: 1
+        serviceRevId: 5
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        external: true
+        parentAppServiceId: 5
+        name: name
+        disabled: true
+        id: 0
+        configurationReady: true
+        needsRedeploy: true
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        replicas:
+          type: integer
+        version:
+          type: string
+        main:
+          type: boolean
+        disabled:
+          type: boolean
+        external:
+          type: boolean
+        required:
+          type: boolean
+        needsRebuild:
+          type: boolean
+        needsRedeploy:
+          type: boolean
+        configurationReady:
+          type: boolean
+        appInstanceId:
+          type: integer
+        serviceRevId:
+          type: integer
+        parentAppServiceId:
+          nullable: true
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appInstanceId
+      - configurationReady
+      - createdAt
+      - disabled
+      - external
+      - id
+      - main
+      - name
+      - needsRebuild
+      - needsRedeploy
+      - replicas
+      - required
+      - serviceRevId
+      - status
+      - title
+      - type
+      - updatedAt
+      - version
+      type: object
+    Import:
+      example:
+        backupId: 9
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        databaseDbId: 5
+        source: source
+        appInstanceId: 6
+        appServiceId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        databaseId: 5
+        appServiceDeploymentId: 2
+        taskId: 7
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        source:
+          type: string
+        status:
+          type: string
+        appInstanceId:
+          nullable: true
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        databaseId:
+          nullable: true
+          type: integer
+        databaseDbId:
+          nullable: true
+          type: integer
+        appServiceDeploymentId:
+          nullable: true
+          type: integer
+        taskId:
+          nullable: true
+          type: integer
+        backupId:
+          nullable: true
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - source
+      - status
+      - updatedAt
+      type: object
+    TasksResponse:
+      example:
+        nextPage: 5
+        totalCount: 4
+        items:
+        - startedAt: 2000-01-23T04:56:07.000+00:00
+          projectIds:
+          - 5
+          - 5
+          clusterId: 9
+          title: title
+          orgId: 5
+          appInstanceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          providerId: 7
+          appId: 2
+          spawnedTaskIds:
+          - 1
+          - 1
+          id: 0
+          serviceId: 2
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          silent: true
+          stackId: 4
+          jobs:
+          - statusTitle: statusTitle
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            title: title
+            steps:
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            timeout: 7
+            isSystem: true
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            id: 6
+            after:
+            - after
+            - after
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - statusTitle: statusTitle
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            title: title
+            steps:
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            timeout: 7
+            isSystem: true
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            id: 6
+            after:
+            - after
+            - after
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          integrationId: 3
+          userId: 1
+          repeatedTaskId: 1
+          system: true
+          originTaskId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          progress: 6
+          status: status
+        - startedAt: 2000-01-23T04:56:07.000+00:00
+          projectIds:
+          - 5
+          - 5
+          clusterId: 9
+          title: title
+          orgId: 5
+          appInstanceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          providerId: 7
+          appId: 2
+          spawnedTaskIds:
+          - 1
+          - 1
+          id: 0
+          serviceId: 2
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          silent: true
+          stackId: 4
+          jobs:
+          - statusTitle: statusTitle
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            title: title
+            steps:
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            timeout: 7
+            isSystem: true
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            id: 6
+            after:
+            - after
+            - after
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - statusTitle: statusTitle
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            title: title
+            steps:
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              status: status
+            timeout: 7
+            isSystem: true
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            id: 6
+            after:
+            - after
+            - after
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          integrationId: 3
+          userId: 1
+          repeatedTaskId: 1
+          system: true
+          originTaskId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          progress: 6
+          status: status
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    TaskStepLogs:
+      example:
+        streamId: 0
+        lines:
+        - level: level
+          message: message
+          sequenceId: 6
+        - level: level
+          message: message
+          sequenceId: 6
+      properties:
+        streamId:
+          nullable: true
+          type: integer
+        lines:
+          items:
+            $ref: '#/components/schemas/LogLine'
+          type: array
+      required:
+      - lines
+      type: object
+    LogLine:
+      example:
+        level: level
+        message: message
+        sequenceId: 6
+      properties:
+        sequenceId:
+          type: integer
+        level:
+          type: string
+        message:
+          type: string
+      required:
+      - level
+      - message
+      - sequenceId
+      type: object
+    URLResponse:
+      example:
+        url: url
+      properties:
+        url:
+          type: string
+      required:
+      - url
+      type: object
+    RemoteGitRepo:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    IntegrationScope:
+      example:
+        name: name
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - name
+      - title
+      type: object
+    CloudRegion:
+      $ref: '#/components/schemas/GenericObject'
+    CloudZone:
+      $ref: '#/components/schemas/GenericObject'
+    CloudMachineType:
+      $ref: '#/components/schemas/GenericObject'
+    KubeVersion:
+      example:
+        name: name
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - name
+      - title
+      type: object
+    KubeSettings:
+      $ref: '#/components/schemas/GenericObject'
+    DatabaseType:
+      example:
+        kind: kind
+        name: name
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        kind:
+          type: string
+      required:
+      - kind
+      - name
+      - title
+      type: object
+    DatabaseVersion:
+      example:
+        name: name
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - name
+      - title
+      type: object
+    DatabaseSettings:
+      $ref: '#/components/schemas/GenericObject'
+    GenericObject:
+      additionalProperties: true
+      type: object
     CreateOrgRequest:
       example:
         name: name
@@ -2565,13 +4980,186 @@ components:
       - force
       type: object
     CreateBuildRequest:
+      description: Specify either appServiceId for one service or appServiceIds for
+        a multi-service build.
       example:
         appServiceId: 0
+        appServiceIds:
+        - 6
+        - 6
       properties:
         appServiceId:
           type: integer
+        appServiceIds:
+          items:
+            type: integer
+          type: array
+      type: object
+    NewBuildFromCIInput:
+      example:
+        appServiceID: 0
+        gitRef: gitRef
+        buildNum: 6
+        workflow: workflow
+        provider: provider
+        gitCommitAuthorEmail: gitCommitAuthorEmail
+        postDeployment: postDeployment
+        buildID: buildID
+        gitCommitAuthorName: gitCommitAuthorName
+        gitCommitMessage: gitCommitMessage
+        gitCommitSHA: gitCommitSHA
+        gitRefType: gitRefType
+      properties:
+        appServiceID:
+          type: integer
+        gitCommitSHA:
+          type: string
+        gitRef:
+          type: string
+        gitRefType:
+          type: string
+        buildNum:
+          type: integer
+        buildID:
+          type: string
+        workflow:
+          nullable: true
+          type: string
+        gitCommitAuthorName:
+          nullable: true
+          type: string
+        gitCommitAuthorEmail:
+          nullable: true
+          type: string
+        gitCommitMessage:
+          nullable: true
+          type: string
+        provider:
+          type: string
+        postDeployment:
+          nullable: true
+          type: string
       required:
-      - appServiceId
+      - appServiceID
+      - buildID
+      - buildNum
+      - gitCommitSHA
+      - gitRef
+      - gitRefType
+      - provider
+      type: object
+    DeploymentFromCIInput:
+      example:
+        skipPostDeployment: true
+        services:
+        - image: image
+          name: name
+        - image: image
+          name: name
+        appBuildID: 0
+      properties:
+        appBuildID:
+          type: integer
+        services:
+          items:
+            $ref: '#/components/schemas/ServiceDeploymentInput'
+          type: array
+        skipPostDeployment:
+          type: boolean
+      required:
+      - appBuildID
+      - services
+      - skipPostDeployment
+      type: object
+    ServiceDeploymentInput:
+      example:
+        image: image
+        name: name
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+      required:
+      - image
+      - name
+      type: object
+    DockerRegistryCredentials:
+      example:
+        password: password
+        username: username
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - password
+      - username
+      type: object
+    AppServiceInput:
+      example:
+        replicas: 0
+        disabled: true
+        main: true
+        buildSource:
+          buildSourceType: buildSourceType
+          template: template
+          gitRef: gitRef
+          remoteGitRepoID: remoteGitRepoID
+          integrationID: 5
+          newRepoName: newRepoName
+          gitRefType: gitRefType
+        version: version
+      properties:
+        replicas:
+          nullable: true
+          type: integer
+        version:
+          nullable: true
+          type: string
+        disabled:
+          nullable: true
+          type: boolean
+        main:
+          nullable: true
+          type: boolean
+        buildSource:
+          $ref: '#/components/schemas/BuildSourceInput'
+      type: object
+    NewImportInput:
+      example:
+        appServiceID: 0
+        import:
+          backupID: 2
+          importName: importName
+          from:
+            appServiceID: 9
+            databaseDBID: 7
+            backupName: backupName
+          source: source
+          url: url
+        databaseDBID: 6
+      properties:
+        appServiceID:
+          nullable: true
+          type: integer
+        databaseDBID:
+          nullable: true
+          type: integer
+        import:
+          $ref: '#/components/schemas/ImportInput'
+      required:
+      - import
+      type: object
+    RepeatTaskRequest:
+      example:
+        force: true
+      properties:
+        force:
+          type: boolean
+      required:
+      - force
       type: object
     NewProjectInput:
       example:
