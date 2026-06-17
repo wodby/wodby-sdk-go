@@ -1,0 +1,22 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 2.0
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: pkg/go.mod
+          cache-dependency-path: pkg/go.sum
+
+      - name: Test generated client
+        run: go test .
+        working-directory: pkg
