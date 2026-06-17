@@ -1,0 +1,3724 @@
+openapi: 3.0.3
+info:
+  description: |
+    Public REST API for customer SDKs and code integrations.
+    GraphQL remains internal for the dashboard. This contract is the versioned public surface.
+  title: Wodby Public API
+  version: 1.0.0
+servers:
+- url: /v1
+security:
+- apiKeyHeader: []
+- accessTokenHeader: []
+tags:
+- name: orgs
+- name: projects
+- name: apps
+- name: app-instances
+- name: app-deployments
+- name: app-builds
+- name: clusters
+- name: databases
+- name: integrations
+- name: backups
+- name: tasks
+- name: app-routes
+- name: envs
+paths:
+  /openapi.yaml:
+    get:
+      responses:
+        "200":
+          content:
+            application/yaml:
+              schema:
+                type: string
+          description: OpenAPI YAML
+      security: []
+      summary: Get OpenAPI YAML
+  /openapi.json:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OpenAPI JSON
+      security: []
+      summary: Get OpenAPI JSON
+  /orgs:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Org'
+                type: array
+          description: List of orgs
+      summary: List orgs
+      tags:
+      - orgs
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrgRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org'
+          description: Created org
+      summary: Create org
+      tags:
+      - orgs
+  /orgs/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete org
+      tags:
+      - orgs
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrgRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org'
+          description: Updated org
+      summary: Update org
+      tags:
+      - orgs
+  /projects:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Project'
+                type: array
+          description: List of projects
+      summary: List projects
+      tags:
+      - projects
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProjectInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: Created project
+      summary: Create project
+      tags:
+      - projects
+  /projects/by-name/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: Project
+      summary: Get project by name
+      tags:
+      - projects
+  /projects/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete project
+      tags:
+      - projects
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: Updated project
+      summary: Update project
+      tags:
+      - projects
+  /apps:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: clusterApp
+        required: false
+        schema:
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/App'
+                type: array
+          description: List of apps
+      summary: List apps
+      tags:
+      - apps
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: Created app
+      summary: Create app
+      tags:
+      - apps
+  /apps/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete app
+      tags:
+      - apps
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: App
+      summary: Get app
+      tags:
+      - apps
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTitleRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: Updated app
+      summary: Update app
+      tags:
+      - apps
+  /app-instances:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: appId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: clusterId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: clusterApp
+        required: false
+        schema:
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppInstance'
+                type: array
+          description: List of app instances
+      summary: List app instances
+      tags:
+      - app-instances
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppInstanceInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstance'
+          description: Created app instance
+      summary: Create app instance
+      tags:
+      - app-instances
+  /app-instances/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: force
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete app instance
+      tags:
+      - app-instances
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstance'
+          description: App instance
+      summary: Get app instance
+      tags:
+      - app-instances
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTitleRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstance'
+          description: Updated app instance
+      summary: Update app instance
+      tags:
+      - app-instances
+  /app-deployments:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeploymentsResponse'
+          description: List of deployments
+      summary: List app deployments
+      tags:
+      - app-deployments
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeploymentRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeployment'
+          description: Created deployment
+      summary: Create deployment
+      tags:
+      - app-deployments
+  /app-deployments/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeployment'
+          description: Deployment
+      summary: Get deployment
+      tags:
+      - app-deployments
+  /app-builds:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBuildsResponse'
+          description: List of builds
+      summary: List app builds
+      tags:
+      - app-builds
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBuildRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppBuild'
+                type: array
+          description: Created build list
+      summary: Create build
+      tags:
+      - app-builds
+  /app-builds/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBuild'
+          description: Build
+      summary: Get build
+      tags:
+      - app-builds
+  /clusters:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: integrationId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Cluster'
+                type: array
+          description: List of clusters
+      summary: List clusters
+      tags:
+      - clusters
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewClusterInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Created cluster
+      summary: Create cluster
+      tags:
+      - clusters
+  /clusters/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: force
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete cluster
+      tags:
+      - clusters
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Cluster
+      summary: Get cluster
+      tags:
+      - clusters
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTitleRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Updated cluster
+      summary: Update cluster
+      tags:
+      - clusters
+  /databases:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Database'
+                type: array
+          description: List of databases
+      summary: List databases
+      tags:
+      - databases
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDatabaseInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+          description: Created database
+      summary: Create database
+      tags:
+      - databases
+  /databases/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete database
+      tags:
+      - databases
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+          description: Database
+      summary: Get database
+      tags:
+      - databases
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTitleRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+          description: Updated database
+      summary: Update database
+      tags:
+      - databases
+  /integrations:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated project ids
+        explode: true
+        in: query
+        name: projectIds
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Comma-separated labels
+        explode: true
+        in: query
+        name: labels
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Integration'
+                type: array
+          description: List of integrations
+      summary: List integrations
+      tags:
+      - integrations
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIntegrationInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+          description: Created integration
+      summary: Create integration
+      tags:
+      - integrations
+  /integrations/by-name/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+          description: Integration
+      summary: Get integration by name
+      tags:
+      - integrations
+  /integrations/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete integration
+      tags:
+      - integrations
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIntegrationInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+          description: Updated integration
+      summary: Update integration
+      tags:
+      - integrations
+  /backups:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: appServiceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseDbId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: backupName
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Backup'
+                type: array
+          description: List of backups
+      summary: List backups
+      tags:
+      - backups
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBackupInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Backup task result
+      summary: Create backup
+      tags:
+      - backups
+  /backups/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Backup'
+          description: Backup
+      summary: Get backup
+      tags:
+      - backups
+  /tasks/{id}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Task
+      summary: Get task
+      tags:
+      - tasks
+  /app-routes:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppRoute'
+                type: array
+          description: List of app routes
+      summary: List app routes
+      tags:
+      - app-routes
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppRouteInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRoute'
+          description: Created app route
+      summary: Create app route
+      tags:
+      - app-routes
+  /app-routes/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete app route
+      tags:
+      - app-routes
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRoute'
+          description: App route
+      summary: Get app route
+      tags:
+      - app-routes
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppRouteInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRoute'
+          description: Updated app route
+      summary: Update app route
+      tags:
+      - app-routes
+  /envs:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Env'
+                type: array
+          description: List of envs
+      summary: List envs
+      tags:
+      - envs
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnvRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Env'
+          description: Created env
+      summary: Create env
+      tags:
+      - envs
+  /envs/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+      summary: Delete env
+      tags:
+      - envs
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Env'
+          description: Env
+      summary: Get env
+      tags:
+      - envs
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEnvRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Env'
+          description: Updated env
+      summary: Update env
+      tags:
+      - envs
+components:
+  parameters:
+    Id:
+      explode: false
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      style: simple
+    Name:
+      explode: false
+      in: path
+      name: name
+      required: true
+      schema:
+        type: string
+      style: simple
+    OrgId:
+      explode: true
+      in: query
+      name: orgId
+      required: true
+      schema:
+        type: integer
+      style: form
+    ProjectIds:
+      description: Comma-separated project ids
+      explode: true
+      in: query
+      name: projectIds
+      required: false
+      schema:
+        type: string
+      style: form
+    Page:
+      description: "Page number, defaults to 1"
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        minimum: 1
+        type: integer
+      style: form
+    PageSize:
+      description: "Page size, defaults to 30"
+      explode: true
+      in: query
+      name: pageSize
+      required: false
+      schema:
+        minimum: 1
+        type: integer
+      style: form
+    ClusterApp:
+      explode: true
+      in: query
+      name: clusterApp
+      required: false
+      schema:
+        type: boolean
+      style: form
+    ClusterAppOptional:
+      explode: true
+      in: query
+      name: clusterApp
+      required: false
+      schema:
+        type: boolean
+      style: form
+    AppId:
+      explode: true
+      in: query
+      name: appId
+      required: false
+      schema:
+        type: integer
+      style: form
+    ClusterId:
+      explode: true
+      in: query
+      name: clusterId
+      required: false
+      schema:
+        type: integer
+      style: form
+    Force:
+      explode: true
+      in: query
+      name: force
+      required: false
+      schema:
+        default: false
+        type: boolean
+      style: form
+    IntegrationId:
+      explode: true
+      in: query
+      name: integrationId
+      required: false
+      schema:
+        type: integer
+      style: form
+    AppInstanceId:
+      explode: true
+      in: query
+      name: appInstanceId
+      required: true
+      schema:
+        type: integer
+      style: form
+    AppInstanceIdOptional:
+      explode: true
+      in: query
+      name: appInstanceId
+      required: false
+      schema:
+        type: integer
+      style: form
+    AppServiceIdOptional:
+      explode: true
+      in: query
+      name: appServiceId
+      required: false
+      schema:
+        type: integer
+      style: form
+    DatabaseIdOptional:
+      explode: true
+      in: query
+      name: databaseId
+      required: false
+      schema:
+        type: integer
+      style: form
+    DatabaseDbIdOptional:
+      explode: true
+      in: query
+      name: databaseDbId
+      required: false
+      schema:
+        type: integer
+      style: form
+  schemas:
+    OperationResult:
+      example:
+        success: true
+        taskId: 0
+      properties:
+        success:
+          type: boolean
+        taskId:
+          nullable: true
+          type: integer
+      required:
+      - success
+      type: object
+    Org:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        domain: domain
+        name: name
+        id: 0
+        title: title
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        domain:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - domain
+      - id
+      - name
+      - title
+      - updatedAt
+      type: object
+    Project:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        title: title
+        orgId: 6
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - orgId
+      - title
+      - updatedAt
+      type: object
+    App:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        clusterApp: true
+        name: name
+        id: 0
+        title: title
+        orgId: 6
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        clusterApp:
+          type: boolean
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - clusterApp
+      - createdAt
+      - id
+      - name
+      - orgId
+      - status
+      - title
+      - updatedAt
+      type: object
+    AppInstance:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        appId: 6
+        name: name
+        mainDomain: mainDomain
+        id: 0
+        clusterId: 1
+        envId: 5
+        title: title
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        mainDomain:
+          nullable: true
+          type: string
+        appId:
+          type: integer
+        clusterId:
+          type: integer
+        envId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appId
+      - clusterId
+      - createdAt
+      - envId
+      - id
+      - name
+      - status
+      - title
+      - updatedAt
+      type: object
+    AppDeployment:
+      example:
+        skipRollback: true
+        appInstanceId: 1
+        number: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+        status:
+          type: string
+        skipRollback:
+          type: boolean
+        appInstanceId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - appInstanceId
+      - createdAt
+      - id
+      - number
+      - skipRollback
+      - status
+      - updatedAt
+      type: object
+    AppDeploymentsResponse:
+      example:
+        nextPage: 5
+        totalCount: 5
+        items:
+        - skipRollback: true
+          appInstanceId: 1
+          number: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - skipRollback: true
+          appInstanceId: 1
+          number: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppDeployment'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    AppBuild:
+      example:
+        gitRef: gitRef
+        commitMessage: commitMessage
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        commitHash: commitHash
+        appInstanceId: 1
+        number: 6
+        appServiceId: 5
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        status: status
+        gitRefType: gitRefType
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+        status:
+          type: string
+        appInstanceId:
+          type: integer
+        appServiceId:
+          type: integer
+        gitRefType:
+          type: string
+        gitRef:
+          type: string
+        commitHash:
+          type: string
+        commitMessage:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - appInstanceId
+      - appServiceId
+      - commitHash
+      - commitMessage
+      - createdAt
+      - gitRef
+      - gitRefType
+      - id
+      - number
+      - status
+      - updatedAt
+      type: object
+    AppBuildsResponse:
+      example:
+        nextPage: 2
+        totalCount: 5
+        items:
+        - gitRef: gitRef
+          commitMessage: commitMessage
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          commitHash: commitHash
+          appInstanceId: 1
+          number: 6
+          appServiceId: 5
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          status: status
+          gitRefType: gitRefType
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - gitRef: gitRef
+          commitMessage: commitMessage
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          commitHash: commitHash
+          appInstanceId: 1
+          number: 6
+          appServiceId: 5
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          status: status
+          gitRefType: gitRefType
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppBuild'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    Cluster:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        zone: zone
+        name: name
+        serverless: true
+        integrationId: 6
+        id: 0
+        title: title
+        region: region
+        version: version
+        orgId: 1
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        serverless:
+          type: boolean
+        version:
+          nullable: true
+          type: string
+        region:
+          nullable: true
+          type: string
+        zone:
+          nullable: true
+          type: string
+        integrationId:
+          nullable: true
+          type: integer
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - orgId
+      - serverless
+      - status
+      - title
+      - updatedAt
+      type: object
+    Database:
+      example:
+        kind: kind
+        integrationId: 6
+        envId: 1
+        title: title
+        type: type
+        version: version
+        orgId: 5
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        zone: zone
+        name: name
+        id: 0
+        region: region
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        kind:
+          type: string
+        status:
+          type: string
+        version:
+          type: string
+        region:
+          nullable: true
+          type: string
+        zone:
+          nullable: true
+          type: string
+        integrationId:
+          nullable: true
+          type: integer
+        envId:
+          type: integer
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - envId
+      - id
+      - kind
+      - name
+      - orgId
+      - status
+      - title
+      - type
+      - updatedAt
+      - version
+      type: object
+    Integration:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        auth: auth
+        scope: scope
+        providerRevId: 6
+        name: name
+        id: 0
+        title: title
+        orgId: 1
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        scope:
+          nullable: true
+          type: string
+        auth:
+          nullable: true
+          type: string
+        providerRevId:
+          type: integer
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - orgId
+      - providerRevId
+      - status
+      - title
+      - updatedAt
+      type: object
+    Backup:
+      example:
+        appInstanceId: 6
+        appServiceId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        databaseDbId: 5
+        id: 0
+        databaseId: 5
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+        appInstanceId:
+          nullable: true
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        databaseId:
+          nullable: true
+          type: integer
+        databaseDbId:
+          nullable: true
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - status
+      - updatedAt
+      type: object
+    Task:
+      example:
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        projectIds:
+        - 5
+        - 5
+        clusterId: 9
+        title: title
+        orgId: 5
+        appInstanceId: 7
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        providerId: 7
+        appId: 2
+        spawnedTaskIds:
+        - 1
+        - 1
+        id: 0
+        serviceId: 2
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        silent: true
+        stackId: 4
+        jobs:
+        - statusTitle: statusTitle
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          title: title
+          steps:
+          - isSystem: true
+            logStatus: logStatus
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            id: 1
+            status: status
+          - isSystem: true
+            logStatus: logStatus
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            id: 1
+            status: status
+          timeout: 7
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: 6
+          after:
+          - after
+          - after
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - statusTitle: statusTitle
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          title: title
+          steps:
+          - isSystem: true
+            logStatus: logStatus
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            id: 1
+            status: status
+          - isSystem: true
+            logStatus: logStatus
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            id: 1
+            status: status
+          timeout: 7
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: 6
+          after:
+          - after
+          - after
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        integrationId: 3
+        userId: 1
+        repeatedTaskId: 1
+        system: true
+        originTaskId: 1
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        progress: 6
+        status: status
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        progress:
+          type: integer
+        silent:
+          type: boolean
+        system:
+          type: boolean
+        userId:
+          type: integer
+        orgId:
+          nullable: true
+          type: integer
+        projectIds:
+          items:
+            type: integer
+          type: array
+        appId:
+          nullable: true
+          type: integer
+        appInstanceId:
+          nullable: true
+          type: integer
+        clusterId:
+          nullable: true
+          type: integer
+        integrationId:
+          nullable: true
+          type: integer
+        serviceId:
+          nullable: true
+          type: integer
+        stackId:
+          nullable: true
+          type: integer
+        providerId:
+          nullable: true
+          type: integer
+        originTaskId:
+          nullable: true
+          type: integer
+        spawnedTaskIds:
+          items:
+            type: integer
+          type: array
+        repeatedTaskId:
+          nullable: true
+          type: integer
+        jobs:
+          items:
+            $ref: '#/components/schemas/TaskJob'
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - createdAt
+      - id
+      - jobs
+      - name
+      - progress
+      - silent
+      - status
+      - system
+      - title
+      - updatedAt
+      - userId
+      type: object
+    TaskJob:
+      example:
+        statusTitle: statusTitle
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        title: title
+        steps:
+        - isSystem: true
+          logStatus: logStatus
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          id: 1
+          status: status
+        - isSystem: true
+          logStatus: logStatus
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          id: 1
+          status: status
+        timeout: 7
+        isSystem: true
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 6
+        after:
+        - after
+        - after
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        after:
+          items:
+            type: string
+          type: array
+        timeout:
+          type: integer
+        isSystem:
+          type: boolean
+        statusTitle:
+          type: string
+        steps:
+          items:
+            $ref: '#/components/schemas/TaskStep'
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - createdAt
+      - id
+      - isSystem
+      - name
+      - status
+      - statusTitle
+      - steps
+      - timeout
+      - title
+      - updatedAt
+      type: object
+    TaskStep:
+      example:
+        isSystem: true
+        logStatus: logStatus
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        id: 1
+        status: status
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+        logStatus:
+          type: string
+        isSystem:
+          type: boolean
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - id
+      - isSystem
+      - logStatus
+      - name
+      - status
+      type: object
+    AppRoute:
+      example:
+        private: true
+        lastSyncedAt: 2000-01-23T04:56:07.000+00:00
+        redirectScheme: redirectScheme
+        redirectPath: redirectPath
+        main: true
+        redirectStatusCode: 6
+        pathType: pathType
+        redirectHost: redirectHost
+        portId: 5
+        appInstanceId: 1
+        path: path
+        appServiceId: 5
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        host: host
+        action: action
+        disabled: true
+        id: 0
+        status: status
+        primary: true
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        host:
+          type: string
+        path:
+          type: string
+        pathType:
+          type: string
+        action:
+          type: string
+        redirectScheme:
+          nullable: true
+          type: string
+        redirectHost:
+          nullable: true
+          type: string
+        redirectPath:
+          nullable: true
+          type: string
+        redirectStatusCode:
+          nullable: true
+          type: integer
+        status:
+          type: string
+        disabled:
+          type: boolean
+        main:
+          type: boolean
+        primary:
+          type: boolean
+        private:
+          type: boolean
+        appInstanceId:
+          type: integer
+        appServiceId:
+          type: integer
+        portId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        lastSyncedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - action
+      - appInstanceId
+      - appServiceId
+      - createdAt
+      - disabled
+      - host
+      - id
+      - main
+      - path
+      - pathType
+      - portId
+      - primary
+      - private
+      - status
+      - updatedAt
+      type: object
+    Env:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        title: title
+        type: type
+        orgId: 6
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        orgId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - orgId
+      - title
+      - type
+      - updatedAt
+      type: object
+    CreateOrgRequest:
+      example:
+        name: name
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - name
+      - title
+      type: object
+    UpdateOrgRequest:
+      example:
+        registryIntegrationID: 0
+        title: title
+        ciIntegrationID: 6
+      properties:
+        title:
+          type: string
+        registryIntegrationID:
+          nullable: true
+          type: integer
+        ciIntegrationID:
+          nullable: true
+          type: integer
+      required:
+      - title
+      type: object
+    UpdateTitleRequest:
+      example:
+        title: title
+      properties:
+        title:
+          type: string
+      required:
+      - title
+      type: object
+    CreateEnvRequest:
+      example:
+        name: name
+        title: title
+        type: type
+        orgId: 0
+      properties:
+        orgId:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+      required:
+      - name
+      - orgId
+      - title
+      - type
+      type: object
+    UpdateEnvRequest:
+      example:
+        name: name
+        title: title
+        type: type
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+      required:
+      - name
+      - title
+      - type
+      type: object
+    CreateDeploymentRequest:
+      example:
+        skipRollback: true
+        services:
+        - skipPostDeployment: true
+          appServiceId: 0
+          appServiceBuildId: 6
+          force: true
+        - skipPostDeployment: true
+          appServiceId: 0
+          appServiceBuildId: 6
+          force: true
+      properties:
+        services:
+          items:
+            $ref: '#/components/schemas/AppServiceDeploymentRequest'
+          type: array
+        skipRollback:
+          nullable: true
+          type: boolean
+      required:
+      - services
+      type: object
+    AppServiceDeploymentRequest:
+      example:
+        skipPostDeployment: true
+        appServiceId: 0
+        appServiceBuildId: 6
+        force: true
+      properties:
+        appServiceId:
+          type: integer
+        appServiceBuildId:
+          nullable: true
+          type: integer
+        skipPostDeployment:
+          nullable: true
+          type: boolean
+        force:
+          type: boolean
+      required:
+      - appServiceId
+      - force
+      type: object
+    CreateBuildRequest:
+      example:
+        appServiceId: 0
+      properties:
+        appServiceId:
+          type: integer
+      required:
+      - appServiceId
+      type: object
+    NewProjectInput:
+      example:
+        role: role
+        name: name
+        title: title
+        orgMembershipIDs:
+        - 1
+        - 1
+        orgID: 0
+        teamIDs:
+        - 6
+        - 6
+      properties:
+        orgID:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        teamIDs:
+          items:
+            type: integer
+          type: array
+        orgMembershipIDs:
+          items:
+            type: integer
+          type: array
+        role:
+          type: string
+      required:
+      - name
+      - orgID
+      - title
+      type: object
+    UpdateProjectInput:
+      example:
+        title: title
+      properties:
+        title:
+          type: string
+      required:
+      - title
+      type: object
+    NewAppInput:
+      example:
+        registryIntegrationID: 9
+        instanceName: instanceName
+        services:
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database:
+            databaseDBID: 7
+            databaseID: 4
+          imports:
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          volumes:
+          - size: 3
+            name: name
+          - size: 3
+            name: name
+          resources:
+            container: container
+            limitMem: 6
+            requestMem: 1
+            limitCPU: 1
+            workload: workload
+            requestCPU: 1
+          disabled: true
+          id: 5
+          buildSource:
+            buildSourceType: buildSourceType
+            template: template
+            gitRef: gitRef
+            remoteGitRepoID: remoteGitRepoID
+            integrationID: 5
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
+          integrations:
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          scalability:
+            maxReplicas: 4
+            minReplicas: 1
+            averageCPU: 7
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database:
+            databaseDBID: 7
+            databaseID: 4
+          imports:
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          volumes:
+          - size: 3
+            name: name
+          - size: 3
+            name: name
+          resources:
+            container: container
+            limitMem: 6
+            requestMem: 1
+            limitCPU: 1
+            workload: workload
+            requestCPU: 1
+          disabled: true
+          id: 5
+          buildSource:
+            buildSourceType: buildSourceType
+            template: template
+            gitRef: gitRef
+            remoteGitRepoID: remoteGitRepoID
+            integrationID: 5
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
+          integrations:
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          scalability:
+            maxReplicas: 4
+            minReplicas: 1
+            averageCPU: 7
+        clusterID: 5
+        envID: 6
+        title: title
+        orgID: 0
+        stackRevID: 1
+        domain: domain
+        newCluster:
+          minNodeCount: 9
+          singleNode: true
+          maxNodeCount: 9
+          region: region
+          demo: true
+          machineType: machineType
+        name: name
+        instanceTitle: instanceTitle
+        projectID: 6
+        ciIntegrationID: 8
+      properties:
+        orgID:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        instanceName:
+          type: string
+        instanceTitle:
+          type: string
+        domain:
+          type: string
+        projectID:
+          nullable: true
+          type: integer
+        stackRevID:
+          type: integer
+        services:
+          items:
+            $ref: '#/components/schemas/NewAppServiceInput'
+          type: array
+        clusterID:
+          nullable: true
+          type: integer
+        newCluster:
+          $ref: '#/components/schemas/NewManagedClusterInput'
+        envID:
+          type: integer
+        ciIntegrationID:
+          nullable: true
+          type: integer
+        registryIntegrationID:
+          nullable: true
+          type: integer
+      required:
+      - domain
+      - envID
+      - instanceName
+      - instanceTitle
+      - name
+      - orgID
+      - services
+      - stackRevID
+      - title
+      type: object
+    NewAppInstanceInput:
+      example:
+        stackRevID: 6
+        registryIntegrationID: 2
+        instanceName: instanceName
+        appID: 0
+        domain: domain
+        newCluster:
+          minNodeCount: 9
+          singleNode: true
+          maxNodeCount: 9
+          region: region
+          demo: true
+          machineType: machineType
+        instanceTitle: instanceTitle
+        services:
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database:
+            databaseDBID: 7
+            databaseID: 4
+          imports:
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          volumes:
+          - size: 3
+            name: name
+          - size: 3
+            name: name
+          resources:
+            container: container
+            limitMem: 6
+            requestMem: 1
+            limitCPU: 1
+            workload: workload
+            requestCPU: 1
+          disabled: true
+          id: 5
+          buildSource:
+            buildSourceType: buildSourceType
+            template: template
+            gitRef: gitRef
+            remoteGitRepoID: remoteGitRepoID
+            integrationID: 5
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
+          integrations:
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          scalability:
+            maxReplicas: 4
+            minReplicas: 1
+            averageCPU: 7
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database:
+            databaseDBID: 7
+            databaseID: 4
+          imports:
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          - backupID: 2
+            importName: importName
+            from:
+              appServiceID: 9
+              databaseDBID: 7
+              backupName: backupName
+            source: source
+            url: url
+          volumes:
+          - size: 3
+            name: name
+          - size: 3
+            name: name
+          resources:
+            container: container
+            limitMem: 6
+            requestMem: 1
+            limitCPU: 1
+            workload: workload
+            requestCPU: 1
+          disabled: true
+          id: 5
+          buildSource:
+            buildSourceType: buildSourceType
+            template: template
+            gitRef: gitRef
+            remoteGitRepoID: remoteGitRepoID
+            integrationID: 5
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
+          integrations:
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          - integrationIDs:
+            - 2
+            - 2
+            name: name
+          scalability:
+            maxReplicas: 4
+            minReplicas: 1
+            averageCPU: 7
+        clusterID: 1
+        envID: 5
+        ciIntegrationID: 5
+      properties:
+        appID:
+          type: integer
+        instanceName:
+          type: string
+        instanceTitle:
+          type: string
+        domain:
+          type: string
+        stackRevID:
+          type: integer
+        services:
+          items:
+            $ref: '#/components/schemas/NewAppServiceInput'
+          type: array
+        clusterID:
+          nullable: true
+          type: integer
+        newCluster:
+          $ref: '#/components/schemas/NewManagedClusterInput'
+        envID:
+          type: integer
+        ciIntegrationID:
+          nullable: true
+          type: integer
+        registryIntegrationID:
+          nullable: true
+          type: integer
+      required:
+      - appID
+      - domain
+      - envID
+      - instanceName
+      - instanceTitle
+      - services
+      - stackRevID
+      type: object
+    NewManagedClusterInput:
+      example:
+        minNodeCount: 9
+        singleNode: true
+        maxNodeCount: 9
+        region: region
+        demo: true
+        machineType: machineType
+      properties:
+        demo:
+          type: boolean
+        singleNode:
+          nullable: true
+          type: boolean
+        region:
+          nullable: true
+          type: string
+        machineType:
+          nullable: true
+          type: string
+        minNodeCount:
+          nullable: true
+          type: integer
+        maxNodeCount:
+          nullable: true
+          type: integer
+      required:
+      - demo
+      type: object
+    NewAppServiceInput:
+      example:
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        database:
+          databaseDBID: 7
+          databaseID: 4
+        imports:
+        - backupID: 2
+          importName: importName
+          from:
+            appServiceID: 9
+            databaseDBID: 7
+            backupName: backupName
+          source: source
+          url: url
+        - backupID: 2
+          importName: importName
+          from:
+            appServiceID: 9
+            databaseDBID: 7
+            backupName: backupName
+          source: source
+          url: url
+        volumes:
+        - size: 3
+          name: name
+        - size: 3
+          name: name
+        resources:
+          container: container
+          limitMem: 6
+          requestMem: 1
+          limitCPU: 1
+          workload: workload
+          requestCPU: 1
+        disabled: true
+        id: 5
+        buildSource:
+          buildSourceType: buildSourceType
+          template: template
+          gitRef: gitRef
+          remoteGitRepoID: remoteGitRepoID
+          integrationID: 5
+          newRepoName: newRepoName
+          gitRefType: gitRefType
+        version: version
+        integrations:
+        - integrationIDs:
+          - 2
+          - 2
+          name: name
+        - integrationIDs:
+          - 2
+          - 2
+          name: name
+        scalability:
+          maxReplicas: 4
+          minReplicas: 1
+          averageCPU: 7
+      properties:
+        id:
+          type: integer
+        disabled:
+          type: boolean
+        version:
+          nullable: true
+          type: string
+        buildSource:
+          $ref: '#/components/schemas/BuildSourceInput'
+        imports:
+          items:
+            $ref: '#/components/schemas/ImportInput'
+          type: array
+        volumes:
+          items:
+            $ref: '#/components/schemas/VolumeSizeInput'
+          type: array
+        integrations:
+          items:
+            $ref: '#/components/schemas/AppServiceIntegrationInput'
+          type: array
+        settings:
+          items:
+            $ref: '#/components/schemas/AppServiceSettingInput'
+          type: array
+        database:
+          $ref: '#/components/schemas/AppServiceDatabaseInput'
+        resources:
+          $ref: '#/components/schemas/ResourcesInput'
+        scalability:
+          $ref: '#/components/schemas/ScalabilityInput'
+      required:
+      - disabled
+      - id
+      type: object
+    BuildSourceInput:
+      example:
+        buildSourceType: buildSourceType
+        template: template
+        gitRef: gitRef
+        remoteGitRepoID: remoteGitRepoID
+        integrationID: 5
+        newRepoName: newRepoName
+        gitRefType: gitRefType
+      properties:
+        buildSourceType:
+          type: string
+        template:
+          nullable: true
+          type: string
+        newRepoName:
+          nullable: true
+          type: string
+        integrationID:
+          nullable: true
+          type: integer
+        remoteGitRepoID:
+          nullable: true
+          type: string
+        gitRef:
+          nullable: true
+          type: string
+        gitRefType:
+          nullable: true
+          type: string
+      required:
+      - buildSourceType
+      type: object
+    ImportInput:
+      example:
+        backupID: 2
+        importName: importName
+        from:
+          appServiceID: 9
+          databaseDBID: 7
+          backupName: backupName
+        source: source
+        url: url
+      properties:
+        importName:
+          nullable: true
+          type: string
+        source:
+          type: string
+        url:
+          nullable: true
+          type: string
+        backupID:
+          nullable: true
+          type: integer
+        from:
+          $ref: '#/components/schemas/ImportFromInput'
+      required:
+      - source
+      type: object
+    ImportFromInput:
+      example:
+        appServiceID: 9
+        databaseDBID: 7
+        backupName: backupName
+      properties:
+        databaseDBID:
+          nullable: true
+          type: integer
+        appServiceID:
+          nullable: true
+          type: integer
+        backupName:
+          nullable: true
+          type: string
+      type: object
+    VolumeSizeInput:
+      example:
+        size: 3
+        name: name
+      properties:
+        name:
+          type: string
+        size:
+          type: integer
+      required:
+      - name
+      - size
+      type: object
+    AppServiceIntegrationInput:
+      example:
+        integrationIDs:
+        - 2
+        - 2
+        name: name
+      properties:
+        name:
+          type: string
+        integrationIDs:
+          items:
+            type: integer
+          type: array
+      required:
+      - integrationIDs
+      - name
+      type: object
+    AppServiceSettingInput:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    AppServiceDatabaseInput:
+      example:
+        databaseDBID: 7
+        databaseID: 4
+      properties:
+        databaseID:
+          type: integer
+        databaseDBID:
+          nullable: true
+          type: integer
+      required:
+      - databaseID
+      type: object
+    ResourcesInput:
+      example:
+        container: container
+        limitMem: 6
+        requestMem: 1
+        limitCPU: 1
+        workload: workload
+        requestCPU: 1
+      properties:
+        workload:
+          nullable: true
+          type: string
+        container:
+          nullable: true
+          type: string
+        requestCPU:
+          nullable: true
+          type: integer
+        requestMem:
+          nullable: true
+          type: integer
+        limitCPU:
+          nullable: true
+          type: integer
+        limitMem:
+          nullable: true
+          type: integer
+      type: object
+    ScalabilityInput:
+      example:
+        maxReplicas: 4
+        minReplicas: 1
+        averageCPU: 7
+      properties:
+        averageCPU:
+          type: integer
+        minReplicas:
+          type: integer
+        maxReplicas:
+          type: integer
+      required:
+      - averageCPU
+      - maxReplicas
+      - minReplicas
+      type: object
+    NewClusterInput:
+      example:
+        disableMonitoring: true
+        maxNodeCount: 5
+        integrationID: 1
+        serverless: true
+        title: title
+        version: version
+        orgID: 0
+        billingOption: billingOption
+        minNodeCount: 5
+        nodeDiskSize: 2
+        zone: zone
+        name: name
+        singleNode: true
+        region: region
+        projectID: 6
+        machineType: machineType
+      properties:
+        orgID:
+          type: integer
+        projectID:
+          nullable: true
+          type: integer
+        integrationID:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        serverless:
+          type: boolean
+        singleNode:
+          nullable: true
+          type: boolean
+        version:
+          nullable: true
+          type: string
+        machineType:
+          nullable: true
+          type: string
+        minNodeCount:
+          nullable: true
+          type: integer
+        maxNodeCount:
+          nullable: true
+          type: integer
+        nodeDiskSize:
+          nullable: true
+          type: integer
+        zone:
+          nullable: true
+          type: string
+        region:
+          nullable: true
+          type: string
+        billingOption:
+          nullable: true
+          type: string
+        disableMonitoring:
+          type: boolean
+      required:
+      - disableMonitoring
+      - integrationID
+      - name
+      - orgID
+      - serverless
+      - title
+      type: object
+    NewDatabaseInput:
+      example:
+        integrationKindID: 5
+        storageAutoscaling: true
+        envID: 1
+        title: title
+        type: type
+        version: version
+        orgID: 0
+        highAvailability: true
+        password: password
+        zone: zone
+        storageSize: 5
+        name: name
+        iops: 7
+        region: region
+        projectID: 6
+        machineType: machineType
+        residedClusterID: 2
+      properties:
+        orgID:
+          type: integer
+        projectID:
+          nullable: true
+          type: integer
+        envID:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        integrationKindID:
+          type: integer
+        type:
+          type: string
+        version:
+          type: string
+        machineType:
+          type: string
+        storageSize:
+          nullable: true
+          type: integer
+        password:
+          nullable: true
+          type: string
+        storageAutoscaling:
+          nullable: true
+          type: boolean
+        highAvailability:
+          nullable: true
+          type: boolean
+        region:
+          nullable: true
+          type: string
+        zone:
+          nullable: true
+          type: string
+        residedClusterID:
+          nullable: true
+          type: integer
+        iops:
+          nullable: true
+          type: integer
+      required:
+      - envID
+      - integrationKindID
+      - machineType
+      - name
+      - orgID
+      - title
+      - type
+      - version
+      type: object
+    NewIntegrationInput:
+      example:
+        fieldsInput:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        auth: auth
+        providerID: 6
+        scope: scope
+        name: name
+        kinds:
+        - kinds
+        - kinds
+        title: title
+        projectID: 1
+        orgID: 0
+      properties:
+        orgID:
+          type: integer
+        providerID:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        kinds:
+          items:
+            type: string
+          type: array
+        auth:
+          nullable: true
+          type: string
+        projectID:
+          nullable: true
+          type: integer
+        fieldsInput:
+          items:
+            $ref: '#/components/schemas/FieldInput'
+          type: array
+        scope:
+          nullable: true
+          type: string
+      required:
+      - kinds
+      - name
+      - orgID
+      - providerID
+      - title
+      type: object
+    UpdateIntegrationInput:
+      example:
+        fieldsInput:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        scope: scope
+        name: name
+        kinds:
+        - kinds
+        - kinds
+        title: title
+      properties:
+        title:
+          type: string
+        name:
+          type: string
+        kinds:
+          items:
+            type: string
+          type: array
+        scope:
+          nullable: true
+          type: string
+        fieldsInput:
+          items:
+            $ref: '#/components/schemas/FieldInput'
+          type: array
+      required:
+      - kinds
+      - name
+      - title
+      type: object
+    FieldInput:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    NewBackupInput:
+      example:
+        bucket: bucket
+        appServiceID: 0
+        storageClass: storageClass
+        databaseDBID: 6
+        integrationID: 1
+        backupName: backupName
+      properties:
+        appServiceID:
+          nullable: true
+          type: integer
+        databaseDBID:
+          nullable: true
+          type: integer
+        backupName:
+          nullable: true
+          type: string
+        integrationID:
+          type: integer
+        bucket:
+          type: string
+        storageClass:
+          nullable: true
+          type: string
+      required:
+      - bucket
+      - integrationID
+      type: object
+    NewAppRouteInput:
+      example:
+        authLogin: authLogin
+        redirectScheme: redirectScheme
+        main: true
+        redirectPath: redirectPath
+        redirectStatusCode: 1
+        pathType: PREFIX
+        redirectHost: redirectHost
+        authPassword: authPassword
+        authID: 5
+        appServiceID: 0
+        path: path
+        port: 6
+        host: host
+        options:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        action: BACKEND
+        letsencrypt: true
+        primary: true
+      properties:
+        appServiceID:
+          type: integer
+        main:
+          type: boolean
+        primary:
+          type: boolean
+        port:
+          type: integer
+        host:
+          type: string
+        path:
+          nullable: true
+          type: string
+        pathType:
+          enum:
+          - PREFIX
+          - EXACT
+          nullable: true
+          type: string
+        action:
+          enum:
+          - BACKEND
+          - REDIRECT
+          nullable: true
+          type: string
+        redirectScheme:
+          nullable: true
+          type: string
+        redirectHost:
+          nullable: true
+          type: string
+        redirectPath:
+          nullable: true
+          type: string
+        redirectStatusCode:
+          nullable: true
+          type: integer
+        letsencrypt:
+          nullable: true
+          type: boolean
+        authLogin:
+          nullable: true
+          type: string
+        authPassword:
+          nullable: true
+          type: string
+        authID:
+          nullable: true
+          type: integer
+        options:
+          items:
+            $ref: '#/components/schemas/AppEndpointOptionInput'
+          type: array
+      required:
+      - appServiceID
+      - host
+      - main
+      - port
+      - primary
+      type: object
+    UpdateAppRouteInput:
+      example:
+        path: path
+        options:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        action: BACKEND
+        redirectScheme: redirectScheme
+        disabled: true
+        main: true
+        redirectPath: redirectPath
+        redirectStatusCode: 0
+        pathType: PREFIX
+        redirectHost: redirectHost
+        primary: true
+      properties:
+        disabled:
+          nullable: true
+          type: boolean
+        main:
+          nullable: true
+          type: boolean
+        primary:
+          nullable: true
+          type: boolean
+        path:
+          nullable: true
+          type: string
+        pathType:
+          enum:
+          - PREFIX
+          - EXACT
+          nullable: true
+          type: string
+        action:
+          enum:
+          - BACKEND
+          - REDIRECT
+          nullable: true
+          type: string
+        redirectScheme:
+          nullable: true
+          type: string
+        redirectHost:
+          nullable: true
+          type: string
+        redirectPath:
+          nullable: true
+          type: string
+        redirectStatusCode:
+          nullable: true
+          type: integer
+        options:
+          items:
+            $ref: '#/components/schemas/AppEndpointOptionInput'
+          type: array
+      type: object
+    AppEndpointOptionInput:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+  securitySchemes:
+    apiKeyHeader:
+      in: header
+      name: X-API-KEY
+      type: apiKey
+    accessTokenHeader:
+      in: header
+      name: X-ACCESS-TOKEN
+      type: apiKey
