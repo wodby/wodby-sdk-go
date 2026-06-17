@@ -1,10 +1,6 @@
-# Wodby SDK for Go
+# Wodby 2.0 SDK for Go
 
-Go client for the Wodby Public API.
-
-This repository is generated from the OpenAPI 3 schema maintained in
-[`wodby/backend-api`](https://github.com/wodby/backend-api). The `2.0` branch is
-updated by the backend API release pipeline.
+Go client for the Wodby 2.0 Public API.
 
 ## Documentation
 
@@ -23,14 +19,3 @@ go get github.com/wodby/wodby-sdk-go/pkg
 ## Authentication
 
 Wodby API requests use an API key in the `X-API-KEY` header.
-
-## Regenerate
-
-The backend API pipeline copies `swagger.json` into this repository and runs:
-
-```bash
-make build
-```
-
-This uses `openapitools/openapi-generator-cli:v7.10.0` and writes generated code
-to `pkg`.
