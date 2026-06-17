@@ -1,5 +1,5 @@
 /*
-Wodby Public API
+Wodby 2.0 Public API
 
 Testing AppDeploymentsAPIService
 
