@@ -126,8 +126,6 @@ docs/UpdateProjectInput.md
 docs/UpdateTitleRequest.md
 docs/VolumeSizeInput.md
 git_push.sh
-go.mod
-go.sum
 model_app.go
 model_app_build.go
 model_app_builds_response.go
