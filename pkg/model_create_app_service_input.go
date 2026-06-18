@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -16,11 +16,11 @@ import (
 	"fmt"
 )
 
-// checks if the NewAppServiceInput type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &NewAppServiceInput{}
+// checks if the CreateAppServiceInput type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateAppServiceInput{}
 
-// NewAppServiceInput struct for NewAppServiceInput
-type NewAppServiceInput struct {
+// CreateAppServiceInput struct for CreateAppServiceInput
+type CreateAppServiceInput struct {
 	Id int32 `json:"id"`
 	Disabled bool `json:"disabled"`
 	Version NullableString `json:"version,omitempty"`
@@ -34,29 +34,29 @@ type NewAppServiceInput struct {
 	Scalability *ScalabilityInput `json:"scalability,omitempty"`
 }
 
-type _NewAppServiceInput NewAppServiceInput
+type _CreateAppServiceInput CreateAppServiceInput
 
-// NewNewAppServiceInput instantiates a new NewAppServiceInput object
+// NewCreateAppServiceInput instantiates a new CreateAppServiceInput object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAppServiceInput(id int32, disabled bool) *NewAppServiceInput {
-	this := NewAppServiceInput{}
+func NewCreateAppServiceInput(id int32, disabled bool) *CreateAppServiceInput {
+	this := CreateAppServiceInput{}
 	this.Id = id
 	this.Disabled = disabled
 	return &this
 }
 
-// NewNewAppServiceInputWithDefaults instantiates a new NewAppServiceInput object
+// NewCreateAppServiceInputWithDefaults instantiates a new CreateAppServiceInput object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewNewAppServiceInputWithDefaults() *NewAppServiceInput {
-	this := NewAppServiceInput{}
+func NewCreateAppServiceInputWithDefaults() *CreateAppServiceInput {
+	this := CreateAppServiceInput{}
 	return &this
 }
 
 // GetId returns the Id field value
-func (o *NewAppServiceInput) GetId() int32 {
+func (o *CreateAppServiceInput) GetId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -67,7 +67,7 @@ func (o *NewAppServiceInput) GetId() int32 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetIdOk() (*int32, bool) {
+func (o *CreateAppServiceInput) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -75,12 +75,12 @@ func (o *NewAppServiceInput) GetIdOk() (*int32, bool) {
 }
 
 // SetId sets field value
-func (o *NewAppServiceInput) SetId(v int32) {
+func (o *CreateAppServiceInput) SetId(v int32) {
 	o.Id = v
 }
 
 // GetDisabled returns the Disabled field value
-func (o *NewAppServiceInput) GetDisabled() bool {
+func (o *CreateAppServiceInput) GetDisabled() bool {
 	if o == nil {
 		var ret bool
 		return ret
@@ -91,7 +91,7 @@ func (o *NewAppServiceInput) GetDisabled() bool {
 
 // GetDisabledOk returns a tuple with the Disabled field value
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetDisabledOk() (*bool, bool) {
+func (o *CreateAppServiceInput) GetDisabledOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -99,12 +99,12 @@ func (o *NewAppServiceInput) GetDisabledOk() (*bool, bool) {
 }
 
 // SetDisabled sets field value
-func (o *NewAppServiceInput) SetDisabled(v bool) {
+func (o *CreateAppServiceInput) SetDisabled(v bool) {
 	o.Disabled = v
 }
 
 // GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppServiceInput) GetVersion() string {
+func (o *CreateAppServiceInput) GetVersion() string {
 	if o == nil || IsNil(o.Version.Get()) {
 		var ret string
 		return ret
@@ -115,7 +115,7 @@ func (o *NewAppServiceInput) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppServiceInput) GetVersionOk() (*string, bool) {
+func (o *CreateAppServiceInput) GetVersionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,7 +123,7 @@ func (o *NewAppServiceInput) GetVersionOk() (*string, bool) {
 }
 
 // HasVersion returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasVersion() bool {
+func (o *CreateAppServiceInput) HasVersion() bool {
 	if o != nil && o.Version.IsSet() {
 		return true
 	}
@@ -132,21 +132,21 @@ func (o *NewAppServiceInput) HasVersion() bool {
 }
 
 // SetVersion gets a reference to the given NullableString and assigns it to the Version field.
-func (o *NewAppServiceInput) SetVersion(v string) {
+func (o *CreateAppServiceInput) SetVersion(v string) {
 	o.Version.Set(&v)
 }
 // SetVersionNil sets the value for Version to be an explicit nil
-func (o *NewAppServiceInput) SetVersionNil() {
+func (o *CreateAppServiceInput) SetVersionNil() {
 	o.Version.Set(nil)
 }
 
 // UnsetVersion ensures that no value is present for Version, not even an explicit nil
-func (o *NewAppServiceInput) UnsetVersion() {
+func (o *CreateAppServiceInput) UnsetVersion() {
 	o.Version.Unset()
 }
 
 // GetBuildSource returns the BuildSource field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetBuildSource() BuildSourceInput {
+func (o *CreateAppServiceInput) GetBuildSource() BuildSourceInput {
 	if o == nil || IsNil(o.BuildSource) {
 		var ret BuildSourceInput
 		return ret
@@ -156,7 +156,7 @@ func (o *NewAppServiceInput) GetBuildSource() BuildSourceInput {
 
 // GetBuildSourceOk returns a tuple with the BuildSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetBuildSourceOk() (*BuildSourceInput, bool) {
+func (o *CreateAppServiceInput) GetBuildSourceOk() (*BuildSourceInput, bool) {
 	if o == nil || IsNil(o.BuildSource) {
 		return nil, false
 	}
@@ -164,7 +164,7 @@ func (o *NewAppServiceInput) GetBuildSourceOk() (*BuildSourceInput, bool) {
 }
 
 // HasBuildSource returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasBuildSource() bool {
+func (o *CreateAppServiceInput) HasBuildSource() bool {
 	if o != nil && !IsNil(o.BuildSource) {
 		return true
 	}
@@ -173,12 +173,12 @@ func (o *NewAppServiceInput) HasBuildSource() bool {
 }
 
 // SetBuildSource gets a reference to the given BuildSourceInput and assigns it to the BuildSource field.
-func (o *NewAppServiceInput) SetBuildSource(v BuildSourceInput) {
+func (o *CreateAppServiceInput) SetBuildSource(v BuildSourceInput) {
 	o.BuildSource = &v
 }
 
 // GetImports returns the Imports field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetImports() []ImportInput {
+func (o *CreateAppServiceInput) GetImports() []ImportInput {
 	if o == nil || IsNil(o.Imports) {
 		var ret []ImportInput
 		return ret
@@ -188,7 +188,7 @@ func (o *NewAppServiceInput) GetImports() []ImportInput {
 
 // GetImportsOk returns a tuple with the Imports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetImportsOk() ([]ImportInput, bool) {
+func (o *CreateAppServiceInput) GetImportsOk() ([]ImportInput, bool) {
 	if o == nil || IsNil(o.Imports) {
 		return nil, false
 	}
@@ -196,7 +196,7 @@ func (o *NewAppServiceInput) GetImportsOk() ([]ImportInput, bool) {
 }
 
 // HasImports returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasImports() bool {
+func (o *CreateAppServiceInput) HasImports() bool {
 	if o != nil && !IsNil(o.Imports) {
 		return true
 	}
@@ -205,12 +205,12 @@ func (o *NewAppServiceInput) HasImports() bool {
 }
 
 // SetImports gets a reference to the given []ImportInput and assigns it to the Imports field.
-func (o *NewAppServiceInput) SetImports(v []ImportInput) {
+func (o *CreateAppServiceInput) SetImports(v []ImportInput) {
 	o.Imports = v
 }
 
 // GetVolumes returns the Volumes field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetVolumes() []VolumeSizeInput {
+func (o *CreateAppServiceInput) GetVolumes() []VolumeSizeInput {
 	if o == nil || IsNil(o.Volumes) {
 		var ret []VolumeSizeInput
 		return ret
@@ -220,7 +220,7 @@ func (o *NewAppServiceInput) GetVolumes() []VolumeSizeInput {
 
 // GetVolumesOk returns a tuple with the Volumes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetVolumesOk() ([]VolumeSizeInput, bool) {
+func (o *CreateAppServiceInput) GetVolumesOk() ([]VolumeSizeInput, bool) {
 	if o == nil || IsNil(o.Volumes) {
 		return nil, false
 	}
@@ -228,7 +228,7 @@ func (o *NewAppServiceInput) GetVolumesOk() ([]VolumeSizeInput, bool) {
 }
 
 // HasVolumes returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasVolumes() bool {
+func (o *CreateAppServiceInput) HasVolumes() bool {
 	if o != nil && !IsNil(o.Volumes) {
 		return true
 	}
@@ -237,12 +237,12 @@ func (o *NewAppServiceInput) HasVolumes() bool {
 }
 
 // SetVolumes gets a reference to the given []VolumeSizeInput and assigns it to the Volumes field.
-func (o *NewAppServiceInput) SetVolumes(v []VolumeSizeInput) {
+func (o *CreateAppServiceInput) SetVolumes(v []VolumeSizeInput) {
 	o.Volumes = v
 }
 
 // GetIntegrations returns the Integrations field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetIntegrations() []AppServiceIntegrationInput {
+func (o *CreateAppServiceInput) GetIntegrations() []AppServiceIntegrationInput {
 	if o == nil || IsNil(o.Integrations) {
 		var ret []AppServiceIntegrationInput
 		return ret
@@ -252,7 +252,7 @@ func (o *NewAppServiceInput) GetIntegrations() []AppServiceIntegrationInput {
 
 // GetIntegrationsOk returns a tuple with the Integrations field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetIntegrationsOk() ([]AppServiceIntegrationInput, bool) {
+func (o *CreateAppServiceInput) GetIntegrationsOk() ([]AppServiceIntegrationInput, bool) {
 	if o == nil || IsNil(o.Integrations) {
 		return nil, false
 	}
@@ -260,7 +260,7 @@ func (o *NewAppServiceInput) GetIntegrationsOk() ([]AppServiceIntegrationInput, 
 }
 
 // HasIntegrations returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasIntegrations() bool {
+func (o *CreateAppServiceInput) HasIntegrations() bool {
 	if o != nil && !IsNil(o.Integrations) {
 		return true
 	}
@@ -269,12 +269,12 @@ func (o *NewAppServiceInput) HasIntegrations() bool {
 }
 
 // SetIntegrations gets a reference to the given []AppServiceIntegrationInput and assigns it to the Integrations field.
-func (o *NewAppServiceInput) SetIntegrations(v []AppServiceIntegrationInput) {
+func (o *CreateAppServiceInput) SetIntegrations(v []AppServiceIntegrationInput) {
 	o.Integrations = v
 }
 
 // GetSettings returns the Settings field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetSettings() []AppServiceSettingInput {
+func (o *CreateAppServiceInput) GetSettings() []AppServiceSettingInput {
 	if o == nil || IsNil(o.Settings) {
 		var ret []AppServiceSettingInput
 		return ret
@@ -284,7 +284,7 @@ func (o *NewAppServiceInput) GetSettings() []AppServiceSettingInput {
 
 // GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetSettingsOk() ([]AppServiceSettingInput, bool) {
+func (o *CreateAppServiceInput) GetSettingsOk() ([]AppServiceSettingInput, bool) {
 	if o == nil || IsNil(o.Settings) {
 		return nil, false
 	}
@@ -292,7 +292,7 @@ func (o *NewAppServiceInput) GetSettingsOk() ([]AppServiceSettingInput, bool) {
 }
 
 // HasSettings returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasSettings() bool {
+func (o *CreateAppServiceInput) HasSettings() bool {
 	if o != nil && !IsNil(o.Settings) {
 		return true
 	}
@@ -301,12 +301,12 @@ func (o *NewAppServiceInput) HasSettings() bool {
 }
 
 // SetSettings gets a reference to the given []AppServiceSettingInput and assigns it to the Settings field.
-func (o *NewAppServiceInput) SetSettings(v []AppServiceSettingInput) {
+func (o *CreateAppServiceInput) SetSettings(v []AppServiceSettingInput) {
 	o.Settings = v
 }
 
 // GetDatabase returns the Database field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetDatabase() AppServiceDatabaseInput {
+func (o *CreateAppServiceInput) GetDatabase() AppServiceDatabaseInput {
 	if o == nil || IsNil(o.Database) {
 		var ret AppServiceDatabaseInput
 		return ret
@@ -316,7 +316,7 @@ func (o *NewAppServiceInput) GetDatabase() AppServiceDatabaseInput {
 
 // GetDatabaseOk returns a tuple with the Database field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetDatabaseOk() (*AppServiceDatabaseInput, bool) {
+func (o *CreateAppServiceInput) GetDatabaseOk() (*AppServiceDatabaseInput, bool) {
 	if o == nil || IsNil(o.Database) {
 		return nil, false
 	}
@@ -324,7 +324,7 @@ func (o *NewAppServiceInput) GetDatabaseOk() (*AppServiceDatabaseInput, bool) {
 }
 
 // HasDatabase returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasDatabase() bool {
+func (o *CreateAppServiceInput) HasDatabase() bool {
 	if o != nil && !IsNil(o.Database) {
 		return true
 	}
@@ -333,12 +333,12 @@ func (o *NewAppServiceInput) HasDatabase() bool {
 }
 
 // SetDatabase gets a reference to the given AppServiceDatabaseInput and assigns it to the Database field.
-func (o *NewAppServiceInput) SetDatabase(v AppServiceDatabaseInput) {
+func (o *CreateAppServiceInput) SetDatabase(v AppServiceDatabaseInput) {
 	o.Database = &v
 }
 
 // GetResources returns the Resources field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetResources() ResourcesInput {
+func (o *CreateAppServiceInput) GetResources() ResourcesInput {
 	if o == nil || IsNil(o.Resources) {
 		var ret ResourcesInput
 		return ret
@@ -348,7 +348,7 @@ func (o *NewAppServiceInput) GetResources() ResourcesInput {
 
 // GetResourcesOk returns a tuple with the Resources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetResourcesOk() (*ResourcesInput, bool) {
+func (o *CreateAppServiceInput) GetResourcesOk() (*ResourcesInput, bool) {
 	if o == nil || IsNil(o.Resources) {
 		return nil, false
 	}
@@ -356,7 +356,7 @@ func (o *NewAppServiceInput) GetResourcesOk() (*ResourcesInput, bool) {
 }
 
 // HasResources returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasResources() bool {
+func (o *CreateAppServiceInput) HasResources() bool {
 	if o != nil && !IsNil(o.Resources) {
 		return true
 	}
@@ -365,12 +365,12 @@ func (o *NewAppServiceInput) HasResources() bool {
 }
 
 // SetResources gets a reference to the given ResourcesInput and assigns it to the Resources field.
-func (o *NewAppServiceInput) SetResources(v ResourcesInput) {
+func (o *CreateAppServiceInput) SetResources(v ResourcesInput) {
 	o.Resources = &v
 }
 
 // GetScalability returns the Scalability field value if set, zero value otherwise.
-func (o *NewAppServiceInput) GetScalability() ScalabilityInput {
+func (o *CreateAppServiceInput) GetScalability() ScalabilityInput {
 	if o == nil || IsNil(o.Scalability) {
 		var ret ScalabilityInput
 		return ret
@@ -380,7 +380,7 @@ func (o *NewAppServiceInput) GetScalability() ScalabilityInput {
 
 // GetScalabilityOk returns a tuple with the Scalability field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppServiceInput) GetScalabilityOk() (*ScalabilityInput, bool) {
+func (o *CreateAppServiceInput) GetScalabilityOk() (*ScalabilityInput, bool) {
 	if o == nil || IsNil(o.Scalability) {
 		return nil, false
 	}
@@ -388,7 +388,7 @@ func (o *NewAppServiceInput) GetScalabilityOk() (*ScalabilityInput, bool) {
 }
 
 // HasScalability returns a boolean if a field has been set.
-func (o *NewAppServiceInput) HasScalability() bool {
+func (o *CreateAppServiceInput) HasScalability() bool {
 	if o != nil && !IsNil(o.Scalability) {
 		return true
 	}
@@ -397,11 +397,11 @@ func (o *NewAppServiceInput) HasScalability() bool {
 }
 
 // SetScalability gets a reference to the given ScalabilityInput and assigns it to the Scalability field.
-func (o *NewAppServiceInput) SetScalability(v ScalabilityInput) {
+func (o *CreateAppServiceInput) SetScalability(v ScalabilityInput) {
 	o.Scalability = &v
 }
 
-func (o NewAppServiceInput) MarshalJSON() ([]byte, error) {
+func (o CreateAppServiceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -409,7 +409,7 @@ func (o NewAppServiceInput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o NewAppServiceInput) ToMap() (map[string]interface{}, error) {
+func (o CreateAppServiceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["disabled"] = o.Disabled
@@ -443,7 +443,7 @@ func (o NewAppServiceInput) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *NewAppServiceInput) UnmarshalJSON(data []byte) (err error) {
+func (o *CreateAppServiceInput) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -466,53 +466,53 @@ func (o *NewAppServiceInput) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varNewAppServiceInput := _NewAppServiceInput{}
+	varCreateAppServiceInput := _CreateAppServiceInput{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varNewAppServiceInput)
+	err = decoder.Decode(&varCreateAppServiceInput)
 
 	if err != nil {
 		return err
 	}
 
-	*o = NewAppServiceInput(varNewAppServiceInput)
+	*o = CreateAppServiceInput(varCreateAppServiceInput)
 
 	return err
 }
 
-type NullableNewAppServiceInput struct {
-	value *NewAppServiceInput
+type NullableCreateAppServiceInput struct {
+	value *CreateAppServiceInput
 	isSet bool
 }
 
-func (v NullableNewAppServiceInput) Get() *NewAppServiceInput {
+func (v NullableCreateAppServiceInput) Get() *CreateAppServiceInput {
 	return v.value
 }
 
-func (v *NullableNewAppServiceInput) Set(val *NewAppServiceInput) {
+func (v *NullableCreateAppServiceInput) Set(val *CreateAppServiceInput) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNewAppServiceInput) IsSet() bool {
+func (v NullableCreateAppServiceInput) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNewAppServiceInput) Unset() {
+func (v *NullableCreateAppServiceInput) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNewAppServiceInput(val *NewAppServiceInput) *NullableNewAppServiceInput {
-	return &NullableNewAppServiceInput{value: val, isSet: true}
+func NewNullableCreateAppServiceInput(val *CreateAppServiceInput) *NullableCreateAppServiceInput {
+	return &NullableCreateAppServiceInput{value: val, isSet: true}
 }
 
-func (v NullableNewAppServiceInput) MarshalJSON() ([]byte, error) {
+func (v NullableCreateAppServiceInput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNewAppServiceInput) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateAppServiceInput) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

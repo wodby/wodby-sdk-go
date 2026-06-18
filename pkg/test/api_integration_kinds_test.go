@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing IntegrationKindsAPIService
 
@@ -22,13 +22,13 @@ func Test_client_IntegrationKindsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test IntegrationKindsAPIService IntegrationKindsIdDatabaseMachineTypesGet", func(t *testing.T) {
+	t.Run("Test IntegrationKindsAPIService GetIntegrationKindDatabaseSettings", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseMachineTypesGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationKindsAPI.GetIntegrationKindDatabaseSettings(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -36,13 +36,13 @@ func Test_client_IntegrationKindsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationKindsAPIService IntegrationKindsIdDatabaseRegionsGet", func(t *testing.T) {
+	t.Run("Test IntegrationKindsAPIService ListIntegrationKindDatabaseMachineTypes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseRegionsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseMachineTypes(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -50,13 +50,13 @@ func Test_client_IntegrationKindsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationKindsAPIService IntegrationKindsIdDatabaseSettingsGet", func(t *testing.T) {
+	t.Run("Test IntegrationKindsAPIService ListIntegrationKindDatabaseRegions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseSettingsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseRegions(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -64,13 +64,13 @@ func Test_client_IntegrationKindsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationKindsAPIService IntegrationKindsIdDatabaseTypesGet", func(t *testing.T) {
+	t.Run("Test IntegrationKindsAPIService ListIntegrationKindDatabaseTypes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseTypesGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseTypes(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -78,13 +78,13 @@ func Test_client_IntegrationKindsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationKindsAPIService IntegrationKindsIdDatabaseVersionsGet", func(t *testing.T) {
+	t.Run("Test IntegrationKindsAPIService ListIntegrationKindDatabaseVersions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseVersionsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseVersions(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

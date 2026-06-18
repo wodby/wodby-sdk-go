@@ -4,17 +4,288 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DatabasesGet**](DatabasesAPI.md#DatabasesGet) | **Get** /databases | List databases
-[**DatabasesIdDelete**](DatabasesAPI.md#DatabasesIdDelete) | **Delete** /databases/{id} | Delete database
-[**DatabasesIdGet**](DatabasesAPI.md#DatabasesIdGet) | **Get** /databases/{id} | Get database
-[**DatabasesIdPut**](DatabasesAPI.md#DatabasesIdPut) | **Put** /databases/{id} | Update database
-[**DatabasesPost**](DatabasesAPI.md#DatabasesPost) | **Post** /databases | Create database
+[**CreateDatabase**](DatabasesAPI.md#CreateDatabase) | **Post** /databases | Create database
+[**DeleteDatabase**](DatabasesAPI.md#DeleteDatabase) | **Delete** /databases/{id} | Delete database
+[**GetDatabase**](DatabasesAPI.md#GetDatabase) | **Get** /databases/{id} | Get database
+[**GetDatabaseByName**](DatabasesAPI.md#GetDatabaseByName) | **Get** /databases/by-name/{name} | Get database by name
+[**ListDatabases**](DatabasesAPI.md#ListDatabases) | **Get** /databases | List databases
+[**UpdateDatabase**](DatabasesAPI.md#UpdateDatabase) | **Put** /databases/{id} | Update database
 
 
 
-## DatabasesGet
+## CreateDatabase
 
-> []Database DatabasesGet(ctx).OrgId(orgId).ProjectIds(projectIds).Kind(kind).Execute()
+> Database CreateDatabase(ctx).NewDatabaseInput(newDatabaseInput).Execute()
+
+Create database
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	newDatabaseInput := *openapiclient.NewNewDatabaseInput(int32(123), int32(123), "Name_example", "Title_example", int32(123), "Type_example", "Version_example", "MachineType_example") // NewDatabaseInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DatabasesAPI.CreateDatabase(context.Background()).NewDatabaseInput(newDatabaseInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.CreateDatabase``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateDatabase`: Database
+	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.CreateDatabase`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateDatabaseRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **newDatabaseInput** | [**NewDatabaseInput**](NewDatabaseInput.md) |  | 
+
+### Return type
+
+[**Database**](Database.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDatabase
+
+> OperationResult DeleteDatabase(ctx, id).Execute()
+
+Delete database
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DatabasesAPI.DeleteDatabase(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.DeleteDatabase``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteDatabase`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.DeleteDatabase`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDatabaseRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetDatabase
+
+> Database GetDatabase(ctx, id).Execute()
+
+Get database
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DatabasesAPI.GetDatabase(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.GetDatabase``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDatabase`: Database
+	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.GetDatabase`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDatabaseRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Database**](Database.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetDatabaseByName
+
+> Database GetDatabaseByName(ctx, name).OrgId(orgId).Execute()
+
+Get database by name
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	name := "name_example" // string | 
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DatabasesAPI.GetDatabaseByName(context.Background(), name).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.GetDatabaseByName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDatabaseByName`: Database
+	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.GetDatabaseByName`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDatabaseByNameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**Database**](Database.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListDatabases
+
+> []Database ListDatabases(ctx).OrgId(orgId).ProjectIds(projectIds).Kind(kind).Execute()
 
 List databases
 
@@ -37,13 +308,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DatabasesAPI.DatabasesGet(context.Background()).OrgId(orgId).ProjectIds(projectIds).Kind(kind).Execute()
+	resp, r, err := apiClient.DatabasesAPI.ListDatabases(context.Background()).OrgId(orgId).ProjectIds(projectIds).Kind(kind).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.DatabasesGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.ListDatabases``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DatabasesGet`: []Database
-	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.DatabasesGet`: %v\n", resp)
+	// response from `ListDatabases`: []Database
+	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.ListDatabases`: %v\n", resp)
 }
 ```
 
@@ -53,7 +324,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiDatabasesGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListDatabasesRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -80,145 +351,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## DatabasesIdDelete
+## UpdateDatabase
 
-> OperationResult DatabasesIdDelete(ctx, id).Execute()
-
-Delete database
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DatabasesAPI.DatabasesIdDelete(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.DatabasesIdDelete``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `DatabasesIdDelete`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.DatabasesIdDelete`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDatabasesIdDeleteRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**OperationResult**](OperationResult.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## DatabasesIdGet
-
-> Database DatabasesIdGet(ctx, id).Execute()
-
-Get database
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DatabasesAPI.DatabasesIdGet(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.DatabasesIdGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `DatabasesIdGet`: Database
-	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.DatabasesIdGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDatabasesIdGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**Database**](Database.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## DatabasesIdPut
-
-> Database DatabasesIdPut(ctx, id).UpdateTitleRequest(updateTitleRequest).Execute()
+> Database UpdateDatabase(ctx, id).UpdateTitleRequest(updateTitleRequest).Execute()
 
 Update database
 
@@ -240,13 +375,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DatabasesAPI.DatabasesIdPut(context.Background(), id).UpdateTitleRequest(updateTitleRequest).Execute()
+	resp, r, err := apiClient.DatabasesAPI.UpdateDatabase(context.Background(), id).UpdateTitleRequest(updateTitleRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.DatabasesIdPut``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.UpdateDatabase``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DatabasesIdPut`: Database
-	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.DatabasesIdPut`: %v\n", resp)
+	// response from `UpdateDatabase`: Database
+	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.UpdateDatabase`: %v\n", resp)
 }
 ```
 
@@ -260,77 +395,13 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiDatabasesIdPutRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiUpdateDatabaseRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateTitleRequest** | [**UpdateTitleRequest**](UpdateTitleRequest.md) |  | 
-
-### Return type
-
-[**Database**](Database.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## DatabasesPost
-
-> Database DatabasesPost(ctx).NewDatabaseInput(newDatabaseInput).Execute()
-
-Create database
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	newDatabaseInput := *openapiclient.NewNewDatabaseInput(int32(123), int32(123), "Name_example", "Title_example", int32(123), "Type_example", "Version_example", "MachineType_example") // NewDatabaseInput | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DatabasesAPI.DatabasesPost(context.Background()).NewDatabaseInput(newDatabaseInput).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DatabasesAPI.DatabasesPost``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `DatabasesPost`: Database
-	fmt.Fprintf(os.Stdout, "Response from `DatabasesAPI.DatabasesPost`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDatabasesPostRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **newDatabaseInput** | [**NewDatabaseInput**](NewDatabaseInput.md) |  | 
 
 ### Return type
 

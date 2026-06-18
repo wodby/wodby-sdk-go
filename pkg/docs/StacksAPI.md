@@ -4,86 +4,19 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**StackRevisionsIdGet**](StacksAPI.md#StackRevisionsIdGet) | **Get** /stack-revisions/{id} | Get stack revision
-[**StackRevisionsIdServicesGet**](StacksAPI.md#StackRevisionsIdServicesGet) | **Get** /stack-revisions/{id}/services | List stack services
-[**StacksByNameNameGet**](StacksAPI.md#StacksByNameNameGet) | **Get** /stacks/by-name/{name} | Get stack by name
-[**StacksGet**](StacksAPI.md#StacksGet) | **Get** /stacks | List stacks
+[**GetStack**](StacksAPI.md#GetStack) | **Get** /stacks/{id} | Get stack
+[**GetStackByName**](StacksAPI.md#GetStackByName) | **Get** /stacks/by-name/{name} | Get stack by name
+[**GetStackRevision**](StacksAPI.md#GetStackRevision) | **Get** /stack-revisions/{id} | Get stack revision
+[**ListStackRevisionServices**](StacksAPI.md#ListStackRevisionServices) | **Get** /stack-revisions/{id}/services | List stack services
+[**ListStacks**](StacksAPI.md#ListStacks) | **Get** /stacks | List stacks
 
 
 
-## StackRevisionsIdGet
+## GetStack
 
-> StackRevision StackRevisionsIdGet(ctx, id).Execute()
+> Stack GetStack(ctx, id).Execute()
 
-Get stack revision
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.StackRevisionsIdGet(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.StackRevisionsIdGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `StackRevisionsIdGet`: StackRevision
-	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.StackRevisionsIdGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiStackRevisionsIdGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**StackRevision**](StackRevision.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## StackRevisionsIdServicesGet
-
-> []StackService StackRevisionsIdServicesGet(ctx, id).Execute()
-
-List stack services
+Get stack
 
 ### Example
 
@@ -102,13 +35,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.StackRevisionsIdServicesGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.StacksAPI.GetStack(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.StackRevisionsIdServicesGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.GetStack``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `StackRevisionsIdServicesGet`: []StackService
-	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.StackRevisionsIdServicesGet`: %v\n", resp)
+	// response from `GetStack`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.GetStack`: %v\n", resp)
 }
 ```
 
@@ -122,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiStackRevisionsIdServicesGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetStackRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -131,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]StackService**](StackService.md)
+[**Stack**](Stack.md)
 
 ### Authorization
 
@@ -147,9 +80,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## StacksByNameNameGet
+## GetStackByName
 
-> Stack StacksByNameNameGet(ctx, name).RevNumber(revNumber).Execute()
+> Stack GetStackByName(ctx, name).RevNumber(revNumber).Execute()
 
 Get stack by name
 
@@ -171,13 +104,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.StacksByNameNameGet(context.Background(), name).RevNumber(revNumber).Execute()
+	resp, r, err := apiClient.StacksAPI.GetStackByName(context.Background(), name).RevNumber(revNumber).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.StacksByNameNameGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.GetStackByName``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `StacksByNameNameGet`: Stack
-	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.StacksByNameNameGet`: %v\n", resp)
+	// response from `GetStackByName`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.GetStackByName`: %v\n", resp)
 }
 ```
 
@@ -191,7 +124,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiStacksByNameNameGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetStackByNameRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -217,9 +150,145 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## StacksGet
+## GetStackRevision
 
-> StacksResponse StacksGet(ctx).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
+> StackRevision GetStackRevision(ctx, id).Execute()
+
+Get stack revision
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.GetStackRevision(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.GetStackRevision``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetStackRevision`: StackRevision
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.GetStackRevision`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetStackRevisionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**StackRevision**](StackRevision.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListStackRevisionServices
+
+> []StackService ListStackRevisionServices(ctx, id).Execute()
+
+List stack services
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ListStackRevisionServices(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListStackRevisionServices``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListStackRevisionServices`: []StackService
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListStackRevisionServices`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListStackRevisionServicesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]StackService**](StackService.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListStacks
+
+> StacksResponse ListStacks(ctx).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
 
 List stacks
 
@@ -244,13 +313,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.StacksGet(context.Background()).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.StacksAPI.ListStacks(context.Background()).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.StacksGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListStacks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `StacksGet`: StacksResponse
-	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.StacksGet`: %v\n", resp)
+	// response from `ListStacks`: StacksResponse
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListStacks`: %v\n", resp)
 }
 ```
 
@@ -260,7 +329,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiStacksGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListStacksRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

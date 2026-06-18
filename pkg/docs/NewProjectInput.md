@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgID** | **int32** |  | 
+**OrgId** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
-**TeamIDs** | Pointer to **[]int32** |  | [optional] 
-**OrgMembershipIDs** | Pointer to **[]int32** |  | [optional] 
+**TeamIds** | Pointer to **[]int32** |  | [optional] 
+**OrgMembershipIds** | Pointer to **[]int32** |  | [optional] 
 **Role** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewNewProjectInput
 
-`func NewNewProjectInput(orgID int32, name string, title string, ) *NewProjectInput`
+`func NewNewProjectInput(orgId int32, name string, title string, ) *NewProjectInput`
 
 NewNewProjectInput instantiates a new NewProjectInput object
 This constructor will assign default values to properties that have it defined,
@@ -30,24 +30,24 @@ NewNewProjectInputWithDefaults instantiates a new NewProjectInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetOrgID
+### GetOrgId
 
-`func (o *NewProjectInput) GetOrgID() int32`
+`func (o *NewProjectInput) GetOrgId() int32`
 
-GetOrgID returns the OrgID field if non-nil, zero value otherwise.
+GetOrgId returns the OrgId field if non-nil, zero value otherwise.
 
-### GetOrgIDOk
+### GetOrgIdOk
 
-`func (o *NewProjectInput) GetOrgIDOk() (*int32, bool)`
+`func (o *NewProjectInput) GetOrgIdOk() (*int32, bool)`
 
-GetOrgIDOk returns a tuple with the OrgID field if it's non-nil, zero value otherwise
+GetOrgIdOk returns a tuple with the OrgId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrgID
+### SetOrgId
 
-`func (o *NewProjectInput) SetOrgID(v int32)`
+`func (o *NewProjectInput) SetOrgId(v int32)`
 
-SetOrgID sets OrgID field to given value.
+SetOrgId sets OrgId field to given value.
 
 
 ### GetName
@@ -90,55 +90,55 @@ and a boolean to check if the value has been set.
 SetTitle sets Title field to given value.
 
 
-### GetTeamIDs
+### GetTeamIds
 
-`func (o *NewProjectInput) GetTeamIDs() []int32`
+`func (o *NewProjectInput) GetTeamIds() []int32`
 
-GetTeamIDs returns the TeamIDs field if non-nil, zero value otherwise.
+GetTeamIds returns the TeamIds field if non-nil, zero value otherwise.
 
-### GetTeamIDsOk
+### GetTeamIdsOk
 
-`func (o *NewProjectInput) GetTeamIDsOk() (*[]int32, bool)`
+`func (o *NewProjectInput) GetTeamIdsOk() (*[]int32, bool)`
 
-GetTeamIDsOk returns a tuple with the TeamIDs field if it's non-nil, zero value otherwise
+GetTeamIdsOk returns a tuple with the TeamIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTeamIDs
+### SetTeamIds
 
-`func (o *NewProjectInput) SetTeamIDs(v []int32)`
+`func (o *NewProjectInput) SetTeamIds(v []int32)`
 
-SetTeamIDs sets TeamIDs field to given value.
+SetTeamIds sets TeamIds field to given value.
 
-### HasTeamIDs
+### HasTeamIds
 
-`func (o *NewProjectInput) HasTeamIDs() bool`
+`func (o *NewProjectInput) HasTeamIds() bool`
 
-HasTeamIDs returns a boolean if a field has been set.
+HasTeamIds returns a boolean if a field has been set.
 
-### GetOrgMembershipIDs
+### GetOrgMembershipIds
 
-`func (o *NewProjectInput) GetOrgMembershipIDs() []int32`
+`func (o *NewProjectInput) GetOrgMembershipIds() []int32`
 
-GetOrgMembershipIDs returns the OrgMembershipIDs field if non-nil, zero value otherwise.
+GetOrgMembershipIds returns the OrgMembershipIds field if non-nil, zero value otherwise.
 
-### GetOrgMembershipIDsOk
+### GetOrgMembershipIdsOk
 
-`func (o *NewProjectInput) GetOrgMembershipIDsOk() (*[]int32, bool)`
+`func (o *NewProjectInput) GetOrgMembershipIdsOk() (*[]int32, bool)`
 
-GetOrgMembershipIDsOk returns a tuple with the OrgMembershipIDs field if it's non-nil, zero value otherwise
+GetOrgMembershipIdsOk returns a tuple with the OrgMembershipIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrgMembershipIDs
+### SetOrgMembershipIds
 
-`func (o *NewProjectInput) SetOrgMembershipIDs(v []int32)`
+`func (o *NewProjectInput) SetOrgMembershipIds(v []int32)`
 
-SetOrgMembershipIDs sets OrgMembershipIDs field to given value.
+SetOrgMembershipIds sets OrgMembershipIds field to given value.
 
-### HasOrgMembershipIDs
+### HasOrgMembershipIds
 
-`func (o *NewProjectInput) HasOrgMembershipIDs() bool`
+`func (o *NewProjectInput) HasOrgMembershipIds() bool`
 
-HasOrgMembershipIDs returns a boolean if a field has been set.
+HasOrgMembershipIds returns a boolean if a field has been set.
 
 ### GetRole
 

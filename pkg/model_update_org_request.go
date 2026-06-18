@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -22,8 +22,8 @@ var _ MappedNullable = &UpdateOrgRequest{}
 // UpdateOrgRequest struct for UpdateOrgRequest
 type UpdateOrgRequest struct {
 	Title string `json:"title"`
-	RegistryIntegrationID NullableInt32 `json:"registryIntegrationID,omitempty"`
-	CiIntegrationID NullableInt32 `json:"ciIntegrationID,omitempty"`
+	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
+	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 }
 
 type _UpdateOrgRequest UpdateOrgRequest
@@ -70,88 +70,88 @@ func (o *UpdateOrgRequest) SetTitle(v string) {
 	o.Title = v
 }
 
-// GetRegistryIntegrationID returns the RegistryIntegrationID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *UpdateOrgRequest) GetRegistryIntegrationID() int32 {
-	if o == nil || IsNil(o.RegistryIntegrationID.Get()) {
+// GetRegistryIntegrationId returns the RegistryIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateOrgRequest) GetRegistryIntegrationId() int32 {
+	if o == nil || IsNil(o.RegistryIntegrationId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.RegistryIntegrationID.Get()
+	return *o.RegistryIntegrationId.Get()
 }
 
-// GetRegistryIntegrationIDOk returns a tuple with the RegistryIntegrationID field value if set, nil otherwise
+// GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *UpdateOrgRequest) GetRegistryIntegrationIDOk() (*int32, bool) {
+func (o *UpdateOrgRequest) GetRegistryIntegrationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.RegistryIntegrationID.Get(), o.RegistryIntegrationID.IsSet()
+	return o.RegistryIntegrationId.Get(), o.RegistryIntegrationId.IsSet()
 }
 
-// HasRegistryIntegrationID returns a boolean if a field has been set.
-func (o *UpdateOrgRequest) HasRegistryIntegrationID() bool {
-	if o != nil && o.RegistryIntegrationID.IsSet() {
+// HasRegistryIntegrationId returns a boolean if a field has been set.
+func (o *UpdateOrgRequest) HasRegistryIntegrationId() bool {
+	if o != nil && o.RegistryIntegrationId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRegistryIntegrationID gets a reference to the given NullableInt32 and assigns it to the RegistryIntegrationID field.
-func (o *UpdateOrgRequest) SetRegistryIntegrationID(v int32) {
-	o.RegistryIntegrationID.Set(&v)
+// SetRegistryIntegrationId gets a reference to the given NullableInt32 and assigns it to the RegistryIntegrationId field.
+func (o *UpdateOrgRequest) SetRegistryIntegrationId(v int32) {
+	o.RegistryIntegrationId.Set(&v)
 }
-// SetRegistryIntegrationIDNil sets the value for RegistryIntegrationID to be an explicit nil
-func (o *UpdateOrgRequest) SetRegistryIntegrationIDNil() {
-	o.RegistryIntegrationID.Set(nil)
-}
-
-// UnsetRegistryIntegrationID ensures that no value is present for RegistryIntegrationID, not even an explicit nil
-func (o *UpdateOrgRequest) UnsetRegistryIntegrationID() {
-	o.RegistryIntegrationID.Unset()
+// SetRegistryIntegrationIdNil sets the value for RegistryIntegrationId to be an explicit nil
+func (o *UpdateOrgRequest) SetRegistryIntegrationIdNil() {
+	o.RegistryIntegrationId.Set(nil)
 }
 
-// GetCiIntegrationID returns the CiIntegrationID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *UpdateOrgRequest) GetCiIntegrationID() int32 {
-	if o == nil || IsNil(o.CiIntegrationID.Get()) {
+// UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+func (o *UpdateOrgRequest) UnsetRegistryIntegrationId() {
+	o.RegistryIntegrationId.Unset()
+}
+
+// GetCiIntegrationId returns the CiIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateOrgRequest) GetCiIntegrationId() int32 {
+	if o == nil || IsNil(o.CiIntegrationId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.CiIntegrationID.Get()
+	return *o.CiIntegrationId.Get()
 }
 
-// GetCiIntegrationIDOk returns a tuple with the CiIntegrationID field value if set, nil otherwise
+// GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *UpdateOrgRequest) GetCiIntegrationIDOk() (*int32, bool) {
+func (o *UpdateOrgRequest) GetCiIntegrationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CiIntegrationID.Get(), o.CiIntegrationID.IsSet()
+	return o.CiIntegrationId.Get(), o.CiIntegrationId.IsSet()
 }
 
-// HasCiIntegrationID returns a boolean if a field has been set.
-func (o *UpdateOrgRequest) HasCiIntegrationID() bool {
-	if o != nil && o.CiIntegrationID.IsSet() {
+// HasCiIntegrationId returns a boolean if a field has been set.
+func (o *UpdateOrgRequest) HasCiIntegrationId() bool {
+	if o != nil && o.CiIntegrationId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCiIntegrationID gets a reference to the given NullableInt32 and assigns it to the CiIntegrationID field.
-func (o *UpdateOrgRequest) SetCiIntegrationID(v int32) {
-	o.CiIntegrationID.Set(&v)
+// SetCiIntegrationId gets a reference to the given NullableInt32 and assigns it to the CiIntegrationId field.
+func (o *UpdateOrgRequest) SetCiIntegrationId(v int32) {
+	o.CiIntegrationId.Set(&v)
 }
-// SetCiIntegrationIDNil sets the value for CiIntegrationID to be an explicit nil
-func (o *UpdateOrgRequest) SetCiIntegrationIDNil() {
-	o.CiIntegrationID.Set(nil)
+// SetCiIntegrationIdNil sets the value for CiIntegrationId to be an explicit nil
+func (o *UpdateOrgRequest) SetCiIntegrationIdNil() {
+	o.CiIntegrationId.Set(nil)
 }
 
-// UnsetCiIntegrationID ensures that no value is present for CiIntegrationID, not even an explicit nil
-func (o *UpdateOrgRequest) UnsetCiIntegrationID() {
-	o.CiIntegrationID.Unset()
+// UnsetCiIntegrationId ensures that no value is present for CiIntegrationId, not even an explicit nil
+func (o *UpdateOrgRequest) UnsetCiIntegrationId() {
+	o.CiIntegrationId.Unset()
 }
 
 func (o UpdateOrgRequest) MarshalJSON() ([]byte, error) {
@@ -165,11 +165,11 @@ func (o UpdateOrgRequest) MarshalJSON() ([]byte, error) {
 func (o UpdateOrgRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["title"] = o.Title
-	if o.RegistryIntegrationID.IsSet() {
-		toSerialize["registryIntegrationID"] = o.RegistryIntegrationID.Get()
+	if o.RegistryIntegrationId.IsSet() {
+		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
 	}
-	if o.CiIntegrationID.IsSet() {
-		toSerialize["ciIntegrationID"] = o.CiIntegrationID.Get()
+	if o.CiIntegrationId.IsSet() {
+		toSerialize["ciIntegrationId"] = o.CiIntegrationId.Get()
 	}
 	return toSerialize, nil
 }

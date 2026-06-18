@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **BuildSourceType** | **string** |  | 
 **Template** | Pointer to **NullableString** |  | [optional] 
 **NewRepoName** | Pointer to **NullableString** |  | [optional] 
-**IntegrationID** | Pointer to **NullableInt32** |  | [optional] 
-**RemoteGitRepoID** | Pointer to **NullableString** |  | [optional] 
+**IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**RemoteGitRepoId** | Pointer to **NullableString** |  | [optional] 
 **GitRef** | Pointer to **NullableString** |  | [optional] 
 **GitRefType** | Pointer to **NullableString** |  | [optional] 
 
@@ -121,76 +121,76 @@ HasNewRepoName returns a boolean if a field has been set.
 `func (o *BuildSourceInput) UnsetNewRepoName()`
 
 UnsetNewRepoName ensures that no value is present for NewRepoName, not even an explicit nil
-### GetIntegrationID
+### GetIntegrationId
 
-`func (o *BuildSourceInput) GetIntegrationID() int32`
+`func (o *BuildSourceInput) GetIntegrationId() int32`
 
-GetIntegrationID returns the IntegrationID field if non-nil, zero value otherwise.
+GetIntegrationId returns the IntegrationId field if non-nil, zero value otherwise.
 
-### GetIntegrationIDOk
+### GetIntegrationIdOk
 
-`func (o *BuildSourceInput) GetIntegrationIDOk() (*int32, bool)`
+`func (o *BuildSourceInput) GetIntegrationIdOk() (*int32, bool)`
 
-GetIntegrationIDOk returns a tuple with the IntegrationID field if it's non-nil, zero value otherwise
+GetIntegrationIdOk returns a tuple with the IntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIntegrationID
+### SetIntegrationId
 
-`func (o *BuildSourceInput) SetIntegrationID(v int32)`
+`func (o *BuildSourceInput) SetIntegrationId(v int32)`
 
-SetIntegrationID sets IntegrationID field to given value.
+SetIntegrationId sets IntegrationId field to given value.
 
-### HasIntegrationID
+### HasIntegrationId
 
-`func (o *BuildSourceInput) HasIntegrationID() bool`
+`func (o *BuildSourceInput) HasIntegrationId() bool`
 
-HasIntegrationID returns a boolean if a field has been set.
+HasIntegrationId returns a boolean if a field has been set.
 
-### SetIntegrationIDNil
+### SetIntegrationIdNil
 
-`func (o *BuildSourceInput) SetIntegrationIDNil(b bool)`
+`func (o *BuildSourceInput) SetIntegrationIdNil(b bool)`
 
- SetIntegrationIDNil sets the value for IntegrationID to be an explicit nil
+ SetIntegrationIdNil sets the value for IntegrationId to be an explicit nil
 
-### UnsetIntegrationID
-`func (o *BuildSourceInput) UnsetIntegrationID()`
+### UnsetIntegrationId
+`func (o *BuildSourceInput) UnsetIntegrationId()`
 
-UnsetIntegrationID ensures that no value is present for IntegrationID, not even an explicit nil
-### GetRemoteGitRepoID
+UnsetIntegrationId ensures that no value is present for IntegrationId, not even an explicit nil
+### GetRemoteGitRepoId
 
-`func (o *BuildSourceInput) GetRemoteGitRepoID() string`
+`func (o *BuildSourceInput) GetRemoteGitRepoId() string`
 
-GetRemoteGitRepoID returns the RemoteGitRepoID field if non-nil, zero value otherwise.
+GetRemoteGitRepoId returns the RemoteGitRepoId field if non-nil, zero value otherwise.
 
-### GetRemoteGitRepoIDOk
+### GetRemoteGitRepoIdOk
 
-`func (o *BuildSourceInput) GetRemoteGitRepoIDOk() (*string, bool)`
+`func (o *BuildSourceInput) GetRemoteGitRepoIdOk() (*string, bool)`
 
-GetRemoteGitRepoIDOk returns a tuple with the RemoteGitRepoID field if it's non-nil, zero value otherwise
+GetRemoteGitRepoIdOk returns a tuple with the RemoteGitRepoId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRemoteGitRepoID
+### SetRemoteGitRepoId
 
-`func (o *BuildSourceInput) SetRemoteGitRepoID(v string)`
+`func (o *BuildSourceInput) SetRemoteGitRepoId(v string)`
 
-SetRemoteGitRepoID sets RemoteGitRepoID field to given value.
+SetRemoteGitRepoId sets RemoteGitRepoId field to given value.
 
-### HasRemoteGitRepoID
+### HasRemoteGitRepoId
 
-`func (o *BuildSourceInput) HasRemoteGitRepoID() bool`
+`func (o *BuildSourceInput) HasRemoteGitRepoId() bool`
 
-HasRemoteGitRepoID returns a boolean if a field has been set.
+HasRemoteGitRepoId returns a boolean if a field has been set.
 
-### SetRemoteGitRepoIDNil
+### SetRemoteGitRepoIdNil
 
-`func (o *BuildSourceInput) SetRemoteGitRepoIDNil(b bool)`
+`func (o *BuildSourceInput) SetRemoteGitRepoIdNil(b bool)`
 
- SetRemoteGitRepoIDNil sets the value for RemoteGitRepoID to be an explicit nil
+ SetRemoteGitRepoIdNil sets the value for RemoteGitRepoId to be an explicit nil
 
-### UnsetRemoteGitRepoID
-`func (o *BuildSourceInput) UnsetRemoteGitRepoID()`
+### UnsetRemoteGitRepoId
+`func (o *BuildSourceInput) UnsetRemoteGitRepoId()`
 
-UnsetRemoteGitRepoID ensures that no value is present for RemoteGitRepoID, not even an explicit nil
+UnsetRemoteGitRepoId ensures that no value is present for RemoteGitRepoId, not even an explicit nil
 ### GetGitRef
 
 `func (o *BuildSourceInput) GetGitRef() string`

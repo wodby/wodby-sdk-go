@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -41,7 +41,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Wodby 2.0 Public API API v1.0.0
+// APIClient manages communication with the Wodby 2 Public API API v1.0.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration

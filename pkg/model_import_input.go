@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -24,7 +24,7 @@ type ImportInput struct {
 	ImportName NullableString `json:"importName,omitempty"`
 	Source string `json:"source"`
 	Url NullableString `json:"url,omitempty"`
-	BackupID NullableInt32 `json:"backupID,omitempty"`
+	BackupId NullableInt32 `json:"backupId,omitempty"`
 	From *ImportFromInput `json:"from,omitempty"`
 }
 
@@ -156,46 +156,46 @@ func (o *ImportInput) UnsetUrl() {
 	o.Url.Unset()
 }
 
-// GetBackupID returns the BackupID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ImportInput) GetBackupID() int32 {
-	if o == nil || IsNil(o.BackupID.Get()) {
+// GetBackupId returns the BackupId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ImportInput) GetBackupId() int32 {
+	if o == nil || IsNil(o.BackupId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.BackupID.Get()
+	return *o.BackupId.Get()
 }
 
-// GetBackupIDOk returns a tuple with the BackupID field value if set, nil otherwise
+// GetBackupIdOk returns a tuple with the BackupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ImportInput) GetBackupIDOk() (*int32, bool) {
+func (o *ImportInput) GetBackupIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.BackupID.Get(), o.BackupID.IsSet()
+	return o.BackupId.Get(), o.BackupId.IsSet()
 }
 
-// HasBackupID returns a boolean if a field has been set.
-func (o *ImportInput) HasBackupID() bool {
-	if o != nil && o.BackupID.IsSet() {
+// HasBackupId returns a boolean if a field has been set.
+func (o *ImportInput) HasBackupId() bool {
+	if o != nil && o.BackupId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetBackupID gets a reference to the given NullableInt32 and assigns it to the BackupID field.
-func (o *ImportInput) SetBackupID(v int32) {
-	o.BackupID.Set(&v)
+// SetBackupId gets a reference to the given NullableInt32 and assigns it to the BackupId field.
+func (o *ImportInput) SetBackupId(v int32) {
+	o.BackupId.Set(&v)
 }
-// SetBackupIDNil sets the value for BackupID to be an explicit nil
-func (o *ImportInput) SetBackupIDNil() {
-	o.BackupID.Set(nil)
+// SetBackupIdNil sets the value for BackupId to be an explicit nil
+func (o *ImportInput) SetBackupIdNil() {
+	o.BackupId.Set(nil)
 }
 
-// UnsetBackupID ensures that no value is present for BackupID, not even an explicit nil
-func (o *ImportInput) UnsetBackupID() {
-	o.BackupID.Unset()
+// UnsetBackupId ensures that no value is present for BackupId, not even an explicit nil
+func (o *ImportInput) UnsetBackupId() {
+	o.BackupId.Unset()
 }
 
 // GetFrom returns the From field value if set, zero value otherwise.
@@ -247,8 +247,8 @@ func (o ImportInput) ToMap() (map[string]interface{}, error) {
 	if o.Url.IsSet() {
 		toSerialize["url"] = o.Url.Get()
 	}
-	if o.BackupID.IsSet() {
-		toSerialize["backupID"] = o.BackupID.Get()
+	if o.BackupId.IsSet() {
+		toSerialize["backupId"] = o.BackupId.Get()
 	}
 	if !IsNil(o.From) {
 		toSerialize["from"] = o.From

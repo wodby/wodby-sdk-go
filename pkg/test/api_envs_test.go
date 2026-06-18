@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing EnvsAPIService
 
@@ -22,11 +22,11 @@ func Test_client_EnvsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test EnvsAPIService EnvsGet", func(t *testing.T) {
+	t.Run("Test EnvsAPIService CreateEnv", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.EnvsAPI.EnvsGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.EnvsAPI.CreateEnv(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +34,13 @@ func Test_client_EnvsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test EnvsAPIService EnvsIdDelete", func(t *testing.T) {
+	t.Run("Test EnvsAPIService DeleteEnv", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.EnvsAPI.EnvsIdDelete(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.EnvsAPI.DeleteEnv(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,13 +48,13 @@ func Test_client_EnvsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test EnvsAPIService EnvsIdGet", func(t *testing.T) {
+	t.Run("Test EnvsAPIService GetEnv", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.EnvsAPI.EnvsIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.EnvsAPI.GetEnv(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,25 +62,39 @@ func Test_client_EnvsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test EnvsAPIService EnvsIdPut", func(t *testing.T) {
+	t.Run("Test EnvsAPIService GetEnvByName", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		resp, httpRes, err := apiClient.EnvsAPI.GetEnvByName(context.Background(), name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test EnvsAPIService ListEnvs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.EnvsAPI.ListEnvs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test EnvsAPIService UpdateEnv", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.EnvsAPI.EnvsIdPut(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test EnvsAPIService EnvsPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.EnvsAPI.EnvsPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.EnvsAPI.UpdateEnv(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

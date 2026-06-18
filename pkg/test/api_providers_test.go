@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing ProvidersAPIService
 
@@ -22,13 +22,13 @@ func Test_client_ProvidersAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test ProvidersAPIService ProviderRevisionsIdGet", func(t *testing.T) {
+	t.Run("Test ProvidersAPIService GetProvider", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.ProvidersAPI.ProviderRevisionsIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.ProvidersAPI.GetProvider(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -36,13 +36,13 @@ func Test_client_ProvidersAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProvidersAPIService ProvidersByNameNameGet", func(t *testing.T) {
+	t.Run("Test ProvidersAPIService GetProviderByName", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var name string
 
-		resp, httpRes, err := apiClient.ProvidersAPI.ProvidersByNameNameGet(context.Background(), name).Execute()
+		resp, httpRes, err := apiClient.ProvidersAPI.GetProviderByName(context.Background(), name).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -50,11 +50,25 @@ func Test_client_ProvidersAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ProvidersAPIService ProvidersGet", func(t *testing.T) {
+	t.Run("Test ProvidersAPIService GetProviderRevision", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ProvidersAPI.ProvidersGet(context.Background()).Execute()
+		var id int32
+
+		resp, httpRes, err := apiClient.ProvidersAPI.GetProviderRevision(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ProvidersAPIService ListProviders", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ProvidersAPI.ListProviders(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

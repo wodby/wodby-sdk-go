@@ -4,14 +4,14 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**TaskStepsIdLogUrlGet**](TaskStepsAPI.md#TaskStepsIdLogUrlGet) | **Get** /task-steps/{id}/log-url | Get task step log URL
-[**TaskStepsIdLogsGet**](TaskStepsAPI.md#TaskStepsIdLogsGet) | **Get** /task-steps/{id}/logs | Get task step logs
+[**GetTaskStepLogUrl**](TaskStepsAPI.md#GetTaskStepLogUrl) | **Get** /task-steps/{id}/log-url | Get task step log URL
+[**GetTaskStepLogs**](TaskStepsAPI.md#GetTaskStepLogs) | **Get** /task-steps/{id}/logs | Get task step logs
 
 
 
-## TaskStepsIdLogUrlGet
+## GetTaskStepLogUrl
 
-> URLResponse TaskStepsIdLogUrlGet(ctx, id).Execute()
+> URLResponse GetTaskStepLogUrl(ctx, id).Execute()
 
 Get task step log URL
 
@@ -32,13 +32,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskStepsAPI.TaskStepsIdLogUrlGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.TaskStepsAPI.GetTaskStepLogUrl(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TaskStepsAPI.TaskStepsIdLogUrlGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TaskStepsAPI.GetTaskStepLogUrl``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TaskStepsIdLogUrlGet`: URLResponse
-	fmt.Fprintf(os.Stdout, "Response from `TaskStepsAPI.TaskStepsIdLogUrlGet`: %v\n", resp)
+	// response from `GetTaskStepLogUrl`: URLResponse
+	fmt.Fprintf(os.Stdout, "Response from `TaskStepsAPI.GetTaskStepLogUrl`: %v\n", resp)
 }
 ```
 
@@ -52,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTaskStepsIdLogUrlGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetTaskStepLogUrlRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -77,9 +77,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TaskStepsIdLogsGet
+## GetTaskStepLogs
 
-> TaskStepLogs TaskStepsIdLogsGet(ctx, id).Execute()
+> TaskStepLogs GetTaskStepLogs(ctx, id).Execute()
 
 Get task step logs
 
@@ -100,13 +100,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskStepsAPI.TaskStepsIdLogsGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.TaskStepsAPI.GetTaskStepLogs(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TaskStepsAPI.TaskStepsIdLogsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TaskStepsAPI.GetTaskStepLogs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TaskStepsIdLogsGet`: TaskStepLogs
-	fmt.Fprintf(os.Stdout, "Response from `TaskStepsAPI.TaskStepsIdLogsGet`: %v\n", resp)
+	// response from `GetTaskStepLogs`: TaskStepLogs
+	fmt.Fprintf(os.Stdout, "Response from `TaskStepsAPI.GetTaskStepLogs`: %v\n", resp)
 }
 ```
 
@@ -120,7 +120,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTaskStepsIdLogsGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetTaskStepLogsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

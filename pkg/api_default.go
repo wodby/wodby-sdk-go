@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -22,23 +22,23 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
-type ApiOpenapiJsonGetRequest struct {
+type ApiGetOpenApiJsonRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 }
 
-func (r ApiOpenapiJsonGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
-	return r.ApiService.OpenapiJsonGetExecute(r)
+func (r ApiGetOpenApiJsonRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.GetOpenApiJsonExecute(r)
 }
 
 /*
-OpenapiJsonGet Get OpenAPI JSON
+GetOpenApiJson Get OpenAPI JSON
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiOpenapiJsonGetRequest
+ @return ApiGetOpenApiJsonRequest
 */
-func (a *DefaultAPIService) OpenapiJsonGet(ctx context.Context) ApiOpenapiJsonGetRequest {
-	return ApiOpenapiJsonGetRequest{
+func (a *DefaultAPIService) GetOpenApiJson(ctx context.Context) ApiGetOpenApiJsonRequest {
+	return ApiGetOpenApiJsonRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -46,7 +46,7 @@ func (a *DefaultAPIService) OpenapiJsonGet(ctx context.Context) ApiOpenapiJsonGe
 
 // Execute executes the request
 //  @return map[string]interface{}
-func (a *DefaultAPIService) OpenapiJsonGetExecute(r ApiOpenapiJsonGetRequest) (map[string]interface{}, *http.Response, error) {
+func (a *DefaultAPIService) GetOpenApiJsonExecute(r ApiGetOpenApiJsonRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -54,7 +54,7 @@ func (a *DefaultAPIService) OpenapiJsonGetExecute(r ApiOpenapiJsonGetRequest) (m
 		localVarReturnValue  map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OpenapiJsonGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetOpenApiJson")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -104,6 +104,25 @@ func (a *DefaultAPIService) OpenapiJsonGetExecute(r ApiOpenapiJsonGetRequest) (m
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -119,23 +138,23 @@ func (a *DefaultAPIService) OpenapiJsonGetExecute(r ApiOpenapiJsonGetRequest) (m
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiOpenapiYamlGetRequest struct {
+type ApiGetOpenApiYamlRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 }
 
-func (r ApiOpenapiYamlGetRequest) Execute() (string, *http.Response, error) {
-	return r.ApiService.OpenapiYamlGetExecute(r)
+func (r ApiGetOpenApiYamlRequest) Execute() (string, *http.Response, error) {
+	return r.ApiService.GetOpenApiYamlExecute(r)
 }
 
 /*
-OpenapiYamlGet Get OpenAPI YAML
+GetOpenApiYaml Get OpenAPI YAML
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiOpenapiYamlGetRequest
+ @return ApiGetOpenApiYamlRequest
 */
-func (a *DefaultAPIService) OpenapiYamlGet(ctx context.Context) ApiOpenapiYamlGetRequest {
-	return ApiOpenapiYamlGetRequest{
+func (a *DefaultAPIService) GetOpenApiYaml(ctx context.Context) ApiGetOpenApiYamlRequest {
+	return ApiGetOpenApiYamlRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -143,7 +162,7 @@ func (a *DefaultAPIService) OpenapiYamlGet(ctx context.Context) ApiOpenapiYamlGe
 
 // Execute executes the request
 //  @return string
-func (a *DefaultAPIService) OpenapiYamlGetExecute(r ApiOpenapiYamlGetRequest) (string, *http.Response, error) {
+func (a *DefaultAPIService) GetOpenApiYamlExecute(r ApiGetOpenApiYamlRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -151,7 +170,7 @@ func (a *DefaultAPIService) OpenapiYamlGetExecute(r ApiOpenapiYamlGetRequest) (s
 		localVarReturnValue  string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OpenapiYamlGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetOpenApiYaml")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -172,7 +191,7 @@ func (a *DefaultAPIService) OpenapiYamlGetExecute(r ApiOpenapiYamlGetRequest) (s
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/yaml"}
+	localVarHTTPHeaderAccepts := []string{"application/yaml", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -201,6 +220,25 @@ func (a *DefaultAPIService) OpenapiYamlGetExecute(r ApiOpenapiYamlGetRequest) (s
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

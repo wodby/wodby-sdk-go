@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing IntegrationsAPIService
 
@@ -22,13 +22,53 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test IntegrationsAPIService IntegrationsByNameNameGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService CreateIntegration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.IntegrationsAPI.CreateIntegration(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test IntegrationsAPIService DeleteIntegration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.IntegrationsAPI.DeleteIntegration(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test IntegrationsAPIService GetIntegration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.IntegrationsAPI.GetIntegration(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test IntegrationsAPIService GetIntegrationByName", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var name string
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsByNameNameGet(context.Background(), name).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.GetIntegrationByName(context.Background(), name).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -36,25 +76,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsGet", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsGet(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test IntegrationsAPIService IntegrationsIdDelete", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService GetIntegrationKubeSettings", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdDelete(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.GetIntegrationKubeSettings(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,13 +90,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdKubeMachineTypesGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationKubeMachineTypes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdKubeMachineTypesGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationKubeMachineTypes(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -76,13 +104,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdKubeRegionsGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationKubeRegions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdKubeRegionsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationKubeRegions(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -90,13 +118,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdKubeSettingsGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationKubeVersions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdKubeSettingsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationKubeVersions(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -104,13 +132,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdKubeVersionsGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationKubeZones", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdKubeVersionsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationKubeZones(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -118,13 +146,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdKubeZonesGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationRemoteGitRepoBranches", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdKubeZonesGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationRemoteGitRepoBranches(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -132,13 +160,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdPut", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationRemoteGitRepoTags", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdPut(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationRemoteGitRepoTags(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -146,13 +174,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdRemoteGitRepoBranchesGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationRemoteGitRepos", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdRemoteGitRepoBranchesGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationRemoteGitRepos(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -160,13 +188,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdRemoteGitRepoTagsGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationScopes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdRemoteGitRepoTagsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationScopes(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -174,13 +202,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdRemoteGitReposGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationStorageBuckets", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdRemoteGitReposGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationStorageBuckets(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -188,13 +216,13 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdScopesGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrationStorageClasses", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdScopesGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrationStorageClasses(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -202,39 +230,25 @@ func Test_client_IntegrationsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test IntegrationsAPIService IntegrationsIdStorageBucketsGet", func(t *testing.T) {
+	t.Run("Test IntegrationsAPIService ListIntegrations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.IntegrationsAPI.ListIntegrations(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test IntegrationsAPIService UpdateIntegration", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdStorageBucketsGet(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test IntegrationsAPIService IntegrationsIdStorageClassesGet", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id int32
-
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsIdStorageClassesGet(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test IntegrationsAPIService IntegrationsPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.IntegrationsAPI.IntegrationsPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.IntegrationsAPI.UpdateIntegration(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

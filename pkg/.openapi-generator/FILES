@@ -50,9 +50,11 @@ docs/BackupsAPI.md
 docs/BuildSourceInput.md
 docs/Cluster.md
 docs/ClustersAPI.md
+docs/CreateAppServiceInput.md
 docs/CreateBuildRequest.md
 docs/CreateDeploymentRequest.md
 docs/CreateEnvRequest.md
+docs/CreateImportInput.md
 docs/CreateOrgRequest.md
 docs/Database.md
 docs/DatabaseType.md
@@ -63,6 +65,7 @@ docs/DeploymentFromCIInput.md
 docs/DockerRegistryCredentials.md
 docs/Env.md
 docs/EnvsAPI.md
+docs/ErrorResponse.md
 docs/FieldInput.md
 docs/Import.md
 docs/ImportFromInput.md
@@ -77,12 +80,10 @@ docs/LogLine.md
 docs/NewAppInput.md
 docs/NewAppInstanceInput.md
 docs/NewAppRouteInput.md
-docs/NewAppServiceInput.md
 docs/NewBackupInput.md
 docs/NewBuildFromCIInput.md
 docs/NewClusterInput.md
 docs/NewDatabaseInput.md
-docs/NewImportInput.md
 docs/NewIntegrationInput.md
 docs/NewManagedClusterInput.md
 docs/NewProjectInput.md
@@ -144,9 +145,11 @@ model_app_service_setting_input.go
 model_backup.go
 model_build_source_input.go
 model_cluster.go
+model_create_app_service_input.go
 model_create_build_request.go
 model_create_deployment_request.go
 model_create_env_request.go
+model_create_import_input.go
 model_create_org_request.go
 model_database.go
 model_database_type.go
@@ -154,6 +157,7 @@ model_database_version.go
 model_deployment_from_ci_input.go
 model_docker_registry_credentials.go
 model_env.go
+model_error_response.go
 model_field_input.go
 model_import.go
 model_import_from_input.go
@@ -165,12 +169,10 @@ model_log_line.go
 model_new_app_input.go
 model_new_app_instance_input.go
 model_new_app_route_input.go
-model_new_app_service_input.go
 model_new_backup_input.go
 model_new_build_from_ci_input.go
 model_new_cluster_input.go
 model_new_database_input.go
-model_new_import_input.go
 model_new_integration_input.go
 model_new_managed_cluster_input.go
 model_new_project_input.go

@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -23,7 +23,165 @@ import (
 // IntegrationKindsAPIService IntegrationKindsAPI service
 type IntegrationKindsAPIService service
 
-type ApiIntegrationKindsIdDatabaseMachineTypesGetRequest struct {
+type ApiGetIntegrationKindDatabaseSettingsRequest struct {
+	ctx context.Context
+	ApiService *IntegrationKindsAPIService
+	id int32
+	dbType *string
+}
+
+func (r ApiGetIntegrationKindDatabaseSettingsRequest) DbType(dbType string) ApiGetIntegrationKindDatabaseSettingsRequest {
+	r.dbType = &dbType
+	return r
+}
+
+func (r ApiGetIntegrationKindDatabaseSettingsRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.GetIntegrationKindDatabaseSettingsExecute(r)
+}
+
+/*
+GetIntegrationKindDatabaseSettings Get database settings
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetIntegrationKindDatabaseSettingsRequest
+*/
+func (a *IntegrationKindsAPIService) GetIntegrationKindDatabaseSettings(ctx context.Context, id int32) ApiGetIntegrationKindDatabaseSettingsRequest {
+	return ApiGetIntegrationKindDatabaseSettingsRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *IntegrationKindsAPIService) GetIntegrationKindDatabaseSettingsExecute(r ApiGetIntegrationKindDatabaseSettingsRequest) (map[string]interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  map[string]interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.GetIntegrationKindDatabaseSettings")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/integration-kinds/{id}/database-settings"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.dbType == nil {
+		return localVarReturnValue, nil, reportError("dbType is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "dbType", r.dbType, "form", "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["accessTokenHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-ACCESS-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListIntegrationKindDatabaseMachineTypesRequest struct {
 	ctx context.Context
 	ApiService *IntegrationKindsAPIService
 	id int32
@@ -34,44 +192,44 @@ type ApiIntegrationKindsIdDatabaseMachineTypesGetRequest struct {
 	zone *string
 }
 
-func (r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) DbType(dbType string) ApiIntegrationKindsIdDatabaseMachineTypesGetRequest {
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) DbType(dbType string) ApiListIntegrationKindDatabaseMachineTypesRequest {
 	r.dbType = &dbType
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) Version(version string) ApiIntegrationKindsIdDatabaseMachineTypesGetRequest {
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Version(version string) ApiListIntegrationKindDatabaseMachineTypesRequest {
 	r.version = &version
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) Ha(ha bool) ApiIntegrationKindsIdDatabaseMachineTypesGetRequest {
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Ha(ha bool) ApiListIntegrationKindDatabaseMachineTypesRequest {
 	r.ha = &ha
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) Region(region string) ApiIntegrationKindsIdDatabaseMachineTypesGetRequest {
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Region(region string) ApiListIntegrationKindDatabaseMachineTypesRequest {
 	r.region = &region
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) Zone(zone string) ApiIntegrationKindsIdDatabaseMachineTypesGetRequest {
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Zone(zone string) ApiListIntegrationKindDatabaseMachineTypesRequest {
 	r.zone = &zone
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) Execute() ([]map[string]interface{}, *http.Response, error) {
-	return r.ApiService.IntegrationKindsIdDatabaseMachineTypesGetExecute(r)
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Execute() ([]map[string]interface{}, *http.Response, error) {
+	return r.ApiService.ListIntegrationKindDatabaseMachineTypesExecute(r)
 }
 
 /*
-IntegrationKindsIdDatabaseMachineTypesGet List database machine types
+ListIntegrationKindDatabaseMachineTypes List database machine types
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiIntegrationKindsIdDatabaseMachineTypesGetRequest
+ @return ApiListIntegrationKindDatabaseMachineTypesRequest
 */
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseMachineTypesGet(ctx context.Context, id int32) ApiIntegrationKindsIdDatabaseMachineTypesGetRequest {
-	return ApiIntegrationKindsIdDatabaseMachineTypesGetRequest{
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseMachineTypes(ctx context.Context, id int32) ApiListIntegrationKindDatabaseMachineTypesRequest {
+	return ApiListIntegrationKindDatabaseMachineTypesRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -80,7 +238,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseMachineTypesGet(c
 
 // Execute executes the request
 //  @return []map[string]interface{}
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseMachineTypesGetExecute(r ApiIntegrationKindsIdDatabaseMachineTypesGetRequest) ([]map[string]interface{}, *http.Response, error) {
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseMachineTypesExecute(r ApiListIntegrationKindDatabaseMachineTypesRequest) ([]map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -88,7 +246,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseMachineTypesGetEx
 		localVarReturnValue  []map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.IntegrationKindsIdDatabaseMachineTypesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.ListIntegrationKindDatabaseMachineTypes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -187,6 +345,25 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseMachineTypesGetEx
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -202,7 +379,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseMachineTypesGetEx
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiIntegrationKindsIdDatabaseRegionsGetRequest struct {
+type ApiListIntegrationKindDatabaseRegionsRequest struct {
 	ctx context.Context
 	ApiService *IntegrationKindsAPIService
 	id int32
@@ -211,34 +388,34 @@ type ApiIntegrationKindsIdDatabaseRegionsGetRequest struct {
 	ha *bool
 }
 
-func (r ApiIntegrationKindsIdDatabaseRegionsGetRequest) DbType(dbType string) ApiIntegrationKindsIdDatabaseRegionsGetRequest {
+func (r ApiListIntegrationKindDatabaseRegionsRequest) DbType(dbType string) ApiListIntegrationKindDatabaseRegionsRequest {
 	r.dbType = &dbType
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseRegionsGetRequest) Version(version string) ApiIntegrationKindsIdDatabaseRegionsGetRequest {
+func (r ApiListIntegrationKindDatabaseRegionsRequest) Version(version string) ApiListIntegrationKindDatabaseRegionsRequest {
 	r.version = &version
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseRegionsGetRequest) Ha(ha bool) ApiIntegrationKindsIdDatabaseRegionsGetRequest {
+func (r ApiListIntegrationKindDatabaseRegionsRequest) Ha(ha bool) ApiListIntegrationKindDatabaseRegionsRequest {
 	r.ha = &ha
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseRegionsGetRequest) Execute() ([]map[string]interface{}, *http.Response, error) {
-	return r.ApiService.IntegrationKindsIdDatabaseRegionsGetExecute(r)
+func (r ApiListIntegrationKindDatabaseRegionsRequest) Execute() ([]map[string]interface{}, *http.Response, error) {
+	return r.ApiService.ListIntegrationKindDatabaseRegionsExecute(r)
 }
 
 /*
-IntegrationKindsIdDatabaseRegionsGet List database regions
+ListIntegrationKindDatabaseRegions List database regions
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiIntegrationKindsIdDatabaseRegionsGetRequest
+ @return ApiListIntegrationKindDatabaseRegionsRequest
 */
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseRegionsGet(ctx context.Context, id int32) ApiIntegrationKindsIdDatabaseRegionsGetRequest {
-	return ApiIntegrationKindsIdDatabaseRegionsGetRequest{
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseRegions(ctx context.Context, id int32) ApiListIntegrationKindDatabaseRegionsRequest {
+	return ApiListIntegrationKindDatabaseRegionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -247,7 +424,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseRegionsGet(ctx co
 
 // Execute executes the request
 //  @return []map[string]interface{}
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseRegionsGetExecute(r ApiIntegrationKindsIdDatabaseRegionsGetRequest) ([]map[string]interface{}, *http.Response, error) {
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseRegionsExecute(r ApiListIntegrationKindDatabaseRegionsRequest) ([]map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -255,7 +432,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseRegionsGetExecute
 		localVarReturnValue  []map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.IntegrationKindsIdDatabaseRegionsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.ListIntegrationKindDatabaseRegions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -348,6 +525,25 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseRegionsGetExecute
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -363,164 +559,25 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseRegionsGetExecute
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiIntegrationKindsIdDatabaseSettingsGetRequest struct {
-	ctx context.Context
-	ApiService *IntegrationKindsAPIService
-	id int32
-	dbType *string
-}
-
-func (r ApiIntegrationKindsIdDatabaseSettingsGetRequest) DbType(dbType string) ApiIntegrationKindsIdDatabaseSettingsGetRequest {
-	r.dbType = &dbType
-	return r
-}
-
-func (r ApiIntegrationKindsIdDatabaseSettingsGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
-	return r.ApiService.IntegrationKindsIdDatabaseSettingsGetExecute(r)
-}
-
-/*
-IntegrationKindsIdDatabaseSettingsGet Get database settings
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiIntegrationKindsIdDatabaseSettingsGetRequest
-*/
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseSettingsGet(ctx context.Context, id int32) ApiIntegrationKindsIdDatabaseSettingsGetRequest {
-	return ApiIntegrationKindsIdDatabaseSettingsGetRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return map[string]interface{}
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseSettingsGetExecute(r ApiIntegrationKindsIdDatabaseSettingsGetRequest) (map[string]interface{}, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.IntegrationKindsIdDatabaseSettingsGet")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/integration-kinds/{id}/database-settings"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.dbType == nil {
-		return localVarReturnValue, nil, reportError("dbType is required and must be specified")
-	}
-
-	parameterAddToHeaderOrQuery(localVarQueryParams, "dbType", r.dbType, "form", "")
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["apiKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-API-KEY"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiIntegrationKindsIdDatabaseTypesGetRequest struct {
+type ApiListIntegrationKindDatabaseTypesRequest struct {
 	ctx context.Context
 	ApiService *IntegrationKindsAPIService
 	id int32
 }
 
-func (r ApiIntegrationKindsIdDatabaseTypesGetRequest) Execute() ([]DatabaseType, *http.Response, error) {
-	return r.ApiService.IntegrationKindsIdDatabaseTypesGetExecute(r)
+func (r ApiListIntegrationKindDatabaseTypesRequest) Execute() ([]DatabaseType, *http.Response, error) {
+	return r.ApiService.ListIntegrationKindDatabaseTypesExecute(r)
 }
 
 /*
-IntegrationKindsIdDatabaseTypesGet List database types
+ListIntegrationKindDatabaseTypes List database types
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiIntegrationKindsIdDatabaseTypesGetRequest
+ @return ApiListIntegrationKindDatabaseTypesRequest
 */
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseTypesGet(ctx context.Context, id int32) ApiIntegrationKindsIdDatabaseTypesGetRequest {
-	return ApiIntegrationKindsIdDatabaseTypesGetRequest{
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseTypes(ctx context.Context, id int32) ApiListIntegrationKindDatabaseTypesRequest {
+	return ApiListIntegrationKindDatabaseTypesRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -529,7 +586,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseTypesGet(ctx cont
 
 // Execute executes the request
 //  @return []DatabaseType
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseTypesGetExecute(r ApiIntegrationKindsIdDatabaseTypesGetRequest) ([]DatabaseType, *http.Response, error) {
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseTypesExecute(r ApiListIntegrationKindDatabaseTypesRequest) ([]DatabaseType, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -537,7 +594,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseTypesGetExecute(r
 		localVarReturnValue  []DatabaseType
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.IntegrationKindsIdDatabaseTypesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.ListIntegrationKindDatabaseTypes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -616,6 +673,25 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseTypesGetExecute(r
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -631,31 +707,31 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseTypesGetExecute(r
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiIntegrationKindsIdDatabaseVersionsGetRequest struct {
+type ApiListIntegrationKindDatabaseVersionsRequest struct {
 	ctx context.Context
 	ApiService *IntegrationKindsAPIService
 	id int32
 	dbType *string
 }
 
-func (r ApiIntegrationKindsIdDatabaseVersionsGetRequest) DbType(dbType string) ApiIntegrationKindsIdDatabaseVersionsGetRequest {
+func (r ApiListIntegrationKindDatabaseVersionsRequest) DbType(dbType string) ApiListIntegrationKindDatabaseVersionsRequest {
 	r.dbType = &dbType
 	return r
 }
 
-func (r ApiIntegrationKindsIdDatabaseVersionsGetRequest) Execute() ([]DatabaseVersion, *http.Response, error) {
-	return r.ApiService.IntegrationKindsIdDatabaseVersionsGetExecute(r)
+func (r ApiListIntegrationKindDatabaseVersionsRequest) Execute() ([]DatabaseVersion, *http.Response, error) {
+	return r.ApiService.ListIntegrationKindDatabaseVersionsExecute(r)
 }
 
 /*
-IntegrationKindsIdDatabaseVersionsGet List database versions
+ListIntegrationKindDatabaseVersions List database versions
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiIntegrationKindsIdDatabaseVersionsGetRequest
+ @return ApiListIntegrationKindDatabaseVersionsRequest
 */
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseVersionsGet(ctx context.Context, id int32) ApiIntegrationKindsIdDatabaseVersionsGetRequest {
-	return ApiIntegrationKindsIdDatabaseVersionsGetRequest{
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseVersions(ctx context.Context, id int32) ApiListIntegrationKindDatabaseVersionsRequest {
+	return ApiListIntegrationKindDatabaseVersionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -664,7 +740,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseVersionsGet(ctx c
 
 // Execute executes the request
 //  @return []DatabaseVersion
-func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseVersionsGetExecute(r ApiIntegrationKindsIdDatabaseVersionsGetRequest) ([]DatabaseVersion, *http.Response, error) {
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseVersionsExecute(r ApiListIntegrationKindDatabaseVersionsRequest) ([]DatabaseVersion, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -672,7 +748,7 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseVersionsGetExecut
 		localVarReturnValue  []DatabaseVersion
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.IntegrationKindsIdDatabaseVersionsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.ListIntegrationKindDatabaseVersions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -755,6 +831,25 @@ func (a *IntegrationKindsAPIService) IntegrationKindsIdDatabaseVersionsGetExecut
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

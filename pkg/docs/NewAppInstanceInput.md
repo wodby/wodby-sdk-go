@@ -4,23 +4,23 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppID** | **int32** |  | 
+**AppId** | **int32** |  | 
 **InstanceName** | **string** |  | 
 **InstanceTitle** | **string** |  | 
 **Domain** | **string** |  | 
-**StackRevID** | **int32** |  | 
-**Services** | [**[]NewAppServiceInput**](NewAppServiceInput.md) |  | 
-**ClusterID** | Pointer to **NullableInt32** |  | [optional] 
+**StackRevId** | **int32** |  | 
+**Services** | [**[]CreateAppServiceInput**](CreateAppServiceInput.md) |  | 
+**ClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **NewCluster** | Pointer to [**NewManagedClusterInput**](NewManagedClusterInput.md) |  | [optional] 
-**EnvID** | **int32** |  | 
-**CiIntegrationID** | Pointer to **NullableInt32** |  | [optional] 
-**RegistryIntegrationID** | Pointer to **NullableInt32** |  | [optional] 
+**EnvId** | **int32** |  | 
+**CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 
 ## Methods
 
 ### NewNewAppInstanceInput
 
-`func NewNewAppInstanceInput(appID int32, instanceName string, instanceTitle string, domain string, stackRevID int32, services []NewAppServiceInput, envID int32, ) *NewAppInstanceInput`
+`func NewNewAppInstanceInput(appId int32, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32, ) *NewAppInstanceInput`
 
 NewNewAppInstanceInput instantiates a new NewAppInstanceInput object
 This constructor will assign default values to properties that have it defined,
@@ -35,24 +35,24 @@ NewNewAppInstanceInputWithDefaults instantiates a new NewAppInstanceInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAppID
+### GetAppId
 
-`func (o *NewAppInstanceInput) GetAppID() int32`
+`func (o *NewAppInstanceInput) GetAppId() int32`
 
-GetAppID returns the AppID field if non-nil, zero value otherwise.
+GetAppId returns the AppId field if non-nil, zero value otherwise.
 
-### GetAppIDOk
+### GetAppIdOk
 
-`func (o *NewAppInstanceInput) GetAppIDOk() (*int32, bool)`
+`func (o *NewAppInstanceInput) GetAppIdOk() (*int32, bool)`
 
-GetAppIDOk returns a tuple with the AppID field if it's non-nil, zero value otherwise
+GetAppIdOk returns a tuple with the AppId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppID
+### SetAppId
 
-`func (o *NewAppInstanceInput) SetAppID(v int32)`
+`func (o *NewAppInstanceInput) SetAppId(v int32)`
 
-SetAppID sets AppID field to given value.
+SetAppId sets AppId field to given value.
 
 
 ### GetInstanceName
@@ -115,81 +115,81 @@ and a boolean to check if the value has been set.
 SetDomain sets Domain field to given value.
 
 
-### GetStackRevID
+### GetStackRevId
 
-`func (o *NewAppInstanceInput) GetStackRevID() int32`
+`func (o *NewAppInstanceInput) GetStackRevId() int32`
 
-GetStackRevID returns the StackRevID field if non-nil, zero value otherwise.
+GetStackRevId returns the StackRevId field if non-nil, zero value otherwise.
 
-### GetStackRevIDOk
+### GetStackRevIdOk
 
-`func (o *NewAppInstanceInput) GetStackRevIDOk() (*int32, bool)`
+`func (o *NewAppInstanceInput) GetStackRevIdOk() (*int32, bool)`
 
-GetStackRevIDOk returns a tuple with the StackRevID field if it's non-nil, zero value otherwise
+GetStackRevIdOk returns a tuple with the StackRevId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStackRevID
+### SetStackRevId
 
-`func (o *NewAppInstanceInput) SetStackRevID(v int32)`
+`func (o *NewAppInstanceInput) SetStackRevId(v int32)`
 
-SetStackRevID sets StackRevID field to given value.
+SetStackRevId sets StackRevId field to given value.
 
 
 ### GetServices
 
-`func (o *NewAppInstanceInput) GetServices() []NewAppServiceInput`
+`func (o *NewAppInstanceInput) GetServices() []CreateAppServiceInput`
 
 GetServices returns the Services field if non-nil, zero value otherwise.
 
 ### GetServicesOk
 
-`func (o *NewAppInstanceInput) GetServicesOk() (*[]NewAppServiceInput, bool)`
+`func (o *NewAppInstanceInput) GetServicesOk() (*[]CreateAppServiceInput, bool)`
 
 GetServicesOk returns a tuple with the Services field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetServices
 
-`func (o *NewAppInstanceInput) SetServices(v []NewAppServiceInput)`
+`func (o *NewAppInstanceInput) SetServices(v []CreateAppServiceInput)`
 
 SetServices sets Services field to given value.
 
 
-### GetClusterID
+### GetClusterId
 
-`func (o *NewAppInstanceInput) GetClusterID() int32`
+`func (o *NewAppInstanceInput) GetClusterId() int32`
 
-GetClusterID returns the ClusterID field if non-nil, zero value otherwise.
+GetClusterId returns the ClusterId field if non-nil, zero value otherwise.
 
-### GetClusterIDOk
+### GetClusterIdOk
 
-`func (o *NewAppInstanceInput) GetClusterIDOk() (*int32, bool)`
+`func (o *NewAppInstanceInput) GetClusterIdOk() (*int32, bool)`
 
-GetClusterIDOk returns a tuple with the ClusterID field if it's non-nil, zero value otherwise
+GetClusterIdOk returns a tuple with the ClusterId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetClusterID
+### SetClusterId
 
-`func (o *NewAppInstanceInput) SetClusterID(v int32)`
+`func (o *NewAppInstanceInput) SetClusterId(v int32)`
 
-SetClusterID sets ClusterID field to given value.
+SetClusterId sets ClusterId field to given value.
 
-### HasClusterID
+### HasClusterId
 
-`func (o *NewAppInstanceInput) HasClusterID() bool`
+`func (o *NewAppInstanceInput) HasClusterId() bool`
 
-HasClusterID returns a boolean if a field has been set.
+HasClusterId returns a boolean if a field has been set.
 
-### SetClusterIDNil
+### SetClusterIdNil
 
-`func (o *NewAppInstanceInput) SetClusterIDNil(b bool)`
+`func (o *NewAppInstanceInput) SetClusterIdNil(b bool)`
 
- SetClusterIDNil sets the value for ClusterID to be an explicit nil
+ SetClusterIdNil sets the value for ClusterId to be an explicit nil
 
-### UnsetClusterID
-`func (o *NewAppInstanceInput) UnsetClusterID()`
+### UnsetClusterId
+`func (o *NewAppInstanceInput) UnsetClusterId()`
 
-UnsetClusterID ensures that no value is present for ClusterID, not even an explicit nil
+UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
 ### GetNewCluster
 
 `func (o *NewAppInstanceInput) GetNewCluster() NewManagedClusterInput`
@@ -215,96 +215,96 @@ SetNewCluster sets NewCluster field to given value.
 
 HasNewCluster returns a boolean if a field has been set.
 
-### GetEnvID
+### GetEnvId
 
-`func (o *NewAppInstanceInput) GetEnvID() int32`
+`func (o *NewAppInstanceInput) GetEnvId() int32`
 
-GetEnvID returns the EnvID field if non-nil, zero value otherwise.
+GetEnvId returns the EnvId field if non-nil, zero value otherwise.
 
-### GetEnvIDOk
+### GetEnvIdOk
 
-`func (o *NewAppInstanceInput) GetEnvIDOk() (*int32, bool)`
+`func (o *NewAppInstanceInput) GetEnvIdOk() (*int32, bool)`
 
-GetEnvIDOk returns a tuple with the EnvID field if it's non-nil, zero value otherwise
+GetEnvIdOk returns a tuple with the EnvId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEnvID
+### SetEnvId
 
-`func (o *NewAppInstanceInput) SetEnvID(v int32)`
+`func (o *NewAppInstanceInput) SetEnvId(v int32)`
 
-SetEnvID sets EnvID field to given value.
+SetEnvId sets EnvId field to given value.
 
 
-### GetCiIntegrationID
+### GetCiIntegrationId
 
-`func (o *NewAppInstanceInput) GetCiIntegrationID() int32`
+`func (o *NewAppInstanceInput) GetCiIntegrationId() int32`
 
-GetCiIntegrationID returns the CiIntegrationID field if non-nil, zero value otherwise.
+GetCiIntegrationId returns the CiIntegrationId field if non-nil, zero value otherwise.
 
-### GetCiIntegrationIDOk
+### GetCiIntegrationIdOk
 
-`func (o *NewAppInstanceInput) GetCiIntegrationIDOk() (*int32, bool)`
+`func (o *NewAppInstanceInput) GetCiIntegrationIdOk() (*int32, bool)`
 
-GetCiIntegrationIDOk returns a tuple with the CiIntegrationID field if it's non-nil, zero value otherwise
+GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCiIntegrationID
+### SetCiIntegrationId
 
-`func (o *NewAppInstanceInput) SetCiIntegrationID(v int32)`
+`func (o *NewAppInstanceInput) SetCiIntegrationId(v int32)`
 
-SetCiIntegrationID sets CiIntegrationID field to given value.
+SetCiIntegrationId sets CiIntegrationId field to given value.
 
-### HasCiIntegrationID
+### HasCiIntegrationId
 
-`func (o *NewAppInstanceInput) HasCiIntegrationID() bool`
+`func (o *NewAppInstanceInput) HasCiIntegrationId() bool`
 
-HasCiIntegrationID returns a boolean if a field has been set.
+HasCiIntegrationId returns a boolean if a field has been set.
 
-### SetCiIntegrationIDNil
+### SetCiIntegrationIdNil
 
-`func (o *NewAppInstanceInput) SetCiIntegrationIDNil(b bool)`
+`func (o *NewAppInstanceInput) SetCiIntegrationIdNil(b bool)`
 
- SetCiIntegrationIDNil sets the value for CiIntegrationID to be an explicit nil
+ SetCiIntegrationIdNil sets the value for CiIntegrationId to be an explicit nil
 
-### UnsetCiIntegrationID
-`func (o *NewAppInstanceInput) UnsetCiIntegrationID()`
+### UnsetCiIntegrationId
+`func (o *NewAppInstanceInput) UnsetCiIntegrationId()`
 
-UnsetCiIntegrationID ensures that no value is present for CiIntegrationID, not even an explicit nil
-### GetRegistryIntegrationID
+UnsetCiIntegrationId ensures that no value is present for CiIntegrationId, not even an explicit nil
+### GetRegistryIntegrationId
 
-`func (o *NewAppInstanceInput) GetRegistryIntegrationID() int32`
+`func (o *NewAppInstanceInput) GetRegistryIntegrationId() int32`
 
-GetRegistryIntegrationID returns the RegistryIntegrationID field if non-nil, zero value otherwise.
+GetRegistryIntegrationId returns the RegistryIntegrationId field if non-nil, zero value otherwise.
 
-### GetRegistryIntegrationIDOk
+### GetRegistryIntegrationIdOk
 
-`func (o *NewAppInstanceInput) GetRegistryIntegrationIDOk() (*int32, bool)`
+`func (o *NewAppInstanceInput) GetRegistryIntegrationIdOk() (*int32, bool)`
 
-GetRegistryIntegrationIDOk returns a tuple with the RegistryIntegrationID field if it's non-nil, zero value otherwise
+GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRegistryIntegrationID
+### SetRegistryIntegrationId
 
-`func (o *NewAppInstanceInput) SetRegistryIntegrationID(v int32)`
+`func (o *NewAppInstanceInput) SetRegistryIntegrationId(v int32)`
 
-SetRegistryIntegrationID sets RegistryIntegrationID field to given value.
+SetRegistryIntegrationId sets RegistryIntegrationId field to given value.
 
-### HasRegistryIntegrationID
+### HasRegistryIntegrationId
 
-`func (o *NewAppInstanceInput) HasRegistryIntegrationID() bool`
+`func (o *NewAppInstanceInput) HasRegistryIntegrationId() bool`
 
-HasRegistryIntegrationID returns a boolean if a field has been set.
+HasRegistryIntegrationId returns a boolean if a field has been set.
 
-### SetRegistryIntegrationIDNil
+### SetRegistryIntegrationIdNil
 
-`func (o *NewAppInstanceInput) SetRegistryIntegrationIDNil(b bool)`
+`func (o *NewAppInstanceInput) SetRegistryIntegrationIdNil(b bool)`
 
- SetRegistryIntegrationIDNil sets the value for RegistryIntegrationID to be an explicit nil
+ SetRegistryIntegrationIdNil sets the value for RegistryIntegrationId to be an explicit nil
 
-### UnsetRegistryIntegrationID
-`func (o *NewAppInstanceInput) UnsetRegistryIntegrationID()`
+### UnsetRegistryIntegrationId
+`func (o *NewAppInstanceInput) UnsetRegistryIntegrationId()`
 
-UnsetRegistryIntegrationID ensures that no value is present for RegistryIntegrationID, not even an explicit nil
+UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

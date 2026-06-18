@@ -3,7 +3,11 @@ info:
   description: |
     Public REST API for customer SDKs and code integrations.
     GraphQL remains internal for the dashboard. This contract is the versioned public surface.
-  title: Wodby 2.0 Public API
+  license:
+    name: Proprietary
+    url: https://wodby.com/legal
+  termsOfService: https://wodby.com/legal
+  title: Wodby 2 Public API
   version: 1.0.0
 servers:
 - url: /v1
@@ -11,29 +15,50 @@ security:
 - apiKeyHeader: []
 - accessTokenHeader: []
 tags:
-- name: orgs
-- name: projects
-- name: apps
-- name: app-instances
-- name: app-services
-- name: app-deployments
-- name: app-builds
-- name: clusters
-- name: databases
-- name: integrations
-- name: integration-kinds
-- name: providers
-- name: services
-- name: stacks
-- name: backups
-- name: imports
-- name: tasks
-- name: task-steps
-- name: app-routes
-- name: envs
+- description: "Organizations that own projects, resources, and access scopes."
+  name: orgs
+- description: Project containers within organizations.
+  name: projects
+- description: Applications and app-level configuration.
+  name: apps
+- description: Deployable application instances.
+  name: app-instances
+- description: Runtime services that belong to app instances.
+  name: app-services
+- description: Deployment records and deployment actions.
+  name: app-deployments
+- description: Build records and CI build ingestion.
+  name: app-builds
+- description: Kubernetes clusters connected to or managed by Wodby.
+  name: clusters
+- description: Database instances managed through provider integrations.
+  name: databases
+- description: Connected provider accounts and credentials.
+  name: integrations
+- description: Provider capability metadata and option lists.
+  name: integration-kinds
+- description: Provider catalog entries and revisions.
+  name: providers
+- description: Service catalog entries and service options.
+  name: services
+- description: Stack catalog entries and stack revisions.
+  name: stacks
+- description: Backup records and backup creation.
+  name: backups
+- description: Import records and import creation.
+  name: imports
+- description: User-visible task records and task actions.
+  name: tasks
+- description: Task step logs and log URLs.
+  name: task-steps
+- description: HTTP routing rules for app instances.
+  name: app-routes
+- description: Organization-level environment definitions.
+  name: envs
 paths:
   /openapi.yaml:
     get:
+      operationId: getOpenApiYaml
       responses:
         "200":
           content:
@@ -41,10 +66,23 @@ paths:
               schema:
                 type: string
           description: OpenAPI YAML
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       security: []
       summary: Get OpenAPI YAML
   /openapi.json:
     get:
+      operationId: getOpenApiJson
       responses:
         "200":
           content:
@@ -52,10 +90,23 @@ paths:
               schema:
                 type: object
           description: OpenAPI JSON
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       security: []
       summary: Get OpenAPI JSON
   /orgs:
     get:
+      operationId: listOrgs
       responses:
         "200":
           content:
@@ -65,10 +116,23 @@ paths:
                   $ref: '#/components/schemas/Org'
                 type: array
           description: List of orgs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List orgs
       tags:
       - orgs
     post:
+      operationId: createOrg
       requestBody:
         content:
           application/json:
@@ -82,11 +146,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Org'
           description: Created org
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create org
       tags:
       - orgs
   /orgs/{id}:
     delete:
+      operationId: deleteOrg
       parameters:
       - explode: false
         in: path
@@ -102,10 +179,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete org
       tags:
       - orgs
+    get:
+      operationId: getOrg
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org'
+          description: Org
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get org
+      tags:
+      - orgs
     put:
+      operationId: updateOrg
       parameters:
       - explode: false
         in: path
@@ -127,11 +249,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Org'
           description: Updated org
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update org
       tags:
       - orgs
   /projects:
     get:
+      operationId: listProjects
       parameters:
       - explode: true
         in: query
@@ -149,10 +284,23 @@ paths:
                   $ref: '#/components/schemas/Project'
                 type: array
           description: List of projects
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List projects
       tags:
       - projects
     post:
+      operationId: createProject
       requestBody:
         content:
           application/json:
@@ -166,11 +314,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
           description: Created project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create project
       tags:
       - projects
   /projects/by-name/{name}:
     get:
+      operationId: getProjectByName
       parameters:
       - explode: false
         in: path
@@ -193,11 +354,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
           description: Project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get project by name
       tags:
       - projects
   /projects/{id}:
     delete:
+      operationId: deleteProject
       parameters:
       - explode: false
         in: path
@@ -213,10 +387,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete project
       tags:
       - projects
+    get:
+      operationId: getProject
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: Project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get project
+      tags:
+      - projects
     put:
+      operationId: updateProject
       parameters:
       - explode: false
         in: path
@@ -238,11 +457,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
           description: Updated project
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update project
       tags:
       - projects
   /apps:
     get:
+      operationId: listApps
       parameters:
       - explode: true
         in: query
@@ -275,10 +507,23 @@ paths:
                   $ref: '#/components/schemas/App'
                 type: array
           description: List of apps
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List apps
       tags:
       - apps
     post:
+      operationId: createApp
       requestBody:
         content:
           application/json:
@@ -292,11 +537,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: Created app
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create app
       tags:
       - apps
   /apps/by-name/{name}:
     get:
+      operationId: getAppByName
       parameters:
       - explode: false
         in: path
@@ -319,11 +577,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: App
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get app by name
       tags:
       - apps
   /apps/{id}:
     delete:
+      operationId: deleteApp
       parameters:
       - explode: false
         in: path
@@ -339,10 +610,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete app
       tags:
       - apps
     get:
+      operationId: getApp
       parameters:
       - explode: false
         in: path
@@ -358,10 +642,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: App
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get app
       tags:
       - apps
     put:
+      operationId: updateApp
       parameters:
       - explode: false
         in: path
@@ -383,11 +680,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: Updated app
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update app
       tags:
       - apps
   /app-instances:
     get:
+      operationId: listAppInstances
       parameters:
       - explode: true
         in: query
@@ -434,10 +744,23 @@ paths:
                   $ref: '#/components/schemas/AppInstance'
                 type: array
           description: List of app instances
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List app instances
       tags:
       - app-instances
     post:
+      operationId: createAppInstance
       requestBody:
         content:
           application/json:
@@ -451,11 +774,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppInstance'
           description: Created app instance
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create app instance
       tags:
       - app-instances
   /app-instances/by-name/{appName}/{instanceName}:
     get:
+      operationId: getAppInstanceByName
       parameters:
       - explode: false
         in: path
@@ -485,11 +821,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppInstance'
           description: App instance
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get app instance by app and instance name
       tags:
       - app-instances
   /app-instances/{id}:
     delete:
+      operationId: deleteAppInstance
       parameters:
       - explode: false
         in: path
@@ -513,10 +862,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete app instance
       tags:
       - app-instances
     get:
+      operationId: getAppInstance
       parameters:
       - explode: false
         in: path
@@ -532,10 +894,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppInstance'
           description: App instance
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get app instance
       tags:
       - app-instances
     put:
+      operationId: updateAppInstance
       parameters:
       - explode: false
         in: path
@@ -557,11 +932,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppInstance'
           description: Updated app instance
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update app instance
       tags:
       - app-instances
   /app-services:
     get:
+      operationId: listAppServices
       parameters:
       - explode: true
         in: query
@@ -579,11 +967,24 @@ paths:
                   $ref: '#/components/schemas/AppService'
                 type: array
           description: List of app services
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List app services
       tags:
       - app-services
   /app-services/{id}:
     get:
+      operationId: getAppService
       parameters:
       - explode: false
         in: path
@@ -599,10 +1000,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppService'
           description: App service
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get app service
       tags:
       - app-services
     put:
+      operationId: updateAppService
       parameters:
       - explode: false
         in: path
@@ -624,11 +1038,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppService'
           description: Updated app service
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update app service
       tags:
       - app-services
   /app-services/{id}/actions/{name}:
     post:
+      operationId: runAppServiceAction
       parameters:
       - explode: false
         in: path
@@ -651,11 +1078,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Action task result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Run app service action
       tags:
       - app-services
   /app-deployments:
     get:
+      operationId: listAppDeployments
       parameters:
       - explode: true
         in: query
@@ -689,10 +1129,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppDeploymentsResponse'
           description: List of deployments
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List app deployments
       tags:
       - app-deployments
     post:
+      operationId: createAppDeployment
       requestBody:
         content:
           application/json:
@@ -706,11 +1159,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppDeployment'
           description: Created deployment
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create deployment
       tags:
       - app-deployments
   /app-deployments/from-ci:
     post:
+      operationId: createAppDeploymentFromCi
       requestBody:
         content:
           application/json:
@@ -724,11 +1190,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppDeployment'
           description: Created deployment
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create deployment from CI
       tags:
       - app-deployments
   /app-deployments/{id}:
     get:
+      operationId: getAppDeployment
       parameters:
       - explode: false
         in: path
@@ -744,11 +1223,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppDeployment'
           description: Deployment
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get deployment
       tags:
       - app-deployments
   /app-deployments/{id}/redeploy:
     post:
+      operationId: redeployAppDeployment
       parameters:
       - explode: false
         in: path
@@ -764,11 +1256,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppDeployment'
           description: Created deployment
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Redeploy deployment
       tags:
       - app-deployments
   /app-builds:
     get:
+      operationId: listAppBuilds
       parameters:
       - explode: true
         in: query
@@ -802,10 +1307,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppBuildsResponse'
           description: List of builds
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List app builds
       tags:
       - app-builds
     post:
+      operationId: createAppBuild
       requestBody:
         content:
           application/json:
@@ -821,11 +1339,24 @@ paths:
                   $ref: '#/components/schemas/AppBuild'
                 type: array
           description: Created build list
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create build
       tags:
       - app-builds
   /app-builds/from-ci:
     post:
+      operationId: createAppBuildFromCi
       requestBody:
         content:
           application/json:
@@ -839,11 +1370,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppBuild'
           description: Created build
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create build from CI
       tags:
       - app-builds
   /app-builds/{id}:
     get:
+      operationId: getAppBuild
       parameters:
       - explode: false
         in: path
@@ -859,11 +1403,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppBuild'
           description: Build
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get build
       tags:
       - app-builds
   /app-builds/{id}/docker-registry-credentials:
     get:
+      operationId: getAppBuildDockerRegistryCredentials
       parameters:
       - explode: false
         in: path
@@ -879,11 +1436,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/DockerRegistryCredentials'
           description: Docker registry credentials
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get Docker registry credentials for build
       tags:
       - app-builds
   /app-builds/{id}/deploy:
     post:
+      operationId: deployAppBuild
       parameters:
       - explode: false
         in: path
@@ -899,11 +1469,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppDeployment'
           description: Created deployment
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Deploy build
       tags:
       - app-builds
   /app-builds/{id}/void:
     post:
+      operationId: voidAppBuild
       parameters:
       - explode: false
         in: path
@@ -919,11 +1502,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppBuild'
           description: Updated build
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Void build images
       tags:
       - app-builds
   /clusters:
     get:
+      operationId: listClusters
       parameters:
       - explode: true
         in: query
@@ -956,10 +1552,23 @@ paths:
                   $ref: '#/components/schemas/Cluster'
                 type: array
           description: List of clusters
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List clusters
       tags:
       - clusters
     post:
+      operationId: createCluster
       requestBody:
         content:
           application/json:
@@ -973,11 +1582,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/Cluster'
           description: Created cluster
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create cluster
+      tags:
+      - clusters
+  /clusters/by-name/{name}:
+    get:
+      operationId: getClusterByName
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Cluster
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get cluster by name
       tags:
       - clusters
   /clusters/{id}:
     delete:
+      operationId: deleteCluster
       parameters:
       - explode: false
         in: path
@@ -1001,10 +1663,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete cluster
       tags:
       - clusters
     get:
+      operationId: getCluster
       parameters:
       - explode: false
         in: path
@@ -1020,10 +1695,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Cluster'
           description: Cluster
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get cluster
       tags:
       - clusters
     put:
+      operationId: updateCluster
       parameters:
       - explode: false
         in: path
@@ -1045,11 +1733,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Cluster'
           description: Updated cluster
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update cluster
       tags:
       - clusters
   /databases:
     get:
+      operationId: listDatabases
       parameters:
       - explode: true
         in: query
@@ -1082,10 +1783,23 @@ paths:
                   $ref: '#/components/schemas/Database'
                 type: array
           description: List of databases
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List databases
       tags:
       - databases
     post:
+      operationId: createDatabase
       requestBody:
         content:
           application/json:
@@ -1099,11 +1813,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/Database'
           description: Created database
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create database
+      tags:
+      - databases
+  /databases/by-name/{name}:
+    get:
+      operationId: getDatabaseByName
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+          description: Database
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get database by name
       tags:
       - databases
   /databases/{id}:
     delete:
+      operationId: deleteDatabase
       parameters:
       - explode: false
         in: path
@@ -1119,10 +1886,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete database
       tags:
       - databases
     get:
+      operationId: getDatabase
       parameters:
       - explode: false
         in: path
@@ -1138,10 +1918,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Database'
           description: Database
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get database
       tags:
       - databases
     put:
+      operationId: updateDatabase
       parameters:
       - explode: false
         in: path
@@ -1163,11 +1956,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Database'
           description: Updated database
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update database
       tags:
       - databases
   /integrations:
     get:
+      operationId: listIntegrations
       parameters:
       - explode: true
         in: query
@@ -1201,10 +2007,23 @@ paths:
                   $ref: '#/components/schemas/Integration'
                 type: array
           description: List of integrations
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List integrations
       tags:
       - integrations
     post:
+      operationId: createIntegration
       requestBody:
         content:
           application/json:
@@ -1218,11 +2037,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Integration'
           description: Created integration
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create integration
       tags:
       - integrations
   /integrations/by-name/{name}:
     get:
+      operationId: getIntegrationByName
       parameters:
       - explode: false
         in: path
@@ -1245,11 +2077,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Integration'
           description: Integration
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get integration by name
       tags:
       - integrations
-  /integrations/{id}/scopes:
+  /integrations/{id}/options/scopes:
     get:
+      operationId: listIntegrationScopes
       parameters:
       - explode: false
         in: path
@@ -1267,11 +2112,24 @@ paths:
                   $ref: '#/components/schemas/IntegrationScope'
                 type: array
           description: Integration scopes
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List integration scopes
       tags:
       - integrations
-  /integrations/{id}/remote-git-repos:
+  /integrations/{id}/options/remote-git-repos:
     get:
+      operationId: listIntegrationRemoteGitRepos
       parameters:
       - explode: false
         in: path
@@ -1289,11 +2147,24 @@ paths:
                   $ref: '#/components/schemas/RemoteGitRepo'
                 type: array
           description: Remote Git repositories
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List remote Git repositories
       tags:
       - integrations
-  /integrations/{id}/remote-git-repo-branches:
+  /integrations/{id}/options/remote-git-repo-branches:
     get:
+      operationId: listIntegrationRemoteGitRepoBranches
       parameters:
       - explode: false
         in: path
@@ -1318,11 +2189,24 @@ paths:
                   type: string
                 type: array
           description: Branch names
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List remote Git repository branches
       tags:
       - integrations
-  /integrations/{id}/remote-git-repo-tags:
+  /integrations/{id}/options/remote-git-repo-tags:
     get:
+      operationId: listIntegrationRemoteGitRepoTags
       parameters:
       - explode: false
         in: path
@@ -1347,11 +2231,24 @@ paths:
                   type: string
                 type: array
           description: Tag names
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List remote Git repository tags
       tags:
       - integrations
-  /integrations/{id}/kube-regions:
+  /integrations/{id}/options/kube-regions:
     get:
+      operationId: listIntegrationKubeRegions
       parameters:
       - explode: false
         in: path
@@ -1369,11 +2266,24 @@ paths:
                   $ref: '#/components/schemas/GenericObject'
                 type: array
           description: Kubernetes regions
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List Kubernetes regions
       tags:
       - integrations
-  /integrations/{id}/kube-zones:
+  /integrations/{id}/options/kube-zones:
     get:
+      operationId: listIntegrationKubeZones
       parameters:
       - explode: false
         in: path
@@ -1391,11 +2301,24 @@ paths:
                   $ref: '#/components/schemas/GenericObject'
                 type: array
           description: Kubernetes zones
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List Kubernetes zones
       tags:
       - integrations
-  /integrations/{id}/kube-machine-types:
+  /integrations/{id}/options/kube-machine-types:
     get:
+      operationId: listIntegrationKubeMachineTypes
       parameters:
       - explode: false
         in: path
@@ -1420,11 +2343,24 @@ paths:
                   $ref: '#/components/schemas/GenericObject'
                 type: array
           description: Kubernetes machine types
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List Kubernetes machine types
       tags:
       - integrations
-  /integrations/{id}/kube-versions:
+  /integrations/{id}/options/kube-versions:
     get:
+      operationId: listIntegrationKubeVersions
       parameters:
       - explode: false
         in: path
@@ -1449,11 +2385,24 @@ paths:
                   $ref: '#/components/schemas/KubeVersion'
                 type: array
           description: Kubernetes versions
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List Kubernetes versions
       tags:
       - integrations
-  /integrations/{id}/kube-settings:
+  /integrations/{id}/options/kube-settings:
     get:
+      operationId: getIntegrationKubeSettings
       parameters:
       - explode: false
         in: path
@@ -1469,11 +2418,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericObject'
           description: Kubernetes settings
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get Kubernetes settings
       tags:
       - integrations
-  /integrations/{id}/storage-buckets:
+  /integrations/{id}/options/storage-buckets:
     get:
+      operationId: listIntegrationStorageBuckets
       parameters:
       - explode: false
         in: path
@@ -1491,11 +2453,24 @@ paths:
                   type: string
                 type: array
           description: Bucket names
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List storage buckets
       tags:
       - integrations
-  /integrations/{id}/storage-classes:
+  /integrations/{id}/options/storage-classes:
     get:
+      operationId: listIntegrationStorageClasses
       parameters:
       - explode: false
         in: path
@@ -1513,11 +2488,24 @@ paths:
                   type: string
                 type: array
           description: Storage class names
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List storage classes
       tags:
       - integrations
   /integrations/{id}:
     delete:
+      operationId: deleteIntegration
       parameters:
       - explode: false
         in: path
@@ -1533,10 +2521,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete integration
       tags:
       - integrations
+    get:
+      operationId: getIntegration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+          description: Integration
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get integration
+      tags:
+      - integrations
     put:
+      operationId: updateIntegration
       parameters:
       - explode: false
         in: path
@@ -1558,11 +2591,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Integration'
           description: Updated integration
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update integration
       tags:
       - integrations
   /integration-kinds/{id}/database-types:
     get:
+      operationId: listIntegrationKindDatabaseTypes
       parameters:
       - explode: false
         in: path
@@ -1580,11 +2626,24 @@ paths:
                   $ref: '#/components/schemas/DatabaseType'
                 type: array
           description: Database types
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List database types
       tags:
       - integration-kinds
   /integration-kinds/{id}/database-regions:
     get:
+      operationId: listIntegrationKindDatabaseRegions
       parameters:
       - explode: false
         in: path
@@ -1624,11 +2683,24 @@ paths:
                   $ref: '#/components/schemas/GenericObject'
                 type: array
           description: Database regions
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List database regions
       tags:
       - integration-kinds
   /integration-kinds/{id}/database-versions:
     get:
+      operationId: listIntegrationKindDatabaseVersions
       parameters:
       - explode: false
         in: path
@@ -1653,11 +2725,24 @@ paths:
                   $ref: '#/components/schemas/DatabaseVersion'
                 type: array
           description: Database versions
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List database versions
       tags:
       - integration-kinds
   /integration-kinds/{id}/database-machine-types:
     get:
+      operationId: listIntegrationKindDatabaseMachineTypes
       parameters:
       - explode: false
         in: path
@@ -1711,11 +2796,24 @@ paths:
                   $ref: '#/components/schemas/GenericObject'
                 type: array
           description: Database machine types
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List database machine types
       tags:
       - integration-kinds
   /integration-kinds/{id}/database-settings:
     get:
+      operationId: getIntegrationKindDatabaseSettings
       parameters:
       - explode: false
         in: path
@@ -1738,11 +2836,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericObject'
           description: Database settings
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get database settings
       tags:
       - integration-kinds
   /providers:
     get:
+      operationId: listProviders
       parameters:
       - explode: true
         in: query
@@ -1798,11 +2909,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProvidersResponse'
           description: Providers response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List providers
       tags:
       - providers
   /providers/by-name/{name}:
     get:
+      operationId: getProviderByName
       parameters:
       - explode: false
         in: path
@@ -1818,11 +2942,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/Provider'
           description: Provider
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get provider by name
+      tags:
+      - providers
+  /providers/{id}:
+    get:
+      operationId: getProvider
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+          description: Provider
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get provider
       tags:
       - providers
   /provider-revisions/{id}:
     get:
+      operationId: getProviderRevision
       parameters:
       - explode: false
         in: path
@@ -1838,11 +3008,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProviderRevision'
           description: Provider revision
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get provider revision
       tags:
       - providers
   /services:
     get:
+      operationId: listServices
       parameters:
       - explode: true
         in: query
@@ -1891,11 +3074,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServicesResponse'
           description: Services response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List services
       tags:
       - services
   /services/by-name/{name}:
     get:
+      operationId: getServiceByName
       parameters:
       - explode: false
         in: path
@@ -1918,11 +3114,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/Service'
           description: Service
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get service by name
       tags:
       - services
-  /services/{name}/link-candidates:
+  /services/{id}:
     get:
+      operationId: getService
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: Service
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get service
+      tags:
+      - services
+  /services/{name}/options/link-candidates:
+    get:
+      operationId: listServiceLinkCandidates
       parameters:
       - explode: false
         in: path
@@ -1940,11 +3182,24 @@ paths:
                   $ref: '#/components/schemas/GenericObject'
                 type: array
           description: Service link candidates
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List service link candidates
       tags:
       - services
   /service-revisions/{id}:
     get:
+      operationId: getServiceRevision
       parameters:
       - explode: false
         in: path
@@ -1960,11 +3215,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceRevision'
           description: Service revision
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get service revision
       tags:
       - services
   /stacks:
     get:
+      operationId: listStacks
       parameters:
       - explode: true
         in: query
@@ -2013,11 +3281,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/StacksResponse'
           description: Stacks response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List stacks
       tags:
       - stacks
   /stacks/by-name/{name}:
     get:
+      operationId: getStackByName
       parameters:
       - explode: false
         in: path
@@ -2040,11 +3321,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/Stack'
           description: Stack
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get stack by name
+      tags:
+      - stacks
+  /stacks/{id}:
+    get:
+      operationId: getStack
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Stack
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get stack
       tags:
       - stacks
   /stack-revisions/{id}:
     get:
+      operationId: getStackRevision
       parameters:
       - explode: false
         in: path
@@ -2060,11 +3387,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/StackRevision'
           description: Stack revision
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get stack revision
       tags:
       - stacks
   /stack-revisions/{id}/services:
     get:
+      operationId: listStackRevisionServices
       parameters:
       - explode: false
         in: path
@@ -2082,11 +3422,24 @@ paths:
                   $ref: '#/components/schemas/StackService'
                 type: array
           description: Stack services
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List stack services
       tags:
       - stacks
   /backups:
     get:
+      operationId: listBackups
       parameters:
       - explode: true
         in: query
@@ -2132,10 +3485,23 @@ paths:
                   $ref: '#/components/schemas/Backup'
                 type: array
           description: List of backups
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List backups
       tags:
       - backups
     post:
+      operationId: createBackup
       requestBody:
         content:
           application/json:
@@ -2149,11 +3515,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Backup task result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create backup
       tags:
       - backups
   /backups/{id}:
     get:
+      operationId: getBackup
       parameters:
       - explode: false
         in: path
@@ -2169,11 +3548,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Backup'
           description: Backup
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get backup
       tags:
       - backups
   /imports:
     get:
+      operationId: listImports
       parameters:
       - explode: true
         in: query
@@ -2212,15 +3604,28 @@ paths:
                   $ref: '#/components/schemas/Import'
                 type: array
           description: List of imports
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List imports
       tags:
       - imports
     post:
+      operationId: createImport
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewImportInput'
+              $ref: '#/components/schemas/CreateImportInput'
         required: true
       responses:
         "201":
@@ -2229,11 +3634,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Import task result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create import
       tags:
       - imports
   /imports/{id}:
     get:
+      operationId: getImport
       parameters:
       - explode: false
         in: path
@@ -2249,11 +3667,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Import'
           description: Import
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get import
       tags:
       - imports
   /tasks:
     get:
+      operationId: listTasks
       parameters:
       - explode: true
         in: query
@@ -2384,11 +3815,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/TasksResponse'
           description: Tasks response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List tasks
       tags:
       - tasks
   /tasks/{id}:
     get:
+      operationId: getTask
       parameters:
       - explode: false
         in: path
@@ -2404,11 +3848,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Task'
           description: Task
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get task
       tags:
       - tasks
   /tasks/{id}/cancel:
     post:
+      operationId: cancelTask
       parameters:
       - explode: false
         in: path
@@ -2424,11 +3881,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Cancel result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Cancel task
       tags:
       - tasks
   /tasks/{id}/repeat:
     post:
+      operationId: repeatTask
       parameters:
       - explode: false
         in: path
@@ -2450,11 +3920,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Repeat task result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Repeat task
       tags:
       - tasks
   /task-steps/{id}/logs:
     get:
+      operationId: getTaskStepLogs
       parameters:
       - explode: false
         in: path
@@ -2470,11 +3953,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/TaskStepLogs'
           description: Task step logs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get task step logs
       tags:
       - task-steps
   /task-steps/{id}/log-url:
     get:
+      operationId: getTaskStepLogUrl
       parameters:
       - explode: false
         in: path
@@ -2490,11 +3986,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/URLResponse'
           description: Task step log URL
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get task step log URL
       tags:
       - task-steps
   /app-routes:
     get:
+      operationId: listAppRoutes
       parameters:
       - explode: true
         in: query
@@ -2512,10 +4021,23 @@ paths:
                   $ref: '#/components/schemas/AppRoute'
                 type: array
           description: List of app routes
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List app routes
       tags:
       - app-routes
     post:
+      operationId: createAppRoute
       requestBody:
         content:
           application/json:
@@ -2529,11 +4051,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppRoute'
           description: Created app route
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create app route
       tags:
       - app-routes
   /app-routes/{id}:
     delete:
+      operationId: deleteAppRoute
       parameters:
       - explode: false
         in: path
@@ -2549,10 +4084,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete app route
       tags:
       - app-routes
     get:
+      operationId: getAppRoute
       parameters:
       - explode: false
         in: path
@@ -2568,10 +4116,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppRoute'
           description: App route
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get app route
       tags:
       - app-routes
     put:
+      operationId: updateAppRoute
       parameters:
       - explode: false
         in: path
@@ -2593,11 +4154,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/AppRoute'
           description: Updated app route
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update app route
       tags:
       - app-routes
   /envs:
     get:
+      operationId: listEnvs
       parameters:
       - explode: true
         in: query
@@ -2615,10 +4189,23 @@ paths:
                   $ref: '#/components/schemas/Env'
                 type: array
           description: List of envs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: List envs
       tags:
       - envs
     post:
+      operationId: createEnv
       requestBody:
         content:
           application/json:
@@ -2632,11 +4219,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/Env'
           description: Created env
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Create env
+      tags:
+      - envs
+  /envs/by-name/{name}:
+    get:
+      operationId: getEnvByName
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: orgId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Env'
+          description: Env
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get env by name
       tags:
       - envs
   /envs/{id}:
     delete:
+      operationId: deleteEnv
       parameters:
       - explode: false
         in: path
@@ -2652,10 +4292,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationResult'
           description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Delete env
       tags:
       - envs
     get:
+      operationId: getEnv
       parameters:
       - explode: false
         in: path
@@ -2671,10 +4324,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Env'
           description: Env
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Get env
       tags:
       - envs
     put:
+      operationId: updateEnv
       parameters:
       - explode: false
         in: path
@@ -2696,6 +4362,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Env'
           description: Updated env
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
       summary: Update env
       tags:
       - envs
@@ -2940,7 +4618,23 @@ components:
       schema:
         type: integer
       style: form
+  responses:
+    Error:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Error response
   schemas:
+    ErrorResponse:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
     OperationResult:
       example:
         success: true
@@ -4873,16 +6567,16 @@ components:
       type: object
     UpdateOrgRequest:
       example:
-        registryIntegrationID: 0
+        registryIntegrationId: 0
         title: title
-        ciIntegrationID: 6
+        ciIntegrationId: 6
       properties:
         title:
           type: string
-        registryIntegrationID:
+        registryIntegrationId:
           nullable: true
           type: integer
-        ciIntegrationID:
+        ciIntegrationId:
           nullable: true
           type: integer
       required:
@@ -4980,37 +6674,36 @@ components:
       - force
       type: object
     CreateBuildRequest:
-      description: Specify either appServiceId for one service or appServiceIds for
-        a multi-service build.
+      description: App service IDs to build.
       example:
-        appServiceId: 0
         appServiceIds:
-        - 6
-        - 6
+        - 0
+        - 0
       properties:
-        appServiceId:
-          type: integer
         appServiceIds:
           items:
             type: integer
+          minItems: 1
           type: array
+      required:
+      - appServiceIds
       type: object
     NewBuildFromCIInput:
       example:
-        appServiceID: 0
+        appServiceId: 0
         gitRef: gitRef
         buildNum: 6
         workflow: workflow
         provider: provider
         gitCommitAuthorEmail: gitCommitAuthorEmail
         postDeployment: postDeployment
-        buildID: buildID
+        buildId: buildId
         gitCommitAuthorName: gitCommitAuthorName
         gitCommitMessage: gitCommitMessage
         gitCommitSHA: gitCommitSHA
         gitRefType: gitRefType
       properties:
-        appServiceID:
+        appServiceId:
           type: integer
         gitCommitSHA:
           type: string
@@ -5020,7 +6713,7 @@ components:
           type: string
         buildNum:
           type: integer
-        buildID:
+        buildId:
           type: string
         workflow:
           nullable: true
@@ -5040,8 +6733,8 @@ components:
           nullable: true
           type: string
       required:
-      - appServiceID
-      - buildID
+      - appServiceId
+      - buildId
       - buildNum
       - gitCommitSHA
       - gitRef
@@ -5056,9 +6749,9 @@ components:
           name: name
         - image: image
           name: name
-        appBuildID: 0
+        appBuildId: 0
       properties:
-        appBuildID:
+        appBuildId:
           type: integer
         services:
           items:
@@ -5067,7 +6760,7 @@ components:
         skipPostDeployment:
           type: boolean
       required:
-      - appBuildID
+      - appBuildId
       - services
       - skipPostDeployment
       type: object
@@ -5106,8 +6799,8 @@ components:
           buildSourceType: buildSourceType
           template: template
           gitRef: gitRef
-          remoteGitRepoID: remoteGitRepoID
-          integrationID: 5
+          remoteGitRepoId: remoteGitRepoId
+          integrationId: 5
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version
@@ -5127,31 +6820,6 @@ components:
         buildSource:
           $ref: '#/components/schemas/BuildSourceInput'
       type: object
-    NewImportInput:
-      example:
-        appServiceID: 0
-        import:
-          backupID: 2
-          importName: importName
-          from:
-            appServiceID: 9
-            databaseDBID: 7
-            backupName: backupName
-          source: source
-          url: url
-        databaseDBID: 6
-      properties:
-        appServiceID:
-          nullable: true
-          type: integer
-        databaseDBID:
-          nullable: true
-          type: integer
-        import:
-          $ref: '#/components/schemas/ImportInput'
-      required:
-      - import
-      type: object
     RepeatTaskRequest:
       example:
         force: true
@@ -5166,25 +6834,25 @@ components:
         role: role
         name: name
         title: title
-        orgMembershipIDs:
+        orgMembershipIds:
         - 1
         - 1
-        orgID: 0
-        teamIDs:
+        orgId: 0
+        teamIds:
         - 6
         - 6
       properties:
-        orgID:
+        orgId:
           type: integer
         name:
           type: string
         title:
           type: string
-        teamIDs:
+        teamIds:
           items:
             type: integer
           type: array
-        orgMembershipIDs:
+        orgMembershipIds:
           items:
             type: integer
           type: array
@@ -5192,7 +6860,7 @@ components:
           type: string
       required:
       - name
-      - orgID
+      - orgId
       - title
       type: object
     UpdateProjectInput:
@@ -5206,7 +6874,7 @@ components:
       type: object
     NewAppInput:
       example:
-        registryIntegrationID: 9
+        registryIntegrationId: 9
         instanceName: instanceName
         services:
         - settings:
@@ -5215,22 +6883,22 @@ components:
           - name: name
             value: value
           database:
-            databaseDBID: 7
-            databaseID: 4
+            databaseDbId: 7
+            databaseId: 4
           imports:
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
@@ -5252,17 +6920,17 @@ components:
             buildSourceType: buildSourceType
             template: template
             gitRef: gitRef
-            remoteGitRepoID: remoteGitRepoID
-            integrationID: 5
+            remoteGitRepoId: remoteGitRepoId
+            integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
@@ -5276,22 +6944,22 @@ components:
           - name: name
             value: value
           database:
-            databaseDBID: 7
-            databaseID: 4
+            databaseDbId: 7
+            databaseId: 4
           imports:
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
@@ -5313,17 +6981,17 @@ components:
             buildSourceType: buildSourceType
             template: template
             gitRef: gitRef
-            remoteGitRepoID: remoteGitRepoID
-            integrationID: 5
+            remoteGitRepoId: remoteGitRepoId
+            integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
@@ -5331,11 +6999,11 @@ components:
             maxReplicas: 4
             minReplicas: 1
             averageCPU: 7
-        clusterID: 5
-        envID: 6
+        clusterId: 5
+        envId: 6
         title: title
-        orgID: 0
-        stackRevID: 1
+        orgId: 0
+        stackRevId: 1
         domain: domain
         newCluster:
           minNodeCount: 9
@@ -5346,10 +7014,10 @@ components:
           machineType: machineType
         name: name
         instanceTitle: instanceTitle
-        projectID: 6
-        ciIntegrationID: 8
+        projectId: 6
+        ciIntegrationId: 8
       properties:
-        orgID:
+        orgId:
           type: integer
         name:
           type: string
@@ -5361,45 +7029,45 @@ components:
           type: string
         domain:
           type: string
-        projectID:
+        projectId:
           nullable: true
           type: integer
-        stackRevID:
+        stackRevId:
           type: integer
         services:
           items:
-            $ref: '#/components/schemas/NewAppServiceInput'
+            $ref: '#/components/schemas/CreateAppServiceInput'
           type: array
-        clusterID:
+        clusterId:
           nullable: true
           type: integer
         newCluster:
           $ref: '#/components/schemas/NewManagedClusterInput'
-        envID:
+        envId:
           type: integer
-        ciIntegrationID:
+        ciIntegrationId:
           nullable: true
           type: integer
-        registryIntegrationID:
+        registryIntegrationId:
           nullable: true
           type: integer
       required:
       - domain
-      - envID
+      - envId
       - instanceName
       - instanceTitle
       - name
-      - orgID
+      - orgId
       - services
-      - stackRevID
+      - stackRevId
       - title
       type: object
     NewAppInstanceInput:
       example:
-        stackRevID: 6
-        registryIntegrationID: 2
+        stackRevId: 6
+        registryIntegrationId: 2
         instanceName: instanceName
-        appID: 0
+        appId: 0
         domain: domain
         newCluster:
           minNodeCount: 9
@@ -5416,22 +7084,22 @@ components:
           - name: name
             value: value
           database:
-            databaseDBID: 7
-            databaseID: 4
+            databaseDbId: 7
+            databaseId: 4
           imports:
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
@@ -5453,17 +7121,17 @@ components:
             buildSourceType: buildSourceType
             template: template
             gitRef: gitRef
-            remoteGitRepoID: remoteGitRepoID
-            integrationID: 5
+            remoteGitRepoId: remoteGitRepoId
+            integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
@@ -5477,22 +7145,22 @@ components:
           - name: name
             value: value
           database:
-            databaseDBID: 7
-            databaseID: 4
+            databaseDbId: 7
+            databaseId: 4
           imports:
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
-          - backupID: 2
+          - backupId: 2
             importName: importName
             from:
-              appServiceID: 9
-              databaseDBID: 7
+              appServiceId: 9
+              databaseDbId: 7
               backupName: backupName
             source: source
             url: url
@@ -5514,17 +7182,17 @@ components:
             buildSourceType: buildSourceType
             template: template
             gitRef: gitRef
-            remoteGitRepoID: remoteGitRepoID
-            integrationID: 5
+            remoteGitRepoId: remoteGitRepoId
+            integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
-          - integrationIDs:
+          - integrationIds:
             - 2
             - 2
             name: name
@@ -5532,11 +7200,11 @@ components:
             maxReplicas: 4
             minReplicas: 1
             averageCPU: 7
-        clusterID: 1
-        envID: 5
-        ciIntegrationID: 5
+        clusterId: 1
+        envId: 5
+        ciIntegrationId: 5
       properties:
-        appID:
+        appId:
           type: integer
         instanceName:
           type: string
@@ -5544,33 +7212,33 @@ components:
           type: string
         domain:
           type: string
-        stackRevID:
+        stackRevId:
           type: integer
         services:
           items:
-            $ref: '#/components/schemas/NewAppServiceInput'
+            $ref: '#/components/schemas/CreateAppServiceInput'
           type: array
-        clusterID:
+        clusterId:
           nullable: true
           type: integer
         newCluster:
           $ref: '#/components/schemas/NewManagedClusterInput'
-        envID:
+        envId:
           type: integer
-        ciIntegrationID:
+        ciIntegrationId:
           nullable: true
           type: integer
-        registryIntegrationID:
+        registryIntegrationId:
           nullable: true
           type: integer
       required:
-      - appID
+      - appId
       - domain
-      - envID
+      - envId
       - instanceName
       - instanceTitle
       - services
-      - stackRevID
+      - stackRevId
       type: object
     NewManagedClusterInput:
       example:
@@ -5601,112 +7269,13 @@ components:
       required:
       - demo
       type: object
-    NewAppServiceInput:
-      example:
-        settings:
-        - name: name
-          value: value
-        - name: name
-          value: value
-        database:
-          databaseDBID: 7
-          databaseID: 4
-        imports:
-        - backupID: 2
-          importName: importName
-          from:
-            appServiceID: 9
-            databaseDBID: 7
-            backupName: backupName
-          source: source
-          url: url
-        - backupID: 2
-          importName: importName
-          from:
-            appServiceID: 9
-            databaseDBID: 7
-            backupName: backupName
-          source: source
-          url: url
-        volumes:
-        - size: 3
-          name: name
-        - size: 3
-          name: name
-        resources:
-          container: container
-          limitMem: 6
-          requestMem: 1
-          limitCPU: 1
-          workload: workload
-          requestCPU: 1
-        disabled: true
-        id: 5
-        buildSource:
-          buildSourceType: buildSourceType
-          template: template
-          gitRef: gitRef
-          remoteGitRepoID: remoteGitRepoID
-          integrationID: 5
-          newRepoName: newRepoName
-          gitRefType: gitRefType
-        version: version
-        integrations:
-        - integrationIDs:
-          - 2
-          - 2
-          name: name
-        - integrationIDs:
-          - 2
-          - 2
-          name: name
-        scalability:
-          maxReplicas: 4
-          minReplicas: 1
-          averageCPU: 7
-      properties:
-        id:
-          type: integer
-        disabled:
-          type: boolean
-        version:
-          nullable: true
-          type: string
-        buildSource:
-          $ref: '#/components/schemas/BuildSourceInput'
-        imports:
-          items:
-            $ref: '#/components/schemas/ImportInput'
-          type: array
-        volumes:
-          items:
-            $ref: '#/components/schemas/VolumeSizeInput'
-          type: array
-        integrations:
-          items:
-            $ref: '#/components/schemas/AppServiceIntegrationInput'
-          type: array
-        settings:
-          items:
-            $ref: '#/components/schemas/AppServiceSettingInput'
-          type: array
-        database:
-          $ref: '#/components/schemas/AppServiceDatabaseInput'
-        resources:
-          $ref: '#/components/schemas/ResourcesInput'
-        scalability:
-          $ref: '#/components/schemas/ScalabilityInput'
-      required:
-      - disabled
-      - id
-      type: object
     BuildSourceInput:
       example:
         buildSourceType: buildSourceType
         template: template
         gitRef: gitRef
-        remoteGitRepoID: remoteGitRepoID
-        integrationID: 5
+        remoteGitRepoId: remoteGitRepoId
+        integrationId: 5
         newRepoName: newRepoName
         gitRefType: gitRefType
       properties:
@@ -5718,10 +7287,10 @@ components:
         newRepoName:
           nullable: true
           type: string
-        integrationID:
+        integrationId:
           nullable: true
           type: integer
-        remoteGitRepoID:
+        remoteGitRepoId:
           nullable: true
           type: string
         gitRef:
@@ -5735,11 +7304,11 @@ components:
       type: object
     ImportInput:
       example:
-        backupID: 2
+        backupId: 2
         importName: importName
         from:
-          appServiceID: 9
-          databaseDBID: 7
+          appServiceId: 9
+          databaseDbId: 7
           backupName: backupName
         source: source
         url: url
@@ -5752,7 +7321,7 @@ components:
         url:
           nullable: true
           type: string
-        backupID:
+        backupId:
           nullable: true
           type: integer
         from:
@@ -5762,14 +7331,14 @@ components:
       type: object
     ImportFromInput:
       example:
-        appServiceID: 9
-        databaseDBID: 7
+        appServiceId: 9
+        databaseDbId: 7
         backupName: backupName
       properties:
-        databaseDBID:
+        databaseDbId:
           nullable: true
           type: integer
-        appServiceID:
+        appServiceId:
           nullable: true
           type: integer
         backupName:
@@ -5791,19 +7360,19 @@ components:
       type: object
     AppServiceIntegrationInput:
       example:
-        integrationIDs:
+        integrationIds:
         - 2
         - 2
         name: name
       properties:
         name:
           type: string
-        integrationIDs:
+        integrationIds:
           items:
             type: integer
           type: array
       required:
-      - integrationIDs
+      - integrationIds
       - name
       type: object
     AppServiceSettingInput:
@@ -5821,16 +7390,16 @@ components:
       type: object
     AppServiceDatabaseInput:
       example:
-        databaseDBID: 7
-        databaseID: 4
+        databaseDbId: 7
+        databaseId: 4
       properties:
-        databaseID:
+        databaseId:
           type: integer
-        databaseDBID:
+        databaseDbId:
           nullable: true
           type: integer
       required:
-      - databaseID
+      - databaseId
       type: object
     ResourcesInput:
       example:
@@ -5881,11 +7450,11 @@ components:
       example:
         disableMonitoring: true
         maxNodeCount: 5
-        integrationID: 1
+        integrationId: 1
         serverless: true
         title: title
         version: version
-        orgID: 0
+        orgId: 0
         billingOption: billingOption
         minNodeCount: 5
         nodeDiskSize: 2
@@ -5893,15 +7462,15 @@ components:
         name: name
         singleNode: true
         region: region
-        projectID: 6
+        projectId: 6
         machineType: machineType
       properties:
-        orgID:
+        orgId:
           type: integer
-        projectID:
+        projectId:
           nullable: true
           type: integer
-        integrationID:
+        integrationId:
           type: integer
         name:
           type: string
@@ -5940,21 +7509,21 @@ components:
           type: boolean
       required:
       - disableMonitoring
-      - integrationID
+      - integrationId
       - name
-      - orgID
+      - orgId
       - serverless
       - title
       type: object
     NewDatabaseInput:
       example:
-        integrationKindID: 5
+        integrationKindId: 5
         storageAutoscaling: true
-        envID: 1
+        envId: 1
         title: title
         type: type
         version: version
-        orgID: 0
+        orgId: 0
         highAvailability: true
         password: password
         zone: zone
@@ -5962,22 +7531,22 @@ components:
         name: name
         iops: 7
         region: region
-        projectID: 6
+        projectId: 6
         machineType: machineType
-        residedClusterID: 2
+        residedClusterId: 2
       properties:
-        orgID:
+        orgId:
           type: integer
-        projectID:
+        projectId:
           nullable: true
           type: integer
-        envID:
+        envId:
           type: integer
         name:
           type: string
         title:
           type: string
-        integrationKindID:
+        integrationKindId:
           type: integer
         type:
           type: string
@@ -6003,18 +7572,18 @@ components:
         zone:
           nullable: true
           type: string
-        residedClusterID:
+        residedClusterId:
           nullable: true
           type: integer
         iops:
           nullable: true
           type: integer
       required:
-      - envID
-      - integrationKindID
+      - envId
+      - integrationKindId
       - machineType
       - name
-      - orgID
+      - orgId
       - title
       - type
       - version
@@ -6027,19 +7596,19 @@ components:
         - name: name
           value: value
         auth: auth
-        providerID: 6
+        providerId: 6
         scope: scope
         name: name
         kinds:
         - kinds
         - kinds
         title: title
-        projectID: 1
-        orgID: 0
+        projectId: 1
+        orgId: 0
       properties:
-        orgID:
+        orgId:
           type: integer
-        providerID:
+        providerId:
           type: integer
         name:
           type: string
@@ -6052,7 +7621,7 @@ components:
         auth:
           nullable: true
           type: string
-        projectID:
+        projectId:
           nullable: true
           type: integer
         fieldsInput:
@@ -6065,8 +7634,8 @@ components:
       required:
       - kinds
       - name
-      - orgID
-      - providerID
+      - orgId
+      - providerId
       - title
       type: object
     UpdateIntegrationInput:
@@ -6119,22 +7688,22 @@ components:
     NewBackupInput:
       example:
         bucket: bucket
-        appServiceID: 0
+        appServiceId: 0
         storageClass: storageClass
-        databaseDBID: 6
-        integrationID: 1
+        integrationId: 1
+        databaseDbId: 6
         backupName: backupName
       properties:
-        appServiceID:
+        appServiceId:
           nullable: true
           type: integer
-        databaseDBID:
+        databaseDbId:
           nullable: true
           type: integer
         backupName:
           nullable: true
           type: string
-        integrationID:
+        integrationId:
           type: integer
         bucket:
           type: string
@@ -6143,7 +7712,7 @@ components:
           type: string
       required:
       - bucket
-      - integrationID
+      - integrationId
       type: object
     NewAppRouteInput:
       example:
@@ -6155,8 +7724,8 @@ components:
         pathType: PREFIX
         redirectHost: redirectHost
         authPassword: authPassword
-        authID: 5
-        appServiceID: 0
+        authId: 5
+        appServiceId: 0
         path: path
         port: 6
         host: host
@@ -6169,7 +7738,7 @@ components:
         letsencrypt: true
         primary: true
       properties:
-        appServiceID:
+        appServiceId:
           type: integer
         main:
           type: boolean
@@ -6215,7 +7784,7 @@ components:
         authPassword:
           nullable: true
           type: string
-        authID:
+        authId:
           nullable: true
           type: integer
         options:
@@ -6223,7 +7792,7 @@ components:
             $ref: '#/components/schemas/AppEndpointOptionInput'
           type: array
       required:
-      - appServiceID
+      - appServiceId
       - host
       - main
       - port
@@ -6300,6 +7869,130 @@ components:
       required:
       - name
       - value
+      type: object
+    CreateAppServiceInput:
+      example:
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        database:
+          databaseDbId: 7
+          databaseId: 4
+        imports:
+        - backupId: 2
+          importName: importName
+          from:
+            appServiceId: 9
+            databaseDbId: 7
+            backupName: backupName
+          source: source
+          url: url
+        - backupId: 2
+          importName: importName
+          from:
+            appServiceId: 9
+            databaseDbId: 7
+            backupName: backupName
+          source: source
+          url: url
+        volumes:
+        - size: 3
+          name: name
+        - size: 3
+          name: name
+        resources:
+          container: container
+          limitMem: 6
+          requestMem: 1
+          limitCPU: 1
+          workload: workload
+          requestCPU: 1
+        disabled: true
+        id: 5
+        buildSource:
+          buildSourceType: buildSourceType
+          template: template
+          gitRef: gitRef
+          remoteGitRepoId: remoteGitRepoId
+          integrationId: 5
+          newRepoName: newRepoName
+          gitRefType: gitRefType
+        version: version
+        integrations:
+        - integrationIds:
+          - 2
+          - 2
+          name: name
+        - integrationIds:
+          - 2
+          - 2
+          name: name
+        scalability:
+          maxReplicas: 4
+          minReplicas: 1
+          averageCPU: 7
+      properties:
+        id:
+          type: integer
+        disabled:
+          type: boolean
+        version:
+          nullable: true
+          type: string
+        buildSource:
+          $ref: '#/components/schemas/BuildSourceInput'
+        imports:
+          items:
+            $ref: '#/components/schemas/ImportInput'
+          type: array
+        volumes:
+          items:
+            $ref: '#/components/schemas/VolumeSizeInput'
+          type: array
+        integrations:
+          items:
+            $ref: '#/components/schemas/AppServiceIntegrationInput'
+          type: array
+        settings:
+          items:
+            $ref: '#/components/schemas/AppServiceSettingInput'
+          type: array
+        database:
+          $ref: '#/components/schemas/AppServiceDatabaseInput'
+        resources:
+          $ref: '#/components/schemas/ResourcesInput'
+        scalability:
+          $ref: '#/components/schemas/ScalabilityInput'
+      required:
+      - disabled
+      - id
+      type: object
+    CreateImportInput:
+      example:
+        appServiceId: 0
+        import:
+          backupId: 2
+          importName: importName
+          from:
+            appServiceId: 9
+            databaseDbId: 7
+            backupName: backupName
+          source: source
+          url: url
+        databaseDbId: 6
+      properties:
+        appServiceId:
+          nullable: true
+          type: integer
+        databaseDbId:
+          nullable: true
+          type: integer
+        import:
+          $ref: '#/components/schemas/ImportInput'
+      required:
+      - import
       type: object
   securitySchemes:
     apiKeyHeader:

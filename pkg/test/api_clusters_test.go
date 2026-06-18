@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing ClustersAPIService
 
@@ -22,11 +22,11 @@ func Test_client_ClustersAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test ClustersAPIService ClustersGet", func(t *testing.T) {
+	t.Run("Test ClustersAPIService CreateCluster", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ClustersAPI.ClustersGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ClustersAPI.CreateCluster(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +34,13 @@ func Test_client_ClustersAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ClustersAPIService ClustersIdDelete", func(t *testing.T) {
+	t.Run("Test ClustersAPIService DeleteCluster", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.ClustersAPI.ClustersIdDelete(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.ClustersAPI.DeleteCluster(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,13 +48,13 @@ func Test_client_ClustersAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ClustersAPIService ClustersIdGet", func(t *testing.T) {
+	t.Run("Test ClustersAPIService GetCluster", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.ClustersAPI.ClustersIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.ClustersAPI.GetCluster(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,25 +62,39 @@ func Test_client_ClustersAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ClustersAPIService ClustersIdPut", func(t *testing.T) {
+	t.Run("Test ClustersAPIService GetClusterByName", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		resp, httpRes, err := apiClient.ClustersAPI.GetClusterByName(context.Background(), name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ClustersAPIService ListClusters", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ClustersAPI.ListClusters(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ClustersAPIService UpdateCluster", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.ClustersAPI.ClustersIdPut(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test ClustersAPIService ClustersPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.ClustersAPI.ClustersPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ClustersAPI.UpdateCluster(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

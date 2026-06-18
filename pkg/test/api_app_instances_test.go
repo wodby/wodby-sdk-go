@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing AppInstancesAPIService
 
@@ -22,14 +22,54 @@ func Test_client_AppInstancesAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test AppInstancesAPIService AppInstancesByNameAppNameInstanceNameGet", func(t *testing.T) {
+	t.Run("Test AppInstancesAPIService CreateAppInstance", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AppInstancesAPI.CreateAppInstance(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppInstancesAPIService DeleteAppInstance", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.AppInstancesAPI.DeleteAppInstance(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppInstancesAPIService GetAppInstance", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.AppInstancesAPI.GetAppInstance(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppInstancesAPIService GetAppInstanceByName", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var appName string
 		var instanceName string
 
-		resp, httpRes, err := apiClient.AppInstancesAPI.AppInstancesByNameAppNameInstanceNameGet(context.Background(), appName, instanceName).Execute()
+		resp, httpRes, err := apiClient.AppInstancesAPI.GetAppInstanceByName(context.Background(), appName, instanceName).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -37,11 +77,11 @@ func Test_client_AppInstancesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppInstancesAPIService AppInstancesGet", func(t *testing.T) {
+	t.Run("Test AppInstancesAPIService ListAppInstances", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AppInstancesAPI.AppInstancesGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppInstancesAPI.ListAppInstances(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -49,53 +89,13 @@ func Test_client_AppInstancesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppInstancesAPIService AppInstancesIdDelete", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id int32
-
-		resp, httpRes, err := apiClient.AppInstancesAPI.AppInstancesIdDelete(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AppInstancesAPIService AppInstancesIdGet", func(t *testing.T) {
+	t.Run("Test AppInstancesAPIService UpdateAppInstance", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppInstancesAPI.AppInstancesIdGet(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AppInstancesAPIService AppInstancesIdPut", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id int32
-
-		resp, httpRes, err := apiClient.AppInstancesAPI.AppInstancesIdPut(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AppInstancesAPIService AppInstancesPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.AppInstancesAPI.AppInstancesPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppInstancesAPI.UpdateAppInstance(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

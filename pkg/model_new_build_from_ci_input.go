@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,12 +21,12 @@ var _ MappedNullable = &NewBuildFromCIInput{}
 
 // NewBuildFromCIInput struct for NewBuildFromCIInput
 type NewBuildFromCIInput struct {
-	AppServiceID int32 `json:"appServiceID"`
+	AppServiceId int32 `json:"appServiceId"`
 	GitCommitSHA string `json:"gitCommitSHA"`
 	GitRef string `json:"gitRef"`
 	GitRefType string `json:"gitRefType"`
 	BuildNum int32 `json:"buildNum"`
-	BuildID string `json:"buildID"`
+	BuildId string `json:"buildId"`
 	Workflow NullableString `json:"workflow,omitempty"`
 	GitCommitAuthorName NullableString `json:"gitCommitAuthorName,omitempty"`
 	GitCommitAuthorEmail NullableString `json:"gitCommitAuthorEmail,omitempty"`
@@ -41,14 +41,14 @@ type _NewBuildFromCIInput NewBuildFromCIInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewBuildFromCIInput(appServiceID int32, gitCommitSHA string, gitRef string, gitRefType string, buildNum int32, buildID string, provider string) *NewBuildFromCIInput {
+func NewNewBuildFromCIInput(appServiceId int32, gitCommitSHA string, gitRef string, gitRefType string, buildNum int32, buildId string, provider string) *NewBuildFromCIInput {
 	this := NewBuildFromCIInput{}
-	this.AppServiceID = appServiceID
+	this.AppServiceId = appServiceId
 	this.GitCommitSHA = gitCommitSHA
 	this.GitRef = gitRef
 	this.GitRefType = gitRefType
 	this.BuildNum = buildNum
-	this.BuildID = buildID
+	this.BuildId = buildId
 	this.Provider = provider
 	return &this
 }
@@ -61,28 +61,28 @@ func NewNewBuildFromCIInputWithDefaults() *NewBuildFromCIInput {
 	return &this
 }
 
-// GetAppServiceID returns the AppServiceID field value
-func (o *NewBuildFromCIInput) GetAppServiceID() int32 {
+// GetAppServiceId returns the AppServiceId field value
+func (o *NewBuildFromCIInput) GetAppServiceId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.AppServiceID
+	return o.AppServiceId
 }
 
-// GetAppServiceIDOk returns a tuple with the AppServiceID field value
+// GetAppServiceIdOk returns a tuple with the AppServiceId field value
 // and a boolean to check if the value has been set.
-func (o *NewBuildFromCIInput) GetAppServiceIDOk() (*int32, bool) {
+func (o *NewBuildFromCIInput) GetAppServiceIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AppServiceID, true
+	return &o.AppServiceId, true
 }
 
-// SetAppServiceID sets field value
-func (o *NewBuildFromCIInput) SetAppServiceID(v int32) {
-	o.AppServiceID = v
+// SetAppServiceId sets field value
+func (o *NewBuildFromCIInput) SetAppServiceId(v int32) {
+	o.AppServiceId = v
 }
 
 // GetGitCommitSHA returns the GitCommitSHA field value
@@ -181,28 +181,28 @@ func (o *NewBuildFromCIInput) SetBuildNum(v int32) {
 	o.BuildNum = v
 }
 
-// GetBuildID returns the BuildID field value
-func (o *NewBuildFromCIInput) GetBuildID() string {
+// GetBuildId returns the BuildId field value
+func (o *NewBuildFromCIInput) GetBuildId() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.BuildID
+	return o.BuildId
 }
 
-// GetBuildIDOk returns a tuple with the BuildID field value
+// GetBuildIdOk returns a tuple with the BuildId field value
 // and a boolean to check if the value has been set.
-func (o *NewBuildFromCIInput) GetBuildIDOk() (*string, bool) {
+func (o *NewBuildFromCIInput) GetBuildIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.BuildID, true
+	return &o.BuildId, true
 }
 
-// SetBuildID sets field value
-func (o *NewBuildFromCIInput) SetBuildID(v string) {
-	o.BuildID = v
+// SetBuildId sets field value
+func (o *NewBuildFromCIInput) SetBuildId(v string) {
+	o.BuildId = v
 }
 
 // GetWorkflow returns the Workflow field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -449,12 +449,12 @@ func (o NewBuildFromCIInput) MarshalJSON() ([]byte, error) {
 
 func (o NewBuildFromCIInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["appServiceID"] = o.AppServiceID
+	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["gitCommitSHA"] = o.GitCommitSHA
 	toSerialize["gitRef"] = o.GitRef
 	toSerialize["gitRefType"] = o.GitRefType
 	toSerialize["buildNum"] = o.BuildNum
-	toSerialize["buildID"] = o.BuildID
+	toSerialize["buildId"] = o.BuildId
 	if o.Workflow.IsSet() {
 		toSerialize["workflow"] = o.Workflow.Get()
 	}
@@ -479,12 +479,12 @@ func (o *NewBuildFromCIInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"appServiceID",
+		"appServiceId",
 		"gitCommitSHA",
 		"gitRef",
 		"gitRefType",
 		"buildNum",
-		"buildID",
+		"buildId",
 		"provider",
 	}
 

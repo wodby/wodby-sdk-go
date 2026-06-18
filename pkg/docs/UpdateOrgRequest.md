@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Title** | **string** |  | 
-**RegistryIntegrationID** | Pointer to **NullableInt32** |  | [optional] 
-**CiIntegrationID** | Pointer to **NullableInt32** |  | [optional] 
+**RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 
 ## Methods
 
@@ -47,76 +47,76 @@ and a boolean to check if the value has been set.
 SetTitle sets Title field to given value.
 
 
-### GetRegistryIntegrationID
+### GetRegistryIntegrationId
 
-`func (o *UpdateOrgRequest) GetRegistryIntegrationID() int32`
+`func (o *UpdateOrgRequest) GetRegistryIntegrationId() int32`
 
-GetRegistryIntegrationID returns the RegistryIntegrationID field if non-nil, zero value otherwise.
+GetRegistryIntegrationId returns the RegistryIntegrationId field if non-nil, zero value otherwise.
 
-### GetRegistryIntegrationIDOk
+### GetRegistryIntegrationIdOk
 
-`func (o *UpdateOrgRequest) GetRegistryIntegrationIDOk() (*int32, bool)`
+`func (o *UpdateOrgRequest) GetRegistryIntegrationIdOk() (*int32, bool)`
 
-GetRegistryIntegrationIDOk returns a tuple with the RegistryIntegrationID field if it's non-nil, zero value otherwise
+GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRegistryIntegrationID
+### SetRegistryIntegrationId
 
-`func (o *UpdateOrgRequest) SetRegistryIntegrationID(v int32)`
+`func (o *UpdateOrgRequest) SetRegistryIntegrationId(v int32)`
 
-SetRegistryIntegrationID sets RegistryIntegrationID field to given value.
+SetRegistryIntegrationId sets RegistryIntegrationId field to given value.
 
-### HasRegistryIntegrationID
+### HasRegistryIntegrationId
 
-`func (o *UpdateOrgRequest) HasRegistryIntegrationID() bool`
+`func (o *UpdateOrgRequest) HasRegistryIntegrationId() bool`
 
-HasRegistryIntegrationID returns a boolean if a field has been set.
+HasRegistryIntegrationId returns a boolean if a field has been set.
 
-### SetRegistryIntegrationIDNil
+### SetRegistryIntegrationIdNil
 
-`func (o *UpdateOrgRequest) SetRegistryIntegrationIDNil(b bool)`
+`func (o *UpdateOrgRequest) SetRegistryIntegrationIdNil(b bool)`
 
- SetRegistryIntegrationIDNil sets the value for RegistryIntegrationID to be an explicit nil
+ SetRegistryIntegrationIdNil sets the value for RegistryIntegrationId to be an explicit nil
 
-### UnsetRegistryIntegrationID
-`func (o *UpdateOrgRequest) UnsetRegistryIntegrationID()`
+### UnsetRegistryIntegrationId
+`func (o *UpdateOrgRequest) UnsetRegistryIntegrationId()`
 
-UnsetRegistryIntegrationID ensures that no value is present for RegistryIntegrationID, not even an explicit nil
-### GetCiIntegrationID
+UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+### GetCiIntegrationId
 
-`func (o *UpdateOrgRequest) GetCiIntegrationID() int32`
+`func (o *UpdateOrgRequest) GetCiIntegrationId() int32`
 
-GetCiIntegrationID returns the CiIntegrationID field if non-nil, zero value otherwise.
+GetCiIntegrationId returns the CiIntegrationId field if non-nil, zero value otherwise.
 
-### GetCiIntegrationIDOk
+### GetCiIntegrationIdOk
 
-`func (o *UpdateOrgRequest) GetCiIntegrationIDOk() (*int32, bool)`
+`func (o *UpdateOrgRequest) GetCiIntegrationIdOk() (*int32, bool)`
 
-GetCiIntegrationIDOk returns a tuple with the CiIntegrationID field if it's non-nil, zero value otherwise
+GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCiIntegrationID
+### SetCiIntegrationId
 
-`func (o *UpdateOrgRequest) SetCiIntegrationID(v int32)`
+`func (o *UpdateOrgRequest) SetCiIntegrationId(v int32)`
 
-SetCiIntegrationID sets CiIntegrationID field to given value.
+SetCiIntegrationId sets CiIntegrationId field to given value.
 
-### HasCiIntegrationID
+### HasCiIntegrationId
 
-`func (o *UpdateOrgRequest) HasCiIntegrationID() bool`
+`func (o *UpdateOrgRequest) HasCiIntegrationId() bool`
 
-HasCiIntegrationID returns a boolean if a field has been set.
+HasCiIntegrationId returns a boolean if a field has been set.
 
-### SetCiIntegrationIDNil
+### SetCiIntegrationIdNil
 
-`func (o *UpdateOrgRequest) SetCiIntegrationIDNil(b bool)`
+`func (o *UpdateOrgRequest) SetCiIntegrationIdNil(b bool)`
 
- SetCiIntegrationIDNil sets the value for CiIntegrationID to be an explicit nil
+ SetCiIntegrationIdNil sets the value for CiIntegrationId to be an explicit nil
 
-### UnsetCiIntegrationID
-`func (o *UpdateOrgRequest) UnsetCiIntegrationID()`
+### UnsetCiIntegrationId
+`func (o *UpdateOrgRequest) UnsetCiIntegrationId()`
 
-UnsetCiIntegrationID ensures that no value is present for CiIntegrationID, not even an explicit nil
+UnsetCiIntegrationId ensures that no value is present for CiIntegrationId, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

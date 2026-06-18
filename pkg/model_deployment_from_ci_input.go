@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &DeploymentFromCIInput{}
 
 // DeploymentFromCIInput struct for DeploymentFromCIInput
 type DeploymentFromCIInput struct {
-	AppBuildID int32 `json:"appBuildID"`
+	AppBuildId int32 `json:"appBuildId"`
 	Services []ServiceDeploymentInput `json:"services"`
 	SkipPostDeployment bool `json:"skipPostDeployment"`
 }
@@ -32,9 +32,9 @@ type _DeploymentFromCIInput DeploymentFromCIInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeploymentFromCIInput(appBuildID int32, services []ServiceDeploymentInput, skipPostDeployment bool) *DeploymentFromCIInput {
+func NewDeploymentFromCIInput(appBuildId int32, services []ServiceDeploymentInput, skipPostDeployment bool) *DeploymentFromCIInput {
 	this := DeploymentFromCIInput{}
-	this.AppBuildID = appBuildID
+	this.AppBuildId = appBuildId
 	this.Services = services
 	this.SkipPostDeployment = skipPostDeployment
 	return &this
@@ -48,28 +48,28 @@ func NewDeploymentFromCIInputWithDefaults() *DeploymentFromCIInput {
 	return &this
 }
 
-// GetAppBuildID returns the AppBuildID field value
-func (o *DeploymentFromCIInput) GetAppBuildID() int32 {
+// GetAppBuildId returns the AppBuildId field value
+func (o *DeploymentFromCIInput) GetAppBuildId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.AppBuildID
+	return o.AppBuildId
 }
 
-// GetAppBuildIDOk returns a tuple with the AppBuildID field value
+// GetAppBuildIdOk returns a tuple with the AppBuildId field value
 // and a boolean to check if the value has been set.
-func (o *DeploymentFromCIInput) GetAppBuildIDOk() (*int32, bool) {
+func (o *DeploymentFromCIInput) GetAppBuildIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AppBuildID, true
+	return &o.AppBuildId, true
 }
 
-// SetAppBuildID sets field value
-func (o *DeploymentFromCIInput) SetAppBuildID(v int32) {
-	o.AppBuildID = v
+// SetAppBuildId sets field value
+func (o *DeploymentFromCIInput) SetAppBuildId(v int32) {
+	o.AppBuildId = v
 }
 
 // GetServices returns the Services field value
@@ -130,7 +130,7 @@ func (o DeploymentFromCIInput) MarshalJSON() ([]byte, error) {
 
 func (o DeploymentFromCIInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["appBuildID"] = o.AppBuildID
+	toSerialize["appBuildId"] = o.AppBuildId
 	toSerialize["services"] = o.Services
 	toSerialize["skipPostDeployment"] = o.SkipPostDeployment
 	return toSerialize, nil
@@ -141,7 +141,7 @@ func (o *DeploymentFromCIInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"appBuildID",
+		"appBuildId",
 		"services",
 		"skipPostDeployment",
 	}

@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgID** | **int32** |  | 
-**ProviderID** | **int32** |  | 
+**OrgId** | **int32** |  | 
+**ProviderId** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **Kinds** | **[]string** |  | 
 **Auth** | Pointer to **NullableString** |  | [optional] 
-**ProjectID** | Pointer to **NullableInt32** |  | [optional] 
+**ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **FieldsInput** | Pointer to [**[]FieldInput**](FieldInput.md) |  | [optional] 
 **Scope** | Pointer to **NullableString** |  | [optional] 
 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewNewIntegrationInput
 
-`func NewNewIntegrationInput(orgID int32, providerID int32, name string, title string, kinds []string, ) *NewIntegrationInput`
+`func NewNewIntegrationInput(orgId int32, providerId int32, name string, title string, kinds []string, ) *NewIntegrationInput`
 
 NewNewIntegrationInput instantiates a new NewIntegrationInput object
 This constructor will assign default values to properties that have it defined,
@@ -33,44 +33,44 @@ NewNewIntegrationInputWithDefaults instantiates a new NewIntegrationInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetOrgID
+### GetOrgId
 
-`func (o *NewIntegrationInput) GetOrgID() int32`
+`func (o *NewIntegrationInput) GetOrgId() int32`
 
-GetOrgID returns the OrgID field if non-nil, zero value otherwise.
+GetOrgId returns the OrgId field if non-nil, zero value otherwise.
 
-### GetOrgIDOk
+### GetOrgIdOk
 
-`func (o *NewIntegrationInput) GetOrgIDOk() (*int32, bool)`
+`func (o *NewIntegrationInput) GetOrgIdOk() (*int32, bool)`
 
-GetOrgIDOk returns a tuple with the OrgID field if it's non-nil, zero value otherwise
+GetOrgIdOk returns a tuple with the OrgId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrgID
+### SetOrgId
 
-`func (o *NewIntegrationInput) SetOrgID(v int32)`
+`func (o *NewIntegrationInput) SetOrgId(v int32)`
 
-SetOrgID sets OrgID field to given value.
+SetOrgId sets OrgId field to given value.
 
 
-### GetProviderID
+### GetProviderId
 
-`func (o *NewIntegrationInput) GetProviderID() int32`
+`func (o *NewIntegrationInput) GetProviderId() int32`
 
-GetProviderID returns the ProviderID field if non-nil, zero value otherwise.
+GetProviderId returns the ProviderId field if non-nil, zero value otherwise.
 
-### GetProviderIDOk
+### GetProviderIdOk
 
-`func (o *NewIntegrationInput) GetProviderIDOk() (*int32, bool)`
+`func (o *NewIntegrationInput) GetProviderIdOk() (*int32, bool)`
 
-GetProviderIDOk returns a tuple with the ProviderID field if it's non-nil, zero value otherwise
+GetProviderIdOk returns a tuple with the ProviderId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProviderID
+### SetProviderId
 
-`func (o *NewIntegrationInput) SetProviderID(v int32)`
+`func (o *NewIntegrationInput) SetProviderId(v int32)`
 
-SetProviderID sets ProviderID field to given value.
+SetProviderId sets ProviderId field to given value.
 
 
 ### GetName
@@ -168,41 +168,41 @@ HasAuth returns a boolean if a field has been set.
 `func (o *NewIntegrationInput) UnsetAuth()`
 
 UnsetAuth ensures that no value is present for Auth, not even an explicit nil
-### GetProjectID
+### GetProjectId
 
-`func (o *NewIntegrationInput) GetProjectID() int32`
+`func (o *NewIntegrationInput) GetProjectId() int32`
 
-GetProjectID returns the ProjectID field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetProjectIDOk
+### GetProjectIdOk
 
-`func (o *NewIntegrationInput) GetProjectIDOk() (*int32, bool)`
+`func (o *NewIntegrationInput) GetProjectIdOk() (*int32, bool)`
 
-GetProjectIDOk returns a tuple with the ProjectID field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectID
+### SetProjectId
 
-`func (o *NewIntegrationInput) SetProjectID(v int32)`
+`func (o *NewIntegrationInput) SetProjectId(v int32)`
 
-SetProjectID sets ProjectID field to given value.
+SetProjectId sets ProjectId field to given value.
 
-### HasProjectID
+### HasProjectId
 
-`func (o *NewIntegrationInput) HasProjectID() bool`
+`func (o *NewIntegrationInput) HasProjectId() bool`
 
-HasProjectID returns a boolean if a field has been set.
+HasProjectId returns a boolean if a field has been set.
 
-### SetProjectIDNil
+### SetProjectIdNil
 
-`func (o *NewIntegrationInput) SetProjectIDNil(b bool)`
+`func (o *NewIntegrationInput) SetProjectIdNil(b bool)`
 
- SetProjectIDNil sets the value for ProjectID to be an explicit nil
+ SetProjectIdNil sets the value for ProjectId to be an explicit nil
 
-### UnsetProjectID
-`func (o *NewIntegrationInput) UnsetProjectID()`
+### UnsetProjectId
+`func (o *NewIntegrationInput) UnsetProjectId()`
 
-UnsetProjectID ensures that no value is present for ProjectID, not even an explicit nil
+UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
 ### GetFieldsInput
 
 `func (o *NewIntegrationInput) GetFieldsInput() []FieldInput`

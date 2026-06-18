@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing TaskStepsAPIService
 
@@ -22,13 +22,13 @@ func Test_client_TaskStepsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test TaskStepsAPIService TaskStepsIdLogUrlGet", func(t *testing.T) {
+	t.Run("Test TaskStepsAPIService GetTaskStepLogUrl", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.TaskStepsAPI.TaskStepsIdLogUrlGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.TaskStepsAPI.GetTaskStepLogUrl(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -36,13 +36,13 @@ func Test_client_TaskStepsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TaskStepsAPIService TaskStepsIdLogsGet", func(t *testing.T) {
+	t.Run("Test TaskStepsAPIService GetTaskStepLogs", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.TaskStepsAPI.TaskStepsIdLogsGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.TaskStepsAPI.GetTaskStepLogs(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

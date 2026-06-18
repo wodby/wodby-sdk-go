@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**IntegrationIDs** | **[]int32** |  | 
+**IntegrationIds** | **[]int32** |  | 
 
 ## Methods
 
 ### NewAppServiceIntegrationInput
 
-`func NewAppServiceIntegrationInput(name string, integrationIDs []int32, ) *AppServiceIntegrationInput`
+`func NewAppServiceIntegrationInput(name string, integrationIds []int32, ) *AppServiceIntegrationInput`
 
 NewAppServiceIntegrationInput instantiates a new AppServiceIntegrationInput object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetName sets Name field to given value.
 
 
-### GetIntegrationIDs
+### GetIntegrationIds
 
-`func (o *AppServiceIntegrationInput) GetIntegrationIDs() []int32`
+`func (o *AppServiceIntegrationInput) GetIntegrationIds() []int32`
 
-GetIntegrationIDs returns the IntegrationIDs field if non-nil, zero value otherwise.
+GetIntegrationIds returns the IntegrationIds field if non-nil, zero value otherwise.
 
-### GetIntegrationIDsOk
+### GetIntegrationIdsOk
 
-`func (o *AppServiceIntegrationInput) GetIntegrationIDsOk() (*[]int32, bool)`
+`func (o *AppServiceIntegrationInput) GetIntegrationIdsOk() (*[]int32, bool)`
 
-GetIntegrationIDsOk returns a tuple with the IntegrationIDs field if it's non-nil, zero value otherwise
+GetIntegrationIdsOk returns a tuple with the IntegrationIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIntegrationIDs
+### SetIntegrationIds
 
-`func (o *AppServiceIntegrationInput) SetIntegrationIDs(v []int32)`
+`func (o *AppServiceIntegrationInput) SetIntegrationIds(v []int32)`
 
-SetIntegrationIDs sets IntegrationIDs field to given value.
+SetIntegrationIds sets IntegrationIds field to given value.
 
 
 

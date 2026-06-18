@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,17 +21,17 @@ var _ MappedNullable = &NewAppInstanceInput{}
 
 // NewAppInstanceInput struct for NewAppInstanceInput
 type NewAppInstanceInput struct {
-	AppID int32 `json:"appID"`
+	AppId int32 `json:"appId"`
 	InstanceName string `json:"instanceName"`
 	InstanceTitle string `json:"instanceTitle"`
 	Domain string `json:"domain"`
-	StackRevID int32 `json:"stackRevID"`
-	Services []NewAppServiceInput `json:"services"`
-	ClusterID NullableInt32 `json:"clusterID,omitempty"`
+	StackRevId int32 `json:"stackRevId"`
+	Services []CreateAppServiceInput `json:"services"`
+	ClusterId NullableInt32 `json:"clusterId,omitempty"`
 	NewCluster *NewManagedClusterInput `json:"newCluster,omitempty"`
-	EnvID int32 `json:"envID"`
-	CiIntegrationID NullableInt32 `json:"ciIntegrationID,omitempty"`
-	RegistryIntegrationID NullableInt32 `json:"registryIntegrationID,omitempty"`
+	EnvId int32 `json:"envId"`
+	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
+	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
 }
 
 type _NewAppInstanceInput NewAppInstanceInput
@@ -40,15 +40,15 @@ type _NewAppInstanceInput NewAppInstanceInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAppInstanceInput(appID int32, instanceName string, instanceTitle string, domain string, stackRevID int32, services []NewAppServiceInput, envID int32) *NewAppInstanceInput {
+func NewNewAppInstanceInput(appId int32, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32) *NewAppInstanceInput {
 	this := NewAppInstanceInput{}
-	this.AppID = appID
+	this.AppId = appId
 	this.InstanceName = instanceName
 	this.InstanceTitle = instanceTitle
 	this.Domain = domain
-	this.StackRevID = stackRevID
+	this.StackRevId = stackRevId
 	this.Services = services
-	this.EnvID = envID
+	this.EnvId = envId
 	return &this
 }
 
@@ -60,28 +60,28 @@ func NewNewAppInstanceInputWithDefaults() *NewAppInstanceInput {
 	return &this
 }
 
-// GetAppID returns the AppID field value
-func (o *NewAppInstanceInput) GetAppID() int32 {
+// GetAppId returns the AppId field value
+func (o *NewAppInstanceInput) GetAppId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.AppID
+	return o.AppId
 }
 
-// GetAppIDOk returns a tuple with the AppID field value
+// GetAppIdOk returns a tuple with the AppId field value
 // and a boolean to check if the value has been set.
-func (o *NewAppInstanceInput) GetAppIDOk() (*int32, bool) {
+func (o *NewAppInstanceInput) GetAppIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AppID, true
+	return &o.AppId, true
 }
 
-// SetAppID sets field value
-func (o *NewAppInstanceInput) SetAppID(v int32) {
-	o.AppID = v
+// SetAppId sets field value
+func (o *NewAppInstanceInput) SetAppId(v int32) {
+	o.AppId = v
 }
 
 // GetInstanceName returns the InstanceName field value
@@ -156,34 +156,34 @@ func (o *NewAppInstanceInput) SetDomain(v string) {
 	o.Domain = v
 }
 
-// GetStackRevID returns the StackRevID field value
-func (o *NewAppInstanceInput) GetStackRevID() int32 {
+// GetStackRevId returns the StackRevId field value
+func (o *NewAppInstanceInput) GetStackRevId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.StackRevID
+	return o.StackRevId
 }
 
-// GetStackRevIDOk returns a tuple with the StackRevID field value
+// GetStackRevIdOk returns a tuple with the StackRevId field value
 // and a boolean to check if the value has been set.
-func (o *NewAppInstanceInput) GetStackRevIDOk() (*int32, bool) {
+func (o *NewAppInstanceInput) GetStackRevIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.StackRevID, true
+	return &o.StackRevId, true
 }
 
-// SetStackRevID sets field value
-func (o *NewAppInstanceInput) SetStackRevID(v int32) {
-	o.StackRevID = v
+// SetStackRevId sets field value
+func (o *NewAppInstanceInput) SetStackRevId(v int32) {
+	o.StackRevId = v
 }
 
 // GetServices returns the Services field value
-func (o *NewAppInstanceInput) GetServices() []NewAppServiceInput {
+func (o *NewAppInstanceInput) GetServices() []CreateAppServiceInput {
 	if o == nil {
-		var ret []NewAppServiceInput
+		var ret []CreateAppServiceInput
 		return ret
 	}
 
@@ -192,7 +192,7 @@ func (o *NewAppInstanceInput) GetServices() []NewAppServiceInput {
 
 // GetServicesOk returns a tuple with the Services field value
 // and a boolean to check if the value has been set.
-func (o *NewAppInstanceInput) GetServicesOk() ([]NewAppServiceInput, bool) {
+func (o *NewAppInstanceInput) GetServicesOk() ([]CreateAppServiceInput, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -200,50 +200,50 @@ func (o *NewAppInstanceInput) GetServicesOk() ([]NewAppServiceInput, bool) {
 }
 
 // SetServices sets field value
-func (o *NewAppInstanceInput) SetServices(v []NewAppServiceInput) {
+func (o *NewAppInstanceInput) SetServices(v []CreateAppServiceInput) {
 	o.Services = v
 }
 
-// GetClusterID returns the ClusterID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppInstanceInput) GetClusterID() int32 {
-	if o == nil || IsNil(o.ClusterID.Get()) {
+// GetClusterId returns the ClusterId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppInstanceInput) GetClusterId() int32 {
+	if o == nil || IsNil(o.ClusterId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.ClusterID.Get()
+	return *o.ClusterId.Get()
 }
 
-// GetClusterIDOk returns a tuple with the ClusterID field value if set, nil otherwise
+// GetClusterIdOk returns a tuple with the ClusterId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppInstanceInput) GetClusterIDOk() (*int32, bool) {
+func (o *NewAppInstanceInput) GetClusterIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.ClusterID.Get(), o.ClusterID.IsSet()
+	return o.ClusterId.Get(), o.ClusterId.IsSet()
 }
 
-// HasClusterID returns a boolean if a field has been set.
-func (o *NewAppInstanceInput) HasClusterID() bool {
-	if o != nil && o.ClusterID.IsSet() {
+// HasClusterId returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasClusterId() bool {
+	if o != nil && o.ClusterId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetClusterID gets a reference to the given NullableInt32 and assigns it to the ClusterID field.
-func (o *NewAppInstanceInput) SetClusterID(v int32) {
-	o.ClusterID.Set(&v)
+// SetClusterId gets a reference to the given NullableInt32 and assigns it to the ClusterId field.
+func (o *NewAppInstanceInput) SetClusterId(v int32) {
+	o.ClusterId.Set(&v)
 }
-// SetClusterIDNil sets the value for ClusterID to be an explicit nil
-func (o *NewAppInstanceInput) SetClusterIDNil() {
-	o.ClusterID.Set(nil)
+// SetClusterIdNil sets the value for ClusterId to be an explicit nil
+func (o *NewAppInstanceInput) SetClusterIdNil() {
+	o.ClusterId.Set(nil)
 }
 
-// UnsetClusterID ensures that no value is present for ClusterID, not even an explicit nil
-func (o *NewAppInstanceInput) UnsetClusterID() {
-	o.ClusterID.Unset()
+// UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
+func (o *NewAppInstanceInput) UnsetClusterId() {
+	o.ClusterId.Unset()
 }
 
 // GetNewCluster returns the NewCluster field value if set, zero value otherwise.
@@ -278,112 +278,112 @@ func (o *NewAppInstanceInput) SetNewCluster(v NewManagedClusterInput) {
 	o.NewCluster = &v
 }
 
-// GetEnvID returns the EnvID field value
-func (o *NewAppInstanceInput) GetEnvID() int32 {
+// GetEnvId returns the EnvId field value
+func (o *NewAppInstanceInput) GetEnvId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.EnvID
+	return o.EnvId
 }
 
-// GetEnvIDOk returns a tuple with the EnvID field value
+// GetEnvIdOk returns a tuple with the EnvId field value
 // and a boolean to check if the value has been set.
-func (o *NewAppInstanceInput) GetEnvIDOk() (*int32, bool) {
+func (o *NewAppInstanceInput) GetEnvIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.EnvID, true
+	return &o.EnvId, true
 }
 
-// SetEnvID sets field value
-func (o *NewAppInstanceInput) SetEnvID(v int32) {
-	o.EnvID = v
+// SetEnvId sets field value
+func (o *NewAppInstanceInput) SetEnvId(v int32) {
+	o.EnvId = v
 }
 
-// GetCiIntegrationID returns the CiIntegrationID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppInstanceInput) GetCiIntegrationID() int32 {
-	if o == nil || IsNil(o.CiIntegrationID.Get()) {
+// GetCiIntegrationId returns the CiIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppInstanceInput) GetCiIntegrationId() int32 {
+	if o == nil || IsNil(o.CiIntegrationId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.CiIntegrationID.Get()
+	return *o.CiIntegrationId.Get()
 }
 
-// GetCiIntegrationIDOk returns a tuple with the CiIntegrationID field value if set, nil otherwise
+// GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppInstanceInput) GetCiIntegrationIDOk() (*int32, bool) {
+func (o *NewAppInstanceInput) GetCiIntegrationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CiIntegrationID.Get(), o.CiIntegrationID.IsSet()
+	return o.CiIntegrationId.Get(), o.CiIntegrationId.IsSet()
 }
 
-// HasCiIntegrationID returns a boolean if a field has been set.
-func (o *NewAppInstanceInput) HasCiIntegrationID() bool {
-	if o != nil && o.CiIntegrationID.IsSet() {
+// HasCiIntegrationId returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasCiIntegrationId() bool {
+	if o != nil && o.CiIntegrationId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCiIntegrationID gets a reference to the given NullableInt32 and assigns it to the CiIntegrationID field.
-func (o *NewAppInstanceInput) SetCiIntegrationID(v int32) {
-	o.CiIntegrationID.Set(&v)
+// SetCiIntegrationId gets a reference to the given NullableInt32 and assigns it to the CiIntegrationId field.
+func (o *NewAppInstanceInput) SetCiIntegrationId(v int32) {
+	o.CiIntegrationId.Set(&v)
 }
-// SetCiIntegrationIDNil sets the value for CiIntegrationID to be an explicit nil
-func (o *NewAppInstanceInput) SetCiIntegrationIDNil() {
-	o.CiIntegrationID.Set(nil)
-}
-
-// UnsetCiIntegrationID ensures that no value is present for CiIntegrationID, not even an explicit nil
-func (o *NewAppInstanceInput) UnsetCiIntegrationID() {
-	o.CiIntegrationID.Unset()
+// SetCiIntegrationIdNil sets the value for CiIntegrationId to be an explicit nil
+func (o *NewAppInstanceInput) SetCiIntegrationIdNil() {
+	o.CiIntegrationId.Set(nil)
 }
 
-// GetRegistryIntegrationID returns the RegistryIntegrationID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppInstanceInput) GetRegistryIntegrationID() int32 {
-	if o == nil || IsNil(o.RegistryIntegrationID.Get()) {
+// UnsetCiIntegrationId ensures that no value is present for CiIntegrationId, not even an explicit nil
+func (o *NewAppInstanceInput) UnsetCiIntegrationId() {
+	o.CiIntegrationId.Unset()
+}
+
+// GetRegistryIntegrationId returns the RegistryIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppInstanceInput) GetRegistryIntegrationId() int32 {
+	if o == nil || IsNil(o.RegistryIntegrationId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.RegistryIntegrationID.Get()
+	return *o.RegistryIntegrationId.Get()
 }
 
-// GetRegistryIntegrationIDOk returns a tuple with the RegistryIntegrationID field value if set, nil otherwise
+// GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppInstanceInput) GetRegistryIntegrationIDOk() (*int32, bool) {
+func (o *NewAppInstanceInput) GetRegistryIntegrationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.RegistryIntegrationID.Get(), o.RegistryIntegrationID.IsSet()
+	return o.RegistryIntegrationId.Get(), o.RegistryIntegrationId.IsSet()
 }
 
-// HasRegistryIntegrationID returns a boolean if a field has been set.
-func (o *NewAppInstanceInput) HasRegistryIntegrationID() bool {
-	if o != nil && o.RegistryIntegrationID.IsSet() {
+// HasRegistryIntegrationId returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasRegistryIntegrationId() bool {
+	if o != nil && o.RegistryIntegrationId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRegistryIntegrationID gets a reference to the given NullableInt32 and assigns it to the RegistryIntegrationID field.
-func (o *NewAppInstanceInput) SetRegistryIntegrationID(v int32) {
-	o.RegistryIntegrationID.Set(&v)
+// SetRegistryIntegrationId gets a reference to the given NullableInt32 and assigns it to the RegistryIntegrationId field.
+func (o *NewAppInstanceInput) SetRegistryIntegrationId(v int32) {
+	o.RegistryIntegrationId.Set(&v)
 }
-// SetRegistryIntegrationIDNil sets the value for RegistryIntegrationID to be an explicit nil
-func (o *NewAppInstanceInput) SetRegistryIntegrationIDNil() {
-	o.RegistryIntegrationID.Set(nil)
+// SetRegistryIntegrationIdNil sets the value for RegistryIntegrationId to be an explicit nil
+func (o *NewAppInstanceInput) SetRegistryIntegrationIdNil() {
+	o.RegistryIntegrationId.Set(nil)
 }
 
-// UnsetRegistryIntegrationID ensures that no value is present for RegistryIntegrationID, not even an explicit nil
-func (o *NewAppInstanceInput) UnsetRegistryIntegrationID() {
-	o.RegistryIntegrationID.Unset()
+// UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+func (o *NewAppInstanceInput) UnsetRegistryIntegrationId() {
+	o.RegistryIntegrationId.Unset()
 }
 
 func (o NewAppInstanceInput) MarshalJSON() ([]byte, error) {
@@ -396,24 +396,24 @@ func (o NewAppInstanceInput) MarshalJSON() ([]byte, error) {
 
 func (o NewAppInstanceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["appID"] = o.AppID
+	toSerialize["appId"] = o.AppId
 	toSerialize["instanceName"] = o.InstanceName
 	toSerialize["instanceTitle"] = o.InstanceTitle
 	toSerialize["domain"] = o.Domain
-	toSerialize["stackRevID"] = o.StackRevID
+	toSerialize["stackRevId"] = o.StackRevId
 	toSerialize["services"] = o.Services
-	if o.ClusterID.IsSet() {
-		toSerialize["clusterID"] = o.ClusterID.Get()
+	if o.ClusterId.IsSet() {
+		toSerialize["clusterId"] = o.ClusterId.Get()
 	}
 	if !IsNil(o.NewCluster) {
 		toSerialize["newCluster"] = o.NewCluster
 	}
-	toSerialize["envID"] = o.EnvID
-	if o.CiIntegrationID.IsSet() {
-		toSerialize["ciIntegrationID"] = o.CiIntegrationID.Get()
+	toSerialize["envId"] = o.EnvId
+	if o.CiIntegrationId.IsSet() {
+		toSerialize["ciIntegrationId"] = o.CiIntegrationId.Get()
 	}
-	if o.RegistryIntegrationID.IsSet() {
-		toSerialize["registryIntegrationID"] = o.RegistryIntegrationID.Get()
+	if o.RegistryIntegrationId.IsSet() {
+		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
 	}
 	return toSerialize, nil
 }
@@ -423,13 +423,13 @@ func (o *NewAppInstanceInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"appID",
+		"appId",
 		"instanceName",
 		"instanceTitle",
 		"domain",
-		"stackRevID",
+		"stackRevId",
 		"services",
-		"envID",
+		"envId",
 	}
 
 	allProperties := make(map[string]interface{})

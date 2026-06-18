@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing TasksAPIService
 
@@ -22,11 +22,13 @@ func Test_client_TasksAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test TasksAPIService TasksGet", func(t *testing.T) {
+	t.Run("Test TasksAPIService CancelTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TasksAPI.TasksGet(context.Background()).Execute()
+		var id int32
+
+		resp, httpRes, err := apiClient.TasksAPI.CancelTask(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +36,13 @@ func Test_client_TasksAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TasksAPIService TasksIdCancelPost", func(t *testing.T) {
+	t.Run("Test TasksAPIService GetTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.TasksAPI.TasksIdCancelPost(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.TasksAPI.GetTask(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,13 +50,11 @@ func Test_client_TasksAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TasksAPIService TasksIdGet", func(t *testing.T) {
+	t.Run("Test TasksAPIService ListTasks", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var id int32
-
-		resp, httpRes, err := apiClient.TasksAPI.TasksIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.TasksAPI.ListTasks(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,13 +62,13 @@ func Test_client_TasksAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TasksAPIService TasksIdRepeatPost", func(t *testing.T) {
+	t.Run("Test TasksAPIService RepeatTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.TasksAPI.TasksIdRepeatPost(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.TasksAPI.RepeatTask(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

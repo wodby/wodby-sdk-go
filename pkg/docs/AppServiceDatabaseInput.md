@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DatabaseID** | **int32** |  | 
-**DatabaseDBID** | Pointer to **NullableInt32** |  | [optional] 
+**DatabaseId** | **int32** |  | 
+**DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
 
 ## Methods
 
 ### NewAppServiceDatabaseInput
 
-`func NewAppServiceDatabaseInput(databaseID int32, ) *AppServiceDatabaseInput`
+`func NewAppServiceDatabaseInput(databaseId int32, ) *AppServiceDatabaseInput`
 
 NewAppServiceDatabaseInput instantiates a new AppServiceDatabaseInput object
 This constructor will assign default values to properties that have it defined,
@@ -26,61 +26,61 @@ NewAppServiceDatabaseInputWithDefaults instantiates a new AppServiceDatabaseInpu
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetDatabaseID
+### GetDatabaseId
 
-`func (o *AppServiceDatabaseInput) GetDatabaseID() int32`
+`func (o *AppServiceDatabaseInput) GetDatabaseId() int32`
 
-GetDatabaseID returns the DatabaseID field if non-nil, zero value otherwise.
+GetDatabaseId returns the DatabaseId field if non-nil, zero value otherwise.
 
-### GetDatabaseIDOk
+### GetDatabaseIdOk
 
-`func (o *AppServiceDatabaseInput) GetDatabaseIDOk() (*int32, bool)`
+`func (o *AppServiceDatabaseInput) GetDatabaseIdOk() (*int32, bool)`
 
-GetDatabaseIDOk returns a tuple with the DatabaseID field if it's non-nil, zero value otherwise
+GetDatabaseIdOk returns a tuple with the DatabaseId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatabaseID
+### SetDatabaseId
 
-`func (o *AppServiceDatabaseInput) SetDatabaseID(v int32)`
+`func (o *AppServiceDatabaseInput) SetDatabaseId(v int32)`
 
-SetDatabaseID sets DatabaseID field to given value.
+SetDatabaseId sets DatabaseId field to given value.
 
 
-### GetDatabaseDBID
+### GetDatabaseDbId
 
-`func (o *AppServiceDatabaseInput) GetDatabaseDBID() int32`
+`func (o *AppServiceDatabaseInput) GetDatabaseDbId() int32`
 
-GetDatabaseDBID returns the DatabaseDBID field if non-nil, zero value otherwise.
+GetDatabaseDbId returns the DatabaseDbId field if non-nil, zero value otherwise.
 
-### GetDatabaseDBIDOk
+### GetDatabaseDbIdOk
 
-`func (o *AppServiceDatabaseInput) GetDatabaseDBIDOk() (*int32, bool)`
+`func (o *AppServiceDatabaseInput) GetDatabaseDbIdOk() (*int32, bool)`
 
-GetDatabaseDBIDOk returns a tuple with the DatabaseDBID field if it's non-nil, zero value otherwise
+GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatabaseDBID
+### SetDatabaseDbId
 
-`func (o *AppServiceDatabaseInput) SetDatabaseDBID(v int32)`
+`func (o *AppServiceDatabaseInput) SetDatabaseDbId(v int32)`
 
-SetDatabaseDBID sets DatabaseDBID field to given value.
+SetDatabaseDbId sets DatabaseDbId field to given value.
 
-### HasDatabaseDBID
+### HasDatabaseDbId
 
-`func (o *AppServiceDatabaseInput) HasDatabaseDBID() bool`
+`func (o *AppServiceDatabaseInput) HasDatabaseDbId() bool`
 
-HasDatabaseDBID returns a boolean if a field has been set.
+HasDatabaseDbId returns a boolean if a field has been set.
 
-### SetDatabaseDBIDNil
+### SetDatabaseDbIdNil
 
-`func (o *AppServiceDatabaseInput) SetDatabaseDBIDNil(b bool)`
+`func (o *AppServiceDatabaseInput) SetDatabaseDbIdNil(b bool)`
 
- SetDatabaseDBIDNil sets the value for DatabaseDBID to be an explicit nil
+ SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
 
-### UnsetDatabaseDBID
-`func (o *AppServiceDatabaseInput) UnsetDatabaseDBID()`
+### UnsetDatabaseDbId
+`func (o *AppServiceDatabaseInput) UnsetDatabaseDbId()`
 
-UnsetDatabaseDBID ensures that no value is present for DatabaseDBID, not even an explicit nil
+UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

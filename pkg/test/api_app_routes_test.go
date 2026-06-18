@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing AppRoutesAPIService
 
@@ -22,11 +22,11 @@ func Test_client_AppRoutesAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test AppRoutesAPIService AppRoutesGet", func(t *testing.T) {
+	t.Run("Test AppRoutesAPIService CreateAppRoute", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AppRoutesAPI.AppRoutesGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppRoutesAPI.CreateAppRoute(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +34,13 @@ func Test_client_AppRoutesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppRoutesAPIService AppRoutesIdDelete", func(t *testing.T) {
+	t.Run("Test AppRoutesAPIService DeleteAppRoute", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppRoutesAPI.AppRoutesIdDelete(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.AppRoutesAPI.DeleteAppRoute(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,13 +48,13 @@ func Test_client_AppRoutesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppRoutesAPIService AppRoutesIdGet", func(t *testing.T) {
+	t.Run("Test AppRoutesAPIService GetAppRoute", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppRoutesAPI.AppRoutesIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.AppRoutesAPI.GetAppRoute(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,25 +62,25 @@ func Test_client_AppRoutesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppRoutesAPIService AppRoutesIdPut", func(t *testing.T) {
+	t.Run("Test AppRoutesAPIService ListAppRoutes", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AppRoutesAPI.ListAppRoutes(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppRoutesAPIService UpdateAppRoute", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppRoutesAPI.AppRoutesIdPut(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AppRoutesAPIService AppRoutesPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.AppRoutesAPI.AppRoutesPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppRoutesAPI.UpdateAppRoute(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

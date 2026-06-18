@@ -4,17 +4,17 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ImportsGet**](ImportsAPI.md#ImportsGet) | **Get** /imports | List imports
-[**ImportsIdGet**](ImportsAPI.md#ImportsIdGet) | **Get** /imports/{id} | Get import
-[**ImportsPost**](ImportsAPI.md#ImportsPost) | **Post** /imports | Create import
+[**CreateImport**](ImportsAPI.md#CreateImport) | **Post** /imports | Create import
+[**GetImport**](ImportsAPI.md#GetImport) | **Get** /imports/{id} | Get import
+[**ListImports**](ImportsAPI.md#ListImports) | **Get** /imports | List imports
 
 
 
-## ImportsGet
+## CreateImport
 
-> []Import ImportsGet(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).Execute()
+> OperationResult CreateImport(ctx).CreateImportInput(createImportInput).Execute()
 
-List imports
+Create import
 
 ### Example
 
@@ -29,20 +29,17 @@ import (
 )
 
 func main() {
-	appInstanceId := int32(56) // int32 |  (optional)
-	appServiceId := int32(56) // int32 |  (optional)
-	databaseId := int32(56) // int32 |  (optional)
-	databaseDbId := int32(56) // int32 |  (optional)
+	createImportInput := *openapiclient.NewCreateImportInput(*openapiclient.NewImportInput("Source_example")) // CreateImportInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ImportsAPI.ImportsGet(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).Execute()
+	resp, r, err := apiClient.ImportsAPI.CreateImport(context.Background()).CreateImportInput(createImportInput).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ImportsAPI.ImportsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ImportsAPI.CreateImport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ImportsGet`: []Import
-	fmt.Fprintf(os.Stdout, "Response from `ImportsAPI.ImportsGet`: %v\n", resp)
+	// response from `CreateImport`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ImportsAPI.CreateImport`: %v\n", resp)
 }
 ```
 
@@ -52,19 +49,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiImportsGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiCreateImportRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **appInstanceId** | **int32** |  | 
- **appServiceId** | **int32** |  | 
- **databaseId** | **int32** |  | 
- **databaseDbId** | **int32** |  | 
+ **createImportInput** | [**CreateImportInput**](CreateImportInput.md) |  | 
 
 ### Return type
 
-[**[]Import**](Import.md)
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 
@@ -72,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -80,9 +74,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ImportsIdGet
+## GetImport
 
-> Import ImportsIdGet(ctx, id).Execute()
+> Import GetImport(ctx, id).Execute()
 
 Get import
 
@@ -103,13 +97,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ImportsAPI.ImportsIdGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.ImportsAPI.GetImport(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ImportsAPI.ImportsIdGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ImportsAPI.GetImport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ImportsIdGet`: Import
-	fmt.Fprintf(os.Stdout, "Response from `ImportsAPI.ImportsIdGet`: %v\n", resp)
+	// response from `GetImport`: Import
+	fmt.Fprintf(os.Stdout, "Response from `ImportsAPI.GetImport`: %v\n", resp)
 }
 ```
 
@@ -123,7 +117,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiImportsIdGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetImportRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -148,11 +142,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ImportsPost
+## ListImports
 
-> OperationResult ImportsPost(ctx).NewImportInput(newImportInput).Execute()
+> []Import ListImports(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).Execute()
 
-Create import
+List imports
 
 ### Example
 
@@ -167,17 +161,20 @@ import (
 )
 
 func main() {
-	newImportInput := *openapiclient.NewNewImportInput(*openapiclient.NewImportInput("Source_example")) // NewImportInput | 
+	appInstanceId := int32(56) // int32 |  (optional)
+	appServiceId := int32(56) // int32 |  (optional)
+	databaseId := int32(56) // int32 |  (optional)
+	databaseDbId := int32(56) // int32 |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ImportsAPI.ImportsPost(context.Background()).NewImportInput(newImportInput).Execute()
+	resp, r, err := apiClient.ImportsAPI.ListImports(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ImportsAPI.ImportsPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ImportsAPI.ListImports``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ImportsPost`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `ImportsAPI.ImportsPost`: %v\n", resp)
+	// response from `ListImports`: []Import
+	fmt.Fprintf(os.Stdout, "Response from `ImportsAPI.ListImports`: %v\n", resp)
 }
 ```
 
@@ -187,16 +184,19 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiImportsPostRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListImportsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **newImportInput** | [**NewImportInput**](NewImportInput.md) |  | 
+ **appInstanceId** | **int32** |  | 
+ **appServiceId** | **int32** |  | 
+ **databaseId** | **int32** |  | 
+ **databaseDbId** | **int32** |  | 
 
 ### Return type
 
-[**OperationResult**](OperationResult.md)
+[**[]Import**](Import.md)
 
 ### Authorization
 
@@ -204,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

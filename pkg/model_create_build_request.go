@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -12,23 +12,27 @@ package client
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CreateBuildRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateBuildRequest{}
 
-// CreateBuildRequest Specify either appServiceId for one service or appServiceIds for a multi-service build.
+// CreateBuildRequest App service IDs to build.
 type CreateBuildRequest struct {
-	AppServiceId *int32 `json:"appServiceId,omitempty"`
-	AppServiceIds []int32 `json:"appServiceIds,omitempty"`
+	AppServiceIds []int32 `json:"appServiceIds"`
 }
+
+type _CreateBuildRequest CreateBuildRequest
 
 // NewCreateBuildRequest instantiates a new CreateBuildRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateBuildRequest() *CreateBuildRequest {
+func NewCreateBuildRequest(appServiceIds []int32) *CreateBuildRequest {
 	this := CreateBuildRequest{}
+	this.AppServiceIds = appServiceIds
 	return &this
 }
 
@@ -40,66 +44,26 @@ func NewCreateBuildRequestWithDefaults() *CreateBuildRequest {
 	return &this
 }
 
-// GetAppServiceId returns the AppServiceId field value if set, zero value otherwise.
-func (o *CreateBuildRequest) GetAppServiceId() int32 {
-	if o == nil || IsNil(o.AppServiceId) {
-		var ret int32
-		return ret
-	}
-	return *o.AppServiceId
-}
-
-// GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateBuildRequest) GetAppServiceIdOk() (*int32, bool) {
-	if o == nil || IsNil(o.AppServiceId) {
-		return nil, false
-	}
-	return o.AppServiceId, true
-}
-
-// HasAppServiceId returns a boolean if a field has been set.
-func (o *CreateBuildRequest) HasAppServiceId() bool {
-	if o != nil && !IsNil(o.AppServiceId) {
-		return true
-	}
-
-	return false
-}
-
-// SetAppServiceId gets a reference to the given int32 and assigns it to the AppServiceId field.
-func (o *CreateBuildRequest) SetAppServiceId(v int32) {
-	o.AppServiceId = &v
-}
-
-// GetAppServiceIds returns the AppServiceIds field value if set, zero value otherwise.
+// GetAppServiceIds returns the AppServiceIds field value
 func (o *CreateBuildRequest) GetAppServiceIds() []int32 {
-	if o == nil || IsNil(o.AppServiceIds) {
+	if o == nil {
 		var ret []int32
 		return ret
 	}
+
 	return o.AppServiceIds
 }
 
-// GetAppServiceIdsOk returns a tuple with the AppServiceIds field value if set, nil otherwise
+// GetAppServiceIdsOk returns a tuple with the AppServiceIds field value
 // and a boolean to check if the value has been set.
 func (o *CreateBuildRequest) GetAppServiceIdsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.AppServiceIds) {
+	if o == nil {
 		return nil, false
 	}
 	return o.AppServiceIds, true
 }
 
-// HasAppServiceIds returns a boolean if a field has been set.
-func (o *CreateBuildRequest) HasAppServiceIds() bool {
-	if o != nil && !IsNil(o.AppServiceIds) {
-		return true
-	}
-
-	return false
-}
-
-// SetAppServiceIds gets a reference to the given []int32 and assigns it to the AppServiceIds field.
+// SetAppServiceIds sets field value
 func (o *CreateBuildRequest) SetAppServiceIds(v []int32) {
 	o.AppServiceIds = v
 }
@@ -114,13 +78,45 @@ func (o CreateBuildRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateBuildRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AppServiceId) {
-		toSerialize["appServiceId"] = o.AppServiceId
-	}
-	if !IsNil(o.AppServiceIds) {
-		toSerialize["appServiceIds"] = o.AppServiceIds
-	}
+	toSerialize["appServiceIds"] = o.AppServiceIds
 	return toSerialize, nil
+}
+
+func (o *CreateBuildRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"appServiceIds",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateBuildRequest := _CreateBuildRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateBuildRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateBuildRequest(varCreateBuildRequest)
+
+	return err
 }
 
 type NullableCreateBuildRequest struct {

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgID** | **int32** |  | 
-**ProjectID** | Pointer to **NullableInt32** |  | [optional] 
-**IntegrationID** | **int32** |  | 
+**OrgId** | **int32** |  | 
+**ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**IntegrationId** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **Serverless** | **bool** |  | 
@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewNewClusterInput
 
-`func NewNewClusterInput(orgID int32, integrationID int32, name string, title string, serverless bool, disableMonitoring bool, ) *NewClusterInput`
+`func NewNewClusterInput(orgId int32, integrationId int32, name string, title string, serverless bool, disableMonitoring bool, ) *NewClusterInput`
 
 NewNewClusterInput instantiates a new NewClusterInput object
 This constructor will assign default values to properties that have it defined,
@@ -40,79 +40,79 @@ NewNewClusterInputWithDefaults instantiates a new NewClusterInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetOrgID
+### GetOrgId
 
-`func (o *NewClusterInput) GetOrgID() int32`
+`func (o *NewClusterInput) GetOrgId() int32`
 
-GetOrgID returns the OrgID field if non-nil, zero value otherwise.
+GetOrgId returns the OrgId field if non-nil, zero value otherwise.
 
-### GetOrgIDOk
+### GetOrgIdOk
 
-`func (o *NewClusterInput) GetOrgIDOk() (*int32, bool)`
+`func (o *NewClusterInput) GetOrgIdOk() (*int32, bool)`
 
-GetOrgIDOk returns a tuple with the OrgID field if it's non-nil, zero value otherwise
+GetOrgIdOk returns a tuple with the OrgId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrgID
+### SetOrgId
 
-`func (o *NewClusterInput) SetOrgID(v int32)`
+`func (o *NewClusterInput) SetOrgId(v int32)`
 
-SetOrgID sets OrgID field to given value.
+SetOrgId sets OrgId field to given value.
 
 
-### GetProjectID
+### GetProjectId
 
-`func (o *NewClusterInput) GetProjectID() int32`
+`func (o *NewClusterInput) GetProjectId() int32`
 
-GetProjectID returns the ProjectID field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetProjectIDOk
+### GetProjectIdOk
 
-`func (o *NewClusterInput) GetProjectIDOk() (*int32, bool)`
+`func (o *NewClusterInput) GetProjectIdOk() (*int32, bool)`
 
-GetProjectIDOk returns a tuple with the ProjectID field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectID
+### SetProjectId
 
-`func (o *NewClusterInput) SetProjectID(v int32)`
+`func (o *NewClusterInput) SetProjectId(v int32)`
 
-SetProjectID sets ProjectID field to given value.
+SetProjectId sets ProjectId field to given value.
 
-### HasProjectID
+### HasProjectId
 
-`func (o *NewClusterInput) HasProjectID() bool`
+`func (o *NewClusterInput) HasProjectId() bool`
 
-HasProjectID returns a boolean if a field has been set.
+HasProjectId returns a boolean if a field has been set.
 
-### SetProjectIDNil
+### SetProjectIdNil
 
-`func (o *NewClusterInput) SetProjectIDNil(b bool)`
+`func (o *NewClusterInput) SetProjectIdNil(b bool)`
 
- SetProjectIDNil sets the value for ProjectID to be an explicit nil
+ SetProjectIdNil sets the value for ProjectId to be an explicit nil
 
-### UnsetProjectID
-`func (o *NewClusterInput) UnsetProjectID()`
+### UnsetProjectId
+`func (o *NewClusterInput) UnsetProjectId()`
 
-UnsetProjectID ensures that no value is present for ProjectID, not even an explicit nil
-### GetIntegrationID
+UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetIntegrationId
 
-`func (o *NewClusterInput) GetIntegrationID() int32`
+`func (o *NewClusterInput) GetIntegrationId() int32`
 
-GetIntegrationID returns the IntegrationID field if non-nil, zero value otherwise.
+GetIntegrationId returns the IntegrationId field if non-nil, zero value otherwise.
 
-### GetIntegrationIDOk
+### GetIntegrationIdOk
 
-`func (o *NewClusterInput) GetIntegrationIDOk() (*int32, bool)`
+`func (o *NewClusterInput) GetIntegrationIdOk() (*int32, bool)`
 
-GetIntegrationIDOk returns a tuple with the IntegrationID field if it's non-nil, zero value otherwise
+GetIntegrationIdOk returns a tuple with the IntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIntegrationID
+### SetIntegrationId
 
-`func (o *NewClusterInput) SetIntegrationID(v int32)`
+`func (o *NewClusterInput) SetIntegrationId(v int32)`
 
-SetIntegrationID sets IntegrationID field to given value.
+SetIntegrationId sets IntegrationId field to given value.
 
 
 ### GetName

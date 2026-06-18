@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -24,8 +24,8 @@ type BuildSourceInput struct {
 	BuildSourceType string `json:"buildSourceType"`
 	Template NullableString `json:"template,omitempty"`
 	NewRepoName NullableString `json:"newRepoName,omitempty"`
-	IntegrationID NullableInt32 `json:"integrationID,omitempty"`
-	RemoteGitRepoID NullableString `json:"remoteGitRepoID,omitempty"`
+	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
+	RemoteGitRepoId NullableString `json:"remoteGitRepoId,omitempty"`
 	GitRef NullableString `json:"gitRef,omitempty"`
 	GitRefType NullableString `json:"gitRefType,omitempty"`
 }
@@ -158,88 +158,88 @@ func (o *BuildSourceInput) UnsetNewRepoName() {
 	o.NewRepoName.Unset()
 }
 
-// GetIntegrationID returns the IntegrationID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BuildSourceInput) GetIntegrationID() int32 {
-	if o == nil || IsNil(o.IntegrationID.Get()) {
+// GetIntegrationId returns the IntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BuildSourceInput) GetIntegrationId() int32 {
+	if o == nil || IsNil(o.IntegrationId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.IntegrationID.Get()
+	return *o.IntegrationId.Get()
 }
 
-// GetIntegrationIDOk returns a tuple with the IntegrationID field value if set, nil otherwise
+// GetIntegrationIdOk returns a tuple with the IntegrationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BuildSourceInput) GetIntegrationIDOk() (*int32, bool) {
+func (o *BuildSourceInput) GetIntegrationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.IntegrationID.Get(), o.IntegrationID.IsSet()
+	return o.IntegrationId.Get(), o.IntegrationId.IsSet()
 }
 
-// HasIntegrationID returns a boolean if a field has been set.
-func (o *BuildSourceInput) HasIntegrationID() bool {
-	if o != nil && o.IntegrationID.IsSet() {
+// HasIntegrationId returns a boolean if a field has been set.
+func (o *BuildSourceInput) HasIntegrationId() bool {
+	if o != nil && o.IntegrationId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetIntegrationID gets a reference to the given NullableInt32 and assigns it to the IntegrationID field.
-func (o *BuildSourceInput) SetIntegrationID(v int32) {
-	o.IntegrationID.Set(&v)
+// SetIntegrationId gets a reference to the given NullableInt32 and assigns it to the IntegrationId field.
+func (o *BuildSourceInput) SetIntegrationId(v int32) {
+	o.IntegrationId.Set(&v)
 }
-// SetIntegrationIDNil sets the value for IntegrationID to be an explicit nil
-func (o *BuildSourceInput) SetIntegrationIDNil() {
-	o.IntegrationID.Set(nil)
-}
-
-// UnsetIntegrationID ensures that no value is present for IntegrationID, not even an explicit nil
-func (o *BuildSourceInput) UnsetIntegrationID() {
-	o.IntegrationID.Unset()
+// SetIntegrationIdNil sets the value for IntegrationId to be an explicit nil
+func (o *BuildSourceInput) SetIntegrationIdNil() {
+	o.IntegrationId.Set(nil)
 }
 
-// GetRemoteGitRepoID returns the RemoteGitRepoID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BuildSourceInput) GetRemoteGitRepoID() string {
-	if o == nil || IsNil(o.RemoteGitRepoID.Get()) {
+// UnsetIntegrationId ensures that no value is present for IntegrationId, not even an explicit nil
+func (o *BuildSourceInput) UnsetIntegrationId() {
+	o.IntegrationId.Unset()
+}
+
+// GetRemoteGitRepoId returns the RemoteGitRepoId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BuildSourceInput) GetRemoteGitRepoId() string {
+	if o == nil || IsNil(o.RemoteGitRepoId.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.RemoteGitRepoID.Get()
+	return *o.RemoteGitRepoId.Get()
 }
 
-// GetRemoteGitRepoIDOk returns a tuple with the RemoteGitRepoID field value if set, nil otherwise
+// GetRemoteGitRepoIdOk returns a tuple with the RemoteGitRepoId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BuildSourceInput) GetRemoteGitRepoIDOk() (*string, bool) {
+func (o *BuildSourceInput) GetRemoteGitRepoIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.RemoteGitRepoID.Get(), o.RemoteGitRepoID.IsSet()
+	return o.RemoteGitRepoId.Get(), o.RemoteGitRepoId.IsSet()
 }
 
-// HasRemoteGitRepoID returns a boolean if a field has been set.
-func (o *BuildSourceInput) HasRemoteGitRepoID() bool {
-	if o != nil && o.RemoteGitRepoID.IsSet() {
+// HasRemoteGitRepoId returns a boolean if a field has been set.
+func (o *BuildSourceInput) HasRemoteGitRepoId() bool {
+	if o != nil && o.RemoteGitRepoId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRemoteGitRepoID gets a reference to the given NullableString and assigns it to the RemoteGitRepoID field.
-func (o *BuildSourceInput) SetRemoteGitRepoID(v string) {
-	o.RemoteGitRepoID.Set(&v)
+// SetRemoteGitRepoId gets a reference to the given NullableString and assigns it to the RemoteGitRepoId field.
+func (o *BuildSourceInput) SetRemoteGitRepoId(v string) {
+	o.RemoteGitRepoId.Set(&v)
 }
-// SetRemoteGitRepoIDNil sets the value for RemoteGitRepoID to be an explicit nil
-func (o *BuildSourceInput) SetRemoteGitRepoIDNil() {
-	o.RemoteGitRepoID.Set(nil)
+// SetRemoteGitRepoIdNil sets the value for RemoteGitRepoId to be an explicit nil
+func (o *BuildSourceInput) SetRemoteGitRepoIdNil() {
+	o.RemoteGitRepoId.Set(nil)
 }
 
-// UnsetRemoteGitRepoID ensures that no value is present for RemoteGitRepoID, not even an explicit nil
-func (o *BuildSourceInput) UnsetRemoteGitRepoID() {
-	o.RemoteGitRepoID.Unset()
+// UnsetRemoteGitRepoId ensures that no value is present for RemoteGitRepoId, not even an explicit nil
+func (o *BuildSourceInput) UnsetRemoteGitRepoId() {
+	o.RemoteGitRepoId.Unset()
 }
 
 // GetGitRef returns the GitRef field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -343,11 +343,11 @@ func (o BuildSourceInput) ToMap() (map[string]interface{}, error) {
 	if o.NewRepoName.IsSet() {
 		toSerialize["newRepoName"] = o.NewRepoName.Get()
 	}
-	if o.IntegrationID.IsSet() {
-		toSerialize["integrationID"] = o.IntegrationID.Get()
+	if o.IntegrationId.IsSet() {
+		toSerialize["integrationId"] = o.IntegrationId.Get()
 	}
-	if o.RemoteGitRepoID.IsSet() {
-		toSerialize["remoteGitRepoID"] = o.RemoteGitRepoID.Get()
+	if o.RemoteGitRepoId.IsSet() {
+		toSerialize["remoteGitRepoId"] = o.RemoteGitRepoId.Get()
 	}
 	if o.GitRef.IsSet() {
 		toSerialize["gitRef"] = o.GitRef.Get()

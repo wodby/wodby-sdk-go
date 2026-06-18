@@ -80,109 +80,118 @@ All URIs are relative to */v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AppBuildsAPI* | [**AppBuildsFromCiPost**](docs/AppBuildsAPI.md#appbuildsfromcipost) | **Post** /app-builds/from-ci | Create build from CI
-*AppBuildsAPI* | [**AppBuildsGet**](docs/AppBuildsAPI.md#appbuildsget) | **Get** /app-builds | List app builds
-*AppBuildsAPI* | [**AppBuildsIdDeployPost**](docs/AppBuildsAPI.md#appbuildsiddeploypost) | **Post** /app-builds/{id}/deploy | Deploy build
-*AppBuildsAPI* | [**AppBuildsIdDockerRegistryCredentialsGet**](docs/AppBuildsAPI.md#appbuildsiddockerregistrycredentialsget) | **Get** /app-builds/{id}/docker-registry-credentials | Get Docker registry credentials for build
-*AppBuildsAPI* | [**AppBuildsIdGet**](docs/AppBuildsAPI.md#appbuildsidget) | **Get** /app-builds/{id} | Get build
-*AppBuildsAPI* | [**AppBuildsIdVoidPost**](docs/AppBuildsAPI.md#appbuildsidvoidpost) | **Post** /app-builds/{id}/void | Void build images
-*AppBuildsAPI* | [**AppBuildsPost**](docs/AppBuildsAPI.md#appbuildspost) | **Post** /app-builds | Create build
-*AppDeploymentsAPI* | [**AppDeploymentsFromCiPost**](docs/AppDeploymentsAPI.md#appdeploymentsfromcipost) | **Post** /app-deployments/from-ci | Create deployment from CI
-*AppDeploymentsAPI* | [**AppDeploymentsGet**](docs/AppDeploymentsAPI.md#appdeploymentsget) | **Get** /app-deployments | List app deployments
-*AppDeploymentsAPI* | [**AppDeploymentsIdGet**](docs/AppDeploymentsAPI.md#appdeploymentsidget) | **Get** /app-deployments/{id} | Get deployment
-*AppDeploymentsAPI* | [**AppDeploymentsIdRedeployPost**](docs/AppDeploymentsAPI.md#appdeploymentsidredeploypost) | **Post** /app-deployments/{id}/redeploy | Redeploy deployment
-*AppDeploymentsAPI* | [**AppDeploymentsPost**](docs/AppDeploymentsAPI.md#appdeploymentspost) | **Post** /app-deployments | Create deployment
-*AppInstancesAPI* | [**AppInstancesByNameAppNameInstanceNameGet**](docs/AppInstancesAPI.md#appinstancesbynameappnameinstancenameget) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
-*AppInstancesAPI* | [**AppInstancesGet**](docs/AppInstancesAPI.md#appinstancesget) | **Get** /app-instances | List app instances
-*AppInstancesAPI* | [**AppInstancesIdDelete**](docs/AppInstancesAPI.md#appinstancesiddelete) | **Delete** /app-instances/{id} | Delete app instance
-*AppInstancesAPI* | [**AppInstancesIdGet**](docs/AppInstancesAPI.md#appinstancesidget) | **Get** /app-instances/{id} | Get app instance
-*AppInstancesAPI* | [**AppInstancesIdPut**](docs/AppInstancesAPI.md#appinstancesidput) | **Put** /app-instances/{id} | Update app instance
-*AppInstancesAPI* | [**AppInstancesPost**](docs/AppInstancesAPI.md#appinstancespost) | **Post** /app-instances | Create app instance
-*AppRoutesAPI* | [**AppRoutesGet**](docs/AppRoutesAPI.md#approutesget) | **Get** /app-routes | List app routes
-*AppRoutesAPI* | [**AppRoutesIdDelete**](docs/AppRoutesAPI.md#approutesiddelete) | **Delete** /app-routes/{id} | Delete app route
-*AppRoutesAPI* | [**AppRoutesIdGet**](docs/AppRoutesAPI.md#approutesidget) | **Get** /app-routes/{id} | Get app route
-*AppRoutesAPI* | [**AppRoutesIdPut**](docs/AppRoutesAPI.md#approutesidput) | **Put** /app-routes/{id} | Update app route
-*AppRoutesAPI* | [**AppRoutesPost**](docs/AppRoutesAPI.md#approutespost) | **Post** /app-routes | Create app route
-*AppServicesAPI* | [**AppServicesGet**](docs/AppServicesAPI.md#appservicesget) | **Get** /app-services | List app services
-*AppServicesAPI* | [**AppServicesIdActionsNamePost**](docs/AppServicesAPI.md#appservicesidactionsnamepost) | **Post** /app-services/{id}/actions/{name} | Run app service action
-*AppServicesAPI* | [**AppServicesIdGet**](docs/AppServicesAPI.md#appservicesidget) | **Get** /app-services/{id} | Get app service
-*AppServicesAPI* | [**AppServicesIdPut**](docs/AppServicesAPI.md#appservicesidput) | **Put** /app-services/{id} | Update app service
-*AppsAPI* | [**AppsByNameNameGet**](docs/AppsAPI.md#appsbynamenameget) | **Get** /apps/by-name/{name} | Get app by name
-*AppsAPI* | [**AppsGet**](docs/AppsAPI.md#appsget) | **Get** /apps | List apps
-*AppsAPI* | [**AppsIdDelete**](docs/AppsAPI.md#appsiddelete) | **Delete** /apps/{id} | Delete app
-*AppsAPI* | [**AppsIdGet**](docs/AppsAPI.md#appsidget) | **Get** /apps/{id} | Get app
-*AppsAPI* | [**AppsIdPut**](docs/AppsAPI.md#appsidput) | **Put** /apps/{id} | Update app
-*AppsAPI* | [**AppsPost**](docs/AppsAPI.md#appspost) | **Post** /apps | Create app
-*BackupsAPI* | [**BackupsGet**](docs/BackupsAPI.md#backupsget) | **Get** /backups | List backups
-*BackupsAPI* | [**BackupsIdGet**](docs/BackupsAPI.md#backupsidget) | **Get** /backups/{id} | Get backup
-*BackupsAPI* | [**BackupsPost**](docs/BackupsAPI.md#backupspost) | **Post** /backups | Create backup
-*ClustersAPI* | [**ClustersGet**](docs/ClustersAPI.md#clustersget) | **Get** /clusters | List clusters
-*ClustersAPI* | [**ClustersIdDelete**](docs/ClustersAPI.md#clustersiddelete) | **Delete** /clusters/{id} | Delete cluster
-*ClustersAPI* | [**ClustersIdGet**](docs/ClustersAPI.md#clustersidget) | **Get** /clusters/{id} | Get cluster
-*ClustersAPI* | [**ClustersIdPut**](docs/ClustersAPI.md#clustersidput) | **Put** /clusters/{id} | Update cluster
-*ClustersAPI* | [**ClustersPost**](docs/ClustersAPI.md#clusterspost) | **Post** /clusters | Create cluster
-*DatabasesAPI* | [**DatabasesGet**](docs/DatabasesAPI.md#databasesget) | **Get** /databases | List databases
-*DatabasesAPI* | [**DatabasesIdDelete**](docs/DatabasesAPI.md#databasesiddelete) | **Delete** /databases/{id} | Delete database
-*DatabasesAPI* | [**DatabasesIdGet**](docs/DatabasesAPI.md#databasesidget) | **Get** /databases/{id} | Get database
-*DatabasesAPI* | [**DatabasesIdPut**](docs/DatabasesAPI.md#databasesidput) | **Put** /databases/{id} | Update database
-*DatabasesAPI* | [**DatabasesPost**](docs/DatabasesAPI.md#databasespost) | **Post** /databases | Create database
-*DefaultAPI* | [**OpenapiJsonGet**](docs/DefaultAPI.md#openapijsonget) | **Get** /openapi.json | Get OpenAPI JSON
-*DefaultAPI* | [**OpenapiYamlGet**](docs/DefaultAPI.md#openapiyamlget) | **Get** /openapi.yaml | Get OpenAPI YAML
-*EnvsAPI* | [**EnvsGet**](docs/EnvsAPI.md#envsget) | **Get** /envs | List envs
-*EnvsAPI* | [**EnvsIdDelete**](docs/EnvsAPI.md#envsiddelete) | **Delete** /envs/{id} | Delete env
-*EnvsAPI* | [**EnvsIdGet**](docs/EnvsAPI.md#envsidget) | **Get** /envs/{id} | Get env
-*EnvsAPI* | [**EnvsIdPut**](docs/EnvsAPI.md#envsidput) | **Put** /envs/{id} | Update env
-*EnvsAPI* | [**EnvsPost**](docs/EnvsAPI.md#envspost) | **Post** /envs | Create env
-*ImportsAPI* | [**ImportsGet**](docs/ImportsAPI.md#importsget) | **Get** /imports | List imports
-*ImportsAPI* | [**ImportsIdGet**](docs/ImportsAPI.md#importsidget) | **Get** /imports/{id} | Get import
-*ImportsAPI* | [**ImportsPost**](docs/ImportsAPI.md#importspost) | **Post** /imports | Create import
-*IntegrationKindsAPI* | [**IntegrationKindsIdDatabaseMachineTypesGet**](docs/IntegrationKindsAPI.md#integrationkindsiddatabasemachinetypesget) | **Get** /integration-kinds/{id}/database-machine-types | List database machine types
-*IntegrationKindsAPI* | [**IntegrationKindsIdDatabaseRegionsGet**](docs/IntegrationKindsAPI.md#integrationkindsiddatabaseregionsget) | **Get** /integration-kinds/{id}/database-regions | List database regions
-*IntegrationKindsAPI* | [**IntegrationKindsIdDatabaseSettingsGet**](docs/IntegrationKindsAPI.md#integrationkindsiddatabasesettingsget) | **Get** /integration-kinds/{id}/database-settings | Get database settings
-*IntegrationKindsAPI* | [**IntegrationKindsIdDatabaseTypesGet**](docs/IntegrationKindsAPI.md#integrationkindsiddatabasetypesget) | **Get** /integration-kinds/{id}/database-types | List database types
-*IntegrationKindsAPI* | [**IntegrationKindsIdDatabaseVersionsGet**](docs/IntegrationKindsAPI.md#integrationkindsiddatabaseversionsget) | **Get** /integration-kinds/{id}/database-versions | List database versions
-*IntegrationsAPI* | [**IntegrationsByNameNameGet**](docs/IntegrationsAPI.md#integrationsbynamenameget) | **Get** /integrations/by-name/{name} | Get integration by name
-*IntegrationsAPI* | [**IntegrationsGet**](docs/IntegrationsAPI.md#integrationsget) | **Get** /integrations | List integrations
-*IntegrationsAPI* | [**IntegrationsIdDelete**](docs/IntegrationsAPI.md#integrationsiddelete) | **Delete** /integrations/{id} | Delete integration
-*IntegrationsAPI* | [**IntegrationsIdKubeMachineTypesGet**](docs/IntegrationsAPI.md#integrationsidkubemachinetypesget) | **Get** /integrations/{id}/kube-machine-types | List Kubernetes machine types
-*IntegrationsAPI* | [**IntegrationsIdKubeRegionsGet**](docs/IntegrationsAPI.md#integrationsidkuberegionsget) | **Get** /integrations/{id}/kube-regions | List Kubernetes regions
-*IntegrationsAPI* | [**IntegrationsIdKubeSettingsGet**](docs/IntegrationsAPI.md#integrationsidkubesettingsget) | **Get** /integrations/{id}/kube-settings | Get Kubernetes settings
-*IntegrationsAPI* | [**IntegrationsIdKubeVersionsGet**](docs/IntegrationsAPI.md#integrationsidkubeversionsget) | **Get** /integrations/{id}/kube-versions | List Kubernetes versions
-*IntegrationsAPI* | [**IntegrationsIdKubeZonesGet**](docs/IntegrationsAPI.md#integrationsidkubezonesget) | **Get** /integrations/{id}/kube-zones | List Kubernetes zones
-*IntegrationsAPI* | [**IntegrationsIdPut**](docs/IntegrationsAPI.md#integrationsidput) | **Put** /integrations/{id} | Update integration
-*IntegrationsAPI* | [**IntegrationsIdRemoteGitRepoBranchesGet**](docs/IntegrationsAPI.md#integrationsidremotegitrepobranchesget) | **Get** /integrations/{id}/remote-git-repo-branches | List remote Git repository branches
-*IntegrationsAPI* | [**IntegrationsIdRemoteGitRepoTagsGet**](docs/IntegrationsAPI.md#integrationsidremotegitrepotagsget) | **Get** /integrations/{id}/remote-git-repo-tags | List remote Git repository tags
-*IntegrationsAPI* | [**IntegrationsIdRemoteGitReposGet**](docs/IntegrationsAPI.md#integrationsidremotegitreposget) | **Get** /integrations/{id}/remote-git-repos | List remote Git repositories
-*IntegrationsAPI* | [**IntegrationsIdScopesGet**](docs/IntegrationsAPI.md#integrationsidscopesget) | **Get** /integrations/{id}/scopes | List integration scopes
-*IntegrationsAPI* | [**IntegrationsIdStorageBucketsGet**](docs/IntegrationsAPI.md#integrationsidstoragebucketsget) | **Get** /integrations/{id}/storage-buckets | List storage buckets
-*IntegrationsAPI* | [**IntegrationsIdStorageClassesGet**](docs/IntegrationsAPI.md#integrationsidstorageclassesget) | **Get** /integrations/{id}/storage-classes | List storage classes
-*IntegrationsAPI* | [**IntegrationsPost**](docs/IntegrationsAPI.md#integrationspost) | **Post** /integrations | Create integration
-*OrgsAPI* | [**OrgsGet**](docs/OrgsAPI.md#orgsget) | **Get** /orgs | List orgs
-*OrgsAPI* | [**OrgsIdDelete**](docs/OrgsAPI.md#orgsiddelete) | **Delete** /orgs/{id} | Delete org
-*OrgsAPI* | [**OrgsIdPut**](docs/OrgsAPI.md#orgsidput) | **Put** /orgs/{id} | Update org
-*OrgsAPI* | [**OrgsPost**](docs/OrgsAPI.md#orgspost) | **Post** /orgs | Create org
-*ProjectsAPI* | [**ProjectsByNameNameGet**](docs/ProjectsAPI.md#projectsbynamenameget) | **Get** /projects/by-name/{name} | Get project by name
-*ProjectsAPI* | [**ProjectsGet**](docs/ProjectsAPI.md#projectsget) | **Get** /projects | List projects
-*ProjectsAPI* | [**ProjectsIdDelete**](docs/ProjectsAPI.md#projectsiddelete) | **Delete** /projects/{id} | Delete project
-*ProjectsAPI* | [**ProjectsIdPut**](docs/ProjectsAPI.md#projectsidput) | **Put** /projects/{id} | Update project
-*ProjectsAPI* | [**ProjectsPost**](docs/ProjectsAPI.md#projectspost) | **Post** /projects | Create project
-*ProvidersAPI* | [**ProviderRevisionsIdGet**](docs/ProvidersAPI.md#providerrevisionsidget) | **Get** /provider-revisions/{id} | Get provider revision
-*ProvidersAPI* | [**ProvidersByNameNameGet**](docs/ProvidersAPI.md#providersbynamenameget) | **Get** /providers/by-name/{name} | Get provider by name
-*ProvidersAPI* | [**ProvidersGet**](docs/ProvidersAPI.md#providersget) | **Get** /providers | List providers
-*ServicesAPI* | [**ServiceRevisionsIdGet**](docs/ServicesAPI.md#servicerevisionsidget) | **Get** /service-revisions/{id} | Get service revision
-*ServicesAPI* | [**ServicesByNameNameGet**](docs/ServicesAPI.md#servicesbynamenameget) | **Get** /services/by-name/{name} | Get service by name
-*ServicesAPI* | [**ServicesGet**](docs/ServicesAPI.md#servicesget) | **Get** /services | List services
-*ServicesAPI* | [**ServicesNameLinkCandidatesGet**](docs/ServicesAPI.md#servicesnamelinkcandidatesget) | **Get** /services/{name}/link-candidates | List service link candidates
-*StacksAPI* | [**StackRevisionsIdGet**](docs/StacksAPI.md#stackrevisionsidget) | **Get** /stack-revisions/{id} | Get stack revision
-*StacksAPI* | [**StackRevisionsIdServicesGet**](docs/StacksAPI.md#stackrevisionsidservicesget) | **Get** /stack-revisions/{id}/services | List stack services
-*StacksAPI* | [**StacksByNameNameGet**](docs/StacksAPI.md#stacksbynamenameget) | **Get** /stacks/by-name/{name} | Get stack by name
-*StacksAPI* | [**StacksGet**](docs/StacksAPI.md#stacksget) | **Get** /stacks | List stacks
-*TaskStepsAPI* | [**TaskStepsIdLogUrlGet**](docs/TaskStepsAPI.md#taskstepsidlogurlget) | **Get** /task-steps/{id}/log-url | Get task step log URL
-*TaskStepsAPI* | [**TaskStepsIdLogsGet**](docs/TaskStepsAPI.md#taskstepsidlogsget) | **Get** /task-steps/{id}/logs | Get task step logs
-*TasksAPI* | [**TasksGet**](docs/TasksAPI.md#tasksget) | **Get** /tasks | List tasks
-*TasksAPI* | [**TasksIdCancelPost**](docs/TasksAPI.md#tasksidcancelpost) | **Post** /tasks/{id}/cancel | Cancel task
-*TasksAPI* | [**TasksIdGet**](docs/TasksAPI.md#tasksidget) | **Get** /tasks/{id} | Get task
-*TasksAPI* | [**TasksIdRepeatPost**](docs/TasksAPI.md#tasksidrepeatpost) | **Post** /tasks/{id}/repeat | Repeat task
+*AppBuildsAPI* | [**CreateAppBuild**](docs/AppBuildsAPI.md#createappbuild) | **Post** /app-builds | Create build
+*AppBuildsAPI* | [**CreateAppBuildFromCi**](docs/AppBuildsAPI.md#createappbuildfromci) | **Post** /app-builds/from-ci | Create build from CI
+*AppBuildsAPI* | [**DeployAppBuild**](docs/AppBuildsAPI.md#deployappbuild) | **Post** /app-builds/{id}/deploy | Deploy build
+*AppBuildsAPI* | [**GetAppBuild**](docs/AppBuildsAPI.md#getappbuild) | **Get** /app-builds/{id} | Get build
+*AppBuildsAPI* | [**GetAppBuildDockerRegistryCredentials**](docs/AppBuildsAPI.md#getappbuilddockerregistrycredentials) | **Get** /app-builds/{id}/docker-registry-credentials | Get Docker registry credentials for build
+*AppBuildsAPI* | [**ListAppBuilds**](docs/AppBuildsAPI.md#listappbuilds) | **Get** /app-builds | List app builds
+*AppBuildsAPI* | [**VoidAppBuild**](docs/AppBuildsAPI.md#voidappbuild) | **Post** /app-builds/{id}/void | Void build images
+*AppDeploymentsAPI* | [**CreateAppDeployment**](docs/AppDeploymentsAPI.md#createappdeployment) | **Post** /app-deployments | Create deployment
+*AppDeploymentsAPI* | [**CreateAppDeploymentFromCi**](docs/AppDeploymentsAPI.md#createappdeploymentfromci) | **Post** /app-deployments/from-ci | Create deployment from CI
+*AppDeploymentsAPI* | [**GetAppDeployment**](docs/AppDeploymentsAPI.md#getappdeployment) | **Get** /app-deployments/{id} | Get deployment
+*AppDeploymentsAPI* | [**ListAppDeployments**](docs/AppDeploymentsAPI.md#listappdeployments) | **Get** /app-deployments | List app deployments
+*AppDeploymentsAPI* | [**RedeployAppDeployment**](docs/AppDeploymentsAPI.md#redeployappdeployment) | **Post** /app-deployments/{id}/redeploy | Redeploy deployment
+*AppInstancesAPI* | [**CreateAppInstance**](docs/AppInstancesAPI.md#createappinstance) | **Post** /app-instances | Create app instance
+*AppInstancesAPI* | [**DeleteAppInstance**](docs/AppInstancesAPI.md#deleteappinstance) | **Delete** /app-instances/{id} | Delete app instance
+*AppInstancesAPI* | [**GetAppInstance**](docs/AppInstancesAPI.md#getappinstance) | **Get** /app-instances/{id} | Get app instance
+*AppInstancesAPI* | [**GetAppInstanceByName**](docs/AppInstancesAPI.md#getappinstancebyname) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
+*AppInstancesAPI* | [**ListAppInstances**](docs/AppInstancesAPI.md#listappinstances) | **Get** /app-instances | List app instances
+*AppInstancesAPI* | [**UpdateAppInstance**](docs/AppInstancesAPI.md#updateappinstance) | **Put** /app-instances/{id} | Update app instance
+*AppRoutesAPI* | [**CreateAppRoute**](docs/AppRoutesAPI.md#createapproute) | **Post** /app-routes | Create app route
+*AppRoutesAPI* | [**DeleteAppRoute**](docs/AppRoutesAPI.md#deleteapproute) | **Delete** /app-routes/{id} | Delete app route
+*AppRoutesAPI* | [**GetAppRoute**](docs/AppRoutesAPI.md#getapproute) | **Get** /app-routes/{id} | Get app route
+*AppRoutesAPI* | [**ListAppRoutes**](docs/AppRoutesAPI.md#listapproutes) | **Get** /app-routes | List app routes
+*AppRoutesAPI* | [**UpdateAppRoute**](docs/AppRoutesAPI.md#updateapproute) | **Put** /app-routes/{id} | Update app route
+*AppServicesAPI* | [**GetAppService**](docs/AppServicesAPI.md#getappservice) | **Get** /app-services/{id} | Get app service
+*AppServicesAPI* | [**ListAppServices**](docs/AppServicesAPI.md#listappservices) | **Get** /app-services | List app services
+*AppServicesAPI* | [**RunAppServiceAction**](docs/AppServicesAPI.md#runappserviceaction) | **Post** /app-services/{id}/actions/{name} | Run app service action
+*AppServicesAPI* | [**UpdateAppService**](docs/AppServicesAPI.md#updateappservice) | **Put** /app-services/{id} | Update app service
+*AppsAPI* | [**CreateApp**](docs/AppsAPI.md#createapp) | **Post** /apps | Create app
+*AppsAPI* | [**DeleteApp**](docs/AppsAPI.md#deleteapp) | **Delete** /apps/{id} | Delete app
+*AppsAPI* | [**GetApp**](docs/AppsAPI.md#getapp) | **Get** /apps/{id} | Get app
+*AppsAPI* | [**GetAppByName**](docs/AppsAPI.md#getappbyname) | **Get** /apps/by-name/{name} | Get app by name
+*AppsAPI* | [**ListApps**](docs/AppsAPI.md#listapps) | **Get** /apps | List apps
+*AppsAPI* | [**UpdateApp**](docs/AppsAPI.md#updateapp) | **Put** /apps/{id} | Update app
+*BackupsAPI* | [**CreateBackup**](docs/BackupsAPI.md#createbackup) | **Post** /backups | Create backup
+*BackupsAPI* | [**GetBackup**](docs/BackupsAPI.md#getbackup) | **Get** /backups/{id} | Get backup
+*BackupsAPI* | [**ListBackups**](docs/BackupsAPI.md#listbackups) | **Get** /backups | List backups
+*ClustersAPI* | [**CreateCluster**](docs/ClustersAPI.md#createcluster) | **Post** /clusters | Create cluster
+*ClustersAPI* | [**DeleteCluster**](docs/ClustersAPI.md#deletecluster) | **Delete** /clusters/{id} | Delete cluster
+*ClustersAPI* | [**GetCluster**](docs/ClustersAPI.md#getcluster) | **Get** /clusters/{id} | Get cluster
+*ClustersAPI* | [**GetClusterByName**](docs/ClustersAPI.md#getclusterbyname) | **Get** /clusters/by-name/{name} | Get cluster by name
+*ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
+*ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
+*DatabasesAPI* | [**CreateDatabase**](docs/DatabasesAPI.md#createdatabase) | **Post** /databases | Create database
+*DatabasesAPI* | [**DeleteDatabase**](docs/DatabasesAPI.md#deletedatabase) | **Delete** /databases/{id} | Delete database
+*DatabasesAPI* | [**GetDatabase**](docs/DatabasesAPI.md#getdatabase) | **Get** /databases/{id} | Get database
+*DatabasesAPI* | [**GetDatabaseByName**](docs/DatabasesAPI.md#getdatabasebyname) | **Get** /databases/by-name/{name} | Get database by name
+*DatabasesAPI* | [**ListDatabases**](docs/DatabasesAPI.md#listdatabases) | **Get** /databases | List databases
+*DatabasesAPI* | [**UpdateDatabase**](docs/DatabasesAPI.md#updatedatabase) | **Put** /databases/{id} | Update database
+*DefaultAPI* | [**GetOpenApiJson**](docs/DefaultAPI.md#getopenapijson) | **Get** /openapi.json | Get OpenAPI JSON
+*DefaultAPI* | [**GetOpenApiYaml**](docs/DefaultAPI.md#getopenapiyaml) | **Get** /openapi.yaml | Get OpenAPI YAML
+*EnvsAPI* | [**CreateEnv**](docs/EnvsAPI.md#createenv) | **Post** /envs | Create env
+*EnvsAPI* | [**DeleteEnv**](docs/EnvsAPI.md#deleteenv) | **Delete** /envs/{id} | Delete env
+*EnvsAPI* | [**GetEnv**](docs/EnvsAPI.md#getenv) | **Get** /envs/{id} | Get env
+*EnvsAPI* | [**GetEnvByName**](docs/EnvsAPI.md#getenvbyname) | **Get** /envs/by-name/{name} | Get env by name
+*EnvsAPI* | [**ListEnvs**](docs/EnvsAPI.md#listenvs) | **Get** /envs | List envs
+*EnvsAPI* | [**UpdateEnv**](docs/EnvsAPI.md#updateenv) | **Put** /envs/{id} | Update env
+*ImportsAPI* | [**CreateImport**](docs/ImportsAPI.md#createimport) | **Post** /imports | Create import
+*ImportsAPI* | [**GetImport**](docs/ImportsAPI.md#getimport) | **Get** /imports/{id} | Get import
+*ImportsAPI* | [**ListImports**](docs/ImportsAPI.md#listimports) | **Get** /imports | List imports
+*IntegrationKindsAPI* | [**GetIntegrationKindDatabaseSettings**](docs/IntegrationKindsAPI.md#getintegrationkinddatabasesettings) | **Get** /integration-kinds/{id}/database-settings | Get database settings
+*IntegrationKindsAPI* | [**ListIntegrationKindDatabaseMachineTypes**](docs/IntegrationKindsAPI.md#listintegrationkinddatabasemachinetypes) | **Get** /integration-kinds/{id}/database-machine-types | List database machine types
+*IntegrationKindsAPI* | [**ListIntegrationKindDatabaseRegions**](docs/IntegrationKindsAPI.md#listintegrationkinddatabaseregions) | **Get** /integration-kinds/{id}/database-regions | List database regions
+*IntegrationKindsAPI* | [**ListIntegrationKindDatabaseTypes**](docs/IntegrationKindsAPI.md#listintegrationkinddatabasetypes) | **Get** /integration-kinds/{id}/database-types | List database types
+*IntegrationKindsAPI* | [**ListIntegrationKindDatabaseVersions**](docs/IntegrationKindsAPI.md#listintegrationkinddatabaseversions) | **Get** /integration-kinds/{id}/database-versions | List database versions
+*IntegrationsAPI* | [**CreateIntegration**](docs/IntegrationsAPI.md#createintegration) | **Post** /integrations | Create integration
+*IntegrationsAPI* | [**DeleteIntegration**](docs/IntegrationsAPI.md#deleteintegration) | **Delete** /integrations/{id} | Delete integration
+*IntegrationsAPI* | [**GetIntegration**](docs/IntegrationsAPI.md#getintegration) | **Get** /integrations/{id} | Get integration
+*IntegrationsAPI* | [**GetIntegrationByName**](docs/IntegrationsAPI.md#getintegrationbyname) | **Get** /integrations/by-name/{name} | Get integration by name
+*IntegrationsAPI* | [**GetIntegrationKubeSettings**](docs/IntegrationsAPI.md#getintegrationkubesettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
+*IntegrationsAPI* | [**ListIntegrationKubeMachineTypes**](docs/IntegrationsAPI.md#listintegrationkubemachinetypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
+*IntegrationsAPI* | [**ListIntegrationKubeRegions**](docs/IntegrationsAPI.md#listintegrationkuberegions) | **Get** /integrations/{id}/options/kube-regions | List Kubernetes regions
+*IntegrationsAPI* | [**ListIntegrationKubeVersions**](docs/IntegrationsAPI.md#listintegrationkubeversions) | **Get** /integrations/{id}/options/kube-versions | List Kubernetes versions
+*IntegrationsAPI* | [**ListIntegrationKubeZones**](docs/IntegrationsAPI.md#listintegrationkubezones) | **Get** /integrations/{id}/options/kube-zones | List Kubernetes zones
+*IntegrationsAPI* | [**ListIntegrationRemoteGitRepoBranches**](docs/IntegrationsAPI.md#listintegrationremotegitrepobranches) | **Get** /integrations/{id}/options/remote-git-repo-branches | List remote Git repository branches
+*IntegrationsAPI* | [**ListIntegrationRemoteGitRepoTags**](docs/IntegrationsAPI.md#listintegrationremotegitrepotags) | **Get** /integrations/{id}/options/remote-git-repo-tags | List remote Git repository tags
+*IntegrationsAPI* | [**ListIntegrationRemoteGitRepos**](docs/IntegrationsAPI.md#listintegrationremotegitrepos) | **Get** /integrations/{id}/options/remote-git-repos | List remote Git repositories
+*IntegrationsAPI* | [**ListIntegrationScopes**](docs/IntegrationsAPI.md#listintegrationscopes) | **Get** /integrations/{id}/options/scopes | List integration scopes
+*IntegrationsAPI* | [**ListIntegrationStorageBuckets**](docs/IntegrationsAPI.md#listintegrationstoragebuckets) | **Get** /integrations/{id}/options/storage-buckets | List storage buckets
+*IntegrationsAPI* | [**ListIntegrationStorageClasses**](docs/IntegrationsAPI.md#listintegrationstorageclasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
+*IntegrationsAPI* | [**ListIntegrations**](docs/IntegrationsAPI.md#listintegrations) | **Get** /integrations | List integrations
+*IntegrationsAPI* | [**UpdateIntegration**](docs/IntegrationsAPI.md#updateintegration) | **Put** /integrations/{id} | Update integration
+*OrgsAPI* | [**CreateOrg**](docs/OrgsAPI.md#createorg) | **Post** /orgs | Create org
+*OrgsAPI* | [**DeleteOrg**](docs/OrgsAPI.md#deleteorg) | **Delete** /orgs/{id} | Delete org
+*OrgsAPI* | [**GetOrg**](docs/OrgsAPI.md#getorg) | **Get** /orgs/{id} | Get org
+*OrgsAPI* | [**ListOrgs**](docs/OrgsAPI.md#listorgs) | **Get** /orgs | List orgs
+*OrgsAPI* | [**UpdateOrg**](docs/OrgsAPI.md#updateorg) | **Put** /orgs/{id} | Update org
+*ProjectsAPI* | [**CreateProject**](docs/ProjectsAPI.md#createproject) | **Post** /projects | Create project
+*ProjectsAPI* | [**DeleteProject**](docs/ProjectsAPI.md#deleteproject) | **Delete** /projects/{id} | Delete project
+*ProjectsAPI* | [**GetProject**](docs/ProjectsAPI.md#getproject) | **Get** /projects/{id} | Get project
+*ProjectsAPI* | [**GetProjectByName**](docs/ProjectsAPI.md#getprojectbyname) | **Get** /projects/by-name/{name} | Get project by name
+*ProjectsAPI* | [**ListProjects**](docs/ProjectsAPI.md#listprojects) | **Get** /projects | List projects
+*ProjectsAPI* | [**UpdateProject**](docs/ProjectsAPI.md#updateproject) | **Put** /projects/{id} | Update project
+*ProvidersAPI* | [**GetProvider**](docs/ProvidersAPI.md#getprovider) | **Get** /providers/{id} | Get provider
+*ProvidersAPI* | [**GetProviderByName**](docs/ProvidersAPI.md#getproviderbyname) | **Get** /providers/by-name/{name} | Get provider by name
+*ProvidersAPI* | [**GetProviderRevision**](docs/ProvidersAPI.md#getproviderrevision) | **Get** /provider-revisions/{id} | Get provider revision
+*ProvidersAPI* | [**ListProviders**](docs/ProvidersAPI.md#listproviders) | **Get** /providers | List providers
+*ServicesAPI* | [**GetService**](docs/ServicesAPI.md#getservice) | **Get** /services/{id} | Get service
+*ServicesAPI* | [**GetServiceByName**](docs/ServicesAPI.md#getservicebyname) | **Get** /services/by-name/{name} | Get service by name
+*ServicesAPI* | [**GetServiceRevision**](docs/ServicesAPI.md#getservicerevision) | **Get** /service-revisions/{id} | Get service revision
+*ServicesAPI* | [**ListServiceLinkCandidates**](docs/ServicesAPI.md#listservicelinkcandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
+*ServicesAPI* | [**ListServices**](docs/ServicesAPI.md#listservices) | **Get** /services | List services
+*StacksAPI* | [**GetStack**](docs/StacksAPI.md#getstack) | **Get** /stacks/{id} | Get stack
+*StacksAPI* | [**GetStackByName**](docs/StacksAPI.md#getstackbyname) | **Get** /stacks/by-name/{name} | Get stack by name
+*StacksAPI* | [**GetStackRevision**](docs/StacksAPI.md#getstackrevision) | **Get** /stack-revisions/{id} | Get stack revision
+*StacksAPI* | [**ListStackRevisionServices**](docs/StacksAPI.md#liststackrevisionservices) | **Get** /stack-revisions/{id}/services | List stack services
+*StacksAPI* | [**ListStacks**](docs/StacksAPI.md#liststacks) | **Get** /stacks | List stacks
+*TaskStepsAPI* | [**GetTaskStepLogUrl**](docs/TaskStepsAPI.md#gettasksteplogurl) | **Get** /task-steps/{id}/log-url | Get task step log URL
+*TaskStepsAPI* | [**GetTaskStepLogs**](docs/TaskStepsAPI.md#gettasksteplogs) | **Get** /task-steps/{id}/logs | Get task step logs
+*TasksAPI* | [**CancelTask**](docs/TasksAPI.md#canceltask) | **Post** /tasks/{id}/cancel | Cancel task
+*TasksAPI* | [**GetTask**](docs/TasksAPI.md#gettask) | **Get** /tasks/{id} | Get task
+*TasksAPI* | [**ListTasks**](docs/TasksAPI.md#listtasks) | **Get** /tasks | List tasks
+*TasksAPI* | [**RepeatTask**](docs/TasksAPI.md#repeattask) | **Post** /tasks/{id}/repeat | Repeat task
 
 
 ## Documentation For Models
@@ -204,9 +213,11 @@ Class | Method | HTTP request | Description
  - [Backup](docs/Backup.md)
  - [BuildSourceInput](docs/BuildSourceInput.md)
  - [Cluster](docs/Cluster.md)
+ - [CreateAppServiceInput](docs/CreateAppServiceInput.md)
  - [CreateBuildRequest](docs/CreateBuildRequest.md)
  - [CreateDeploymentRequest](docs/CreateDeploymentRequest.md)
  - [CreateEnvRequest](docs/CreateEnvRequest.md)
+ - [CreateImportInput](docs/CreateImportInput.md)
  - [CreateOrgRequest](docs/CreateOrgRequest.md)
  - [Database](docs/Database.md)
  - [DatabaseType](docs/DatabaseType.md)
@@ -214,6 +225,7 @@ Class | Method | HTTP request | Description
  - [DeploymentFromCIInput](docs/DeploymentFromCIInput.md)
  - [DockerRegistryCredentials](docs/DockerRegistryCredentials.md)
  - [Env](docs/Env.md)
+ - [ErrorResponse](docs/ErrorResponse.md)
  - [FieldInput](docs/FieldInput.md)
  - [Import](docs/Import.md)
  - [ImportFromInput](docs/ImportFromInput.md)
@@ -225,12 +237,10 @@ Class | Method | HTTP request | Description
  - [NewAppInput](docs/NewAppInput.md)
  - [NewAppInstanceInput](docs/NewAppInstanceInput.md)
  - [NewAppRouteInput](docs/NewAppRouteInput.md)
- - [NewAppServiceInput](docs/NewAppServiceInput.md)
  - [NewBackupInput](docs/NewBackupInput.md)
  - [NewBuildFromCIInput](docs/NewBuildFromCIInput.md)
  - [NewClusterInput](docs/NewClusterInput.md)
  - [NewDatabaseInput](docs/NewDatabaseInput.md)
- - [NewImportInput](docs/NewImportInput.md)
  - [NewIntegrationInput](docs/NewIntegrationInput.md)
  - [NewManagedClusterInput](docs/NewManagedClusterInput.md)
  - [NewProjectInput](docs/NewProjectInput.md)

@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing OrgsAPIService
 
@@ -22,11 +22,11 @@ func Test_client_OrgsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test OrgsAPIService OrgsGet", func(t *testing.T) {
+	t.Run("Test OrgsAPIService CreateOrg", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.OrgsAPI.OrgsGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.OrgsAPI.CreateOrg(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +34,13 @@ func Test_client_OrgsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test OrgsAPIService OrgsIdDelete", func(t *testing.T) {
+	t.Run("Test OrgsAPIService DeleteOrg", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.OrgsAPI.OrgsIdDelete(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.OrgsAPI.DeleteOrg(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,13 +48,13 @@ func Test_client_OrgsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test OrgsAPIService OrgsIdPut", func(t *testing.T) {
+	t.Run("Test OrgsAPIService GetOrg", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.OrgsAPI.OrgsIdPut(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.OrgsAPI.GetOrg(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,11 +62,25 @@ func Test_client_OrgsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test OrgsAPIService OrgsPost", func(t *testing.T) {
+	t.Run("Test OrgsAPIService ListOrgs", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.OrgsAPI.OrgsPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.OrgsAPI.ListOrgs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test OrgsAPIService UpdateOrg", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.OrgsAPI.UpdateOrg(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

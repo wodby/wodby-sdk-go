@@ -4,18 +4,19 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ServiceRevisionsIdGet**](ServicesAPI.md#ServiceRevisionsIdGet) | **Get** /service-revisions/{id} | Get service revision
-[**ServicesByNameNameGet**](ServicesAPI.md#ServicesByNameNameGet) | **Get** /services/by-name/{name} | Get service by name
-[**ServicesGet**](ServicesAPI.md#ServicesGet) | **Get** /services | List services
-[**ServicesNameLinkCandidatesGet**](ServicesAPI.md#ServicesNameLinkCandidatesGet) | **Get** /services/{name}/link-candidates | List service link candidates
+[**GetService**](ServicesAPI.md#GetService) | **Get** /services/{id} | Get service
+[**GetServiceByName**](ServicesAPI.md#GetServiceByName) | **Get** /services/by-name/{name} | Get service by name
+[**GetServiceRevision**](ServicesAPI.md#GetServiceRevision) | **Get** /service-revisions/{id} | Get service revision
+[**ListServiceLinkCandidates**](ServicesAPI.md#ListServiceLinkCandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
+[**ListServices**](ServicesAPI.md#ListServices) | **Get** /services | List services
 
 
 
-## ServiceRevisionsIdGet
+## GetService
 
-> ServiceRevision ServiceRevisionsIdGet(ctx, id).Execute()
+> Service GetService(ctx, id).Execute()
 
-Get service revision
+Get service
 
 ### Example
 
@@ -34,13 +35,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ServicesAPI.ServiceRevisionsIdGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.ServicesAPI.GetService(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ServiceRevisionsIdGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.GetService``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ServiceRevisionsIdGet`: ServiceRevision
-	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ServiceRevisionsIdGet`: %v\n", resp)
+	// response from `GetService`: Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.GetService`: %v\n", resp)
 }
 ```
 
@@ -54,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiServiceRevisionsIdGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetServiceRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -63,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ServiceRevision**](ServiceRevision.md)
+[**Service**](Service.md)
 
 ### Authorization
 
@@ -79,9 +80,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ServicesByNameNameGet
+## GetServiceByName
 
-> Service ServicesByNameNameGet(ctx, name).RevNumber(revNumber).Execute()
+> Service GetServiceByName(ctx, name).RevNumber(revNumber).Execute()
 
 Get service by name
 
@@ -103,13 +104,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ServicesAPI.ServicesByNameNameGet(context.Background(), name).RevNumber(revNumber).Execute()
+	resp, r, err := apiClient.ServicesAPI.GetServiceByName(context.Background(), name).RevNumber(revNumber).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ServicesByNameNameGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.GetServiceByName``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ServicesByNameNameGet`: Service
-	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ServicesByNameNameGet`: %v\n", resp)
+	// response from `GetServiceByName`: Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.GetServiceByName`: %v\n", resp)
 }
 ```
 
@@ -123,7 +124,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiServicesByNameNameGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetServiceByNameRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -149,9 +150,145 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ServicesGet
+## GetServiceRevision
 
-> ServicesResponse ServicesGet(ctx).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
+> ServiceRevision GetServiceRevision(ctx, id).Execute()
+
+Get service revision
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.GetServiceRevision(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.GetServiceRevision``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetServiceRevision`: ServiceRevision
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.GetServiceRevision`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetServiceRevisionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ServiceRevision**](ServiceRevision.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListServiceLinkCandidates
+
+> []map[string]interface{} ListServiceLinkCandidates(ctx, name).Execute()
+
+List service link candidates
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	name := "name_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ListServiceLinkCandidates(context.Background(), name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ListServiceLinkCandidates``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListServiceLinkCandidates`: []map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ListServiceLinkCandidates`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListServiceLinkCandidatesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]map[string]interface{}**](map.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListServices
+
+> ServicesResponse ListServices(ctx).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
 
 List services
 
@@ -176,13 +313,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ServicesAPI.ServicesGet(context.Background()).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.ServicesAPI.ListServices(context.Background()).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ServicesGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ListServices``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ServicesGet`: ServicesResponse
-	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ServicesGet`: %v\n", resp)
+	// response from `ListServices`: ServicesResponse
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ListServices`: %v\n", resp)
 }
 ```
 
@@ -192,7 +329,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiServicesGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListServicesRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -206,74 +343,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ServicesResponse**](ServicesResponse.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ServicesNameLinkCandidatesGet
-
-> []map[string]interface{} ServicesNameLinkCandidatesGet(ctx, name).Execute()
-
-List service link candidates
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	name := "name_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ServicesAPI.ServicesNameLinkCandidatesGet(context.Background(), name).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ServicesNameLinkCandidatesGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ServicesNameLinkCandidatesGet`: []map[string]interface{}
-	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ServicesNameLinkCandidatesGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**name** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiServicesNameLinkCandidatesGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**[]map[string]interface{}**](map.md)
 
 ### Authorization
 

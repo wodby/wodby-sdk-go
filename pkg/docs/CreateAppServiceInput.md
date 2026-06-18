@@ -1,4 +1,4 @@
-# NewAppServiceInput
+# CreateAppServiceInput
 
 ## Properties
 
@@ -18,295 +18,295 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewNewAppServiceInput
+### NewCreateAppServiceInput
 
-`func NewNewAppServiceInput(id int32, disabled bool, ) *NewAppServiceInput`
+`func NewCreateAppServiceInput(id int32, disabled bool, ) *CreateAppServiceInput`
 
-NewNewAppServiceInput instantiates a new NewAppServiceInput object
+NewCreateAppServiceInput instantiates a new CreateAppServiceInput object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewNewAppServiceInputWithDefaults
+### NewCreateAppServiceInputWithDefaults
 
-`func NewNewAppServiceInputWithDefaults() *NewAppServiceInput`
+`func NewCreateAppServiceInputWithDefaults() *CreateAppServiceInput`
 
-NewNewAppServiceInputWithDefaults instantiates a new NewAppServiceInput object
+NewCreateAppServiceInputWithDefaults instantiates a new CreateAppServiceInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *NewAppServiceInput) GetId() int32`
+`func (o *CreateAppServiceInput) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *NewAppServiceInput) GetIdOk() (*int32, bool)`
+`func (o *CreateAppServiceInput) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *NewAppServiceInput) SetId(v int32)`
+`func (o *CreateAppServiceInput) SetId(v int32)`
 
 SetId sets Id field to given value.
 
 
 ### GetDisabled
 
-`func (o *NewAppServiceInput) GetDisabled() bool`
+`func (o *CreateAppServiceInput) GetDisabled() bool`
 
 GetDisabled returns the Disabled field if non-nil, zero value otherwise.
 
 ### GetDisabledOk
 
-`func (o *NewAppServiceInput) GetDisabledOk() (*bool, bool)`
+`func (o *CreateAppServiceInput) GetDisabledOk() (*bool, bool)`
 
 GetDisabledOk returns a tuple with the Disabled field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDisabled
 
-`func (o *NewAppServiceInput) SetDisabled(v bool)`
+`func (o *CreateAppServiceInput) SetDisabled(v bool)`
 
 SetDisabled sets Disabled field to given value.
 
 
 ### GetVersion
 
-`func (o *NewAppServiceInput) GetVersion() string`
+`func (o *CreateAppServiceInput) GetVersion() string`
 
 GetVersion returns the Version field if non-nil, zero value otherwise.
 
 ### GetVersionOk
 
-`func (o *NewAppServiceInput) GetVersionOk() (*string, bool)`
+`func (o *CreateAppServiceInput) GetVersionOk() (*string, bool)`
 
 GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVersion
 
-`func (o *NewAppServiceInput) SetVersion(v string)`
+`func (o *CreateAppServiceInput) SetVersion(v string)`
 
 SetVersion sets Version field to given value.
 
 ### HasVersion
 
-`func (o *NewAppServiceInput) HasVersion() bool`
+`func (o *CreateAppServiceInput) HasVersion() bool`
 
 HasVersion returns a boolean if a field has been set.
 
 ### SetVersionNil
 
-`func (o *NewAppServiceInput) SetVersionNil(b bool)`
+`func (o *CreateAppServiceInput) SetVersionNil(b bool)`
 
  SetVersionNil sets the value for Version to be an explicit nil
 
 ### UnsetVersion
-`func (o *NewAppServiceInput) UnsetVersion()`
+`func (o *CreateAppServiceInput) UnsetVersion()`
 
 UnsetVersion ensures that no value is present for Version, not even an explicit nil
 ### GetBuildSource
 
-`func (o *NewAppServiceInput) GetBuildSource() BuildSourceInput`
+`func (o *CreateAppServiceInput) GetBuildSource() BuildSourceInput`
 
 GetBuildSource returns the BuildSource field if non-nil, zero value otherwise.
 
 ### GetBuildSourceOk
 
-`func (o *NewAppServiceInput) GetBuildSourceOk() (*BuildSourceInput, bool)`
+`func (o *CreateAppServiceInput) GetBuildSourceOk() (*BuildSourceInput, bool)`
 
 GetBuildSourceOk returns a tuple with the BuildSource field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBuildSource
 
-`func (o *NewAppServiceInput) SetBuildSource(v BuildSourceInput)`
+`func (o *CreateAppServiceInput) SetBuildSource(v BuildSourceInput)`
 
 SetBuildSource sets BuildSource field to given value.
 
 ### HasBuildSource
 
-`func (o *NewAppServiceInput) HasBuildSource() bool`
+`func (o *CreateAppServiceInput) HasBuildSource() bool`
 
 HasBuildSource returns a boolean if a field has been set.
 
 ### GetImports
 
-`func (o *NewAppServiceInput) GetImports() []ImportInput`
+`func (o *CreateAppServiceInput) GetImports() []ImportInput`
 
 GetImports returns the Imports field if non-nil, zero value otherwise.
 
 ### GetImportsOk
 
-`func (o *NewAppServiceInput) GetImportsOk() (*[]ImportInput, bool)`
+`func (o *CreateAppServiceInput) GetImportsOk() (*[]ImportInput, bool)`
 
 GetImportsOk returns a tuple with the Imports field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetImports
 
-`func (o *NewAppServiceInput) SetImports(v []ImportInput)`
+`func (o *CreateAppServiceInput) SetImports(v []ImportInput)`
 
 SetImports sets Imports field to given value.
 
 ### HasImports
 
-`func (o *NewAppServiceInput) HasImports() bool`
+`func (o *CreateAppServiceInput) HasImports() bool`
 
 HasImports returns a boolean if a field has been set.
 
 ### GetVolumes
 
-`func (o *NewAppServiceInput) GetVolumes() []VolumeSizeInput`
+`func (o *CreateAppServiceInput) GetVolumes() []VolumeSizeInput`
 
 GetVolumes returns the Volumes field if non-nil, zero value otherwise.
 
 ### GetVolumesOk
 
-`func (o *NewAppServiceInput) GetVolumesOk() (*[]VolumeSizeInput, bool)`
+`func (o *CreateAppServiceInput) GetVolumesOk() (*[]VolumeSizeInput, bool)`
 
 GetVolumesOk returns a tuple with the Volumes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVolumes
 
-`func (o *NewAppServiceInput) SetVolumes(v []VolumeSizeInput)`
+`func (o *CreateAppServiceInput) SetVolumes(v []VolumeSizeInput)`
 
 SetVolumes sets Volumes field to given value.
 
 ### HasVolumes
 
-`func (o *NewAppServiceInput) HasVolumes() bool`
+`func (o *CreateAppServiceInput) HasVolumes() bool`
 
 HasVolumes returns a boolean if a field has been set.
 
 ### GetIntegrations
 
-`func (o *NewAppServiceInput) GetIntegrations() []AppServiceIntegrationInput`
+`func (o *CreateAppServiceInput) GetIntegrations() []AppServiceIntegrationInput`
 
 GetIntegrations returns the Integrations field if non-nil, zero value otherwise.
 
 ### GetIntegrationsOk
 
-`func (o *NewAppServiceInput) GetIntegrationsOk() (*[]AppServiceIntegrationInput, bool)`
+`func (o *CreateAppServiceInput) GetIntegrationsOk() (*[]AppServiceIntegrationInput, bool)`
 
 GetIntegrationsOk returns a tuple with the Integrations field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIntegrations
 
-`func (o *NewAppServiceInput) SetIntegrations(v []AppServiceIntegrationInput)`
+`func (o *CreateAppServiceInput) SetIntegrations(v []AppServiceIntegrationInput)`
 
 SetIntegrations sets Integrations field to given value.
 
 ### HasIntegrations
 
-`func (o *NewAppServiceInput) HasIntegrations() bool`
+`func (o *CreateAppServiceInput) HasIntegrations() bool`
 
 HasIntegrations returns a boolean if a field has been set.
 
 ### GetSettings
 
-`func (o *NewAppServiceInput) GetSettings() []AppServiceSettingInput`
+`func (o *CreateAppServiceInput) GetSettings() []AppServiceSettingInput`
 
 GetSettings returns the Settings field if non-nil, zero value otherwise.
 
 ### GetSettingsOk
 
-`func (o *NewAppServiceInput) GetSettingsOk() (*[]AppServiceSettingInput, bool)`
+`func (o *CreateAppServiceInput) GetSettingsOk() (*[]AppServiceSettingInput, bool)`
 
 GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSettings
 
-`func (o *NewAppServiceInput) SetSettings(v []AppServiceSettingInput)`
+`func (o *CreateAppServiceInput) SetSettings(v []AppServiceSettingInput)`
 
 SetSettings sets Settings field to given value.
 
 ### HasSettings
 
-`func (o *NewAppServiceInput) HasSettings() bool`
+`func (o *CreateAppServiceInput) HasSettings() bool`
 
 HasSettings returns a boolean if a field has been set.
 
 ### GetDatabase
 
-`func (o *NewAppServiceInput) GetDatabase() AppServiceDatabaseInput`
+`func (o *CreateAppServiceInput) GetDatabase() AppServiceDatabaseInput`
 
 GetDatabase returns the Database field if non-nil, zero value otherwise.
 
 ### GetDatabaseOk
 
-`func (o *NewAppServiceInput) GetDatabaseOk() (*AppServiceDatabaseInput, bool)`
+`func (o *CreateAppServiceInput) GetDatabaseOk() (*AppServiceDatabaseInput, bool)`
 
 GetDatabaseOk returns a tuple with the Database field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDatabase
 
-`func (o *NewAppServiceInput) SetDatabase(v AppServiceDatabaseInput)`
+`func (o *CreateAppServiceInput) SetDatabase(v AppServiceDatabaseInput)`
 
 SetDatabase sets Database field to given value.
 
 ### HasDatabase
 
-`func (o *NewAppServiceInput) HasDatabase() bool`
+`func (o *CreateAppServiceInput) HasDatabase() bool`
 
 HasDatabase returns a boolean if a field has been set.
 
 ### GetResources
 
-`func (o *NewAppServiceInput) GetResources() ResourcesInput`
+`func (o *CreateAppServiceInput) GetResources() ResourcesInput`
 
 GetResources returns the Resources field if non-nil, zero value otherwise.
 
 ### GetResourcesOk
 
-`func (o *NewAppServiceInput) GetResourcesOk() (*ResourcesInput, bool)`
+`func (o *CreateAppServiceInput) GetResourcesOk() (*ResourcesInput, bool)`
 
 GetResourcesOk returns a tuple with the Resources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetResources
 
-`func (o *NewAppServiceInput) SetResources(v ResourcesInput)`
+`func (o *CreateAppServiceInput) SetResources(v ResourcesInput)`
 
 SetResources sets Resources field to given value.
 
 ### HasResources
 
-`func (o *NewAppServiceInput) HasResources() bool`
+`func (o *CreateAppServiceInput) HasResources() bool`
 
 HasResources returns a boolean if a field has been set.
 
 ### GetScalability
 
-`func (o *NewAppServiceInput) GetScalability() ScalabilityInput`
+`func (o *CreateAppServiceInput) GetScalability() ScalabilityInput`
 
 GetScalability returns the Scalability field if non-nil, zero value otherwise.
 
 ### GetScalabilityOk
 
-`func (o *NewAppServiceInput) GetScalabilityOk() (*ScalabilityInput, bool)`
+`func (o *CreateAppServiceInput) GetScalabilityOk() (*ScalabilityInput, bool)`
 
 GetScalabilityOk returns a tuple with the Scalability field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetScalability
 
-`func (o *NewAppServiceInput) SetScalability(v ScalabilityInput)`
+`func (o *CreateAppServiceInput) SetScalability(v ScalabilityInput)`
 
 SetScalability sets Scalability field to given value.
 
 ### HasScalability
 
-`func (o *NewAppServiceInput) HasScalability() bool`
+`func (o *CreateAppServiceInput) HasScalability() bool`
 
 HasScalability returns a boolean if a field has been set.
 

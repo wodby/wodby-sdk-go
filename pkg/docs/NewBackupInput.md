@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppServiceID** | Pointer to **NullableInt32** |  | [optional] 
-**DatabaseDBID** | Pointer to **NullableInt32** |  | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
+**DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
-**IntegrationID** | **int32** |  | 
+**IntegrationId** | **int32** |  | 
 **Bucket** | **string** |  | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewNewBackupInput
 
-`func NewNewBackupInput(integrationID int32, bucket string, ) *NewBackupInput`
+`func NewNewBackupInput(integrationId int32, bucket string, ) *NewBackupInput`
 
 NewNewBackupInput instantiates a new NewBackupInput object
 This constructor will assign default values to properties that have it defined,
@@ -30,76 +30,76 @@ NewNewBackupInputWithDefaults instantiates a new NewBackupInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAppServiceID
+### GetAppServiceId
 
-`func (o *NewBackupInput) GetAppServiceID() int32`
+`func (o *NewBackupInput) GetAppServiceId() int32`
 
-GetAppServiceID returns the AppServiceID field if non-nil, zero value otherwise.
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
 
-### GetAppServiceIDOk
+### GetAppServiceIdOk
 
-`func (o *NewBackupInput) GetAppServiceIDOk() (*int32, bool)`
+`func (o *NewBackupInput) GetAppServiceIdOk() (*int32, bool)`
 
-GetAppServiceIDOk returns a tuple with the AppServiceID field if it's non-nil, zero value otherwise
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppServiceID
+### SetAppServiceId
 
-`func (o *NewBackupInput) SetAppServiceID(v int32)`
+`func (o *NewBackupInput) SetAppServiceId(v int32)`
 
-SetAppServiceID sets AppServiceID field to given value.
+SetAppServiceId sets AppServiceId field to given value.
 
-### HasAppServiceID
+### HasAppServiceId
 
-`func (o *NewBackupInput) HasAppServiceID() bool`
+`func (o *NewBackupInput) HasAppServiceId() bool`
 
-HasAppServiceID returns a boolean if a field has been set.
+HasAppServiceId returns a boolean if a field has been set.
 
-### SetAppServiceIDNil
+### SetAppServiceIdNil
 
-`func (o *NewBackupInput) SetAppServiceIDNil(b bool)`
+`func (o *NewBackupInput) SetAppServiceIdNil(b bool)`
 
- SetAppServiceIDNil sets the value for AppServiceID to be an explicit nil
+ SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
 
-### UnsetAppServiceID
-`func (o *NewBackupInput) UnsetAppServiceID()`
+### UnsetAppServiceId
+`func (o *NewBackupInput) UnsetAppServiceId()`
 
-UnsetAppServiceID ensures that no value is present for AppServiceID, not even an explicit nil
-### GetDatabaseDBID
+UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
+### GetDatabaseDbId
 
-`func (o *NewBackupInput) GetDatabaseDBID() int32`
+`func (o *NewBackupInput) GetDatabaseDbId() int32`
 
-GetDatabaseDBID returns the DatabaseDBID field if non-nil, zero value otherwise.
+GetDatabaseDbId returns the DatabaseDbId field if non-nil, zero value otherwise.
 
-### GetDatabaseDBIDOk
+### GetDatabaseDbIdOk
 
-`func (o *NewBackupInput) GetDatabaseDBIDOk() (*int32, bool)`
+`func (o *NewBackupInput) GetDatabaseDbIdOk() (*int32, bool)`
 
-GetDatabaseDBIDOk returns a tuple with the DatabaseDBID field if it's non-nil, zero value otherwise
+GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatabaseDBID
+### SetDatabaseDbId
 
-`func (o *NewBackupInput) SetDatabaseDBID(v int32)`
+`func (o *NewBackupInput) SetDatabaseDbId(v int32)`
 
-SetDatabaseDBID sets DatabaseDBID field to given value.
+SetDatabaseDbId sets DatabaseDbId field to given value.
 
-### HasDatabaseDBID
+### HasDatabaseDbId
 
-`func (o *NewBackupInput) HasDatabaseDBID() bool`
+`func (o *NewBackupInput) HasDatabaseDbId() bool`
 
-HasDatabaseDBID returns a boolean if a field has been set.
+HasDatabaseDbId returns a boolean if a field has been set.
 
-### SetDatabaseDBIDNil
+### SetDatabaseDbIdNil
 
-`func (o *NewBackupInput) SetDatabaseDBIDNil(b bool)`
+`func (o *NewBackupInput) SetDatabaseDbIdNil(b bool)`
 
- SetDatabaseDBIDNil sets the value for DatabaseDBID to be an explicit nil
+ SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
 
-### UnsetDatabaseDBID
-`func (o *NewBackupInput) UnsetDatabaseDBID()`
+### UnsetDatabaseDbId
+`func (o *NewBackupInput) UnsetDatabaseDbId()`
 
-UnsetDatabaseDBID ensures that no value is present for DatabaseDBID, not even an explicit nil
+UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
 ### GetBackupName
 
 `func (o *NewBackupInput) GetBackupName() string`
@@ -135,24 +135,24 @@ HasBackupName returns a boolean if a field has been set.
 `func (o *NewBackupInput) UnsetBackupName()`
 
 UnsetBackupName ensures that no value is present for BackupName, not even an explicit nil
-### GetIntegrationID
+### GetIntegrationId
 
-`func (o *NewBackupInput) GetIntegrationID() int32`
+`func (o *NewBackupInput) GetIntegrationId() int32`
 
-GetIntegrationID returns the IntegrationID field if non-nil, zero value otherwise.
+GetIntegrationId returns the IntegrationId field if non-nil, zero value otherwise.
 
-### GetIntegrationIDOk
+### GetIntegrationIdOk
 
-`func (o *NewBackupInput) GetIntegrationIDOk() (*int32, bool)`
+`func (o *NewBackupInput) GetIntegrationIdOk() (*int32, bool)`
 
-GetIntegrationIDOk returns a tuple with the IntegrationID field if it's non-nil, zero value otherwise
+GetIntegrationIdOk returns a tuple with the IntegrationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIntegrationID
+### SetIntegrationId
 
-`func (o *NewBackupInput) SetIntegrationID(v int32)`
+`func (o *NewBackupInput) SetIntegrationId(v int32)`
 
-SetIntegrationID sets IntegrationID field to given value.
+SetIntegrationId sets IntegrationId field to given value.
 
 
 ### GetBucket

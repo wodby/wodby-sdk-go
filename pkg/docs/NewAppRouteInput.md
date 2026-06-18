@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppServiceID** | **int32** |  | 
+**AppServiceId** | **int32** |  | 
 **Main** | **bool** |  | 
 **Primary** | **bool** |  | 
 **Port** | **int32** |  | 
@@ -19,14 +19,14 @@ Name | Type | Description | Notes
 **Letsencrypt** | Pointer to **NullableBool** |  | [optional] 
 **AuthLogin** | Pointer to **NullableString** |  | [optional] 
 **AuthPassword** | Pointer to **NullableString** |  | [optional] 
-**AuthID** | Pointer to **NullableInt32** |  | [optional] 
+**AuthId** | Pointer to **NullableInt32** |  | [optional] 
 **Options** | Pointer to [**[]AppEndpointOptionInput**](AppEndpointOptionInput.md) |  | [optional] 
 
 ## Methods
 
 ### NewNewAppRouteInput
 
-`func NewNewAppRouteInput(appServiceID int32, main bool, primary bool, port int32, host string, ) *NewAppRouteInput`
+`func NewNewAppRouteInput(appServiceId int32, main bool, primary bool, port int32, host string, ) *NewAppRouteInput`
 
 NewNewAppRouteInput instantiates a new NewAppRouteInput object
 This constructor will assign default values to properties that have it defined,
@@ -41,24 +41,24 @@ NewNewAppRouteInputWithDefaults instantiates a new NewAppRouteInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAppServiceID
+### GetAppServiceId
 
-`func (o *NewAppRouteInput) GetAppServiceID() int32`
+`func (o *NewAppRouteInput) GetAppServiceId() int32`
 
-GetAppServiceID returns the AppServiceID field if non-nil, zero value otherwise.
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
 
-### GetAppServiceIDOk
+### GetAppServiceIdOk
 
-`func (o *NewAppRouteInput) GetAppServiceIDOk() (*int32, bool)`
+`func (o *NewAppRouteInput) GetAppServiceIdOk() (*int32, bool)`
 
-GetAppServiceIDOk returns a tuple with the AppServiceID field if it's non-nil, zero value otherwise
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppServiceID
+### SetAppServiceId
 
-`func (o *NewAppRouteInput) SetAppServiceID(v int32)`
+`func (o *NewAppRouteInput) SetAppServiceId(v int32)`
 
-SetAppServiceID sets AppServiceID field to given value.
+SetAppServiceId sets AppServiceId field to given value.
 
 
 ### GetMain
@@ -491,41 +491,41 @@ HasAuthPassword returns a boolean if a field has been set.
 `func (o *NewAppRouteInput) UnsetAuthPassword()`
 
 UnsetAuthPassword ensures that no value is present for AuthPassword, not even an explicit nil
-### GetAuthID
+### GetAuthId
 
-`func (o *NewAppRouteInput) GetAuthID() int32`
+`func (o *NewAppRouteInput) GetAuthId() int32`
 
-GetAuthID returns the AuthID field if non-nil, zero value otherwise.
+GetAuthId returns the AuthId field if non-nil, zero value otherwise.
 
-### GetAuthIDOk
+### GetAuthIdOk
 
-`func (o *NewAppRouteInput) GetAuthIDOk() (*int32, bool)`
+`func (o *NewAppRouteInput) GetAuthIdOk() (*int32, bool)`
 
-GetAuthIDOk returns a tuple with the AuthID field if it's non-nil, zero value otherwise
+GetAuthIdOk returns a tuple with the AuthId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAuthID
+### SetAuthId
 
-`func (o *NewAppRouteInput) SetAuthID(v int32)`
+`func (o *NewAppRouteInput) SetAuthId(v int32)`
 
-SetAuthID sets AuthID field to given value.
+SetAuthId sets AuthId field to given value.
 
-### HasAuthID
+### HasAuthId
 
-`func (o *NewAppRouteInput) HasAuthID() bool`
+`func (o *NewAppRouteInput) HasAuthId() bool`
 
-HasAuthID returns a boolean if a field has been set.
+HasAuthId returns a boolean if a field has been set.
 
-### SetAuthIDNil
+### SetAuthIdNil
 
-`func (o *NewAppRouteInput) SetAuthIDNil(b bool)`
+`func (o *NewAppRouteInput) SetAuthIdNil(b bool)`
 
- SetAuthIDNil sets the value for AuthID to be an explicit nil
+ SetAuthIdNil sets the value for AuthId to be an explicit nil
 
-### UnsetAuthID
-`func (o *NewAppRouteInput) UnsetAuthID()`
+### UnsetAuthId
+`func (o *NewAppRouteInput) UnsetAuthId()`
 
-UnsetAuthID ensures that no value is present for AuthID, not even an explicit nil
+UnsetAuthId ensures that no value is present for AuthId, not even an explicit nil
 ### GetOptions
 
 `func (o *NewAppRouteInput) GetOptions() []AppEndpointOptionInput`

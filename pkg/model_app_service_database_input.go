@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,8 +21,8 @@ var _ MappedNullable = &AppServiceDatabaseInput{}
 
 // AppServiceDatabaseInput struct for AppServiceDatabaseInput
 type AppServiceDatabaseInput struct {
-	DatabaseID int32 `json:"databaseID"`
-	DatabaseDBID NullableInt32 `json:"databaseDBID,omitempty"`
+	DatabaseId int32 `json:"databaseId"`
+	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
 }
 
 type _AppServiceDatabaseInput AppServiceDatabaseInput
@@ -31,9 +31,9 @@ type _AppServiceDatabaseInput AppServiceDatabaseInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceDatabaseInput(databaseID int32) *AppServiceDatabaseInput {
+func NewAppServiceDatabaseInput(databaseId int32) *AppServiceDatabaseInput {
 	this := AppServiceDatabaseInput{}
-	this.DatabaseID = databaseID
+	this.DatabaseId = databaseId
 	return &this
 }
 
@@ -45,70 +45,70 @@ func NewAppServiceDatabaseInputWithDefaults() *AppServiceDatabaseInput {
 	return &this
 }
 
-// GetDatabaseID returns the DatabaseID field value
-func (o *AppServiceDatabaseInput) GetDatabaseID() int32 {
+// GetDatabaseId returns the DatabaseId field value
+func (o *AppServiceDatabaseInput) GetDatabaseId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.DatabaseID
+	return o.DatabaseId
 }
 
-// GetDatabaseIDOk returns a tuple with the DatabaseID field value
+// GetDatabaseIdOk returns a tuple with the DatabaseId field value
 // and a boolean to check if the value has been set.
-func (o *AppServiceDatabaseInput) GetDatabaseIDOk() (*int32, bool) {
+func (o *AppServiceDatabaseInput) GetDatabaseIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.DatabaseID, true
+	return &o.DatabaseId, true
 }
 
-// SetDatabaseID sets field value
-func (o *AppServiceDatabaseInput) SetDatabaseID(v int32) {
-	o.DatabaseID = v
+// SetDatabaseId sets field value
+func (o *AppServiceDatabaseInput) SetDatabaseId(v int32) {
+	o.DatabaseId = v
 }
 
-// GetDatabaseDBID returns the DatabaseDBID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AppServiceDatabaseInput) GetDatabaseDBID() int32 {
-	if o == nil || IsNil(o.DatabaseDBID.Get()) {
+// GetDatabaseDbId returns the DatabaseDbId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceDatabaseInput) GetDatabaseDbId() int32 {
+	if o == nil || IsNil(o.DatabaseDbId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.DatabaseDBID.Get()
+	return *o.DatabaseDbId.Get()
 }
 
-// GetDatabaseDBIDOk returns a tuple with the DatabaseDBID field value if set, nil otherwise
+// GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AppServiceDatabaseInput) GetDatabaseDBIDOk() (*int32, bool) {
+func (o *AppServiceDatabaseInput) GetDatabaseDbIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.DatabaseDBID.Get(), o.DatabaseDBID.IsSet()
+	return o.DatabaseDbId.Get(), o.DatabaseDbId.IsSet()
 }
 
-// HasDatabaseDBID returns a boolean if a field has been set.
-func (o *AppServiceDatabaseInput) HasDatabaseDBID() bool {
-	if o != nil && o.DatabaseDBID.IsSet() {
+// HasDatabaseDbId returns a boolean if a field has been set.
+func (o *AppServiceDatabaseInput) HasDatabaseDbId() bool {
+	if o != nil && o.DatabaseDbId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetDatabaseDBID gets a reference to the given NullableInt32 and assigns it to the DatabaseDBID field.
-func (o *AppServiceDatabaseInput) SetDatabaseDBID(v int32) {
-	o.DatabaseDBID.Set(&v)
+// SetDatabaseDbId gets a reference to the given NullableInt32 and assigns it to the DatabaseDbId field.
+func (o *AppServiceDatabaseInput) SetDatabaseDbId(v int32) {
+	o.DatabaseDbId.Set(&v)
 }
-// SetDatabaseDBIDNil sets the value for DatabaseDBID to be an explicit nil
-func (o *AppServiceDatabaseInput) SetDatabaseDBIDNil() {
-	o.DatabaseDBID.Set(nil)
+// SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
+func (o *AppServiceDatabaseInput) SetDatabaseDbIdNil() {
+	o.DatabaseDbId.Set(nil)
 }
 
-// UnsetDatabaseDBID ensures that no value is present for DatabaseDBID, not even an explicit nil
-func (o *AppServiceDatabaseInput) UnsetDatabaseDBID() {
-	o.DatabaseDBID.Unset()
+// UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+func (o *AppServiceDatabaseInput) UnsetDatabaseDbId() {
+	o.DatabaseDbId.Unset()
 }
 
 func (o AppServiceDatabaseInput) MarshalJSON() ([]byte, error) {
@@ -121,9 +121,9 @@ func (o AppServiceDatabaseInput) MarshalJSON() ([]byte, error) {
 
 func (o AppServiceDatabaseInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["databaseID"] = o.DatabaseID
-	if o.DatabaseDBID.IsSet() {
-		toSerialize["databaseDBID"] = o.DatabaseDBID.Get()
+	toSerialize["databaseId"] = o.DatabaseId
+	if o.DatabaseDbId.IsSet() {
+		toSerialize["databaseDbId"] = o.DatabaseDbId.Get()
 	}
 	return toSerialize, nil
 }
@@ -133,7 +133,7 @@ func (o *AppServiceDatabaseInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"databaseID",
+		"databaseId",
 	}
 
 	allProperties := make(map[string]interface{})

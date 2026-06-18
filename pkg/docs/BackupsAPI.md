@@ -4,17 +4,17 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**BackupsGet**](BackupsAPI.md#BackupsGet) | **Get** /backups | List backups
-[**BackupsIdGet**](BackupsAPI.md#BackupsIdGet) | **Get** /backups/{id} | Get backup
-[**BackupsPost**](BackupsAPI.md#BackupsPost) | **Post** /backups | Create backup
+[**CreateBackup**](BackupsAPI.md#CreateBackup) | **Post** /backups | Create backup
+[**GetBackup**](BackupsAPI.md#GetBackup) | **Get** /backups/{id} | Get backup
+[**ListBackups**](BackupsAPI.md#ListBackups) | **Get** /backups | List backups
 
 
 
-## BackupsGet
+## CreateBackup
 
-> []Backup BackupsGet(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).BackupName(backupName).Execute()
+> OperationResult CreateBackup(ctx).NewBackupInput(newBackupInput).Execute()
 
-List backups
+Create backup
 
 ### Example
 
@@ -29,21 +29,17 @@ import (
 )
 
 func main() {
-	appInstanceId := int32(56) // int32 |  (optional)
-	appServiceId := int32(56) // int32 |  (optional)
-	databaseId := int32(56) // int32 |  (optional)
-	databaseDbId := int32(56) // int32 |  (optional)
-	backupName := "backupName_example" // string |  (optional)
+	newBackupInput := *openapiclient.NewNewBackupInput(int32(123), "Bucket_example") // NewBackupInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BackupsAPI.BackupsGet(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).BackupName(backupName).Execute()
+	resp, r, err := apiClient.BackupsAPI.CreateBackup(context.Background()).NewBackupInput(newBackupInput).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.BackupsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.CreateBackup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `BackupsGet`: []Backup
-	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.BackupsGet`: %v\n", resp)
+	// response from `CreateBackup`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.CreateBackup`: %v\n", resp)
 }
 ```
 
@@ -53,20 +49,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiBackupsGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiCreateBackupRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **appInstanceId** | **int32** |  | 
- **appServiceId** | **int32** |  | 
- **databaseId** | **int32** |  | 
- **databaseDbId** | **int32** |  | 
- **backupName** | **string** |  | 
+ **newBackupInput** | [**NewBackupInput**](NewBackupInput.md) |  | 
 
 ### Return type
 
-[**[]Backup**](Backup.md)
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 
@@ -74,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -82,9 +74,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## BackupsIdGet
+## GetBackup
 
-> Backup BackupsIdGet(ctx, id).Execute()
+> Backup GetBackup(ctx, id).Execute()
 
 Get backup
 
@@ -105,13 +97,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BackupsAPI.BackupsIdGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.BackupsAPI.GetBackup(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.BackupsIdGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.GetBackup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `BackupsIdGet`: Backup
-	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.BackupsIdGet`: %v\n", resp)
+	// response from `GetBackup`: Backup
+	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.GetBackup`: %v\n", resp)
 }
 ```
 
@@ -125,7 +117,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiBackupsIdGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetBackupRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -150,11 +142,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## BackupsPost
+## ListBackups
 
-> OperationResult BackupsPost(ctx).NewBackupInput(newBackupInput).Execute()
+> []Backup ListBackups(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).BackupName(backupName).Execute()
 
-Create backup
+List backups
 
 ### Example
 
@@ -169,17 +161,21 @@ import (
 )
 
 func main() {
-	newBackupInput := *openapiclient.NewNewBackupInput(int32(123), "Bucket_example") // NewBackupInput | 
+	appInstanceId := int32(56) // int32 |  (optional)
+	appServiceId := int32(56) // int32 |  (optional)
+	databaseId := int32(56) // int32 |  (optional)
+	databaseDbId := int32(56) // int32 |  (optional)
+	backupName := "backupName_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BackupsAPI.BackupsPost(context.Background()).NewBackupInput(newBackupInput).Execute()
+	resp, r, err := apiClient.BackupsAPI.ListBackups(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).BackupName(backupName).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.BackupsPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.ListBackups``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `BackupsPost`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.BackupsPost`: %v\n", resp)
+	// response from `ListBackups`: []Backup
+	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.ListBackups`: %v\n", resp)
 }
 ```
 
@@ -189,16 +185,20 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiBackupsPostRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListBackupsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **newBackupInput** | [**NewBackupInput**](NewBackupInput.md) |  | 
+ **appInstanceId** | **int32** |  | 
+ **appServiceId** | **int32** |  | 
+ **databaseId** | **int32** |  | 
+ **databaseDbId** | **int32** |  | 
+ **backupName** | **string** |  | 
 
 ### Return type
 
-[**OperationResult**](OperationResult.md)
+[**[]Backup**](Backup.md)
 
 ### Authorization
 
@@ -206,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

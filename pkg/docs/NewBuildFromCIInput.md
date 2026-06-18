@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppServiceID** | **int32** |  | 
+**AppServiceId** | **int32** |  | 
 **GitCommitSHA** | **string** |  | 
 **GitRef** | **string** |  | 
 **GitRefType** | **string** |  | 
 **BuildNum** | **int32** |  | 
-**BuildID** | **string** |  | 
+**BuildId** | **string** |  | 
 **Workflow** | Pointer to **NullableString** |  | [optional] 
 **GitCommitAuthorName** | Pointer to **NullableString** |  | [optional] 
 **GitCommitAuthorEmail** | Pointer to **NullableString** |  | [optional] 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewNewBuildFromCIInput
 
-`func NewNewBuildFromCIInput(appServiceID int32, gitCommitSHA string, gitRef string, gitRefType string, buildNum int32, buildID string, provider string, ) *NewBuildFromCIInput`
+`func NewNewBuildFromCIInput(appServiceId int32, gitCommitSHA string, gitRef string, gitRefType string, buildNum int32, buildId string, provider string, ) *NewBuildFromCIInput`
 
 NewNewBuildFromCIInput instantiates a new NewBuildFromCIInput object
 This constructor will assign default values to properties that have it defined,
@@ -36,24 +36,24 @@ NewNewBuildFromCIInputWithDefaults instantiates a new NewBuildFromCIInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAppServiceID
+### GetAppServiceId
 
-`func (o *NewBuildFromCIInput) GetAppServiceID() int32`
+`func (o *NewBuildFromCIInput) GetAppServiceId() int32`
 
-GetAppServiceID returns the AppServiceID field if non-nil, zero value otherwise.
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
 
-### GetAppServiceIDOk
+### GetAppServiceIdOk
 
-`func (o *NewBuildFromCIInput) GetAppServiceIDOk() (*int32, bool)`
+`func (o *NewBuildFromCIInput) GetAppServiceIdOk() (*int32, bool)`
 
-GetAppServiceIDOk returns a tuple with the AppServiceID field if it's non-nil, zero value otherwise
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppServiceID
+### SetAppServiceId
 
-`func (o *NewBuildFromCIInput) SetAppServiceID(v int32)`
+`func (o *NewBuildFromCIInput) SetAppServiceId(v int32)`
 
-SetAppServiceID sets AppServiceID field to given value.
+SetAppServiceId sets AppServiceId field to given value.
 
 
 ### GetGitCommitSHA
@@ -136,24 +136,24 @@ and a boolean to check if the value has been set.
 SetBuildNum sets BuildNum field to given value.
 
 
-### GetBuildID
+### GetBuildId
 
-`func (o *NewBuildFromCIInput) GetBuildID() string`
+`func (o *NewBuildFromCIInput) GetBuildId() string`
 
-GetBuildID returns the BuildID field if non-nil, zero value otherwise.
+GetBuildId returns the BuildId field if non-nil, zero value otherwise.
 
-### GetBuildIDOk
+### GetBuildIdOk
 
-`func (o *NewBuildFromCIInput) GetBuildIDOk() (*string, bool)`
+`func (o *NewBuildFromCIInput) GetBuildIdOk() (*string, bool)`
 
-GetBuildIDOk returns a tuple with the BuildID field if it's non-nil, zero value otherwise
+GetBuildIdOk returns a tuple with the BuildId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBuildID
+### SetBuildId
 
-`func (o *NewBuildFromCIInput) SetBuildID(v string)`
+`func (o *NewBuildFromCIInput) SetBuildId(v string)`
 
-SetBuildID sets BuildID field to given value.
+SetBuildId sets BuildId field to given value.
 
 
 ### GetWorkflow

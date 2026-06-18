@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -23,25 +23,25 @@ import (
 // TaskStepsAPIService TaskStepsAPI service
 type TaskStepsAPIService service
 
-type ApiTaskStepsIdLogUrlGetRequest struct {
+type ApiGetTaskStepLogUrlRequest struct {
 	ctx context.Context
 	ApiService *TaskStepsAPIService
 	id int32
 }
 
-func (r ApiTaskStepsIdLogUrlGetRequest) Execute() (*URLResponse, *http.Response, error) {
-	return r.ApiService.TaskStepsIdLogUrlGetExecute(r)
+func (r ApiGetTaskStepLogUrlRequest) Execute() (*URLResponse, *http.Response, error) {
+	return r.ApiService.GetTaskStepLogUrlExecute(r)
 }
 
 /*
-TaskStepsIdLogUrlGet Get task step log URL
+GetTaskStepLogUrl Get task step log URL
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiTaskStepsIdLogUrlGetRequest
+ @return ApiGetTaskStepLogUrlRequest
 */
-func (a *TaskStepsAPIService) TaskStepsIdLogUrlGet(ctx context.Context, id int32) ApiTaskStepsIdLogUrlGetRequest {
-	return ApiTaskStepsIdLogUrlGetRequest{
+func (a *TaskStepsAPIService) GetTaskStepLogUrl(ctx context.Context, id int32) ApiGetTaskStepLogUrlRequest {
+	return ApiGetTaskStepLogUrlRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -50,7 +50,7 @@ func (a *TaskStepsAPIService) TaskStepsIdLogUrlGet(ctx context.Context, id int32
 
 // Execute executes the request
 //  @return URLResponse
-func (a *TaskStepsAPIService) TaskStepsIdLogUrlGetExecute(r ApiTaskStepsIdLogUrlGetRequest) (*URLResponse, *http.Response, error) {
+func (a *TaskStepsAPIService) GetTaskStepLogUrlExecute(r ApiGetTaskStepLogUrlRequest) (*URLResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -58,7 +58,7 @@ func (a *TaskStepsAPIService) TaskStepsIdLogUrlGetExecute(r ApiTaskStepsIdLogUrl
 		localVarReturnValue  *URLResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TaskStepsAPIService.TaskStepsIdLogUrlGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TaskStepsAPIService.GetTaskStepLogUrl")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -137,6 +137,25 @@ func (a *TaskStepsAPIService) TaskStepsIdLogUrlGetExecute(r ApiTaskStepsIdLogUrl
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -152,25 +171,25 @@ func (a *TaskStepsAPIService) TaskStepsIdLogUrlGetExecute(r ApiTaskStepsIdLogUrl
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiTaskStepsIdLogsGetRequest struct {
+type ApiGetTaskStepLogsRequest struct {
 	ctx context.Context
 	ApiService *TaskStepsAPIService
 	id int32
 }
 
-func (r ApiTaskStepsIdLogsGetRequest) Execute() (*TaskStepLogs, *http.Response, error) {
-	return r.ApiService.TaskStepsIdLogsGetExecute(r)
+func (r ApiGetTaskStepLogsRequest) Execute() (*TaskStepLogs, *http.Response, error) {
+	return r.ApiService.GetTaskStepLogsExecute(r)
 }
 
 /*
-TaskStepsIdLogsGet Get task step logs
+GetTaskStepLogs Get task step logs
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiTaskStepsIdLogsGetRequest
+ @return ApiGetTaskStepLogsRequest
 */
-func (a *TaskStepsAPIService) TaskStepsIdLogsGet(ctx context.Context, id int32) ApiTaskStepsIdLogsGetRequest {
-	return ApiTaskStepsIdLogsGetRequest{
+func (a *TaskStepsAPIService) GetTaskStepLogs(ctx context.Context, id int32) ApiGetTaskStepLogsRequest {
+	return ApiGetTaskStepLogsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -179,7 +198,7 @@ func (a *TaskStepsAPIService) TaskStepsIdLogsGet(ctx context.Context, id int32) 
 
 // Execute executes the request
 //  @return TaskStepLogs
-func (a *TaskStepsAPIService) TaskStepsIdLogsGetExecute(r ApiTaskStepsIdLogsGetRequest) (*TaskStepLogs, *http.Response, error) {
+func (a *TaskStepsAPIService) GetTaskStepLogsExecute(r ApiGetTaskStepLogsRequest) (*TaskStepLogs, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -187,7 +206,7 @@ func (a *TaskStepsAPIService) TaskStepsIdLogsGetExecute(r ApiTaskStepsIdLogsGetR
 		localVarReturnValue  *TaskStepLogs
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TaskStepsAPIService.TaskStepsIdLogsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TaskStepsAPIService.GetTaskStepLogs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,6 +285,25 @@ func (a *TaskStepsAPIService) TaskStepsIdLogsGetExecute(r ApiTaskStepsIdLogsGetR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

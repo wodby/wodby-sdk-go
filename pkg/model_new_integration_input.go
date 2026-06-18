@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,13 +21,13 @@ var _ MappedNullable = &NewIntegrationInput{}
 
 // NewIntegrationInput struct for NewIntegrationInput
 type NewIntegrationInput struct {
-	OrgID int32 `json:"orgID"`
-	ProviderID int32 `json:"providerID"`
+	OrgId int32 `json:"orgId"`
+	ProviderId int32 `json:"providerId"`
 	Name string `json:"name"`
 	Title string `json:"title"`
 	Kinds []string `json:"kinds"`
 	Auth NullableString `json:"auth,omitempty"`
-	ProjectID NullableInt32 `json:"projectID,omitempty"`
+	ProjectId NullableInt32 `json:"projectId,omitempty"`
 	FieldsInput []FieldInput `json:"fieldsInput,omitempty"`
 	Scope NullableString `json:"scope,omitempty"`
 }
@@ -38,10 +38,10 @@ type _NewIntegrationInput NewIntegrationInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewIntegrationInput(orgID int32, providerID int32, name string, title string, kinds []string) *NewIntegrationInput {
+func NewNewIntegrationInput(orgId int32, providerId int32, name string, title string, kinds []string) *NewIntegrationInput {
 	this := NewIntegrationInput{}
-	this.OrgID = orgID
-	this.ProviderID = providerID
+	this.OrgId = orgId
+	this.ProviderId = providerId
 	this.Name = name
 	this.Title = title
 	this.Kinds = kinds
@@ -56,52 +56,52 @@ func NewNewIntegrationInputWithDefaults() *NewIntegrationInput {
 	return &this
 }
 
-// GetOrgID returns the OrgID field value
-func (o *NewIntegrationInput) GetOrgID() int32 {
+// GetOrgId returns the OrgId field value
+func (o *NewIntegrationInput) GetOrgId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.OrgID
+	return o.OrgId
 }
 
-// GetOrgIDOk returns a tuple with the OrgID field value
+// GetOrgIdOk returns a tuple with the OrgId field value
 // and a boolean to check if the value has been set.
-func (o *NewIntegrationInput) GetOrgIDOk() (*int32, bool) {
+func (o *NewIntegrationInput) GetOrgIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.OrgID, true
+	return &o.OrgId, true
 }
 
-// SetOrgID sets field value
-func (o *NewIntegrationInput) SetOrgID(v int32) {
-	o.OrgID = v
+// SetOrgId sets field value
+func (o *NewIntegrationInput) SetOrgId(v int32) {
+	o.OrgId = v
 }
 
-// GetProviderID returns the ProviderID field value
-func (o *NewIntegrationInput) GetProviderID() int32 {
+// GetProviderId returns the ProviderId field value
+func (o *NewIntegrationInput) GetProviderId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.ProviderID
+	return o.ProviderId
 }
 
-// GetProviderIDOk returns a tuple with the ProviderID field value
+// GetProviderIdOk returns a tuple with the ProviderId field value
 // and a boolean to check if the value has been set.
-func (o *NewIntegrationInput) GetProviderIDOk() (*int32, bool) {
+func (o *NewIntegrationInput) GetProviderIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.ProviderID, true
+	return &o.ProviderId, true
 }
 
-// SetProviderID sets field value
-func (o *NewIntegrationInput) SetProviderID(v int32) {
-	o.ProviderID = v
+// SetProviderId sets field value
+func (o *NewIntegrationInput) SetProviderId(v int32) {
+	o.ProviderId = v
 }
 
 // GetName returns the Name field value
@@ -218,46 +218,46 @@ func (o *NewIntegrationInput) UnsetAuth() {
 	o.Auth.Unset()
 }
 
-// GetProjectID returns the ProjectID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewIntegrationInput) GetProjectID() int32 {
-	if o == nil || IsNil(o.ProjectID.Get()) {
+// GetProjectId returns the ProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewIntegrationInput) GetProjectId() int32 {
+	if o == nil || IsNil(o.ProjectId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.ProjectID.Get()
+	return *o.ProjectId.Get()
 }
 
-// GetProjectIDOk returns a tuple with the ProjectID field value if set, nil otherwise
+// GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewIntegrationInput) GetProjectIDOk() (*int32, bool) {
+func (o *NewIntegrationInput) GetProjectIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.ProjectID.Get(), o.ProjectID.IsSet()
+	return o.ProjectId.Get(), o.ProjectId.IsSet()
 }
 
-// HasProjectID returns a boolean if a field has been set.
-func (o *NewIntegrationInput) HasProjectID() bool {
-	if o != nil && o.ProjectID.IsSet() {
+// HasProjectId returns a boolean if a field has been set.
+func (o *NewIntegrationInput) HasProjectId() bool {
+	if o != nil && o.ProjectId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetProjectID gets a reference to the given NullableInt32 and assigns it to the ProjectID field.
-func (o *NewIntegrationInput) SetProjectID(v int32) {
-	o.ProjectID.Set(&v)
+// SetProjectId gets a reference to the given NullableInt32 and assigns it to the ProjectId field.
+func (o *NewIntegrationInput) SetProjectId(v int32) {
+	o.ProjectId.Set(&v)
 }
-// SetProjectIDNil sets the value for ProjectID to be an explicit nil
-func (o *NewIntegrationInput) SetProjectIDNil() {
-	o.ProjectID.Set(nil)
+// SetProjectIdNil sets the value for ProjectId to be an explicit nil
+func (o *NewIntegrationInput) SetProjectIdNil() {
+	o.ProjectId.Set(nil)
 }
 
-// UnsetProjectID ensures that no value is present for ProjectID, not even an explicit nil
-func (o *NewIntegrationInput) UnsetProjectID() {
-	o.ProjectID.Unset()
+// UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+func (o *NewIntegrationInput) UnsetProjectId() {
+	o.ProjectId.Unset()
 }
 
 // GetFieldsInput returns the FieldsInput field value if set, zero value otherwise.
@@ -344,16 +344,16 @@ func (o NewIntegrationInput) MarshalJSON() ([]byte, error) {
 
 func (o NewIntegrationInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgID"] = o.OrgID
-	toSerialize["providerID"] = o.ProviderID
+	toSerialize["orgId"] = o.OrgId
+	toSerialize["providerId"] = o.ProviderId
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["kinds"] = o.Kinds
 	if o.Auth.IsSet() {
 		toSerialize["auth"] = o.Auth.Get()
 	}
-	if o.ProjectID.IsSet() {
-		toSerialize["projectID"] = o.ProjectID.Get()
+	if o.ProjectId.IsSet() {
+		toSerialize["projectId"] = o.ProjectId.Get()
 	}
 	if !IsNil(o.FieldsInput) {
 		toSerialize["fieldsInput"] = o.FieldsInput
@@ -369,8 +369,8 @@ func (o *NewIntegrationInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgID",
-		"providerID",
+		"orgId",
+		"providerId",
 		"name",
 		"title",
 		"kinds",

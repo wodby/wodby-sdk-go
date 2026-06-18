@@ -4,16 +4,152 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**TasksGet**](TasksAPI.md#TasksGet) | **Get** /tasks | List tasks
-[**TasksIdCancelPost**](TasksAPI.md#TasksIdCancelPost) | **Post** /tasks/{id}/cancel | Cancel task
-[**TasksIdGet**](TasksAPI.md#TasksIdGet) | **Get** /tasks/{id} | Get task
-[**TasksIdRepeatPost**](TasksAPI.md#TasksIdRepeatPost) | **Post** /tasks/{id}/repeat | Repeat task
+[**CancelTask**](TasksAPI.md#CancelTask) | **Post** /tasks/{id}/cancel | Cancel task
+[**GetTask**](TasksAPI.md#GetTask) | **Get** /tasks/{id} | Get task
+[**ListTasks**](TasksAPI.md#ListTasks) | **Get** /tasks | List tasks
+[**RepeatTask**](TasksAPI.md#RepeatTask) | **Post** /tasks/{id}/repeat | Repeat task
 
 
 
-## TasksGet
+## CancelTask
 
-> TasksResponse TasksGet(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
+> OperationResult CancelTask(ctx, id).Execute()
+
+Cancel task
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TasksAPI.CancelTask(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.CancelTask``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CancelTask`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.CancelTask`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCancelTaskRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetTask
+
+> Task GetTask(ctx, id).Execute()
+
+Get task
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TasksAPI.GetTask(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.GetTask``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetTask`: Task
+	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.GetTask`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTaskRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Task**](Task.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListTasks
+
+> TasksResponse ListTasks(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 
 List tasks
 
@@ -49,13 +185,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TasksAPI.TasksGet(context.Background()).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.TasksAPI.ListTasks(context.Background()).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.TasksGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.ListTasks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TasksGet`: TasksResponse
-	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.TasksGet`: %v\n", resp)
+	// response from `ListTasks`: TasksResponse
+	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.ListTasks`: %v\n", resp)
 }
 ```
 
@@ -65,7 +201,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTasksGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListTasksRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -105,145 +241,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TasksIdCancelPost
+## RepeatTask
 
-> OperationResult TasksIdCancelPost(ctx, id).Execute()
-
-Cancel task
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TasksAPI.TasksIdCancelPost(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.TasksIdCancelPost``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `TasksIdCancelPost`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.TasksIdCancelPost`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiTasksIdCancelPostRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**OperationResult**](OperationResult.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## TasksIdGet
-
-> Task TasksIdGet(ctx, id).Execute()
-
-Get task
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TasksAPI.TasksIdGet(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.TasksIdGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `TasksIdGet`: Task
-	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.TasksIdGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiTasksIdGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**Task**](Task.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## TasksIdRepeatPost
-
-> OperationResult TasksIdRepeatPost(ctx, id).RepeatTaskRequest(repeatTaskRequest).Execute()
+> OperationResult RepeatTask(ctx, id).RepeatTaskRequest(repeatTaskRequest).Execute()
 
 Repeat task
 
@@ -265,13 +265,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TasksAPI.TasksIdRepeatPost(context.Background(), id).RepeatTaskRequest(repeatTaskRequest).Execute()
+	resp, r, err := apiClient.TasksAPI.RepeatTask(context.Background(), id).RepeatTaskRequest(repeatTaskRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.TasksIdRepeatPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.RepeatTask``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TasksIdRepeatPost`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.TasksIdRepeatPost`: %v\n", resp)
+	// response from `RepeatTask`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `TasksAPI.RepeatTask`: %v\n", resp)
 }
 ```
 
@@ -285,7 +285,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTasksIdRepeatPostRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiRepeatTaskRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

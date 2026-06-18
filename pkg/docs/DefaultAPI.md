@@ -4,14 +4,14 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**OpenapiJsonGet**](DefaultAPI.md#OpenapiJsonGet) | **Get** /openapi.json | Get OpenAPI JSON
-[**OpenapiYamlGet**](DefaultAPI.md#OpenapiYamlGet) | **Get** /openapi.yaml | Get OpenAPI YAML
+[**GetOpenApiJson**](DefaultAPI.md#GetOpenApiJson) | **Get** /openapi.json | Get OpenAPI JSON
+[**GetOpenApiYaml**](DefaultAPI.md#GetOpenApiYaml) | **Get** /openapi.yaml | Get OpenAPI YAML
 
 
 
-## OpenapiJsonGet
+## GetOpenApiJson
 
-> map[string]interface{} OpenapiJsonGet(ctx).Execute()
+> map[string]interface{} GetOpenApiJson(ctx).Execute()
 
 Get OpenAPI JSON
 
@@ -31,13 +31,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.OpenapiJsonGet(context.Background()).Execute()
+	resp, r, err := apiClient.DefaultAPI.GetOpenApiJson(context.Background()).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.OpenapiJsonGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetOpenApiJson``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `OpenapiJsonGet`: map[string]interface{}
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.OpenapiJsonGet`: %v\n", resp)
+	// response from `GetOpenApiJson`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetOpenApiJson`: %v\n", resp)
 }
 ```
 
@@ -47,7 +47,7 @@ This endpoint does not need any parameter.
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiOpenapiJsonGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetOpenApiJsonRequest struct via the builder pattern
 
 
 ### Return type
@@ -68,9 +68,9 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## OpenapiYamlGet
+## GetOpenApiYaml
 
-> string OpenapiYamlGet(ctx).Execute()
+> string GetOpenApiYaml(ctx).Execute()
 
 Get OpenAPI YAML
 
@@ -90,13 +90,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.OpenapiYamlGet(context.Background()).Execute()
+	resp, r, err := apiClient.DefaultAPI.GetOpenApiYaml(context.Background()).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.OpenapiYamlGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetOpenApiYaml``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `OpenapiYamlGet`: string
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.OpenapiYamlGet`: %v\n", resp)
+	// response from `GetOpenApiYaml`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetOpenApiYaml`: %v\n", resp)
 }
 ```
 
@@ -106,7 +106,7 @@ This endpoint does not need any parameter.
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiOpenapiYamlGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetOpenApiYamlRequest struct via the builder pattern
 
 
 ### Return type
@@ -120,7 +120,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/yaml
+- **Accept**: application/yaml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

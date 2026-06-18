@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing AppServicesAPIService
 
@@ -22,11 +22,13 @@ func Test_client_AppServicesAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test AppServicesAPIService AppServicesGet", func(t *testing.T) {
+	t.Run("Test AppServicesAPIService GetAppService", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AppServicesAPI.AppServicesGet(context.Background()).Execute()
+		var id int32
+
+		resp, httpRes, err := apiClient.AppServicesAPI.GetAppService(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,14 +36,26 @@ func Test_client_AppServicesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppServicesAPIService AppServicesIdActionsNamePost", func(t *testing.T) {
+	t.Run("Test AppServicesAPIService ListAppServices", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AppServicesAPI.ListAppServices(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppServicesAPIService RunAppServiceAction", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 		var name string
 
-		resp, httpRes, err := apiClient.AppServicesAPI.AppServicesIdActionsNamePost(context.Background(), id, name).Execute()
+		resp, httpRes, err := apiClient.AppServicesAPI.RunAppServiceAction(context.Background(), id, name).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -49,27 +63,13 @@ func Test_client_AppServicesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppServicesAPIService AppServicesIdGet", func(t *testing.T) {
+	t.Run("Test AppServicesAPIService UpdateAppService", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppServicesAPI.AppServicesIdGet(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AppServicesAPIService AppServicesIdPut", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id int32
-
-		resp, httpRes, err := apiClient.AppServicesAPI.AppServicesIdPut(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.AppServicesAPI.UpdateAppService(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

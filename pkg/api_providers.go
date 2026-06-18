@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -23,25 +23,25 @@ import (
 // ProvidersAPIService ProvidersAPI service
 type ProvidersAPIService service
 
-type ApiProviderRevisionsIdGetRequest struct {
+type ApiGetProviderRequest struct {
 	ctx context.Context
 	ApiService *ProvidersAPIService
 	id int32
 }
 
-func (r ApiProviderRevisionsIdGetRequest) Execute() (*ProviderRevision, *http.Response, error) {
-	return r.ApiService.ProviderRevisionsIdGetExecute(r)
+func (r ApiGetProviderRequest) Execute() (*Provider, *http.Response, error) {
+	return r.ApiService.GetProviderExecute(r)
 }
 
 /*
-ProviderRevisionsIdGet Get provider revision
+GetProvider Get provider
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiProviderRevisionsIdGetRequest
+ @return ApiGetProviderRequest
 */
-func (a *ProvidersAPIService) ProviderRevisionsIdGet(ctx context.Context, id int32) ApiProviderRevisionsIdGetRequest {
-	return ApiProviderRevisionsIdGetRequest{
+func (a *ProvidersAPIService) GetProvider(ctx context.Context, id int32) ApiGetProviderRequest {
+	return ApiGetProviderRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -49,21 +49,21 @@ func (a *ProvidersAPIService) ProviderRevisionsIdGet(ctx context.Context, id int
 }
 
 // Execute executes the request
-//  @return ProviderRevision
-func (a *ProvidersAPIService) ProviderRevisionsIdGetExecute(r ApiProviderRevisionsIdGetRequest) (*ProviderRevision, *http.Response, error) {
+//  @return Provider
+func (a *ProvidersAPIService) GetProviderExecute(r ApiGetProviderRequest) (*Provider, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ProviderRevision
+		localVarReturnValue  *Provider
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.ProviderRevisionsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.GetProvider")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/provider-revisions/{id}"
+	localVarPath := localBasePath + "/providers/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -137,6 +137,25 @@ func (a *ProvidersAPIService) ProviderRevisionsIdGetExecute(r ApiProviderRevisio
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -152,25 +171,25 @@ func (a *ProvidersAPIService) ProviderRevisionsIdGetExecute(r ApiProviderRevisio
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiProvidersByNameNameGetRequest struct {
+type ApiGetProviderByNameRequest struct {
 	ctx context.Context
 	ApiService *ProvidersAPIService
 	name string
 }
 
-func (r ApiProvidersByNameNameGetRequest) Execute() (*Provider, *http.Response, error) {
-	return r.ApiService.ProvidersByNameNameGetExecute(r)
+func (r ApiGetProviderByNameRequest) Execute() (*Provider, *http.Response, error) {
+	return r.ApiService.GetProviderByNameExecute(r)
 }
 
 /*
-ProvidersByNameNameGet Get provider by name
+GetProviderByName Get provider by name
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
- @return ApiProvidersByNameNameGetRequest
+ @return ApiGetProviderByNameRequest
 */
-func (a *ProvidersAPIService) ProvidersByNameNameGet(ctx context.Context, name string) ApiProvidersByNameNameGetRequest {
-	return ApiProvidersByNameNameGetRequest{
+func (a *ProvidersAPIService) GetProviderByName(ctx context.Context, name string) ApiGetProviderByNameRequest {
+	return ApiGetProviderByNameRequest{
 		ApiService: a,
 		ctx: ctx,
 		name: name,
@@ -179,7 +198,7 @@ func (a *ProvidersAPIService) ProvidersByNameNameGet(ctx context.Context, name s
 
 // Execute executes the request
 //  @return Provider
-func (a *ProvidersAPIService) ProvidersByNameNameGetExecute(r ApiProvidersByNameNameGetRequest) (*Provider, *http.Response, error) {
+func (a *ProvidersAPIService) GetProviderByNameExecute(r ApiGetProviderByNameRequest) (*Provider, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -187,7 +206,7 @@ func (a *ProvidersAPIService) ProvidersByNameNameGetExecute(r ApiProvidersByName
 		localVarReturnValue  *Provider
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.ProvidersByNameNameGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.GetProviderByName")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,6 +285,25 @@ func (a *ProvidersAPIService) ProvidersByNameNameGetExecute(r ApiProvidersByName
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -281,7 +319,155 @@ func (a *ProvidersAPIService) ProvidersByNameNameGetExecute(r ApiProvidersByName
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiProvidersGetRequest struct {
+type ApiGetProviderRevisionRequest struct {
+	ctx context.Context
+	ApiService *ProvidersAPIService
+	id int32
+}
+
+func (r ApiGetProviderRevisionRequest) Execute() (*ProviderRevision, *http.Response, error) {
+	return r.ApiService.GetProviderRevisionExecute(r)
+}
+
+/*
+GetProviderRevision Get provider revision
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetProviderRevisionRequest
+*/
+func (a *ProvidersAPIService) GetProviderRevision(ctx context.Context, id int32) ApiGetProviderRevisionRequest {
+	return ApiGetProviderRevisionRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return ProviderRevision
+func (a *ProvidersAPIService) GetProviderRevisionExecute(r ApiGetProviderRevisionRequest) (*ProviderRevision, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProviderRevision
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.GetProviderRevision")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/provider-revisions/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["accessTokenHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-ACCESS-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListProvidersRequest struct {
 	ctx context.Context
 	ApiService *ProvidersAPIService
 	orgId *int32
@@ -292,51 +478,51 @@ type ApiProvidersGetRequest struct {
 	pageSize *int32
 }
 
-func (r ApiProvidersGetRequest) OrgId(orgId int32) ApiProvidersGetRequest {
+func (r ApiListProvidersRequest) OrgId(orgId int32) ApiListProvidersRequest {
 	r.orgId = &orgId
 	return r
 }
 
 // Comma-separated project ids
-func (r ApiProvidersGetRequest) ProjectIds(projectIds string) ApiProvidersGetRequest {
+func (r ApiListProvidersRequest) ProjectIds(projectIds string) ApiListProvidersRequest {
 	r.projectIds = &projectIds
 	return r
 }
 
-func (r ApiProvidersGetRequest) ExcludePublic(excludePublic bool) ApiProvidersGetRequest {
+func (r ApiListProvidersRequest) ExcludePublic(excludePublic bool) ApiListProvidersRequest {
 	r.excludePublic = &excludePublic
 	return r
 }
 
-func (r ApiProvidersGetRequest) Search(search string) ApiProvidersGetRequest {
+func (r ApiListProvidersRequest) Search(search string) ApiListProvidersRequest {
 	r.search = &search
 	return r
 }
 
 // Page number, defaults to 1
-func (r ApiProvidersGetRequest) Page(page int32) ApiProvidersGetRequest {
+func (r ApiListProvidersRequest) Page(page int32) ApiListProvidersRequest {
 	r.page = &page
 	return r
 }
 
 // Page size, defaults to 30
-func (r ApiProvidersGetRequest) PageSize(pageSize int32) ApiProvidersGetRequest {
+func (r ApiListProvidersRequest) PageSize(pageSize int32) ApiListProvidersRequest {
 	r.pageSize = &pageSize
 	return r
 }
 
-func (r ApiProvidersGetRequest) Execute() (*ProvidersResponse, *http.Response, error) {
-	return r.ApiService.ProvidersGetExecute(r)
+func (r ApiListProvidersRequest) Execute() (*ProvidersResponse, *http.Response, error) {
+	return r.ApiService.ListProvidersExecute(r)
 }
 
 /*
-ProvidersGet List providers
+ListProviders List providers
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiProvidersGetRequest
+ @return ApiListProvidersRequest
 */
-func (a *ProvidersAPIService) ProvidersGet(ctx context.Context) ApiProvidersGetRequest {
-	return ApiProvidersGetRequest{
+func (a *ProvidersAPIService) ListProviders(ctx context.Context) ApiListProvidersRequest {
+	return ApiListProvidersRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -344,7 +530,7 @@ func (a *ProvidersAPIService) ProvidersGet(ctx context.Context) ApiProvidersGetR
 
 // Execute executes the request
 //  @return ProvidersResponse
-func (a *ProvidersAPIService) ProvidersGetExecute(r ApiProvidersGetRequest) (*ProvidersResponse, *http.Response, error) {
+func (a *ProvidersAPIService) ListProvidersExecute(r ApiListProvidersRequest) (*ProvidersResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -352,7 +538,7 @@ func (a *ProvidersAPIService) ProvidersGetExecute(r ApiProvidersGetRequest) (*Pr
 		localVarReturnValue  *ProvidersResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.ProvidersGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProvidersAPIService.ListProviders")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -449,6 +635,25 @@ func (a *ProvidersAPIService) ProvidersGetExecute(r ApiProvidersGetRequest) (*Pr
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

@@ -4,19 +4,20 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**EnvsGet**](EnvsAPI.md#EnvsGet) | **Get** /envs | List envs
-[**EnvsIdDelete**](EnvsAPI.md#EnvsIdDelete) | **Delete** /envs/{id} | Delete env
-[**EnvsIdGet**](EnvsAPI.md#EnvsIdGet) | **Get** /envs/{id} | Get env
-[**EnvsIdPut**](EnvsAPI.md#EnvsIdPut) | **Put** /envs/{id} | Update env
-[**EnvsPost**](EnvsAPI.md#EnvsPost) | **Post** /envs | Create env
+[**CreateEnv**](EnvsAPI.md#CreateEnv) | **Post** /envs | Create env
+[**DeleteEnv**](EnvsAPI.md#DeleteEnv) | **Delete** /envs/{id} | Delete env
+[**GetEnv**](EnvsAPI.md#GetEnv) | **Get** /envs/{id} | Get env
+[**GetEnvByName**](EnvsAPI.md#GetEnvByName) | **Get** /envs/by-name/{name} | Get env by name
+[**ListEnvs**](EnvsAPI.md#ListEnvs) | **Get** /envs | List envs
+[**UpdateEnv**](EnvsAPI.md#UpdateEnv) | **Put** /envs/{id} | Update env
 
 
 
-## EnvsGet
+## CreateEnv
 
-> []Env EnvsGet(ctx).OrgId(orgId).Execute()
+> Env CreateEnv(ctx).CreateEnvRequest(createEnvRequest).Execute()
 
-List envs
+Create env
 
 ### Example
 
@@ -31,17 +32,17 @@ import (
 )
 
 func main() {
-	orgId := int32(56) // int32 | 
+	createEnvRequest := *openapiclient.NewCreateEnvRequest(int32(123), "Name_example", "Title_example", "Type_example") // CreateEnvRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EnvsAPI.EnvsGet(context.Background()).OrgId(orgId).Execute()
+	resp, r, err := apiClient.EnvsAPI.CreateEnv(context.Background()).CreateEnvRequest(createEnvRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.EnvsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.CreateEnv``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EnvsGet`: []Env
-	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.EnvsGet`: %v\n", resp)
+	// response from `CreateEnv`: Env
+	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.CreateEnv`: %v\n", resp)
 }
 ```
 
@@ -51,16 +52,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiEnvsGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiCreateEnvRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orgId** | **int32** |  | 
+ **createEnvRequest** | [**CreateEnvRequest**](CreateEnvRequest.md) |  | 
 
 ### Return type
 
-[**[]Env**](Env.md)
+[**Env**](Env.md)
 
 ### Authorization
 
@@ -68,7 +69,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -76,9 +77,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## EnvsIdDelete
+## DeleteEnv
 
-> OperationResult EnvsIdDelete(ctx, id).Execute()
+> OperationResult DeleteEnv(ctx, id).Execute()
 
 Delete env
 
@@ -99,13 +100,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EnvsAPI.EnvsIdDelete(context.Background(), id).Execute()
+	resp, r, err := apiClient.EnvsAPI.DeleteEnv(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.EnvsIdDelete``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.DeleteEnv``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EnvsIdDelete`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.EnvsIdDelete`: %v\n", resp)
+	// response from `DeleteEnv`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.DeleteEnv`: %v\n", resp)
 }
 ```
 
@@ -119,7 +120,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiEnvsIdDeleteRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiDeleteEnvRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -144,9 +145,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## EnvsIdGet
+## GetEnv
 
-> Env EnvsIdGet(ctx, id).Execute()
+> Env GetEnv(ctx, id).Execute()
 
 Get env
 
@@ -167,13 +168,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EnvsAPI.EnvsIdGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.EnvsAPI.GetEnv(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.EnvsIdGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.GetEnv``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EnvsIdGet`: Env
-	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.EnvsIdGet`: %v\n", resp)
+	// response from `GetEnv`: Env
+	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.GetEnv`: %v\n", resp)
 }
 ```
 
@@ -187,7 +188,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiEnvsIdGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetEnvRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -212,9 +213,143 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## EnvsIdPut
+## GetEnvByName
 
-> Env EnvsIdPut(ctx, id).UpdateEnvRequest(updateEnvRequest).Execute()
+> Env GetEnvByName(ctx, name).OrgId(orgId).Execute()
+
+Get env by name
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	name := "name_example" // string | 
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.EnvsAPI.GetEnvByName(context.Background(), name).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.GetEnvByName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetEnvByName`: Env
+	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.GetEnvByName`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEnvByNameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**Env**](Env.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListEnvs
+
+> []Env ListEnvs(ctx).OrgId(orgId).Execute()
+
+List envs
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.EnvsAPI.ListEnvs(context.Background()).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.ListEnvs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListEnvs`: []Env
+	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.ListEnvs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListEnvsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**[]Env**](Env.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateEnv
+
+> Env UpdateEnv(ctx, id).UpdateEnvRequest(updateEnvRequest).Execute()
 
 Update env
 
@@ -236,13 +371,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EnvsAPI.EnvsIdPut(context.Background(), id).UpdateEnvRequest(updateEnvRequest).Execute()
+	resp, r, err := apiClient.EnvsAPI.UpdateEnv(context.Background(), id).UpdateEnvRequest(updateEnvRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.EnvsIdPut``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.UpdateEnv``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EnvsIdPut`: Env
-	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.EnvsIdPut`: %v\n", resp)
+	// response from `UpdateEnv`: Env
+	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.UpdateEnv`: %v\n", resp)
 }
 ```
 
@@ -256,77 +391,13 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiEnvsIdPutRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiUpdateEnvRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateEnvRequest** | [**UpdateEnvRequest**](UpdateEnvRequest.md) |  | 
-
-### Return type
-
-[**Env**](Env.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## EnvsPost
-
-> Env EnvsPost(ctx).CreateEnvRequest(createEnvRequest).Execute()
-
-Create env
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	createEnvRequest := *openapiclient.NewCreateEnvRequest(int32(123), "Name_example", "Title_example", "Type_example") // CreateEnvRequest | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EnvsAPI.EnvsPost(context.Background()).CreateEnvRequest(createEnvRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EnvsAPI.EnvsPost``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `EnvsPost`: Env
-	fmt.Fprintf(os.Stdout, "Response from `EnvsAPI.EnvsPost`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiEnvsPostRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createEnvRequest** | [**CreateEnvRequest**](CreateEnvRequest.md) |  | 
 
 ### Return type
 

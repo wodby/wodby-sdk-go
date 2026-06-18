@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,12 +21,12 @@ var _ MappedNullable = &NewDatabaseInput{}
 
 // NewDatabaseInput struct for NewDatabaseInput
 type NewDatabaseInput struct {
-	OrgID int32 `json:"orgID"`
-	ProjectID NullableInt32 `json:"projectID,omitempty"`
-	EnvID int32 `json:"envID"`
+	OrgId int32 `json:"orgId"`
+	ProjectId NullableInt32 `json:"projectId,omitempty"`
+	EnvId int32 `json:"envId"`
 	Name string `json:"name"`
 	Title string `json:"title"`
-	IntegrationKindID int32 `json:"integrationKindID"`
+	IntegrationKindId int32 `json:"integrationKindId"`
 	Type string `json:"type"`
 	Version string `json:"version"`
 	MachineType string `json:"machineType"`
@@ -36,7 +36,7 @@ type NewDatabaseInput struct {
 	HighAvailability NullableBool `json:"highAvailability,omitempty"`
 	Region NullableString `json:"region,omitempty"`
 	Zone NullableString `json:"zone,omitempty"`
-	ResidedClusterID NullableInt32 `json:"residedClusterID,omitempty"`
+	ResidedClusterId NullableInt32 `json:"residedClusterId,omitempty"`
 	Iops NullableInt32 `json:"iops,omitempty"`
 }
 
@@ -46,13 +46,13 @@ type _NewDatabaseInput NewDatabaseInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewDatabaseInput(orgID int32, envID int32, name string, title string, integrationKindID int32, type_ string, version string, machineType string) *NewDatabaseInput {
+func NewNewDatabaseInput(orgId int32, envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string) *NewDatabaseInput {
 	this := NewDatabaseInput{}
-	this.OrgID = orgID
-	this.EnvID = envID
+	this.OrgId = orgId
+	this.EnvId = envId
 	this.Name = name
 	this.Title = title
-	this.IntegrationKindID = integrationKindID
+	this.IntegrationKindId = integrationKindId
 	this.Type = type_
 	this.Version = version
 	this.MachineType = machineType
@@ -67,94 +67,94 @@ func NewNewDatabaseInputWithDefaults() *NewDatabaseInput {
 	return &this
 }
 
-// GetOrgID returns the OrgID field value
-func (o *NewDatabaseInput) GetOrgID() int32 {
+// GetOrgId returns the OrgId field value
+func (o *NewDatabaseInput) GetOrgId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.OrgID
+	return o.OrgId
 }
 
-// GetOrgIDOk returns a tuple with the OrgID field value
+// GetOrgIdOk returns a tuple with the OrgId field value
 // and a boolean to check if the value has been set.
-func (o *NewDatabaseInput) GetOrgIDOk() (*int32, bool) {
+func (o *NewDatabaseInput) GetOrgIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.OrgID, true
+	return &o.OrgId, true
 }
 
-// SetOrgID sets field value
-func (o *NewDatabaseInput) SetOrgID(v int32) {
-	o.OrgID = v
+// SetOrgId sets field value
+func (o *NewDatabaseInput) SetOrgId(v int32) {
+	o.OrgId = v
 }
 
-// GetProjectID returns the ProjectID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewDatabaseInput) GetProjectID() int32 {
-	if o == nil || IsNil(o.ProjectID.Get()) {
+// GetProjectId returns the ProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewDatabaseInput) GetProjectId() int32 {
+	if o == nil || IsNil(o.ProjectId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.ProjectID.Get()
+	return *o.ProjectId.Get()
 }
 
-// GetProjectIDOk returns a tuple with the ProjectID field value if set, nil otherwise
+// GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewDatabaseInput) GetProjectIDOk() (*int32, bool) {
+func (o *NewDatabaseInput) GetProjectIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.ProjectID.Get(), o.ProjectID.IsSet()
+	return o.ProjectId.Get(), o.ProjectId.IsSet()
 }
 
-// HasProjectID returns a boolean if a field has been set.
-func (o *NewDatabaseInput) HasProjectID() bool {
-	if o != nil && o.ProjectID.IsSet() {
+// HasProjectId returns a boolean if a field has been set.
+func (o *NewDatabaseInput) HasProjectId() bool {
+	if o != nil && o.ProjectId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetProjectID gets a reference to the given NullableInt32 and assigns it to the ProjectID field.
-func (o *NewDatabaseInput) SetProjectID(v int32) {
-	o.ProjectID.Set(&v)
+// SetProjectId gets a reference to the given NullableInt32 and assigns it to the ProjectId field.
+func (o *NewDatabaseInput) SetProjectId(v int32) {
+	o.ProjectId.Set(&v)
 }
-// SetProjectIDNil sets the value for ProjectID to be an explicit nil
-func (o *NewDatabaseInput) SetProjectIDNil() {
-	o.ProjectID.Set(nil)
-}
-
-// UnsetProjectID ensures that no value is present for ProjectID, not even an explicit nil
-func (o *NewDatabaseInput) UnsetProjectID() {
-	o.ProjectID.Unset()
+// SetProjectIdNil sets the value for ProjectId to be an explicit nil
+func (o *NewDatabaseInput) SetProjectIdNil() {
+	o.ProjectId.Set(nil)
 }
 
-// GetEnvID returns the EnvID field value
-func (o *NewDatabaseInput) GetEnvID() int32 {
+// UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+func (o *NewDatabaseInput) UnsetProjectId() {
+	o.ProjectId.Unset()
+}
+
+// GetEnvId returns the EnvId field value
+func (o *NewDatabaseInput) GetEnvId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.EnvID
+	return o.EnvId
 }
 
-// GetEnvIDOk returns a tuple with the EnvID field value
+// GetEnvIdOk returns a tuple with the EnvId field value
 // and a boolean to check if the value has been set.
-func (o *NewDatabaseInput) GetEnvIDOk() (*int32, bool) {
+func (o *NewDatabaseInput) GetEnvIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.EnvID, true
+	return &o.EnvId, true
 }
 
-// SetEnvID sets field value
-func (o *NewDatabaseInput) SetEnvID(v int32) {
-	o.EnvID = v
+// SetEnvId sets field value
+func (o *NewDatabaseInput) SetEnvId(v int32) {
+	o.EnvId = v
 }
 
 // GetName returns the Name field value
@@ -205,28 +205,28 @@ func (o *NewDatabaseInput) SetTitle(v string) {
 	o.Title = v
 }
 
-// GetIntegrationKindID returns the IntegrationKindID field value
-func (o *NewDatabaseInput) GetIntegrationKindID() int32 {
+// GetIntegrationKindId returns the IntegrationKindId field value
+func (o *NewDatabaseInput) GetIntegrationKindId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.IntegrationKindID
+	return o.IntegrationKindId
 }
 
-// GetIntegrationKindIDOk returns a tuple with the IntegrationKindID field value
+// GetIntegrationKindIdOk returns a tuple with the IntegrationKindId field value
 // and a boolean to check if the value has been set.
-func (o *NewDatabaseInput) GetIntegrationKindIDOk() (*int32, bool) {
+func (o *NewDatabaseInput) GetIntegrationKindIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.IntegrationKindID, true
+	return &o.IntegrationKindId, true
 }
 
-// SetIntegrationKindID sets field value
-func (o *NewDatabaseInput) SetIntegrationKindID(v int32) {
-	o.IntegrationKindID = v
+// SetIntegrationKindId sets field value
+func (o *NewDatabaseInput) SetIntegrationKindId(v int32) {
+	o.IntegrationKindId = v
 }
 
 // GetType returns the Type field value
@@ -553,46 +553,46 @@ func (o *NewDatabaseInput) UnsetZone() {
 	o.Zone.Unset()
 }
 
-// GetResidedClusterID returns the ResidedClusterID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewDatabaseInput) GetResidedClusterID() int32 {
-	if o == nil || IsNil(o.ResidedClusterID.Get()) {
+// GetResidedClusterId returns the ResidedClusterId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewDatabaseInput) GetResidedClusterId() int32 {
+	if o == nil || IsNil(o.ResidedClusterId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.ResidedClusterID.Get()
+	return *o.ResidedClusterId.Get()
 }
 
-// GetResidedClusterIDOk returns a tuple with the ResidedClusterID field value if set, nil otherwise
+// GetResidedClusterIdOk returns a tuple with the ResidedClusterId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewDatabaseInput) GetResidedClusterIDOk() (*int32, bool) {
+func (o *NewDatabaseInput) GetResidedClusterIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.ResidedClusterID.Get(), o.ResidedClusterID.IsSet()
+	return o.ResidedClusterId.Get(), o.ResidedClusterId.IsSet()
 }
 
-// HasResidedClusterID returns a boolean if a field has been set.
-func (o *NewDatabaseInput) HasResidedClusterID() bool {
-	if o != nil && o.ResidedClusterID.IsSet() {
+// HasResidedClusterId returns a boolean if a field has been set.
+func (o *NewDatabaseInput) HasResidedClusterId() bool {
+	if o != nil && o.ResidedClusterId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetResidedClusterID gets a reference to the given NullableInt32 and assigns it to the ResidedClusterID field.
-func (o *NewDatabaseInput) SetResidedClusterID(v int32) {
-	o.ResidedClusterID.Set(&v)
+// SetResidedClusterId gets a reference to the given NullableInt32 and assigns it to the ResidedClusterId field.
+func (o *NewDatabaseInput) SetResidedClusterId(v int32) {
+	o.ResidedClusterId.Set(&v)
 }
-// SetResidedClusterIDNil sets the value for ResidedClusterID to be an explicit nil
-func (o *NewDatabaseInput) SetResidedClusterIDNil() {
-	o.ResidedClusterID.Set(nil)
+// SetResidedClusterIdNil sets the value for ResidedClusterId to be an explicit nil
+func (o *NewDatabaseInput) SetResidedClusterIdNil() {
+	o.ResidedClusterId.Set(nil)
 }
 
-// UnsetResidedClusterID ensures that no value is present for ResidedClusterID, not even an explicit nil
-func (o *NewDatabaseInput) UnsetResidedClusterID() {
-	o.ResidedClusterID.Unset()
+// UnsetResidedClusterId ensures that no value is present for ResidedClusterId, not even an explicit nil
+func (o *NewDatabaseInput) UnsetResidedClusterId() {
+	o.ResidedClusterId.Unset()
 }
 
 // GetIops returns the Iops field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -647,14 +647,14 @@ func (o NewDatabaseInput) MarshalJSON() ([]byte, error) {
 
 func (o NewDatabaseInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgID"] = o.OrgID
-	if o.ProjectID.IsSet() {
-		toSerialize["projectID"] = o.ProjectID.Get()
+	toSerialize["orgId"] = o.OrgId
+	if o.ProjectId.IsSet() {
+		toSerialize["projectId"] = o.ProjectId.Get()
 	}
-	toSerialize["envID"] = o.EnvID
+	toSerialize["envId"] = o.EnvId
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
-	toSerialize["integrationKindID"] = o.IntegrationKindID
+	toSerialize["integrationKindId"] = o.IntegrationKindId
 	toSerialize["type"] = o.Type
 	toSerialize["version"] = o.Version
 	toSerialize["machineType"] = o.MachineType
@@ -676,8 +676,8 @@ func (o NewDatabaseInput) ToMap() (map[string]interface{}, error) {
 	if o.Zone.IsSet() {
 		toSerialize["zone"] = o.Zone.Get()
 	}
-	if o.ResidedClusterID.IsSet() {
-		toSerialize["residedClusterID"] = o.ResidedClusterID.Get()
+	if o.ResidedClusterId.IsSet() {
+		toSerialize["residedClusterId"] = o.ResidedClusterId.Get()
 	}
 	if o.Iops.IsSet() {
 		toSerialize["iops"] = o.Iops.Get()
@@ -690,11 +690,11 @@ func (o *NewDatabaseInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgID",
-		"envID",
+		"orgId",
+		"envId",
 		"name",
 		"title",
-		"integrationKindID",
+		"integrationKindId",
 		"type",
 		"version",
 		"machineType",

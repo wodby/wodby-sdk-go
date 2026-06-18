@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,11 +21,11 @@ var _ MappedNullable = &NewProjectInput{}
 
 // NewProjectInput struct for NewProjectInput
 type NewProjectInput struct {
-	OrgID int32 `json:"orgID"`
+	OrgId int32 `json:"orgId"`
 	Name string `json:"name"`
 	Title string `json:"title"`
-	TeamIDs []int32 `json:"teamIDs,omitempty"`
-	OrgMembershipIDs []int32 `json:"orgMembershipIDs,omitempty"`
+	TeamIds []int32 `json:"teamIds,omitempty"`
+	OrgMembershipIds []int32 `json:"orgMembershipIds,omitempty"`
 	Role *string `json:"role,omitempty"`
 }
 
@@ -35,9 +35,9 @@ type _NewProjectInput NewProjectInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewProjectInput(orgID int32, name string, title string) *NewProjectInput {
+func NewNewProjectInput(orgId int32, name string, title string) *NewProjectInput {
 	this := NewProjectInput{}
-	this.OrgID = orgID
+	this.OrgId = orgId
 	this.Name = name
 	this.Title = title
 	return &this
@@ -51,28 +51,28 @@ func NewNewProjectInputWithDefaults() *NewProjectInput {
 	return &this
 }
 
-// GetOrgID returns the OrgID field value
-func (o *NewProjectInput) GetOrgID() int32 {
+// GetOrgId returns the OrgId field value
+func (o *NewProjectInput) GetOrgId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.OrgID
+	return o.OrgId
 }
 
-// GetOrgIDOk returns a tuple with the OrgID field value
+// GetOrgIdOk returns a tuple with the OrgId field value
 // and a boolean to check if the value has been set.
-func (o *NewProjectInput) GetOrgIDOk() (*int32, bool) {
+func (o *NewProjectInput) GetOrgIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.OrgID, true
+	return &o.OrgId, true
 }
 
-// SetOrgID sets field value
-func (o *NewProjectInput) SetOrgID(v int32) {
-	o.OrgID = v
+// SetOrgId sets field value
+func (o *NewProjectInput) SetOrgId(v int32) {
+	o.OrgId = v
 }
 
 // GetName returns the Name field value
@@ -123,68 +123,68 @@ func (o *NewProjectInput) SetTitle(v string) {
 	o.Title = v
 }
 
-// GetTeamIDs returns the TeamIDs field value if set, zero value otherwise.
-func (o *NewProjectInput) GetTeamIDs() []int32 {
-	if o == nil || IsNil(o.TeamIDs) {
+// GetTeamIds returns the TeamIds field value if set, zero value otherwise.
+func (o *NewProjectInput) GetTeamIds() []int32 {
+	if o == nil || IsNil(o.TeamIds) {
 		var ret []int32
 		return ret
 	}
-	return o.TeamIDs
+	return o.TeamIds
 }
 
-// GetTeamIDsOk returns a tuple with the TeamIDs field value if set, nil otherwise
+// GetTeamIdsOk returns a tuple with the TeamIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewProjectInput) GetTeamIDsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.TeamIDs) {
+func (o *NewProjectInput) GetTeamIdsOk() ([]int32, bool) {
+	if o == nil || IsNil(o.TeamIds) {
 		return nil, false
 	}
-	return o.TeamIDs, true
+	return o.TeamIds, true
 }
 
-// HasTeamIDs returns a boolean if a field has been set.
-func (o *NewProjectInput) HasTeamIDs() bool {
-	if o != nil && !IsNil(o.TeamIDs) {
+// HasTeamIds returns a boolean if a field has been set.
+func (o *NewProjectInput) HasTeamIds() bool {
+	if o != nil && !IsNil(o.TeamIds) {
 		return true
 	}
 
 	return false
 }
 
-// SetTeamIDs gets a reference to the given []int32 and assigns it to the TeamIDs field.
-func (o *NewProjectInput) SetTeamIDs(v []int32) {
-	o.TeamIDs = v
+// SetTeamIds gets a reference to the given []int32 and assigns it to the TeamIds field.
+func (o *NewProjectInput) SetTeamIds(v []int32) {
+	o.TeamIds = v
 }
 
-// GetOrgMembershipIDs returns the OrgMembershipIDs field value if set, zero value otherwise.
-func (o *NewProjectInput) GetOrgMembershipIDs() []int32 {
-	if o == nil || IsNil(o.OrgMembershipIDs) {
+// GetOrgMembershipIds returns the OrgMembershipIds field value if set, zero value otherwise.
+func (o *NewProjectInput) GetOrgMembershipIds() []int32 {
+	if o == nil || IsNil(o.OrgMembershipIds) {
 		var ret []int32
 		return ret
 	}
-	return o.OrgMembershipIDs
+	return o.OrgMembershipIds
 }
 
-// GetOrgMembershipIDsOk returns a tuple with the OrgMembershipIDs field value if set, nil otherwise
+// GetOrgMembershipIdsOk returns a tuple with the OrgMembershipIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewProjectInput) GetOrgMembershipIDsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.OrgMembershipIDs) {
+func (o *NewProjectInput) GetOrgMembershipIdsOk() ([]int32, bool) {
+	if o == nil || IsNil(o.OrgMembershipIds) {
 		return nil, false
 	}
-	return o.OrgMembershipIDs, true
+	return o.OrgMembershipIds, true
 }
 
-// HasOrgMembershipIDs returns a boolean if a field has been set.
-func (o *NewProjectInput) HasOrgMembershipIDs() bool {
-	if o != nil && !IsNil(o.OrgMembershipIDs) {
+// HasOrgMembershipIds returns a boolean if a field has been set.
+func (o *NewProjectInput) HasOrgMembershipIds() bool {
+	if o != nil && !IsNil(o.OrgMembershipIds) {
 		return true
 	}
 
 	return false
 }
 
-// SetOrgMembershipIDs gets a reference to the given []int32 and assigns it to the OrgMembershipIDs field.
-func (o *NewProjectInput) SetOrgMembershipIDs(v []int32) {
-	o.OrgMembershipIDs = v
+// SetOrgMembershipIds gets a reference to the given []int32 and assigns it to the OrgMembershipIds field.
+func (o *NewProjectInput) SetOrgMembershipIds(v []int32) {
+	o.OrgMembershipIds = v
 }
 
 // GetRole returns the Role field value if set, zero value otherwise.
@@ -229,14 +229,14 @@ func (o NewProjectInput) MarshalJSON() ([]byte, error) {
 
 func (o NewProjectInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgID"] = o.OrgID
+	toSerialize["orgId"] = o.OrgId
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
-	if !IsNil(o.TeamIDs) {
-		toSerialize["teamIDs"] = o.TeamIDs
+	if !IsNil(o.TeamIds) {
+		toSerialize["teamIds"] = o.TeamIds
 	}
-	if !IsNil(o.OrgMembershipIDs) {
-		toSerialize["orgMembershipIDs"] = o.OrgMembershipIDs
+	if !IsNil(o.OrgMembershipIds) {
+		toSerialize["orgMembershipIds"] = o.OrgMembershipIds
 	}
 	if !IsNil(o.Role) {
 		toSerialize["role"] = o.Role
@@ -249,7 +249,7 @@ func (o *NewProjectInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgID",
+		"orgId",
 		"name",
 		"title",
 	}

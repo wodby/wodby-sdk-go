@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing DatabasesAPIService
 
@@ -22,11 +22,11 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test DatabasesAPIService DatabasesGet", func(t *testing.T) {
+	t.Run("Test DatabasesAPIService CreateDatabase", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DatabasesAPI.DatabasesGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DatabasesAPI.CreateDatabase(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +34,13 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DatabasesAPIService DatabasesIdDelete", func(t *testing.T) {
+	t.Run("Test DatabasesAPIService DeleteDatabase", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.DatabasesAPI.DatabasesIdDelete(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.DatabasesAPI.DeleteDatabase(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,13 +48,13 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DatabasesAPIService DatabasesIdGet", func(t *testing.T) {
+	t.Run("Test DatabasesAPIService GetDatabase", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.DatabasesAPI.DatabasesIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.DatabasesAPI.GetDatabase(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -62,25 +62,39 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DatabasesAPIService DatabasesIdPut", func(t *testing.T) {
+	t.Run("Test DatabasesAPIService GetDatabaseByName", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		resp, httpRes, err := apiClient.DatabasesAPI.GetDatabaseByName(context.Background(), name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService ListDatabases", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DatabasesAPI.ListDatabases(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService UpdateDatabase", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.DatabasesAPI.DatabasesIdPut(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DatabasesAPIService DatabasesPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.DatabasesAPI.DatabasesPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DatabasesAPI.UpdateDatabase(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

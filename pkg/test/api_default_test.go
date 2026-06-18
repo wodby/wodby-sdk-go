@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing DefaultAPIService
 
@@ -22,11 +22,11 @@ func Test_client_DefaultAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test DefaultAPIService OpenapiJsonGet", func(t *testing.T) {
+	t.Run("Test DefaultAPIService GetOpenApiJson", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.OpenapiJsonGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.GetOpenApiJson(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,11 +34,11 @@ func Test_client_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService OpenapiYamlGet", func(t *testing.T) {
+	t.Run("Test DefaultAPIService GetOpenApiYaml", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.OpenapiYamlGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.GetOpenApiYaml(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

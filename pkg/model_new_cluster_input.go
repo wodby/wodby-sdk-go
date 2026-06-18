@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,9 +21,9 @@ var _ MappedNullable = &NewClusterInput{}
 
 // NewClusterInput struct for NewClusterInput
 type NewClusterInput struct {
-	OrgID int32 `json:"orgID"`
-	ProjectID NullableInt32 `json:"projectID,omitempty"`
-	IntegrationID int32 `json:"integrationID"`
+	OrgId int32 `json:"orgId"`
+	ProjectId NullableInt32 `json:"projectId,omitempty"`
+	IntegrationId int32 `json:"integrationId"`
 	Name string `json:"name"`
 	Title string `json:"title"`
 	Serverless bool `json:"serverless"`
@@ -45,10 +45,10 @@ type _NewClusterInput NewClusterInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewClusterInput(orgID int32, integrationID int32, name string, title string, serverless bool, disableMonitoring bool) *NewClusterInput {
+func NewNewClusterInput(orgId int32, integrationId int32, name string, title string, serverless bool, disableMonitoring bool) *NewClusterInput {
 	this := NewClusterInput{}
-	this.OrgID = orgID
-	this.IntegrationID = integrationID
+	this.OrgId = orgId
+	this.IntegrationId = integrationId
 	this.Name = name
 	this.Title = title
 	this.Serverless = serverless
@@ -64,94 +64,94 @@ func NewNewClusterInputWithDefaults() *NewClusterInput {
 	return &this
 }
 
-// GetOrgID returns the OrgID field value
-func (o *NewClusterInput) GetOrgID() int32 {
+// GetOrgId returns the OrgId field value
+func (o *NewClusterInput) GetOrgId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.OrgID
+	return o.OrgId
 }
 
-// GetOrgIDOk returns a tuple with the OrgID field value
+// GetOrgIdOk returns a tuple with the OrgId field value
 // and a boolean to check if the value has been set.
-func (o *NewClusterInput) GetOrgIDOk() (*int32, bool) {
+func (o *NewClusterInput) GetOrgIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.OrgID, true
+	return &o.OrgId, true
 }
 
-// SetOrgID sets field value
-func (o *NewClusterInput) SetOrgID(v int32) {
-	o.OrgID = v
+// SetOrgId sets field value
+func (o *NewClusterInput) SetOrgId(v int32) {
+	o.OrgId = v
 }
 
-// GetProjectID returns the ProjectID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewClusterInput) GetProjectID() int32 {
-	if o == nil || IsNil(o.ProjectID.Get()) {
+// GetProjectId returns the ProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewClusterInput) GetProjectId() int32 {
+	if o == nil || IsNil(o.ProjectId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.ProjectID.Get()
+	return *o.ProjectId.Get()
 }
 
-// GetProjectIDOk returns a tuple with the ProjectID field value if set, nil otherwise
+// GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewClusterInput) GetProjectIDOk() (*int32, bool) {
+func (o *NewClusterInput) GetProjectIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.ProjectID.Get(), o.ProjectID.IsSet()
+	return o.ProjectId.Get(), o.ProjectId.IsSet()
 }
 
-// HasProjectID returns a boolean if a field has been set.
-func (o *NewClusterInput) HasProjectID() bool {
-	if o != nil && o.ProjectID.IsSet() {
+// HasProjectId returns a boolean if a field has been set.
+func (o *NewClusterInput) HasProjectId() bool {
+	if o != nil && o.ProjectId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetProjectID gets a reference to the given NullableInt32 and assigns it to the ProjectID field.
-func (o *NewClusterInput) SetProjectID(v int32) {
-	o.ProjectID.Set(&v)
+// SetProjectId gets a reference to the given NullableInt32 and assigns it to the ProjectId field.
+func (o *NewClusterInput) SetProjectId(v int32) {
+	o.ProjectId.Set(&v)
 }
-// SetProjectIDNil sets the value for ProjectID to be an explicit nil
-func (o *NewClusterInput) SetProjectIDNil() {
-	o.ProjectID.Set(nil)
-}
-
-// UnsetProjectID ensures that no value is present for ProjectID, not even an explicit nil
-func (o *NewClusterInput) UnsetProjectID() {
-	o.ProjectID.Unset()
+// SetProjectIdNil sets the value for ProjectId to be an explicit nil
+func (o *NewClusterInput) SetProjectIdNil() {
+	o.ProjectId.Set(nil)
 }
 
-// GetIntegrationID returns the IntegrationID field value
-func (o *NewClusterInput) GetIntegrationID() int32 {
+// UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+func (o *NewClusterInput) UnsetProjectId() {
+	o.ProjectId.Unset()
+}
+
+// GetIntegrationId returns the IntegrationId field value
+func (o *NewClusterInput) GetIntegrationId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.IntegrationID
+	return o.IntegrationId
 }
 
-// GetIntegrationIDOk returns a tuple with the IntegrationID field value
+// GetIntegrationIdOk returns a tuple with the IntegrationId field value
 // and a boolean to check if the value has been set.
-func (o *NewClusterInput) GetIntegrationIDOk() (*int32, bool) {
+func (o *NewClusterInput) GetIntegrationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.IntegrationID, true
+	return &o.IntegrationId, true
 }
 
-// SetIntegrationID sets field value
-func (o *NewClusterInput) SetIntegrationID(v int32) {
-	o.IntegrationID = v
+// SetIntegrationId sets field value
+func (o *NewClusterInput) SetIntegrationId(v int32) {
+	o.IntegrationId = v
 }
 
 // GetName returns the Name field value
@@ -638,11 +638,11 @@ func (o NewClusterInput) MarshalJSON() ([]byte, error) {
 
 func (o NewClusterInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgID"] = o.OrgID
-	if o.ProjectID.IsSet() {
-		toSerialize["projectID"] = o.ProjectID.Get()
+	toSerialize["orgId"] = o.OrgId
+	if o.ProjectId.IsSet() {
+		toSerialize["projectId"] = o.ProjectId.Get()
 	}
-	toSerialize["integrationID"] = o.IntegrationID
+	toSerialize["integrationId"] = o.IntegrationId
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["serverless"] = o.Serverless
@@ -682,8 +682,8 @@ func (o *NewClusterInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgID",
-		"integrationID",
+		"orgId",
+		"integrationId",
 		"name",
 		"title",
 		"serverless",

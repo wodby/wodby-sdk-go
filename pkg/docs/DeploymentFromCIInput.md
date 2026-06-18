@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppBuildID** | **int32** |  | 
+**AppBuildId** | **int32** |  | 
 **Services** | [**[]ServiceDeploymentInput**](ServiceDeploymentInput.md) |  | 
 **SkipPostDeployment** | **bool** |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewDeploymentFromCIInput
 
-`func NewDeploymentFromCIInput(appBuildID int32, services []ServiceDeploymentInput, skipPostDeployment bool, ) *DeploymentFromCIInput`
+`func NewDeploymentFromCIInput(appBuildId int32, services []ServiceDeploymentInput, skipPostDeployment bool, ) *DeploymentFromCIInput`
 
 NewDeploymentFromCIInput instantiates a new DeploymentFromCIInput object
 This constructor will assign default values to properties that have it defined,
@@ -27,24 +27,24 @@ NewDeploymentFromCIInputWithDefaults instantiates a new DeploymentFromCIInput ob
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAppBuildID
+### GetAppBuildId
 
-`func (o *DeploymentFromCIInput) GetAppBuildID() int32`
+`func (o *DeploymentFromCIInput) GetAppBuildId() int32`
 
-GetAppBuildID returns the AppBuildID field if non-nil, zero value otherwise.
+GetAppBuildId returns the AppBuildId field if non-nil, zero value otherwise.
 
-### GetAppBuildIDOk
+### GetAppBuildIdOk
 
-`func (o *DeploymentFromCIInput) GetAppBuildIDOk() (*int32, bool)`
+`func (o *DeploymentFromCIInput) GetAppBuildIdOk() (*int32, bool)`
 
-GetAppBuildIDOk returns a tuple with the AppBuildID field if it's non-nil, zero value otherwise
+GetAppBuildIdOk returns a tuple with the AppBuildId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppBuildID
+### SetAppBuildId
 
-`func (o *DeploymentFromCIInput) SetAppBuildID(v int32)`
+`func (o *DeploymentFromCIInput) SetAppBuildId(v int32)`
 
-SetAppBuildID sets AppBuildID field to given value.
+SetAppBuildId sets AppBuildId field to given value.
 
 
 ### GetServices

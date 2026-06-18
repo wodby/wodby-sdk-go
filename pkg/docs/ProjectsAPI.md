@@ -4,19 +4,20 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ProjectsByNameNameGet**](ProjectsAPI.md#ProjectsByNameNameGet) | **Get** /projects/by-name/{name} | Get project by name
-[**ProjectsGet**](ProjectsAPI.md#ProjectsGet) | **Get** /projects | List projects
-[**ProjectsIdDelete**](ProjectsAPI.md#ProjectsIdDelete) | **Delete** /projects/{id} | Delete project
-[**ProjectsIdPut**](ProjectsAPI.md#ProjectsIdPut) | **Put** /projects/{id} | Update project
-[**ProjectsPost**](ProjectsAPI.md#ProjectsPost) | **Post** /projects | Create project
+[**CreateProject**](ProjectsAPI.md#CreateProject) | **Post** /projects | Create project
+[**DeleteProject**](ProjectsAPI.md#DeleteProject) | **Delete** /projects/{id} | Delete project
+[**GetProject**](ProjectsAPI.md#GetProject) | **Get** /projects/{id} | Get project
+[**GetProjectByName**](ProjectsAPI.md#GetProjectByName) | **Get** /projects/by-name/{name} | Get project by name
+[**ListProjects**](ProjectsAPI.md#ListProjects) | **Get** /projects | List projects
+[**UpdateProject**](ProjectsAPI.md#UpdateProject) | **Put** /projects/{id} | Update project
 
 
 
-## ProjectsByNameNameGet
+## CreateProject
 
-> Project ProjectsByNameNameGet(ctx, name).OrgId(orgId).Execute()
+> Project CreateProject(ctx).NewProjectInput(newProjectInput).Execute()
 
-Get project by name
+Create project
 
 ### Example
 
@@ -31,38 +32,32 @@ import (
 )
 
 func main() {
-	name := "name_example" // string | 
-	orgId := int32(56) // int32 | 
+	newProjectInput := *openapiclient.NewNewProjectInput(int32(123), "Name_example", "Title_example") // NewProjectInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.ProjectsByNameNameGet(context.Background(), name).OrgId(orgId).Execute()
+	resp, r, err := apiClient.ProjectsAPI.CreateProject(context.Background()).NewProjectInput(newProjectInput).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ProjectsByNameNameGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.CreateProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ProjectsByNameNameGet`: Project
-	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ProjectsByNameNameGet`: %v\n", resp)
+	// response from `CreateProject`: Project
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.CreateProject`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**name** | **string** |  | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiProjectsByNameNameGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiCreateProjectRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-
- **orgId** | **int32** |  | 
+ **newProjectInput** | [**NewProjectInput**](NewProjectInput.md) |  | 
 
 ### Return type
 
@@ -74,7 +69,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -82,73 +77,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProjectsGet
+## DeleteProject
 
-> []Project ProjectsGet(ctx).OrgId(orgId).Execute()
-
-List projects
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	orgId := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.ProjectsGet(context.Background()).OrgId(orgId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ProjectsGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ProjectsGet`: []Project
-	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ProjectsGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProjectsGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **orgId** | **int32** |  | 
-
-### Return type
-
-[**[]Project**](Project.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ProjectsIdDelete
-
-> OperationResult ProjectsIdDelete(ctx, id).Execute()
+> OperationResult DeleteProject(ctx, id).Execute()
 
 Delete project
 
@@ -169,13 +100,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.ProjectsIdDelete(context.Background(), id).Execute()
+	resp, r, err := apiClient.ProjectsAPI.DeleteProject(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ProjectsIdDelete``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.DeleteProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ProjectsIdDelete`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ProjectsIdDelete`: %v\n", resp)
+	// response from `DeleteProject`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.DeleteProject`: %v\n", resp)
 }
 ```
 
@@ -189,7 +120,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiProjectsIdDeleteRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiDeleteProjectRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -214,9 +145,211 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ProjectsIdPut
+## GetProject
 
-> Project ProjectsIdPut(ctx, id).UpdateProjectInput(updateProjectInput).Execute()
+> Project GetProject(ctx, id).Execute()
+
+Get project
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProjectsAPI.GetProject(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProject`: Project
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.GetProject`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Project**](Project.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProjectByName
+
+> Project GetProjectByName(ctx, name).OrgId(orgId).Execute()
+
+Get project by name
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	name := "name_example" // string | 
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProjectsAPI.GetProjectByName(context.Background(), name).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetProjectByName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectByName`: Project
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.GetProjectByName`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectByNameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**Project**](Project.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListProjects
+
+> []Project ListProjects(ctx).OrgId(orgId).Execute()
+
+List projects
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	orgId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProjectsAPI.ListProjects(context.Background()).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ListProjects``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListProjects`: []Project
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ListProjects`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListProjectsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **int32** |  | 
+
+### Return type
+
+[**[]Project**](Project.md)
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateProject
+
+> Project UpdateProject(ctx, id).UpdateProjectInput(updateProjectInput).Execute()
 
 Update project
 
@@ -238,13 +371,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.ProjectsIdPut(context.Background(), id).UpdateProjectInput(updateProjectInput).Execute()
+	resp, r, err := apiClient.ProjectsAPI.UpdateProject(context.Background(), id).UpdateProjectInput(updateProjectInput).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ProjectsIdPut``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.UpdateProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ProjectsIdPut`: Project
-	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ProjectsIdPut`: %v\n", resp)
+	// response from `UpdateProject`: Project
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.UpdateProject`: %v\n", resp)
 }
 ```
 
@@ -258,77 +391,13 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiProjectsIdPutRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiUpdateProjectRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateProjectInput** | [**UpdateProjectInput**](UpdateProjectInput.md) |  | 
-
-### Return type
-
-[**Project**](Project.md)
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ProjectsPost
-
-> Project ProjectsPost(ctx).NewProjectInput(newProjectInput).Execute()
-
-Create project
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	newProjectInput := *openapiclient.NewNewProjectInput(int32(123), "Name_example", "Title_example") // NewProjectInput | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.ProjectsPost(context.Background()).NewProjectInput(newProjectInput).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ProjectsPost``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ProjectsPost`: Project
-	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ProjectsPost`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiProjectsPostRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **newProjectInput** | [**NewProjectInput**](NewProjectInput.md) |  | 
 
 ### Return type
 

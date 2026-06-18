@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing AppDeploymentsAPIService
 
@@ -22,11 +22,11 @@ func Test_client_AppDeploymentsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test AppDeploymentsAPIService AppDeploymentsFromCiPost", func(t *testing.T) {
+	t.Run("Test AppDeploymentsAPIService CreateAppDeployment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AppDeploymentsAPI.AppDeploymentsFromCiPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppDeploymentsAPI.CreateAppDeployment(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,11 +34,11 @@ func Test_client_AppDeploymentsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppDeploymentsAPIService AppDeploymentsGet", func(t *testing.T) {
+	t.Run("Test AppDeploymentsAPIService CreateAppDeploymentFromCi", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.AppDeploymentsAPI.AppDeploymentsGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppDeploymentsAPI.CreateAppDeploymentFromCi(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -46,13 +46,13 @@ func Test_client_AppDeploymentsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppDeploymentsAPIService AppDeploymentsIdGet", func(t *testing.T) {
+	t.Run("Test AppDeploymentsAPIService GetAppDeployment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppDeploymentsAPI.AppDeploymentsIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.AppDeploymentsAPI.GetAppDeployment(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -60,25 +60,25 @@ func Test_client_AppDeploymentsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test AppDeploymentsAPIService AppDeploymentsIdRedeployPost", func(t *testing.T) {
+	t.Run("Test AppDeploymentsAPIService ListAppDeployments", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AppDeploymentsAPI.ListAppDeployments(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AppDeploymentsAPIService RedeployAppDeployment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.AppDeploymentsAPI.AppDeploymentsIdRedeployPost(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test AppDeploymentsAPIService AppDeploymentsPost", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.AppDeploymentsAPI.AppDeploymentsPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AppDeploymentsAPI.RedeployAppDeployment(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

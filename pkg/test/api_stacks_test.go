@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing StacksAPIService
 
@@ -22,13 +22,13 @@ func Test_client_StacksAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test StacksAPIService StackRevisionsIdGet", func(t *testing.T) {
+	t.Run("Test StacksAPIService GetStack", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.StacksAPI.StackRevisionsIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.StacksAPI.GetStack(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -36,27 +36,13 @@ func Test_client_StacksAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StacksAPIService StackRevisionsIdServicesGet", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id int32
-
-		resp, httpRes, err := apiClient.StacksAPI.StackRevisionsIdServicesGet(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test StacksAPIService StacksByNameNameGet", func(t *testing.T) {
+	t.Run("Test StacksAPIService GetStackByName", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var name string
 
-		resp, httpRes, err := apiClient.StacksAPI.StacksByNameNameGet(context.Background(), name).Execute()
+		resp, httpRes, err := apiClient.StacksAPI.GetStackByName(context.Background(), name).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -64,11 +50,39 @@ func Test_client_StacksAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test StacksAPIService StacksGet", func(t *testing.T) {
+	t.Run("Test StacksAPIService GetStackRevision", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.StacksAPI.StacksGet(context.Background()).Execute()
+		var id int32
+
+		resp, httpRes, err := apiClient.StacksAPI.GetStackRevision(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StacksAPIService ListStackRevisionServices", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StacksAPI.ListStackRevisionServices(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StacksAPIService ListStacks", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StacksAPI.ListStacks(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ImportName** | Pointer to **NullableString** |  | [optional] 
 **Source** | **string** |  | 
 **Url** | Pointer to **NullableString** |  | [optional] 
-**BackupID** | Pointer to **NullableInt32** |  | [optional] 
+**BackupId** | Pointer to **NullableInt32** |  | [optional] 
 **From** | Pointer to [**ImportFromInput**](ImportFromInput.md) |  | [optional] 
 
 ## Methods
@@ -119,41 +119,41 @@ HasUrl returns a boolean if a field has been set.
 `func (o *ImportInput) UnsetUrl()`
 
 UnsetUrl ensures that no value is present for Url, not even an explicit nil
-### GetBackupID
+### GetBackupId
 
-`func (o *ImportInput) GetBackupID() int32`
+`func (o *ImportInput) GetBackupId() int32`
 
-GetBackupID returns the BackupID field if non-nil, zero value otherwise.
+GetBackupId returns the BackupId field if non-nil, zero value otherwise.
 
-### GetBackupIDOk
+### GetBackupIdOk
 
-`func (o *ImportInput) GetBackupIDOk() (*int32, bool)`
+`func (o *ImportInput) GetBackupIdOk() (*int32, bool)`
 
-GetBackupIDOk returns a tuple with the BackupID field if it's non-nil, zero value otherwise
+GetBackupIdOk returns a tuple with the BackupId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBackupID
+### SetBackupId
 
-`func (o *ImportInput) SetBackupID(v int32)`
+`func (o *ImportInput) SetBackupId(v int32)`
 
-SetBackupID sets BackupID field to given value.
+SetBackupId sets BackupId field to given value.
 
-### HasBackupID
+### HasBackupId
 
-`func (o *ImportInput) HasBackupID() bool`
+`func (o *ImportInput) HasBackupId() bool`
 
-HasBackupID returns a boolean if a field has been set.
+HasBackupId returns a boolean if a field has been set.
 
-### SetBackupIDNil
+### SetBackupIdNil
 
-`func (o *ImportInput) SetBackupIDNil(b bool)`
+`func (o *ImportInput) SetBackupIdNil(b bool)`
 
- SetBackupIDNil sets the value for BackupID to be an explicit nil
+ SetBackupIdNil sets the value for BackupId to be an explicit nil
 
-### UnsetBackupID
-`func (o *ImportInput) UnsetBackupID()`
+### UnsetBackupId
+`func (o *ImportInput) UnsetBackupId()`
 
-UnsetBackupID ensures that no value is present for BackupID, not even an explicit nil
+UnsetBackupId ensures that no value is present for BackupId, not even an explicit nil
 ### GetFrom
 
 `func (o *ImportInput) GetFrom() ImportFromInput`

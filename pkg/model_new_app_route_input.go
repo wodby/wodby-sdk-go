@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &NewAppRouteInput{}
 
 // NewAppRouteInput struct for NewAppRouteInput
 type NewAppRouteInput struct {
-	AppServiceID int32 `json:"appServiceID"`
+	AppServiceId int32 `json:"appServiceId"`
 	Main bool `json:"main"`
 	Primary bool `json:"primary"`
 	Port int32 `json:"port"`
@@ -36,7 +36,7 @@ type NewAppRouteInput struct {
 	Letsencrypt NullableBool `json:"letsencrypt,omitempty"`
 	AuthLogin NullableString `json:"authLogin,omitempty"`
 	AuthPassword NullableString `json:"authPassword,omitempty"`
-	AuthID NullableInt32 `json:"authID,omitempty"`
+	AuthId NullableInt32 `json:"authId,omitempty"`
 	Options []AppEndpointOptionInput `json:"options,omitempty"`
 }
 
@@ -46,9 +46,9 @@ type _NewAppRouteInput NewAppRouteInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAppRouteInput(appServiceID int32, main bool, primary bool, port int32, host string) *NewAppRouteInput {
+func NewNewAppRouteInput(appServiceId int32, main bool, primary bool, port int32, host string) *NewAppRouteInput {
 	this := NewAppRouteInput{}
-	this.AppServiceID = appServiceID
+	this.AppServiceId = appServiceId
 	this.Main = main
 	this.Primary = primary
 	this.Port = port
@@ -64,28 +64,28 @@ func NewNewAppRouteInputWithDefaults() *NewAppRouteInput {
 	return &this
 }
 
-// GetAppServiceID returns the AppServiceID field value
-func (o *NewAppRouteInput) GetAppServiceID() int32 {
+// GetAppServiceId returns the AppServiceId field value
+func (o *NewAppRouteInput) GetAppServiceId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.AppServiceID
+	return o.AppServiceId
 }
 
-// GetAppServiceIDOk returns a tuple with the AppServiceID field value
+// GetAppServiceIdOk returns a tuple with the AppServiceId field value
 // and a boolean to check if the value has been set.
-func (o *NewAppRouteInput) GetAppServiceIDOk() (*int32, bool) {
+func (o *NewAppRouteInput) GetAppServiceIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AppServiceID, true
+	return &o.AppServiceId, true
 }
 
-// SetAppServiceID sets field value
-func (o *NewAppRouteInput) SetAppServiceID(v int32) {
-	o.AppServiceID = v
+// SetAppServiceId sets field value
+func (o *NewAppRouteInput) SetAppServiceId(v int32) {
+	o.AppServiceId = v
 }
 
 // GetMain returns the Main field value
@@ -604,46 +604,46 @@ func (o *NewAppRouteInput) UnsetAuthPassword() {
 	o.AuthPassword.Unset()
 }
 
-// GetAuthID returns the AuthID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppRouteInput) GetAuthID() int32 {
-	if o == nil || IsNil(o.AuthID.Get()) {
+// GetAuthId returns the AuthId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppRouteInput) GetAuthId() int32 {
+	if o == nil || IsNil(o.AuthId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.AuthID.Get()
+	return *o.AuthId.Get()
 }
 
-// GetAuthIDOk returns a tuple with the AuthID field value if set, nil otherwise
+// GetAuthIdOk returns a tuple with the AuthId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppRouteInput) GetAuthIDOk() (*int32, bool) {
+func (o *NewAppRouteInput) GetAuthIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AuthID.Get(), o.AuthID.IsSet()
+	return o.AuthId.Get(), o.AuthId.IsSet()
 }
 
-// HasAuthID returns a boolean if a field has been set.
-func (o *NewAppRouteInput) HasAuthID() bool {
-	if o != nil && o.AuthID.IsSet() {
+// HasAuthId returns a boolean if a field has been set.
+func (o *NewAppRouteInput) HasAuthId() bool {
+	if o != nil && o.AuthId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAuthID gets a reference to the given NullableInt32 and assigns it to the AuthID field.
-func (o *NewAppRouteInput) SetAuthID(v int32) {
-	o.AuthID.Set(&v)
+// SetAuthId gets a reference to the given NullableInt32 and assigns it to the AuthId field.
+func (o *NewAppRouteInput) SetAuthId(v int32) {
+	o.AuthId.Set(&v)
 }
-// SetAuthIDNil sets the value for AuthID to be an explicit nil
-func (o *NewAppRouteInput) SetAuthIDNil() {
-	o.AuthID.Set(nil)
+// SetAuthIdNil sets the value for AuthId to be an explicit nil
+func (o *NewAppRouteInput) SetAuthIdNil() {
+	o.AuthId.Set(nil)
 }
 
-// UnsetAuthID ensures that no value is present for AuthID, not even an explicit nil
-func (o *NewAppRouteInput) UnsetAuthID() {
-	o.AuthID.Unset()
+// UnsetAuthId ensures that no value is present for AuthId, not even an explicit nil
+func (o *NewAppRouteInput) UnsetAuthId() {
+	o.AuthId.Unset()
 }
 
 // GetOptions returns the Options field value if set, zero value otherwise.
@@ -688,7 +688,7 @@ func (o NewAppRouteInput) MarshalJSON() ([]byte, error) {
 
 func (o NewAppRouteInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["appServiceID"] = o.AppServiceID
+	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["main"] = o.Main
 	toSerialize["primary"] = o.Primary
 	toSerialize["port"] = o.Port
@@ -723,8 +723,8 @@ func (o NewAppRouteInput) ToMap() (map[string]interface{}, error) {
 	if o.AuthPassword.IsSet() {
 		toSerialize["authPassword"] = o.AuthPassword.Get()
 	}
-	if o.AuthID.IsSet() {
-		toSerialize["authID"] = o.AuthID.Get()
+	if o.AuthId.IsSet() {
+		toSerialize["authId"] = o.AuthId.Get()
 	}
 	if !IsNil(o.Options) {
 		toSerialize["options"] = o.Options
@@ -737,7 +737,7 @@ func (o *NewAppRouteInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"appServiceID",
+		"appServiceId",
 		"main",
 		"primary",
 		"port",

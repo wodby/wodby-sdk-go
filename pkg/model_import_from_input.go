@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -19,8 +19,8 @@ var _ MappedNullable = &ImportFromInput{}
 
 // ImportFromInput struct for ImportFromInput
 type ImportFromInput struct {
-	DatabaseDBID NullableInt32 `json:"databaseDBID,omitempty"`
-	AppServiceID NullableInt32 `json:"appServiceID,omitempty"`
+	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
+	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	BackupName NullableString `json:"backupName,omitempty"`
 }
 
@@ -41,88 +41,88 @@ func NewImportFromInputWithDefaults() *ImportFromInput {
 	return &this
 }
 
-// GetDatabaseDBID returns the DatabaseDBID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ImportFromInput) GetDatabaseDBID() int32 {
-	if o == nil || IsNil(o.DatabaseDBID.Get()) {
+// GetDatabaseDbId returns the DatabaseDbId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ImportFromInput) GetDatabaseDbId() int32 {
+	if o == nil || IsNil(o.DatabaseDbId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.DatabaseDBID.Get()
+	return *o.DatabaseDbId.Get()
 }
 
-// GetDatabaseDBIDOk returns a tuple with the DatabaseDBID field value if set, nil otherwise
+// GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ImportFromInput) GetDatabaseDBIDOk() (*int32, bool) {
+func (o *ImportFromInput) GetDatabaseDbIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.DatabaseDBID.Get(), o.DatabaseDBID.IsSet()
+	return o.DatabaseDbId.Get(), o.DatabaseDbId.IsSet()
 }
 
-// HasDatabaseDBID returns a boolean if a field has been set.
-func (o *ImportFromInput) HasDatabaseDBID() bool {
-	if o != nil && o.DatabaseDBID.IsSet() {
+// HasDatabaseDbId returns a boolean if a field has been set.
+func (o *ImportFromInput) HasDatabaseDbId() bool {
+	if o != nil && o.DatabaseDbId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetDatabaseDBID gets a reference to the given NullableInt32 and assigns it to the DatabaseDBID field.
-func (o *ImportFromInput) SetDatabaseDBID(v int32) {
-	o.DatabaseDBID.Set(&v)
+// SetDatabaseDbId gets a reference to the given NullableInt32 and assigns it to the DatabaseDbId field.
+func (o *ImportFromInput) SetDatabaseDbId(v int32) {
+	o.DatabaseDbId.Set(&v)
 }
-// SetDatabaseDBIDNil sets the value for DatabaseDBID to be an explicit nil
-func (o *ImportFromInput) SetDatabaseDBIDNil() {
-	o.DatabaseDBID.Set(nil)
-}
-
-// UnsetDatabaseDBID ensures that no value is present for DatabaseDBID, not even an explicit nil
-func (o *ImportFromInput) UnsetDatabaseDBID() {
-	o.DatabaseDBID.Unset()
+// SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
+func (o *ImportFromInput) SetDatabaseDbIdNil() {
+	o.DatabaseDbId.Set(nil)
 }
 
-// GetAppServiceID returns the AppServiceID field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ImportFromInput) GetAppServiceID() int32 {
-	if o == nil || IsNil(o.AppServiceID.Get()) {
+// UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+func (o *ImportFromInput) UnsetDatabaseDbId() {
+	o.DatabaseDbId.Unset()
+}
+
+// GetAppServiceId returns the AppServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ImportFromInput) GetAppServiceId() int32 {
+	if o == nil || IsNil(o.AppServiceId.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.AppServiceID.Get()
+	return *o.AppServiceId.Get()
 }
 
-// GetAppServiceIDOk returns a tuple with the AppServiceID field value if set, nil otherwise
+// GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ImportFromInput) GetAppServiceIDOk() (*int32, bool) {
+func (o *ImportFromInput) GetAppServiceIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AppServiceID.Get(), o.AppServiceID.IsSet()
+	return o.AppServiceId.Get(), o.AppServiceId.IsSet()
 }
 
-// HasAppServiceID returns a boolean if a field has been set.
-func (o *ImportFromInput) HasAppServiceID() bool {
-	if o != nil && o.AppServiceID.IsSet() {
+// HasAppServiceId returns a boolean if a field has been set.
+func (o *ImportFromInput) HasAppServiceId() bool {
+	if o != nil && o.AppServiceId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAppServiceID gets a reference to the given NullableInt32 and assigns it to the AppServiceID field.
-func (o *ImportFromInput) SetAppServiceID(v int32) {
-	o.AppServiceID.Set(&v)
+// SetAppServiceId gets a reference to the given NullableInt32 and assigns it to the AppServiceId field.
+func (o *ImportFromInput) SetAppServiceId(v int32) {
+	o.AppServiceId.Set(&v)
 }
-// SetAppServiceIDNil sets the value for AppServiceID to be an explicit nil
-func (o *ImportFromInput) SetAppServiceIDNil() {
-	o.AppServiceID.Set(nil)
+// SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+func (o *ImportFromInput) SetAppServiceIdNil() {
+	o.AppServiceId.Set(nil)
 }
 
-// UnsetAppServiceID ensures that no value is present for AppServiceID, not even an explicit nil
-func (o *ImportFromInput) UnsetAppServiceID() {
-	o.AppServiceID.Unset()
+// UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
+func (o *ImportFromInput) UnsetAppServiceId() {
+	o.AppServiceId.Unset()
 }
 
 // GetBackupName returns the BackupName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -177,11 +177,11 @@ func (o ImportFromInput) MarshalJSON() ([]byte, error) {
 
 func (o ImportFromInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.DatabaseDBID.IsSet() {
-		toSerialize["databaseDBID"] = o.DatabaseDBID.Get()
+	if o.DatabaseDbId.IsSet() {
+		toSerialize["databaseDbId"] = o.DatabaseDbId.Get()
 	}
-	if o.AppServiceID.IsSet() {
-		toSerialize["appServiceID"] = o.AppServiceID.Get()
+	if o.AppServiceId.IsSet() {
+		toSerialize["appServiceId"] = o.AppServiceId.Get()
 	}
 	if o.BackupName.IsSet() {
 		toSerialize["backupName"] = o.BackupName.Get()

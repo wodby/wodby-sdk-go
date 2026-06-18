@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgID** | **int32** |  | 
-**ProjectID** | Pointer to **NullableInt32** |  | [optional] 
-**EnvID** | **int32** |  | 
+**OrgId** | **int32** |  | 
+**ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**EnvId** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
-**IntegrationKindID** | **int32** |  | 
+**IntegrationKindId** | **int32** |  | 
 **Type** | **string** |  | 
 **Version** | **string** |  | 
 **MachineType** | **string** |  | 
@@ -19,14 +19,14 @@ Name | Type | Description | Notes
 **HighAvailability** | Pointer to **NullableBool** |  | [optional] 
 **Region** | Pointer to **NullableString** |  | [optional] 
 **Zone** | Pointer to **NullableString** |  | [optional] 
-**ResidedClusterID** | Pointer to **NullableInt32** |  | [optional] 
+**ResidedClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **Iops** | Pointer to **NullableInt32** |  | [optional] 
 
 ## Methods
 
 ### NewNewDatabaseInput
 
-`func NewNewDatabaseInput(orgID int32, envID int32, name string, title string, integrationKindID int32, type_ string, version string, machineType string, ) *NewDatabaseInput`
+`func NewNewDatabaseInput(orgId int32, envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string, ) *NewDatabaseInput`
 
 NewNewDatabaseInput instantiates a new NewDatabaseInput object
 This constructor will assign default values to properties that have it defined,
@@ -41,79 +41,79 @@ NewNewDatabaseInputWithDefaults instantiates a new NewDatabaseInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetOrgID
+### GetOrgId
 
-`func (o *NewDatabaseInput) GetOrgID() int32`
+`func (o *NewDatabaseInput) GetOrgId() int32`
 
-GetOrgID returns the OrgID field if non-nil, zero value otherwise.
+GetOrgId returns the OrgId field if non-nil, zero value otherwise.
 
-### GetOrgIDOk
+### GetOrgIdOk
 
-`func (o *NewDatabaseInput) GetOrgIDOk() (*int32, bool)`
+`func (o *NewDatabaseInput) GetOrgIdOk() (*int32, bool)`
 
-GetOrgIDOk returns a tuple with the OrgID field if it's non-nil, zero value otherwise
+GetOrgIdOk returns a tuple with the OrgId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrgID
+### SetOrgId
 
-`func (o *NewDatabaseInput) SetOrgID(v int32)`
+`func (o *NewDatabaseInput) SetOrgId(v int32)`
 
-SetOrgID sets OrgID field to given value.
+SetOrgId sets OrgId field to given value.
 
 
-### GetProjectID
+### GetProjectId
 
-`func (o *NewDatabaseInput) GetProjectID() int32`
+`func (o *NewDatabaseInput) GetProjectId() int32`
 
-GetProjectID returns the ProjectID field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetProjectIDOk
+### GetProjectIdOk
 
-`func (o *NewDatabaseInput) GetProjectIDOk() (*int32, bool)`
+`func (o *NewDatabaseInput) GetProjectIdOk() (*int32, bool)`
 
-GetProjectIDOk returns a tuple with the ProjectID field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectID
+### SetProjectId
 
-`func (o *NewDatabaseInput) SetProjectID(v int32)`
+`func (o *NewDatabaseInput) SetProjectId(v int32)`
 
-SetProjectID sets ProjectID field to given value.
+SetProjectId sets ProjectId field to given value.
 
-### HasProjectID
+### HasProjectId
 
-`func (o *NewDatabaseInput) HasProjectID() bool`
+`func (o *NewDatabaseInput) HasProjectId() bool`
 
-HasProjectID returns a boolean if a field has been set.
+HasProjectId returns a boolean if a field has been set.
 
-### SetProjectIDNil
+### SetProjectIdNil
 
-`func (o *NewDatabaseInput) SetProjectIDNil(b bool)`
+`func (o *NewDatabaseInput) SetProjectIdNil(b bool)`
 
- SetProjectIDNil sets the value for ProjectID to be an explicit nil
+ SetProjectIdNil sets the value for ProjectId to be an explicit nil
 
-### UnsetProjectID
-`func (o *NewDatabaseInput) UnsetProjectID()`
+### UnsetProjectId
+`func (o *NewDatabaseInput) UnsetProjectId()`
 
-UnsetProjectID ensures that no value is present for ProjectID, not even an explicit nil
-### GetEnvID
+UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetEnvId
 
-`func (o *NewDatabaseInput) GetEnvID() int32`
+`func (o *NewDatabaseInput) GetEnvId() int32`
 
-GetEnvID returns the EnvID field if non-nil, zero value otherwise.
+GetEnvId returns the EnvId field if non-nil, zero value otherwise.
 
-### GetEnvIDOk
+### GetEnvIdOk
 
-`func (o *NewDatabaseInput) GetEnvIDOk() (*int32, bool)`
+`func (o *NewDatabaseInput) GetEnvIdOk() (*int32, bool)`
 
-GetEnvIDOk returns a tuple with the EnvID field if it's non-nil, zero value otherwise
+GetEnvIdOk returns a tuple with the EnvId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEnvID
+### SetEnvId
 
-`func (o *NewDatabaseInput) SetEnvID(v int32)`
+`func (o *NewDatabaseInput) SetEnvId(v int32)`
 
-SetEnvID sets EnvID field to given value.
+SetEnvId sets EnvId field to given value.
 
 
 ### GetName
@@ -156,24 +156,24 @@ and a boolean to check if the value has been set.
 SetTitle sets Title field to given value.
 
 
-### GetIntegrationKindID
+### GetIntegrationKindId
 
-`func (o *NewDatabaseInput) GetIntegrationKindID() int32`
+`func (o *NewDatabaseInput) GetIntegrationKindId() int32`
 
-GetIntegrationKindID returns the IntegrationKindID field if non-nil, zero value otherwise.
+GetIntegrationKindId returns the IntegrationKindId field if non-nil, zero value otherwise.
 
-### GetIntegrationKindIDOk
+### GetIntegrationKindIdOk
 
-`func (o *NewDatabaseInput) GetIntegrationKindIDOk() (*int32, bool)`
+`func (o *NewDatabaseInput) GetIntegrationKindIdOk() (*int32, bool)`
 
-GetIntegrationKindIDOk returns a tuple with the IntegrationKindID field if it's non-nil, zero value otherwise
+GetIntegrationKindIdOk returns a tuple with the IntegrationKindId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIntegrationKindID
+### SetIntegrationKindId
 
-`func (o *NewDatabaseInput) SetIntegrationKindID(v int32)`
+`func (o *NewDatabaseInput) SetIntegrationKindId(v int32)`
 
-SetIntegrationKindID sets IntegrationKindID field to given value.
+SetIntegrationKindId sets IntegrationKindId field to given value.
 
 
 ### GetType
@@ -446,41 +446,41 @@ HasZone returns a boolean if a field has been set.
 `func (o *NewDatabaseInput) UnsetZone()`
 
 UnsetZone ensures that no value is present for Zone, not even an explicit nil
-### GetResidedClusterID
+### GetResidedClusterId
 
-`func (o *NewDatabaseInput) GetResidedClusterID() int32`
+`func (o *NewDatabaseInput) GetResidedClusterId() int32`
 
-GetResidedClusterID returns the ResidedClusterID field if non-nil, zero value otherwise.
+GetResidedClusterId returns the ResidedClusterId field if non-nil, zero value otherwise.
 
-### GetResidedClusterIDOk
+### GetResidedClusterIdOk
 
-`func (o *NewDatabaseInput) GetResidedClusterIDOk() (*int32, bool)`
+`func (o *NewDatabaseInput) GetResidedClusterIdOk() (*int32, bool)`
 
-GetResidedClusterIDOk returns a tuple with the ResidedClusterID field if it's non-nil, zero value otherwise
+GetResidedClusterIdOk returns a tuple with the ResidedClusterId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetResidedClusterID
+### SetResidedClusterId
 
-`func (o *NewDatabaseInput) SetResidedClusterID(v int32)`
+`func (o *NewDatabaseInput) SetResidedClusterId(v int32)`
 
-SetResidedClusterID sets ResidedClusterID field to given value.
+SetResidedClusterId sets ResidedClusterId field to given value.
 
-### HasResidedClusterID
+### HasResidedClusterId
 
-`func (o *NewDatabaseInput) HasResidedClusterID() bool`
+`func (o *NewDatabaseInput) HasResidedClusterId() bool`
 
-HasResidedClusterID returns a boolean if a field has been set.
+HasResidedClusterId returns a boolean if a field has been set.
 
-### SetResidedClusterIDNil
+### SetResidedClusterIdNil
 
-`func (o *NewDatabaseInput) SetResidedClusterIDNil(b bool)`
+`func (o *NewDatabaseInput) SetResidedClusterIdNil(b bool)`
 
- SetResidedClusterIDNil sets the value for ResidedClusterID to be an explicit nil
+ SetResidedClusterIdNil sets the value for ResidedClusterId to be an explicit nil
 
-### UnsetResidedClusterID
-`func (o *NewDatabaseInput) UnsetResidedClusterID()`
+### UnsetResidedClusterId
+`func (o *NewDatabaseInput) UnsetResidedClusterId()`
 
-UnsetResidedClusterID ensures that no value is present for ResidedClusterID, not even an explicit nil
+UnsetResidedClusterId ensures that no value is present for ResidedClusterId, not even an explicit nil
 ### GetIops
 
 `func (o *NewDatabaseInput) GetIops() int32`

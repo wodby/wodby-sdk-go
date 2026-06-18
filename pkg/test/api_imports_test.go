@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Testing ImportsAPIService
 
@@ -22,11 +22,11 @@ func Test_client_ImportsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test ImportsAPIService ImportsGet", func(t *testing.T) {
+	t.Run("Test ImportsAPIService CreateImport", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ImportsAPI.ImportsGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ImportsAPI.CreateImport(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -34,13 +34,13 @@ func Test_client_ImportsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ImportsAPIService ImportsIdGet", func(t *testing.T) {
+	t.Run("Test ImportsAPIService GetImport", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var id int32
 
-		resp, httpRes, err := apiClient.ImportsAPI.ImportsIdGet(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.ImportsAPI.GetImport(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -48,11 +48,11 @@ func Test_client_ImportsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ImportsAPIService ImportsPost", func(t *testing.T) {
+	t.Run("Test ImportsAPIService ListImports", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ImportsAPI.ImportsPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.ImportsAPI.ListImports(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

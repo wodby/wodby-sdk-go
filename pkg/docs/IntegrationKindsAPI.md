@@ -4,17 +4,87 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**IntegrationKindsIdDatabaseMachineTypesGet**](IntegrationKindsAPI.md#IntegrationKindsIdDatabaseMachineTypesGet) | **Get** /integration-kinds/{id}/database-machine-types | List database machine types
-[**IntegrationKindsIdDatabaseRegionsGet**](IntegrationKindsAPI.md#IntegrationKindsIdDatabaseRegionsGet) | **Get** /integration-kinds/{id}/database-regions | List database regions
-[**IntegrationKindsIdDatabaseSettingsGet**](IntegrationKindsAPI.md#IntegrationKindsIdDatabaseSettingsGet) | **Get** /integration-kinds/{id}/database-settings | Get database settings
-[**IntegrationKindsIdDatabaseTypesGet**](IntegrationKindsAPI.md#IntegrationKindsIdDatabaseTypesGet) | **Get** /integration-kinds/{id}/database-types | List database types
-[**IntegrationKindsIdDatabaseVersionsGet**](IntegrationKindsAPI.md#IntegrationKindsIdDatabaseVersionsGet) | **Get** /integration-kinds/{id}/database-versions | List database versions
+[**GetIntegrationKindDatabaseSettings**](IntegrationKindsAPI.md#GetIntegrationKindDatabaseSettings) | **Get** /integration-kinds/{id}/database-settings | Get database settings
+[**ListIntegrationKindDatabaseMachineTypes**](IntegrationKindsAPI.md#ListIntegrationKindDatabaseMachineTypes) | **Get** /integration-kinds/{id}/database-machine-types | List database machine types
+[**ListIntegrationKindDatabaseRegions**](IntegrationKindsAPI.md#ListIntegrationKindDatabaseRegions) | **Get** /integration-kinds/{id}/database-regions | List database regions
+[**ListIntegrationKindDatabaseTypes**](IntegrationKindsAPI.md#ListIntegrationKindDatabaseTypes) | **Get** /integration-kinds/{id}/database-types | List database types
+[**ListIntegrationKindDatabaseVersions**](IntegrationKindsAPI.md#ListIntegrationKindDatabaseVersions) | **Get** /integration-kinds/{id}/database-versions | List database versions
 
 
 
-## IntegrationKindsIdDatabaseMachineTypesGet
+## GetIntegrationKindDatabaseSettings
 
-> []map[string]interface{} IntegrationKindsIdDatabaseMachineTypesGet(ctx, id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
+> map[string]interface{} GetIntegrationKindDatabaseSettings(ctx, id).DbType(dbType).Execute()
+
+Get database settings
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	dbType := "dbType_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationKindsAPI.GetIntegrationKindDatabaseSettings(context.Background(), id).DbType(dbType).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.GetIntegrationKindDatabaseSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetIntegrationKindDatabaseSettings`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.GetIntegrationKindDatabaseSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetIntegrationKindDatabaseSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **dbType** | **string** |  | 
+
+### Return type
+
+**map[string]interface{}**
+
+### Authorization
+
+[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListIntegrationKindDatabaseMachineTypes
+
+> []map[string]interface{} ListIntegrationKindDatabaseMachineTypes(ctx, id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
 
 List database machine types
 
@@ -40,13 +110,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseMachineTypesGet(context.Background(), id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
+	resp, r, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseMachineTypes(context.Background(), id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.IntegrationKindsIdDatabaseMachineTypesGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.ListIntegrationKindDatabaseMachineTypes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `IntegrationKindsIdDatabaseMachineTypesGet`: []map[string]interface{}
-	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.IntegrationKindsIdDatabaseMachineTypesGet`: %v\n", resp)
+	// response from `ListIntegrationKindDatabaseMachineTypes`: []map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.ListIntegrationKindDatabaseMachineTypes`: %v\n", resp)
 }
 ```
 
@@ -60,7 +130,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiIntegrationKindsIdDatabaseMachineTypesGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListIntegrationKindDatabaseMachineTypesRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -90,9 +160,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## IntegrationKindsIdDatabaseRegionsGet
+## ListIntegrationKindDatabaseRegions
 
-> []map[string]interface{} IntegrationKindsIdDatabaseRegionsGet(ctx, id).DbType(dbType).Version(version).Ha(ha).Execute()
+> []map[string]interface{} ListIntegrationKindDatabaseRegions(ctx, id).DbType(dbType).Version(version).Ha(ha).Execute()
 
 List database regions
 
@@ -116,13 +186,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseRegionsGet(context.Background(), id).DbType(dbType).Version(version).Ha(ha).Execute()
+	resp, r, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseRegions(context.Background(), id).DbType(dbType).Version(version).Ha(ha).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.IntegrationKindsIdDatabaseRegionsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.ListIntegrationKindDatabaseRegions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `IntegrationKindsIdDatabaseRegionsGet`: []map[string]interface{}
-	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.IntegrationKindsIdDatabaseRegionsGet`: %v\n", resp)
+	// response from `ListIntegrationKindDatabaseRegions`: []map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.ListIntegrationKindDatabaseRegions`: %v\n", resp)
 }
 ```
 
@@ -136,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiIntegrationKindsIdDatabaseRegionsGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListIntegrationKindDatabaseRegionsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -164,79 +234,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## IntegrationKindsIdDatabaseSettingsGet
+## ListIntegrationKindDatabaseTypes
 
-> map[string]interface{} IntegrationKindsIdDatabaseSettingsGet(ctx, id).DbType(dbType).Execute()
-
-Get database settings
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-	dbType := "dbType_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseSettingsGet(context.Background(), id).DbType(dbType).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.IntegrationKindsIdDatabaseSettingsGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `IntegrationKindsIdDatabaseSettingsGet`: map[string]interface{}
-	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.IntegrationKindsIdDatabaseSettingsGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiIntegrationKindsIdDatabaseSettingsGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **dbType** | **string** |  | 
-
-### Return type
-
-**map[string]interface{}**
-
-### Authorization
-
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## IntegrationKindsIdDatabaseTypesGet
-
-> []DatabaseType IntegrationKindsIdDatabaseTypesGet(ctx, id).Execute()
+> []DatabaseType ListIntegrationKindDatabaseTypes(ctx, id).Execute()
 
 List database types
 
@@ -257,13 +257,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseTypesGet(context.Background(), id).Execute()
+	resp, r, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseTypes(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.IntegrationKindsIdDatabaseTypesGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.ListIntegrationKindDatabaseTypes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `IntegrationKindsIdDatabaseTypesGet`: []DatabaseType
-	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.IntegrationKindsIdDatabaseTypesGet`: %v\n", resp)
+	// response from `ListIntegrationKindDatabaseTypes`: []DatabaseType
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.ListIntegrationKindDatabaseTypes`: %v\n", resp)
 }
 ```
 
@@ -277,7 +277,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiIntegrationKindsIdDatabaseTypesGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListIntegrationKindDatabaseTypesRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -302,9 +302,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## IntegrationKindsIdDatabaseVersionsGet
+## ListIntegrationKindDatabaseVersions
 
-> []DatabaseVersion IntegrationKindsIdDatabaseVersionsGet(ctx, id).DbType(dbType).Execute()
+> []DatabaseVersion ListIntegrationKindDatabaseVersions(ctx, id).DbType(dbType).Execute()
 
 List database versions
 
@@ -326,13 +326,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationKindsAPI.IntegrationKindsIdDatabaseVersionsGet(context.Background(), id).DbType(dbType).Execute()
+	resp, r, err := apiClient.IntegrationKindsAPI.ListIntegrationKindDatabaseVersions(context.Background(), id).DbType(dbType).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.IntegrationKindsIdDatabaseVersionsGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.ListIntegrationKindDatabaseVersions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `IntegrationKindsIdDatabaseVersionsGet`: []DatabaseVersion
-	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.IntegrationKindsIdDatabaseVersionsGet`: %v\n", resp)
+	// response from `ListIntegrationKindDatabaseVersions`: []DatabaseVersion
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.ListIntegrationKindDatabaseVersions`: %v\n", resp)
 }
 ```
 
@@ -346,7 +346,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiIntegrationKindsIdDatabaseVersionsGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListIntegrationKindDatabaseVersionsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

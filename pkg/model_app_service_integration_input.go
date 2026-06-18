@@ -1,5 +1,5 @@
 /*
-Wodby 2.0 Public API
+Wodby 2 Public API
 
 Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &AppServiceIntegrationInput{}
 // AppServiceIntegrationInput struct for AppServiceIntegrationInput
 type AppServiceIntegrationInput struct {
 	Name string `json:"name"`
-	IntegrationIDs []int32 `json:"integrationIDs"`
+	IntegrationIds []int32 `json:"integrationIds"`
 }
 
 type _AppServiceIntegrationInput AppServiceIntegrationInput
@@ -31,10 +31,10 @@ type _AppServiceIntegrationInput AppServiceIntegrationInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceIntegrationInput(name string, integrationIDs []int32) *AppServiceIntegrationInput {
+func NewAppServiceIntegrationInput(name string, integrationIds []int32) *AppServiceIntegrationInput {
 	this := AppServiceIntegrationInput{}
 	this.Name = name
-	this.IntegrationIDs = integrationIDs
+	this.IntegrationIds = integrationIds
 	return &this
 }
 
@@ -70,28 +70,28 @@ func (o *AppServiceIntegrationInput) SetName(v string) {
 	o.Name = v
 }
 
-// GetIntegrationIDs returns the IntegrationIDs field value
-func (o *AppServiceIntegrationInput) GetIntegrationIDs() []int32 {
+// GetIntegrationIds returns the IntegrationIds field value
+func (o *AppServiceIntegrationInput) GetIntegrationIds() []int32 {
 	if o == nil {
 		var ret []int32
 		return ret
 	}
 
-	return o.IntegrationIDs
+	return o.IntegrationIds
 }
 
-// GetIntegrationIDsOk returns a tuple with the IntegrationIDs field value
+// GetIntegrationIdsOk returns a tuple with the IntegrationIds field value
 // and a boolean to check if the value has been set.
-func (o *AppServiceIntegrationInput) GetIntegrationIDsOk() ([]int32, bool) {
+func (o *AppServiceIntegrationInput) GetIntegrationIdsOk() ([]int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.IntegrationIDs, true
+	return o.IntegrationIds, true
 }
 
-// SetIntegrationIDs sets field value
-func (o *AppServiceIntegrationInput) SetIntegrationIDs(v []int32) {
-	o.IntegrationIDs = v
+// SetIntegrationIds sets field value
+func (o *AppServiceIntegrationInput) SetIntegrationIds(v []int32) {
+	o.IntegrationIds = v
 }
 
 func (o AppServiceIntegrationInput) MarshalJSON() ([]byte, error) {
@@ -105,7 +105,7 @@ func (o AppServiceIntegrationInput) MarshalJSON() ([]byte, error) {
 func (o AppServiceIntegrationInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
-	toSerialize["integrationIDs"] = o.IntegrationIDs
+	toSerialize["integrationIds"] = o.IntegrationIds
 	return toSerialize, nil
 }
 
@@ -115,7 +115,7 @@ func (o *AppServiceIntegrationInput) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"name",
-		"integrationIDs",
+		"integrationIds",
 	}
 
 	allProperties := make(map[string]interface{})

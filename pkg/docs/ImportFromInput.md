@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DatabaseDBID** | Pointer to **NullableInt32** |  | [optional] 
-**AppServiceID** | Pointer to **NullableInt32** |  | [optional] 
+**DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
@@ -27,76 +27,76 @@ NewImportFromInputWithDefaults instantiates a new ImportFromInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetDatabaseDBID
+### GetDatabaseDbId
 
-`func (o *ImportFromInput) GetDatabaseDBID() int32`
+`func (o *ImportFromInput) GetDatabaseDbId() int32`
 
-GetDatabaseDBID returns the DatabaseDBID field if non-nil, zero value otherwise.
+GetDatabaseDbId returns the DatabaseDbId field if non-nil, zero value otherwise.
 
-### GetDatabaseDBIDOk
+### GetDatabaseDbIdOk
 
-`func (o *ImportFromInput) GetDatabaseDBIDOk() (*int32, bool)`
+`func (o *ImportFromInput) GetDatabaseDbIdOk() (*int32, bool)`
 
-GetDatabaseDBIDOk returns a tuple with the DatabaseDBID field if it's non-nil, zero value otherwise
+GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatabaseDBID
+### SetDatabaseDbId
 
-`func (o *ImportFromInput) SetDatabaseDBID(v int32)`
+`func (o *ImportFromInput) SetDatabaseDbId(v int32)`
 
-SetDatabaseDBID sets DatabaseDBID field to given value.
+SetDatabaseDbId sets DatabaseDbId field to given value.
 
-### HasDatabaseDBID
+### HasDatabaseDbId
 
-`func (o *ImportFromInput) HasDatabaseDBID() bool`
+`func (o *ImportFromInput) HasDatabaseDbId() bool`
 
-HasDatabaseDBID returns a boolean if a field has been set.
+HasDatabaseDbId returns a boolean if a field has been set.
 
-### SetDatabaseDBIDNil
+### SetDatabaseDbIdNil
 
-`func (o *ImportFromInput) SetDatabaseDBIDNil(b bool)`
+`func (o *ImportFromInput) SetDatabaseDbIdNil(b bool)`
 
- SetDatabaseDBIDNil sets the value for DatabaseDBID to be an explicit nil
+ SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
 
-### UnsetDatabaseDBID
-`func (o *ImportFromInput) UnsetDatabaseDBID()`
+### UnsetDatabaseDbId
+`func (o *ImportFromInput) UnsetDatabaseDbId()`
 
-UnsetDatabaseDBID ensures that no value is present for DatabaseDBID, not even an explicit nil
-### GetAppServiceID
+UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+### GetAppServiceId
 
-`func (o *ImportFromInput) GetAppServiceID() int32`
+`func (o *ImportFromInput) GetAppServiceId() int32`
 
-GetAppServiceID returns the AppServiceID field if non-nil, zero value otherwise.
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
 
-### GetAppServiceIDOk
+### GetAppServiceIdOk
 
-`func (o *ImportFromInput) GetAppServiceIDOk() (*int32, bool)`
+`func (o *ImportFromInput) GetAppServiceIdOk() (*int32, bool)`
 
-GetAppServiceIDOk returns a tuple with the AppServiceID field if it's non-nil, zero value otherwise
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppServiceID
+### SetAppServiceId
 
-`func (o *ImportFromInput) SetAppServiceID(v int32)`
+`func (o *ImportFromInput) SetAppServiceId(v int32)`
 
-SetAppServiceID sets AppServiceID field to given value.
+SetAppServiceId sets AppServiceId field to given value.
 
-### HasAppServiceID
+### HasAppServiceId
 
-`func (o *ImportFromInput) HasAppServiceID() bool`
+`func (o *ImportFromInput) HasAppServiceId() bool`
 
-HasAppServiceID returns a boolean if a field has been set.
+HasAppServiceId returns a boolean if a field has been set.
 
-### SetAppServiceIDNil
+### SetAppServiceIdNil
 
-`func (o *ImportFromInput) SetAppServiceIDNil(b bool)`
+`func (o *ImportFromInput) SetAppServiceIdNil(b bool)`
 
- SetAppServiceIDNil sets the value for AppServiceID to be an explicit nil
+ SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
 
-### UnsetAppServiceID
-`func (o *ImportFromInput) UnsetAppServiceID()`
+### UnsetAppServiceId
+`func (o *ImportFromInput) UnsetAppServiceId()`
 
-UnsetAppServiceID ensures that no value is present for AppServiceID, not even an explicit nil
+UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
 ### GetBackupName
 
 `func (o *ImportFromInput) GetBackupName() string`
