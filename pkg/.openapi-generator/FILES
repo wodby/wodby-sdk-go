@@ -55,7 +55,6 @@ docs/CreateBuildRequest.md
 docs/CreateDeploymentRequest.md
 docs/CreateEnvRequest.md
 docs/CreateImportInput.md
-docs/CreateOrgRequest.md
 docs/Database.md
 docs/DatabaseType.md
 docs/DatabaseVersion.md
@@ -148,7 +147,6 @@ model_create_build_request.go
 model_create_deployment_request.go
 model_create_env_request.go
 model_create_import_input.go
-model_create_org_request.go
 model_database.go
 model_database_type.go
 model_database_version.go

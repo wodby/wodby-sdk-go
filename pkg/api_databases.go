@@ -97,20 +97,6 @@ func (a *DatabasesAPIService) CreateDatabaseExecute(r ApiCreateDatabaseRequest) 
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
 			if apiKey, ok := auth["apiKeyHeader"]; ok {
 				var key string
 				if apiKey.Prefix != "" {
@@ -241,20 +227,6 @@ func (a *DatabasesAPIService) DeleteDatabaseExecute(r ApiDeleteDatabaseRequest) 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -393,20 +365,6 @@ func (a *DatabasesAPIService) GetDatabaseExecute(r ApiGetDatabaseRequest) (*Data
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
 			if apiKey, ok := auth["apiKeyHeader"]; ok {
 				var key string
 				if apiKey.Prefix != "" {
@@ -481,6 +439,7 @@ type ApiGetDatabaseByNameRequest struct {
 	orgId *int32
 }
 
+// Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization.
 func (r ApiGetDatabaseByNameRequest) OrgId(orgId int32) ApiGetDatabaseByNameRequest {
 	r.orgId = &orgId
 	return r
@@ -526,11 +485,10 @@ func (a *DatabasesAPIService) GetDatabaseByNameExecute(r ApiGetDatabaseByNameReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.orgId == nil {
-		return localVarReturnValue, nil, reportError("orgId is required and must be specified")
-	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "orgId", r.orgId, "form", "")
+	if r.orgId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orgId", r.orgId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -547,20 +505,6 @@ func (a *DatabasesAPIService) GetDatabaseByNameExecute(r ApiGetDatabaseByNameReq
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -640,6 +584,7 @@ type ApiListDatabasesRequest struct {
 	kind *string
 }
 
+// Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization.
 func (r ApiListDatabasesRequest) OrgId(orgId int32) ApiListDatabasesRequest {
 	r.orgId = &orgId
 	return r
@@ -693,11 +638,10 @@ func (a *DatabasesAPIService) ListDatabasesExecute(r ApiListDatabasesRequest) ([
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.orgId == nil {
-		return localVarReturnValue, nil, reportError("orgId is required and must be specified")
-	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "orgId", r.orgId, "form", "")
+	if r.orgId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orgId", r.orgId, "form", "")
+	}
 	if r.projectIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "projectIds", r.projectIds, "form", "")
 	}
@@ -720,20 +664,6 @@ func (a *DatabasesAPIService) ListDatabasesExecute(r ApiListDatabasesRequest) ([
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -880,20 +810,6 @@ func (a *DatabasesAPIService) UpdateDatabaseExecute(r ApiUpdateDatabaseRequest) 
 	}
 	// body params
 	localVarPostBody = r.updateTitleRequest
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["accessTokenHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-ACCESS-TOKEN"] = key
-			}
-		}
-	}
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

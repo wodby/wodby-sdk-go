@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **int32** |  | 
+**OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvId** | **int32** |  | 
 **Name** | **string** |  | 
@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewNewDatabaseInput
 
-`func NewNewDatabaseInput(orgId int32, envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string, ) *NewDatabaseInput`
+`func NewNewDatabaseInput(envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string, ) *NewDatabaseInput`
 
 NewNewDatabaseInput instantiates a new NewDatabaseInput object
 This constructor will assign default values to properties that have it defined,
@@ -60,6 +60,11 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+### HasOrgId
+
+`func (o *NewDatabaseInput) HasOrgId() bool`
+
+HasOrgId returns a boolean if a field has been set.
 
 ### GetProjectId
 

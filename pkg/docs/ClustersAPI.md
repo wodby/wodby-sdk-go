@@ -32,7 +32,7 @@ import (
 )
 
 func main() {
-	newClusterInput := *openapiclient.NewNewClusterInput(int32(123), int32(123), "Name_example", "Title_example", false, false) // NewClusterInput | 
+	newClusterInput := *openapiclient.NewNewClusterInput(int32(123), "Name_example", "Title_example", false, false) // NewClusterInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -65,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -135,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -203,7 +203,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -235,7 +235,7 @@ import (
 
 func main() {
 	name := "name_example" // string | 
-	orgId := int32(56) // int32 | 
+	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -265,7 +265,7 @@ Other parameters are passed through a pointer to a apiGetClusterByNameRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **orgId** | **int32** |  | 
+ **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
 
 ### Return type
 
@@ -273,7 +273,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -304,7 +304,7 @@ import (
 )
 
 func main() {
-	orgId := int32(56) // int32 | 
+	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	integrationId := int32(56) // int32 |  (optional)
 
@@ -331,7 +331,7 @@ Other parameters are passed through a pointer to a apiListClustersRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orgId** | **int32** |  | 
+ **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
  **integrationId** | **int32** |  | 
 
@@ -341,7 +341,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -411,7 +411,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 

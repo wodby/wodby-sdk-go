@@ -21,7 +21,8 @@ var _ MappedNullable = &NewProjectInput{}
 
 // NewProjectInput struct for NewProjectInput
 type NewProjectInput struct {
-	OrgId int32 `json:"orgId"`
+	// Optional for API-key requests; defaults to the API key's organization.
+	OrgId *int32 `json:"orgId,omitempty"`
 	Name string `json:"name"`
 	Title string `json:"title"`
 	TeamIds []int32 `json:"teamIds,omitempty"`
@@ -35,9 +36,8 @@ type _NewProjectInput NewProjectInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewProjectInput(orgId int32, name string, title string) *NewProjectInput {
+func NewNewProjectInput(name string, title string) *NewProjectInput {
 	this := NewProjectInput{}
-	this.OrgId = orgId
 	this.Name = name
 	this.Title = title
 	return &this
@@ -51,28 +51,36 @@ func NewNewProjectInputWithDefaults() *NewProjectInput {
 	return &this
 }
 
-// GetOrgId returns the OrgId field value
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
 func (o *NewProjectInput) GetOrgId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		var ret int32
 		return ret
 	}
-
-	return o.OrgId
+	return *o.OrgId
 }
 
-// GetOrgIdOk returns a tuple with the OrgId field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewProjectInput) GetOrgIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		return nil, false
 	}
-	return &o.OrgId, true
+	return o.OrgId, true
 }
 
-// SetOrgId sets field value
+// HasOrgId returns a boolean if a field has been set.
+func (o *NewProjectInput) HasOrgId() bool {
+	if o != nil && !IsNil(o.OrgId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgId gets a reference to the given int32 and assigns it to the OrgId field.
 func (o *NewProjectInput) SetOrgId(v int32) {
-	o.OrgId = v
+	o.OrgId = &v
 }
 
 // GetName returns the Name field value
@@ -229,7 +237,9 @@ func (o NewProjectInput) MarshalJSON() ([]byte, error) {
 
 func (o NewProjectInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.OrgId) {
+		toSerialize["orgId"] = o.OrgId
+	}
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	if !IsNil(o.TeamIds) {
@@ -249,7 +259,6 @@ func (o *NewProjectInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgId",
 		"name",
 		"title",
 	}

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **int32** |  | 
+**OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **Type** | **string** |  | 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewCreateEnvRequest
 
-`func NewCreateEnvRequest(orgId int32, name string, title string, type_ string, ) *CreateEnvRequest`
+`func NewCreateEnvRequest(name string, title string, type_ string, ) *CreateEnvRequest`
 
 NewCreateEnvRequest instantiates a new CreateEnvRequest object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+### HasOrgId
+
+`func (o *CreateEnvRequest) HasOrgId() bool`
+
+HasOrgId returns a boolean if a field has been set.
 
 ### GetName
 

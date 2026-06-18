@@ -66,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -130,7 +130,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -198,7 +198,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -266,7 +266,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader), [ciAccessTokenHeader](../README.md#ciAccessTokenHeader)
 
 ### HTTP request headers
 
@@ -334,7 +334,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader), [ciAccessTokenHeader](../README.md#ciAccessTokenHeader)
 
 ### HTTP request headers
 
@@ -402,7 +402,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -470,7 +470,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 

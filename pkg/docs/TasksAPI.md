@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -135,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -167,7 +167,7 @@ import (
 
 func main() {
 	scope := "scope_example" // string |  (optional)
-	orgId := int32(56) // int32 |  (optional)
+	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	withoutOrigin := true // bool |  (optional)
 	statuses := "statuses_example" // string | Comma-separated task statuses (optional)
@@ -207,7 +207,7 @@ Other parameters are passed through a pointer to a apiListTasksRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scope** | **string** |  | 
- **orgId** | **int32** |  | 
+ **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
  **withoutOrigin** | **bool** |  | 
  **statuses** | **string** | Comma-separated task statuses | 
@@ -229,7 +229,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -299,7 +299,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 

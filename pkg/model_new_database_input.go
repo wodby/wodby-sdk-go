@@ -21,7 +21,8 @@ var _ MappedNullable = &NewDatabaseInput{}
 
 // NewDatabaseInput struct for NewDatabaseInput
 type NewDatabaseInput struct {
-	OrgId int32 `json:"orgId"`
+	// Optional for API-key requests; defaults to the API key's organization.
+	OrgId *int32 `json:"orgId,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
 	EnvId int32 `json:"envId"`
 	Name string `json:"name"`
@@ -46,9 +47,8 @@ type _NewDatabaseInput NewDatabaseInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewDatabaseInput(orgId int32, envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string) *NewDatabaseInput {
+func NewNewDatabaseInput(envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string) *NewDatabaseInput {
 	this := NewDatabaseInput{}
-	this.OrgId = orgId
 	this.EnvId = envId
 	this.Name = name
 	this.Title = title
@@ -67,28 +67,36 @@ func NewNewDatabaseInputWithDefaults() *NewDatabaseInput {
 	return &this
 }
 
-// GetOrgId returns the OrgId field value
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
 func (o *NewDatabaseInput) GetOrgId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		var ret int32
 		return ret
 	}
-
-	return o.OrgId
+	return *o.OrgId
 }
 
-// GetOrgIdOk returns a tuple with the OrgId field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewDatabaseInput) GetOrgIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		return nil, false
 	}
-	return &o.OrgId, true
+	return o.OrgId, true
 }
 
-// SetOrgId sets field value
+// HasOrgId returns a boolean if a field has been set.
+func (o *NewDatabaseInput) HasOrgId() bool {
+	if o != nil && !IsNil(o.OrgId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgId gets a reference to the given int32 and assigns it to the OrgId field.
 func (o *NewDatabaseInput) SetOrgId(v int32) {
-	o.OrgId = v
+	o.OrgId = &v
 }
 
 // GetProjectId returns the ProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -647,7 +655,9 @@ func (o NewDatabaseInput) MarshalJSON() ([]byte, error) {
 
 func (o NewDatabaseInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.OrgId) {
+		toSerialize["orgId"] = o.OrgId
+	}
 	if o.ProjectId.IsSet() {
 		toSerialize["projectId"] = o.ProjectId.Get()
 	}
@@ -690,7 +700,6 @@ func (o *NewDatabaseInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgId",
 		"envId",
 		"name",
 		"title",

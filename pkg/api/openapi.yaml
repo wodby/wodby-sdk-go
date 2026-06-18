@@ -13,7 +13,6 @@ servers:
 - url: /v1
 security:
 - apiKeyHeader: []
-- accessTokenHeader: []
 tags:
 - description: "Organizations that own projects, resources, and access scopes."
   name: orgs
@@ -131,36 +130,6 @@ paths:
       summary: List orgs
       tags:
       - orgs
-    post:
-      operationId: createOrg
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrgRequest'
-        required: true
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Org'
-          description: Created org
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Error response
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Error response
-      summary: Create org
-      tags:
-      - orgs
   /orgs/{id}:
     delete:
       operationId: deleteOrg
@@ -268,10 +237,12 @@ paths:
     get:
       operationId: listProjects
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -340,10 +311,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -476,10 +449,12 @@ paths:
     get:
       operationId: listApps
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -563,10 +538,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -699,10 +676,12 @@ paths:
     get:
       operationId: listAppInstances
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -807,10 +786,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -1202,6 +1183,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
+      security:
+      - apiKeyHeader: []
+      - ciAccessTokenHeader: []
       summary: Create deployment from CI
       tags:
       - app-deployments
@@ -1415,6 +1399,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
+      security:
+      - apiKeyHeader: []
+      - ciAccessTokenHeader: []
       summary: Get build
       tags:
       - app-builds
@@ -1448,6 +1435,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
+      security:
+      - apiKeyHeader: []
+      - ciAccessTokenHeader: []
       summary: Get Docker registry credentials for build
       tags:
       - app-builds
@@ -1521,10 +1511,12 @@ paths:
     get:
       operationId: listClusters
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -1608,10 +1600,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -1752,10 +1746,12 @@ paths:
     get:
       operationId: listDatabases
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -1839,10 +1835,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -1975,10 +1973,12 @@ paths:
     get:
       operationId: listIntegrations
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -2063,10 +2063,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -2855,10 +2857,12 @@ paths:
     get:
       operationId: listProviders
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -3027,10 +3031,12 @@ paths:
     get:
       operationId: listServices
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -3234,10 +3240,12 @@ paths:
     get:
       operationId: listStacks
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -3697,7 +3705,9 @@ paths:
           - user_only
           type: string
         style: form
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
         required: false
@@ -4173,10 +4183,12 @@ paths:
     get:
       operationId: listEnvs
       parameters:
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -4245,10 +4257,12 @@ paths:
         schema:
           type: string
         style: simple
-      - explode: true
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
         in: query
         name: orgId
-        required: true
+        required: false
         schema:
           type: integer
         style: form
@@ -4396,14 +4410,18 @@ components:
         type: string
       style: simple
     OrgId:
+      description: "Optional for API-key requests; defaults to the API key's organization.\
+        \ If provided, it must match the key's organization."
       explode: true
       in: query
       name: orgId
-      required: true
+      required: false
       schema:
         type: integer
       style: form
     OrgIdOptional:
+      description: "Optional for API-key requests; defaults to the API key's organization.\
+        \ If provided, it must match the key's organization."
       explode: true
       in: query
       name: orgId
@@ -6552,19 +6570,6 @@ components:
     GenericObject:
       additionalProperties: true
       type: object
-    CreateOrgRequest:
-      example:
-        name: name
-        title: title
-      properties:
-        name:
-          type: string
-        title:
-          type: string
-      required:
-      - name
-      - title
-      type: object
     UpdateOrgRequest:
       example:
         registryIntegrationId: 0
@@ -6599,6 +6604,7 @@ components:
         orgId: 0
       properties:
         orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         name:
           type: string
@@ -6608,7 +6614,6 @@ components:
           type: string
       required:
       - name
-      - orgId
       - title
       - type
       type: object
@@ -6843,6 +6848,7 @@ components:
         - 6
       properties:
         orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         name:
           type: string
@@ -6860,7 +6866,6 @@ components:
           type: string
       required:
       - name
-      - orgId
       - title
       type: object
     UpdateProjectInput:
@@ -7018,6 +7023,7 @@ components:
         ciIntegrationId: 8
       properties:
         orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         name:
           type: string
@@ -7057,7 +7063,6 @@ components:
       - instanceName
       - instanceTitle
       - name
-      - orgId
       - services
       - stackRevId
       - title
@@ -7466,6 +7471,7 @@ components:
         machineType: machineType
       properties:
         orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         projectId:
           nullable: true
@@ -7511,7 +7517,6 @@ components:
       - disableMonitoring
       - integrationId
       - name
-      - orgId
       - serverless
       - title
       type: object
@@ -7536,6 +7541,7 @@ components:
         residedClusterId: 2
       properties:
         orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         projectId:
           nullable: true
@@ -7583,7 +7589,6 @@ components:
       - integrationKindId
       - machineType
       - name
-      - orgId
       - title
       - type
       - version
@@ -7607,6 +7612,7 @@ components:
         orgId: 0
       properties:
         orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         providerId:
           type: integer
@@ -7634,7 +7640,6 @@ components:
       required:
       - kinds
       - name
-      - orgId
       - providerId
       - title
       type: object
@@ -7996,10 +8001,14 @@ components:
       type: object
   securitySchemes:
     apiKeyHeader:
+      description: Organization-scoped Wodby API key. Requests are restricted to the
+        key's organization.
       in: header
       name: X-API-KEY
       type: apiKey
-    accessTokenHeader:
+    ciAccessTokenHeader:
+      description: Short-lived CI token generated by Wodby build workflows. Only operations
+        that explicitly list this scheme accept it.
       in: header
       name: X-ACCESS-TOKEN
       type: apiKey

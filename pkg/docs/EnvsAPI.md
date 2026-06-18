@@ -32,7 +32,7 @@ import (
 )
 
 func main() {
-	createEnvRequest := *openapiclient.NewCreateEnvRequest(int32(123), "Name_example", "Title_example", "Type_example") // CreateEnvRequest | 
+	createEnvRequest := *openapiclient.NewCreateEnvRequest("Name_example", "Title_example", "Type_example") // CreateEnvRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -65,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -133,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -201,7 +201,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -233,7 +233,7 @@ import (
 
 func main() {
 	name := "name_example" // string | 
-	orgId := int32(56) // int32 | 
+	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -263,7 +263,7 @@ Other parameters are passed through a pointer to a apiGetEnvByNameRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **orgId** | **int32** |  | 
+ **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
 
 ### Return type
 
@@ -271,7 +271,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -302,7 +302,7 @@ import (
 )
 
 func main() {
-	orgId := int32(56) // int32 | 
+	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -327,7 +327,7 @@ Other parameters are passed through a pointer to a apiListEnvsRequest struct via
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orgId** | **int32** |  | 
+ **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
 
 ### Return type
 
@@ -335,7 +335,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 
@@ -405,7 +405,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[accessTokenHeader](../README.md#accessTokenHeader), [apiKeyHeader](../README.md#apiKeyHeader)
+[apiKeyHeader](../README.md#apiKeyHeader)
 
 ### HTTP request headers
 

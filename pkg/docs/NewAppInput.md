@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **int32** |  | 
+**OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **InstanceName** | **string** |  | 
@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewNewAppInput
 
-`func NewNewAppInput(orgId int32, name string, title string, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32, ) *NewAppInput`
+`func NewNewAppInput(name string, title string, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32, ) *NewAppInput`
 
 NewNewAppInput instantiates a new NewAppInput object
 This constructor will assign default values to properties that have it defined,
@@ -57,6 +57,11 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+### HasOrgId
+
+`func (o *NewAppInput) HasOrgId() bool`
+
+HasOrgId returns a boolean if a field has been set.
 
 ### GetName
 

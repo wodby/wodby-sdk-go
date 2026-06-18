@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **int32** |  | 
+**OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **IntegrationId** | **int32** |  | 
 **Name** | **string** |  | 
@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewNewClusterInput
 
-`func NewNewClusterInput(orgId int32, integrationId int32, name string, title string, serverless bool, disableMonitoring bool, ) *NewClusterInput`
+`func NewNewClusterInput(integrationId int32, name string, title string, serverless bool, disableMonitoring bool, ) *NewClusterInput`
 
 NewNewClusterInput instantiates a new NewClusterInput object
 This constructor will assign default values to properties that have it defined,
@@ -59,6 +59,11 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+### HasOrgId
+
+`func (o *NewClusterInput) HasOrgId() bool`
+
+HasOrgId returns a boolean if a field has been set.
 
 ### GetProjectId
 

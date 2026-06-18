@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **int32** |  | 
+**OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProviderId** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewNewIntegrationInput
 
-`func NewNewIntegrationInput(orgId int32, providerId int32, name string, title string, kinds []string, ) *NewIntegrationInput`
+`func NewNewIntegrationInput(providerId int32, name string, title string, kinds []string, ) *NewIntegrationInput`
 
 NewNewIntegrationInput instantiates a new NewIntegrationInput object
 This constructor will assign default values to properties that have it defined,
@@ -52,6 +52,11 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+### HasOrgId
+
+`func (o *NewIntegrationInput) HasOrgId() bool`
+
+HasOrgId returns a boolean if a field has been set.
 
 ### GetProviderId
 

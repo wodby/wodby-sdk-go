@@ -21,7 +21,8 @@ var _ MappedNullable = &NewClusterInput{}
 
 // NewClusterInput struct for NewClusterInput
 type NewClusterInput struct {
-	OrgId int32 `json:"orgId"`
+	// Optional for API-key requests; defaults to the API key's organization.
+	OrgId *int32 `json:"orgId,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
 	IntegrationId int32 `json:"integrationId"`
 	Name string `json:"name"`
@@ -45,9 +46,8 @@ type _NewClusterInput NewClusterInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewClusterInput(orgId int32, integrationId int32, name string, title string, serverless bool, disableMonitoring bool) *NewClusterInput {
+func NewNewClusterInput(integrationId int32, name string, title string, serverless bool, disableMonitoring bool) *NewClusterInput {
 	this := NewClusterInput{}
-	this.OrgId = orgId
 	this.IntegrationId = integrationId
 	this.Name = name
 	this.Title = title
@@ -64,28 +64,36 @@ func NewNewClusterInputWithDefaults() *NewClusterInput {
 	return &this
 }
 
-// GetOrgId returns the OrgId field value
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
 func (o *NewClusterInput) GetOrgId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		var ret int32
 		return ret
 	}
-
-	return o.OrgId
+	return *o.OrgId
 }
 
-// GetOrgIdOk returns a tuple with the OrgId field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewClusterInput) GetOrgIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		return nil, false
 	}
-	return &o.OrgId, true
+	return o.OrgId, true
 }
 
-// SetOrgId sets field value
+// HasOrgId returns a boolean if a field has been set.
+func (o *NewClusterInput) HasOrgId() bool {
+	if o != nil && !IsNil(o.OrgId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgId gets a reference to the given int32 and assigns it to the OrgId field.
 func (o *NewClusterInput) SetOrgId(v int32) {
-	o.OrgId = v
+	o.OrgId = &v
 }
 
 // GetProjectId returns the ProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -638,7 +646,9 @@ func (o NewClusterInput) MarshalJSON() ([]byte, error) {
 
 func (o NewClusterInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.OrgId) {
+		toSerialize["orgId"] = o.OrgId
+	}
 	if o.ProjectId.IsSet() {
 		toSerialize["projectId"] = o.ProjectId.Get()
 	}
@@ -682,7 +692,6 @@ func (o *NewClusterInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgId",
 		"integrationId",
 		"name",
 		"title",

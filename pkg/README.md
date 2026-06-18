@@ -161,7 +161,6 @@ Class | Method | HTTP request | Description
 *IntegrationsAPI* | [**ListIntegrationStorageClasses**](docs/IntegrationsAPI.md#listintegrationstorageclasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
 *IntegrationsAPI* | [**ListIntegrations**](docs/IntegrationsAPI.md#listintegrations) | **Get** /integrations | List integrations
 *IntegrationsAPI* | [**UpdateIntegration**](docs/IntegrationsAPI.md#updateintegration) | **Put** /integrations/{id} | Update integration
-*OrgsAPI* | [**CreateOrg**](docs/OrgsAPI.md#createorg) | **Post** /orgs | Create org
 *OrgsAPI* | [**DeleteOrg**](docs/OrgsAPI.md#deleteorg) | **Delete** /orgs/{id} | Delete org
 *OrgsAPI* | [**GetOrg**](docs/OrgsAPI.md#getorg) | **Get** /orgs/{id} | Get org
 *OrgsAPI* | [**ListOrgs**](docs/OrgsAPI.md#listorgs) | **Get** /orgs | List orgs
@@ -218,7 +217,6 @@ Class | Method | HTTP request | Description
  - [CreateDeploymentRequest](docs/CreateDeploymentRequest.md)
  - [CreateEnvRequest](docs/CreateEnvRequest.md)
  - [CreateImportInput](docs/CreateImportInput.md)
- - [CreateOrgRequest](docs/CreateOrgRequest.md)
  - [Database](docs/Database.md)
  - [DatabaseType](docs/DatabaseType.md)
  - [DatabaseVersion](docs/DatabaseVersion.md)
@@ -302,13 +300,13 @@ auth := context.WithValue(
 r, err := client.Service.Operation(auth, args)
 ```
 
-### accessTokenHeader
+### ciAccessTokenHeader
 
 - **Type**: API key
 - **API key parameter name**: X-ACCESS-TOKEN
 - **Location**: HTTP header
 
-Note, each API key must be added to a map of `map[string]APIKey` where the key is: accessTokenHeader and passed in as the auth context for each request.
+Note, each API key must be added to a map of `map[string]APIKey` where the key is: ciAccessTokenHeader and passed in as the auth context for each request.
 
 Example
 
@@ -317,7 +315,7 @@ auth := context.WithValue(
 		context.Background(),
 		client.ContextAPIKeys,
 		map[string]client.APIKey{
-			"accessTokenHeader": {Key: "API_KEY_STRING"},
+			"ciAccessTokenHeader": {Key: "API_KEY_STRING"},
 		},
 	)
 r, err := client.Service.Operation(auth, args)

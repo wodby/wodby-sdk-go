@@ -21,7 +21,8 @@ var _ MappedNullable = &NewIntegrationInput{}
 
 // NewIntegrationInput struct for NewIntegrationInput
 type NewIntegrationInput struct {
-	OrgId int32 `json:"orgId"`
+	// Optional for API-key requests; defaults to the API key's organization.
+	OrgId *int32 `json:"orgId,omitempty"`
 	ProviderId int32 `json:"providerId"`
 	Name string `json:"name"`
 	Title string `json:"title"`
@@ -38,9 +39,8 @@ type _NewIntegrationInput NewIntegrationInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewIntegrationInput(orgId int32, providerId int32, name string, title string, kinds []string) *NewIntegrationInput {
+func NewNewIntegrationInput(providerId int32, name string, title string, kinds []string) *NewIntegrationInput {
 	this := NewIntegrationInput{}
-	this.OrgId = orgId
 	this.ProviderId = providerId
 	this.Name = name
 	this.Title = title
@@ -56,28 +56,36 @@ func NewNewIntegrationInputWithDefaults() *NewIntegrationInput {
 	return &this
 }
 
-// GetOrgId returns the OrgId field value
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
 func (o *NewIntegrationInput) GetOrgId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		var ret int32
 		return ret
 	}
-
-	return o.OrgId
+	return *o.OrgId
 }
 
-// GetOrgIdOk returns a tuple with the OrgId field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewIntegrationInput) GetOrgIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		return nil, false
 	}
-	return &o.OrgId, true
+	return o.OrgId, true
 }
 
-// SetOrgId sets field value
+// HasOrgId returns a boolean if a field has been set.
+func (o *NewIntegrationInput) HasOrgId() bool {
+	if o != nil && !IsNil(o.OrgId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgId gets a reference to the given int32 and assigns it to the OrgId field.
 func (o *NewIntegrationInput) SetOrgId(v int32) {
-	o.OrgId = v
+	o.OrgId = &v
 }
 
 // GetProviderId returns the ProviderId field value
@@ -344,7 +352,9 @@ func (o NewIntegrationInput) MarshalJSON() ([]byte, error) {
 
 func (o NewIntegrationInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.OrgId) {
+		toSerialize["orgId"] = o.OrgId
+	}
 	toSerialize["providerId"] = o.ProviderId
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
@@ -369,7 +379,6 @@ func (o *NewIntegrationInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"orgId",
 		"providerId",
 		"name",
 		"title",
