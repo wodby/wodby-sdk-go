@@ -14,9 +14,7 @@ jobs:
 
       - uses: actions/setup-go@v6
         with:
-          go-version-file: pkg/go.mod
-          cache-dependency-path: pkg/go.sum
+          go-version-file: go.mod
 
       - name: Test generated client
-        run: go test .
-        working-directory: pkg
+        run: go test ./...

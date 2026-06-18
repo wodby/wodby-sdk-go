@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
 )
 
 func Test_client_TasksAPIService(t *testing.T) {

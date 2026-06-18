@@ -4,8 +4,8 @@ Go client for the Wodby 2.0 Public API.
 
 ## Package
 
-- [Go package documentation](https://pkg.go.dev/github.com/wodby/wodby-sdk-go/pkg)
-- Go package: `github.com/wodby/wodby-sdk-go/pkg`
+- [Go package documentation](https://pkg.go.dev/github.com/wodby/wodby-sdk-go/v4/pkg)
+- Go package: `github.com/wodby/wodby-sdk-go/v4/pkg`
 
 ## Documentation
 
@@ -18,7 +18,7 @@ Go client for the Wodby 2.0 Public API.
 After generation, use the package from `pkg`.
 
 ```bash
-go get github.com/wodby/wodby-sdk-go/pkg
+go get github.com/wodby/wodby-sdk-go/v4/pkg
 ```
 
 ## Authentication

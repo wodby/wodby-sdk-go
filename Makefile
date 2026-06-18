@@ -21,7 +21,9 @@ codegen:
 			-i ./swagger.json \
 			-g go \
 			-o ./pkg \
-			--additional-properties=packageName=client
+			--additional-properties=packageName=client,packageVersion=4.0.0,withGoMod=false \
+			--git-user-id=wodby \
+			--git-repo-id=wodby-sdk-go/v4/pkg
 	sudo chown -R $(UID) ./
 	rm -f ./pkg/.travis.yml \
 		./pkg/git_push.sh \
