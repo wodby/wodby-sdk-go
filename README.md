@@ -2,6 +2,11 @@
 
 Go client for the Wodby 2.0 Public API.
 
+## Package
+
+- [Go package documentation](https://pkg.go.dev/github.com/wodby/wodby-sdk-go/pkg)
+- Go package: `github.com/wodby/wodby-sdk-go/pkg`
+
 ## Documentation
 
 - [API reference](https://wodby.com/docs/2.0/api/)
