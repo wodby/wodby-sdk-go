@@ -1405,6 +1405,42 @@ paths:
       summary: Get build
       tags:
       - app-builds
+  /app-builds/{id}/config:
+    get:
+      operationId: getAppBuildConfig
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBuildConfig'
+          description: Build config
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      security:
+      - apiKeyHeader: []
+      - ciAccessTokenHeader: []
+      summary: Get build config
+      tags:
+      - app-builds
   /app-builds/{id}/docker-registry-credentials:
     get:
       operationId: getAppBuildDockerRegistryCredentials
@@ -5001,6 +5037,115 @@ components:
       required:
       - items
       - totalCount
+      type: object
+    AppBuildConfig:
+      example:
+        registryRepository: registryRepository
+        registryHost: registryHost
+        services:
+        - args:
+          - name: name
+            secret: true
+            value: value
+          - name: name
+            secret: true
+            value: value
+          image: image
+          managed: true
+          dockerfile: dockerfile
+          name: name
+          main: true
+          dockerignore: dockerignore
+          title: title
+        - args:
+          - name: name
+            secret: true
+            value: value
+          - name: name
+            secret: true
+            value: value
+          image: image
+          managed: true
+          dockerfile: dockerfile
+          name: name
+          main: true
+          dockerignore: dockerignore
+          title: title
+      properties:
+        registryHost:
+          type: string
+        registryRepository:
+          type: string
+        services:
+          items:
+            $ref: '#/components/schemas/AppServiceBuildConfig'
+          type: array
+      required:
+      - registryHost
+      - registryRepository
+      - services
+      type: object
+    AppServiceBuildConfig:
+      example:
+        args:
+        - name: name
+          secret: true
+          value: value
+        - name: name
+          secret: true
+          value: value
+        image: image
+        managed: true
+        dockerfile: dockerfile
+        name: name
+        main: true
+        dockerignore: dockerignore
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        managed:
+          type: boolean
+        main:
+          type: boolean
+        image:
+          type: string
+        dockerfile:
+          nullable: true
+          type: string
+        dockerignore:
+          nullable: true
+          type: string
+        args:
+          items:
+            $ref: '#/components/schemas/AppServiceBuildArg'
+          nullable: true
+          type: array
+      required:
+      - image
+      - main
+      - managed
+      - name
+      - title
+      type: object
+    AppServiceBuildArg:
+      example:
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+      required:
+      - name
+      - secret
+      - value
       type: object
     Cluster:
       example:

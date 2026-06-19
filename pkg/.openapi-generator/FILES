@@ -27,6 +27,7 @@ client.go
 configuration.go
 docs/App.md
 docs/AppBuild.md
+docs/AppBuildConfig.md
 docs/AppBuildsAPI.md
 docs/AppBuildsResponse.md
 docs/AppDeployment.md
@@ -38,6 +39,8 @@ docs/AppInstancesAPI.md
 docs/AppRoute.md
 docs/AppRoutesAPI.md
 docs/AppService.md
+docs/AppServiceBuildArg.md
+docs/AppServiceBuildConfig.md
 docs/AppServiceDatabaseInput.md
 docs/AppServiceDeploymentRequest.md
 docs/AppServiceInput.md
@@ -127,6 +130,7 @@ docs/VolumeSizeInput.md
 git_push.sh
 model_app.go
 model_app_build.go
+model_app_build_config.go
 model_app_builds_response.go
 model_app_deployment.go
 model_app_deployments_response.go
@@ -134,6 +138,8 @@ model_app_endpoint_option_input.go
 model_app_instance.go
 model_app_route.go
 model_app_service.go
+model_app_service_build_arg.go
+model_app_service_build_config.go
 model_app_service_database_input.go
 model_app_service_deployment_request.go
 model_app_service_input.go
