@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **Name** | **string** |  | 
-**Title** | **string** |  | 
+**Title** | Pointer to **string** | Defaults to name when omitted. | [optional] 
 **InstanceName** | **string** |  | 
-**InstanceTitle** | **string** |  | 
-**Domain** | **string** |  | 
+**InstanceTitle** | Pointer to **string** | Defaults to instanceName when omitted. | [optional] 
+**Domain** | Pointer to **string** | Defaults to instanceName.name.orgDomain when omitted. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **StackRevId** | **int32** |  | 
-**Services** | [**[]CreateAppServiceInput**](CreateAppServiceInput.md) |  | 
+**Services** | Pointer to [**[]CreateAppServiceInput**](CreateAppServiceInput.md) | Defaults to the stack revision&#39;s service defaults when omitted. | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvId** | **int32** |  | 
 **CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewNewAppInput
 
-`func NewNewAppInput(name string, title string, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32, ) *NewAppInput`
+`func NewNewAppInput(name string, instanceName string, stackRevId int32, envId int32, ) *NewAppInput`
 
 NewNewAppInput instantiates a new NewAppInput object
 This constructor will assign default values to properties that have it defined,
@@ -101,6 +101,11 @@ and a boolean to check if the value has been set.
 
 SetTitle sets Title field to given value.
 
+### HasTitle
+
+`func (o *NewAppInput) HasTitle() bool`
+
+HasTitle returns a boolean if a field has been set.
 
 ### GetInstanceName
 
@@ -141,6 +146,11 @@ and a boolean to check if the value has been set.
 
 SetInstanceTitle sets InstanceTitle field to given value.
 
+### HasInstanceTitle
+
+`func (o *NewAppInput) HasInstanceTitle() bool`
+
+HasInstanceTitle returns a boolean if a field has been set.
 
 ### GetDomain
 
@@ -161,6 +171,11 @@ and a boolean to check if the value has been set.
 
 SetDomain sets Domain field to given value.
 
+### HasDomain
+
+`func (o *NewAppInput) HasDomain() bool`
+
+HasDomain returns a boolean if a field has been set.
 
 ### GetProjectId
 
@@ -236,6 +251,11 @@ and a boolean to check if the value has been set.
 
 SetServices sets Services field to given value.
 
+### HasServices
+
+`func (o *NewAppInput) HasServices() bool`
+
+HasServices returns a boolean if a field has been set.
 
 ### GetClusterId
 

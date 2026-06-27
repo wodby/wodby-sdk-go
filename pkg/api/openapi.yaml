@@ -8685,8 +8685,9 @@ components:
     Cluster:
       example:
         wodby: true
+        maxNodeCount: 1
         serverless: true
-        integrationId: 6
+        integrationId: 5
         k3s: true
         title: title
         demo: true
@@ -8694,9 +8695,11 @@ components:
         ips:
         - ips
         - ips
-        orgId: 1
+        orgId: 2
         createdAt: 2000-01-23T04:56:07.000+00:00
         hostname: hostname
+        minNodeCount: 6
+        lastNodeCount: 5
         infraVersion: infraVersion
         zone: zone
         name: name
@@ -8729,6 +8732,15 @@ components:
           type: string
         infraVersion:
           type: string
+        minNodeCount:
+          nullable: true
+          type: integer
+        maxNodeCount:
+          nullable: true
+          type: integer
+        lastNodeCount:
+          nullable: true
+          type: integer
         region:
           nullable: true
           type: string
@@ -12320,12 +12332,15 @@ components:
         name:
           type: string
         title:
+          description: Defaults to name when omitted.
           type: string
         instanceName:
           type: string
         instanceTitle:
+          description: Defaults to instanceName when omitted.
           type: string
         domain:
+          description: Defaults to instanceName.name.orgDomain when omitted.
           type: string
         projectId:
           nullable: true
@@ -12333,6 +12348,7 @@ components:
         stackRevId:
           type: integer
         services:
+          description: Defaults to the stack revision's service defaults when omitted.
           items:
             $ref: '#/components/schemas/CreateAppServiceInput'
           type: array
@@ -12348,14 +12364,10 @@ components:
           nullable: true
           type: integer
       required:
-      - domain
       - envId
       - instanceName
-      - instanceTitle
       - name
-      - services
       - stackRevId
-      - title
       type: object
     NewAppInstanceInput:
       example:
@@ -12497,12 +12509,15 @@ components:
         instanceName:
           type: string
         instanceTitle:
+          description: Defaults to instanceName when omitted.
           type: string
         domain:
+          description: Defaults to instanceName.appName.orgDomain when omitted.
           type: string
         stackRevId:
           type: integer
         services:
+          description: Defaults to the stack revision's service defaults when omitted.
           items:
             $ref: '#/components/schemas/CreateAppServiceInput'
           type: array
@@ -12519,11 +12534,8 @@ components:
           type: integer
       required:
       - appId
-      - domain
       - envId
       - instanceName
-      - instanceTitle
-      - services
       - stackRevId
       type: object
     BuildSourceInput:

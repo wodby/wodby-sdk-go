@@ -15,6 +15,9 @@ Name | Type | Description | Notes
 **SingleNode** | **bool** |  | 
 **Version** | Pointer to **NullableString** |  | [optional] 
 **InfraVersion** | **string** |  | 
+**MinNodeCount** | Pointer to **NullableInt32** |  | [optional] 
+**MaxNodeCount** | Pointer to **NullableInt32** |  | [optional] 
+**LastNodeCount** | Pointer to **NullableInt32** |  | [optional] 
 **Region** | Pointer to **NullableString** |  | [optional] 
 **Zone** | Pointer to **NullableString** |  | [optional] 
 **Ips** | Pointer to **[]string** |  | [optional] 
@@ -278,6 +281,111 @@ and a boolean to check if the value has been set.
 SetInfraVersion sets InfraVersion field to given value.
 
 
+### GetMinNodeCount
+
+`func (o *Cluster) GetMinNodeCount() int32`
+
+GetMinNodeCount returns the MinNodeCount field if non-nil, zero value otherwise.
+
+### GetMinNodeCountOk
+
+`func (o *Cluster) GetMinNodeCountOk() (*int32, bool)`
+
+GetMinNodeCountOk returns a tuple with the MinNodeCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMinNodeCount
+
+`func (o *Cluster) SetMinNodeCount(v int32)`
+
+SetMinNodeCount sets MinNodeCount field to given value.
+
+### HasMinNodeCount
+
+`func (o *Cluster) HasMinNodeCount() bool`
+
+HasMinNodeCount returns a boolean if a field has been set.
+
+### SetMinNodeCountNil
+
+`func (o *Cluster) SetMinNodeCountNil(b bool)`
+
+ SetMinNodeCountNil sets the value for MinNodeCount to be an explicit nil
+
+### UnsetMinNodeCount
+`func (o *Cluster) UnsetMinNodeCount()`
+
+UnsetMinNodeCount ensures that no value is present for MinNodeCount, not even an explicit nil
+### GetMaxNodeCount
+
+`func (o *Cluster) GetMaxNodeCount() int32`
+
+GetMaxNodeCount returns the MaxNodeCount field if non-nil, zero value otherwise.
+
+### GetMaxNodeCountOk
+
+`func (o *Cluster) GetMaxNodeCountOk() (*int32, bool)`
+
+GetMaxNodeCountOk returns a tuple with the MaxNodeCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaxNodeCount
+
+`func (o *Cluster) SetMaxNodeCount(v int32)`
+
+SetMaxNodeCount sets MaxNodeCount field to given value.
+
+### HasMaxNodeCount
+
+`func (o *Cluster) HasMaxNodeCount() bool`
+
+HasMaxNodeCount returns a boolean if a field has been set.
+
+### SetMaxNodeCountNil
+
+`func (o *Cluster) SetMaxNodeCountNil(b bool)`
+
+ SetMaxNodeCountNil sets the value for MaxNodeCount to be an explicit nil
+
+### UnsetMaxNodeCount
+`func (o *Cluster) UnsetMaxNodeCount()`
+
+UnsetMaxNodeCount ensures that no value is present for MaxNodeCount, not even an explicit nil
+### GetLastNodeCount
+
+`func (o *Cluster) GetLastNodeCount() int32`
+
+GetLastNodeCount returns the LastNodeCount field if non-nil, zero value otherwise.
+
+### GetLastNodeCountOk
+
+`func (o *Cluster) GetLastNodeCountOk() (*int32, bool)`
+
+GetLastNodeCountOk returns a tuple with the LastNodeCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastNodeCount
+
+`func (o *Cluster) SetLastNodeCount(v int32)`
+
+SetLastNodeCount sets LastNodeCount field to given value.
+
+### HasLastNodeCount
+
+`func (o *Cluster) HasLastNodeCount() bool`
+
+HasLastNodeCount returns a boolean if a field has been set.
+
+### SetLastNodeCountNil
+
+`func (o *Cluster) SetLastNodeCountNil(b bool)`
+
+ SetLastNodeCountNil sets the value for LastNodeCount to be an explicit nil
+
+### UnsetLastNodeCount
+`func (o *Cluster) UnsetLastNodeCount()`
+
+UnsetLastNodeCount ensures that no value is present for LastNodeCount, not even an explicit nil
 ### GetRegion
 
 `func (o *Cluster) GetRegion() string`

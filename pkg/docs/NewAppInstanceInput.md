@@ -6,10 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppId** | **int32** |  | 
 **InstanceName** | **string** |  | 
-**InstanceTitle** | **string** |  | 
-**Domain** | **string** |  | 
+**InstanceTitle** | Pointer to **string** | Defaults to instanceName when omitted. | [optional] 
+**Domain** | Pointer to **string** | Defaults to instanceName.appName.orgDomain when omitted. | [optional] 
 **StackRevId** | **int32** |  | 
-**Services** | [**[]CreateAppServiceInput**](CreateAppServiceInput.md) |  | 
+**Services** | Pointer to [**[]CreateAppServiceInput**](CreateAppServiceInput.md) | Defaults to the stack revision&#39;s service defaults when omitted. | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvId** | **int32** |  | 
 **CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewNewAppInstanceInput
 
-`func NewNewAppInstanceInput(appId int32, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32, ) *NewAppInstanceInput`
+`func NewNewAppInstanceInput(appId int32, instanceName string, stackRevId int32, envId int32, ) *NewAppInstanceInput`
 
 NewNewAppInstanceInput instantiates a new NewAppInstanceInput object
 This constructor will assign default values to properties that have it defined,
@@ -93,6 +93,11 @@ and a boolean to check if the value has been set.
 
 SetInstanceTitle sets InstanceTitle field to given value.
 
+### HasInstanceTitle
+
+`func (o *NewAppInstanceInput) HasInstanceTitle() bool`
+
+HasInstanceTitle returns a boolean if a field has been set.
 
 ### GetDomain
 
@@ -113,6 +118,11 @@ and a boolean to check if the value has been set.
 
 SetDomain sets Domain field to given value.
 
+### HasDomain
+
+`func (o *NewAppInstanceInput) HasDomain() bool`
+
+HasDomain returns a boolean if a field has been set.
 
 ### GetStackRevId
 
@@ -153,6 +163,11 @@ and a boolean to check if the value has been set.
 
 SetServices sets Services field to given value.
 
+### HasServices
+
+`func (o *NewAppInstanceInput) HasServices() bool`
+
+HasServices returns a boolean if a field has been set.
 
 ### GetClusterId
 

@@ -23,10 +23,13 @@ var _ MappedNullable = &NewAppInstanceInput{}
 type NewAppInstanceInput struct {
 	AppId int32 `json:"appId"`
 	InstanceName string `json:"instanceName"`
-	InstanceTitle string `json:"instanceTitle"`
-	Domain string `json:"domain"`
+	// Defaults to instanceName when omitted.
+	InstanceTitle *string `json:"instanceTitle,omitempty"`
+	// Defaults to instanceName.appName.orgDomain when omitted.
+	Domain *string `json:"domain,omitempty"`
 	StackRevId int32 `json:"stackRevId"`
-	Services []CreateAppServiceInput `json:"services"`
+	// Defaults to the stack revision's service defaults when omitted.
+	Services []CreateAppServiceInput `json:"services,omitempty"`
 	ClusterId NullableInt32 `json:"clusterId,omitempty"`
 	EnvId int32 `json:"envId"`
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
@@ -39,14 +42,11 @@ type _NewAppInstanceInput NewAppInstanceInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAppInstanceInput(appId int32, instanceName string, instanceTitle string, domain string, stackRevId int32, services []CreateAppServiceInput, envId int32) *NewAppInstanceInput {
+func NewNewAppInstanceInput(appId int32, instanceName string, stackRevId int32, envId int32) *NewAppInstanceInput {
 	this := NewAppInstanceInput{}
 	this.AppId = appId
 	this.InstanceName = instanceName
-	this.InstanceTitle = instanceTitle
-	this.Domain = domain
 	this.StackRevId = stackRevId
-	this.Services = services
 	this.EnvId = envId
 	return &this
 }
@@ -107,52 +107,68 @@ func (o *NewAppInstanceInput) SetInstanceName(v string) {
 	o.InstanceName = v
 }
 
-// GetInstanceTitle returns the InstanceTitle field value
+// GetInstanceTitle returns the InstanceTitle field value if set, zero value otherwise.
 func (o *NewAppInstanceInput) GetInstanceTitle() string {
-	if o == nil {
+	if o == nil || IsNil(o.InstanceTitle) {
 		var ret string
 		return ret
 	}
-
-	return o.InstanceTitle
+	return *o.InstanceTitle
 }
 
-// GetInstanceTitleOk returns a tuple with the InstanceTitle field value
+// GetInstanceTitleOk returns a tuple with the InstanceTitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppInstanceInput) GetInstanceTitleOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.InstanceTitle) {
 		return nil, false
 	}
-	return &o.InstanceTitle, true
+	return o.InstanceTitle, true
 }
 
-// SetInstanceTitle sets field value
+// HasInstanceTitle returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasInstanceTitle() bool {
+	if o != nil && !IsNil(o.InstanceTitle) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceTitle gets a reference to the given string and assigns it to the InstanceTitle field.
 func (o *NewAppInstanceInput) SetInstanceTitle(v string) {
-	o.InstanceTitle = v
+	o.InstanceTitle = &v
 }
 
-// GetDomain returns the Domain field value
+// GetDomain returns the Domain field value if set, zero value otherwise.
 func (o *NewAppInstanceInput) GetDomain() string {
-	if o == nil {
+	if o == nil || IsNil(o.Domain) {
 		var ret string
 		return ret
 	}
-
-	return o.Domain
+	return *o.Domain
 }
 
-// GetDomainOk returns a tuple with the Domain field value
+// GetDomainOk returns a tuple with the Domain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppInstanceInput) GetDomainOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Domain) {
 		return nil, false
 	}
-	return &o.Domain, true
+	return o.Domain, true
 }
 
-// SetDomain sets field value
+// HasDomain returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasDomain() bool {
+	if o != nil && !IsNil(o.Domain) {
+		return true
+	}
+
+	return false
+}
+
+// SetDomain gets a reference to the given string and assigns it to the Domain field.
 func (o *NewAppInstanceInput) SetDomain(v string) {
-	o.Domain = v
+	o.Domain = &v
 }
 
 // GetStackRevId returns the StackRevId field value
@@ -179,26 +195,34 @@ func (o *NewAppInstanceInput) SetStackRevId(v int32) {
 	o.StackRevId = v
 }
 
-// GetServices returns the Services field value
+// GetServices returns the Services field value if set, zero value otherwise.
 func (o *NewAppInstanceInput) GetServices() []CreateAppServiceInput {
-	if o == nil {
+	if o == nil || IsNil(o.Services) {
 		var ret []CreateAppServiceInput
 		return ret
 	}
-
 	return o.Services
 }
 
-// GetServicesOk returns a tuple with the Services field value
+// GetServicesOk returns a tuple with the Services field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppInstanceInput) GetServicesOk() ([]CreateAppServiceInput, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Services) {
 		return nil, false
 	}
 	return o.Services, true
 }
 
-// SetServices sets field value
+// HasServices returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasServices() bool {
+	if o != nil && !IsNil(o.Services) {
+		return true
+	}
+
+	return false
+}
+
+// SetServices gets a reference to the given []CreateAppServiceInput and assigns it to the Services field.
 func (o *NewAppInstanceInput) SetServices(v []CreateAppServiceInput) {
 	o.Services = v
 }
@@ -365,10 +389,16 @@ func (o NewAppInstanceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["appId"] = o.AppId
 	toSerialize["instanceName"] = o.InstanceName
-	toSerialize["instanceTitle"] = o.InstanceTitle
-	toSerialize["domain"] = o.Domain
+	if !IsNil(o.InstanceTitle) {
+		toSerialize["instanceTitle"] = o.InstanceTitle
+	}
+	if !IsNil(o.Domain) {
+		toSerialize["domain"] = o.Domain
+	}
 	toSerialize["stackRevId"] = o.StackRevId
-	toSerialize["services"] = o.Services
+	if !IsNil(o.Services) {
+		toSerialize["services"] = o.Services
+	}
 	if o.ClusterId.IsSet() {
 		toSerialize["clusterId"] = o.ClusterId.Get()
 	}
@@ -389,10 +419,7 @@ func (o *NewAppInstanceInput) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"appId",
 		"instanceName",
-		"instanceTitle",
-		"domain",
 		"stackRevId",
-		"services",
 		"envId",
 	}
 

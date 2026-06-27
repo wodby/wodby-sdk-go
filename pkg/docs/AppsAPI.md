@@ -34,7 +34,7 @@ import (
 )
 
 func main() {
-	newAppInput := *openapiclient.NewNewAppInput("Name_example", "Title_example", "InstanceName_example", "InstanceTitle_example", "Domain_example", int32(123), []openapiclient.CreateAppServiceInput{*openapiclient.NewCreateAppServiceInput(int32(123), false)}, int32(123)) // NewAppInput | 
+	newAppInput := *openapiclient.NewNewAppInput("Name_example", "InstanceName_example", int32(123), int32(123)) // NewAppInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
