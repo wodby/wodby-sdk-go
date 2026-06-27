@@ -34,6 +34,90 @@ func Test_client_StackServicesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test StackServicesAPIService CreateStackServiceAnnotation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.CreateStackServiceAnnotation(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService CreateStackServiceCronSchedule", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.CreateStackServiceCronSchedule(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService CreateStackServiceEnvVar", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.CreateStackServiceEnvVar(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService CreateStackServiceHelmValue", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.CreateStackServiceHelmValue(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService CreateStackServiceIntegration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.CreateStackServiceIntegration(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService CreateStackServiceToken", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.CreateStackServiceToken(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StackServicesAPIService DeleteStackService", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -41,6 +125,216 @@ func Test_client_StackServicesAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackService(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService DeleteStackServiceAnnotation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackServiceAnnotation(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService DeleteStackServiceCronSchedule", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackServiceCronSchedule(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService DeleteStackServiceEnvVar", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackServiceEnvVar(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService DeleteStackServiceHelmValue", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackServiceHelmValue(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService DeleteStackServiceIntegration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackServiceIntegration(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService DeleteStackServiceToken", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.DeleteStackServiceToken(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceAnnotations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceAnnotations(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceConfigs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceConfigs(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceCronSchedules", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceCronSchedules(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceEnvVars", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceEnvVars(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceHelmValues", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceHelmValues(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceIntegrations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceIntegrations(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceLinks", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceLinks(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceTokens", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceTokens(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService ListStackServiceVolumes", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.ListStackServiceVolumes(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -60,6 +354,94 @@ func Test_client_StackServicesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test StackServicesAPIService SetStackServiceConfig", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+		var name string
+
+		resp, httpRes, err := apiClient.StackServicesAPI.SetStackServiceConfig(context.Background(), id, name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService SetStackServiceLink", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+		var name string
+
+		resp, httpRes, err := apiClient.StackServicesAPI.SetStackServiceLink(context.Background(), id, name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService SetStackServiceOptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.SetStackServiceOptions(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService SetStackServiceResources", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.SetStackServiceResources(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService SetStackServiceSetting", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+		var name string
+
+		resp, httpRes, err := apiClient.StackServicesAPI.SetStackServiceSetting(context.Background(), id, name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService SetStackServiceVolume", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+		var name string
+
+		resp, httpRes, err := apiClient.StackServicesAPI.SetStackServiceVolume(context.Background(), id, name).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StackServicesAPIService UpdateStackService", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -67,6 +449,62 @@ func Test_client_StackServicesAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.StackServicesAPI.UpdateStackService(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService UpdateStackServiceCronSchedule", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.UpdateStackServiceCronSchedule(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService UpdateStackServiceEnvVar", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.UpdateStackServiceEnvVar(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService UpdateStackServiceHelmValue", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.UpdateStackServiceHelmValue(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StackServicesAPIService UpdateStackServiceToken", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.StackServicesAPI.UpdateStackServiceToken(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

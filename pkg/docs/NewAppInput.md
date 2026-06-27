@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **StackRevId** | **int32** |  | 
 **Services** | [**[]CreateAppServiceInput**](CreateAppServiceInput.md) |  | 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
-**NewCluster** | Pointer to [**NewManagedClusterInput**](NewManagedClusterInput.md) |  | [optional] 
 **EnvId** | **int32** |  | 
 **CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
@@ -273,31 +272,6 @@ HasClusterId returns a boolean if a field has been set.
 `func (o *NewAppInput) UnsetClusterId()`
 
 UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
-### GetNewCluster
-
-`func (o *NewAppInput) GetNewCluster() NewManagedClusterInput`
-
-GetNewCluster returns the NewCluster field if non-nil, zero value otherwise.
-
-### GetNewClusterOk
-
-`func (o *NewAppInput) GetNewClusterOk() (*NewManagedClusterInput, bool)`
-
-GetNewClusterOk returns a tuple with the NewCluster field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNewCluster
-
-`func (o *NewAppInput) SetNewCluster(v NewManagedClusterInput)`
-
-SetNewCluster sets NewCluster field to given value.
-
-### HasNewCluster
-
-`func (o *NewAppInput) HasNewCluster() bool`
-
-HasNewCluster returns a boolean if a field has been set.
-
 ### GetEnvId
 
 `func (o *NewAppInput) GetEnvId() int32`

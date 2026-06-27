@@ -32,7 +32,6 @@ type NewAppInput struct {
 	StackRevId int32 `json:"stackRevId"`
 	Services []CreateAppServiceInput `json:"services"`
 	ClusterId NullableInt32 `json:"clusterId,omitempty"`
-	NewCluster *NewManagedClusterInput `json:"newCluster,omitempty"`
 	EnvId int32 `json:"envId"`
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
@@ -349,38 +348,6 @@ func (o *NewAppInput) UnsetClusterId() {
 	o.ClusterId.Unset()
 }
 
-// GetNewCluster returns the NewCluster field value if set, zero value otherwise.
-func (o *NewAppInput) GetNewCluster() NewManagedClusterInput {
-	if o == nil || IsNil(o.NewCluster) {
-		var ret NewManagedClusterInput
-		return ret
-	}
-	return *o.NewCluster
-}
-
-// GetNewClusterOk returns a tuple with the NewCluster field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NewAppInput) GetNewClusterOk() (*NewManagedClusterInput, bool) {
-	if o == nil || IsNil(o.NewCluster) {
-		return nil, false
-	}
-	return o.NewCluster, true
-}
-
-// HasNewCluster returns a boolean if a field has been set.
-func (o *NewAppInput) HasNewCluster() bool {
-	if o != nil && !IsNil(o.NewCluster) {
-		return true
-	}
-
-	return false
-}
-
-// SetNewCluster gets a reference to the given NewManagedClusterInput and assigns it to the NewCluster field.
-func (o *NewAppInput) SetNewCluster(v NewManagedClusterInput) {
-	o.NewCluster = &v
-}
-
 // GetEnvId returns the EnvId field value
 func (o *NewAppInput) GetEnvId() int32 {
 	if o == nil {
@@ -514,9 +481,6 @@ func (o NewAppInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["services"] = o.Services
 	if o.ClusterId.IsSet() {
 		toSerialize["clusterId"] = o.ClusterId.Get()
-	}
-	if !IsNil(o.NewCluster) {
-		toSerialize["newCluster"] = o.NewCluster
 	}
 	toSerialize["envId"] = o.EnvId
 	if o.CiIntegrationId.IsSet() {

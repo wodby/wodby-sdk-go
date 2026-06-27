@@ -1030,6 +1030,46 @@ paths:
       summary: Update app instance
       tags:
       - app-instances
+  /app-instances/{id}/actions/upgrade-stack:
+    post:
+      description: Upgrades an app instance stack using the selected upgrade sections.
+      operationId: upgradeAppInstanceStack
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppInstanceStackUpgradeInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Upgrade result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Upgrade app instance stack
+      tags:
+      - app-instances
   /app-services:
     get:
       description: Returns app services matching the request filters.
@@ -1178,6 +1218,1459 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
       summary: Run app service action
+      tags:
+      - app-services
+  /app-services/{id}/log-streams:
+    post:
+      description: Creates a log stream for an app service container and returns the
+        stream id.
+      operationId: createAppServiceLogStream
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppServiceLogStreamInput'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogStream'
+          description: Created log stream
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service log stream
+      tags:
+      - app-services
+  /app-services/{id}/env-vars:
+    get:
+      description: Returns environment variables configured for an app service.
+      operationId: listAppServiceEnvVars
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceEnvVar'
+                type: array
+          description: List of app service env vars
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service env vars
+      tags:
+      - app-services
+    post:
+      description: Creates an environment variable for an app service.
+      operationId: createAppServiceEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppServiceEnvVarInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceEnvVar'
+          description: Created app service env var
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service env var
+      tags:
+      - app-services
+  /app-service-env-vars/{id}:
+    delete:
+      description: Deletes an app service environment variable.
+      operationId: deleteAppServiceEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete app service env var
+      tags:
+      - app-services
+    put:
+      description: Updates an app service environment variable.
+      operationId: updateAppServiceEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppServiceEnvVarInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceEnvVar'
+          description: Updated app service env var
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update app service env var
+      tags:
+      - app-services
+  /app-services/{id}/helm-values:
+    get:
+      description: Returns Helm values configured for an app service.
+      operationId: listAppServiceHelmValues
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceHelmValue'
+                type: array
+          description: List of app service Helm values
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service Helm values
+      tags:
+      - app-services
+    post:
+      description: Creates a Helm value override for an app service.
+      operationId: createAppServiceHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedSecretValueInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceHelmValue'
+          description: Created app service Helm value
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service Helm value
+      tags:
+      - app-services
+  /app-service-helm-values/{id}:
+    delete:
+      description: Deletes an app service Helm value override.
+      operationId: deleteAppServiceHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete app service Helm value
+      tags:
+      - app-services
+    put:
+      description: Updates an app service Helm value override.
+      operationId: updateAppServiceHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSecretValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceHelmValue'
+          description: Updated app service Helm value
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update app service Helm value
+      tags:
+      - app-services
+  /app-services/{id}/tokens:
+    get:
+      description: Returns tokens configured for an app service without revealing
+        secret values.
+      operationId: listAppServiceTokens
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceToken'
+                type: array
+          description: List of app service tokens
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service tokens
+      tags:
+      - app-services
+    post:
+      description: Creates a token for an app service.
+      operationId: createAppServiceToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedSecretValueInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceToken'
+          description: Created app service token
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service token
+      tags:
+      - app-services
+  /app-service-tokens/{id}:
+    delete:
+      description: Deletes an app service token.
+      operationId: deleteAppServiceToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete app service token
+      tags:
+      - app-services
+    put:
+      description: Updates an app service token value or secret flag.
+      operationId: updateAppServiceToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSecretValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceToken'
+          description: Updated app service token
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update app service token
+      tags:
+      - app-services
+  /app-services/{id}/annotations:
+    get:
+      description: Returns annotations configured for an app service.
+      operationId: listAppServiceAnnotations
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceAnnotation'
+                type: array
+          description: List of app service annotations
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service annotations
+      tags:
+      - app-services
+    post:
+      description: Creates an annotation for an app service.
+      operationId: createAppServiceAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAnnotationInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceAnnotation'
+          description: Created app service annotation
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service annotation
+      tags:
+      - app-services
+  /app-service-annotations/{id}:
+    delete:
+      description: Deletes an app service annotation.
+      operationId: deleteAppServiceAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete app service annotation
+      tags:
+      - app-services
+  /app-services/{id}/integrations:
+    get:
+      description: Returns integration links configured for an app service.
+      operationId: listAppServiceIntegrations
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceIntegration'
+                type: array
+          description: List of app service integrations
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service integrations
+      tags:
+      - app-services
+    post:
+      description: Links an integration to an app service integration slot.
+      operationId: createAppServiceIntegration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationLinkInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceIntegration'
+          description: Created app service integration
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service integration
+      tags:
+      - app-services
+  /app-service-integrations/{id}:
+    delete:
+      description: Removes an integration link from an app service.
+      operationId: deleteAppServiceIntegration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete app service integration
+      tags:
+      - app-services
+  /app-services/{id}/settings:
+    get:
+      description: Returns settings configured for an app service.
+      operationId: listAppServiceSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceSetting'
+                type: array
+          description: List of app service settings
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service settings
+      tags:
+      - app-services
+  /app-services/{id}/settings/{name}:
+    put:
+      description: Sets a named setting value for an app service.
+      operationId: setAppServiceSetting
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetStringValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceSetting'
+          description: Updated app service setting
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set app service setting
+      tags:
+      - app-services
+  /app-services/{id}/configs:
+    get:
+      description: Returns config overrides for an app service.
+      operationId: listAppServiceConfigs
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceConfig'
+                type: array
+          description: List of app service configs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service configs
+      tags:
+      - app-services
+  /app-services/{id}/configs/{name}:
+    put:
+      description: Sets or disables a named config override for an app service.
+      operationId: setAppServiceConfig
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigOverrideInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set app service config
+      tags:
+      - app-services
+  /app-services/{id}/links:
+    get:
+      description: Returns service links configured for an app service.
+      operationId: listAppServiceLinks
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceLink'
+                type: array
+          description: List of app service links
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service links
+      tags:
+      - app-services
+  /app-services/{id}/links/{name}:
+    put:
+      description: Links or unlinks another app service for a named link slot.
+      operationId: setAppServiceLink
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppServiceLinkInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set app service link
+      tags:
+      - app-services
+  /app-services/{id}/containers:
+    get:
+      description: Returns container resource settings for an app service.
+      operationId: listAppServiceContainers
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceContainer'
+                type: array
+          description: List of app service containers
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service containers
+      tags:
+      - app-services
+  /app-services/{id}/resources:
+    put:
+      description: Sets CPU and memory requests or limits for an app service container.
+      operationId: setAppServiceResources
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourcesInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set app service resources
+      tags:
+      - app-services
+  /app-services/{id}/database:
+    put:
+      description: Updates the database DB and user references used by an app service.
+      operationId: updateAppServiceDatabase
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppServiceDatabaseInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppService'
+          description: Updated app service
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update app service database references
+      tags:
+      - app-services
+  /app-services/{id}/cron-schedules:
+    get:
+      description: Returns cron schedules configured for an app service.
+      operationId: listAppServiceCronSchedules
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceCronSchedule'
+                type: array
+          description: List of app service cron schedules
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service cron schedules
+      tags:
+      - app-services
+    post:
+      description: Creates a cron schedule for an app service.
+      operationId: createAppServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppServiceCronScheduleInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceCronSchedule'
+          description: Created app service cron schedule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create app service cron schedule
+      tags:
+      - app-services
+  /app-service-cron-schedules/{id}:
+    delete:
+      description: Deletes an app service cron schedule.
+      operationId: deleteAppServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete app service cron schedule
+      tags:
+      - app-services
+    put:
+      description: Updates an app service cron schedule.
+      operationId: updateAppServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppServiceCronScheduleInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceCronSchedule'
+          description: Updated app service cron schedule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update app service cron schedule
+      tags:
+      - app-services
+  /app-service-cron-schedules/{id}/run:
+    post:
+      description: Runs an app service cron schedule immediately and returns the created
+        task.
+      operationId: runAppServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Cron run task
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Run app service cron schedule
+      tags:
+      - app-services
+  /app-service-cron-jobs:
+    get:
+      description: Returns app service cron jobs matching the request filters.
+      operationId: listAppServiceCronJobs
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: appServiceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: scheduleId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceCronJobsResponse'
+          description: App service cron jobs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List app service cron jobs
+      tags:
+      - app-services
+  /app-service-cron-jobs/{id}:
+    get:
+      description: Returns the app service cron job identified by the request path.
+      operationId: getAppServiceCronJob
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceCronJob'
+          description: App service cron job
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get app service cron job
+      tags:
+      - app-services
+  /log-streams/{id}/start:
+    post:
+      description: Starts an existing log stream.
+      operationId: startLogStream
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Start result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Start log stream
+      tags:
+      - app-services
+  /log-streams/{id}/keep-alive:
+    post:
+      description: Extends an existing log stream lease.
+      operationId: keepLogStreamAlive
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Keep-alive result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Keep log stream alive
+      tags:
+      - app-services
+  /log-streams/{id}/stop:
+    post:
+      description: Stops an existing log stream.
+      operationId: stopLogStream
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Stop result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Stop log stream
       tags:
       - app-services
   /app-ports:
@@ -2170,6 +3663,317 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
       summary: Update database
+      tags:
+      - databases
+  /databases/{id}/options/charsets:
+    get:
+      description: Returns charset and default collation options supported by a database.
+      operationId: listDatabaseCharsets
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabaseCharset'
+                type: array
+          description: List of database charsets
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List database charsets
+      tags:
+      - databases
+  /database-dbs:
+    get:
+      description: Returns DBs that belong to a database.
+      operationId: listDatabaseDBs
+      parameters:
+      - explode: true
+        in: query
+        name: databaseId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabaseDB'
+                type: array
+          description: List of database DBs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List database DBs
+      tags:
+      - databases
+    post:
+      description: Creates a DB inside a database.
+      operationId: createDatabaseDB
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDatabaseDBInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseDB'
+          description: Created database DB
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create database DB
+      tags:
+      - databases
+  /database-dbs/{id}:
+    delete:
+      description: Deletes a database DB and returns the operation result.
+      operationId: deleteDatabaseDB
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete database DB
+      tags:
+      - databases
+    get:
+      description: Returns the database DB identified by the request path.
+      operationId: getDatabaseDB
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseDB'
+          description: Database DB
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get database DB
+      tags:
+      - databases
+  /database-users:
+    get:
+      description: Returns users that belong to a database without revealing passwords.
+      operationId: listDatabaseUsers
+      parameters:
+      - explode: true
+        in: query
+        name: databaseId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabaseUser'
+                type: array
+          description: List of database users
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List database users
+      tags:
+      - databases
+    post:
+      description: Creates a database user and optionally grants it access to DBs.
+      operationId: createDatabaseUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDatabaseUserInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseUser'
+          description: Created database user
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create database user
+      tags:
+      - databases
+  /database-users/{id}/dbs:
+    put:
+      description: Replaces the DB grants for a database user.
+      operationId: updateDatabaseUserDBs
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDatabaseUserDBsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseUser'
+          description: Updated database user
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update database user DB grants
+      tags:
+      - databases
+  /database-users/{id}:
+    delete:
+      description: Deletes a database user and returns the operation result.
+      operationId: deleteDatabaseUser
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete database user
       tags:
       - databases
   /integrations:
@@ -3898,6 +5702,1193 @@ paths:
       summary: Update stack service
       tags:
       - stack-services
+  /stack-services/{id}/env-vars:
+    get:
+      description: Returns environment variables configured for a stack service.
+      operationId: listStackServiceEnvVars
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceEnvVar'
+                type: array
+          description: List of stack service env vars
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service env vars
+      tags:
+      - stack-services
+    post:
+      description: Creates an environment variable for a stack service.
+      operationId: createStackServiceEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackServiceEnvVarInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceEnvVar'
+          description: Created stack service env var
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create stack service env var
+      tags:
+      - stack-services
+  /stack-service-env-vars/{id}:
+    delete:
+      description: Deletes a stack service environment variable.
+      operationId: deleteStackServiceEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete stack service env var
+      tags:
+      - stack-services
+    put:
+      description: Updates a stack service environment variable.
+      operationId: updateStackServiceEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackServiceEnvVarInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceEnvVar'
+          description: Updated stack service env var
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update stack service env var
+      tags:
+      - stack-services
+  /stack-services/{id}/helm-values:
+    get:
+      description: Returns Helm values configured for a stack service.
+      operationId: listStackServiceHelmValues
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceHelmValue'
+                type: array
+          description: List of stack service Helm values
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service Helm values
+      tags:
+      - stack-services
+    post:
+      description: Creates a Helm value override for a stack service.
+      operationId: createStackServiceHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackServiceScopedValueInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceHelmValue'
+          description: Created stack service Helm value
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create stack service Helm value
+      tags:
+      - stack-services
+  /stack-service-helm-values/{id}:
+    delete:
+      description: Deletes a stack service Helm value override.
+      operationId: deleteStackServiceHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete stack service Helm value
+      tags:
+      - stack-services
+    put:
+      description: Updates a stack service Helm value override.
+      operationId: updateStackServiceHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSecretValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceHelmValue'
+          description: Updated stack service Helm value
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update stack service Helm value
+      tags:
+      - stack-services
+  /stack-services/{id}/tokens:
+    get:
+      description: Returns tokens configured for a stack service without revealing
+        secret values.
+      operationId: listStackServiceTokens
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceToken'
+                type: array
+          description: List of stack service tokens
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service tokens
+      tags:
+      - stack-services
+    post:
+      description: Creates a token for a stack service.
+      operationId: createStackServiceToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackServiceTokenInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceToken'
+          description: Created stack service token
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create stack service token
+      tags:
+      - stack-services
+  /stack-service-tokens/{id}:
+    delete:
+      description: Deletes a stack service token.
+      operationId: deleteStackServiceToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete stack service token
+      tags:
+      - stack-services
+    put:
+      description: "Updates a stack service token value, secret flag, or regex."
+      operationId: updateStackServiceToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackServiceTokenInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceToken'
+          description: Updated stack service token
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update stack service token
+      tags:
+      - stack-services
+  /stack-services/{id}/annotations:
+    get:
+      description: Returns annotations configured for a stack service.
+      operationId: listStackServiceAnnotations
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceAnnotation'
+                type: array
+          description: List of stack service annotations
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service annotations
+      tags:
+      - stack-services
+    post:
+      description: Creates an annotation for a stack service.
+      operationId: createStackServiceAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackServiceAnnotationInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceAnnotation'
+          description: Created stack service annotation
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create stack service annotation
+      tags:
+      - stack-services
+  /stack-service-annotations/{id}:
+    delete:
+      description: Deletes a stack service annotation.
+      operationId: deleteStackServiceAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete stack service annotation
+      tags:
+      - stack-services
+  /stack-services/{id}/integrations:
+    get:
+      description: Returns integration links configured for a stack service.
+      operationId: listStackServiceIntegrations
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceIntegration'
+                type: array
+          description: List of stack service integrations
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service integrations
+      tags:
+      - stack-services
+    post:
+      description: Links an integration to a stack service integration slot.
+      operationId: createStackServiceIntegration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationLinkInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceIntegration'
+          description: Created stack service integration
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create stack service integration
+      tags:
+      - stack-services
+  /stack-service-integrations/{id}:
+    delete:
+      description: Removes an integration link from a stack service.
+      operationId: deleteStackServiceIntegration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete stack service integration
+      tags:
+      - stack-services
+  /stack-services/{id}/links:
+    get:
+      description: Returns service links configured for a stack service.
+      operationId: listStackServiceLinks
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceLink'
+                type: array
+          description: List of stack service links
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service links
+      tags:
+      - stack-services
+  /stack-services/{id}/links/{name}:
+    put:
+      description: Links or unlinks another stack service for a named link slot.
+      operationId: setStackServiceLink
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackServiceLinkInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set stack service link
+      tags:
+      - stack-services
+  /stack-services/{id}/volumes:
+    get:
+      description: Returns volumes configured for a stack service.
+      operationId: listStackServiceVolumes
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceVolume'
+                type: array
+          description: List of stack service volumes
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service volumes
+      tags:
+      - stack-services
+  /stack-services/{id}/volumes/{name}:
+    put:
+      description: Sets or clears a stack service volume size.
+      operationId: setStackServiceVolume
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackServiceVolumeInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set stack service volume
+      tags:
+      - stack-services
+  /stack-services/{id}/settings/{name}:
+    put:
+      description: Sets or clears a named setting value for a stack service.
+      operationId: setStackServiceSetting
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetNullableStringValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set stack service setting
+      tags:
+      - stack-services
+  /stack-services/{id}/configs:
+    get:
+      description: Returns config overrides for a stack service.
+      operationId: listStackServiceConfigs
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceConfig'
+                type: array
+          description: List of stack service configs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service configs
+      tags:
+      - stack-services
+  /stack-services/{id}/configs/{name}:
+    put:
+      description: Sets a named config override for a stack service.
+      operationId: setStackServiceConfig
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackServiceConfigInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set stack service config
+      tags:
+      - stack-services
+  /stack-services/{id}/resources:
+    put:
+      description: Sets CPU and memory requests or limits for a stack service container.
+      operationId: setStackServiceResources
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourcesInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Set stack service resources
+      tags:
+      - stack-services
+  /stack-services/{id}/options:
+    put:
+      description: Replaces stack service option settings.
+      operationId: setStackServiceOptions
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackServiceOptionsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update stack service options
+      tags:
+      - stack-services
+  /stack-services/{id}/cron-schedules:
+    get:
+      description: Returns cron schedules configured for a stack service.
+      operationId: listStackServiceCronSchedules
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceCronSchedule'
+                type: array
+          description: List of stack service cron schedules
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List stack service cron schedules
+      tags:
+      - stack-services
+    post:
+      description: Creates a cron schedule for a stack service.
+      operationId: createStackServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackServiceCronScheduleInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceCronSchedule'
+          description: Created stack service cron schedule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Create stack service cron schedule
+      tags:
+      - stack-services
+  /stack-service-cron-schedules/{id}:
+    delete:
+      description: Deletes a stack service cron schedule.
+      operationId: deleteStackServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Delete stack service cron schedule
+      tags:
+      - stack-services
+    put:
+      description: Updates a stack service cron schedule.
+      operationId: updateStackServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackServiceCronScheduleInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackServiceCronSchedule'
+          description: Updated stack service cron schedule
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update stack service cron schedule
+      tags:
+      - stack-services
   /backups:
     get:
       description: Returns backups matching the request filters.
@@ -5096,6 +8087,22 @@ components:
       schema:
         type: integer
       style: form
+    ScheduleIdOptional:
+      explode: true
+      in: query
+      name: scheduleId
+      required: false
+      schema:
+        type: integer
+      style: form
+    DatabaseId:
+      explode: true
+      in: query
+      name: databaseId
+      required: true
+      schema:
+        type: integer
+      style: form
     DatabaseIdOptional:
       explode: true
       in: query
@@ -5305,14 +8312,21 @@ components:
       type: object
     AppInstance:
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        appId: 6
-        name: name
+        stackId: 5
+        stackName: stackName
         mainDomain: mainDomain
-        id: 0
         clusterId: 1
         envId: 5
         title: title
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        stackRevId: 2
+        stackTitle: stackTitle
+        stackVersion: stackVersion
+        stackRevNumber: 7
+        appId: 6
+        name: name
+        stackIcon: stackIcon
+        id: 0
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -5333,6 +8347,20 @@ components:
           type: integer
         envId:
           type: integer
+        stackId:
+          type: integer
+        stackRevId:
+          type: integer
+        stackName:
+          type: string
+        stackTitle:
+          type: string
+        stackIcon:
+          type: string
+        stackRevNumber:
+          type: integer
+        stackVersion:
+          type: string
         createdAt:
           format: date-time
           type: string
@@ -5346,6 +8374,13 @@ components:
       - envId
       - id
       - name
+      - stackIcon
+      - stackId
+      - stackName
+      - stackRevId
+      - stackRevNumber
+      - stackTitle
+      - stackVersion
       - status
       - title
       - updatedAt
@@ -6933,6 +9968,905 @@ components:
       - updatedAt
       - version
       type: object
+    AppServiceEnvVarSource:
+      properties:
+        fromService:
+          type: boolean
+        fromStack:
+          type: boolean
+        fromWodby:
+          type: boolean
+        setting:
+          nullable: true
+          type: string
+        link:
+          nullable: true
+          type: string
+        integration:
+          nullable: true
+          type: string
+      required:
+      - fromService
+      - fromStack
+      - fromWodby
+      type: object
+    AppServiceEnvVar:
+      example:
+        container: container
+        appServiceId: 6
+        valueSecretId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        build: true
+        envType: envType
+        name: name
+        workload: workload
+        runtime: true
+        id: 0
+        source: "{}"
+        value: value
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        workload:
+          type: string
+        container:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        runtime:
+          type: boolean
+        build:
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+        source:
+          allOf:
+          - $ref: '#/components/schemas/AppServiceEnvVarSource'
+          nullable: true
+          type: object
+        createdAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - appServiceId
+      - build
+      - container
+      - id
+      - name
+      - runtime
+      - value
+      - workload
+      type: object
+    AppServiceHelmValueSource:
+      properties:
+        fromService:
+          type: boolean
+        fromStack:
+          type: boolean
+      required:
+      - fromService
+      - fromStack
+      type: object
+    AppServiceHelmValue:
+      example:
+        appServiceId: 6
+        valueSecretId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        source: "{}"
+        value: value
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        source:
+          allOf:
+          - $ref: '#/components/schemas/AppServiceHelmValueSource'
+          nullable: true
+          type: object
+        createdAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - appServiceId
+      - id
+      - name
+      - value
+      type: object
+    AppServiceToken:
+      example:
+        appServiceId: 6
+        valueSecretId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: envType
+        name: name
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - appServiceId
+      - createdAt
+      - id
+      - name
+      - value
+      type: object
+    AppServiceAnnotationSource:
+      properties:
+        fromService:
+          type: boolean
+        fromStack:
+          type: boolean
+        fromWodby:
+          type: boolean
+      required:
+      - fromService
+      - fromStack
+      - fromWodby
+      type: object
+    AppServiceAnnotation:
+      example:
+        appServiceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: envType
+        name: name
+        id: 0
+        source: "{}"
+        value: value
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+        envType:
+          nullable: true
+          type: string
+        source:
+          allOf:
+          - $ref: '#/components/schemas/AppServiceAnnotationSource'
+          nullable: true
+          type: object
+        createdAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - appServiceId
+      - id
+      - name
+      - value
+      type: object
+    AppServiceIntegration:
+      example:
+        appServiceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        integrationId: 1
+        id: 0
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        integrationId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appServiceId
+      - createdAt
+      - id
+      - integrationId
+      - name
+      - updatedAt
+      type: object
+    AppServiceSetting:
+      example:
+        appServiceId: 6
+        fromSettingId: 1
+        build: true
+        var: var
+        name: name
+        runtime: true
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+        var:
+          type: string
+        runtime:
+          type: boolean
+        build:
+          type: boolean
+        fromSettingId:
+          nullable: true
+          type: integer
+      required:
+      - appServiceId
+      - build
+      - id
+      - name
+      - runtime
+      - value
+      - var
+      type: object
+    AppServiceConfig:
+      example:
+        appServiceId: 6
+        name: name
+        disabled: true
+        id: 0
+        title: title
+        config: config
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        config:
+          nullable: true
+          type: string
+        disabled:
+          type: boolean
+      required:
+      - appServiceId
+      - disabled
+      - id
+      - name
+      - title
+      type: object
+    AppServiceLink:
+      example:
+        appServiceId: 6
+        name: name
+        id: 0
+        linkedAppServiceId: 1
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        linkedAppServiceId:
+          type: integer
+        name:
+          type: string
+      required:
+      - appServiceId
+      - id
+      - linkedAppServiceId
+      - name
+      type: object
+    AppServiceContainer:
+      example:
+        appServiceId: 6
+        limitMem: 2
+        requestMem: 5
+        limitCPU: 5
+        name: name
+        workload: workload
+        id: 0
+        requestCPU: 1
+      properties:
+        id:
+          nullable: true
+          type: integer
+        appServiceId:
+          type: integer
+        workload:
+          type: string
+        name:
+          type: string
+        requestCPU:
+          nullable: true
+          type: integer
+        requestMem:
+          nullable: true
+          type: integer
+        limitCPU:
+          nullable: true
+          type: integer
+        limitMem:
+          nullable: true
+          type: integer
+      required:
+      - appServiceId
+      - name
+      - workload
+      type: object
+    AppServiceCronSchedule:
+      example:
+        appServiceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        crontab: crontab
+        envType: envType
+        workload: workload
+        disabled: true
+        id: 0
+        title: title
+        command: command
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        title:
+          type: string
+        crontab:
+          type: string
+        command:
+          type: string
+        workload:
+          nullable: true
+          type: string
+        disabled:
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appServiceId
+      - command
+      - createdAt
+      - crontab
+      - disabled
+      - id
+      - title
+      - updatedAt
+      type: object
+    AppServiceCronJob:
+      example:
+        appServiceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        title: title
+        scheduleId: 1
+        taskId: 5
+        command: command
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        scheduleId:
+          nullable: true
+          type: integer
+        taskId:
+          nullable: true
+          type: integer
+        title:
+          type: string
+        command:
+          type: string
+        status:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appServiceId
+      - command
+      - createdAt
+      - id
+      - status
+      - title
+      - updatedAt
+      type: object
+    AppServiceCronJobsResponse:
+      example:
+        nextPage: 2
+        totalCount: 5
+        items:
+        - appServiceId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          title: title
+          scheduleId: 1
+          taskId: 5
+          command: command
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - appServiceId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          title: title
+          scheduleId: 1
+          taskId: 5
+          command: command
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppServiceCronJob'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    LogStream:
+      example:
+        id: 0
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      type: object
+    StackServiceEnvVar:
+      example:
+        container: container
+        valueSecretId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: envType
+        name: name
+        workload: workload
+        stackServiceId: 6
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        workload:
+          type: string
+        container:
+          type: string
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - container
+      - createdAt
+      - id
+      - name
+      - stackServiceId
+      - workload
+      type: object
+    StackServiceHelmValue:
+      example:
+        valueSecretId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: envType
+        name: name
+        stackServiceId: 6
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - stackServiceId
+      type: object
+    StackServiceToken:
+      example:
+        valueSecretId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        regex: regex
+        envType: envType
+        name: name
+        stackServiceId: 6
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        regex:
+          nullable: true
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - stackServiceId
+      type: object
+    StackServiceAnnotation:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: envType
+        name: name
+        stackServiceId: 6
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - stackServiceId
+      type: object
+    StackServiceIntegration:
+      example:
+        name: name
+        integrationId: 1
+        stackServiceId: 6
+        id: 0
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        integrationId:
+          type: integer
+      required:
+      - id
+      - integrationId
+      - name
+      - stackServiceId
+      type: object
+    StackServiceLink:
+      example:
+        linkedStackServiceId: 1
+        name: name
+        stackServiceId: 6
+        id: 0
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        linkedStackServiceId:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      - linkedStackServiceId
+      - name
+      - stackServiceId
+      type: object
+    StackServiceConfig:
+      example:
+        name: name
+        stackServiceId: 6
+        disabled: true
+        id: 0
+        config: config
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        config:
+          type: string
+        disabled:
+          type: boolean
+      required:
+      - config
+      - disabled
+      - id
+      - name
+      - stackServiceId
+      type: object
+    StackServiceVolume:
+      example:
+        size: 1
+        name: name
+        stackServiceId: 6
+        id: 0
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        size:
+          type: integer
+      required:
+      - id
+      - name
+      - size
+      - stackServiceId
+      type: object
+    StackServiceCronSchedule:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        crontab: crontab
+        envType: envType
+        name: name
+        workload: workload
+        stackServiceId: 6
+        disabled: true
+        id: 0
+        title: title
+        command: command
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        crontab:
+          type: string
+        command:
+          type: string
+        workload:
+          nullable: true
+          type: string
+        disabled:
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - command
+      - createdAt
+      - crontab
+      - disabled
+      - id
+      - name
+      - stackServiceId
+      - title
+      - updatedAt
+      type: object
+    DatabaseDB:
+      example:
+        charset: charset
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        collation: collation
+        databaseId: 6
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        databaseId:
+          type: integer
+        name:
+          type: string
+        collation:
+          type: string
+        charset:
+          type: string
+        status:
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - charset
+      - collation
+      - createdAt
+      - id
+      - name
+      - status
+      - updatedAt
+      type: object
+    DatabaseUser:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        hostname: hostname
+        dbs:
+        - charset: charset
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: 0
+          collation: collation
+          databaseId: 6
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - charset: charset
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: 0
+          collation: collation
+          databaseId: 6
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        databaseId: 6
+        passwordSecretId: 1
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        databaseId:
+          type: integer
+        name:
+          type: string
+        passwordSecretId:
+          type: integer
+        hostname:
+          nullable: true
+          type: string
+        status:
+          type: string
+        dbs:
+          items:
+            $ref: '#/components/schemas/DatabaseDB'
+          type: array
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - passwordSecretId
+      - status
+      - updatedAt
+      type: object
+    DatabaseCharset:
+      example:
+        default: true
+        name: name
+        title: title
+        defaultCollation: defaultCollation
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        defaultCollation:
+          type: string
+        default:
+          type: boolean
+      required:
+      - default
+      - defaultCollation
+      - name
+      - title
+      type: object
     AppPort:
       example:
         appInstanceId: 5
@@ -7055,8 +10989,8 @@ components:
       type: object
     TasksResponse:
       example:
-        nextPage: 5
-        totalCount: 4
+        nextPage: 6
+        totalCount: 0
         items:
         - startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
@@ -7632,6 +11566,275 @@ components:
         buildSource:
           $ref: '#/components/schemas/BuildSourceInput'
       type: object
+    NewAppServiceEnvVarInput:
+      example:
+        container: container
+        build: true
+        name: name
+        workload: workload
+        runtime: true
+        secret: true
+        value: value
+      properties:
+        workload:
+          nullable: true
+          type: string
+        container:
+          nullable: true
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+        runtime:
+          nullable: true
+          type: boolean
+        build:
+          nullable: true
+          type: boolean
+      required:
+      - name
+      - secret
+      - value
+      type: object
+    UpdateAppServiceEnvVarInput:
+      example:
+        build: true
+        runtime: true
+        secret: true
+        value: value
+      properties:
+        value:
+          nullable: true
+          type: string
+        secret:
+          type: boolean
+        runtime:
+          nullable: true
+          type: boolean
+        build:
+          nullable: true
+          type: boolean
+      required:
+      - secret
+      type: object
+    NamedSecretValueInput:
+      example:
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+      required:
+      - name
+      - secret
+      - value
+      type: object
+    UpdateSecretValueInput:
+      example:
+        secret: true
+        value: value
+      properties:
+        value:
+          type: string
+        secret:
+          type: boolean
+      required:
+      - secret
+      - value
+      type: object
+    NewAnnotationInput:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    IntegrationLinkInput:
+      example:
+        name: name
+        integrationId: 0
+      properties:
+        name:
+          type: string
+        integrationId:
+          type: integer
+      required:
+      - integrationId
+      - name
+      type: object
+    SetStringValueInput:
+      example:
+        value: value
+      properties:
+        value:
+          type: string
+      required:
+      - value
+      type: object
+    SetNullableStringValueInput:
+      example:
+        value: value
+      properties:
+        value:
+          nullable: true
+          type: string
+      type: object
+    ConfigOverrideInput:
+      example:
+        disabled: true
+        config: config
+      properties:
+        config:
+          nullable: true
+          type: string
+        disabled:
+          nullable: true
+          type: boolean
+      type: object
+    AppServiceLinkInput:
+      example:
+        linkedAppServiceId: 0
+      properties:
+        linkedAppServiceId:
+          nullable: true
+          type: integer
+      type: object
+    UpdateAppServiceDatabaseInput:
+      example:
+        databaseUserId: 6
+        databaseDbId: 0
+      properties:
+        databaseDbId:
+          nullable: true
+          type: integer
+        databaseUserId:
+          nullable: true
+          type: integer
+      type: object
+    NewAppServiceCronScheduleInput:
+      example:
+        crontab: crontab
+        workload: workload
+        title: title
+        command: command
+      properties:
+        title:
+          type: string
+        crontab:
+          type: string
+        command:
+          type: string
+        workload:
+          nullable: true
+          type: string
+      required:
+      - command
+      - crontab
+      - title
+      type: object
+    UpdateAppServiceCronScheduleInput:
+      example:
+        crontab: crontab
+        workload: workload
+        disabled: true
+        title: title
+        command: command
+      properties:
+        disabled:
+          nullable: true
+          type: boolean
+        title:
+          nullable: true
+          type: string
+        crontab:
+          nullable: true
+          type: string
+        command:
+          nullable: true
+          type: string
+        workload:
+          nullable: true
+          type: string
+      type: object
+    NewAppServiceLogStreamInput:
+      example:
+        container: container
+        workload: workload
+      properties:
+        workload:
+          nullable: true
+          type: string
+        container:
+          nullable: true
+          type: string
+      type: object
+    AppInstanceStackUpgradeInput:
+      example:
+        cron: true
+        settings: true
+        configs: true
+        versions: true
+        replicas: true
+        volumes: true
+        resources: true
+        links: true
+        tokens: true
+        main: true
+        services: true
+        integrations: true
+      properties:
+        versions:
+          type: boolean
+        replicas:
+          type: boolean
+        resources:
+          type: boolean
+        integrations:
+          type: boolean
+        services:
+          type: boolean
+        settings:
+          type: boolean
+        links:
+          type: boolean
+        tokens:
+          type: boolean
+        configs:
+          type: boolean
+        cron:
+          type: boolean
+        volumes:
+          type: boolean
+        main:
+          type: boolean
+      required:
+      - configs
+      - cron
+      - integrations
+      - links
+      - main
+      - replicas
+      - resources
+      - services
+      - settings
+      - tokens
+      - versions
+      - volumes
+      type: object
     StackServiceInput:
       example:
         replicas: 0
@@ -7665,6 +11868,248 @@ components:
           type: string
         buildSource:
           $ref: '#/components/schemas/BuildSourceInput'
+      type: object
+    NewStackServiceEnvVarInput:
+      example:
+        container: container
+        envType: envType
+        name: name
+        workload: workload
+        secret: true
+        value: value
+      properties:
+        workload:
+          nullable: true
+          type: string
+        container:
+          nullable: true
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+      required:
+      - name
+      - secret
+      - value
+      type: object
+    UpdateStackServiceEnvVarInput:
+      example:
+        secret: true
+        value: value
+      properties:
+        value:
+          type: string
+        secret:
+          type: boolean
+      required:
+      - secret
+      - value
+      type: object
+    NewStackServiceScopedValueInput:
+      example:
+        envType: envType
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+      required:
+      - name
+      - secret
+      - value
+      type: object
+    NewStackServiceTokenInput:
+      example:
+        regex: regex
+        envType: envType
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        secret:
+          type: boolean
+        regex:
+          nullable: true
+          type: string
+        envType:
+          nullable: true
+          type: string
+      required:
+      - name
+      - secret
+      type: object
+    UpdateStackServiceTokenInput:
+      example:
+        regex: regex
+        secret: true
+        value: value
+      properties:
+        value:
+          nullable: true
+          type: string
+        secret:
+          type: boolean
+        regex:
+          nullable: true
+          type: string
+      required:
+      - secret
+      type: object
+    NewStackServiceAnnotationInput:
+      example:
+        envType: envType
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        envType:
+          nullable: true
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    StackServiceLinkInput:
+      example:
+        linkedStackServiceId: 0
+      properties:
+        linkedStackServiceId:
+          nullable: true
+          type: integer
+      type: object
+    StackServiceVolumeInput:
+      example:
+        size: 0
+      properties:
+        size:
+          nullable: true
+          type: integer
+      type: object
+    StackServiceConfigInput:
+      example:
+        config: config
+      properties:
+        config:
+          type: string
+      required:
+      - config
+      type: object
+    StackServiceOptionsInput:
+      example:
+        options:
+        - default: true
+          disabled: true
+          version: version
+        - default: true
+          disabled: true
+          version: version
+      properties:
+        options:
+          items:
+            $ref: '#/components/schemas/StackServiceOptionInput'
+          type: array
+      required:
+      - options
+      type: object
+    StackServiceOptionInput:
+      example:
+        default: true
+        disabled: true
+        version: version
+      properties:
+        version:
+          type: string
+        default:
+          type: boolean
+        disabled:
+          type: boolean
+      required:
+      - default
+      - disabled
+      - version
+      type: object
+    NewStackServiceCronScheduleInput:
+      example:
+        crontab: crontab
+        envType: envType
+        name: name
+        workload: workload
+        disabled: true
+        title: title
+        command: command
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        crontab:
+          type: string
+        command:
+          type: string
+        workload:
+          nullable: true
+          type: string
+        disabled:
+          nullable: true
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+      required:
+      - command
+      - crontab
+      - name
+      - title
+      type: object
+    UpdateStackServiceCronScheduleInput:
+      example:
+        crontab: crontab
+        envType: envType
+        workload: workload
+        disabled: true
+        title: title
+        command: command
+      properties:
+        disabled:
+          nullable: true
+          type: boolean
+        title:
+          nullable: true
+          type: string
+        crontab:
+          nullable: true
+          type: string
+        command:
+          nullable: true
+          type: string
+        workload:
+          nullable: true
+          type: string
+        envType:
+          nullable: true
+          type: string
       type: object
     UpdateStackFromGitRequest:
       example:
@@ -7733,7 +12178,7 @@ components:
       type: object
     NewAppInput:
       example:
-        registryIntegrationId: 9
+        registryIntegrationId: 6
         instanceName: instanceName
         services:
         - settings:
@@ -7859,22 +12304,15 @@ components:
             minReplicas: 1
             averageCPU: 7
         clusterId: 5
-        envId: 6
+        envId: 9
         title: title
         orgId: 0
         stackRevId: 1
         domain: domain
-        newCluster:
-          minNodeCount: 9
-          singleNode: true
-          maxNodeCount: 9
-          region: region
-          demo: true
-          machineType: machineType
         name: name
         instanceTitle: instanceTitle
         projectId: 6
-        ciIntegrationId: 8
+        ciIntegrationId: 9
       properties:
         orgId:
           description: Optional for API-key requests; defaults to the API key's organization.
@@ -7901,8 +12339,6 @@ components:
         clusterId:
           nullable: true
           type: integer
-        newCluster:
-          $ref: '#/components/schemas/NewManagedClusterInput'
         envId:
           type: integer
         ciIntegrationId:
@@ -7928,13 +12364,6 @@ components:
         instanceName: instanceName
         appId: 0
         domain: domain
-        newCluster:
-          minNodeCount: 9
-          singleNode: true
-          maxNodeCount: 9
-          region: region
-          demo: true
-          machineType: machineType
         instanceTitle: instanceTitle
         services:
         - settings:
@@ -8080,8 +12509,6 @@ components:
         clusterId:
           nullable: true
           type: integer
-        newCluster:
-          $ref: '#/components/schemas/NewManagedClusterInput'
         envId:
           type: integer
         ciIntegrationId:
@@ -8098,35 +12525,6 @@ components:
       - instanceTitle
       - services
       - stackRevId
-      type: object
-    NewManagedClusterInput:
-      example:
-        minNodeCount: 9
-        singleNode: true
-        maxNodeCount: 9
-        region: region
-        demo: true
-        machineType: machineType
-      properties:
-        demo:
-          type: boolean
-        singleNode:
-          nullable: true
-          type: boolean
-        region:
-          nullable: true
-          type: string
-        machineType:
-          nullable: true
-          type: string
-        minNodeCount:
-          nullable: true
-          type: integer
-        maxNodeCount:
-          nullable: true
-          type: integer
-      required:
-      - demo
       type: object
     BuildSourceInput:
       example:
@@ -8446,6 +12844,68 @@ components:
       - title
       - type
       - version
+      type: object
+    NewDatabaseDBInput:
+      example:
+        charset: charset
+        name: name
+        collation: collation
+        databaseId: 0
+      properties:
+        databaseId:
+          type: integer
+        name:
+          type: string
+        charset:
+          nullable: true
+          type: string
+        collation:
+          nullable: true
+          type: string
+      required:
+      - databaseId
+      - name
+      type: object
+    NewDatabaseUserInput:
+      example:
+        password: password
+        hostname: hostname
+        databaseDbIds:
+        - 6
+        - 6
+        name: name
+        databaseId: 0
+      properties:
+        databaseId:
+          type: integer
+        name:
+          type: string
+        password:
+          type: string
+        hostname:
+          nullable: true
+          type: string
+        databaseDbIds:
+          items:
+            type: integer
+          type: array
+      required:
+      - databaseId
+      - name
+      - password
+      type: object
+    UpdateDatabaseUserDBsInput:
+      example:
+        databaseDbIds:
+        - 0
+        - 0
+      properties:
+        databaseDbIds:
+          items:
+            type: integer
+          type: array
+      required:
+      - databaseDbIds
       type: object
     NewIntegrationInput:
       example:

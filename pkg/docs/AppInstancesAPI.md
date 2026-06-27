@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**GetAppInstanceByName**](AppInstancesAPI.md#GetAppInstanceByName) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
 [**ListAppInstances**](AppInstancesAPI.md#ListAppInstances) | **Get** /app-instances | List app instances
 [**UpdateAppInstance**](AppInstancesAPI.md#UpdateAppInstance) | **Put** /app-instances/{id} | Update app instance
+[**UpgradeAppInstanceStack**](AppInstancesAPI.md#UpgradeAppInstanceStack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 
 
 
@@ -427,6 +428,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppInstance**](AppInstance.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpgradeAppInstanceStack
+
+> OperationResult UpgradeAppInstanceStack(ctx, id).AppInstanceStackUpgradeInput(appInstanceStackUpgradeInput).Execute()
+
+Upgrade app instance stack
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appInstanceStackUpgradeInput := *openapiclient.NewAppInstanceStackUpgradeInput(false, false, false, false, false, false, false, false, false, false, false, false) // AppInstanceStackUpgradeInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.UpgradeAppInstanceStack(context.Background(), id).AppInstanceStackUpgradeInput(appInstanceStackUpgradeInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.UpgradeAppInstanceStack``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpgradeAppInstanceStack`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.UpgradeAppInstanceStack`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpgradeAppInstanceStackRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appInstanceStackUpgradeInput** | [**AppInstanceStackUpgradeInput**](AppInstanceStackUpgradeInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 

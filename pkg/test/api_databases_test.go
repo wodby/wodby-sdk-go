@@ -34,6 +34,30 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DatabasesAPIService CreateDatabaseDB", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DatabasesAPI.CreateDatabaseDB(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService CreateDatabaseUser", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DatabasesAPI.CreateDatabaseUser(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DatabasesAPIService DeleteDatabase", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -41,6 +65,34 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.DatabasesAPI.DeleteDatabase(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService DeleteDatabaseDB", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.DatabasesAPI.DeleteDatabaseDB(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService DeleteDatabaseUser", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.DatabasesAPI.DeleteDatabaseUser(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -76,6 +128,58 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DatabasesAPIService GetDatabaseDB", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.DatabasesAPI.GetDatabaseDB(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService ListDatabaseCharsets", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.DatabasesAPI.ListDatabaseCharsets(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService ListDatabaseDBs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DatabasesAPI.ListDatabaseDBs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService ListDatabaseUsers", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DatabasesAPI.ListDatabaseUsers(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DatabasesAPIService ListDatabases", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -95,6 +199,20 @@ func Test_client_DatabasesAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.DatabasesAPI.UpdateDatabase(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DatabasesAPIService UpdateDatabaseUserDBs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.DatabasesAPI.UpdateDatabaseUserDBs(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -12,6 +12,13 @@ Name | Type | Description | Notes
 **AppId** | **int32** |  | 
 **ClusterId** | **int32** |  | 
 **EnvId** | **int32** |  | 
+**StackId** | **int32** |  | 
+**StackRevId** | **int32** |  | 
+**StackName** | **string** |  | 
+**StackTitle** | **string** |  | 
+**StackIcon** | **string** |  | 
+**StackRevNumber** | **int32** |  | 
+**StackVersion** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -19,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewAppInstance
 
-`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
+`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
 
 NewAppInstance instantiates a new AppInstance object
 This constructor will assign default values to properties that have it defined,
@@ -207,6 +214,146 @@ and a boolean to check if the value has been set.
 `func (o *AppInstance) SetEnvId(v int32)`
 
 SetEnvId sets EnvId field to given value.
+
+
+### GetStackId
+
+`func (o *AppInstance) GetStackId() int32`
+
+GetStackId returns the StackId field if non-nil, zero value otherwise.
+
+### GetStackIdOk
+
+`func (o *AppInstance) GetStackIdOk() (*int32, bool)`
+
+GetStackIdOk returns a tuple with the StackId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackId
+
+`func (o *AppInstance) SetStackId(v int32)`
+
+SetStackId sets StackId field to given value.
+
+
+### GetStackRevId
+
+`func (o *AppInstance) GetStackRevId() int32`
+
+GetStackRevId returns the StackRevId field if non-nil, zero value otherwise.
+
+### GetStackRevIdOk
+
+`func (o *AppInstance) GetStackRevIdOk() (*int32, bool)`
+
+GetStackRevIdOk returns a tuple with the StackRevId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackRevId
+
+`func (o *AppInstance) SetStackRevId(v int32)`
+
+SetStackRevId sets StackRevId field to given value.
+
+
+### GetStackName
+
+`func (o *AppInstance) GetStackName() string`
+
+GetStackName returns the StackName field if non-nil, zero value otherwise.
+
+### GetStackNameOk
+
+`func (o *AppInstance) GetStackNameOk() (*string, bool)`
+
+GetStackNameOk returns a tuple with the StackName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackName
+
+`func (o *AppInstance) SetStackName(v string)`
+
+SetStackName sets StackName field to given value.
+
+
+### GetStackTitle
+
+`func (o *AppInstance) GetStackTitle() string`
+
+GetStackTitle returns the StackTitle field if non-nil, zero value otherwise.
+
+### GetStackTitleOk
+
+`func (o *AppInstance) GetStackTitleOk() (*string, bool)`
+
+GetStackTitleOk returns a tuple with the StackTitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackTitle
+
+`func (o *AppInstance) SetStackTitle(v string)`
+
+SetStackTitle sets StackTitle field to given value.
+
+
+### GetStackIcon
+
+`func (o *AppInstance) GetStackIcon() string`
+
+GetStackIcon returns the StackIcon field if non-nil, zero value otherwise.
+
+### GetStackIconOk
+
+`func (o *AppInstance) GetStackIconOk() (*string, bool)`
+
+GetStackIconOk returns a tuple with the StackIcon field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackIcon
+
+`func (o *AppInstance) SetStackIcon(v string)`
+
+SetStackIcon sets StackIcon field to given value.
+
+
+### GetStackRevNumber
+
+`func (o *AppInstance) GetStackRevNumber() int32`
+
+GetStackRevNumber returns the StackRevNumber field if non-nil, zero value otherwise.
+
+### GetStackRevNumberOk
+
+`func (o *AppInstance) GetStackRevNumberOk() (*int32, bool)`
+
+GetStackRevNumberOk returns a tuple with the StackRevNumber field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackRevNumber
+
+`func (o *AppInstance) SetStackRevNumber(v int32)`
+
+SetStackRevNumber sets StackRevNumber field to given value.
+
+
+### GetStackVersion
+
+`func (o *AppInstance) GetStackVersion() string`
+
+GetStackVersion returns the StackVersion field if non-nil, zero value otherwise.
+
+### GetStackVersionOk
+
+`func (o *AppInstance) GetStackVersionOk() (*string, bool)`
+
+GetStackVersionOk returns a tuple with the StackVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackVersion
+
+`func (o *AppInstance) SetStackVersion(v string)`
+
+SetStackVersion sets StackVersion field to given value.
 
 
 ### GetCreatedAt

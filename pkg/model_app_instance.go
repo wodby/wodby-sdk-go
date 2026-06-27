@@ -30,6 +30,13 @@ type AppInstance struct {
 	AppId int32 `json:"appId"`
 	ClusterId int32 `json:"clusterId"`
 	EnvId int32 `json:"envId"`
+	StackId int32 `json:"stackId"`
+	StackRevId int32 `json:"stackRevId"`
+	StackName string `json:"stackName"`
+	StackTitle string `json:"stackTitle"`
+	StackIcon string `json:"stackIcon"`
+	StackRevNumber int32 `json:"stackRevNumber"`
+	StackVersion string `json:"stackVersion"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -40,7 +47,7 @@ type _AppInstance AppInstance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, createdAt time.Time, updatedAt time.Time) *AppInstance {
+func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, createdAt time.Time, updatedAt time.Time) *AppInstance {
 	this := AppInstance{}
 	this.Id = id
 	this.Name = name
@@ -49,6 +56,13 @@ func NewAppInstance(id int32, name string, title string, status string, appId in
 	this.AppId = appId
 	this.ClusterId = clusterId
 	this.EnvId = envId
+	this.StackId = stackId
+	this.StackRevId = stackRevId
+	this.StackName = stackName
+	this.StackTitle = stackTitle
+	this.StackIcon = stackIcon
+	this.StackRevNumber = stackRevNumber
+	this.StackVersion = stackVersion
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -272,6 +286,174 @@ func (o *AppInstance) SetEnvId(v int32) {
 	o.EnvId = v
 }
 
+// GetStackId returns the StackId field value
+func (o *AppInstance) GetStackId() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.StackId
+}
+
+// GetStackIdOk returns a tuple with the StackId field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackId, true
+}
+
+// SetStackId sets field value
+func (o *AppInstance) SetStackId(v int32) {
+	o.StackId = v
+}
+
+// GetStackRevId returns the StackRevId field value
+func (o *AppInstance) GetStackRevId() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.StackRevId
+}
+
+// GetStackRevIdOk returns a tuple with the StackRevId field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackRevIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackRevId, true
+}
+
+// SetStackRevId sets field value
+func (o *AppInstance) SetStackRevId(v int32) {
+	o.StackRevId = v
+}
+
+// GetStackName returns the StackName field value
+func (o *AppInstance) GetStackName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.StackName
+}
+
+// GetStackNameOk returns a tuple with the StackName field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackName, true
+}
+
+// SetStackName sets field value
+func (o *AppInstance) SetStackName(v string) {
+	o.StackName = v
+}
+
+// GetStackTitle returns the StackTitle field value
+func (o *AppInstance) GetStackTitle() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.StackTitle
+}
+
+// GetStackTitleOk returns a tuple with the StackTitle field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackTitle, true
+}
+
+// SetStackTitle sets field value
+func (o *AppInstance) SetStackTitle(v string) {
+	o.StackTitle = v
+}
+
+// GetStackIcon returns the StackIcon field value
+func (o *AppInstance) GetStackIcon() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.StackIcon
+}
+
+// GetStackIconOk returns a tuple with the StackIcon field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackIconOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackIcon, true
+}
+
+// SetStackIcon sets field value
+func (o *AppInstance) SetStackIcon(v string) {
+	o.StackIcon = v
+}
+
+// GetStackRevNumber returns the StackRevNumber field value
+func (o *AppInstance) GetStackRevNumber() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.StackRevNumber
+}
+
+// GetStackRevNumberOk returns a tuple with the StackRevNumber field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackRevNumberOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackRevNumber, true
+}
+
+// SetStackRevNumber sets field value
+func (o *AppInstance) SetStackRevNumber(v int32) {
+	o.StackRevNumber = v
+}
+
+// GetStackVersion returns the StackVersion field value
+func (o *AppInstance) GetStackVersion() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.StackVersion
+}
+
+// GetStackVersionOk returns a tuple with the StackVersion field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetStackVersionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackVersion, true
+}
+
+// SetStackVersion sets field value
+func (o *AppInstance) SetStackVersion(v string) {
+	o.StackVersion = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppInstance) GetCreatedAt() time.Time {
 	if o == nil {
@@ -340,6 +522,13 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize["appId"] = o.AppId
 	toSerialize["clusterId"] = o.ClusterId
 	toSerialize["envId"] = o.EnvId
+	toSerialize["stackId"] = o.StackId
+	toSerialize["stackRevId"] = o.StackRevId
+	toSerialize["stackName"] = o.StackName
+	toSerialize["stackTitle"] = o.StackTitle
+	toSerialize["stackIcon"] = o.StackIcon
+	toSerialize["stackRevNumber"] = o.StackRevNumber
+	toSerialize["stackVersion"] = o.StackVersion
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -357,6 +546,13 @@ func (o *AppInstance) UnmarshalJSON(data []byte) (err error) {
 		"appId",
 		"clusterId",
 		"envId",
+		"stackId",
+		"stackRevId",
+		"stackName",
+		"stackTitle",
+		"stackIcon",
+		"stackRevNumber",
+		"stackVersion",
 		"createdAt",
 		"updatedAt",
 	}
