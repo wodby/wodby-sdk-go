@@ -26,11 +26,11 @@ type StackServicesAPIService service
 type ApiCreateStackServiceRequest struct {
 	ctx context.Context
 	ApiService *StackServicesAPIService
-	newStackServiceInput *NewStackServiceInput
+	createStackServiceInput *CreateStackServiceInput
 }
 
-func (r ApiCreateStackServiceRequest) NewStackServiceInput(newStackServiceInput NewStackServiceInput) ApiCreateStackServiceRequest {
-	r.newStackServiceInput = &newStackServiceInput
+func (r ApiCreateStackServiceRequest) CreateStackServiceInput(createStackServiceInput CreateStackServiceInput) ApiCreateStackServiceRequest {
+	r.createStackServiceInput = &createStackServiceInput
 	return r
 }
 
@@ -73,8 +73,8 @@ func (a *StackServicesAPIService) CreateStackServiceExecute(r ApiCreateStackServ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.newStackServiceInput == nil {
-		return localVarReturnValue, nil, reportError("newStackServiceInput is required and must be specified")
+	if r.createStackServiceInput == nil {
+		return localVarReturnValue, nil, reportError("createStackServiceInput is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -95,7 +95,7 @@ func (a *StackServicesAPIService) CreateStackServiceExecute(r ApiCreateStackServ
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.newStackServiceInput
+	localVarPostBody = r.createStackServiceInput
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

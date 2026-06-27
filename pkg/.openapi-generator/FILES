@@ -63,6 +63,7 @@ docs/CreateBuildRequest.md
 docs/CreateDeploymentRequest.md
 docs/CreateEnvRequest.md
 docs/CreateImportInput.md
+docs/CreateStackServiceInput.md
 docs/Database.md
 docs/DatabaseType.md
 docs/DatabaseVersion.md
@@ -94,7 +95,6 @@ docs/NewDatabaseInput.md
 docs/NewIntegrationInput.md
 docs/NewManagedClusterInput.md
 docs/NewProjectInput.md
-docs/NewStackServiceInput.md
 docs/OperationResult.md
 docs/Org.md
 docs/OrgMembership.md
@@ -166,6 +166,7 @@ model_create_build_request.go
 model_create_deployment_request.go
 model_create_env_request.go
 model_create_import_input.go
+model_create_stack_service_input.go
 model_database.go
 model_database_type.go
 model_database_version.go
@@ -191,7 +192,6 @@ model_new_database_input.go
 model_new_integration_input.go
 model_new_managed_cluster_input.go
 model_new_project_input.go
-model_new_stack_service_input.go
 model_operation_result.go
 model_org.go
 model_org_membership.go

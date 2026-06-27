@@ -3582,7 +3582,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewStackServiceInput"
+                "$ref": "#/components/schemas/CreateStackServiceInput"
               }
             }
           }
@@ -7021,37 +7021,6 @@
           }
         }
       },
-      "NewStackServiceInput": {
-        "type": "object",
-        "required": [
-          "stackId",
-          "serviceId",
-          "name",
-          "title",
-          "required",
-          "replicas"
-        ],
-        "properties": {
-          "stackId": {
-            "type": "integer"
-          },
-          "serviceId": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "required": {
-            "type": "boolean"
-          },
-          "replicas": {
-            "type": "integer"
-          }
-        }
-      },
       "StackServiceInput": {
         "type": "object",
         "properties": {
@@ -7972,6 +7941,37 @@
           },
           "scalability": {
             "$ref": "#/components/schemas/ScalabilityInput"
+          }
+        }
+      },
+      "CreateStackServiceInput": {
+        "type": "object",
+        "required": [
+          "stackId",
+          "serviceId",
+          "name",
+          "title",
+          "required",
+          "replicas"
+        ],
+        "properties": {
+          "stackId": {
+            "type": "integer"
+          },
+          "serviceId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "replicas": {
+            "type": "integer"
           }
         }
       },

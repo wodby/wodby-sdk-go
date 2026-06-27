@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## CreateStackService
 
-> StackService CreateStackService(ctx).NewStackServiceInput(newStackServiceInput).Execute()
+> StackService CreateStackService(ctx).CreateStackServiceInput(createStackServiceInput).Execute()
 
 Create stack service
 
@@ -32,11 +32,11 @@ import (
 )
 
 func main() {
-	newStackServiceInput := *openapiclient.NewNewStackServiceInput(int32(123), int32(123), "Name_example", "Title_example", false, int32(123)) // NewStackServiceInput | 
+	createStackServiceInput := *openapiclient.NewCreateStackServiceInput(int32(123), int32(123), "Name_example", "Title_example", false, int32(123)) // CreateStackServiceInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StackServicesAPI.CreateStackService(context.Background()).NewStackServiceInput(newStackServiceInput).Execute()
+	resp, r, err := apiClient.StackServicesAPI.CreateStackService(context.Background()).CreateStackServiceInput(createStackServiceInput).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StackServicesAPI.CreateStackService``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -57,7 +57,7 @@ Other parameters are passed through a pointer to a apiCreateStackServiceRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **newStackServiceInput** | [**NewStackServiceInput**](NewStackServiceInput.md) |  | 
+ **createStackServiceInput** | [**CreateStackServiceInput**](CreateStackServiceInput.md) |  | 
 
 ### Return type
 

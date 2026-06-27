@@ -16,11 +16,11 @@ import (
 	"fmt"
 )
 
-// checks if the NewStackServiceInput type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &NewStackServiceInput{}
+// checks if the CreateStackServiceInput type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateStackServiceInput{}
 
-// NewStackServiceInput struct for NewStackServiceInput
-type NewStackServiceInput struct {
+// CreateStackServiceInput struct for CreateStackServiceInput
+type CreateStackServiceInput struct {
 	StackId int32 `json:"stackId"`
 	ServiceId int32 `json:"serviceId"`
 	Name string `json:"name"`
@@ -29,14 +29,14 @@ type NewStackServiceInput struct {
 	Replicas int32 `json:"replicas"`
 }
 
-type _NewStackServiceInput NewStackServiceInput
+type _CreateStackServiceInput CreateStackServiceInput
 
-// NewNewStackServiceInput instantiates a new NewStackServiceInput object
+// NewCreateStackServiceInput instantiates a new CreateStackServiceInput object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewStackServiceInput(stackId int32, serviceId int32, name string, title string, required bool, replicas int32) *NewStackServiceInput {
-	this := NewStackServiceInput{}
+func NewCreateStackServiceInput(stackId int32, serviceId int32, name string, title string, required bool, replicas int32) *CreateStackServiceInput {
+	this := CreateStackServiceInput{}
 	this.StackId = stackId
 	this.ServiceId = serviceId
 	this.Name = name
@@ -46,16 +46,16 @@ func NewNewStackServiceInput(stackId int32, serviceId int32, name string, title 
 	return &this
 }
 
-// NewNewStackServiceInputWithDefaults instantiates a new NewStackServiceInput object
+// NewCreateStackServiceInputWithDefaults instantiates a new CreateStackServiceInput object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewNewStackServiceInputWithDefaults() *NewStackServiceInput {
-	this := NewStackServiceInput{}
+func NewCreateStackServiceInputWithDefaults() *CreateStackServiceInput {
+	this := CreateStackServiceInput{}
 	return &this
 }
 
 // GetStackId returns the StackId field value
-func (o *NewStackServiceInput) GetStackId() int32 {
+func (o *CreateStackServiceInput) GetStackId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -66,7 +66,7 @@ func (o *NewStackServiceInput) GetStackId() int32 {
 
 // GetStackIdOk returns a tuple with the StackId field value
 // and a boolean to check if the value has been set.
-func (o *NewStackServiceInput) GetStackIdOk() (*int32, bool) {
+func (o *CreateStackServiceInput) GetStackIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -74,12 +74,12 @@ func (o *NewStackServiceInput) GetStackIdOk() (*int32, bool) {
 }
 
 // SetStackId sets field value
-func (o *NewStackServiceInput) SetStackId(v int32) {
+func (o *CreateStackServiceInput) SetStackId(v int32) {
 	o.StackId = v
 }
 
 // GetServiceId returns the ServiceId field value
-func (o *NewStackServiceInput) GetServiceId() int32 {
+func (o *CreateStackServiceInput) GetServiceId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -90,7 +90,7 @@ func (o *NewStackServiceInput) GetServiceId() int32 {
 
 // GetServiceIdOk returns a tuple with the ServiceId field value
 // and a boolean to check if the value has been set.
-func (o *NewStackServiceInput) GetServiceIdOk() (*int32, bool) {
+func (o *CreateStackServiceInput) GetServiceIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -98,12 +98,12 @@ func (o *NewStackServiceInput) GetServiceIdOk() (*int32, bool) {
 }
 
 // SetServiceId sets field value
-func (o *NewStackServiceInput) SetServiceId(v int32) {
+func (o *CreateStackServiceInput) SetServiceId(v int32) {
 	o.ServiceId = v
 }
 
 // GetName returns the Name field value
-func (o *NewStackServiceInput) GetName() string {
+func (o *CreateStackServiceInput) GetName() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -114,7 +114,7 @@ func (o *NewStackServiceInput) GetName() string {
 
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-func (o *NewStackServiceInput) GetNameOk() (*string, bool) {
+func (o *CreateStackServiceInput) GetNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -122,12 +122,12 @@ func (o *NewStackServiceInput) GetNameOk() (*string, bool) {
 }
 
 // SetName sets field value
-func (o *NewStackServiceInput) SetName(v string) {
+func (o *CreateStackServiceInput) SetName(v string) {
 	o.Name = v
 }
 
 // GetTitle returns the Title field value
-func (o *NewStackServiceInput) GetTitle() string {
+func (o *CreateStackServiceInput) GetTitle() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -138,7 +138,7 @@ func (o *NewStackServiceInput) GetTitle() string {
 
 // GetTitleOk returns a tuple with the Title field value
 // and a boolean to check if the value has been set.
-func (o *NewStackServiceInput) GetTitleOk() (*string, bool) {
+func (o *CreateStackServiceInput) GetTitleOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -146,12 +146,12 @@ func (o *NewStackServiceInput) GetTitleOk() (*string, bool) {
 }
 
 // SetTitle sets field value
-func (o *NewStackServiceInput) SetTitle(v string) {
+func (o *CreateStackServiceInput) SetTitle(v string) {
 	o.Title = v
 }
 
 // GetRequired returns the Required field value
-func (o *NewStackServiceInput) GetRequired() bool {
+func (o *CreateStackServiceInput) GetRequired() bool {
 	if o == nil {
 		var ret bool
 		return ret
@@ -162,7 +162,7 @@ func (o *NewStackServiceInput) GetRequired() bool {
 
 // GetRequiredOk returns a tuple with the Required field value
 // and a boolean to check if the value has been set.
-func (o *NewStackServiceInput) GetRequiredOk() (*bool, bool) {
+func (o *CreateStackServiceInput) GetRequiredOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -170,12 +170,12 @@ func (o *NewStackServiceInput) GetRequiredOk() (*bool, bool) {
 }
 
 // SetRequired sets field value
-func (o *NewStackServiceInput) SetRequired(v bool) {
+func (o *CreateStackServiceInput) SetRequired(v bool) {
 	o.Required = v
 }
 
 // GetReplicas returns the Replicas field value
-func (o *NewStackServiceInput) GetReplicas() int32 {
+func (o *CreateStackServiceInput) GetReplicas() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -186,7 +186,7 @@ func (o *NewStackServiceInput) GetReplicas() int32 {
 
 // GetReplicasOk returns a tuple with the Replicas field value
 // and a boolean to check if the value has been set.
-func (o *NewStackServiceInput) GetReplicasOk() (*int32, bool) {
+func (o *CreateStackServiceInput) GetReplicasOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -194,11 +194,11 @@ func (o *NewStackServiceInput) GetReplicasOk() (*int32, bool) {
 }
 
 // SetReplicas sets field value
-func (o *NewStackServiceInput) SetReplicas(v int32) {
+func (o *CreateStackServiceInput) SetReplicas(v int32) {
 	o.Replicas = v
 }
 
-func (o NewStackServiceInput) MarshalJSON() ([]byte, error) {
+func (o CreateStackServiceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -206,7 +206,7 @@ func (o NewStackServiceInput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o NewStackServiceInput) ToMap() (map[string]interface{}, error) {
+func (o CreateStackServiceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["stackId"] = o.StackId
 	toSerialize["serviceId"] = o.ServiceId
@@ -217,7 +217,7 @@ func (o NewStackServiceInput) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *NewStackServiceInput) UnmarshalJSON(data []byte) (err error) {
+func (o *CreateStackServiceInput) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -244,53 +244,53 @@ func (o *NewStackServiceInput) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varNewStackServiceInput := _NewStackServiceInput{}
+	varCreateStackServiceInput := _CreateStackServiceInput{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varNewStackServiceInput)
+	err = decoder.Decode(&varCreateStackServiceInput)
 
 	if err != nil {
 		return err
 	}
 
-	*o = NewStackServiceInput(varNewStackServiceInput)
+	*o = CreateStackServiceInput(varCreateStackServiceInput)
 
 	return err
 }
 
-type NullableNewStackServiceInput struct {
-	value *NewStackServiceInput
+type NullableCreateStackServiceInput struct {
+	value *CreateStackServiceInput
 	isSet bool
 }
 
-func (v NullableNewStackServiceInput) Get() *NewStackServiceInput {
+func (v NullableCreateStackServiceInput) Get() *CreateStackServiceInput {
 	return v.value
 }
 
-func (v *NullableNewStackServiceInput) Set(val *NewStackServiceInput) {
+func (v *NullableCreateStackServiceInput) Set(val *CreateStackServiceInput) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNewStackServiceInput) IsSet() bool {
+func (v NullableCreateStackServiceInput) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNewStackServiceInput) Unset() {
+func (v *NullableCreateStackServiceInput) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNewStackServiceInput(val *NewStackServiceInput) *NullableNewStackServiceInput {
-	return &NullableNewStackServiceInput{value: val, isSet: true}
+func NewNullableCreateStackServiceInput(val *CreateStackServiceInput) *NullableCreateStackServiceInput {
+	return &NullableCreateStackServiceInput{value: val, isSet: true}
 }
 
-func (v NullableNewStackServiceInput) MarshalJSON() ([]byte, error) {
+func (v NullableCreateStackServiceInput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNewStackServiceInput) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateStackServiceInput) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

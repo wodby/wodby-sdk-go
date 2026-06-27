@@ -3801,7 +3801,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewStackServiceInput'
+              $ref: '#/components/schemas/CreateStackServiceInput'
         required: true
       responses:
         "201":
@@ -7632,35 +7632,6 @@ components:
         buildSource:
           $ref: '#/components/schemas/BuildSourceInput'
       type: object
-    NewStackServiceInput:
-      example:
-        replicas: 1
-        stackId: 0
-        name: name
-        serviceId: 6
-        title: title
-        required: true
-      properties:
-        stackId:
-          type: integer
-        serviceId:
-          type: integer
-        name:
-          type: string
-        title:
-          type: string
-        required:
-          type: boolean
-        replicas:
-          type: integer
-      required:
-      - name
-      - replicas
-      - required
-      - serviceId
-      - stackId
-      - title
-      type: object
     StackServiceInput:
       example:
         replicas: 0
@@ -8856,6 +8827,35 @@ components:
       required:
       - disabled
       - id
+      type: object
+    CreateStackServiceInput:
+      example:
+        replicas: 1
+        stackId: 0
+        name: name
+        serviceId: 6
+        title: title
+        required: true
+      properties:
+        stackId:
+          type: integer
+        serviceId:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        required:
+          type: boolean
+        replicas:
+          type: integer
+      required:
+      - name
+      - replicas
+      - required
+      - serviceId
+      - stackId
+      - title
       type: object
     CreateImportInput:
       example:
