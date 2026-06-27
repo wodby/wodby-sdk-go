@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Get OpenAPI JSON
 
+
+
 ### Example
 
 ```go
@@ -73,6 +75,8 @@ No authorization required
 > string GetOpenApiYaml(ctx).Execute()
 
 Get OpenAPI YAML
+
+
 
 ### Example
 

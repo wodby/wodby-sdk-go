@@ -30,6 +30,8 @@ Method | HTTP request | Description
 
 Create integration
 
+
+
 ### Example
 
 ```go
@@ -93,6 +95,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteIntegration(ctx, id).Execute()
 
 Delete integration
+
+
 
 ### Example
 
@@ -162,6 +166,8 @@ Name | Type | Description  | Notes
 
 Get integration
 
+
+
 ### Example
 
 ```go
@@ -229,6 +235,8 @@ Name | Type | Description  | Notes
 > Integration GetIntegrationByName(ctx, name).OrgId(orgId).Execute()
 
 Get integration by name
+
+
 
 ### Example
 
@@ -300,6 +308,8 @@ Name | Type | Description  | Notes
 
 Get Kubernetes settings
 
+
+
 ### Example
 
 ```go
@@ -367,6 +377,8 @@ Name | Type | Description  | Notes
 > []map[string]interface{} ListIntegrationKubeMachineTypes(ctx, id).Location(location).Execute()
 
 List Kubernetes machine types
+
+
 
 ### Example
 
@@ -438,6 +450,8 @@ Name | Type | Description  | Notes
 
 List Kubernetes regions
 
+
+
 ### Example
 
 ```go
@@ -505,6 +519,8 @@ Name | Type | Description  | Notes
 > []KubeVersion ListIntegrationKubeVersions(ctx, id).Location(location).Execute()
 
 List Kubernetes versions
+
+
 
 ### Example
 
@@ -576,6 +592,8 @@ Name | Type | Description  | Notes
 
 List Kubernetes zones
 
+
+
 ### Example
 
 ```go
@@ -643,6 +661,8 @@ Name | Type | Description  | Notes
 > []string ListIntegrationRemoteGitRepoBranches(ctx, id).RemoteGitRepoId(remoteGitRepoId).Execute()
 
 List remote Git repository branches
+
+
 
 ### Example
 
@@ -714,6 +734,8 @@ Name | Type | Description  | Notes
 
 List remote Git repository tags
 
+
+
 ### Example
 
 ```go
@@ -784,6 +806,8 @@ Name | Type | Description  | Notes
 
 List remote Git repositories
 
+
+
 ### Example
 
 ```go
@@ -851,6 +875,8 @@ Name | Type | Description  | Notes
 > []IntegrationScope ListIntegrationScopes(ctx, id).Execute()
 
 List integration scopes
+
+
 
 ### Example
 
@@ -920,6 +946,8 @@ Name | Type | Description  | Notes
 
 List storage buckets
 
+
+
 ### Example
 
 ```go
@@ -987,6 +1015,8 @@ Name | Type | Description  | Notes
 > []string ListIntegrationStorageClasses(ctx, id).Execute()
 
 List storage classes
+
+
 
 ### Example
 
@@ -1056,6 +1086,8 @@ Name | Type | Description  | Notes
 
 List integrations
 
+
+
 ### Example
 
 ```go
@@ -1123,6 +1155,8 @@ Name | Type | Description  | Notes
 > Integration UpdateIntegration(ctx, id).UpdateIntegrationInput(updateIntegrationInput).Execute()
 
 Update integration
+
+
 
 ### Example
 

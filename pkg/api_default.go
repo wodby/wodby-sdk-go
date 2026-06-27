@@ -34,6 +34,8 @@ func (r ApiGetOpenApiJsonRequest) Execute() (map[string]interface{}, *http.Respo
 /*
 GetOpenApiJson Get OpenAPI JSON
 
+Returns the public OpenAPI schema in JSON format.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetOpenApiJsonRequest
 */
@@ -149,6 +151,8 @@ func (r ApiGetOpenApiYamlRequest) Execute() (string, *http.Response, error) {
 
 /*
 GetOpenApiYaml Get OpenAPI YAML
+
+Returns the public OpenAPI schema in YAML format.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetOpenApiYamlRequest

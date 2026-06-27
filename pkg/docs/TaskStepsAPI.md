@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Get task step log URL
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > TaskStepLogs GetTaskStepLogs(ctx, id).Execute()
 
 Get task step logs
+
+
 
 ### Example
 

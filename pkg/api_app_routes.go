@@ -41,6 +41,8 @@ func (r ApiCreateAppRouteRequest) Execute() (*AppRoute, *http.Response, error) {
 /*
 CreateAppRoute Create app route
 
+Creates an app route and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppRouteRequest
 */
@@ -177,6 +179,8 @@ func (r ApiDeleteAppRouteRequest) Execute() (*OperationResult, *http.Response, e
 /*
 DeleteAppRoute Delete app route
 
+Deletes the app route and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteAppRouteRequest
@@ -310,6 +314,8 @@ func (r ApiGetAppRouteRequest) Execute() (*AppRoute, *http.Response, error) {
 
 /*
 GetAppRoute Get app route
+
+Returns the app route identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -449,6 +455,8 @@ func (r ApiListAppRoutesRequest) Execute() ([]AppRoute, *http.Response, error) {
 
 /*
 ListAppRoutes List app routes
+
+Returns app routes matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppRoutesRequest
@@ -590,6 +598,8 @@ func (r ApiUpdateAppRouteRequest) Execute() (*AppRoute, *http.Response, error) {
 
 /*
 UpdateAppRoute Update app route
+
+Updates the app route and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

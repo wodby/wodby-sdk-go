@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 Create cluster
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteCluster(ctx, id).Force(force).Execute()
 
 Delete cluster
+
+
 
 ### Example
 
@@ -153,6 +157,8 @@ Name | Type | Description  | Notes
 
 Get cluster
 
+
+
 ### Example
 
 ```go
@@ -220,6 +226,8 @@ Name | Type | Description  | Notes
 > Cluster GetClusterByName(ctx, name).OrgId(orgId).Execute()
 
 Get cluster by name
+
+
 
 ### Example
 
@@ -291,6 +299,8 @@ Name | Type | Description  | Notes
 
 List clusters
 
+
+
 ### Example
 
 ```go
@@ -358,6 +368,8 @@ Name | Type | Description  | Notes
 > Cluster UpdateCluster(ctx, id).UpdateTitleRequest(updateTitleRequest).Execute()
 
 Update cluster
+
+
 
 ### Example
 

@@ -30,6 +30,7 @@ type Task struct {
 	Silent bool `json:"silent"`
 	System bool `json:"system"`
 	UserId int32 `json:"userId"`
+	User NullableUser `json:"user,omitempty"`
 	OrgId NullableInt32 `json:"orgId,omitempty"`
 	ProjectIds []int32 `json:"projectIds,omitempty"`
 	AppId NullableInt32 `json:"appId,omitempty"`
@@ -269,6 +270,48 @@ func (o *Task) GetUserIdOk() (*int32, bool) {
 // SetUserId sets field value
 func (o *Task) SetUserId(v int32) {
 	o.UserId = v
+}
+
+// GetUser returns the User field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Task) GetUser() User {
+	if o == nil || IsNil(o.User.Get()) {
+		var ret User
+		return ret
+	}
+	return *o.User.Get()
+}
+
+// GetUserOk returns a tuple with the User field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Task) GetUserOk() (*User, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.User.Get(), o.User.IsSet()
+}
+
+// HasUser returns a boolean if a field has been set.
+func (o *Task) HasUser() bool {
+	if o != nil && o.User.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUser gets a reference to the given NullableUser and assigns it to the User field.
+func (o *Task) SetUser(v User) {
+	o.User.Set(&v)
+}
+// SetUserNil sets the value for User to be an explicit nil
+func (o *Task) SetUserNil() {
+	o.User.Set(nil)
+}
+
+// UnsetUser ensures that no value is present for User, not even an explicit nil
+func (o *Task) UnsetUser() {
+	o.User.Unset()
 }
 
 // GetOrgId returns the OrgId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -929,6 +972,9 @@ func (o Task) ToMap() (map[string]interface{}, error) {
 	toSerialize["silent"] = o.Silent
 	toSerialize["system"] = o.System
 	toSerialize["userId"] = o.UserId
+	if o.User.IsSet() {
+		toSerialize["user"] = o.User.Get()
+	}
 	if o.OrgId.IsSet() {
 		toSerialize["orgId"] = o.OrgId.Get()
 	}

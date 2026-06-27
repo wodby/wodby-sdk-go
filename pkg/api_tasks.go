@@ -36,6 +36,8 @@ func (r ApiCancelTaskRequest) Execute() (*OperationResult, *http.Response, error
 /*
 CancelTask Cancel task
 
+Requests cancellation for the task.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiCancelTaskRequest
@@ -169,6 +171,8 @@ func (r ApiGetTaskRequest) Execute() (*Task, *http.Response, error) {
 
 /*
 GetTask Get task
+
+Returns the task identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -404,6 +408,8 @@ func (r ApiListTasksRequest) Execute() (*TasksResponse, *http.Response, error) {
 /*
 ListTasks List tasks
 
+Returns tasks matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListTasksRequest
 */
@@ -588,6 +594,8 @@ func (r ApiRepeatTaskRequest) Execute() (*OperationResult, *http.Response, error
 
 /*
 RepeatTask Repeat task
+
+Creates a repeated run for the task.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

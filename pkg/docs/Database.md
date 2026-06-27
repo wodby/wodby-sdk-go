@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Region** | Pointer to **NullableString** |  | [optional] 
 **Zone** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvId** | **int32** |  | 
 **OrgId** | **int32** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -283,6 +284,41 @@ HasIntegrationId returns a boolean if a field has been set.
 `func (o *Database) UnsetIntegrationId()`
 
 UnsetIntegrationId ensures that no value is present for IntegrationId, not even an explicit nil
+### GetAppServiceId
+
+`func (o *Database) GetAppServiceId() int32`
+
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
+
+### GetAppServiceIdOk
+
+`func (o *Database) GetAppServiceIdOk() (*int32, bool)`
+
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceId
+
+`func (o *Database) SetAppServiceId(v int32)`
+
+SetAppServiceId sets AppServiceId field to given value.
+
+### HasAppServiceId
+
+`func (o *Database) HasAppServiceId() bool`
+
+HasAppServiceId returns a boolean if a field has been set.
+
+### SetAppServiceIdNil
+
+`func (o *Database) SetAppServiceIdNil(b bool)`
+
+ SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+
+### UnsetAppServiceId
+`func (o *Database) UnsetAppServiceId()`
+
+UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
 ### GetEnvId
 
 `func (o *Database) GetEnvId() int32`

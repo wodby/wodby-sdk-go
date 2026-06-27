@@ -18,6 +18,8 @@ Method | HTTP request | Description
 
 Create app route
 
+
+
 ### Example
 
 ```go
@@ -81,6 +83,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteAppRoute(ctx, id).Execute()
 
 Delete app route
+
+
 
 ### Example
 
@@ -150,6 +154,8 @@ Name | Type | Description  | Notes
 
 Get app route
 
+
+
 ### Example
 
 ```go
@@ -218,6 +224,8 @@ Name | Type | Description  | Notes
 
 List app routes
 
+
+
 ### Example
 
 ```go
@@ -281,6 +289,8 @@ Name | Type | Description  | Notes
 > AppRoute UpdateAppRoute(ctx, id).UpdateAppRouteInput(updateAppRouteInput).Execute()
 
 Update app route
+
+
 
 ### Example
 

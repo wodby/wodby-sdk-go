@@ -36,6 +36,8 @@ func (r ApiGetServiceRequest) Execute() (*Service, *http.Response, error) {
 /*
 GetService Get service
 
+Returns the service identified by the request path.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetServiceRequest
@@ -176,6 +178,8 @@ func (r ApiGetServiceByNameRequest) Execute() (*Service, *http.Response, error) 
 /*
 GetServiceByName Get service by name
 
+Returns the service identified by name.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
  @return ApiGetServiceByNameRequest
@@ -313,6 +317,8 @@ func (r ApiGetServiceRevisionRequest) Execute() (*ServiceRevision, *http.Respons
 /*
 GetServiceRevision Get service revision
 
+Returns the service revision identified by the request path.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetServiceRevisionRequest
@@ -446,6 +452,8 @@ func (r ApiListServiceLinkCandidatesRequest) Execute() ([]map[string]interface{}
 
 /*
 ListServiceLinkCandidates List service link candidates
+
+Returns service link candidates matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
@@ -613,6 +621,8 @@ func (r ApiListServicesRequest) Execute() (*ServicesResponse, *http.Response, er
 
 /*
 ListServices List services
+
+Returns services matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListServicesRequest

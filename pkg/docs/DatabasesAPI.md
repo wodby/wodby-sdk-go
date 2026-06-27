@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 Create database
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteDatabase(ctx, id).Execute()
 
 Delete database
+
+
 
 ### Example
 
@@ -151,6 +155,8 @@ Name | Type | Description  | Notes
 
 Get database
 
+
+
 ### Example
 
 ```go
@@ -218,6 +224,8 @@ Name | Type | Description  | Notes
 > Database GetDatabaseByName(ctx, name).OrgId(orgId).Execute()
 
 Get database by name
+
+
 
 ### Example
 
@@ -289,6 +297,8 @@ Name | Type | Description  | Notes
 
 List databases
 
+
+
 ### Example
 
 ```go
@@ -356,6 +366,8 @@ Name | Type | Description  | Notes
 > Database UpdateDatabase(ctx, id).UpdateTitleRequest(updateTitleRequest).Execute()
 
 Update database
+
+
 
 ### Example
 

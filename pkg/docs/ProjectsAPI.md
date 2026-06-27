@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 Create project
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteProject(ctx, id).Execute()
 
 Delete project
+
+
 
 ### Example
 
@@ -151,6 +155,8 @@ Name | Type | Description  | Notes
 
 Get project
 
+
+
 ### Example
 
 ```go
@@ -218,6 +224,8 @@ Name | Type | Description  | Notes
 > Project GetProjectByName(ctx, name).OrgId(orgId).Execute()
 
 Get project by name
+
+
 
 ### Example
 
@@ -289,6 +297,8 @@ Name | Type | Description  | Notes
 
 List projects
 
+
+
 ### Example
 
 ```go
@@ -352,6 +362,8 @@ Name | Type | Description  | Notes
 > Project UpdateProject(ctx, id).UpdateProjectInput(updateProjectInput).Execute()
 
 Update project
+
+
 
 ### Example
 

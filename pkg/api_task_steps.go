@@ -36,6 +36,8 @@ func (r ApiGetTaskStepLogUrlRequest) Execute() (*URLResponse, *http.Response, er
 /*
 GetTaskStepLogUrl Get task step log URL
 
+Returns a temporary log URL for the task step.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetTaskStepLogUrlRequest
@@ -169,6 +171,8 @@ func (r ApiGetTaskStepLogsRequest) Execute() (*TaskStepLogs, *http.Response, err
 
 /*
 GetTaskStepLogs Get task step logs
+
+Returns logs captured for the task step.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

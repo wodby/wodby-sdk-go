@@ -41,6 +41,8 @@ func (r ApiCreateProjectRequest) Execute() (*Project, *http.Response, error) {
 /*
 CreateProject Create project
 
+Creates a project and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateProjectRequest
 */
@@ -177,6 +179,8 @@ func (r ApiDeleteProjectRequest) Execute() (*OperationResult, *http.Response, er
 /*
 DeleteProject Delete project
 
+Deletes the project and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteProjectRequest
@@ -310,6 +314,8 @@ func (r ApiGetProjectRequest) Execute() (*Project, *http.Response, error) {
 
 /*
 GetProject Get project
+
+Returns the project identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -451,6 +457,8 @@ func (r ApiGetProjectByNameRequest) Execute() (*Project, *http.Response, error) 
 
 /*
 GetProjectByName Get project by name
+
+Returns the project identified by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
@@ -595,6 +603,8 @@ func (r ApiListProjectsRequest) Execute() ([]Project, *http.Response, error) {
 /*
 ListProjects List projects
 
+Returns projects matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListProjectsRequest
 */
@@ -734,6 +744,8 @@ func (r ApiUpdateProjectRequest) Execute() (*Project, *http.Response, error) {
 
 /*
 UpdateProject Update project
+
+Updates the project and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

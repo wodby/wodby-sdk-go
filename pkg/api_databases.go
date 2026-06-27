@@ -41,6 +41,8 @@ func (r ApiCreateDatabaseRequest) Execute() (*Database, *http.Response, error) {
 /*
 CreateDatabase Create database
 
+Creates a database and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateDatabaseRequest
 */
@@ -177,6 +179,8 @@ func (r ApiDeleteDatabaseRequest) Execute() (*OperationResult, *http.Response, e
 /*
 DeleteDatabase Delete database
 
+Deletes the database and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteDatabaseRequest
@@ -310,6 +314,8 @@ func (r ApiGetDatabaseRequest) Execute() (*Database, *http.Response, error) {
 
 /*
 GetDatabase Get database
+
+Returns the database identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -451,6 +457,8 @@ func (r ApiGetDatabaseByNameRequest) Execute() (*Database, *http.Response, error
 
 /*
 GetDatabaseByName Get database by name
+
+Returns the database identified by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
@@ -608,6 +616,8 @@ func (r ApiListDatabasesRequest) Execute() ([]Database, *http.Response, error) {
 /*
 ListDatabases List databases
 
+Returns databases matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListDatabasesRequest
 */
@@ -753,6 +763,8 @@ func (r ApiUpdateDatabaseRequest) Execute() (*Database, *http.Response, error) {
 
 /*
 UpdateDatabase Update database
+
+Updates the database and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

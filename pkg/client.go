@@ -55,6 +55,8 @@ type APIClient struct {
 
 	AppInstancesAPI *AppInstancesAPIService
 
+	AppPortsAPI *AppPortsAPIService
+
 	AppRoutesAPI *AppRoutesAPIService
 
 	AppServicesAPI *AppServicesAPIService
@@ -77,6 +79,8 @@ type APIClient struct {
 
 	IntegrationsAPI *IntegrationsAPIService
 
+	OrgMembershipsAPI *OrgMembershipsAPIService
+
 	OrgsAPI *OrgsAPIService
 
 	ProjectsAPI *ProjectsAPIService
@@ -84,6 +88,8 @@ type APIClient struct {
 	ProvidersAPI *ProvidersAPIService
 
 	ServicesAPI *ServicesAPIService
+
+	StackServicesAPI *StackServicesAPIService
 
 	StacksAPI *StacksAPIService
 
@@ -111,6 +117,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AppBuildsAPI = (*AppBuildsAPIService)(&c.common)
 	c.AppDeploymentsAPI = (*AppDeploymentsAPIService)(&c.common)
 	c.AppInstancesAPI = (*AppInstancesAPIService)(&c.common)
+	c.AppPortsAPI = (*AppPortsAPIService)(&c.common)
 	c.AppRoutesAPI = (*AppRoutesAPIService)(&c.common)
 	c.AppServicesAPI = (*AppServicesAPIService)(&c.common)
 	c.AppsAPI = (*AppsAPIService)(&c.common)
@@ -122,10 +129,12 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ImportsAPI = (*ImportsAPIService)(&c.common)
 	c.IntegrationKindsAPI = (*IntegrationKindsAPIService)(&c.common)
 	c.IntegrationsAPI = (*IntegrationsAPIService)(&c.common)
+	c.OrgMembershipsAPI = (*OrgMembershipsAPIService)(&c.common)
 	c.OrgsAPI = (*OrgsAPIService)(&c.common)
 	c.ProjectsAPI = (*ProjectsAPIService)(&c.common)
 	c.ProvidersAPI = (*ProvidersAPIService)(&c.common)
 	c.ServicesAPI = (*ServicesAPIService)(&c.common)
+	c.StackServicesAPI = (*StackServicesAPIService)(&c.common)
 	c.StacksAPI = (*StacksAPIService)(&c.common)
 	c.TaskStepsAPI = (*TaskStepsAPIService)(&c.common)
 	c.TasksAPI = (*TasksAPIService)(&c.common)

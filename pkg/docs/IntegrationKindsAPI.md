@@ -18,6 +18,8 @@ Method | HTTP request | Description
 
 Get database settings
 
+
+
 ### Example
 
 ```go
@@ -87,6 +89,8 @@ Name | Type | Description  | Notes
 > []map[string]interface{} ListIntegrationKindDatabaseMachineTypes(ctx, id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
 
 List database machine types
+
+
 
 ### Example
 
@@ -166,6 +170,8 @@ Name | Type | Description  | Notes
 
 List database regions
 
+
+
 ### Example
 
 ```go
@@ -240,6 +246,8 @@ Name | Type | Description  | Notes
 
 List database types
 
+
+
 ### Example
 
 ```go
@@ -307,6 +315,8 @@ Name | Type | Description  | Notes
 > []DatabaseVersion ListIntegrationKindDatabaseVersions(ctx, id).DbType(dbType).Execute()
 
 List database versions
+
+
 
 ### Example
 

@@ -36,6 +36,8 @@ func (r ApiDeleteOrgRequest) Execute() (*OperationResult, *http.Response, error)
 /*
 DeleteOrg Delete org
 
+Deletes the org and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteOrgRequest
@@ -170,6 +172,8 @@ func (r ApiGetOrgRequest) Execute() (*Org, *http.Response, error) {
 /*
 GetOrg Get org
 
+Returns the org identified by the request path.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetOrgRequest
@@ -302,6 +306,8 @@ func (r ApiListOrgsRequest) Execute() ([]Org, *http.Response, error) {
 
 /*
 ListOrgs List orgs
+
+Returns orgs matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListOrgsRequest
@@ -439,6 +445,8 @@ func (r ApiUpdateOrgRequest) Execute() (*Org, *http.Response, error) {
 
 /*
 UpdateOrg Update org
+
+Updates the org and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

@@ -17,6 +17,8 @@ Method | HTTP request | Description
 
 Cancel task
 
+
+
 ### Example
 
 ```go
@@ -85,6 +87,8 @@ Name | Type | Description  | Notes
 
 Get task
 
+
+
 ### Example
 
 ```go
@@ -152,6 +156,8 @@ Name | Type | Description  | Notes
 > TasksResponse ListTasks(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 
 List tasks
+
+
 
 ### Example
 
@@ -246,6 +252,8 @@ Name | Type | Description  | Notes
 > OperationResult RepeatTask(ctx, id).RepeatTaskRequest(repeatTaskRequest).Execute()
 
 Repeat task
+
+
 
 ### Example
 

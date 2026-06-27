@@ -32,6 +32,7 @@ type Database struct {
 	Region NullableString `json:"region,omitempty"`
 	Zone NullableString `json:"zone,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
+	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	EnvId int32 `json:"envId"`
 	OrgId int32 `json:"orgId"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -362,6 +363,48 @@ func (o *Database) UnsetIntegrationId() {
 	o.IntegrationId.Unset()
 }
 
+// GetAppServiceId returns the AppServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetAppServiceId() int32 {
+	if o == nil || IsNil(o.AppServiceId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AppServiceId.Get()
+}
+
+// GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetAppServiceIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppServiceId.Get(), o.AppServiceId.IsSet()
+}
+
+// HasAppServiceId returns a boolean if a field has been set.
+func (o *Database) HasAppServiceId() bool {
+	if o != nil && o.AppServiceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAppServiceId gets a reference to the given NullableInt32 and assigns it to the AppServiceId field.
+func (o *Database) SetAppServiceId(v int32) {
+	o.AppServiceId.Set(&v)
+}
+// SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+func (o *Database) SetAppServiceIdNil() {
+	o.AppServiceId.Set(nil)
+}
+
+// UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
+func (o *Database) UnsetAppServiceId() {
+	o.AppServiceId.Unset()
+}
+
 // GetEnvId returns the EnvId field value
 func (o *Database) GetEnvId() int32 {
 	if o == nil {
@@ -483,6 +526,9 @@ func (o Database) ToMap() (map[string]interface{}, error) {
 	}
 	if o.IntegrationId.IsSet() {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
+	}
+	if o.AppServiceId.IsSet() {
+		toSerialize["appServiceId"] = o.AppServiceId.Get()
 	}
 	toSerialize["envId"] = o.EnvId
 	toSerialize["orgId"] = o.OrgId

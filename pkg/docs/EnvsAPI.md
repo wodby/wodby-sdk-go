@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 Create env
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteEnv(ctx, id).Execute()
 
 Delete env
+
+
 
 ### Example
 
@@ -151,6 +155,8 @@ Name | Type | Description  | Notes
 
 Get env
 
+
+
 ### Example
 
 ```go
@@ -218,6 +224,8 @@ Name | Type | Description  | Notes
 > Env GetEnvByName(ctx, name).OrgId(orgId).Execute()
 
 Get env by name
+
+
 
 ### Example
 
@@ -289,6 +297,8 @@ Name | Type | Description  | Notes
 
 List envs
 
+
+
 ### Example
 
 ```go
@@ -352,6 +362,8 @@ Name | Type | Description  | Notes
 > Env UpdateEnv(ctx, id).UpdateEnvRequest(updateEnvRequest).Execute()
 
 Update env
+
+
 
 ### Example
 

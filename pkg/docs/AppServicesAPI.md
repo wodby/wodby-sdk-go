@@ -17,6 +17,8 @@ Method | HTTP request | Description
 
 Get app service
 
+
+
 ### Example
 
 ```go
@@ -85,6 +87,8 @@ Name | Type | Description  | Notes
 
 List app services
 
+
+
 ### Example
 
 ```go
@@ -148,6 +152,8 @@ Name | Type | Description  | Notes
 > OperationResult RunAppServiceAction(ctx, id, name).Execute()
 
 Run app service action
+
+
 
 ### Example
 
@@ -219,6 +225,8 @@ Name | Type | Description  | Notes
 > AppService UpdateAppService(ctx, id).AppServiceInput(appServiceInput).Execute()
 
 Update app service
+
+
 
 ### Example
 

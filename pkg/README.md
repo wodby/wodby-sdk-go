@@ -98,6 +98,8 @@ Class | Method | HTTP request | Description
 *AppInstancesAPI* | [**GetAppInstanceByName**](docs/AppInstancesAPI.md#getappinstancebyname) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
 *AppInstancesAPI* | [**ListAppInstances**](docs/AppInstancesAPI.md#listappinstances) | **Get** /app-instances | List app instances
 *AppInstancesAPI* | [**UpdateAppInstance**](docs/AppInstancesAPI.md#updateappinstance) | **Put** /app-instances/{id} | Update app instance
+*AppPortsAPI* | [**GetAppPort**](docs/AppPortsAPI.md#getappport) | **Get** /app-ports/{id} | Get app port
+*AppPortsAPI* | [**ListAppPorts**](docs/AppPortsAPI.md#listappports) | **Get** /app-ports | List app ports
 *AppRoutesAPI* | [**CreateAppRoute**](docs/AppRoutesAPI.md#createapproute) | **Post** /app-routes | Create app route
 *AppRoutesAPI* | [**DeleteAppRoute**](docs/AppRoutesAPI.md#deleteapproute) | **Delete** /app-routes/{id} | Delete app route
 *AppRoutesAPI* | [**GetAppRoute**](docs/AppRoutesAPI.md#getapproute) | **Get** /app-routes/{id} | Get app route
@@ -161,6 +163,8 @@ Class | Method | HTTP request | Description
 *IntegrationsAPI* | [**ListIntegrationStorageClasses**](docs/IntegrationsAPI.md#listintegrationstorageclasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
 *IntegrationsAPI* | [**ListIntegrations**](docs/IntegrationsAPI.md#listintegrations) | **Get** /integrations | List integrations
 *IntegrationsAPI* | [**UpdateIntegration**](docs/IntegrationsAPI.md#updateintegration) | **Put** /integrations/{id} | Update integration
+*OrgMembershipsAPI* | [**GetOrgMembership**](docs/OrgMembershipsAPI.md#getorgmembership) | **Get** /org-memberships/{id} | Get org membership
+*OrgMembershipsAPI* | [**ListOrgMemberships**](docs/OrgMembershipsAPI.md#listorgmemberships) | **Get** /org-memberships | List org memberships
 *OrgsAPI* | [**DeleteOrg**](docs/OrgsAPI.md#deleteorg) | **Delete** /orgs/{id} | Delete org
 *OrgsAPI* | [**GetOrg**](docs/OrgsAPI.md#getorg) | **Get** /orgs/{id} | Get org
 *OrgsAPI* | [**ListOrgs**](docs/OrgsAPI.md#listorgs) | **Get** /orgs | List orgs
@@ -180,11 +184,17 @@ Class | Method | HTTP request | Description
 *ServicesAPI* | [**GetServiceRevision**](docs/ServicesAPI.md#getservicerevision) | **Get** /service-revisions/{id} | Get service revision
 *ServicesAPI* | [**ListServiceLinkCandidates**](docs/ServicesAPI.md#listservicelinkcandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
 *ServicesAPI* | [**ListServices**](docs/ServicesAPI.md#listservices) | **Get** /services | List services
+*StackServicesAPI* | [**CreateStackService**](docs/StackServicesAPI.md#createstackservice) | **Post** /stack-services | Create stack service
+*StackServicesAPI* | [**DeleteStackService**](docs/StackServicesAPI.md#deletestackservice) | **Delete** /stack-services/{id} | Delete stack service
+*StackServicesAPI* | [**ListStackServices**](docs/StackServicesAPI.md#liststackservices) | **Get** /stack-services | List stack services
+*StackServicesAPI* | [**UpdateStackService**](docs/StackServicesAPI.md#updatestackservice) | **Put** /stack-services/{id} | Update stack service
 *StacksAPI* | [**GetStack**](docs/StacksAPI.md#getstack) | **Get** /stacks/{id} | Get stack
 *StacksAPI* | [**GetStackByName**](docs/StacksAPI.md#getstackbyname) | **Get** /stacks/by-name/{name} | Get stack by name
 *StacksAPI* | [**GetStackRevision**](docs/StacksAPI.md#getstackrevision) | **Get** /stack-revisions/{id} | Get stack revision
 *StacksAPI* | [**ListStackRevisionServices**](docs/StacksAPI.md#liststackrevisionservices) | **Get** /stack-revisions/{id}/services | List stack services
 *StacksAPI* | [**ListStacks**](docs/StacksAPI.md#liststacks) | **Get** /stacks | List stacks
+*StacksAPI* | [**PublishStackDraft**](docs/StacksAPI.md#publishstackdraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
+*StacksAPI* | [**UpdateStackFromGit**](docs/StacksAPI.md#updatestackfromgit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
 *TaskStepsAPI* | [**GetTaskStepLogUrl**](docs/TaskStepsAPI.md#gettasksteplogurl) | **Get** /task-steps/{id}/log-url | Get task step log URL
 *TaskStepsAPI* | [**GetTaskStepLogs**](docs/TaskStepsAPI.md#gettasksteplogs) | **Get** /task-steps/{id}/logs | Get task step logs
 *TasksAPI* | [**CancelTask**](docs/TasksAPI.md#canceltask) | **Post** /tasks/{id}/cancel | Cancel task
@@ -203,6 +213,7 @@ Class | Method | HTTP request | Description
  - [AppDeploymentsResponse](docs/AppDeploymentsResponse.md)
  - [AppEndpointOptionInput](docs/AppEndpointOptionInput.md)
  - [AppInstance](docs/AppInstance.md)
+ - [AppPort](docs/AppPort.md)
  - [AppRoute](docs/AppRoute.md)
  - [AppService](docs/AppService.md)
  - [AppServiceBuildArg](docs/AppServiceBuildArg.md)
@@ -245,8 +256,10 @@ Class | Method | HTTP request | Description
  - [NewIntegrationInput](docs/NewIntegrationInput.md)
  - [NewManagedClusterInput](docs/NewManagedClusterInput.md)
  - [NewProjectInput](docs/NewProjectInput.md)
+ - [NewStackServiceInput](docs/NewStackServiceInput.md)
  - [OperationResult](docs/OperationResult.md)
  - [Org](docs/Org.md)
+ - [OrgMembership](docs/OrgMembership.md)
  - [Project](docs/Project.md)
  - [Provider](docs/Provider.md)
  - [ProviderRevision](docs/ProviderRevision.md)
@@ -262,6 +275,7 @@ Class | Method | HTTP request | Description
  - [Stack](docs/Stack.md)
  - [StackRevision](docs/StackRevision.md)
  - [StackService](docs/StackService.md)
+ - [StackServiceInput](docs/StackServiceInput.md)
  - [StacksResponse](docs/StacksResponse.md)
  - [Task](docs/Task.md)
  - [TaskJob](docs/TaskJob.md)
@@ -274,7 +288,9 @@ Class | Method | HTTP request | Description
  - [UpdateIntegrationInput](docs/UpdateIntegrationInput.md)
  - [UpdateOrgRequest](docs/UpdateOrgRequest.md)
  - [UpdateProjectInput](docs/UpdateProjectInput.md)
+ - [UpdateStackFromGitRequest](docs/UpdateStackFromGitRequest.md)
  - [UpdateTitleRequest](docs/UpdateTitleRequest.md)
+ - [User](docs/User.md)
  - [VolumeSizeInput](docs/VolumeSizeInput.md)
 
 

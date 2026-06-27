@@ -5,6 +5,7 @@ api/openapi.yaml
 api_app_builds.go
 api_app_deployments.go
 api_app_instances.go
+api_app_ports.go
 api_app_routes.go
 api_app_services.go
 api_apps.go
@@ -16,10 +17,12 @@ api_envs.go
 api_imports.go
 api_integration_kinds.go
 api_integrations.go
+api_org_memberships.go
 api_orgs.go
 api_projects.go
 api_providers.go
 api_services.go
+api_stack_services.go
 api_stacks.go
 api_task_steps.go
 api_tasks.go
@@ -36,6 +39,8 @@ docs/AppDeploymentsResponse.md
 docs/AppEndpointOptionInput.md
 docs/AppInstance.md
 docs/AppInstancesAPI.md
+docs/AppPort.md
+docs/AppPortsAPI.md
 docs/AppRoute.md
 docs/AppRoutesAPI.md
 docs/AppService.md
@@ -89,8 +94,11 @@ docs/NewDatabaseInput.md
 docs/NewIntegrationInput.md
 docs/NewManagedClusterInput.md
 docs/NewProjectInput.md
+docs/NewStackServiceInput.md
 docs/OperationResult.md
 docs/Org.md
+docs/OrgMembership.md
+docs/OrgMembershipsAPI.md
 docs/OrgsAPI.md
 docs/Project.md
 docs/ProjectsAPI.md
@@ -110,6 +118,8 @@ docs/ServicesResponse.md
 docs/Stack.md
 docs/StackRevision.md
 docs/StackService.md
+docs/StackServiceInput.md
+docs/StackServicesAPI.md
 docs/StacksAPI.md
 docs/StacksResponse.md
 docs/Task.md
@@ -125,7 +135,9 @@ docs/UpdateEnvRequest.md
 docs/UpdateIntegrationInput.md
 docs/UpdateOrgRequest.md
 docs/UpdateProjectInput.md
+docs/UpdateStackFromGitRequest.md
 docs/UpdateTitleRequest.md
+docs/User.md
 docs/VolumeSizeInput.md
 git_push.sh
 model_app.go
@@ -136,6 +148,7 @@ model_app_deployment.go
 model_app_deployments_response.go
 model_app_endpoint_option_input.go
 model_app_instance.go
+model_app_port.go
 model_app_route.go
 model_app_service.go
 model_app_service_build_arg.go
@@ -178,8 +191,10 @@ model_new_database_input.go
 model_new_integration_input.go
 model_new_managed_cluster_input.go
 model_new_project_input.go
+model_new_stack_service_input.go
 model_operation_result.go
 model_org.go
+model_org_membership.go
 model_project.go
 model_provider.go
 model_provider_revision.go
@@ -195,6 +210,7 @@ model_services_response.go
 model_stack.go
 model_stack_revision.go
 model_stack_service.go
+model_stack_service_input.go
 model_stacks_response.go
 model_task.go
 model_task_job.go
@@ -206,13 +222,16 @@ model_update_env_request.go
 model_update_integration_input.go
 model_update_org_request.go
 model_update_project_input.go
+model_update_stack_from_git_request.go
 model_update_title_request.go
 model_url_response.go
+model_user.go
 model_volume_size_input.go
 response.go
 test/api_app_builds_test.go
 test/api_app_deployments_test.go
 test/api_app_instances_test.go
+test/api_app_ports_test.go
 test/api_app_routes_test.go
 test/api_app_services_test.go
 test/api_apps_test.go
@@ -224,10 +243,12 @@ test/api_envs_test.go
 test/api_imports_test.go
 test/api_integration_kinds_test.go
 test/api_integrations_test.go
+test/api_org_memberships_test.go
 test/api_orgs_test.go
 test/api_projects_test.go
 test/api_providers_test.go
 test/api_services_test.go
+test/api_stack_services_test.go
 test/api_stacks_test.go
 test/api_task_steps_test.go
 test/api_tasks_test.go

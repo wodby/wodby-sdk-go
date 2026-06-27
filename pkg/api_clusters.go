@@ -41,6 +41,8 @@ func (r ApiCreateClusterRequest) Execute() (*Cluster, *http.Response, error) {
 /*
 CreateCluster Create cluster
 
+Creates a cluster and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateClusterRequest
 */
@@ -183,6 +185,8 @@ func (r ApiDeleteClusterRequest) Execute() (*OperationResult, *http.Response, er
 /*
 DeleteCluster Delete cluster
 
+Deletes the cluster and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteClusterRequest
@@ -322,6 +326,8 @@ func (r ApiGetClusterRequest) Execute() (*Cluster, *http.Response, error) {
 
 /*
 GetCluster Get cluster
+
+Returns the cluster identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -463,6 +469,8 @@ func (r ApiGetClusterByNameRequest) Execute() (*Cluster, *http.Response, error) 
 
 /*
 GetClusterByName Get cluster by name
+
+Returns the cluster identified by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
@@ -620,6 +628,8 @@ func (r ApiListClustersRequest) Execute() ([]Cluster, *http.Response, error) {
 /*
 ListClusters List clusters
 
+Returns clusters matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListClustersRequest
 */
@@ -765,6 +775,8 @@ func (r ApiUpdateClusterRequest) Execute() (*Cluster, *http.Response, error) {
 
 /*
 UpdateCluster Update cluster
+
+Updates the cluster and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

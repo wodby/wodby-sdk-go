@@ -20,6 +20,8 @@ Method | HTTP request | Description
 
 Create build
 
+
+
 ### Example
 
 ```go
@@ -84,6 +86,8 @@ Name | Type | Description  | Notes
 
 Create build from CI
 
+
+
 ### Example
 
 ```go
@@ -147,6 +151,8 @@ Name | Type | Description  | Notes
 > AppDeployment DeployAppBuild(ctx, id).Execute()
 
 Deploy build
+
+
 
 ### Example
 
@@ -216,6 +222,8 @@ Name | Type | Description  | Notes
 
 Get build
 
+
+
 ### Example
 
 ```go
@@ -283,6 +291,8 @@ Name | Type | Description  | Notes
 > AppBuildConfig GetAppBuildConfig(ctx, id).Execute()
 
 Get build config
+
+
 
 ### Example
 
@@ -352,6 +362,8 @@ Name | Type | Description  | Notes
 
 Get Docker registry credentials for build
 
+
+
 ### Example
 
 ```go
@@ -419,6 +431,8 @@ Name | Type | Description  | Notes
 > AppBuildsResponse ListAppBuilds(ctx).AppInstanceId(appInstanceId).Page(page).PageSize(pageSize).Execute()
 
 List app builds
+
+
 
 ### Example
 

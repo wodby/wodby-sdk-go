@@ -17,6 +17,8 @@ Method | HTTP request | Description
 
 Delete org
 
+
+
 ### Example
 
 ```go
@@ -84,6 +86,8 @@ Name | Type | Description  | Notes
 > Org GetOrg(ctx, id).Execute()
 
 Get org
+
+
 
 ### Example
 
@@ -153,6 +157,8 @@ Name | Type | Description  | Notes
 
 List orgs
 
+
+
 ### Example
 
 ```go
@@ -211,6 +217,8 @@ Other parameters are passed through a pointer to a apiListOrgsRequest struct via
 > Org UpdateOrg(ctx, id).UpdateOrgRequest(updateOrgRequest).Execute()
 
 Update org
+
+
 
 ### Example
 

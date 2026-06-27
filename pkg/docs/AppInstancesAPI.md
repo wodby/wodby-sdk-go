@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 Create app instance
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteAppInstance(ctx, id).Force(force).Execute()
 
 Delete app instance
+
+
 
 ### Example
 
@@ -153,6 +157,8 @@ Name | Type | Description  | Notes
 
 Get app instance
 
+
+
 ### Example
 
 ```go
@@ -220,6 +226,8 @@ Name | Type | Description  | Notes
 > AppInstance GetAppInstanceByName(ctx, appName, instanceName).OrgId(orgId).Execute()
 
 Get app instance by app and instance name
+
+
 
 ### Example
 
@@ -294,6 +302,8 @@ Name | Type | Description  | Notes
 
 List app instances
 
+
+
 ### Example
 
 ```go
@@ -365,6 +375,8 @@ Name | Type | Description  | Notes
 > AppInstance UpdateAppInstance(ctx, id).UpdateTitleRequest(updateTitleRequest).Execute()
 
 Update app instance
+
+
 
 ### Example
 

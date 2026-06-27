@@ -18,6 +18,8 @@ Method | HTTP request | Description
 
 Create deployment
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 
 Create deployment from CI
 
+
+
 ### Example
 
 ```go
@@ -145,6 +149,8 @@ Name | Type | Description  | Notes
 > AppDeployment GetAppDeployment(ctx, id).Execute()
 
 Get deployment
+
+
 
 ### Example
 
@@ -214,6 +220,8 @@ Name | Type | Description  | Notes
 
 List app deployments
 
+
+
 ### Example
 
 ```go
@@ -281,6 +289,8 @@ Name | Type | Description  | Notes
 > AppDeployment RedeployAppDeployment(ctx, id).Execute()
 
 Redeploy deployment
+
+
 
 ### Example
 

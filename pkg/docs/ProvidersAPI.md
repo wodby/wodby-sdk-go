@@ -17,6 +17,8 @@ Method | HTTP request | Description
 
 Get provider
 
+
+
 ### Example
 
 ```go
@@ -84,6 +86,8 @@ Name | Type | Description  | Notes
 > Provider GetProviderByName(ctx, name).Execute()
 
 Get provider by name
+
+
 
 ### Example
 
@@ -153,6 +157,8 @@ Name | Type | Description  | Notes
 
 Get provider revision
 
+
+
 ### Example
 
 ```go
@@ -220,6 +226,8 @@ Name | Type | Description  | Notes
 > ProvidersResponse ListProviders(ctx).OrgId(orgId).ProjectIds(projectIds).ExcludePublic(excludePublic).Search(search).Page(page).PageSize(pageSize).Execute()
 
 List providers
+
+
 
 ### Example
 

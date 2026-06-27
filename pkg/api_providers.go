@@ -36,6 +36,8 @@ func (r ApiGetProviderRequest) Execute() (*Provider, *http.Response, error) {
 /*
 GetProvider Get provider
 
+Returns the provider identified by the request path.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetProviderRequest
@@ -170,6 +172,8 @@ func (r ApiGetProviderByNameRequest) Execute() (*Provider, *http.Response, error
 /*
 GetProviderByName Get provider by name
 
+Returns the provider identified by name.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
  @return ApiGetProviderByNameRequest
@@ -303,6 +307,8 @@ func (r ApiGetProviderRevisionRequest) Execute() (*ProviderRevision, *http.Respo
 
 /*
 GetProviderRevision Get provider revision
+
+Returns the provider revision identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -476,6 +482,8 @@ func (r ApiListProvidersRequest) Execute() (*ProvidersResponse, *http.Response, 
 
 /*
 ListProviders List providers
+
+Returns providers matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListProvidersRequest

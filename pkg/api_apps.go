@@ -41,6 +41,8 @@ func (r ApiCreateAppRequest) Execute() (*App, *http.Response, error) {
 /*
 CreateApp Create app
 
+Creates an app and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppRequest
 */
@@ -177,6 +179,8 @@ func (r ApiDeleteAppRequest) Execute() (*OperationResult, *http.Response, error)
 /*
 DeleteApp Delete app
 
+Deletes the app and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteAppRequest
@@ -310,6 +314,8 @@ func (r ApiGetAppRequest) Execute() (*App, *http.Response, error) {
 
 /*
 GetApp Get app
+
+Returns the app identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -451,6 +457,8 @@ func (r ApiGetAppByNameRequest) Execute() (*App, *http.Response, error) {
 
 /*
 GetAppByName Get app by name
+
+Returns the app identified by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
@@ -608,6 +616,8 @@ func (r ApiListAppsRequest) Execute() ([]App, *http.Response, error) {
 /*
 ListApps List apps
 
+Returns apps matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppsRequest
 */
@@ -753,6 +763,8 @@ func (r ApiUpdateAppRequest) Execute() (*App, *http.Response, error) {
 
 /*
 UpdateApp Update app
+
+Updates the app and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

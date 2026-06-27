@@ -36,6 +36,8 @@ func (r ApiGetAppServiceRequest) Execute() (*AppService, *http.Response, error) 
 /*
 GetAppService Get app service
 
+Returns the app service identified by the request path.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetAppServiceRequest
@@ -175,6 +177,8 @@ func (r ApiListAppServicesRequest) Execute() ([]AppService, *http.Response, erro
 /*
 ListAppServices List app services
 
+Returns app services matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppServicesRequest
 */
@@ -310,6 +314,8 @@ func (r ApiRunAppServiceActionRequest) Execute() (*OperationResult, *http.Respon
 
 /*
 RunAppServiceAction Run app service action
+
+Runs the named action for an app service.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -453,6 +459,8 @@ func (r ApiUpdateAppServiceRequest) Execute() (*AppService, *http.Response, erro
 
 /*
 UpdateAppService Update app service
+
+Updates the app service and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

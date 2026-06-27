@@ -41,6 +41,8 @@ func (r ApiCreateAppDeploymentRequest) Execute() (*AppDeployment, *http.Response
 /*
 CreateAppDeployment Create deployment
 
+Creates a deployment and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppDeploymentRequest
 */
@@ -181,6 +183,8 @@ func (r ApiCreateAppDeploymentFromCiRequest) Execute() (*AppDeployment, *http.Re
 
 /*
 CreateAppDeploymentFromCi Create deployment from CI
+
+Creates a deployment from a CI workflow request.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppDeploymentFromCiRequest
@@ -331,6 +335,8 @@ func (r ApiGetAppDeploymentRequest) Execute() (*AppDeployment, *http.Response, e
 
 /*
 GetAppDeployment Get deployment
+
+Returns the deployment identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -485,6 +491,8 @@ func (r ApiListAppDeploymentsRequest) Execute() (*AppDeploymentsResponse, *http.
 /*
 ListAppDeployments List app deployments
 
+Returns app deployments matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppDeploymentsRequest
 */
@@ -625,6 +633,8 @@ func (r ApiRedeployAppDeploymentRequest) Execute() (*AppDeployment, *http.Respon
 
 /*
 RedeployAppDeployment Redeploy deployment
+
+Creates a redeployment task for an existing deployment.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

@@ -16,6 +16,8 @@ Method | HTTP request | Description
 
 Create backup
 
+
+
 ### Example
 
 ```go
@@ -79,6 +81,8 @@ Name | Type | Description  | Notes
 > Backup GetBackup(ctx, id).Execute()
 
 Get backup
+
+
 
 ### Example
 
@@ -147,6 +151,8 @@ Name | Type | Description  | Notes
 > []Backup ListBackups(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).BackupName(backupName).Execute()
 
 List backups
+
+
 
 ### Example
 

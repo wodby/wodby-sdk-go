@@ -41,6 +41,8 @@ func (r ApiCreateIntegrationRequest) Execute() (*Integration, *http.Response, er
 /*
 CreateIntegration Create integration
 
+Creates an integration and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateIntegrationRequest
 */
@@ -177,6 +179,8 @@ func (r ApiDeleteIntegrationRequest) Execute() (*OperationResult, *http.Response
 /*
 DeleteIntegration Delete integration
 
+Deletes the integration and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteIntegrationRequest
@@ -310,6 +314,8 @@ func (r ApiGetIntegrationRequest) Execute() (*Integration, *http.Response, error
 
 /*
 GetIntegration Get integration
+
+Returns the integration identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -452,6 +458,8 @@ func (r ApiGetIntegrationByNameRequest) Execute() (*Integration, *http.Response,
 /*
 GetIntegrationByName Get integration by name
 
+Returns the integration identified by name.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
  @return ApiGetIntegrationByNameRequest
@@ -588,6 +596,8 @@ func (r ApiGetIntegrationKubeSettingsRequest) Execute() (map[string]interface{},
 
 /*
 GetIntegrationKubeSettings Get Kubernetes settings
+
+Returns the Kubernetes settings identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -729,6 +739,8 @@ func (r ApiListIntegrationKubeMachineTypesRequest) Execute() ([]map[string]inter
 /*
 ListIntegrationKubeMachineTypes List Kubernetes machine types
 
+Returns Kubernetes machine types matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationKubeMachineTypesRequest
@@ -866,6 +878,8 @@ func (r ApiListIntegrationKubeRegionsRequest) Execute() ([]map[string]interface{
 
 /*
 ListIntegrationKubeRegions List Kubernetes regions
+
+Returns Kubernetes regions matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1007,6 +1021,8 @@ func (r ApiListIntegrationKubeVersionsRequest) Execute() ([]KubeVersion, *http.R
 /*
 ListIntegrationKubeVersions List Kubernetes versions
 
+Returns Kubernetes versions matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationKubeVersionsRequest
@@ -1144,6 +1160,8 @@ func (r ApiListIntegrationKubeZonesRequest) Execute() ([]map[string]interface{},
 
 /*
 ListIntegrationKubeZones List Kubernetes zones
+
+Returns Kubernetes zones matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1284,6 +1302,8 @@ func (r ApiListIntegrationRemoteGitRepoBranchesRequest) Execute() ([]string, *ht
 
 /*
 ListIntegrationRemoteGitRepoBranches List remote Git repository branches
+
+Returns remote Git repository branches matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1429,6 +1449,8 @@ func (r ApiListIntegrationRemoteGitRepoTagsRequest) Execute() ([]string, *http.R
 /*
 ListIntegrationRemoteGitRepoTags List remote Git repository tags
 
+Returns remote Git repository tags matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationRemoteGitRepoTagsRequest
@@ -1567,6 +1589,8 @@ func (r ApiListIntegrationRemoteGitReposRequest) Execute() ([]RemoteGitRepo, *ht
 /*
 ListIntegrationRemoteGitRepos List remote Git repositories
 
+Returns remote Git repositories matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationRemoteGitReposRequest
@@ -1700,6 +1724,8 @@ func (r ApiListIntegrationScopesRequest) Execute() ([]IntegrationScope, *http.Re
 
 /*
 ListIntegrationScopes List integration scopes
+
+Returns integration scopes matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1835,6 +1861,8 @@ func (r ApiListIntegrationStorageBucketsRequest) Execute() ([]string, *http.Resp
 /*
 ListIntegrationStorageBuckets List storage buckets
 
+Returns storage buckets matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationStorageBucketsRequest
@@ -1968,6 +1996,8 @@ func (r ApiListIntegrationStorageClassesRequest) Execute() ([]string, *http.Resp
 
 /*
 ListIntegrationStorageClasses List storage classes
+
+Returns storage classes matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -2123,6 +2153,8 @@ func (r ApiListIntegrationsRequest) Execute() ([]Integration, *http.Response, er
 /*
 ListIntegrations List integrations
 
+Returns integrations matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListIntegrationsRequest
 */
@@ -2268,6 +2300,8 @@ func (r ApiUpdateIntegrationRequest) Execute() (*Integration, *http.Response, er
 
 /*
 UpdateIntegration Update integration
+
+Updates the integration and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

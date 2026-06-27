@@ -16,6 +16,8 @@ Method | HTTP request | Description
 
 Create import
 
+
+
 ### Example
 
 ```go
@@ -79,6 +81,8 @@ Name | Type | Description  | Notes
 > Import GetImport(ctx, id).Execute()
 
 Get import
+
+
 
 ### Example
 
@@ -147,6 +151,8 @@ Name | Type | Description  | Notes
 > []Import ListImports(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).Execute()
 
 List imports
+
+
 
 ### Example
 

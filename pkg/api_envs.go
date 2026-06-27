@@ -41,6 +41,8 @@ func (r ApiCreateEnvRequest) Execute() (*Env, *http.Response, error) {
 /*
 CreateEnv Create env
 
+Creates an env and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateEnvRequest
 */
@@ -177,6 +179,8 @@ func (r ApiDeleteEnvRequest) Execute() (*OperationResult, *http.Response, error)
 /*
 DeleteEnv Delete env
 
+Deletes the env and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteEnvRequest
@@ -310,6 +314,8 @@ func (r ApiGetEnvRequest) Execute() (*Env, *http.Response, error) {
 
 /*
 GetEnv Get env
+
+Returns the env identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -451,6 +457,8 @@ func (r ApiGetEnvByNameRequest) Execute() (*Env, *http.Response, error) {
 
 /*
 GetEnvByName Get env by name
+
+Returns the env identified by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name
@@ -595,6 +603,8 @@ func (r ApiListEnvsRequest) Execute() ([]Env, *http.Response, error) {
 /*
 ListEnvs List envs
 
+Returns envs matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListEnvsRequest
 */
@@ -734,6 +744,8 @@ func (r ApiUpdateEnvRequest) Execute() (*Env, *http.Response, error) {
 
 /*
 UpdateEnv Update env
+
+Updates the env and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

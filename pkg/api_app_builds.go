@@ -41,6 +41,8 @@ func (r ApiCreateAppBuildRequest) Execute() ([]AppBuild, *http.Response, error) 
 /*
 CreateAppBuild Create build
 
+Creates a build and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppBuildRequest
 */
@@ -182,6 +184,8 @@ func (r ApiCreateAppBuildFromCiRequest) Execute() (*AppBuild, *http.Response, er
 /*
 CreateAppBuildFromCi Create build from CI
 
+Creates a build from a CI workflow request.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppBuildFromCiRequest
 */
@@ -318,6 +322,8 @@ func (r ApiDeployAppBuildRequest) Execute() (*AppDeployment, *http.Response, err
 /*
 DeployAppBuild Deploy build
 
+Creates a deployment from the completed app build.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeployAppBuildRequest
@@ -451,6 +457,8 @@ func (r ApiGetAppBuildRequest) Execute() (*AppBuild, *http.Response, error) {
 
 /*
 GetAppBuild Get build
+
+Returns the build identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -600,6 +608,8 @@ func (r ApiGetAppBuildConfigRequest) Execute() (*AppBuildConfig, *http.Response,
 /*
 GetAppBuildConfig Get build config
 
+Returns CI build configuration for the app build.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetAppBuildConfigRequest
@@ -747,6 +757,8 @@ func (r ApiGetAppBuildDockerRegistryCredentialsRequest) Execute() (*DockerRegist
 
 /*
 GetAppBuildDockerRegistryCredentials Get Docker registry credentials for build
+
+Returns Docker registry credentials for the app build.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -914,6 +926,8 @@ func (r ApiListAppBuildsRequest) Execute() (*AppBuildsResponse, *http.Response, 
 
 /*
 ListAppBuilds List app builds
+
+Returns app builds matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppBuildsRequest

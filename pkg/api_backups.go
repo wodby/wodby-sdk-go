@@ -41,6 +41,8 @@ func (r ApiCreateBackupRequest) Execute() (*OperationResult, *http.Response, err
 /*
 CreateBackup Create backup
 
+Creates a backup and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateBackupRequest
 */
@@ -176,6 +178,8 @@ func (r ApiGetBackupRequest) Execute() (*Backup, *http.Response, error) {
 
 /*
 GetBackup Get backup
+
+Returns the backup identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -339,6 +343,8 @@ func (r ApiListBackupsRequest) Execute() ([]Backup, *http.Response, error) {
 
 /*
 ListBackups List backups
+
+Returns backups matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListBackupsRequest

@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 Create app
 
+
+
 ### Example
 
 ```go
@@ -82,6 +84,8 @@ Name | Type | Description  | Notes
 > OperationResult DeleteApp(ctx, id).Execute()
 
 Delete app
+
+
 
 ### Example
 
@@ -151,6 +155,8 @@ Name | Type | Description  | Notes
 
 Get app
 
+
+
 ### Example
 
 ```go
@@ -218,6 +224,8 @@ Name | Type | Description  | Notes
 > App GetAppByName(ctx, name).OrgId(orgId).Execute()
 
 Get app by name
+
+
 
 ### Example
 
@@ -289,6 +297,8 @@ Name | Type | Description  | Notes
 
 List apps
 
+
+
 ### Example
 
 ```go
@@ -356,6 +366,8 @@ Name | Type | Description  | Notes
 > App UpdateApp(ctx, id).UpdateTitleRequest(updateTitleRequest).Execute()
 
 Update app
+
+
 
 ### Example
 

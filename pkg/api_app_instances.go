@@ -41,6 +41,8 @@ func (r ApiCreateAppInstanceRequest) Execute() (*AppInstance, *http.Response, er
 /*
 CreateAppInstance Create app instance
 
+Creates an app instance and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAppInstanceRequest
 */
@@ -183,6 +185,8 @@ func (r ApiDeleteAppInstanceRequest) Execute() (*OperationResult, *http.Response
 /*
 DeleteAppInstance Delete app instance
 
+Deletes the app instance and returns the operation result.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiDeleteAppInstanceRequest
@@ -322,6 +326,8 @@ func (r ApiGetAppInstanceRequest) Execute() (*AppInstance, *http.Response, error
 
 /*
 GetAppInstance Get app instance
+
+Returns the app instance identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -464,6 +470,8 @@ func (r ApiGetAppInstanceByNameRequest) Execute() (*AppInstance, *http.Response,
 
 /*
 GetAppInstanceByName Get app instance by app and instance name
+
+Returns the app instance identified by app and instance name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appName
@@ -636,6 +644,8 @@ func (r ApiListAppInstancesRequest) Execute() ([]AppInstance, *http.Response, er
 /*
 ListAppInstances List app instances
 
+Returns app instances matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppInstancesRequest
 */
@@ -787,6 +797,8 @@ func (r ApiUpdateAppInstanceRequest) Execute() (*AppInstance, *http.Response, er
 
 /*
 UpdateAppInstance Update app instance
+
+Updates the app instance and returns the updated resource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

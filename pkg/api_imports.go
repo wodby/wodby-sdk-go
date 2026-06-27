@@ -41,6 +41,8 @@ func (r ApiCreateImportRequest) Execute() (*OperationResult, *http.Response, err
 /*
 CreateImport Create import
 
+Creates an import and returns the created resource.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateImportRequest
 */
@@ -176,6 +178,8 @@ func (r ApiGetImportRequest) Execute() (*Import, *http.Response, error) {
 
 /*
 GetImport Get import
+
+Returns the import identified by the request path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -333,6 +337,8 @@ func (r ApiListImportsRequest) Execute() ([]Import, *http.Response, error) {
 
 /*
 ListImports List imports
+
+Returns imports matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListImportsRequest

@@ -42,6 +42,8 @@ func (r ApiGetIntegrationKindDatabaseSettingsRequest) Execute() (map[string]inte
 /*
 GetIntegrationKindDatabaseSettings Get database settings
 
+Returns the database settings identified by the request path.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiGetIntegrationKindDatabaseSettingsRequest
@@ -209,6 +211,8 @@ func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Execute() ([]map[stri
 
 /*
 ListIntegrationKindDatabaseMachineTypes List database machine types
+
+Returns database machine types matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -382,6 +386,8 @@ func (r ApiListIntegrationKindDatabaseRegionsRequest) Execute() ([]map[string]in
 /*
 ListIntegrationKindDatabaseRegions List database regions
 
+Returns database regions matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationKindDatabaseRegionsRequest
@@ -530,6 +536,8 @@ func (r ApiListIntegrationKindDatabaseTypesRequest) Execute() ([]DatabaseType, *
 /*
 ListIntegrationKindDatabaseTypes List database types
 
+Returns database types matching the request filters.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiListIntegrationKindDatabaseTypesRequest
@@ -669,6 +677,8 @@ func (r ApiListIntegrationKindDatabaseVersionsRequest) Execute() ([]DatabaseVers
 
 /*
 ListIntegrationKindDatabaseVersions List database versions
+
+Returns database versions matching the request filters.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

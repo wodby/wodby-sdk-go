@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **Silent** | **bool** |  | 
 **System** | **bool** |  | 
 **UserId** | **int32** |  | 
+**User** | Pointer to [**NullableUser**](User.md) |  | [optional] 
 **OrgId** | Pointer to **NullableInt32** |  | [optional] 
 **ProjectIds** | Pointer to **[]int32** |  | [optional] 
 **AppId** | Pointer to **NullableInt32** |  | [optional] 
@@ -209,6 +210,41 @@ and a boolean to check if the value has been set.
 SetUserId sets UserId field to given value.
 
 
+### GetUser
+
+`func (o *Task) GetUser() User`
+
+GetUser returns the User field if non-nil, zero value otherwise.
+
+### GetUserOk
+
+`func (o *Task) GetUserOk() (*User, bool)`
+
+GetUserOk returns a tuple with the User field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUser
+
+`func (o *Task) SetUser(v User)`
+
+SetUser sets User field to given value.
+
+### HasUser
+
+`func (o *Task) HasUser() bool`
+
+HasUser returns a boolean if a field has been set.
+
+### SetUserNil
+
+`func (o *Task) SetUserNil(b bool)`
+
+ SetUserNil sets the value for User to be an explicit nil
+
+### UnsetUser
+`func (o *Task) UnsetUser()`
+
+UnsetUser ensures that no value is present for User, not even an explicit nil
 ### GetOrgId
 
 `func (o *Task) GetOrgId() int32`
