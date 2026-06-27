@@ -27,9 +27,16 @@ type Cluster struct {
 	Title string `json:"title"`
 	Status string `json:"status"`
 	Serverless bool `json:"serverless"`
+	Demo bool `json:"demo"`
+	Wodby bool `json:"wodby"`
+	K3s bool `json:"k3s"`
+	SingleNode bool `json:"singleNode"`
 	Version NullableString `json:"version,omitempty"`
+	InfraVersion string `json:"infraVersion"`
 	Region NullableString `json:"region,omitempty"`
 	Zone NullableString `json:"zone,omitempty"`
+	Ips []string `json:"ips,omitempty"`
+	Hostname NullableString `json:"hostname,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	OrgId int32 `json:"orgId"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -42,13 +49,18 @@ type _Cluster Cluster
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCluster(id int32, name string, title string, status string, serverless bool, orgId int32, createdAt time.Time, updatedAt time.Time) *Cluster {
+func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, createdAt time.Time, updatedAt time.Time) *Cluster {
 	this := Cluster{}
 	this.Id = id
 	this.Name = name
 	this.Title = title
 	this.Status = status
 	this.Serverless = serverless
+	this.Demo = demo
+	this.Wodby = wodby
+	this.K3s = k3s
+	this.SingleNode = singleNode
+	this.InfraVersion = infraVersion
 	this.OrgId = orgId
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -183,6 +195,102 @@ func (o *Cluster) SetServerless(v bool) {
 	o.Serverless = v
 }
 
+// GetDemo returns the Demo field value
+func (o *Cluster) GetDemo() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Demo
+}
+
+// GetDemoOk returns a tuple with the Demo field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetDemoOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Demo, true
+}
+
+// SetDemo sets field value
+func (o *Cluster) SetDemo(v bool) {
+	o.Demo = v
+}
+
+// GetWodby returns the Wodby field value
+func (o *Cluster) GetWodby() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Wodby
+}
+
+// GetWodbyOk returns a tuple with the Wodby field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetWodbyOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Wodby, true
+}
+
+// SetWodby sets field value
+func (o *Cluster) SetWodby(v bool) {
+	o.Wodby = v
+}
+
+// GetK3s returns the K3s field value
+func (o *Cluster) GetK3s() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.K3s
+}
+
+// GetK3sOk returns a tuple with the K3s field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetK3sOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.K3s, true
+}
+
+// SetK3s sets field value
+func (o *Cluster) SetK3s(v bool) {
+	o.K3s = v
+}
+
+// GetSingleNode returns the SingleNode field value
+func (o *Cluster) GetSingleNode() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.SingleNode
+}
+
+// GetSingleNodeOk returns a tuple with the SingleNode field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetSingleNodeOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.SingleNode, true
+}
+
+// SetSingleNode sets field value
+func (o *Cluster) SetSingleNode(v bool) {
+	o.SingleNode = v
+}
+
 // GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Cluster) GetVersion() string {
 	if o == nil || IsNil(o.Version.Get()) {
@@ -223,6 +331,30 @@ func (o *Cluster) SetVersionNil() {
 // UnsetVersion ensures that no value is present for Version, not even an explicit nil
 func (o *Cluster) UnsetVersion() {
 	o.Version.Unset()
+}
+
+// GetInfraVersion returns the InfraVersion field value
+func (o *Cluster) GetInfraVersion() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.InfraVersion
+}
+
+// GetInfraVersionOk returns a tuple with the InfraVersion field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetInfraVersionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.InfraVersion, true
+}
+
+// SetInfraVersion sets field value
+func (o *Cluster) SetInfraVersion(v string) {
+	o.InfraVersion = v
 }
 
 // GetRegion returns the Region field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -307,6 +439,81 @@ func (o *Cluster) SetZoneNil() {
 // UnsetZone ensures that no value is present for Zone, not even an explicit nil
 func (o *Cluster) UnsetZone() {
 	o.Zone.Unset()
+}
+
+// GetIps returns the Ips field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetIps() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.Ips
+}
+
+// GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetIpsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Ips) {
+		return nil, false
+	}
+	return o.Ips, true
+}
+
+// HasIps returns a boolean if a field has been set.
+func (o *Cluster) HasIps() bool {
+	if o != nil && !IsNil(o.Ips) {
+		return true
+	}
+
+	return false
+}
+
+// SetIps gets a reference to the given []string and assigns it to the Ips field.
+func (o *Cluster) SetIps(v []string) {
+	o.Ips = v
+}
+
+// GetHostname returns the Hostname field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetHostname() string {
+	if o == nil || IsNil(o.Hostname.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Hostname.Get()
+}
+
+// GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetHostnameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Hostname.Get(), o.Hostname.IsSet()
+}
+
+// HasHostname returns a boolean if a field has been set.
+func (o *Cluster) HasHostname() bool {
+	if o != nil && o.Hostname.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHostname gets a reference to the given NullableString and assigns it to the Hostname field.
+func (o *Cluster) SetHostname(v string) {
+	o.Hostname.Set(&v)
+}
+// SetHostnameNil sets the value for Hostname to be an explicit nil
+func (o *Cluster) SetHostnameNil() {
+	o.Hostname.Set(nil)
+}
+
+// UnsetHostname ensures that no value is present for Hostname, not even an explicit nil
+func (o *Cluster) UnsetHostname() {
+	o.Hostname.Unset()
 }
 
 // GetIntegrationId returns the IntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -438,14 +645,25 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	toSerialize["title"] = o.Title
 	toSerialize["status"] = o.Status
 	toSerialize["serverless"] = o.Serverless
+	toSerialize["demo"] = o.Demo
+	toSerialize["wodby"] = o.Wodby
+	toSerialize["k3s"] = o.K3s
+	toSerialize["singleNode"] = o.SingleNode
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()
 	}
+	toSerialize["infraVersion"] = o.InfraVersion
 	if o.Region.IsSet() {
 		toSerialize["region"] = o.Region.Get()
 	}
 	if o.Zone.IsSet() {
 		toSerialize["zone"] = o.Zone.Get()
+	}
+	if o.Ips != nil {
+		toSerialize["ips"] = o.Ips
+	}
+	if o.Hostname.IsSet() {
+		toSerialize["hostname"] = o.Hostname.Get()
 	}
 	if o.IntegrationId.IsSet() {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
@@ -466,6 +684,11 @@ func (o *Cluster) UnmarshalJSON(data []byte) (err error) {
 		"title",
 		"status",
 		"serverless",
+		"demo",
+		"wodby",
+		"k3s",
+		"singleNode",
+		"infraVersion",
 		"orgId",
 		"createdAt",
 		"updatedAt",

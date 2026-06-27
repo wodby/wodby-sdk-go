@@ -5116,16 +5116,25 @@ components:
       type: object
     Cluster:
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        zone: zone
-        name: name
+        wodby: true
         serverless: true
         integrationId: 6
-        id: 0
+        k3s: true
         title: title
-        region: region
+        demo: true
         version: version
+        ips:
+        - ips
+        - ips
         orgId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        hostname: hostname
+        infraVersion: infraVersion
+        zone: zone
+        name: name
+        singleNode: true
+        id: 0
+        region: region
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -5139,13 +5148,31 @@ components:
           type: string
         serverless:
           type: boolean
+        demo:
+          type: boolean
+        wodby:
+          type: boolean
+        k3s:
+          type: boolean
+        singleNode:
+          type: boolean
         version:
           nullable: true
+          type: string
+        infraVersion:
           type: string
         region:
           nullable: true
           type: string
         zone:
+          nullable: true
+          type: string
+        ips:
+          items:
+            type: string
+          nullable: true
+          type: array
+        hostname:
           nullable: true
           type: string
         integrationId:
@@ -5161,13 +5188,18 @@ components:
           type: string
       required:
       - createdAt
+      - demo
       - id
+      - infraVersion
+      - k3s
       - name
       - orgId
       - serverless
+      - singleNode
       - status
       - title
       - updatedAt
+      - wodby
       type: object
     Database:
       example:

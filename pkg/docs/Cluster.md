@@ -9,9 +9,16 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **Status** | **string** |  | 
 **Serverless** | **bool** |  | 
+**Demo** | **bool** |  | 
+**Wodby** | **bool** |  | 
+**K3s** | **bool** |  | 
+**SingleNode** | **bool** |  | 
 **Version** | Pointer to **NullableString** |  | [optional] 
+**InfraVersion** | **string** |  | 
 **Region** | Pointer to **NullableString** |  | [optional] 
 **Zone** | Pointer to **NullableString** |  | [optional] 
+**Ips** | Pointer to **[]string** |  | [optional] 
+**Hostname** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **OrgId** | **int32** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -21,7 +28,7 @@ Name | Type | Description | Notes
 
 ### NewCluster
 
-`func NewCluster(id int32, name string, title string, status string, serverless bool, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Cluster`
+`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Cluster`
 
 NewCluster instantiates a new Cluster object
 This constructor will assign default values to properties that have it defined,
@@ -136,6 +143,86 @@ and a boolean to check if the value has been set.
 SetServerless sets Serverless field to given value.
 
 
+### GetDemo
+
+`func (o *Cluster) GetDemo() bool`
+
+GetDemo returns the Demo field if non-nil, zero value otherwise.
+
+### GetDemoOk
+
+`func (o *Cluster) GetDemoOk() (*bool, bool)`
+
+GetDemoOk returns a tuple with the Demo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDemo
+
+`func (o *Cluster) SetDemo(v bool)`
+
+SetDemo sets Demo field to given value.
+
+
+### GetWodby
+
+`func (o *Cluster) GetWodby() bool`
+
+GetWodby returns the Wodby field if non-nil, zero value otherwise.
+
+### GetWodbyOk
+
+`func (o *Cluster) GetWodbyOk() (*bool, bool)`
+
+GetWodbyOk returns a tuple with the Wodby field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWodby
+
+`func (o *Cluster) SetWodby(v bool)`
+
+SetWodby sets Wodby field to given value.
+
+
+### GetK3s
+
+`func (o *Cluster) GetK3s() bool`
+
+GetK3s returns the K3s field if non-nil, zero value otherwise.
+
+### GetK3sOk
+
+`func (o *Cluster) GetK3sOk() (*bool, bool)`
+
+GetK3sOk returns a tuple with the K3s field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetK3s
+
+`func (o *Cluster) SetK3s(v bool)`
+
+SetK3s sets K3s field to given value.
+
+
+### GetSingleNode
+
+`func (o *Cluster) GetSingleNode() bool`
+
+GetSingleNode returns the SingleNode field if non-nil, zero value otherwise.
+
+### GetSingleNodeOk
+
+`func (o *Cluster) GetSingleNodeOk() (*bool, bool)`
+
+GetSingleNodeOk returns a tuple with the SingleNode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSingleNode
+
+`func (o *Cluster) SetSingleNode(v bool)`
+
+SetSingleNode sets SingleNode field to given value.
+
+
 ### GetVersion
 
 `func (o *Cluster) GetVersion() string`
@@ -171,6 +258,26 @@ HasVersion returns a boolean if a field has been set.
 `func (o *Cluster) UnsetVersion()`
 
 UnsetVersion ensures that no value is present for Version, not even an explicit nil
+### GetInfraVersion
+
+`func (o *Cluster) GetInfraVersion() string`
+
+GetInfraVersion returns the InfraVersion field if non-nil, zero value otherwise.
+
+### GetInfraVersionOk
+
+`func (o *Cluster) GetInfraVersionOk() (*string, bool)`
+
+GetInfraVersionOk returns a tuple with the InfraVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInfraVersion
+
+`func (o *Cluster) SetInfraVersion(v string)`
+
+SetInfraVersion sets InfraVersion field to given value.
+
+
 ### GetRegion
 
 `func (o *Cluster) GetRegion() string`
@@ -241,6 +348,76 @@ HasZone returns a boolean if a field has been set.
 `func (o *Cluster) UnsetZone()`
 
 UnsetZone ensures that no value is present for Zone, not even an explicit nil
+### GetIps
+
+`func (o *Cluster) GetIps() []string`
+
+GetIps returns the Ips field if non-nil, zero value otherwise.
+
+### GetIpsOk
+
+`func (o *Cluster) GetIpsOk() (*[]string, bool)`
+
+GetIpsOk returns a tuple with the Ips field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIps
+
+`func (o *Cluster) SetIps(v []string)`
+
+SetIps sets Ips field to given value.
+
+### HasIps
+
+`func (o *Cluster) HasIps() bool`
+
+HasIps returns a boolean if a field has been set.
+
+### SetIpsNil
+
+`func (o *Cluster) SetIpsNil(b bool)`
+
+ SetIpsNil sets the value for Ips to be an explicit nil
+
+### UnsetIps
+`func (o *Cluster) UnsetIps()`
+
+UnsetIps ensures that no value is present for Ips, not even an explicit nil
+### GetHostname
+
+`func (o *Cluster) GetHostname() string`
+
+GetHostname returns the Hostname field if non-nil, zero value otherwise.
+
+### GetHostnameOk
+
+`func (o *Cluster) GetHostnameOk() (*string, bool)`
+
+GetHostnameOk returns a tuple with the Hostname field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHostname
+
+`func (o *Cluster) SetHostname(v string)`
+
+SetHostname sets Hostname field to given value.
+
+### HasHostname
+
+`func (o *Cluster) HasHostname() bool`
+
+HasHostname returns a boolean if a field has been set.
+
+### SetHostnameNil
+
+`func (o *Cluster) SetHostnameNil(b bool)`
+
+ SetHostnameNil sets the value for Hostname to be an explicit nil
+
+### UnsetHostname
+`func (o *Cluster) UnsetHostname()`
+
+UnsetHostname ensures that no value is present for Hostname, not even an explicit nil
 ### GetIntegrationId
 
 `func (o *Cluster) GetIntegrationId() int32`
