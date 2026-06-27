@@ -1510,39 +1510,6 @@ paths:
       summary: Deploy build
       tags:
       - app-builds
-  /app-builds/{id}/void:
-    post:
-      operationId: voidAppBuild
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AppBuild'
-          description: Updated build
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Error response
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Error response
-      summary: Void build images
-      tags:
-      - app-builds
   /clusters:
     get:
       operationId: listClusters
