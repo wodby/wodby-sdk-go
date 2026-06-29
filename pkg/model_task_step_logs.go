@@ -21,7 +21,10 @@ var _ MappedNullable = &TaskStepLogs{}
 
 // TaskStepLogs struct for TaskStepLogs
 type TaskStepLogs struct {
+	Status string `json:"status"`
 	StreamId NullableInt32 `json:"streamId,omitempty"`
+	// Temporary URL for persisted logs when URL delivery is selected or auto-selected.
+	Url NullableString `json:"url,omitempty"`
 	Lines []LogLine `json:"lines"`
 }
 
@@ -31,8 +34,9 @@ type _TaskStepLogs TaskStepLogs
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTaskStepLogs(lines []LogLine) *TaskStepLogs {
+func NewTaskStepLogs(status string, lines []LogLine) *TaskStepLogs {
 	this := TaskStepLogs{}
+	this.Status = status
 	this.Lines = lines
 	return &this
 }
@@ -43,6 +47,30 @@ func NewTaskStepLogs(lines []LogLine) *TaskStepLogs {
 func NewTaskStepLogsWithDefaults() *TaskStepLogs {
 	this := TaskStepLogs{}
 	return &this
+}
+
+// GetStatus returns the Status field value
+func (o *TaskStepLogs) GetStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
+// and a boolean to check if the value has been set.
+func (o *TaskStepLogs) GetStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Status, true
+}
+
+// SetStatus sets field value
+func (o *TaskStepLogs) SetStatus(v string) {
+	o.Status = v
 }
 
 // GetStreamId returns the StreamId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -87,6 +115,48 @@ func (o *TaskStepLogs) UnsetStreamId() {
 	o.StreamId.Unset()
 }
 
+// GetUrl returns the Url field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TaskStepLogs) GetUrl() string {
+	if o == nil || IsNil(o.Url.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Url.Get()
+}
+
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TaskStepLogs) GetUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Url.Get(), o.Url.IsSet()
+}
+
+// HasUrl returns a boolean if a field has been set.
+func (o *TaskStepLogs) HasUrl() bool {
+	if o != nil && o.Url.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given NullableString and assigns it to the Url field.
+func (o *TaskStepLogs) SetUrl(v string) {
+	o.Url.Set(&v)
+}
+// SetUrlNil sets the value for Url to be an explicit nil
+func (o *TaskStepLogs) SetUrlNil() {
+	o.Url.Set(nil)
+}
+
+// UnsetUrl ensures that no value is present for Url, not even an explicit nil
+func (o *TaskStepLogs) UnsetUrl() {
+	o.Url.Unset()
+}
+
 // GetLines returns the Lines field value
 func (o *TaskStepLogs) GetLines() []LogLine {
 	if o == nil {
@@ -121,8 +191,12 @@ func (o TaskStepLogs) MarshalJSON() ([]byte, error) {
 
 func (o TaskStepLogs) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["status"] = o.Status
 	if o.StreamId.IsSet() {
 		toSerialize["streamId"] = o.StreamId.Get()
+	}
+	if o.Url.IsSet() {
+		toSerialize["url"] = o.Url.Get()
 	}
 	toSerialize["lines"] = o.Lines
 	return toSerialize, nil
@@ -133,6 +207,7 @@ func (o *TaskStepLogs) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"status",
 		"lines",
 	}
 

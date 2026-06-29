@@ -7401,7 +7401,8 @@ paths:
       - tasks
   /task-steps/{id}/logs:
     get:
-      description: Returns logs captured for the task step.
+      description: Returns current inline logs for pending task steps and a temporary
+        log URL for persisted task steps.
       operationId: getTaskStepLogs
       parameters:
       - explode: false
@@ -7411,6 +7412,20 @@ paths:
         schema:
           type: integer
         style: simple
+      - description: Delivery mode. Auto returns a URL for persisted logs and inline
+          lines for pending or empty logs.
+        explode: true
+        in: query
+        name: delivery
+        required: false
+        schema:
+          default: auto
+          enum:
+          - auto
+          - inline
+          - url
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -11204,16 +11219,30 @@ components:
         - level: level
           message: message
           sequenceId: 6
+        url: url
+        status: persisted
       properties:
+        status:
+          enum:
+          - persisted
+          - empty
+          - pending
+          type: string
         streamId:
           nullable: true
           type: integer
+        url:
+          description: Temporary URL for persisted logs when URL delivery is selected
+            or auto-selected.
+          nullable: true
+          type: string
         lines:
           items:
             $ref: '#/components/schemas/LogLine'
           type: array
       required:
       - lines
+      - status
       type: object
     LogLine:
       example:

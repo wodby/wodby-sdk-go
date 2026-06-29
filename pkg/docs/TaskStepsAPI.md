@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 
 ## GetTaskStepLogs
 
-> TaskStepLogs GetTaskStepLogs(ctx, id).Execute()
+> TaskStepLogs GetTaskStepLogs(ctx, id).Delivery(delivery).Execute()
 
 Get task step logs
 
@@ -101,10 +101,11 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
+	delivery := "delivery_example" // string | Delivery mode. Auto returns a URL for persisted logs and inline lines for pending or empty logs. (optional) (default to "auto")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskStepsAPI.GetTaskStepLogs(context.Background(), id).Execute()
+	resp, r, err := apiClient.TaskStepsAPI.GetTaskStepLogs(context.Background(), id).Delivery(delivery).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskStepsAPI.GetTaskStepLogs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -130,6 +131,7 @@ Other parameters are passed through a pointer to a apiGetTaskStepLogsRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **delivery** | **string** | Delivery mode. Auto returns a URL for persisted logs and inline lines for pending or empty logs. | [default to &quot;auto&quot;]
 
 ### Return type
 

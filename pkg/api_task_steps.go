@@ -163,6 +163,13 @@ type ApiGetTaskStepLogsRequest struct {
 	ctx context.Context
 	ApiService *TaskStepsAPIService
 	id int32
+	delivery *string
+}
+
+// Delivery mode. Auto returns a URL for persisted logs and inline lines for pending or empty logs.
+func (r ApiGetTaskStepLogsRequest) Delivery(delivery string) ApiGetTaskStepLogsRequest {
+	r.delivery = &delivery
+	return r
 }
 
 func (r ApiGetTaskStepLogsRequest) Execute() (*TaskStepLogs, *http.Response, error) {
@@ -172,7 +179,7 @@ func (r ApiGetTaskStepLogsRequest) Execute() (*TaskStepLogs, *http.Response, err
 /*
 GetTaskStepLogs Get task step logs
 
-Returns logs captured for the task step.
+Returns current inline logs for pending task steps and a temporary log URL for persisted task steps.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -208,6 +215,12 @@ func (a *TaskStepsAPIService) GetTaskStepLogsExecute(r ApiGetTaskStepLogsRequest
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.delivery != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery", r.delivery, "form", "")
+	} else {
+		var defaultValue string = "auto"
+		r.delivery = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
