@@ -39,6 +39,7 @@ type AppRoute struct {
 	AppInstanceId int32 `json:"appInstanceId"`
 	AppServiceId int32 `json:"appServiceId"`
 	PortId int32 `json:"portId"`
+	Cert NullableCert `json:"cert,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	LastSyncedAt NullableTime `json:"lastSyncedAt,omitempty"`
@@ -558,6 +559,48 @@ func (o *AppRoute) SetPortId(v int32) {
 	o.PortId = v
 }
 
+// GetCert returns the Cert field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppRoute) GetCert() Cert {
+	if o == nil || IsNil(o.Cert.Get()) {
+		var ret Cert
+		return ret
+	}
+	return *o.Cert.Get()
+}
+
+// GetCertOk returns a tuple with the Cert field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppRoute) GetCertOk() (*Cert, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Cert.Get(), o.Cert.IsSet()
+}
+
+// HasCert returns a boolean if a field has been set.
+func (o *AppRoute) HasCert() bool {
+	if o != nil && o.Cert.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCert gets a reference to the given NullableCert and assigns it to the Cert field.
+func (o *AppRoute) SetCert(v Cert) {
+	o.Cert.Set(&v)
+}
+// SetCertNil sets the value for Cert to be an explicit nil
+func (o *AppRoute) SetCertNil() {
+	o.Cert.Set(nil)
+}
+
+// UnsetCert ensures that no value is present for Cert, not even an explicit nil
+func (o *AppRoute) UnsetCert() {
+	o.Cert.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppRoute) GetCreatedAt() time.Time {
 	if o == nil {
@@ -683,6 +726,9 @@ func (o AppRoute) ToMap() (map[string]interface{}, error) {
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["portId"] = o.PortId
+	if o.Cert.IsSet() {
+		toSerialize["cert"] = o.Cert.Get()
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	if o.LastSyncedAt.IsSet() {

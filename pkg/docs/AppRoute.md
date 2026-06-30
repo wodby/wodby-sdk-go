@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **AppInstanceId** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
 **PortId** | **int32** |  | 
+**Cert** | Pointer to [**NullableCert**](Cert.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **LastSyncedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -444,6 +445,41 @@ and a boolean to check if the value has been set.
 SetPortId sets PortId field to given value.
 
 
+### GetCert
+
+`func (o *AppRoute) GetCert() Cert`
+
+GetCert returns the Cert field if non-nil, zero value otherwise.
+
+### GetCertOk
+
+`func (o *AppRoute) GetCertOk() (*Cert, bool)`
+
+GetCertOk returns a tuple with the Cert field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCert
+
+`func (o *AppRoute) SetCert(v Cert)`
+
+SetCert sets Cert field to given value.
+
+### HasCert
+
+`func (o *AppRoute) HasCert() bool`
+
+HasCert returns a boolean if a field has been set.
+
+### SetCertNil
+
+`func (o *AppRoute) SetCertNil(b bool)`
+
+ SetCertNil sets the value for Cert to be an explicit nil
+
+### UnsetCert
+`func (o *AppRoute) UnsetCert()`
+
+UnsetCert ensures that no value is present for Cert, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *AppRoute) GetCreatedAt() time.Time`

@@ -157,6 +157,8 @@ Class | Method | HTTP request | Description
 *BackupsAPI* | [**CreateBackup**](docs/BackupsAPI.md#createbackup) | **Post** /backups | Create backup
 *BackupsAPI* | [**GetBackup**](docs/BackupsAPI.md#getbackup) | **Get** /backups/{id} | Get backup
 *BackupsAPI* | [**ListBackups**](docs/BackupsAPI.md#listbackups) | **Get** /backups | List backups
+*CertsAPI* | [**GetCert**](docs/CertsAPI.md#getcert) | **Get** /certs/{id} | Get cert
+*CertsAPI* | [**ListCerts**](docs/CertsAPI.md#listcerts) | **Get** /certs | List certs
 *ClustersAPI* | [**CreateCluster**](docs/ClustersAPI.md#createcluster) | **Post** /clusters | Create cluster
 *ClustersAPI* | [**DeleteCluster**](docs/ClustersAPI.md#deletecluster) | **Delete** /clusters/{id} | Delete cluster
 *ClustersAPI* | [**GetCluster**](docs/ClustersAPI.md#getcluster) | **Get** /clusters/{id} | Get cluster
@@ -298,6 +300,7 @@ Class | Method | HTTP request | Description
  - [AppService](docs/AppService.md)
  - [AppServiceAnnotation](docs/AppServiceAnnotation.md)
  - [AppServiceAnnotationSource](docs/AppServiceAnnotationSource.md)
+ - [AppServiceBuild](docs/AppServiceBuild.md)
  - [AppServiceBuildArg](docs/AppServiceBuildArg.md)
  - [AppServiceBuildConfig](docs/AppServiceBuildConfig.md)
  - [AppServiceConfig](docs/AppServiceConfig.md)
@@ -306,6 +309,7 @@ Class | Method | HTTP request | Description
  - [AppServiceCronJobsResponse](docs/AppServiceCronJobsResponse.md)
  - [AppServiceCronSchedule](docs/AppServiceCronSchedule.md)
  - [AppServiceDatabaseInput](docs/AppServiceDatabaseInput.md)
+ - [AppServiceDeployment](docs/AppServiceDeployment.md)
  - [AppServiceDeploymentRequest](docs/AppServiceDeploymentRequest.md)
  - [AppServiceEnvVar](docs/AppServiceEnvVar.md)
  - [AppServiceEnvVarSource](docs/AppServiceEnvVarSource.md)
@@ -321,6 +325,7 @@ Class | Method | HTTP request | Description
  - [AppServiceToken](docs/AppServiceToken.md)
  - [Backup](docs/Backup.md)
  - [BuildSourceInput](docs/BuildSourceInput.md)
+ - [Cert](docs/Cert.md)
  - [Cluster](docs/Cluster.md)
  - [ConfigOverrideInput](docs/ConfigOverrideInput.md)
  - [CreateAppServiceInput](docs/CreateAppServiceInput.md)

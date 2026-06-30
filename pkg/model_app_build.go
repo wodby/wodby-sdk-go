@@ -27,6 +27,8 @@ type AppBuild struct {
 	Status string `json:"status"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	AppServiceId int32 `json:"appServiceId"`
+	Task NullableTask `json:"task,omitempty"`
+	AppServiceBuilds []AppServiceBuild `json:"appServiceBuilds"`
 	GitRefType string `json:"gitRefType"`
 	GitRef string `json:"gitRef"`
 	CommitHash string `json:"commitHash"`
@@ -43,13 +45,14 @@ type _AppBuild AppBuild
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, gitRefType string, gitRef string, commitHash string, commitMessage string, createdAt time.Time, updatedAt time.Time) *AppBuild {
+func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, appServiceBuilds []AppServiceBuild, gitRefType string, gitRef string, commitHash string, commitMessage string, createdAt time.Time, updatedAt time.Time) *AppBuild {
 	this := AppBuild{}
 	this.Id = id
 	this.Number = number
 	this.Status = status
 	this.AppInstanceId = appInstanceId
 	this.AppServiceId = appServiceId
+	this.AppServiceBuilds = appServiceBuilds
 	this.GitRefType = gitRefType
 	this.GitRef = gitRef
 	this.CommitHash = commitHash
@@ -185,6 +188,72 @@ func (o *AppBuild) GetAppServiceIdOk() (*int32, bool) {
 // SetAppServiceId sets field value
 func (o *AppBuild) SetAppServiceId(v int32) {
 	o.AppServiceId = v
+}
+
+// GetTask returns the Task field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetTask() Task {
+	if o == nil || IsNil(o.Task.Get()) {
+		var ret Task
+		return ret
+	}
+	return *o.Task.Get()
+}
+
+// GetTaskOk returns a tuple with the Task field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetTaskOk() (*Task, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Task.Get(), o.Task.IsSet()
+}
+
+// HasTask returns a boolean if a field has been set.
+func (o *AppBuild) HasTask() bool {
+	if o != nil && o.Task.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTask gets a reference to the given NullableTask and assigns it to the Task field.
+func (o *AppBuild) SetTask(v Task) {
+	o.Task.Set(&v)
+}
+// SetTaskNil sets the value for Task to be an explicit nil
+func (o *AppBuild) SetTaskNil() {
+	o.Task.Set(nil)
+}
+
+// UnsetTask ensures that no value is present for Task, not even an explicit nil
+func (o *AppBuild) UnsetTask() {
+	o.Task.Unset()
+}
+
+// GetAppServiceBuilds returns the AppServiceBuilds field value
+func (o *AppBuild) GetAppServiceBuilds() []AppServiceBuild {
+	if o == nil {
+		var ret []AppServiceBuild
+		return ret
+	}
+
+	return o.AppServiceBuilds
+}
+
+// GetAppServiceBuildsOk returns a tuple with the AppServiceBuilds field value
+// and a boolean to check if the value has been set.
+func (o *AppBuild) GetAppServiceBuildsOk() ([]AppServiceBuild, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppServiceBuilds, true
+}
+
+// SetAppServiceBuilds sets field value
+func (o *AppBuild) SetAppServiceBuilds(v []AppServiceBuild) {
+	o.AppServiceBuilds = v
 }
 
 // GetGitRefType returns the GitRefType field value
@@ -430,6 +499,10 @@ func (o AppBuild) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["appServiceId"] = o.AppServiceId
+	if o.Task.IsSet() {
+		toSerialize["task"] = o.Task.Get()
+	}
+	toSerialize["appServiceBuilds"] = o.AppServiceBuilds
 	toSerialize["gitRefType"] = o.GitRefType
 	toSerialize["gitRef"] = o.GitRef
 	toSerialize["commitHash"] = o.CommitHash
@@ -455,6 +528,7 @@ func (o *AppBuild) UnmarshalJSON(data []byte) (err error) {
 		"status",
 		"appInstanceId",
 		"appServiceId",
+		"appServiceBuilds",
 		"gitRefType",
 		"gitRef",
 		"commitHash",

@@ -10,6 +10,7 @@ api_app_routes.go
 api_app_services.go
 api_apps.go
 api_backups.go
+api_certs.go
 api_clusters.go
 api_databases.go
 api_default.go
@@ -47,6 +48,7 @@ docs/AppRoutesAPI.md
 docs/AppService.md
 docs/AppServiceAnnotation.md
 docs/AppServiceAnnotationSource.md
+docs/AppServiceBuild.md
 docs/AppServiceBuildArg.md
 docs/AppServiceBuildConfig.md
 docs/AppServiceConfig.md
@@ -55,6 +57,7 @@ docs/AppServiceCronJob.md
 docs/AppServiceCronJobsResponse.md
 docs/AppServiceCronSchedule.md
 docs/AppServiceDatabaseInput.md
+docs/AppServiceDeployment.md
 docs/AppServiceDeploymentRequest.md
 docs/AppServiceEnvVar.md
 docs/AppServiceEnvVarSource.md
@@ -73,6 +76,8 @@ docs/AppsAPI.md
 docs/Backup.md
 docs/BackupsAPI.md
 docs/BuildSourceInput.md
+docs/Cert.md
+docs/CertsAPI.md
 docs/Cluster.md
 docs/ClustersAPI.md
 docs/ConfigOverrideInput.md
@@ -212,6 +217,7 @@ model_app_route.go
 model_app_service.go
 model_app_service_annotation.go
 model_app_service_annotation_source.go
+model_app_service_build.go
 model_app_service_build_arg.go
 model_app_service_build_config.go
 model_app_service_config.go
@@ -220,6 +226,7 @@ model_app_service_cron_job.go
 model_app_service_cron_jobs_response.go
 model_app_service_cron_schedule.go
 model_app_service_database_input.go
+model_app_service_deployment.go
 model_app_service_deployment_request.go
 model_app_service_env_var.go
 model_app_service_env_var_source.go
@@ -235,6 +242,7 @@ model_app_service_setting_input.go
 model_app_service_token.go
 model_backup.go
 model_build_source_input.go
+model_cert.go
 model_cluster.go
 model_config_override_input.go
 model_create_app_service_input.go
@@ -352,6 +360,7 @@ test/api_app_routes_test.go
 test/api_app_services_test.go
 test/api_apps_test.go
 test/api_backups_test.go
+test/api_certs_test.go
 test/api_clusters_test.go
 test/api_databases_test.go
 test/api_default_test.go

@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **SkipRollback** | **bool** |  | 
 **AppInstanceId** | **int32** |  | 
+**Builds** | [**[]AppBuild**](AppBuild.md) |  | 
+**Task** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
+**AppServiceDeployments** | [**[]AppServiceDeployment**](AppServiceDeployment.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **StartedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -18,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewAppDeployment
 
-`func NewAppDeployment(id int32, number int32, status string, skipRollback bool, appInstanceId int32, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
+`func NewAppDeployment(id int32, number int32, status string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
 
 NewAppDeployment instantiates a new AppDeployment object
 This constructor will assign default values to properties that have it defined,
@@ -131,6 +134,81 @@ and a boolean to check if the value has been set.
 `func (o *AppDeployment) SetAppInstanceId(v int32)`
 
 SetAppInstanceId sets AppInstanceId field to given value.
+
+
+### GetBuilds
+
+`func (o *AppDeployment) GetBuilds() []AppBuild`
+
+GetBuilds returns the Builds field if non-nil, zero value otherwise.
+
+### GetBuildsOk
+
+`func (o *AppDeployment) GetBuildsOk() (*[]AppBuild, bool)`
+
+GetBuildsOk returns a tuple with the Builds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuilds
+
+`func (o *AppDeployment) SetBuilds(v []AppBuild)`
+
+SetBuilds sets Builds field to given value.
+
+
+### GetTask
+
+`func (o *AppDeployment) GetTask() Task`
+
+GetTask returns the Task field if non-nil, zero value otherwise.
+
+### GetTaskOk
+
+`func (o *AppDeployment) GetTaskOk() (*Task, bool)`
+
+GetTaskOk returns a tuple with the Task field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTask
+
+`func (o *AppDeployment) SetTask(v Task)`
+
+SetTask sets Task field to given value.
+
+### HasTask
+
+`func (o *AppDeployment) HasTask() bool`
+
+HasTask returns a boolean if a field has been set.
+
+### SetTaskNil
+
+`func (o *AppDeployment) SetTaskNil(b bool)`
+
+ SetTaskNil sets the value for Task to be an explicit nil
+
+### UnsetTask
+`func (o *AppDeployment) UnsetTask()`
+
+UnsetTask ensures that no value is present for Task, not even an explicit nil
+### GetAppServiceDeployments
+
+`func (o *AppDeployment) GetAppServiceDeployments() []AppServiceDeployment`
+
+GetAppServiceDeployments returns the AppServiceDeployments field if non-nil, zero value otherwise.
+
+### GetAppServiceDeploymentsOk
+
+`func (o *AppDeployment) GetAppServiceDeploymentsOk() (*[]AppServiceDeployment, bool)`
+
+GetAppServiceDeploymentsOk returns a tuple with the AppServiceDeployments field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceDeployments
+
+`func (o *AppDeployment) SetAppServiceDeployments(v []AppServiceDeployment)`
+
+SetAppServiceDeployments sets AppServiceDeployments field to given value.
 
 
 ### GetCreatedAt

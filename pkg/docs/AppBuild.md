@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **AppInstanceId** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
+**Task** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
+**AppServiceBuilds** | [**[]AppServiceBuild**](AppServiceBuild.md) |  | 
 **GitRefType** | **string** |  | 
 **GitRef** | **string** |  | 
 **CommitHash** | **string** |  | 
@@ -22,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewAppBuild
 
-`func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, gitRefType string, gitRef string, commitHash string, commitMessage string, createdAt time.Time, updatedAt time.Time, ) *AppBuild`
+`func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, appServiceBuilds []AppServiceBuild, gitRefType string, gitRef string, commitHash string, commitMessage string, createdAt time.Time, updatedAt time.Time, ) *AppBuild`
 
 NewAppBuild instantiates a new AppBuild object
 This constructor will assign default values to properties that have it defined,
@@ -135,6 +137,61 @@ and a boolean to check if the value has been set.
 `func (o *AppBuild) SetAppServiceId(v int32)`
 
 SetAppServiceId sets AppServiceId field to given value.
+
+
+### GetTask
+
+`func (o *AppBuild) GetTask() Task`
+
+GetTask returns the Task field if non-nil, zero value otherwise.
+
+### GetTaskOk
+
+`func (o *AppBuild) GetTaskOk() (*Task, bool)`
+
+GetTaskOk returns a tuple with the Task field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTask
+
+`func (o *AppBuild) SetTask(v Task)`
+
+SetTask sets Task field to given value.
+
+### HasTask
+
+`func (o *AppBuild) HasTask() bool`
+
+HasTask returns a boolean if a field has been set.
+
+### SetTaskNil
+
+`func (o *AppBuild) SetTaskNil(b bool)`
+
+ SetTaskNil sets the value for Task to be an explicit nil
+
+### UnsetTask
+`func (o *AppBuild) UnsetTask()`
+
+UnsetTask ensures that no value is present for Task, not even an explicit nil
+### GetAppServiceBuilds
+
+`func (o *AppBuild) GetAppServiceBuilds() []AppServiceBuild`
+
+GetAppServiceBuilds returns the AppServiceBuilds field if non-nil, zero value otherwise.
+
+### GetAppServiceBuildsOk
+
+`func (o *AppBuild) GetAppServiceBuildsOk() (*[]AppServiceBuild, bool)`
+
+GetAppServiceBuildsOk returns a tuple with the AppServiceBuilds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceBuilds
+
+`func (o *AppBuild) SetAppServiceBuilds(v []AppServiceBuild)`
+
+SetAppServiceBuilds sets AppServiceBuilds field to given value.
 
 
 ### GetGitRefType

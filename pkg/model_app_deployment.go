@@ -27,6 +27,9 @@ type AppDeployment struct {
 	Status string `json:"status"`
 	SkipRollback bool `json:"skipRollback"`
 	AppInstanceId int32 `json:"appInstanceId"`
+	Builds []AppBuild `json:"builds"`
+	Task NullableTask `json:"task,omitempty"`
+	AppServiceDeployments []AppServiceDeployment `json:"appServiceDeployments"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	StartedAt NullableTime `json:"startedAt,omitempty"`
@@ -39,13 +42,15 @@ type _AppDeployment AppDeployment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppDeployment(id int32, number int32, status string, skipRollback bool, appInstanceId int32, createdAt time.Time, updatedAt time.Time) *AppDeployment {
+func NewAppDeployment(id int32, number int32, status string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
 	this := AppDeployment{}
 	this.Id = id
 	this.Number = number
 	this.Status = status
 	this.SkipRollback = skipRollback
 	this.AppInstanceId = appInstanceId
+	this.Builds = builds
+	this.AppServiceDeployments = appServiceDeployments
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -177,6 +182,96 @@ func (o *AppDeployment) GetAppInstanceIdOk() (*int32, bool) {
 // SetAppInstanceId sets field value
 func (o *AppDeployment) SetAppInstanceId(v int32) {
 	o.AppInstanceId = v
+}
+
+// GetBuilds returns the Builds field value
+func (o *AppDeployment) GetBuilds() []AppBuild {
+	if o == nil {
+		var ret []AppBuild
+		return ret
+	}
+
+	return o.Builds
+}
+
+// GetBuildsOk returns a tuple with the Builds field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetBuildsOk() ([]AppBuild, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Builds, true
+}
+
+// SetBuilds sets field value
+func (o *AppDeployment) SetBuilds(v []AppBuild) {
+	o.Builds = v
+}
+
+// GetTask returns the Task field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetTask() Task {
+	if o == nil || IsNil(o.Task.Get()) {
+		var ret Task
+		return ret
+	}
+	return *o.Task.Get()
+}
+
+// GetTaskOk returns a tuple with the Task field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetTaskOk() (*Task, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Task.Get(), o.Task.IsSet()
+}
+
+// HasTask returns a boolean if a field has been set.
+func (o *AppDeployment) HasTask() bool {
+	if o != nil && o.Task.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTask gets a reference to the given NullableTask and assigns it to the Task field.
+func (o *AppDeployment) SetTask(v Task) {
+	o.Task.Set(&v)
+}
+// SetTaskNil sets the value for Task to be an explicit nil
+func (o *AppDeployment) SetTaskNil() {
+	o.Task.Set(nil)
+}
+
+// UnsetTask ensures that no value is present for Task, not even an explicit nil
+func (o *AppDeployment) UnsetTask() {
+	o.Task.Unset()
+}
+
+// GetAppServiceDeployments returns the AppServiceDeployments field value
+func (o *AppDeployment) GetAppServiceDeployments() []AppServiceDeployment {
+	if o == nil {
+		var ret []AppServiceDeployment
+		return ret
+	}
+
+	return o.AppServiceDeployments
+}
+
+// GetAppServiceDeploymentsOk returns a tuple with the AppServiceDeployments field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetAppServiceDeploymentsOk() ([]AppServiceDeployment, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppServiceDeployments, true
+}
+
+// SetAppServiceDeployments sets field value
+func (o *AppDeployment) SetAppServiceDeployments(v []AppServiceDeployment) {
+	o.AppServiceDeployments = v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -326,6 +421,11 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["skipRollback"] = o.SkipRollback
 	toSerialize["appInstanceId"] = o.AppInstanceId
+	toSerialize["builds"] = o.Builds
+	if o.Task.IsSet() {
+		toSerialize["task"] = o.Task.Get()
+	}
+	toSerialize["appServiceDeployments"] = o.AppServiceDeployments
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	if o.StartedAt.IsSet() {
@@ -347,6 +447,8 @@ func (o *AppDeployment) UnmarshalJSON(data []byte) (err error) {
 		"status",
 		"skipRollback",
 		"appInstanceId",
+		"builds",
+		"appServiceDeployments",
 		"createdAt",
 		"updatedAt",
 	}

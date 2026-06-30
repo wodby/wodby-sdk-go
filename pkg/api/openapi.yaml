@@ -34,6 +34,9 @@ tags:
   name: app-ports
 - description: HTTP routing rules for app instances.
   name: app-routes
+- description: "TLS certificate metadata for routes, app services, app instances,\
+    \ and databases."
+  name: certs
 - description: Kubernetes clusters connected to or managed by Wodby.
   name: clusters
 - description: Database instances managed through provider integrations.
@@ -7655,6 +7658,88 @@ paths:
       summary: Update app route
       tags:
       - app-routes
+  /certs:
+    get:
+      description: Returns certificate metadata for an organization.
+      operationId: listCerts
+      parameters:
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Cert'
+                type: array
+          description: List of certs
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: List certs
+      tags:
+      - certs
+  /certs/{id}:
+    get:
+      description: Returns certificate metadata identified by the request path within
+        the requested organization.
+      operationId: getCert
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cert'
+          description: Cert
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Get cert
+      tags:
+      - certs
   /envs:
     get:
       description: Returns envs matching the request filters.
@@ -8406,10 +8491,97 @@ components:
         appInstanceId: 1
         number: 6
         createdAt: 2000-01-23T04:56:07.000+00:00
+        task: "{}"
         endedAt: 2000-01-23T04:56:07.000+00:00
+        builds:
+        - gitRef: gitRef
+          commitMessage: commitMessage
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          commitHash: commitHash
+          appInstanceId: 2
+          number: 5
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
+          appServiceBuilds:
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          id: 5
+          status: status
+          gitRefType: gitRefType
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - gitRef: gitRef
+          commitMessage: commitMessage
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          commitHash: commitHash
+          appInstanceId: 2
+          number: 5
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
+          appServiceBuilds:
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          id: 5
+          status: status
+          gitRefType: gitRefType
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         startedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         status: status
+        appServiceDeployments:
+        - jobName: jobName
+          skipPostDeployment: true
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appServiceBuildId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          force: true
+          id: 4
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - jobName: jobName
+          skipPostDeployment: true
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appServiceBuildId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          force: true
+          id: 4
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -8422,6 +8594,19 @@ components:
           type: boolean
         appInstanceId:
           type: integer
+        builds:
+          items:
+            $ref: '#/components/schemas/AppBuild'
+          type: array
+        task:
+          allOf:
+          - $ref: '#/components/schemas/Task'
+          nullable: true
+          type: object
+        appServiceDeployments:
+          items:
+            $ref: '#/components/schemas/AppServiceDeployment'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -8438,6 +8623,8 @@ components:
           type: string
       required:
       - appInstanceId
+      - appServiceDeployments
+      - builds
       - createdAt
       - id
       - number
@@ -8445,28 +8632,255 @@ components:
       - status
       - updatedAt
       type: object
+    AppServiceDeployment:
+      example:
+        jobName: jobName
+        skipPostDeployment: true
+        appServiceId: 7
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        appServiceBuildId: 1
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        force: true
+        id: 4
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        jobName:
+          type: string
+        status:
+          type: string
+        appServiceId:
+          type: integer
+        appServiceBuildId:
+          nullable: true
+          type: integer
+        skipPostDeployment:
+          type: boolean
+        force:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - appServiceId
+      - createdAt
+      - force
+      - id
+      - jobName
+      - skipPostDeployment
+      - status
+      - updatedAt
+      type: object
     AppDeploymentsResponse:
       example:
-        nextPage: 5
-        totalCount: 5
+        nextPage: 1
+        totalCount: 1
         items:
         - skipRollback: true
           appInstanceId: 1
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
           endedAt: 2000-01-23T04:56:07.000+00:00
+          builds:
+          - gitRef: gitRef
+            commitMessage: commitMessage
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            commitHash: commitHash
+            appInstanceId: 2
+            number: 5
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            task: "{}"
+            appServiceBuilds:
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            status: status
+            gitRefType: gitRefType
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - gitRef: gitRef
+            commitMessage: commitMessage
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            commitHash: commitHash
+            appInstanceId: 2
+            number: 5
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            task: "{}"
+            appServiceBuilds:
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            status: status
+            gitRefType: gitRefType
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           status: status
+          appServiceDeployments:
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - skipRollback: true
           appInstanceId: 1
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
           endedAt: 2000-01-23T04:56:07.000+00:00
+          builds:
+          - gitRef: gitRef
+            commitMessage: commitMessage
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            commitHash: commitHash
+            appInstanceId: 2
+            number: 5
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            task: "{}"
+            appServiceBuilds:
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            status: status
+            gitRefType: gitRefType
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - gitRef: gitRef
+            commitMessage: commitMessage
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            commitHash: commitHash
+            appInstanceId: 2
+            number: 5
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            task: "{}"
+            appServiceBuilds:
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - image: image
+              appServiceId: 2
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              size: 3
+              id: 9
+              imageDeleted: true
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            id: 5
+            status: status
+            gitRefType: gitRefType
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           status: status
+          appServiceDeployments:
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         items:
@@ -8488,12 +8902,30 @@ components:
         commitMessage: commitMessage
         startedAt: 2000-01-23T04:56:07.000+00:00
         commitHash: commitHash
-        appInstanceId: 1
-        number: 6
-        appServiceId: 5
+        appInstanceId: 2
+        number: 5
+        appServiceId: 7
         createdAt: 2000-01-23T04:56:07.000+00:00
+        task: "{}"
+        appServiceBuilds:
+        - image: image
+          appServiceId: 2
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          size: 3
+          id: 9
+          imageDeleted: true
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - image: image
+          appServiceId: 2
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          size: 3
+          id: 9
+          imageDeleted: true
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
-        id: 0
+        id: 5
         status: status
         gitRefType: gitRefType
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -8508,6 +8940,15 @@ components:
           type: integer
         appServiceId:
           type: integer
+        task:
+          allOf:
+          - $ref: '#/components/schemas/Task'
+          nullable: true
+          type: object
+        appServiceBuilds:
+          items:
+            $ref: '#/components/schemas/AppServiceBuild'
+          type: array
         gitRefType:
           type: string
         gitRef:
@@ -8532,6 +8973,7 @@ components:
           type: string
       required:
       - appInstanceId
+      - appServiceBuilds
       - appServiceId
       - commitHash
       - commitMessage
@@ -8543,21 +8985,78 @@ components:
       - status
       - updatedAt
       type: object
+    AppServiceBuild:
+      example:
+        image: image
+        appServiceId: 2
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        size: 3
+        id: 9
+        imageDeleted: true
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        status:
+          type: string
+        image:
+          type: string
+        imageDeleted:
+          type: boolean
+        size:
+          type: integer
+        appServiceId:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appServiceId
+      - createdAt
+      - id
+      - image
+      - imageDeleted
+      - size
+      - status
+      - updatedAt
+      type: object
     AppBuildsResponse:
       example:
-        nextPage: 2
-        totalCount: 5
+        nextPage: 6
+        totalCount: 0
         items:
         - gitRef: gitRef
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
-          appInstanceId: 1
-          number: 6
-          appServiceId: 5
+          appInstanceId: 2
+          number: 5
+          appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
+          appServiceBuilds:
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 0
+          id: 5
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -8565,12 +9064,30 @@ components:
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
-          appInstanceId: 1
-          number: 6
-          appServiceId: 5
+          appInstanceId: 2
+          number: 5
+          appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
+          appServiceBuilds:
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - image: image
+            appServiceId: 2
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 3
+            id: 9
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 0
+          id: 5
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -9256,6 +9773,7 @@ components:
         redirectScheme: redirectScheme
         redirectPath: redirectPath
         main: true
+        cert: "{}"
         redirectStatusCode: 6
         pathType: pathType
         redirectHost: redirectHost
@@ -9310,6 +9828,11 @@ components:
           type: integer
         portId:
           type: integer
+        cert:
+          allOf:
+          - $ref: '#/components/schemas/Cert'
+          nullable: true
+          type: object
         createdAt:
           format: date-time
           type: string
@@ -9334,6 +9857,68 @@ components:
       - portId
       - primary
       - private
+      - status
+      - updatedAt
+      type: object
+    Cert:
+      example:
+        issuer: issuer
+        renewsAt: 2000-01-23T04:56:07.000+00:00
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+        appInstanceId: 1
+        appServiceId: 5
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        keyLength: 6
+        id: 0
+        issuedAt: 2000-01-23T04:56:07.000+00:00
+        keyType: keyType
+        databaseId: 5
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        issuer:
+          type: string
+        keyType:
+          type: string
+        keyLength:
+          type: integer
+        status:
+          type: string
+        appInstanceId:
+          nullable: true
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        databaseId:
+          nullable: true
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        issuedAt:
+          format: date-time
+          nullable: true
+          type: string
+        renewsAt:
+          format: date-time
+          nullable: true
+          type: string
+        expiresAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - createdAt
+      - id
+      - issuer
+      - keyLength
+      - keyType
       - status
       - updatedAt
       type: object
