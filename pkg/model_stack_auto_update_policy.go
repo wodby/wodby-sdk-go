@@ -22,7 +22,6 @@ var _ MappedNullable = &StackAutoUpdatePolicy{}
 // StackAutoUpdatePolicy struct for StackAutoUpdatePolicy
 type StackAutoUpdatePolicy struct {
 	Scope string `json:"scope"`
-	IncludeDisabled bool `json:"includeDisabled"`
 	VersionPolicy *StackAutoUpdateVersionPolicy `json:"versionPolicy,omitempty"`
 }
 
@@ -32,10 +31,9 @@ type _StackAutoUpdatePolicy StackAutoUpdatePolicy
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStackAutoUpdatePolicy(scope string, includeDisabled bool) *StackAutoUpdatePolicy {
+func NewStackAutoUpdatePolicy(scope string) *StackAutoUpdatePolicy {
 	this := StackAutoUpdatePolicy{}
 	this.Scope = scope
-	this.IncludeDisabled = includeDisabled
 	return &this
 }
 
@@ -69,30 +67,6 @@ func (o *StackAutoUpdatePolicy) GetScopeOk() (*string, bool) {
 // SetScope sets field value
 func (o *StackAutoUpdatePolicy) SetScope(v string) {
 	o.Scope = v
-}
-
-// GetIncludeDisabled returns the IncludeDisabled field value
-func (o *StackAutoUpdatePolicy) GetIncludeDisabled() bool {
-	if o == nil {
-		var ret bool
-		return ret
-	}
-
-	return o.IncludeDisabled
-}
-
-// GetIncludeDisabledOk returns a tuple with the IncludeDisabled field value
-// and a boolean to check if the value has been set.
-func (o *StackAutoUpdatePolicy) GetIncludeDisabledOk() (*bool, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.IncludeDisabled, true
-}
-
-// SetIncludeDisabled sets field value
-func (o *StackAutoUpdatePolicy) SetIncludeDisabled(v bool) {
-	o.IncludeDisabled = v
 }
 
 // GetVersionPolicy returns the VersionPolicy field value if set, zero value otherwise.
@@ -138,7 +112,6 @@ func (o StackAutoUpdatePolicy) MarshalJSON() ([]byte, error) {
 func (o StackAutoUpdatePolicy) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["scope"] = o.Scope
-	toSerialize["includeDisabled"] = o.IncludeDisabled
 	if !IsNil(o.VersionPolicy) {
 		toSerialize["versionPolicy"] = o.VersionPolicy
 	}
@@ -151,7 +124,6 @@ func (o *StackAutoUpdatePolicy) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"scope",
-		"includeDisabled",
 	}
 
 	allProperties := make(map[string]interface{})

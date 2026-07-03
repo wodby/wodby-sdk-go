@@ -5,14 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Scope** | **string** |  | 
-**IncludeDisabled** | **bool** |  | 
 **VersionPolicy** | Pointer to [**StackAutoUpdateVersionPolicy**](StackAutoUpdateVersionPolicy.md) |  | [optional] 
 
 ## Methods
 
 ### NewStackAutoUpdatePolicy
 
-`func NewStackAutoUpdatePolicy(scope string, includeDisabled bool, ) *StackAutoUpdatePolicy`
+`func NewStackAutoUpdatePolicy(scope string, ) *StackAutoUpdatePolicy`
 
 NewStackAutoUpdatePolicy instantiates a new StackAutoUpdatePolicy object
 This constructor will assign default values to properties that have it defined,
@@ -45,26 +44,6 @@ and a boolean to check if the value has been set.
 `func (o *StackAutoUpdatePolicy) SetScope(v string)`
 
 SetScope sets Scope field to given value.
-
-
-### GetIncludeDisabled
-
-`func (o *StackAutoUpdatePolicy) GetIncludeDisabled() bool`
-
-GetIncludeDisabled returns the IncludeDisabled field if non-nil, zero value otherwise.
-
-### GetIncludeDisabledOk
-
-`func (o *StackAutoUpdatePolicy) GetIncludeDisabledOk() (*bool, bool)`
-
-GetIncludeDisabledOk returns a tuple with the IncludeDisabled field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIncludeDisabled
-
-`func (o *StackAutoUpdatePolicy) SetIncludeDisabled(v bool)`
-
-SetIncludeDisabled sets IncludeDisabled field to given value.
 
 
 ### GetVersionPolicy

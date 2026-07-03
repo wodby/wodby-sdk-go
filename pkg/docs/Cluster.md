@@ -17,7 +17,8 @@ Name | Type | Description | Notes
 **InfraVersion** | **string** |  | 
 **MinNodeCount** | Pointer to **NullableInt32** |  | [optional] 
 **MaxNodeCount** | Pointer to **NullableInt32** |  | [optional] 
-**LastNodeCount** | Pointer to **NullableInt32** |  | [optional] 
+**LastNodesReady** | Pointer to **NullableInt32** |  | [optional] 
+**LastNodesTotal** | Pointer to **NullableInt32** |  | [optional] 
 **Region** | Pointer to **NullableString** |  | [optional] 
 **Zone** | Pointer to **NullableString** |  | [optional] 
 **Ips** | Pointer to **[]string** |  | [optional] 
@@ -352,41 +353,76 @@ HasMaxNodeCount returns a boolean if a field has been set.
 `func (o *Cluster) UnsetMaxNodeCount()`
 
 UnsetMaxNodeCount ensures that no value is present for MaxNodeCount, not even an explicit nil
-### GetLastNodeCount
+### GetLastNodesReady
 
-`func (o *Cluster) GetLastNodeCount() int32`
+`func (o *Cluster) GetLastNodesReady() int32`
 
-GetLastNodeCount returns the LastNodeCount field if non-nil, zero value otherwise.
+GetLastNodesReady returns the LastNodesReady field if non-nil, zero value otherwise.
 
-### GetLastNodeCountOk
+### GetLastNodesReadyOk
 
-`func (o *Cluster) GetLastNodeCountOk() (*int32, bool)`
+`func (o *Cluster) GetLastNodesReadyOk() (*int32, bool)`
 
-GetLastNodeCountOk returns a tuple with the LastNodeCount field if it's non-nil, zero value otherwise
+GetLastNodesReadyOk returns a tuple with the LastNodesReady field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLastNodeCount
+### SetLastNodesReady
 
-`func (o *Cluster) SetLastNodeCount(v int32)`
+`func (o *Cluster) SetLastNodesReady(v int32)`
 
-SetLastNodeCount sets LastNodeCount field to given value.
+SetLastNodesReady sets LastNodesReady field to given value.
 
-### HasLastNodeCount
+### HasLastNodesReady
 
-`func (o *Cluster) HasLastNodeCount() bool`
+`func (o *Cluster) HasLastNodesReady() bool`
 
-HasLastNodeCount returns a boolean if a field has been set.
+HasLastNodesReady returns a boolean if a field has been set.
 
-### SetLastNodeCountNil
+### SetLastNodesReadyNil
 
-`func (o *Cluster) SetLastNodeCountNil(b bool)`
+`func (o *Cluster) SetLastNodesReadyNil(b bool)`
 
- SetLastNodeCountNil sets the value for LastNodeCount to be an explicit nil
+ SetLastNodesReadyNil sets the value for LastNodesReady to be an explicit nil
 
-### UnsetLastNodeCount
-`func (o *Cluster) UnsetLastNodeCount()`
+### UnsetLastNodesReady
+`func (o *Cluster) UnsetLastNodesReady()`
 
-UnsetLastNodeCount ensures that no value is present for LastNodeCount, not even an explicit nil
+UnsetLastNodesReady ensures that no value is present for LastNodesReady, not even an explicit nil
+### GetLastNodesTotal
+
+`func (o *Cluster) GetLastNodesTotal() int32`
+
+GetLastNodesTotal returns the LastNodesTotal field if non-nil, zero value otherwise.
+
+### GetLastNodesTotalOk
+
+`func (o *Cluster) GetLastNodesTotalOk() (*int32, bool)`
+
+GetLastNodesTotalOk returns a tuple with the LastNodesTotal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastNodesTotal
+
+`func (o *Cluster) SetLastNodesTotal(v int32)`
+
+SetLastNodesTotal sets LastNodesTotal field to given value.
+
+### HasLastNodesTotal
+
+`func (o *Cluster) HasLastNodesTotal() bool`
+
+HasLastNodesTotal returns a boolean if a field has been set.
+
+### SetLastNodesTotalNil
+
+`func (o *Cluster) SetLastNodesTotalNil(b bool)`
+
+ SetLastNodesTotalNil sets the value for LastNodesTotal to be an explicit nil
+
+### UnsetLastNodesTotal
+`func (o *Cluster) UnsetLastNodesTotal()`
+
+UnsetLastNodesTotal ensures that no value is present for LastNodesTotal, not even an explicit nil
 ### GetRegion
 
 `func (o *Cluster) GetRegion() string`

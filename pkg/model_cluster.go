@@ -35,7 +35,8 @@ type Cluster struct {
 	InfraVersion string `json:"infraVersion"`
 	MinNodeCount NullableInt32 `json:"minNodeCount,omitempty"`
 	MaxNodeCount NullableInt32 `json:"maxNodeCount,omitempty"`
-	LastNodeCount NullableInt32 `json:"lastNodeCount,omitempty"`
+	LastNodesReady NullableInt32 `json:"lastNodesReady,omitempty"`
+	LastNodesTotal NullableInt32 `json:"lastNodesTotal,omitempty"`
 	Region NullableString `json:"region,omitempty"`
 	Zone NullableString `json:"zone,omitempty"`
 	Ips []string `json:"ips,omitempty"`
@@ -445,46 +446,88 @@ func (o *Cluster) UnsetMaxNodeCount() {
 	o.MaxNodeCount.Unset()
 }
 
-// GetLastNodeCount returns the LastNodeCount field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Cluster) GetLastNodeCount() int32 {
-	if o == nil || IsNil(o.LastNodeCount.Get()) {
+// GetLastNodesReady returns the LastNodesReady field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetLastNodesReady() int32 {
+	if o == nil || IsNil(o.LastNodesReady.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.LastNodeCount.Get()
+	return *o.LastNodesReady.Get()
 }
 
-// GetLastNodeCountOk returns a tuple with the LastNodeCount field value if set, nil otherwise
+// GetLastNodesReadyOk returns a tuple with the LastNodesReady field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Cluster) GetLastNodeCountOk() (*int32, bool) {
+func (o *Cluster) GetLastNodesReadyOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.LastNodeCount.Get(), o.LastNodeCount.IsSet()
+	return o.LastNodesReady.Get(), o.LastNodesReady.IsSet()
 }
 
-// HasLastNodeCount returns a boolean if a field has been set.
-func (o *Cluster) HasLastNodeCount() bool {
-	if o != nil && o.LastNodeCount.IsSet() {
+// HasLastNodesReady returns a boolean if a field has been set.
+func (o *Cluster) HasLastNodesReady() bool {
+	if o != nil && o.LastNodesReady.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetLastNodeCount gets a reference to the given NullableInt32 and assigns it to the LastNodeCount field.
-func (o *Cluster) SetLastNodeCount(v int32) {
-	o.LastNodeCount.Set(&v)
+// SetLastNodesReady gets a reference to the given NullableInt32 and assigns it to the LastNodesReady field.
+func (o *Cluster) SetLastNodesReady(v int32) {
+	o.LastNodesReady.Set(&v)
 }
-// SetLastNodeCountNil sets the value for LastNodeCount to be an explicit nil
-func (o *Cluster) SetLastNodeCountNil() {
-	o.LastNodeCount.Set(nil)
+// SetLastNodesReadyNil sets the value for LastNodesReady to be an explicit nil
+func (o *Cluster) SetLastNodesReadyNil() {
+	o.LastNodesReady.Set(nil)
 }
 
-// UnsetLastNodeCount ensures that no value is present for LastNodeCount, not even an explicit nil
-func (o *Cluster) UnsetLastNodeCount() {
-	o.LastNodeCount.Unset()
+// UnsetLastNodesReady ensures that no value is present for LastNodesReady, not even an explicit nil
+func (o *Cluster) UnsetLastNodesReady() {
+	o.LastNodesReady.Unset()
+}
+
+// GetLastNodesTotal returns the LastNodesTotal field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetLastNodesTotal() int32 {
+	if o == nil || IsNil(o.LastNodesTotal.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.LastNodesTotal.Get()
+}
+
+// GetLastNodesTotalOk returns a tuple with the LastNodesTotal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetLastNodesTotalOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastNodesTotal.Get(), o.LastNodesTotal.IsSet()
+}
+
+// HasLastNodesTotal returns a boolean if a field has been set.
+func (o *Cluster) HasLastNodesTotal() bool {
+	if o != nil && o.LastNodesTotal.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastNodesTotal gets a reference to the given NullableInt32 and assigns it to the LastNodesTotal field.
+func (o *Cluster) SetLastNodesTotal(v int32) {
+	o.LastNodesTotal.Set(&v)
+}
+// SetLastNodesTotalNil sets the value for LastNodesTotal to be an explicit nil
+func (o *Cluster) SetLastNodesTotalNil() {
+	o.LastNodesTotal.Set(nil)
+}
+
+// UnsetLastNodesTotal ensures that no value is present for LastNodesTotal, not even an explicit nil
+func (o *Cluster) UnsetLastNodesTotal() {
+	o.LastNodesTotal.Unset()
 }
 
 // GetRegion returns the Region field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -821,8 +864,11 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	if o.MaxNodeCount.IsSet() {
 		toSerialize["maxNodeCount"] = o.MaxNodeCount.Get()
 	}
-	if o.LastNodeCount.IsSet() {
-		toSerialize["lastNodeCount"] = o.LastNodeCount.Get()
+	if o.LastNodesReady.IsSet() {
+		toSerialize["lastNodesReady"] = o.LastNodesReady.Get()
+	}
+	if o.LastNodesTotal.IsSet() {
+		toSerialize["lastNodesTotal"] = o.LastNodesTotal.Get()
 	}
 	if o.Region.IsSet() {
 		toSerialize["region"] = o.Region.Get()

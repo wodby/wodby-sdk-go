@@ -20,7 +20,6 @@ var _ MappedNullable = &StackAutoUpdatePolicyInput{}
 // StackAutoUpdatePolicyInput struct for StackAutoUpdatePolicyInput
 type StackAutoUpdatePolicyInput struct {
 	Scope NullableString `json:"scope,omitempty"`
-	IncludeDisabled NullableBool `json:"includeDisabled,omitempty"`
 	VersionPolicy *StackAutoUpdateVersionPolicyInput `json:"versionPolicy,omitempty"`
 }
 
@@ -83,48 +82,6 @@ func (o *StackAutoUpdatePolicyInput) UnsetScope() {
 	o.Scope.Unset()
 }
 
-// GetIncludeDisabled returns the IncludeDisabled field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *StackAutoUpdatePolicyInput) GetIncludeDisabled() bool {
-	if o == nil || IsNil(o.IncludeDisabled.Get()) {
-		var ret bool
-		return ret
-	}
-	return *o.IncludeDisabled.Get()
-}
-
-// GetIncludeDisabledOk returns a tuple with the IncludeDisabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *StackAutoUpdatePolicyInput) GetIncludeDisabledOk() (*bool, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.IncludeDisabled.Get(), o.IncludeDisabled.IsSet()
-}
-
-// HasIncludeDisabled returns a boolean if a field has been set.
-func (o *StackAutoUpdatePolicyInput) HasIncludeDisabled() bool {
-	if o != nil && o.IncludeDisabled.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeDisabled gets a reference to the given NullableBool and assigns it to the IncludeDisabled field.
-func (o *StackAutoUpdatePolicyInput) SetIncludeDisabled(v bool) {
-	o.IncludeDisabled.Set(&v)
-}
-// SetIncludeDisabledNil sets the value for IncludeDisabled to be an explicit nil
-func (o *StackAutoUpdatePolicyInput) SetIncludeDisabledNil() {
-	o.IncludeDisabled.Set(nil)
-}
-
-// UnsetIncludeDisabled ensures that no value is present for IncludeDisabled, not even an explicit nil
-func (o *StackAutoUpdatePolicyInput) UnsetIncludeDisabled() {
-	o.IncludeDisabled.Unset()
-}
-
 // GetVersionPolicy returns the VersionPolicy field value if set, zero value otherwise.
 func (o *StackAutoUpdatePolicyInput) GetVersionPolicy() StackAutoUpdateVersionPolicyInput {
 	if o == nil || IsNil(o.VersionPolicy) {
@@ -169,9 +126,6 @@ func (o StackAutoUpdatePolicyInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Scope.IsSet() {
 		toSerialize["scope"] = o.Scope.Get()
-	}
-	if o.IncludeDisabled.IsSet() {
-		toSerialize["includeDisabled"] = o.IncludeDisabled.Get()
 	}
 	if !IsNil(o.VersionPolicy) {
 		toSerialize["versionPolicy"] = o.VersionPolicy

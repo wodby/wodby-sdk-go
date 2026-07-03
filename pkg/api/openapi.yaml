@@ -8784,7 +8784,6 @@ components:
     StackAutoUpdatePolicy:
       example:
         scope: scope
-        includeDisabled: true
         versionPolicy:
           mode: mode
           allowMajor: true
@@ -8793,18 +8792,14 @@ components:
       properties:
         scope:
           type: string
-        includeDisabled:
-          type: boolean
         versionPolicy:
           $ref: '#/components/schemas/StackAutoUpdateVersionPolicy'
       required:
-      - includeDisabled
       - scope
       type: object
     StackAutoUpdatePolicyInput:
       example:
         scope: scope
-        includeDisabled: true
         versionPolicy:
           mode: mode
           allowMajor: true
@@ -8814,9 +8809,6 @@ components:
         scope:
           nullable: true
           type: string
-        includeDisabled:
-          nullable: true
-          type: boolean
         versionPolicy:
           $ref: '#/components/schemas/StackAutoUpdateVersionPolicyInput'
       type: object
@@ -8825,7 +8817,6 @@ components:
         enabled: true
         policy:
           scope: scope
-          includeDisabled: true
           versionPolicy:
             mode: mode
             allowMajor: true
@@ -8844,7 +8835,6 @@ components:
         enabled: true
         policy:
           scope: scope
-          includeDisabled: true
           versionPolicy:
             mode: mode
             allowMajor: true
@@ -9026,7 +9016,6 @@ components:
           enabled: true
           policy:
             scope: scope
-            includeDisabled: true
             versionPolicy:
               mode: mode
               allowMajor: true
@@ -9067,7 +9056,6 @@ components:
           enabled: true
           policy:
             scope: scope
-            includeDisabled: true
             versionPolicy:
               mode: mode
               allowMajor: true
@@ -10279,9 +10267,11 @@ components:
                 allowPatch: true
                 allowMinor: true
         wodby: true
+        lastNodesReady: 5
+        lastNodesTotal: 5
         maxNodeCount: 1
         serverless: true
-        integrationId: 5
+        integrationId: 2
         k3s: true
         title: title
         demo: true
@@ -10289,11 +10279,10 @@ components:
         ips:
         - ips
         - ips
-        orgId: 2
+        orgId: 7
         createdAt: 2000-01-23T04:56:07.000+00:00
         hostname: hostname
         minNodeCount: 6
-        lastNodeCount: 5
         infraVersion: infraVersion
         zone: zone
         name: name
@@ -10332,7 +10321,10 @@ components:
         maxNodeCount:
           nullable: true
           type: integer
-        lastNodeCount:
+        lastNodesReady:
+          nullable: true
+          type: integer
+        lastNodesTotal:
           nullable: true
           type: integer
         region:
@@ -11399,7 +11391,6 @@ components:
             enabled: true
             policy:
               scope: scope
-              includeDisabled: true
               versionPolicy:
                 mode: mode
                 allowMajor: true
@@ -11604,7 +11595,6 @@ components:
               enabled: true
               policy:
                 scope: scope
-                includeDisabled: true
                 versionPolicy:
                   mode: mode
                   allowMajor: true
@@ -11647,7 +11637,6 @@ components:
               enabled: true
               policy:
                 scope: scope
-                includeDisabled: true
                 versionPolicy:
                   mode: mode
                   allowMajor: true

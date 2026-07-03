@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Scope** | Pointer to **NullableString** |  | [optional] 
-**IncludeDisabled** | Pointer to **NullableBool** |  | [optional] 
 **VersionPolicy** | Pointer to [**StackAutoUpdateVersionPolicyInput**](StackAutoUpdateVersionPolicyInput.md) |  | [optional] 
 
 ## Methods
@@ -62,41 +61,6 @@ HasScope returns a boolean if a field has been set.
 `func (o *StackAutoUpdatePolicyInput) UnsetScope()`
 
 UnsetScope ensures that no value is present for Scope, not even an explicit nil
-### GetIncludeDisabled
-
-`func (o *StackAutoUpdatePolicyInput) GetIncludeDisabled() bool`
-
-GetIncludeDisabled returns the IncludeDisabled field if non-nil, zero value otherwise.
-
-### GetIncludeDisabledOk
-
-`func (o *StackAutoUpdatePolicyInput) GetIncludeDisabledOk() (*bool, bool)`
-
-GetIncludeDisabledOk returns a tuple with the IncludeDisabled field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIncludeDisabled
-
-`func (o *StackAutoUpdatePolicyInput) SetIncludeDisabled(v bool)`
-
-SetIncludeDisabled sets IncludeDisabled field to given value.
-
-### HasIncludeDisabled
-
-`func (o *StackAutoUpdatePolicyInput) HasIncludeDisabled() bool`
-
-HasIncludeDisabled returns a boolean if a field has been set.
-
-### SetIncludeDisabledNil
-
-`func (o *StackAutoUpdatePolicyInput) SetIncludeDisabledNil(b bool)`
-
- SetIncludeDisabledNil sets the value for IncludeDisabled to be an explicit nil
-
-### UnsetIncludeDisabled
-`func (o *StackAutoUpdatePolicyInput) UnsetIncludeDisabled()`
-
-UnsetIncludeDisabled ensures that no value is present for IncludeDisabled, not even an explicit nil
 ### GetVersionPolicy
 
 `func (o *StackAutoUpdatePolicyInput) GetVersionPolicy() StackAutoUpdateVersionPolicyInput`
