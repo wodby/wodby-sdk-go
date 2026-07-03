@@ -37,6 +37,7 @@ type AppInstance struct {
 	StackIcon string `json:"stackIcon"`
 	StackRevNumber int32 `json:"stackRevNumber"`
 	StackVersion string `json:"stackVersion"`
+	Settings *AppInstanceSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -454,6 +455,38 @@ func (o *AppInstance) SetStackVersion(v string) {
 	o.StackVersion = v
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *AppInstance) GetSettings() AppInstanceSettings {
+	if o == nil || IsNil(o.Settings) {
+		var ret AppInstanceSettings
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetSettingsOk() (*AppInstanceSettings, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *AppInstance) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given AppInstanceSettings and assigns it to the Settings field.
+func (o *AppInstance) SetSettings(v AppInstanceSettings) {
+	o.Settings = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppInstance) GetCreatedAt() time.Time {
 	if o == nil {
@@ -529,6 +562,9 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize["stackIcon"] = o.StackIcon
 	toSerialize["stackRevNumber"] = o.StackRevNumber
 	toSerialize["stackVersion"] = o.StackVersion
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

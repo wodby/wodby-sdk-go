@@ -42,6 +42,7 @@ type Cluster struct {
 	Hostname NullableString `json:"hostname,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	OrgId int32 `json:"orgId"`
+	Settings *ClusterSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -711,6 +712,38 @@ func (o *Cluster) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *Cluster) GetSettings() ClusterSettings {
+	if o == nil || IsNil(o.Settings) {
+		var ret ClusterSettings
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetSettingsOk() (*ClusterSettings, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *Cluster) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given ClusterSettings and assigns it to the Settings field.
+func (o *Cluster) SetSettings(v ClusterSettings) {
+	o.Settings = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Cluster) GetCreatedAt() time.Time {
 	if o == nil {
@@ -807,6 +840,9 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
 	}
 	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

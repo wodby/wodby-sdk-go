@@ -64,6 +64,18 @@ func Test_client_ServicesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ServicesAPIService ImportServices", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServicesAPI.ImportServices(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ServicesAPIService ListServiceLinkCandidates", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -83,6 +95,20 @@ func Test_client_ServicesAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ServicesAPI.ListServices(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ServicesAPIService UpdateServiceSettings", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.ServicesAPI.UpdateServiceSettings(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

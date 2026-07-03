@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **Hostname** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **OrgId** | **int32** |  | 
+**Settings** | Pointer to [**ClusterSettings**](ClusterSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -580,6 +581,31 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+
+### GetSettings
+
+`func (o *Cluster) GetSettings() ClusterSettings`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *Cluster) GetSettingsOk() (*ClusterSettings, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *Cluster) SetSettings(v ClusterSettings)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *Cluster) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

@@ -103,6 +103,20 @@ func Test_client_AppInstancesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AppInstancesAPIService UpdateAppInstanceSettings", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.AppInstancesAPI.UpdateAppInstanceSettings(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AppInstancesAPIService UpgradeAppInstanceStack", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

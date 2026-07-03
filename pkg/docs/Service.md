@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **OriginStackRevVersion** | Pointer to **NullableString** |  | [optional] 
 **OriginStackRevCreatedAt** | Pointer to **NullableTime** |  | [optional] 
 **OrgId** | **int32** |  | 
+**Settings** | Pointer to [**ServiceSettings**](ServiceSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -631,6 +632,31 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+
+### GetSettings
+
+`func (o *Service) GetSettings() ServiceSettings`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *Service) GetSettingsOk() (*ServiceSettings, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *Service) SetSettings(v ServiceSettings)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *Service) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

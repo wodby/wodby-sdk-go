@@ -1033,6 +1033,46 @@ paths:
       summary: Update app instance
       tags:
       - app-instances
+  /app-instances/settings/{id}:
+    put:
+      description: Updates app instance settings and returns the updated app instance.
+      operationId: updateAppInstanceSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppInstanceSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstance'
+          description: Updated app instance
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update app instance settings
+      tags:
+      - app-instances
   /app-instances/{id}/actions/upgrade-stack:
     post:
       description: Upgrades an app instance stack using the selected upgrade sections.
@@ -3435,6 +3475,46 @@ paths:
       summary: Update cluster
       tags:
       - clusters
+  /clusters/settings/{id}:
+    put:
+      description: Updates cluster settings and returns the updated cluster.
+      operationId: updateClusterSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Updated cluster
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update cluster settings
+      tags:
+      - clusters
   /databases:
     get:
       description: Returns databases matching the request filters.
@@ -5132,6 +5212,38 @@ paths:
       summary: List services
       tags:
       - services
+  /services/actions/import:
+    post:
+      description: Starts a task that imports services from a Git repository.
+      operationId: importServices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportCatalogFromGitInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Import task
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Import services from Git
+      tags:
+      - services
   /services/by-name/{name}:
     get:
       description: Returns the service identified by name.
@@ -5205,6 +5317,46 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
       summary: Get service
+      tags:
+      - services
+  /services/settings/{id}:
+    put:
+      description: Updates service settings and returns the updated service.
+      operationId: updateServiceSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: Updated service
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update service settings
       tags:
       - services
   /services/{name}/options/link-candidates:
@@ -5346,6 +5498,38 @@ paths:
       summary: List stacks
       tags:
       - stacks
+  /stacks/actions/import:
+    post:
+      description: Starts a task that imports stacks from a Git repository.
+      operationId: importStacks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportCatalogFromGitInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Import task
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Import stacks from Git
+      tags:
+      - stacks
   /stacks/by-name/{name}:
     get:
       description: Returns the stack identified by name.
@@ -5419,6 +5603,46 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Error response
       summary: Get stack
+      tags:
+      - stacks
+  /stacks/settings/{id}:
+    put:
+      description: Updates stack settings and returns the updated stack.
+      operationId: updateStackSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Updated stack
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Error response
+      summary: Update stack settings
       tags:
       - stacks
   /stacks/{id}/actions/update-from-git:
@@ -8249,6 +8473,811 @@ components:
       required:
       - success
       type: object
+    GitAutoUpdateSettings:
+      example:
+        allowMajor: true
+        allowPatch: true
+        semverTags: true
+        allowMinor: true
+        branches: true
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+        branches:
+          type: boolean
+        semverTags:
+          type: boolean
+        allowPatch:
+          type: boolean
+        allowMinor:
+          type: boolean
+        allowMajor:
+          type: boolean
+      required:
+      - allowMajor
+      - allowMinor
+      - allowPatch
+      - branches
+      - enabled
+      - semverTags
+      type: object
+    GitAutoUpdateSettingsInput:
+      example:
+        allowMajor: true
+        allowPatch: true
+        semverTags: true
+        allowMinor: true
+        branches: true
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+        branches:
+          type: boolean
+        semverTags:
+          type: boolean
+        allowPatch:
+          type: boolean
+        allowMinor:
+          type: boolean
+        allowMajor:
+          type: boolean
+      required:
+      - allowMajor
+      - allowMinor
+      - allowPatch
+      - branches
+      - enabled
+      - semverTags
+      type: object
+    ServiceSettings:
+      example:
+        gitAutoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+      properties:
+        gitAutoUpdate:
+          $ref: '#/components/schemas/GitAutoUpdateSettings'
+      type: object
+    ServiceSettingsInput:
+      example:
+        gitAutoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+      properties:
+        gitAutoUpdate:
+          $ref: '#/components/schemas/GitAutoUpdateSettingsInput'
+      type: object
+    AppInstanceStackUpgradeSettings:
+      example:
+        cron: true
+        settings: true
+        configs: true
+        versions: true
+        replicas: true
+        volumes: true
+        resources: true
+        links: true
+        tokens: true
+        main: true
+        services: true
+        integrations: true
+      properties:
+        versions:
+          type: boolean
+        replicas:
+          type: boolean
+        resources:
+          type: boolean
+        integrations:
+          type: boolean
+        services:
+          type: boolean
+        settings:
+          type: boolean
+        links:
+          type: boolean
+        tokens:
+          type: boolean
+        configs:
+          type: boolean
+        cron:
+          type: boolean
+        volumes:
+          type: boolean
+        main:
+          type: boolean
+      required:
+      - configs
+      - cron
+      - integrations
+      - links
+      - main
+      - replicas
+      - resources
+      - services
+      - settings
+      - tokens
+      - versions
+      - volumes
+      type: object
+    AppInstanceStackUpgradeSettingsInput:
+      example:
+        cron: true
+        settings: true
+        configs: true
+        versions: true
+        replicas: true
+        volumes: true
+        resources: true
+        links: true
+        tokens: true
+        main: true
+        services: true
+        integrations: true
+      properties:
+        versions:
+          type: boolean
+        replicas:
+          type: boolean
+        resources:
+          type: boolean
+        integrations:
+          type: boolean
+        services:
+          type: boolean
+        settings:
+          type: boolean
+        links:
+          type: boolean
+        tokens:
+          type: boolean
+        configs:
+          type: boolean
+        cron:
+          type: boolean
+        volumes:
+          type: boolean
+        main:
+          type: boolean
+      type: object
+    AppInstanceAutoStackUpgradeSettings:
+      example:
+        upgradeSettings:
+          cron: true
+          settings: true
+          configs: true
+          versions: true
+          replicas: true
+          volumes: true
+          resources: true
+          links: true
+          tokens: true
+          main: true
+          services: true
+          integrations: true
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+        upgradeSettings:
+          $ref: '#/components/schemas/AppInstanceStackUpgradeSettings'
+      required:
+      - enabled
+      type: object
+    AppInstanceAutoStackUpgradeSettingsInput:
+      example:
+        upgradeSettings:
+          cron: true
+          settings: true
+          configs: true
+          versions: true
+          replicas: true
+          volumes: true
+          resources: true
+          links: true
+          tokens: true
+          main: true
+          services: true
+          integrations: true
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+        upgradeSettings:
+          $ref: '#/components/schemas/AppInstanceStackUpgradeSettingsInput'
+      required:
+      - enabled
+      type: object
+    AppInstanceSettings:
+      example:
+        autoStackUpgrade:
+          upgradeSettings:
+            cron: true
+            settings: true
+            configs: true
+            versions: true
+            replicas: true
+            volumes: true
+            resources: true
+            links: true
+            tokens: true
+            main: true
+            services: true
+            integrations: true
+          enabled: true
+      properties:
+        autoStackUpgrade:
+          $ref: '#/components/schemas/AppInstanceAutoStackUpgradeSettings'
+      type: object
+    AppInstanceSettingsInput:
+      example:
+        autoStackUpgrade:
+          upgradeSettings:
+            cron: true
+            settings: true
+            configs: true
+            versions: true
+            replicas: true
+            volumes: true
+            resources: true
+            links: true
+            tokens: true
+            main: true
+            services: true
+            integrations: true
+          enabled: true
+      properties:
+        autoStackUpgrade:
+          $ref: '#/components/schemas/AppInstanceAutoStackUpgradeSettingsInput'
+      type: object
+    StackAutoUpdateVersionPolicy:
+      example:
+        mode: mode
+        allowMajor: true
+        allowPatch: true
+        allowMinor: true
+      properties:
+        mode:
+          type: string
+        allowPatch:
+          type: boolean
+        allowMinor:
+          type: boolean
+        allowMajor:
+          type: boolean
+      required:
+      - allowMajor
+      - allowMinor
+      - allowPatch
+      - mode
+      type: object
+    StackAutoUpdateVersionPolicyInput:
+      example:
+        mode: mode
+        allowMajor: true
+        allowPatch: true
+        allowMinor: true
+      properties:
+        mode:
+          nullable: true
+          type: string
+        allowPatch:
+          nullable: true
+          type: boolean
+        allowMinor:
+          nullable: true
+          type: boolean
+        allowMajor:
+          nullable: true
+          type: boolean
+      type: object
+    StackAutoUpdatePolicy:
+      example:
+        scope: scope
+        includeDisabled: true
+        versionPolicy:
+          mode: mode
+          allowMajor: true
+          allowPatch: true
+          allowMinor: true
+      properties:
+        scope:
+          type: string
+        includeDisabled:
+          type: boolean
+        versionPolicy:
+          $ref: '#/components/schemas/StackAutoUpdateVersionPolicy'
+      required:
+      - includeDisabled
+      - scope
+      type: object
+    StackAutoUpdatePolicyInput:
+      example:
+        scope: scope
+        includeDisabled: true
+        versionPolicy:
+          mode: mode
+          allowMajor: true
+          allowPatch: true
+          allowMinor: true
+      properties:
+        scope:
+          nullable: true
+          type: string
+        includeDisabled:
+          nullable: true
+          type: boolean
+        versionPolicy:
+          $ref: '#/components/schemas/StackAutoUpdateVersionPolicyInput'
+      type: object
+    StackAutoServiceRevisionUpdateSettings:
+      example:
+        enabled: true
+        policy:
+          scope: scope
+          includeDisabled: true
+          versionPolicy:
+            mode: mode
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+      properties:
+        enabled:
+          type: boolean
+        policy:
+          $ref: '#/components/schemas/StackAutoUpdatePolicy'
+      required:
+      - enabled
+      type: object
+    StackAutoServiceRevisionUpdateSettingsInput:
+      example:
+        enabled: true
+        policy:
+          scope: scope
+          includeDisabled: true
+          versionPolicy:
+            mode: mode
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+      properties:
+        enabled:
+          type: boolean
+        policy:
+          $ref: '#/components/schemas/StackAutoUpdatePolicyInput'
+      required:
+      - enabled
+      type: object
+    StackAutoOriginUpdateVersionPolicy:
+      example:
+        mode: mode
+        allowMajor: true
+        allowPatch: true
+        allowMinor: true
+      properties:
+        mode:
+          type: string
+        allowPatch:
+          type: boolean
+        allowMinor:
+          type: boolean
+        allowMajor:
+          type: boolean
+      required:
+      - allowMajor
+      - allowMinor
+      - allowPatch
+      - mode
+      type: object
+    StackAutoOriginUpdateVersionPolicyInput:
+      example:
+        mode: mode
+        allowMajor: true
+        allowPatch: true
+        allowMinor: true
+      properties:
+        mode:
+          nullable: true
+          type: string
+        allowPatch:
+          nullable: true
+          type: boolean
+        allowMinor:
+          nullable: true
+          type: boolean
+        allowMajor:
+          nullable: true
+          type: boolean
+      type: object
+    StackSyncOptions:
+      example:
+        deleteStackAnnotations: true
+        deleteStackEnvVars: true
+        deleteStackHelmValues: true
+        deleteStackServicesConfiguration: true
+        deleteStackTokens: true
+        deleteStackServices: true
+      properties:
+        deleteStackHelmValues:
+          type: boolean
+        deleteStackEnvVars:
+          type: boolean
+        deleteStackTokens:
+          type: boolean
+        deleteStackAnnotations:
+          type: boolean
+        deleteStackServices:
+          type: boolean
+        deleteStackServicesConfiguration:
+          type: boolean
+      required:
+      - deleteStackAnnotations
+      - deleteStackEnvVars
+      - deleteStackHelmValues
+      - deleteStackServices
+      - deleteStackServicesConfiguration
+      - deleteStackTokens
+      type: object
+    StackSyncOptionsInput:
+      example:
+        deleteStackAnnotations: true
+        deleteStackEnvVars: true
+        deleteStackHelmValues: true
+        deleteStackServicesConfiguration: true
+        deleteStackTokens: true
+        deleteStackServices: true
+      properties:
+        deleteStackHelmValues:
+          nullable: true
+          type: boolean
+        deleteStackEnvVars:
+          nullable: true
+          type: boolean
+        deleteStackTokens:
+          nullable: true
+          type: boolean
+        deleteStackAnnotations:
+          nullable: true
+          type: boolean
+        deleteStackServices:
+          nullable: true
+          type: boolean
+        deleteStackServicesConfiguration:
+          nullable: true
+          type: boolean
+      type: object
+    StackAutoOriginUpdateSettings:
+      example:
+        enabled: true
+        versionPolicy:
+          mode: mode
+          allowMajor: true
+          allowPatch: true
+          allowMinor: true
+        syncOptions:
+          deleteStackAnnotations: true
+          deleteStackEnvVars: true
+          deleteStackHelmValues: true
+          deleteStackServicesConfiguration: true
+          deleteStackTokens: true
+          deleteStackServices: true
+      properties:
+        enabled:
+          type: boolean
+        versionPolicy:
+          $ref: '#/components/schemas/StackAutoOriginUpdateVersionPolicy'
+        syncOptions:
+          $ref: '#/components/schemas/StackSyncOptions'
+      required:
+      - enabled
+      type: object
+    StackAutoOriginUpdateSettingsInput:
+      example:
+        enabled: true
+        versionPolicy:
+          mode: mode
+          allowMajor: true
+          allowPatch: true
+          allowMinor: true
+        syncOptions:
+          deleteStackAnnotations: true
+          deleteStackEnvVars: true
+          deleteStackHelmValues: true
+          deleteStackServicesConfiguration: true
+          deleteStackTokens: true
+          deleteStackServices: true
+      properties:
+        enabled:
+          type: boolean
+        versionPolicy:
+          $ref: '#/components/schemas/StackAutoOriginUpdateVersionPolicyInput'
+        syncOptions:
+          $ref: '#/components/schemas/StackSyncOptionsInput'
+      required:
+      - enabled
+      type: object
+    StackSettings:
+      example:
+        autoOriginStackUpdate:
+          enabled: true
+          versionPolicy:
+            mode: mode
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+          syncOptions:
+            deleteStackAnnotations: true
+            deleteStackEnvVars: true
+            deleteStackHelmValues: true
+            deleteStackServicesConfiguration: true
+            deleteStackTokens: true
+            deleteStackServices: true
+        autoServiceRevisionUpdate:
+          enabled: true
+          policy:
+            scope: scope
+            includeDisabled: true
+            versionPolicy:
+              mode: mode
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+        gitAutoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+      properties:
+        gitAutoUpdate:
+          $ref: '#/components/schemas/GitAutoUpdateSettings'
+        autoServiceRevisionUpdate:
+          $ref: '#/components/schemas/StackAutoServiceRevisionUpdateSettings'
+        autoOriginStackUpdate:
+          $ref: '#/components/schemas/StackAutoOriginUpdateSettings'
+      type: object
+    StackSettingsInput:
+      example:
+        autoOriginStackUpdate:
+          enabled: true
+          versionPolicy:
+            mode: mode
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+          syncOptions:
+            deleteStackAnnotations: true
+            deleteStackEnvVars: true
+            deleteStackHelmValues: true
+            deleteStackServicesConfiguration: true
+            deleteStackTokens: true
+            deleteStackServices: true
+        autoServiceRevisionUpdate:
+          enabled: true
+          policy:
+            scope: scope
+            includeDisabled: true
+            versionPolicy:
+              mode: mode
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+        gitAutoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+      properties:
+        gitAutoUpdate:
+          $ref: '#/components/schemas/GitAutoUpdateSettingsInput'
+        autoServiceRevisionUpdate:
+          $ref: '#/components/schemas/StackAutoServiceRevisionUpdateSettingsInput'
+        autoOriginStackUpdate:
+          $ref: '#/components/schemas/StackAutoOriginUpdateSettingsInput'
+      type: object
+    ClusterAutoUpgradeVersionPolicy:
+      example:
+        allowMajor: true
+        allowPatch: true
+        allowMinor: true
+      properties:
+        allowPatch:
+          type: boolean
+        allowMinor:
+          type: boolean
+        allowMajor:
+          type: boolean
+      required:
+      - allowMajor
+      - allowMinor
+      - allowPatch
+      type: object
+    ClusterAutoUpgradeVersionPolicyInput:
+      example:
+        allowMajor: true
+        allowPatch: true
+        allowMinor: true
+      properties:
+        allowPatch:
+          nullable: true
+          type: boolean
+        allowMinor:
+          nullable: true
+          type: boolean
+        allowMajor:
+          nullable: true
+          type: boolean
+      type: object
+    ClusterAutoInfrastructureComponentSettings:
+      example:
+        enabled: true
+        versionPolicy:
+          allowMajor: true
+          allowPatch: true
+          allowMinor: true
+      properties:
+        enabled:
+          type: boolean
+        versionPolicy:
+          $ref: '#/components/schemas/ClusterAutoUpgradeVersionPolicy'
+      required:
+      - enabled
+      type: object
+    ClusterAutoInfrastructureComponentSettingsInput:
+      example:
+        enabled: true
+        versionPolicy:
+          allowMajor: true
+          allowPatch: true
+          allowMinor: true
+      properties:
+        enabled:
+          nullable: true
+          type: boolean
+        versionPolicy:
+          $ref: '#/components/schemas/ClusterAutoUpgradeVersionPolicyInput'
+      type: object
+    ClusterAutoInfrastructureUpgradeSettings:
+      example:
+        infra:
+          enabled: true
+          versionPolicy:
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+        enabled: true
+        apps:
+          enabled: true
+          versionPolicy:
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+      properties:
+        enabled:
+          type: boolean
+        infra:
+          $ref: '#/components/schemas/ClusterAutoInfrastructureComponentSettings'
+        apps:
+          $ref: '#/components/schemas/ClusterAutoInfrastructureComponentSettings'
+      required:
+      - enabled
+      type: object
+    ClusterAutoInfrastructureUpgradeSettingsInput:
+      example:
+        infra:
+          enabled: true
+          versionPolicy:
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+        enabled: true
+        apps:
+          enabled: true
+          versionPolicy:
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+      properties:
+        enabled:
+          type: boolean
+        infra:
+          $ref: '#/components/schemas/ClusterAutoInfrastructureComponentSettingsInput'
+        apps:
+          $ref: '#/components/schemas/ClusterAutoInfrastructureComponentSettingsInput'
+      required:
+      - enabled
+      type: object
+    ClusterSettings:
+      example:
+        autoInfrastructureUpgrade:
+          infra:
+            enabled: true
+            versionPolicy:
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+          enabled: true
+          apps:
+            enabled: true
+            versionPolicy:
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+      properties:
+        autoInfrastructureUpgrade:
+          $ref: '#/components/schemas/ClusterAutoInfrastructureUpgradeSettings'
+      type: object
+    ClusterSettingsInput:
+      example:
+        autoInfrastructureUpgrade:
+          infra:
+            enabled: true
+            versionPolicy:
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+          enabled: true
+          apps:
+            enabled: true
+            versionPolicy:
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+      properties:
+        autoInfrastructureUpgrade:
+          $ref: '#/components/schemas/ClusterAutoInfrastructureUpgradeSettingsInput'
+      type: object
+    ImportCatalogFromGitInput:
+      example:
+        gitRef: gitRef
+        remoteGitRepoId: remoteGitRepoId
+        autoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+        integrationId: 1
+        projectId: 6
+        orgId: 0
+        gitRefType: gitRefType
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        integrationId:
+          type: integer
+        remoteGitRepoId:
+          type: string
+        gitRef:
+          type: string
+        gitRefType:
+          type: string
+        autoUpdate:
+          $ref: '#/components/schemas/GitAutoUpdateSettingsInput'
+      required:
+      - gitRef
+      - gitRefType
+      - integrationId
+      - remoteGitRepoId
+      type: object
     Org:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -8412,6 +9441,22 @@ components:
       type: object
     AppInstance:
       example:
+        settings:
+          autoStackUpgrade:
+            upgradeSettings:
+              cron: true
+              settings: true
+              configs: true
+              versions: true
+              replicas: true
+              volumes: true
+              resources: true
+              links: true
+              tokens: true
+              main: true
+              services: true
+              integrations: true
+            enabled: true
         stackId: 5
         stackName: stackName
         mainDomain: mainDomain
@@ -8461,6 +9506,8 @@ components:
           type: integer
         stackVersion:
           type: string
+        settings:
+          $ref: '#/components/schemas/AppInstanceSettings'
         createdAt:
           format: date-time
           type: string
@@ -9216,6 +10263,21 @@ components:
       type: object
     Cluster:
       example:
+        settings:
+          autoInfrastructureUpgrade:
+            infra:
+              enabled: true
+              versionPolicy:
+                allowMajor: true
+                allowPatch: true
+                allowMinor: true
+            enabled: true
+            apps:
+              enabled: true
+              versionPolicy:
+                allowMajor: true
+                allowPatch: true
+                allowMinor: true
         wodby: true
         maxNodeCount: 1
         serverless: true
@@ -9292,6 +10354,8 @@ components:
           type: integer
         orgId:
           type: integer
+        settings:
+          $ref: '#/components/schemas/ClusterSettings'
         createdAt:
           format: date-time
           type: string
@@ -10080,6 +11144,14 @@ components:
       example:
         originStackRevId: 2
         draftRevId: 1
+        settings:
+          gitAutoUpdate:
+            allowMajor: true
+            allowPatch: true
+            semverTags: true
+            allowMinor: true
+            branches: true
+            enabled: true
         originStackRevNumber: 9
         revId: 6
         originStackRevName: originStackRevName
@@ -10156,6 +11228,8 @@ components:
           type: string
         orgId:
           type: integer
+        settings:
+          $ref: '#/components/schemas/ServiceSettings'
         createdAt:
           format: date-time
           type: string
@@ -10230,6 +11304,14 @@ components:
         items:
         - originStackRevId: 2
           draftRevId: 1
+          settings:
+            gitAutoUpdate:
+              allowMajor: true
+              allowPatch: true
+              semverTags: true
+              allowMinor: true
+              branches: true
+              enabled: true
           originStackRevNumber: 9
           revId: 6
           originStackRevName: originStackRevName
@@ -10253,6 +11335,14 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - originStackRevId: 2
           draftRevId: 1
+          settings:
+            gitAutoUpdate:
+              allowMajor: true
+              allowPatch: true
+              semverTags: true
+              allowMinor: true
+              branches: true
+              enabled: true
           originStackRevNumber: 9
           revId: 6
           originStackRevName: originStackRevName
@@ -10290,6 +11380,38 @@ components:
       type: object
     Stack:
       example:
+        settings:
+          autoOriginStackUpdate:
+            enabled: true
+            versionPolicy:
+              mode: mode
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+            syncOptions:
+              deleteStackAnnotations: true
+              deleteStackEnvVars: true
+              deleteStackHelmValues: true
+              deleteStackServicesConfiguration: true
+              deleteStackTokens: true
+              deleteStackServices: true
+          autoServiceRevisionUpdate:
+            enabled: true
+            policy:
+              scope: scope
+              includeDisabled: true
+              versionPolicy:
+                mode: mode
+                allowMajor: true
+                allowPatch: true
+                allowMinor: true
+          gitAutoUpdate:
+            allowMajor: true
+            allowPatch: true
+            semverTags: true
+            allowMinor: true
+            branches: true
+            enabled: true
         createdAt: 2000-01-23T04:56:07.000+00:00
         public: true
         latestRevNumber: 1
@@ -10320,6 +11442,8 @@ components:
           type: integer
         orgId:
           type: integer
+        settings:
+          $ref: '#/components/schemas/StackSettings'
         createdAt:
           format: date-time
           type: string
@@ -10461,7 +11585,39 @@ components:
         nextPage: 2
         totalCount: 5
         items:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - settings:
+            autoOriginStackUpdate:
+              enabled: true
+              versionPolicy:
+                mode: mode
+                allowMajor: true
+                allowPatch: true
+                allowMinor: true
+              syncOptions:
+                deleteStackAnnotations: true
+                deleteStackEnvVars: true
+                deleteStackHelmValues: true
+                deleteStackServicesConfiguration: true
+                deleteStackTokens: true
+                deleteStackServices: true
+            autoServiceRevisionUpdate:
+              enabled: true
+              policy:
+                scope: scope
+                includeDisabled: true
+                versionPolicy:
+                  mode: mode
+                  allowMajor: true
+                  allowPatch: true
+                  allowMinor: true
+            gitAutoUpdate:
+              allowMajor: true
+              allowPatch: true
+              semverTags: true
+              allowMinor: true
+              branches: true
+              enabled: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
           public: true
           latestRevNumber: 1
           name: name
@@ -10472,7 +11628,39 @@ components:
           orgId: 5
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - settings:
+            autoOriginStackUpdate:
+              enabled: true
+              versionPolicy:
+                mode: mode
+                allowMajor: true
+                allowPatch: true
+                allowMinor: true
+              syncOptions:
+                deleteStackAnnotations: true
+                deleteStackEnvVars: true
+                deleteStackHelmValues: true
+                deleteStackServicesConfiguration: true
+                deleteStackTokens: true
+                deleteStackServices: true
+            autoServiceRevisionUpdate:
+              enabled: true
+              policy:
+                scope: scope
+                includeDisabled: true
+                versionPolicy:
+                  mode: mode
+                  allowMajor: true
+                  allowPatch: true
+                  allowMinor: true
+            gitAutoUpdate:
+              allowMajor: true
+              allowPatch: true
+              semverTags: true
+              allowMinor: true
+              branches: true
+              enabled: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
           public: true
           latestRevNumber: 1
           name: name

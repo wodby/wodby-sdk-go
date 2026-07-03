@@ -7,8 +7,10 @@ Method | HTTP request | Description
 [**GetService**](ServicesAPI.md#GetService) | **Get** /services/{id} | Get service
 [**GetServiceByName**](ServicesAPI.md#GetServiceByName) | **Get** /services/by-name/{name} | Get service by name
 [**GetServiceRevision**](ServicesAPI.md#GetServiceRevision) | **Get** /service-revisions/{id} | Get service revision
+[**ImportServices**](ServicesAPI.md#ImportServices) | **Post** /services/actions/import | Import services from Git
 [**ListServiceLinkCandidates**](ServicesAPI.md#ListServiceLinkCandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
 [**ListServices**](ServicesAPI.md#ListServices) | **Get** /services | List services
+[**UpdateServiceSettings**](ServicesAPI.md#UpdateServiceSettings) | **Put** /services/settings/{id} | Update service settings
 
 
 
@@ -224,6 +226,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ImportServices
+
+> OperationResult ImportServices(ctx).ImportCatalogFromGitInput(importCatalogFromGitInput).Execute()
+
+Import services from Git
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	importCatalogFromGitInput := *openapiclient.NewImportCatalogFromGitInput(int32(123), "RemoteGitRepoId_example", "GitRef_example", "GitRefType_example") // ImportCatalogFromGitInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ImportServices(context.Background()).ImportCatalogFromGitInput(importCatalogFromGitInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ImportServices``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ImportServices`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ImportServices`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiImportServicesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **importCatalogFromGitInput** | [**ImportCatalogFromGitInput**](ImportCatalogFromGitInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListServiceLinkCandidates
 
 > []map[string]interface{} ListServiceLinkCandidates(ctx, name).Execute()
@@ -361,6 +429,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateServiceSettings
+
+> Service UpdateServiceSettings(ctx, id).ServiceSettingsInput(serviceSettingsInput).Execute()
+
+Update service settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	serviceSettingsInput := *openapiclient.NewServiceSettingsInput() // ServiceSettingsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.UpdateServiceSettings(context.Background(), id).ServiceSettingsInput(serviceSettingsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.UpdateServiceSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateServiceSettings`: Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.UpdateServiceSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateServiceSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **serviceSettingsInput** | [**ServiceSettingsInput**](ServiceSettingsInput.md) |  | 
+
+### Return type
+
+[**Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

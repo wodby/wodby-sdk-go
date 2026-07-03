@@ -43,6 +43,7 @@ type Service struct {
 	OriginStackRevVersion NullableString `json:"originStackRevVersion,omitempty"`
 	OriginStackRevCreatedAt NullableTime `json:"originStackRevCreatedAt,omitempty"`
 	OrgId int32 `json:"orgId"`
+	Settings *ServiceSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -780,6 +781,38 @@ func (o *Service) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *Service) GetSettings() ServiceSettings {
+	if o == nil || IsNil(o.Settings) {
+		var ret ServiceSettings
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Service) GetSettingsOk() (*ServiceSettings, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *Service) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given ServiceSettings and assigns it to the Settings field.
+func (o *Service) SetSettings(v ServiceSettings) {
+	o.Settings = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Service) GetCreatedAt() time.Time {
 	if o == nil {
@@ -881,6 +914,9 @@ func (o Service) ToMap() (map[string]interface{}, error) {
 		toSerialize["originStackRevCreatedAt"] = o.OriginStackRevCreatedAt.Get()
 	}
 	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

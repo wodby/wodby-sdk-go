@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **StackIcon** | **string** |  | 
 **StackRevNumber** | **int32** |  | 
 **StackVersion** | **string** |  | 
+**Settings** | Pointer to [**AppInstanceSettings**](AppInstanceSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -355,6 +356,31 @@ and a boolean to check if the value has been set.
 
 SetStackVersion sets StackVersion field to given value.
 
+
+### GetSettings
+
+`func (o *AppInstance) GetSettings() AppInstanceSettings`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *AppInstance) GetSettingsOk() (*AppInstanceSettings, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *AppInstance) SetSettings(v AppInstanceSettings)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *AppInstance) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

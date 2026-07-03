@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**GetAppInstanceByName**](AppInstancesAPI.md#GetAppInstanceByName) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
 [**ListAppInstances**](AppInstancesAPI.md#ListAppInstances) | **Get** /app-instances | List app instances
 [**UpdateAppInstance**](AppInstancesAPI.md#UpdateAppInstance) | **Put** /app-instances/{id} | Update app instance
+[**UpdateAppInstanceSettings**](AppInstancesAPI.md#UpdateAppInstanceSettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 [**UpgradeAppInstanceStack**](AppInstancesAPI.md#UpgradeAppInstanceStack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 
 
@@ -424,6 +425,78 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateTitleRequest** | [**UpdateTitleRequest**](UpdateTitleRequest.md) |  | 
+
+### Return type
+
+[**AppInstance**](AppInstance.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAppInstanceSettings
+
+> AppInstance UpdateAppInstanceSettings(ctx, id).AppInstanceSettingsInput(appInstanceSettingsInput).Execute()
+
+Update app instance settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appInstanceSettingsInput := *openapiclient.NewAppInstanceSettingsInput() // AppInstanceSettingsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.UpdateAppInstanceSettings(context.Background(), id).AppInstanceSettingsInput(appInstanceSettingsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.UpdateAppInstanceSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAppInstanceSettings`: AppInstance
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.UpdateAppInstanceSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAppInstanceSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appInstanceSettingsInput** | [**AppInstanceSettingsInput**](AppInstanceSettingsInput.md) |  | 
 
 ### Return type
 

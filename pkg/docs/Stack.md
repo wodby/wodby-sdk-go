@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **RevId** | **int32** |  | 
 **LatestRevNumber** | **int32** |  | 
 **OrgId** | **int32** |  | 
+**Settings** | Pointer to [**StackSettings**](StackSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -214,6 +215,31 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+
+### GetSettings
+
+`func (o *Stack) GetSettings() StackSettings`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *Stack) GetSettingsOk() (*StackSettings, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *Stack) SetSettings(v StackSettings)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *Stack) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

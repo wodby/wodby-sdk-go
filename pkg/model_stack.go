@@ -31,6 +31,7 @@ type Stack struct {
 	RevId int32 `json:"revId"`
 	LatestRevNumber int32 `json:"latestRevNumber"`
 	OrgId int32 `json:"orgId"`
+	Settings *StackSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -281,6 +282,38 @@ func (o *Stack) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *Stack) GetSettings() StackSettings {
+	if o == nil || IsNil(o.Settings) {
+		var ret StackSettings
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Stack) GetSettingsOk() (*StackSettings, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *Stack) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given StackSettings and assigns it to the Settings field.
+func (o *Stack) SetSettings(v StackSettings) {
+	o.Settings = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Stack) GetCreatedAt() time.Time {
 	if o == nil {
@@ -348,6 +381,9 @@ func (o Stack) ToMap() (map[string]interface{}, error) {
 	toSerialize["revId"] = o.RevId
 	toSerialize["latestRevNumber"] = o.LatestRevNumber
 	toSerialize["orgId"] = o.OrgId
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
