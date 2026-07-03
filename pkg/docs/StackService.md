@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **Disabled** | **bool** |  | 
 **Required** | **bool** |  | 
 **Replicas** | **int32** |  | 
+**Outdated** | **bool** |  | 
 **ServiceRevId** | **int32** |  | 
 **ServiceRevName** | **string** |  | 
 **ServiceRevTitle** | **string** |  | 
@@ -25,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewStackService
 
-`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time, ) *StackService`
+`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time, ) *StackService`
 
 NewStackService instantiates a new StackService object
 This constructor will assign default values to properties that have it defined,
@@ -198,6 +199,26 @@ and a boolean to check if the value has been set.
 `func (o *StackService) SetReplicas(v int32)`
 
 SetReplicas sets Replicas field to given value.
+
+
+### GetOutdated
+
+`func (o *StackService) GetOutdated() bool`
+
+GetOutdated returns the Outdated field if non-nil, zero value otherwise.
+
+### GetOutdatedOk
+
+`func (o *StackService) GetOutdatedOk() (*bool, bool)`
+
+GetOutdatedOk returns a tuple with the Outdated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOutdated
+
+`func (o *StackService) SetOutdated(v bool)`
+
+SetOutdated sets Outdated field to given value.
 
 
 ### GetServiceRevId

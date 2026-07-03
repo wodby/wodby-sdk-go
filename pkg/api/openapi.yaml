@@ -11511,6 +11511,7 @@ components:
         required: true
         serviceRevId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
+        outdated: true
         buildSourceIntegrationId: 5
         name: name
         disabled: true
@@ -11535,6 +11536,8 @@ components:
           type: boolean
         replicas:
           type: integer
+        outdated:
+          type: boolean
         serviceRevId:
           type: integer
         serviceRevName:
@@ -11561,6 +11564,7 @@ components:
       - id
       - main
       - name
+      - outdated
       - replicas
       - required
       - serviceRevId
