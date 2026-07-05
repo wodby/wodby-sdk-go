@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | **int32** |  | 
 **Number** | **int32** |  | 
 **Status** | **string** |  | 
+**RollbackStatus** | **string** |  | 
 **SkipRollback** | **bool** |  | 
 **AppInstanceId** | **int32** |  | 
 **Builds** | [**[]AppBuild**](AppBuild.md) |  | 
@@ -21,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewAppDeployment
 
-`func NewAppDeployment(id int32, number int32, status string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
+`func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
 
 NewAppDeployment instantiates a new AppDeployment object
 This constructor will assign default values to properties that have it defined,
@@ -94,6 +95,26 @@ and a boolean to check if the value has been set.
 `func (o *AppDeployment) SetStatus(v string)`
 
 SetStatus sets Status field to given value.
+
+
+### GetRollbackStatus
+
+`func (o *AppDeployment) GetRollbackStatus() string`
+
+GetRollbackStatus returns the RollbackStatus field if non-nil, zero value otherwise.
+
+### GetRollbackStatusOk
+
+`func (o *AppDeployment) GetRollbackStatusOk() (*string, bool)`
+
+GetRollbackStatusOk returns a tuple with the RollbackStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRollbackStatus
+
+`func (o *AppDeployment) SetRollbackStatus(v string)`
+
+SetRollbackStatus sets RollbackStatus field to given value.
 
 
 ### GetSkipRollback

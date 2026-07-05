@@ -25,6 +25,7 @@ type AppDeployment struct {
 	Id int32 `json:"id"`
 	Number int32 `json:"number"`
 	Status string `json:"status"`
+	RollbackStatus string `json:"rollbackStatus"`
 	SkipRollback bool `json:"skipRollback"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	Builds []AppBuild `json:"builds"`
@@ -42,11 +43,12 @@ type _AppDeployment AppDeployment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppDeployment(id int32, number int32, status string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
+func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
 	this := AppDeployment{}
 	this.Id = id
 	this.Number = number
 	this.Status = status
+	this.RollbackStatus = rollbackStatus
 	this.SkipRollback = skipRollback
 	this.AppInstanceId = appInstanceId
 	this.Builds = builds
@@ -134,6 +136,30 @@ func (o *AppDeployment) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *AppDeployment) SetStatus(v string) {
 	o.Status = v
+}
+
+// GetRollbackStatus returns the RollbackStatus field value
+func (o *AppDeployment) GetRollbackStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.RollbackStatus
+}
+
+// GetRollbackStatusOk returns a tuple with the RollbackStatus field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetRollbackStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RollbackStatus, true
+}
+
+// SetRollbackStatus sets field value
+func (o *AppDeployment) SetRollbackStatus(v string) {
+	o.RollbackStatus = v
 }
 
 // GetSkipRollback returns the SkipRollback field value
@@ -419,6 +445,7 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["number"] = o.Number
 	toSerialize["status"] = o.Status
+	toSerialize["rollbackStatus"] = o.RollbackStatus
 	toSerialize["skipRollback"] = o.SkipRollback
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["builds"] = o.Builds
@@ -445,6 +472,7 @@ func (o *AppDeployment) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"number",
 		"status",
+		"rollbackStatus",
 		"skipRollback",
 		"appInstanceId",
 		"builds",

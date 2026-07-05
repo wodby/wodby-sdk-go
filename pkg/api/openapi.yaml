@@ -9522,6 +9522,30 @@ components:
       type: object
     AppDeployment:
       example:
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        appServiceDeployments:
+        - jobName: jobName
+          skipPostDeployment: true
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appServiceBuildId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          force: true
+          id: 4
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - jobName: jobName
+          skipPostDeployment: true
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appServiceBuildId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          force: true
+          id: 4
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         skipRollback: true
         appInstanceId: 1
         number: 6
@@ -9591,32 +9615,9 @@ components:
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        startedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
+        rollbackStatus: not_attempted
         status: status
-        appServiceDeployments:
-        - jobName: jobName
-          skipPostDeployment: true
-          appServiceId: 7
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          appServiceBuildId: 1
-          endedAt: 2000-01-23T04:56:07.000+00:00
-          startedAt: 2000-01-23T04:56:07.000+00:00
-          force: true
-          id: 4
-          status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - jobName: jobName
-          skipPostDeployment: true
-          appServiceId: 7
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          appServiceBuildId: 1
-          endedAt: 2000-01-23T04:56:07.000+00:00
-          startedAt: 2000-01-23T04:56:07.000+00:00
-          force: true
-          id: 4
-          status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -9624,6 +9625,12 @@ components:
         number:
           type: integer
         status:
+          type: string
+        rollbackStatus:
+          enum:
+          - not_attempted
+          - rolled_back
+          - failed
           type: string
         skipRollback:
           type: boolean
@@ -9663,6 +9670,7 @@ components:
       - createdAt
       - id
       - number
+      - rollbackStatus
       - skipRollback
       - status
       - updatedAt
@@ -9725,7 +9733,31 @@ components:
         nextPage: 1
         totalCount: 1
         items:
-        - skipRollback: true
+        - startedAt: 2000-01-23T04:56:07.000+00:00
+          appServiceDeployments:
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          skipRollback: true
           appInstanceId: 1
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -9794,34 +9826,35 @@ components:
             status: status
             gitRefType: gitRefType
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          startedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
+          rollbackStatus: not_attempted
           status: status
-          appServiceDeployments:
-          - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 7
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
-            endedAt: 2000-01-23T04:56:07.000+00:00
-            startedAt: 2000-01-23T04:56:07.000+00:00
-            force: true
-            id: 4
-            status: status
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 7
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
-            endedAt: 2000-01-23T04:56:07.000+00:00
-            startedAt: 2000-01-23T04:56:07.000+00:00
-            force: true
-            id: 4
-            status: status
-            updatedAt: 2000-01-23T04:56:07.000+00:00
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - skipRollback: true
+        - startedAt: 2000-01-23T04:56:07.000+00:00
+          appServiceDeployments:
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - jobName: jobName
+            skipPostDeployment: true
+            appServiceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appServiceBuildId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            force: true
+            id: 4
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          skipRollback: true
           appInstanceId: 1
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -9890,32 +9923,9 @@ components:
             status: status
             gitRefType: gitRefType
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          startedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
+          rollbackStatus: not_attempted
           status: status
-          appServiceDeployments:
-          - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 7
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
-            endedAt: 2000-01-23T04:56:07.000+00:00
-            startedAt: 2000-01-23T04:56:07.000+00:00
-            force: true
-            id: 4
-            status: status
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 7
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
-            endedAt: 2000-01-23T04:56:07.000+00:00
-            startedAt: 2000-01-23T04:56:07.000+00:00
-            force: true
-            id: 4
-            status: status
-            updatedAt: 2000-01-23T04:56:07.000+00:00
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         items:
