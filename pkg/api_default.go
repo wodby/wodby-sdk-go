@@ -77,7 +77,7 @@ func (a *DefaultAPIService) GetOpenApiJsonExecute(r ApiGetOpenApiJsonRequest) (m
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -107,7 +107,7 @@ func (a *DefaultAPIService) GetOpenApiJsonExecute(r ApiGetOpenApiJsonRequest) (m
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -117,7 +117,7 @@ func (a *DefaultAPIService) GetOpenApiJsonExecute(r ApiGetOpenApiJsonRequest) (m
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -195,7 +195,7 @@ func (a *DefaultAPIService) GetOpenApiYamlExecute(r ApiGetOpenApiYamlRequest) (s
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/yaml", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -225,7 +225,7 @@ func (a *DefaultAPIService) GetOpenApiYamlExecute(r ApiGetOpenApiYamlRequest) (s
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -235,7 +235,7 @@ func (a *DefaultAPIService) GetOpenApiYamlExecute(r ApiGetOpenApiYamlRequest) (s
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

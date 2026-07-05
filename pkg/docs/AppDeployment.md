@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **SkipRollback** | **bool** |  | 
 **AppInstanceId** | **int32** |  | 
 **Builds** | [**[]AppBuild**](AppBuild.md) |  | 
+**TaskId** | Pointer to **NullableInt32** |  | [optional] 
 **Task** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
 **AppServiceDeployments** | [**[]AppServiceDeployment**](AppServiceDeployment.md) |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -177,6 +178,41 @@ and a boolean to check if the value has been set.
 SetBuilds sets Builds field to given value.
 
 
+### GetTaskId
+
+`func (o *AppDeployment) GetTaskId() int32`
+
+GetTaskId returns the TaskId field if non-nil, zero value otherwise.
+
+### GetTaskIdOk
+
+`func (o *AppDeployment) GetTaskIdOk() (*int32, bool)`
+
+GetTaskIdOk returns a tuple with the TaskId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTaskId
+
+`func (o *AppDeployment) SetTaskId(v int32)`
+
+SetTaskId sets TaskId field to given value.
+
+### HasTaskId
+
+`func (o *AppDeployment) HasTaskId() bool`
+
+HasTaskId returns a boolean if a field has been set.
+
+### SetTaskIdNil
+
+`func (o *AppDeployment) SetTaskIdNil(b bool)`
+
+ SetTaskIdNil sets the value for TaskId to be an explicit nil
+
+### UnsetTaskId
+`func (o *AppDeployment) UnsetTaskId()`
+
+UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
 ### GetTask
 
 `func (o *AppDeployment) GetTask() Task`

@@ -87,7 +87,7 @@ func (a *EnvsAPIService) CreateEnvExecute(r ApiCreateEnvRequest) (*Env, *http.Re
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -133,7 +133,7 @@ func (a *EnvsAPIService) CreateEnvExecute(r ApiCreateEnvRequest) (*Env, *http.Re
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -143,7 +143,7 @@ func (a *EnvsAPIService) CreateEnvExecute(r ApiCreateEnvRequest) (*Env, *http.Re
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -225,7 +225,7 @@ func (a *EnvsAPIService) DeleteEnvExecute(r ApiDeleteEnvRequest) (*OperationResu
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -269,7 +269,7 @@ func (a *EnvsAPIService) DeleteEnvExecute(r ApiDeleteEnvRequest) (*OperationResu
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -279,7 +279,7 @@ func (a *EnvsAPIService) DeleteEnvExecute(r ApiDeleteEnvRequest) (*OperationResu
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -361,7 +361,7 @@ func (a *EnvsAPIService) GetEnvExecute(r ApiGetEnvRequest) (*Env, *http.Response
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -405,7 +405,7 @@ func (a *EnvsAPIService) GetEnvExecute(r ApiGetEnvRequest) (*Env, *http.Response
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -415,7 +415,7 @@ func (a *EnvsAPIService) GetEnvExecute(r ApiGetEnvRequest) (*Env, *http.Response
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -507,7 +507,7 @@ func (a *EnvsAPIService) GetEnvByNameExecute(r ApiGetEnvByNameRequest) (*Env, *h
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -551,7 +551,7 @@ func (a *EnvsAPIService) GetEnvByNameExecute(r ApiGetEnvByNameRequest) (*Env, *h
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -561,7 +561,7 @@ func (a *EnvsAPIService) GetEnvByNameExecute(r ApiGetEnvByNameRequest) (*Env, *h
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -649,7 +649,7 @@ func (a *EnvsAPIService) ListEnvsExecute(r ApiListEnvsRequest) ([]Env, *http.Res
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -693,7 +693,7 @@ func (a *EnvsAPIService) ListEnvsExecute(r ApiListEnvsRequest) ([]Env, *http.Res
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -703,7 +703,7 @@ func (a *EnvsAPIService) ListEnvsExecute(r ApiListEnvsRequest) ([]Env, *http.Res
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -794,7 +794,7 @@ func (a *EnvsAPIService) UpdateEnvExecute(r ApiUpdateEnvRequest) (*Env, *http.Re
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -840,7 +840,7 @@ func (a *EnvsAPIService) UpdateEnvExecute(r ApiUpdateEnvRequest) (*Env, *http.Re
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -850,7 +850,7 @@ func (a *EnvsAPIService) UpdateEnvExecute(r ApiUpdateEnvRequest) (*Env, *http.Re
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

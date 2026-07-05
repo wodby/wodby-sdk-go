@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **AppInstanceId** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
+**TaskId** | Pointer to **NullableInt32** |  | [optional] 
 **Task** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
 **AppServiceBuilds** | [**[]AppServiceBuild**](AppServiceBuild.md) |  | 
 **GitRefType** | **string** |  | 
@@ -139,6 +140,41 @@ and a boolean to check if the value has been set.
 SetAppServiceId sets AppServiceId field to given value.
 
 
+### GetTaskId
+
+`func (o *AppBuild) GetTaskId() int32`
+
+GetTaskId returns the TaskId field if non-nil, zero value otherwise.
+
+### GetTaskIdOk
+
+`func (o *AppBuild) GetTaskIdOk() (*int32, bool)`
+
+GetTaskIdOk returns a tuple with the TaskId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTaskId
+
+`func (o *AppBuild) SetTaskId(v int32)`
+
+SetTaskId sets TaskId field to given value.
+
+### HasTaskId
+
+`func (o *AppBuild) HasTaskId() bool`
+
+HasTaskId returns a boolean if a field has been set.
+
+### SetTaskIdNil
+
+`func (o *AppBuild) SetTaskIdNil(b bool)`
+
+ SetTaskIdNil sets the value for TaskId to be an explicit nil
+
+### UnsetTaskId
+`func (o *AppBuild) UnsetTaskId()`
+
+UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
 ### GetTask
 
 `func (o *AppBuild) GetTask() Task`

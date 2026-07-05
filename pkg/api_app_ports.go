@@ -82,7 +82,7 @@ func (a *AppPortsAPIService) GetAppPortExecute(r ApiGetAppPortRequest) (*AppPort
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -126,7 +126,7 @@ func (a *AppPortsAPIService) GetAppPortExecute(r ApiGetAppPortRequest) (*AppPort
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -136,7 +136,7 @@ func (a *AppPortsAPIService) GetAppPortExecute(r ApiGetAppPortRequest) (*AppPort
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -224,7 +224,7 @@ func (a *AppPortsAPIService) ListAppPortsExecute(r ApiListAppPortsRequest) ([]Ap
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -268,7 +268,7 @@ func (a *AppPortsAPIService) ListAppPortsExecute(r ApiListAppPortsRequest) ([]Ap
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -278,7 +278,7 @@ func (a *AppPortsAPIService) ListAppPortsExecute(r ApiListAppPortsRequest) ([]Ap
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -4,81 +4,10 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteOrg**](OrgsAPI.md#DeleteOrg) | **Delete** /orgs/{id} | Delete org
 [**GetOrg**](OrgsAPI.md#GetOrg) | **Get** /orgs/{id} | Get org
 [**ListOrgs**](OrgsAPI.md#ListOrgs) | **Get** /orgs | List orgs
 [**UpdateOrg**](OrgsAPI.md#UpdateOrg) | **Put** /orgs/{id} | Update org
 
-
-
-## DeleteOrg
-
-> OperationResult DeleteOrg(ctx, id).Execute()
-
-Delete org
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
-)
-
-func main() {
-	id := int32(56) // int32 | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OrgsAPI.DeleteOrg(context.Background(), id).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `OrgsAPI.DeleteOrg``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `DeleteOrg`: OperationResult
-	fmt.Fprintf(os.Stdout, "Response from `OrgsAPI.DeleteOrg`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDeleteOrgRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**OperationResult**](OperationResult.md)
-
-### Authorization
-
-[apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
 
 
 ## GetOrg
@@ -144,7 +73,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -205,7 +134,7 @@ Other parameters are passed through a pointer to a apiListOrgsRequest struct via
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -277,7 +206,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

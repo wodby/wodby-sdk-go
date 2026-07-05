@@ -23,6 +23,7 @@ type StackServiceInput struct {
 	Required NullableBool `json:"required,omitempty"`
 	Disabled NullableBool `json:"disabled,omitempty"`
 	Main NullableBool `json:"main,omitempty"`
+	ServiceRevPinned NullableBool `json:"serviceRevPinned,omitempty"`
 	Title NullableString `json:"title,omitempty"`
 	BuildSource *BuildSourceInput `json:"buildSource,omitempty"`
 }
@@ -212,6 +213,48 @@ func (o *StackServiceInput) UnsetMain() {
 	o.Main.Unset()
 }
 
+// GetServiceRevPinned returns the ServiceRevPinned field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackServiceInput) GetServiceRevPinned() bool {
+	if o == nil || IsNil(o.ServiceRevPinned.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.ServiceRevPinned.Get()
+}
+
+// GetServiceRevPinnedOk returns a tuple with the ServiceRevPinned field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackServiceInput) GetServiceRevPinnedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ServiceRevPinned.Get(), o.ServiceRevPinned.IsSet()
+}
+
+// HasServiceRevPinned returns a boolean if a field has been set.
+func (o *StackServiceInput) HasServiceRevPinned() bool {
+	if o != nil && o.ServiceRevPinned.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceRevPinned gets a reference to the given NullableBool and assigns it to the ServiceRevPinned field.
+func (o *StackServiceInput) SetServiceRevPinned(v bool) {
+	o.ServiceRevPinned.Set(&v)
+}
+// SetServiceRevPinnedNil sets the value for ServiceRevPinned to be an explicit nil
+func (o *StackServiceInput) SetServiceRevPinnedNil() {
+	o.ServiceRevPinned.Set(nil)
+}
+
+// UnsetServiceRevPinned ensures that no value is present for ServiceRevPinned, not even an explicit nil
+func (o *StackServiceInput) UnsetServiceRevPinned() {
+	o.ServiceRevPinned.Unset()
+}
+
 // GetTitle returns the Title field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *StackServiceInput) GetTitle() string {
 	if o == nil || IsNil(o.Title.Get()) {
@@ -307,6 +350,9 @@ func (o StackServiceInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Main.IsSet() {
 		toSerialize["main"] = o.Main.Get()
+	}
+	if o.ServiceRevPinned.IsSet() {
+		toSerialize["serviceRevPinned"] = o.ServiceRevPinned.Get()
 	}
 	if o.Title.IsSet() {
 		toSerialize["title"] = o.Title.Get()

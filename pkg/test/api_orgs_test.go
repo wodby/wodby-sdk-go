@@ -22,20 +22,6 @@ func Test_client_OrgsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test OrgsAPIService DeleteOrg", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id int32
-
-		resp, httpRes, err := apiClient.OrgsAPI.DeleteOrg(context.Background(), id).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test OrgsAPIService GetOrg", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

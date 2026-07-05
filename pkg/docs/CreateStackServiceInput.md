@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **Required** | **bool** |  | 
 **Replicas** | **int32** |  | 
+**ServiceRevPinned** | Pointer to **NullableBool** |  | [optional] 
 
 ## Methods
 
@@ -150,6 +151,41 @@ and a boolean to check if the value has been set.
 SetReplicas sets Replicas field to given value.
 
 
+### GetServiceRevPinned
+
+`func (o *CreateStackServiceInput) GetServiceRevPinned() bool`
+
+GetServiceRevPinned returns the ServiceRevPinned field if non-nil, zero value otherwise.
+
+### GetServiceRevPinnedOk
+
+`func (o *CreateStackServiceInput) GetServiceRevPinnedOk() (*bool, bool)`
+
+GetServiceRevPinnedOk returns a tuple with the ServiceRevPinned field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceRevPinned
+
+`func (o *CreateStackServiceInput) SetServiceRevPinned(v bool)`
+
+SetServiceRevPinned sets ServiceRevPinned field to given value.
+
+### HasServiceRevPinned
+
+`func (o *CreateStackServiceInput) HasServiceRevPinned() bool`
+
+HasServiceRevPinned returns a boolean if a field has been set.
+
+### SetServiceRevPinnedNil
+
+`func (o *CreateStackServiceInput) SetServiceRevPinnedNil(b bool)`
+
+ SetServiceRevPinnedNil sets the value for ServiceRevPinned to be an explicit nil
+
+### UnsetServiceRevPinned
+`func (o *CreateStackServiceInput) UnsetServiceRevPinned()`
+
+UnsetServiceRevPinned ensures that no value is present for ServiceRevPinned, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

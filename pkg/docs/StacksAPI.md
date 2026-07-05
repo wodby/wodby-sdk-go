@@ -4,6 +4,7 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DuplicateStack**](StacksAPI.md#DuplicateStack) | **Post** /stacks/{id}/actions/duplicate | Duplicate stack
 [**GetStack**](StacksAPI.md#GetStack) | **Get** /stacks/{id} | Get stack
 [**GetStackByName**](StacksAPI.md#GetStackByName) | **Get** /stacks/by-name/{name} | Get stack by name
 [**GetStackRevision**](StacksAPI.md#GetStackRevision) | **Get** /stack-revisions/{id} | Get stack revision
@@ -11,9 +12,82 @@ Method | HTTP request | Description
 [**ListStackRevisionServices**](StacksAPI.md#ListStackRevisionServices) | **Get** /stack-revisions/{id}/services | List stack services
 [**ListStacks**](StacksAPI.md#ListStacks) | **Get** /stacks | List stacks
 [**PublishStackDraft**](StacksAPI.md#PublishStackDraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
+[**SyncStackWithOrigin**](StacksAPI.md#SyncStackWithOrigin) | **Post** /stacks/{id}/actions/sync-origin | Sync stack with origin
 [**UpdateStackFromGit**](StacksAPI.md#UpdateStackFromGit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
 [**UpdateStackSettings**](StacksAPI.md#UpdateStackSettings) | **Put** /stacks/settings/{id} | Update stack settings
 
+
+
+## DuplicateStack
+
+> Stack DuplicateStack(ctx, id).DuplicateStackRequest(duplicateStackRequest).Execute()
+
+Duplicate stack
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	duplicateStackRequest := *openapiclient.NewDuplicateStackRequest() // DuplicateStackRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DuplicateStack(context.Background(), id).DuplicateStackRequest(duplicateStackRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DuplicateStack``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DuplicateStack`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DuplicateStack`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDuplicateStackRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **duplicateStackRequest** | [**DuplicateStackRequest**](DuplicateStackRequest.md) |  | 
+
+### Return type
+
+[**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetStack
@@ -79,7 +153,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -151,7 +225,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -221,7 +295,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -287,7 +361,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -357,7 +431,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -431,7 +505,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -501,7 +575,79 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SyncStackWithOrigin
+
+> Stack SyncStackWithOrigin(ctx, id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
+
+Sync stack with origin
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	stackSyncOptionsInput := *openapiclient.NewStackSyncOptionsInput() // StackSyncOptionsInput |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.SyncStackWithOrigin(context.Background(), id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.SyncStackWithOrigin``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SyncStackWithOrigin`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.SyncStackWithOrigin`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSyncStackWithOriginRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **stackSyncOptionsInput** | [**StackSyncOptionsInput**](StackSyncOptionsInput.md) |  | 
+
+### Return type
+
+[**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -573,7 +719,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -645,7 +791,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
+- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -27,6 +27,7 @@ type AppBuild struct {
 	Status string `json:"status"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	AppServiceId int32 `json:"appServiceId"`
+	TaskId NullableInt32 `json:"taskId,omitempty"`
 	Task NullableTask `json:"task,omitempty"`
 	AppServiceBuilds []AppServiceBuild `json:"appServiceBuilds"`
 	GitRefType string `json:"gitRefType"`
@@ -188,6 +189,48 @@ func (o *AppBuild) GetAppServiceIdOk() (*int32, bool) {
 // SetAppServiceId sets field value
 func (o *AppBuild) SetAppServiceId(v int32) {
 	o.AppServiceId = v
+}
+
+// GetTaskId returns the TaskId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetTaskId() int32 {
+	if o == nil || IsNil(o.TaskId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.TaskId.Get()
+}
+
+// GetTaskIdOk returns a tuple with the TaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetTaskIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TaskId.Get(), o.TaskId.IsSet()
+}
+
+// HasTaskId returns a boolean if a field has been set.
+func (o *AppBuild) HasTaskId() bool {
+	if o != nil && o.TaskId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTaskId gets a reference to the given NullableInt32 and assigns it to the TaskId field.
+func (o *AppBuild) SetTaskId(v int32) {
+	o.TaskId.Set(&v)
+}
+// SetTaskIdNil sets the value for TaskId to be an explicit nil
+func (o *AppBuild) SetTaskIdNil() {
+	o.TaskId.Set(nil)
+}
+
+// UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
+func (o *AppBuild) UnsetTaskId() {
+	o.TaskId.Unset()
 }
 
 // GetTask returns the Task field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -499,6 +542,9 @@ func (o AppBuild) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["appServiceId"] = o.AppServiceId
+	if o.TaskId.IsSet() {
+		toSerialize["taskId"] = o.TaskId.Get()
+	}
 	if o.Task.IsSet() {
 		toSerialize["task"] = o.Task.Get()
 	}

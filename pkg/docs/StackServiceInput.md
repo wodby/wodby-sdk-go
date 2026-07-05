@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Required** | Pointer to **NullableBool** |  | [optional] 
 **Disabled** | Pointer to **NullableBool** |  | [optional] 
 **Main** | Pointer to **NullableBool** |  | [optional] 
+**ServiceRevPinned** | Pointer to **NullableBool** |  | [optional] 
 **Title** | Pointer to **NullableString** |  | [optional] 
 **BuildSource** | Pointer to [**BuildSourceInput**](BuildSourceInput.md) |  | [optional] 
 
@@ -170,6 +171,41 @@ HasMain returns a boolean if a field has been set.
 `func (o *StackServiceInput) UnsetMain()`
 
 UnsetMain ensures that no value is present for Main, not even an explicit nil
+### GetServiceRevPinned
+
+`func (o *StackServiceInput) GetServiceRevPinned() bool`
+
+GetServiceRevPinned returns the ServiceRevPinned field if non-nil, zero value otherwise.
+
+### GetServiceRevPinnedOk
+
+`func (o *StackServiceInput) GetServiceRevPinnedOk() (*bool, bool)`
+
+GetServiceRevPinnedOk returns a tuple with the ServiceRevPinned field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceRevPinned
+
+`func (o *StackServiceInput) SetServiceRevPinned(v bool)`
+
+SetServiceRevPinned sets ServiceRevPinned field to given value.
+
+### HasServiceRevPinned
+
+`func (o *StackServiceInput) HasServiceRevPinned() bool`
+
+HasServiceRevPinned returns a boolean if a field has been set.
+
+### SetServiceRevPinnedNil
+
+`func (o *StackServiceInput) SetServiceRevPinnedNil(b bool)`
+
+ SetServiceRevPinnedNil sets the value for ServiceRevPinned to be an explicit nil
+
+### UnsetServiceRevPinned
+`func (o *StackServiceInput) UnsetServiceRevPinned()`
+
+UnsetServiceRevPinned ensures that no value is present for ServiceRevPinned, not even an explicit nil
 ### GetTitle
 
 `func (o *StackServiceInput) GetTitle() string`

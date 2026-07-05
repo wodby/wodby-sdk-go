@@ -14,6 +14,8 @@ servers:
 security:
 - apiKeyHeader: []
 tags:
+- description: Authenticated user account profile.
+  name: user
 - description: "Organizations that own projects, resources, and access scopes."
   name: orgs
 - description: "Organization users, invitations, roles, and membership status."
@@ -77,15 +79,15 @@ paths:
           description: OpenAPI YAML
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       security: []
       summary: Get OpenAPI YAML
@@ -102,18 +104,76 @@ paths:
           description: OpenAPI JSON
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       security: []
       summary: Get OpenAPI JSON
+  /user:
+    get:
+      description: Returns the authenticated user account.
+      operationId: getCurrentUser
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+          description: Current user
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get current user
+      tags:
+      - user
+    put:
+      description: Updates the authenticated user's basic profile and returns the
+        updated account.
+      operationId: updateCurrentUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCurrentUserRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+          description: Updated current user
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update current user
+      tags:
+      - user
   /orgs:
     get:
       description: Returns orgs matching the request filters.
@@ -129,53 +189,20 @@ paths:
           description: List of orgs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List orgs
       tags:
       - orgs
   /orgs/{id}:
-    delete:
-      description: Deletes the org and returns the operation result.
-      operationId: deleteOrg
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationResult'
-          description: Delete result
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Error response
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Error response
-      summary: Delete org
-      tags:
-      - orgs
     get:
       description: Returns the org identified by the request path.
       operationId: getOrg
@@ -196,15 +223,15 @@ paths:
           description: Org
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get org
       tags:
@@ -235,15 +262,15 @@ paths:
           description: Updated org
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update org
       tags:
@@ -273,15 +300,15 @@ paths:
           description: List of org memberships
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List org memberships
       tags:
@@ -307,15 +334,15 @@ paths:
           description: Org membership
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get org membership
       tags:
@@ -345,15 +372,15 @@ paths:
           description: List of projects
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List projects
       tags:
@@ -376,15 +403,15 @@ paths:
           description: Created project
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create project
       tags:
@@ -419,15 +446,15 @@ paths:
           description: Project
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get project by name
       tags:
@@ -453,15 +480,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete project
       tags:
@@ -486,15 +513,15 @@ paths:
           description: Project
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get project
       tags:
@@ -525,15 +552,15 @@ paths:
           description: Updated project
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update project
       tags:
@@ -578,15 +605,15 @@ paths:
           description: List of apps
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List apps
       tags:
@@ -609,15 +636,15 @@ paths:
           description: Created app
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app
       tags:
@@ -652,15 +679,15 @@ paths:
           description: App
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app by name
       tags:
@@ -686,15 +713,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app
       tags:
@@ -719,15 +746,15 @@ paths:
           description: App
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app
       tags:
@@ -758,15 +785,15 @@ paths:
           description: Updated app
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app
       tags:
@@ -825,15 +852,15 @@ paths:
           description: List of app instances
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app instances
       tags:
@@ -856,15 +883,15 @@ paths:
           description: Created app instance
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app instance
       tags:
@@ -906,15 +933,15 @@ paths:
           description: App instance
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app instance by app and instance name
       tags:
@@ -948,15 +975,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app instance
       tags:
@@ -981,15 +1008,15 @@ paths:
           description: App instance
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app instance
       tags:
@@ -1020,15 +1047,15 @@ paths:
           description: Updated app instance
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app instance
       tags:
@@ -1060,15 +1087,15 @@ paths:
           description: Updated app instance
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app instance settings
       tags:
@@ -1100,15 +1127,15 @@ paths:
           description: Upgrade result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Upgrade app instance stack
       tags:
@@ -1136,15 +1163,15 @@ paths:
           description: List of app services
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app services
       tags:
@@ -1170,15 +1197,15 @@ paths:
           description: App service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app service
       tags:
@@ -1209,15 +1236,15 @@ paths:
           description: Updated app service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app service
       tags:
@@ -1250,15 +1277,15 @@ paths:
           description: Action task result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Run app service action
       tags:
@@ -1290,15 +1317,15 @@ paths:
           description: Created log stream
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service log stream
       tags:
@@ -1326,15 +1353,15 @@ paths:
           description: List of app service env vars
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service env vars
       tags:
@@ -1365,15 +1392,15 @@ paths:
           description: Created app service env var
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service env var
       tags:
@@ -1399,15 +1426,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service env var
       tags:
@@ -1438,15 +1465,15 @@ paths:
           description: Updated app service env var
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app service env var
       tags:
@@ -1474,15 +1501,15 @@ paths:
           description: List of app service Helm values
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service Helm values
       tags:
@@ -1513,15 +1540,15 @@ paths:
           description: Created app service Helm value
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service Helm value
       tags:
@@ -1547,15 +1574,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service Helm value
       tags:
@@ -1586,15 +1613,15 @@ paths:
           description: Updated app service Helm value
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app service Helm value
       tags:
@@ -1623,15 +1650,15 @@ paths:
           description: List of app service tokens
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service tokens
       tags:
@@ -1662,15 +1689,15 @@ paths:
           description: Created app service token
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service token
       tags:
@@ -1696,15 +1723,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service token
       tags:
@@ -1735,15 +1762,15 @@ paths:
           description: Updated app service token
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app service token
       tags:
@@ -1771,15 +1798,15 @@ paths:
           description: List of app service annotations
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service annotations
       tags:
@@ -1810,15 +1837,15 @@ paths:
           description: Created app service annotation
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service annotation
       tags:
@@ -1844,15 +1871,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service annotation
       tags:
@@ -1880,15 +1907,15 @@ paths:
           description: List of app service integrations
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service integrations
       tags:
@@ -1919,15 +1946,15 @@ paths:
           description: Created app service integration
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service integration
       tags:
@@ -1953,15 +1980,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service integration
       tags:
@@ -1989,15 +2016,15 @@ paths:
           description: List of app service settings
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service settings
       tags:
@@ -2036,15 +2063,15 @@ paths:
           description: Updated app service setting
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set app service setting
       tags:
@@ -2072,15 +2099,15 @@ paths:
           description: List of app service configs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service configs
       tags:
@@ -2119,15 +2146,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set app service config
       tags:
@@ -2155,15 +2182,15 @@ paths:
           description: List of app service links
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service links
       tags:
@@ -2202,15 +2229,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set app service link
       tags:
@@ -2238,15 +2265,15 @@ paths:
           description: List of app service containers
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service containers
       tags:
@@ -2278,15 +2305,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set app service resources
       tags:
@@ -2318,15 +2345,15 @@ paths:
           description: Updated app service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app service database references
       tags:
@@ -2354,15 +2381,15 @@ paths:
           description: List of app service cron schedules
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service cron schedules
       tags:
@@ -2393,15 +2420,15 @@ paths:
           description: Created app service cron schedule
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app service cron schedule
       tags:
@@ -2427,15 +2454,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service cron schedule
       tags:
@@ -2466,15 +2493,15 @@ paths:
           description: Updated app service cron schedule
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app service cron schedule
       tags:
@@ -2501,15 +2528,15 @@ paths:
           description: Cron run task
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Run app service cron schedule
       tags:
@@ -2567,15 +2594,15 @@ paths:
           description: App service cron jobs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service cron jobs
       tags:
@@ -2601,15 +2628,15 @@ paths:
           description: App service cron job
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app service cron job
       tags:
@@ -2635,15 +2662,15 @@ paths:
           description: Start result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Start log stream
       tags:
@@ -2669,15 +2696,15 @@ paths:
           description: Keep-alive result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Keep log stream alive
       tags:
@@ -2703,15 +2730,15 @@ paths:
           description: Stop result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Stop log stream
       tags:
@@ -2739,15 +2766,15 @@ paths:
           description: List of app ports
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app ports
       tags:
@@ -2773,15 +2800,15 @@ paths:
           description: App port
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app port
       tags:
@@ -2825,15 +2852,15 @@ paths:
           description: List of deployments
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app deployments
       tags:
@@ -2856,15 +2883,15 @@ paths:
           description: Created deployment
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create deployment
       tags:
@@ -2888,15 +2915,15 @@ paths:
           description: Created deployment
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       security:
       - apiKeyHeader: []
@@ -2925,15 +2952,15 @@ paths:
           description: Deployment
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get deployment
       tags:
@@ -2959,15 +2986,15 @@ paths:
           description: Created deployment
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Redeploy deployment
       tags:
@@ -3011,15 +3038,15 @@ paths:
           description: List of builds
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app builds
       tags:
@@ -3038,21 +3065,19 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/AppBuild'
-                type: array
+                $ref: '#/components/schemas/AppBuildsCreateResponse'
           description: Created build list
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create build
       tags:
@@ -3076,15 +3101,15 @@ paths:
           description: Created build
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create build from CI
       tags:
@@ -3110,15 +3135,15 @@ paths:
           description: Build
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       security:
       - apiKeyHeader: []
@@ -3147,15 +3172,15 @@ paths:
           description: Build config
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       security:
       - apiKeyHeader: []
@@ -3184,15 +3209,15 @@ paths:
           description: Docker registry credentials
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       security:
       - apiKeyHeader: []
@@ -3221,15 +3246,15 @@ paths:
           description: Created deployment
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Deploy build
       tags:
@@ -3274,15 +3299,15 @@ paths:
           description: List of clusters
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List clusters
       tags:
@@ -3305,15 +3330,15 @@ paths:
           description: Created cluster
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create cluster
       tags:
@@ -3348,15 +3373,15 @@ paths:
           description: Cluster
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get cluster by name
       tags:
@@ -3390,15 +3415,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete cluster
       tags:
@@ -3423,15 +3448,15 @@ paths:
           description: Cluster
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get cluster
       tags:
@@ -3462,15 +3487,15 @@ paths:
           description: Updated cluster
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update cluster
       tags:
@@ -3502,17 +3527,87 @@ paths:
           description: Updated cluster
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update cluster settings
+      tags:
+      - clusters
+  /clusters/{id}/actions/upgrade-infra:
+    post:
+      description: Starts a cluster infrastructure upgrade task and returns the task
+        identifier.
+      operationId: upgradeClusterInfra
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Upgrade task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Upgrade cluster infrastructure
+      tags:
+      - clusters
+  /clusters/{id}/actions/upgrade-infra-apps:
+    post:
+      description: Starts a cluster infrastructure app stack upgrade task and returns
+        the task identifier.
+      operationId: upgradeClusterInfraApps
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Upgrade task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Upgrade cluster infrastructure app stacks
       tags:
       - clusters
   /databases:
@@ -3555,15 +3650,15 @@ paths:
           description: List of databases
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List databases
       tags:
@@ -3586,15 +3681,15 @@ paths:
           description: Created database
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create database
       tags:
@@ -3629,15 +3724,15 @@ paths:
           description: Database
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get database by name
       tags:
@@ -3663,15 +3758,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete database
       tags:
@@ -3696,15 +3791,15 @@ paths:
           description: Database
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get database
       tags:
@@ -3735,15 +3830,15 @@ paths:
           description: Updated database
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update database
       tags:
@@ -3771,15 +3866,15 @@ paths:
           description: List of database charsets
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database charsets
       tags:
@@ -3807,15 +3902,15 @@ paths:
           description: List of database DBs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database DBs
       tags:
@@ -3838,15 +3933,15 @@ paths:
           description: Created database DB
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create database DB
       tags:
@@ -3872,15 +3967,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete database DB
       tags:
@@ -3905,15 +4000,15 @@ paths:
           description: Database DB
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get database DB
       tags:
@@ -3941,15 +4036,15 @@ paths:
           description: List of database users
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database users
       tags:
@@ -3972,15 +4067,15 @@ paths:
           description: Created database user
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create database user
       tags:
@@ -4012,15 +4107,15 @@ paths:
           description: Updated database user
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update database user DB grants
       tags:
@@ -4046,15 +4141,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete database user
       tags:
@@ -4100,15 +4195,15 @@ paths:
           description: List of integrations
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List integrations
       tags:
@@ -4131,15 +4226,15 @@ paths:
           description: Created integration
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create integration
       tags:
@@ -4174,15 +4269,15 @@ paths:
           description: Integration
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get integration by name
       tags:
@@ -4210,15 +4305,15 @@ paths:
           description: Integration scopes
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List integration scopes
       tags:
@@ -4246,15 +4341,15 @@ paths:
           description: Remote Git repositories
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List remote Git repositories
       tags:
@@ -4289,15 +4384,15 @@ paths:
           description: Branch names
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List remote Git repository branches
       tags:
@@ -4332,15 +4427,15 @@ paths:
           description: Tag names
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List remote Git repository tags
       tags:
@@ -4368,15 +4463,15 @@ paths:
           description: Kubernetes regions
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List Kubernetes regions
       tags:
@@ -4404,15 +4499,15 @@ paths:
           description: Kubernetes zones
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List Kubernetes zones
       tags:
@@ -4447,15 +4542,15 @@ paths:
           description: Kubernetes machine types
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List Kubernetes machine types
       tags:
@@ -4490,15 +4585,15 @@ paths:
           description: Kubernetes versions
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List Kubernetes versions
       tags:
@@ -4524,15 +4619,15 @@ paths:
           description: Kubernetes settings
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get Kubernetes settings
       tags:
@@ -4560,15 +4655,15 @@ paths:
           description: Bucket names
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List storage buckets
       tags:
@@ -4596,15 +4691,15 @@ paths:
           description: Storage class names
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List storage classes
       tags:
@@ -4630,15 +4725,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete integration
       tags:
@@ -4663,15 +4758,15 @@ paths:
           description: Integration
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get integration
       tags:
@@ -4702,15 +4797,15 @@ paths:
           description: Updated integration
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update integration
       tags:
@@ -4738,15 +4833,15 @@ paths:
           description: Database types
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database types
       tags:
@@ -4796,15 +4891,15 @@ paths:
           description: Database regions
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database regions
       tags:
@@ -4839,15 +4934,15 @@ paths:
           description: Database versions
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database versions
       tags:
@@ -4911,15 +5006,15 @@ paths:
           description: Database machine types
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List database machine types
       tags:
@@ -4952,15 +5047,15 @@ paths:
           description: Database settings
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get database settings
       tags:
@@ -5028,15 +5123,15 @@ paths:
           description: Providers response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List providers
       tags:
@@ -5062,15 +5157,15 @@ paths:
           description: Provider
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get provider by name
       tags:
@@ -5096,15 +5191,15 @@ paths:
           description: Provider
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get provider
       tags:
@@ -5130,15 +5225,15 @@ paths:
           description: Provider revision
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get provider revision
       tags:
@@ -5199,15 +5294,15 @@ paths:
           description: Services response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List services
       tags:
@@ -5231,15 +5326,15 @@ paths:
           description: Import task
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Import services from Git
       tags:
@@ -5272,15 +5367,15 @@ paths:
           description: Service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get service by name
       tags:
@@ -5306,15 +5401,15 @@ paths:
           description: Service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get service
       tags:
@@ -5346,15 +5441,15 @@ paths:
           description: Updated service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update service settings
       tags:
@@ -5382,15 +5477,15 @@ paths:
           description: Service link candidates
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List service link candidates
       tags:
@@ -5416,15 +5511,15 @@ paths:
           description: Service revision
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get service revision
       tags:
@@ -5485,15 +5580,15 @@ paths:
           description: Stacks response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stacks
       tags:
@@ -5517,15 +5612,15 @@ paths:
           description: Import task
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Import stacks from Git
       tags:
@@ -5558,15 +5653,15 @@ paths:
           description: Stack
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get stack by name
       tags:
@@ -5592,15 +5687,15 @@ paths:
           description: Stack
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get stack
       tags:
@@ -5632,15 +5727,15 @@ paths:
           description: Updated stack
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack settings
       tags:
@@ -5672,17 +5767,97 @@ paths:
           description: Update task
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack from git
+      tags:
+      - stacks
+  /stacks/{id}/actions/duplicate:
+    post:
+      description: Duplicates the stack into the target organization or project.
+      operationId: duplicateStack
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DuplicateStackRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Duplicated stack
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Duplicate stack
+      tags:
+      - stacks
+  /stacks/{id}/actions/sync-origin:
+    post:
+      description: Syncs the stack with its origin stack revision.
+      operationId: syncStackWithOrigin
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackSyncOptionsInput'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Synced stack
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Sync stack with origin
       tags:
       - stacks
   /stacks/{id}/actions/publish-draft:
@@ -5706,15 +5881,15 @@ paths:
           description: Published stack
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Publish stack draft
       tags:
@@ -5740,15 +5915,15 @@ paths:
           description: Stack revision
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get stack revision
       tags:
@@ -5776,15 +5951,15 @@ paths:
           description: Stack services
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack services
       tags:
@@ -5812,15 +5987,15 @@ paths:
           description: Stack services
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack services
       tags:
@@ -5843,15 +6018,15 @@ paths:
           description: Created stack service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service
       tags:
@@ -5877,15 +6052,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service
       tags:
@@ -5916,15 +6091,15 @@ paths:
           description: Updated stack service
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack service
       tags:
@@ -5952,15 +6127,15 @@ paths:
           description: List of stack service env vars
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service env vars
       tags:
@@ -5991,15 +6166,15 @@ paths:
           description: Created stack service env var
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service env var
       tags:
@@ -6025,15 +6200,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service env var
       tags:
@@ -6064,15 +6239,15 @@ paths:
           description: Updated stack service env var
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack service env var
       tags:
@@ -6100,15 +6275,15 @@ paths:
           description: List of stack service Helm values
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service Helm values
       tags:
@@ -6139,15 +6314,15 @@ paths:
           description: Created stack service Helm value
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service Helm value
       tags:
@@ -6173,15 +6348,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service Helm value
       tags:
@@ -6212,15 +6387,15 @@ paths:
           description: Updated stack service Helm value
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack service Helm value
       tags:
@@ -6249,15 +6424,15 @@ paths:
           description: List of stack service tokens
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service tokens
       tags:
@@ -6288,15 +6463,15 @@ paths:
           description: Created stack service token
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service token
       tags:
@@ -6322,15 +6497,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service token
       tags:
@@ -6361,15 +6536,15 @@ paths:
           description: Updated stack service token
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack service token
       tags:
@@ -6397,15 +6572,15 @@ paths:
           description: List of stack service annotations
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service annotations
       tags:
@@ -6436,15 +6611,15 @@ paths:
           description: Created stack service annotation
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service annotation
       tags:
@@ -6470,15 +6645,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service annotation
       tags:
@@ -6506,15 +6681,15 @@ paths:
           description: List of stack service integrations
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service integrations
       tags:
@@ -6545,15 +6720,15 @@ paths:
           description: Created stack service integration
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service integration
       tags:
@@ -6579,15 +6754,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service integration
       tags:
@@ -6615,15 +6790,15 @@ paths:
           description: List of stack service links
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service links
       tags:
@@ -6662,15 +6837,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set stack service link
       tags:
@@ -6698,15 +6873,15 @@ paths:
           description: List of stack service volumes
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service volumes
       tags:
@@ -6745,15 +6920,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set stack service volume
       tags:
@@ -6792,15 +6967,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set stack service setting
       tags:
@@ -6828,15 +7003,15 @@ paths:
           description: List of stack service configs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service configs
       tags:
@@ -6875,15 +7050,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set stack service config
       tags:
@@ -6915,15 +7090,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set stack service resources
       tags:
@@ -6955,15 +7130,15 @@ paths:
           description: Update result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack service options
       tags:
@@ -6991,15 +7166,15 @@ paths:
           description: List of stack service cron schedules
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stack service cron schedules
       tags:
@@ -7030,15 +7205,15 @@ paths:
           description: Created stack service cron schedule
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create stack service cron schedule
       tags:
@@ -7064,15 +7239,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete stack service cron schedule
       tags:
@@ -7103,15 +7278,15 @@ paths:
           description: Updated stack service cron schedule
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack service cron schedule
       tags:
@@ -7167,15 +7342,15 @@ paths:
           description: List of backups
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List backups
       tags:
@@ -7198,15 +7373,15 @@ paths:
           description: Backup task result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create backup
       tags:
@@ -7232,15 +7407,15 @@ paths:
           description: Backup
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get backup
       tags:
@@ -7289,15 +7464,15 @@ paths:
           description: List of imports
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List imports
       tags:
@@ -7320,15 +7495,15 @@ paths:
           description: Import task result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create import
       tags:
@@ -7354,15 +7529,15 @@ paths:
           description: Import
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get import
       tags:
@@ -7505,15 +7680,15 @@ paths:
           description: Tasks response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List tasks
       tags:
@@ -7539,15 +7714,15 @@ paths:
           description: Task
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get task
       tags:
@@ -7573,15 +7748,15 @@ paths:
           description: Cancel result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Cancel task
       tags:
@@ -7613,15 +7788,15 @@ paths:
           description: Repeat task result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Repeat task
       tags:
@@ -7662,15 +7837,15 @@ paths:
           description: Task step logs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get task step logs
       tags:
@@ -7696,15 +7871,15 @@ paths:
           description: Task step log URL
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get task step log URL
       tags:
@@ -7732,15 +7907,15 @@ paths:
           description: List of app routes
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app routes
       tags:
@@ -7763,15 +7938,15 @@ paths:
           description: Created app route
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create app route
       tags:
@@ -7797,15 +7972,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app route
       tags:
@@ -7830,15 +8005,15 @@ paths:
           description: App route
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app route
       tags:
@@ -7869,15 +8044,15 @@ paths:
           description: Updated app route
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app route
       tags:
@@ -7907,15 +8082,15 @@ paths:
           description: List of certs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List certs
       tags:
@@ -7951,15 +8126,15 @@ paths:
           description: Cert
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get cert
       tags:
@@ -7989,15 +8164,15 @@ paths:
           description: List of envs
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List envs
       tags:
@@ -8020,15 +8195,15 @@ paths:
           description: Created env
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create env
       tags:
@@ -8063,15 +8238,15 @@ paths:
           description: Env
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get env by name
       tags:
@@ -8097,15 +8272,15 @@ paths:
           description: Delete result
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete env
       tags:
@@ -8130,15 +8305,15 @@ paths:
           description: Env
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get env
       tags:
@@ -8169,15 +8344,15 @@ paths:
           description: Updated env
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
         "4XX":
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update env
       tags:
@@ -8446,19 +8621,52 @@ components:
   responses:
     Error:
       content:
-        application/json:
+        application/problem+json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
+            $ref: '#/components/schemas/ProblemDetails'
       description: Error response
   schemas:
-    ErrorResponse:
-      example:
-        message: message
+    ProblemDetails:
       properties:
+        type:
+          format: uri
+          type: string
+        title:
+          type: string
+        status:
+          maximum: 599
+          minimum: 100
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+        code:
+          type: string
         message:
           type: string
+        errors:
+          items:
+            $ref: '#/components/schemas/ProblemFieldError'
+          type: array
       required:
+      - code
+      - detail
       - message
+      - status
+      - title
+      - type
+      type: object
+    ProblemFieldError:
+      properties:
+        field:
+          type: string
+        code:
+          type: string
+        detail:
+          type: string
+      required:
+      - detail
       type: object
     OperationResult:
       example:
@@ -9076,6 +9284,75 @@ components:
         autoOriginStackUpdate:
           $ref: '#/components/schemas/StackAutoOriginUpdateSettingsInput'
       type: object
+    CopyStackSettingsInput:
+      example:
+        autoOriginStackUpdate:
+          enabled: true
+          versionPolicy:
+            mode: mode
+            allowMajor: true
+            allowPatch: true
+            allowMinor: true
+          syncOptions:
+            deleteStackAnnotations: true
+            deleteStackEnvVars: true
+            deleteStackHelmValues: true
+            deleteStackServicesConfiguration: true
+            deleteStackTokens: true
+            deleteStackServices: true
+        autoServiceRevisionUpdate:
+          enabled: true
+          policy:
+            scope: scope
+            versionPolicy:
+              mode: mode
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+      properties:
+        autoServiceRevisionUpdate:
+          $ref: '#/components/schemas/StackAutoServiceRevisionUpdateSettingsInput'
+        autoOriginStackUpdate:
+          $ref: '#/components/schemas/StackAutoOriginUpdateSettingsInput'
+      type: object
+    DuplicateStackRequest:
+      example:
+        settings:
+          autoOriginStackUpdate:
+            enabled: true
+            versionPolicy:
+              mode: mode
+              allowMajor: true
+              allowPatch: true
+              allowMinor: true
+            syncOptions:
+              deleteStackAnnotations: true
+              deleteStackEnvVars: true
+              deleteStackHelmValues: true
+              deleteStackServicesConfiguration: true
+              deleteStackTokens: true
+              deleteStackServices: true
+          autoServiceRevisionUpdate:
+            enabled: true
+            policy:
+              scope: scope
+              versionPolicy:
+                mode: mode
+                allowMajor: true
+                allowPatch: true
+                allowMinor: true
+        projectId: 6
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        settings:
+          $ref: '#/components/schemas/CopyStackSettingsInput'
+      type: object
     ClusterAutoUpgradeVersionPolicy:
       example:
         allowMajor: true
@@ -9271,7 +9548,7 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         domain: domain
         name: name
-        id: 0
+        id: 6
         title: title
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -9306,6 +9583,77 @@ components:
       required:
       - id
       - name
+      type: object
+    CurrentUser:
+      example:
+        defaultOrg: "{}"
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        defaultProjects:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: 1
+          title: title
+          orgId: 5
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: 1
+          title: title
+          orgId: 5
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        orgs:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          domain: domain
+          name: name
+          id: 6
+          title: title
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          domain: domain
+          name: name
+          id: 6
+          title: title
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        twofa: true
+        email: email
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        orgs:
+          items:
+            $ref: '#/components/schemas/Org'
+          type: array
+        twofa:
+          type: boolean
+        defaultOrg:
+          allOf:
+          - $ref: '#/components/schemas/Org'
+          nullable: true
+          type: object
+        defaultProjects:
+          items:
+            $ref: '#/components/schemas/Project'
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - email
+      - id
+      - name
+      - twofa
+      - updatedAt
       type: object
     OrgMembership:
       example:
@@ -9361,9 +9709,9 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        id: 0
+        id: 1
         title: title
-        orgId: 6
+        orgId: 5
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -9526,24 +9874,24 @@ components:
         appServiceDeployments:
         - jobName: jobName
           skipPostDeployment: true
-          appServiceId: 7
+          appServiceId: 1
           createdAt: 2000-01-23T04:56:07.000+00:00
           appServiceBuildId: 1
           endedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           force: true
-          id: 4
+          id: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - jobName: jobName
           skipPostDeployment: true
-          appServiceId: 7
+          appServiceId: 1
           createdAt: 2000-01-23T04:56:07.000+00:00
           appServiceBuildId: 1
           endedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           force: true
-          id: 4
+          id: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         skipRollback: true
@@ -9564,23 +9912,24 @@ components:
           task: "{}"
           appServiceBuilds:
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           id: 5
+          taskId: 9
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -9595,28 +9944,30 @@ components:
           task: "{}"
           appServiceBuilds:
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           id: 5
+          taskId: 9
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         rollbackStatus: not_attempted
+        taskId: 7
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -9640,6 +9991,9 @@ components:
           items:
             $ref: '#/components/schemas/AppBuild'
           type: array
+        taskId:
+          nullable: true
+          type: integer
         task:
           allOf:
           - $ref: '#/components/schemas/Task'
@@ -9679,13 +10033,13 @@ components:
       example:
         jobName: jobName
         skipPostDeployment: true
-        appServiceId: 7
+        appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
         appServiceBuildId: 1
         endedAt: 2000-01-23T04:56:07.000+00:00
         startedAt: 2000-01-23T04:56:07.000+00:00
         force: true
-        id: 4
+        id: 1
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -9730,31 +10084,31 @@ components:
       type: object
     AppDeploymentsResponse:
       example:
-        nextPage: 1
-        totalCount: 1
+        nextPage: 7
+        totalCount: 6
         items:
         - startedAt: 2000-01-23T04:56:07.000+00:00
           appServiceDeployments:
           - jobName: jobName
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
             appServiceBuildId: 1
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 4
+            id: 1
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
             appServiceBuildId: 1
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 4
+            id: 1
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           skipRollback: true
@@ -9775,23 +10129,24 @@ components:
             task: "{}"
             appServiceBuilds:
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             id: 5
+            taskId: 9
             status: status
             gitRefType: gitRefType
             updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -9806,52 +10161,54 @@ components:
             task: "{}"
             appServiceBuilds:
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             id: 5
+            taskId: 9
             status: status
             gitRefType: gitRefType
             updatedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           rollbackStatus: not_attempted
+          taskId: 7
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - startedAt: 2000-01-23T04:56:07.000+00:00
           appServiceDeployments:
           - jobName: jobName
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
             appServiceBuildId: 1
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 4
+            id: 1
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
             appServiceBuildId: 1
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 4
+            id: 1
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           skipRollback: true
@@ -9872,23 +10229,24 @@ components:
             task: "{}"
             appServiceBuilds:
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             id: 5
+            taskId: 9
             status: status
             gitRefType: gitRefType
             updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -9903,28 +10261,30 @@ components:
             task: "{}"
             appServiceBuilds:
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
-              appServiceId: 2
+              appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
-              size: 3
-              id: 9
+              size: 2
+              id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             id: 5
+            taskId: 9
             status: status
             gitRefType: gitRefType
             updatedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           rollbackStatus: not_attempted
+          taskId: 7
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -9954,23 +10314,24 @@ components:
         task: "{}"
         appServiceBuilds:
         - image: image
-          appServiceId: 2
+          appServiceId: 4
           createdAt: 2000-01-23T04:56:07.000+00:00
-          size: 3
-          id: 9
+          size: 2
+          id: 3
           imageDeleted: true
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - image: image
-          appServiceId: 2
+          appServiceId: 4
           createdAt: 2000-01-23T04:56:07.000+00:00
-          size: 3
-          id: 9
+          size: 2
+          id: 3
           imageDeleted: true
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
         id: 5
+        taskId: 9
         status: status
         gitRefType: gitRefType
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -9984,6 +10345,9 @@ components:
         appInstanceId:
           type: integer
         appServiceId:
+          type: integer
+        taskId:
+          nullable: true
           type: integer
         task:
           allOf:
@@ -10033,10 +10397,10 @@ components:
     AppServiceBuild:
       example:
         image: image
-        appServiceId: 2
+        appServiceId: 4
         createdAt: 2000-01-23T04:56:07.000+00:00
-        size: 3
-        id: 9
+        size: 2
+        id: 3
         imageDeleted: true
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -10085,23 +10449,24 @@ components:
           task: "{}"
           appServiceBuilds:
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           id: 5
+          taskId: 9
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -10116,23 +10481,24 @@ components:
           task: "{}"
           appServiceBuilds:
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
-            appServiceId: 2
+            appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
-            size: 3
-            id: 9
+            size: 2
+            id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           id: 5
+          taskId: 9
           status: status
           gitRefType: gitRefType
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -10149,6 +10515,85 @@ components:
       required:
       - items
       - totalCount
+      type: object
+    AppBuildsCreateResponse:
+      example:
+        items:
+        - gitRef: gitRef
+          commitMessage: commitMessage
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          commitHash: commitHash
+          appInstanceId: 2
+          number: 5
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
+          appServiceBuilds:
+          - image: image
+            appServiceId: 4
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 2
+            id: 3
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - image: image
+            appServiceId: 4
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 2
+            id: 3
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          id: 5
+          taskId: 9
+          status: status
+          gitRefType: gitRefType
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - gitRef: gitRef
+          commitMessage: commitMessage
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          commitHash: commitHash
+          appInstanceId: 2
+          number: 5
+          appServiceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          task: "{}"
+          appServiceBuilds:
+          - image: image
+            appServiceId: 4
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 2
+            id: 3
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - image: image
+            appServiceId: 4
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            size: 2
+            id: 3
+            imageDeleted: true
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          id: 5
+          taskId: 9
+          status: status
+          gitRefType: gitRefType
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        taskId: 0
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppBuild'
+          type: array
+        taskId:
+          nullable: true
+          type: integer
+      required:
+      - items
       type: object
     AppBuildConfig:
       example:
@@ -13128,6 +13573,15 @@ components:
     GenericObject:
       additionalProperties: true
       type: object
+    UpdateCurrentUserRequest:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
     UpdateOrgRequest:
       example:
         registryIntegrationId: 0
@@ -13667,6 +14121,7 @@ components:
           gitRefType: gitRefType
         title: title
         required: true
+        serviceRevPinned: true
       properties:
         replicas:
           nullable: true
@@ -13678,6 +14133,9 @@ components:
           nullable: true
           type: boolean
         main:
+          nullable: true
+          type: boolean
+        serviceRevPinned:
           nullable: true
           type: boolean
         title:
@@ -15113,6 +15571,7 @@ components:
         serviceId: 6
         title: title
         required: true
+        serviceRevPinned: true
       properties:
         stackId:
           type: integer
@@ -15126,6 +15585,9 @@ components:
           type: boolean
         replicas:
           type: integer
+        serviceRevPinned:
+          nullable: true
+          type: boolean
       required:
       - name
       - replicas

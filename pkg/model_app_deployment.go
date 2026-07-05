@@ -29,6 +29,7 @@ type AppDeployment struct {
 	SkipRollback bool `json:"skipRollback"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	Builds []AppBuild `json:"builds"`
+	TaskId NullableInt32 `json:"taskId,omitempty"`
 	Task NullableTask `json:"task,omitempty"`
 	AppServiceDeployments []AppServiceDeployment `json:"appServiceDeployments"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -232,6 +233,48 @@ func (o *AppDeployment) GetBuildsOk() ([]AppBuild, bool) {
 // SetBuilds sets field value
 func (o *AppDeployment) SetBuilds(v []AppBuild) {
 	o.Builds = v
+}
+
+// GetTaskId returns the TaskId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetTaskId() int32 {
+	if o == nil || IsNil(o.TaskId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.TaskId.Get()
+}
+
+// GetTaskIdOk returns a tuple with the TaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetTaskIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TaskId.Get(), o.TaskId.IsSet()
+}
+
+// HasTaskId returns a boolean if a field has been set.
+func (o *AppDeployment) HasTaskId() bool {
+	if o != nil && o.TaskId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTaskId gets a reference to the given NullableInt32 and assigns it to the TaskId field.
+func (o *AppDeployment) SetTaskId(v int32) {
+	o.TaskId.Set(&v)
+}
+// SetTaskIdNil sets the value for TaskId to be an explicit nil
+func (o *AppDeployment) SetTaskIdNil() {
+	o.TaskId.Set(nil)
+}
+
+// UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
+func (o *AppDeployment) UnsetTaskId() {
+	o.TaskId.Unset()
 }
 
 // GetTask returns the Task field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -449,6 +492,9 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	toSerialize["skipRollback"] = o.SkipRollback
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["builds"] = o.Builds
+	if o.TaskId.IsSet() {
+		toSerialize["taskId"] = o.TaskId.Get()
+	}
 	if o.Task.IsSet() {
 		toSerialize["task"] = o.Task.Get()
 	}

@@ -98,6 +98,8 @@ type APIClient struct {
 	TaskStepsAPI *TaskStepsAPIService
 
 	TasksAPI *TasksAPIService
+
+	UserAPI *UserAPIService
 }
 
 type service struct {
@@ -141,6 +143,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.StacksAPI = (*StacksAPIService)(&c.common)
 	c.TaskStepsAPI = (*TaskStepsAPIService)(&c.common)
 	c.TasksAPI = (*TasksAPIService)(&c.common)
+	c.UserAPI = (*UserAPIService)(&c.common)
 
 	return c
 }

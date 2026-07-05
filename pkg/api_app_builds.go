@@ -34,7 +34,7 @@ func (r ApiCreateAppBuildRequest) CreateBuildRequest(createBuildRequest CreateBu
 	return r
 }
 
-func (r ApiCreateAppBuildRequest) Execute() ([]AppBuild, *http.Response, error) {
+func (r ApiCreateAppBuildRequest) Execute() (*AppBuildsCreateResponse, *http.Response, error) {
 	return r.ApiService.CreateAppBuildExecute(r)
 }
 
@@ -54,13 +54,13 @@ func (a *AppBuildsAPIService) CreateAppBuild(ctx context.Context) ApiCreateAppBu
 }
 
 // Execute executes the request
-//  @return []AppBuild
-func (a *AppBuildsAPIService) CreateAppBuildExecute(r ApiCreateAppBuildRequest) ([]AppBuild, *http.Response, error) {
+//  @return AppBuildsCreateResponse
+func (a *AppBuildsAPIService) CreateAppBuildExecute(r ApiCreateAppBuildRequest) (*AppBuildsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []AppBuild
+		localVarReturnValue  *AppBuildsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppBuildsAPIService.CreateAppBuild")
@@ -87,7 +87,7 @@ func (a *AppBuildsAPIService) CreateAppBuildExecute(r ApiCreateAppBuildRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -133,7 +133,7 @@ func (a *AppBuildsAPIService) CreateAppBuildExecute(r ApiCreateAppBuildRequest) 
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -143,7 +143,7 @@ func (a *AppBuildsAPIService) CreateAppBuildExecute(r ApiCreateAppBuildRequest) 
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -230,7 +230,7 @@ func (a *AppBuildsAPIService) CreateAppBuildFromCiExecute(r ApiCreateAppBuildFro
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -276,7 +276,7 @@ func (a *AppBuildsAPIService) CreateAppBuildFromCiExecute(r ApiCreateAppBuildFro
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -286,7 +286,7 @@ func (a *AppBuildsAPIService) CreateAppBuildFromCiExecute(r ApiCreateAppBuildFro
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -368,7 +368,7 @@ func (a *AppBuildsAPIService) DeployAppBuildExecute(r ApiDeployAppBuildRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -412,7 +412,7 @@ func (a *AppBuildsAPIService) DeployAppBuildExecute(r ApiDeployAppBuildRequest) 
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -422,7 +422,7 @@ func (a *AppBuildsAPIService) DeployAppBuildExecute(r ApiDeployAppBuildRequest) 
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -504,7 +504,7 @@ func (a *AppBuildsAPIService) GetAppBuildExecute(r ApiGetAppBuildRequest) (*AppB
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -562,7 +562,7 @@ func (a *AppBuildsAPIService) GetAppBuildExecute(r ApiGetAppBuildRequest) (*AppB
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -572,7 +572,7 @@ func (a *AppBuildsAPIService) GetAppBuildExecute(r ApiGetAppBuildRequest) (*AppB
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -654,7 +654,7 @@ func (a *AppBuildsAPIService) GetAppBuildConfigExecute(r ApiGetAppBuildConfigReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -712,7 +712,7 @@ func (a *AppBuildsAPIService) GetAppBuildConfigExecute(r ApiGetAppBuildConfigReq
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -722,7 +722,7 @@ func (a *AppBuildsAPIService) GetAppBuildConfigExecute(r ApiGetAppBuildConfigReq
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -804,7 +804,7 @@ func (a *AppBuildsAPIService) GetAppBuildDockerRegistryCredentialsExecute(r ApiG
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -862,7 +862,7 @@ func (a *AppBuildsAPIService) GetAppBuildDockerRegistryCredentialsExecute(r ApiG
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -872,7 +872,7 @@ func (a *AppBuildsAPIService) GetAppBuildDockerRegistryCredentialsExecute(r ApiG
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -980,7 +980,7 @@ func (a *AppBuildsAPIService) ListAppBuildsExecute(r ApiListAppBuildsRequest) (*
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1024,7 +1024,7 @@ func (a *AppBuildsAPIService) ListAppBuildsExecute(r ApiListAppBuildsRequest) (*
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1034,7 +1034,7 @@ func (a *AppBuildsAPIService) ListAppBuildsExecute(r ApiListAppBuildsRequest) (*
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ErrorResponse
+			var v ProblemDetails
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

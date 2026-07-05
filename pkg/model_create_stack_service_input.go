@@ -27,6 +27,7 @@ type CreateStackServiceInput struct {
 	Title string `json:"title"`
 	Required bool `json:"required"`
 	Replicas int32 `json:"replicas"`
+	ServiceRevPinned NullableBool `json:"serviceRevPinned,omitempty"`
 }
 
 type _CreateStackServiceInput CreateStackServiceInput
@@ -198,6 +199,48 @@ func (o *CreateStackServiceInput) SetReplicas(v int32) {
 	o.Replicas = v
 }
 
+// GetServiceRevPinned returns the ServiceRevPinned field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateStackServiceInput) GetServiceRevPinned() bool {
+	if o == nil || IsNil(o.ServiceRevPinned.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.ServiceRevPinned.Get()
+}
+
+// GetServiceRevPinnedOk returns a tuple with the ServiceRevPinned field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateStackServiceInput) GetServiceRevPinnedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ServiceRevPinned.Get(), o.ServiceRevPinned.IsSet()
+}
+
+// HasServiceRevPinned returns a boolean if a field has been set.
+func (o *CreateStackServiceInput) HasServiceRevPinned() bool {
+	if o != nil && o.ServiceRevPinned.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceRevPinned gets a reference to the given NullableBool and assigns it to the ServiceRevPinned field.
+func (o *CreateStackServiceInput) SetServiceRevPinned(v bool) {
+	o.ServiceRevPinned.Set(&v)
+}
+// SetServiceRevPinnedNil sets the value for ServiceRevPinned to be an explicit nil
+func (o *CreateStackServiceInput) SetServiceRevPinnedNil() {
+	o.ServiceRevPinned.Set(nil)
+}
+
+// UnsetServiceRevPinned ensures that no value is present for ServiceRevPinned, not even an explicit nil
+func (o *CreateStackServiceInput) UnsetServiceRevPinned() {
+	o.ServiceRevPinned.Unset()
+}
+
 func (o CreateStackServiceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -214,6 +257,9 @@ func (o CreateStackServiceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["title"] = o.Title
 	toSerialize["required"] = o.Required
 	toSerialize["replicas"] = o.Replicas
+	if o.ServiceRevPinned.IsSet() {
+		toSerialize["serviceRevPinned"] = o.ServiceRevPinned.Get()
+	}
 	return toSerialize, nil
 }
 
