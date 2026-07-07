@@ -75,6 +75,8 @@ type APIClient struct {
 
 	EnvsAPI *EnvsAPIService
 
+	HelmChartsAPI *HelmChartsAPIService
+
 	ImportsAPI *ImportsAPIService
 
 	IntegrationKindsAPI *IntegrationKindsAPIService
@@ -131,6 +133,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DatabasesAPI = (*DatabasesAPIService)(&c.common)
 	c.DefaultAPI = (*DefaultAPIService)(&c.common)
 	c.EnvsAPI = (*EnvsAPIService)(&c.common)
+	c.HelmChartsAPI = (*HelmChartsAPIService)(&c.common)
 	c.ImportsAPI = (*ImportsAPIService)(&c.common)
 	c.IntegrationKindsAPI = (*IntegrationKindsAPIService)(&c.common)
 	c.IntegrationsAPI = (*IntegrationsAPIService)(&c.common)

@@ -22,6 +22,18 @@ func Test_client_ServicesAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test ServicesAPIService CreateServiceFromManifest", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServicesAPI.CreateServiceFromManifest(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ServicesAPIService GetService", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -102,6 +114,18 @@ func Test_client_ServicesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ServicesAPIService ScaffoldServiceFromHelmChart", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServicesAPI.ScaffoldServiceFromHelmChart(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ServicesAPIService UpdateServiceSettings", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -109,6 +133,18 @@ func Test_client_ServicesAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.ServicesAPI.UpdateServiceSettings(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ServicesAPIService ValidateServiceManifest", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServicesAPI.ValidateServiceManifest(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

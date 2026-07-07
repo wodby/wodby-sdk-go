@@ -4,14 +4,83 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateServiceFromManifest**](ServicesAPI.md#CreateServiceFromManifest) | **Post** /services/actions/create-from-manifest | Create service from manifest
 [**GetService**](ServicesAPI.md#GetService) | **Get** /services/{id} | Get service
 [**GetServiceByName**](ServicesAPI.md#GetServiceByName) | **Get** /services/by-name/{name} | Get service by name
 [**GetServiceRevision**](ServicesAPI.md#GetServiceRevision) | **Get** /service-revisions/{id} | Get service revision
 [**ImportServices**](ServicesAPI.md#ImportServices) | **Post** /services/actions/import | Import services from Git
 [**ListServiceLinkCandidates**](ServicesAPI.md#ListServiceLinkCandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
 [**ListServices**](ServicesAPI.md#ListServices) | **Get** /services | List services
+[**ScaffoldServiceFromHelmChart**](ServicesAPI.md#ScaffoldServiceFromHelmChart) | **Post** /services/actions/scaffold-from-helm-chart | Scaffold service from Helm chart
 [**UpdateServiceSettings**](ServicesAPI.md#UpdateServiceSettings) | **Put** /services/settings/{id} | Update service settings
+[**ValidateServiceManifest**](ServicesAPI.md#ValidateServiceManifest) | **Post** /services/actions/validate-manifest | Validate service manifest
 
+
+
+## CreateServiceFromManifest
+
+> Service CreateServiceFromManifest(ctx).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+
+Create service from manifest
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	manifestFromYAMLInput := *openapiclient.NewManifestFromYAMLInput("ManifestYaml_example") // ManifestFromYAMLInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.CreateServiceFromManifest(context.Background()).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.CreateServiceFromManifest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateServiceFromManifest`: Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.CreateServiceFromManifest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateServiceFromManifestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **manifestFromYAMLInput** | [**ManifestFromYAMLInput**](ManifestFromYAMLInput.md) |  | 
+
+### Return type
+
+[**Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetService
@@ -436,6 +505,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ScaffoldServiceFromHelmChart
+
+> HelmChartServiceScaffoldResponse ScaffoldServiceFromHelmChart(ctx).HelmChartServiceScaffoldInput(helmChartServiceScaffoldInput).Execute()
+
+Scaffold service from Helm chart
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	helmChartServiceScaffoldInput := *openapiclient.NewHelmChartServiceScaffoldInput(*openapiclient.NewHelmChartInput("Chart_example")) // HelmChartServiceScaffoldInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ScaffoldServiceFromHelmChart(context.Background()).HelmChartServiceScaffoldInput(helmChartServiceScaffoldInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ScaffoldServiceFromHelmChart``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ScaffoldServiceFromHelmChart`: HelmChartServiceScaffoldResponse
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ScaffoldServiceFromHelmChart`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiScaffoldServiceFromHelmChartRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **helmChartServiceScaffoldInput** | [**HelmChartServiceScaffoldInput**](HelmChartServiceScaffoldInput.md) |  | 
+
+### Return type
+
+[**HelmChartServiceScaffoldResponse**](HelmChartServiceScaffoldResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateServiceSettings
 
 > Service UpdateServiceSettings(ctx, id).ServiceSettingsInput(serviceSettingsInput).Execute()
@@ -493,6 +628,72 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ValidateServiceManifest
+
+> ManifestValidationResponse ValidateServiceManifest(ctx).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+
+Validate service manifest
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	manifestFromYAMLInput := *openapiclient.NewManifestFromYAMLInput("ManifestYaml_example") // ManifestFromYAMLInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ValidateServiceManifest(context.Background()).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ValidateServiceManifest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ValidateServiceManifest`: ManifestValidationResponse
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ValidateServiceManifest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiValidateServiceManifestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **manifestFromYAMLInput** | [**ManifestFromYAMLInput**](ManifestFromYAMLInput.md) |  | 
+
+### Return type
+
+[**ManifestValidationResponse**](ManifestValidationResponse.md)
 
 ### Authorization
 

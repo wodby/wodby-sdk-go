@@ -4,6 +4,7 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateStackFromManifest**](StacksAPI.md#CreateStackFromManifest) | **Post** /stacks/actions/create-from-manifest | Create stack from manifest
 [**DuplicateStack**](StacksAPI.md#DuplicateStack) | **Post** /stacks/{id}/actions/duplicate | Duplicate stack
 [**GetStack**](StacksAPI.md#GetStack) | **Get** /stacks/{id} | Get stack
 [**GetStackByName**](StacksAPI.md#GetStackByName) | **Get** /stacks/by-name/{name} | Get stack by name
@@ -12,10 +13,78 @@ Method | HTTP request | Description
 [**ListStackRevisionServices**](StacksAPI.md#ListStackRevisionServices) | **Get** /stack-revisions/{id}/services | List stack services
 [**ListStacks**](StacksAPI.md#ListStacks) | **Get** /stacks | List stacks
 [**PublishStackDraft**](StacksAPI.md#PublishStackDraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
+[**ScaffoldStackFromHelmChart**](StacksAPI.md#ScaffoldStackFromHelmChart) | **Post** /stacks/actions/scaffold-from-helm-chart | Scaffold stack from Helm chart
 [**SyncStackWithOrigin**](StacksAPI.md#SyncStackWithOrigin) | **Post** /stacks/{id}/actions/sync-origin | Sync stack with origin
 [**UpdateStackFromGit**](StacksAPI.md#UpdateStackFromGit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
 [**UpdateStackSettings**](StacksAPI.md#UpdateStackSettings) | **Put** /stacks/settings/{id} | Update stack settings
+[**ValidateStackManifest**](StacksAPI.md#ValidateStackManifest) | **Post** /stacks/actions/validate-manifest | Validate stack manifest
 
+
+
+## CreateStackFromManifest
+
+> Stack CreateStackFromManifest(ctx).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+
+Create stack from manifest
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	manifestFromYAMLInput := *openapiclient.NewManifestFromYAMLInput("ManifestYaml_example") // ManifestFromYAMLInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.CreateStackFromManifest(context.Background()).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.CreateStackFromManifest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStackFromManifest`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.CreateStackFromManifest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStackFromManifestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **manifestFromYAMLInput** | [**ManifestFromYAMLInput**](ManifestFromYAMLInput.md) |  | 
+
+### Return type
+
+[**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## DuplicateStack
@@ -582,6 +651,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ScaffoldStackFromHelmChart
+
+> HelmChartStackScaffoldResponse ScaffoldStackFromHelmChart(ctx).HelmChartStackScaffoldInput(helmChartStackScaffoldInput).Execute()
+
+Scaffold stack from Helm chart
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	helmChartStackScaffoldInput := *openapiclient.NewHelmChartStackScaffoldInput(*openapiclient.NewHelmChartInput("Chart_example")) // HelmChartStackScaffoldInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ScaffoldStackFromHelmChart(context.Background()).HelmChartStackScaffoldInput(helmChartStackScaffoldInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ScaffoldStackFromHelmChart``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ScaffoldStackFromHelmChart`: HelmChartStackScaffoldResponse
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ScaffoldStackFromHelmChart`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiScaffoldStackFromHelmChartRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **helmChartStackScaffoldInput** | [**HelmChartStackScaffoldInput**](HelmChartStackScaffoldInput.md) |  | 
+
+### Return type
+
+[**HelmChartStackScaffoldResponse**](HelmChartStackScaffoldResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SyncStackWithOrigin
 
 > Stack SyncStackWithOrigin(ctx, id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
@@ -783,6 +918,72 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ValidateStackManifest
+
+> ManifestValidationResponse ValidateStackManifest(ctx).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+
+Validate stack manifest
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	manifestFromYAMLInput := *openapiclient.NewManifestFromYAMLInput("ManifestYaml_example") // ManifestFromYAMLInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ValidateStackManifest(context.Background()).ManifestFromYAMLInput(manifestFromYAMLInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ValidateStackManifest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ValidateStackManifest`: ManifestValidationResponse
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ValidateStackManifest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiValidateStackManifestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **manifestFromYAMLInput** | [**ManifestFromYAMLInput**](ManifestFromYAMLInput.md) |  | 
+
+### Return type
+
+[**ManifestValidationResponse**](ManifestValidationResponse.md)
 
 ### Authorization
 

@@ -49,6 +49,8 @@ tags:
   name: integration-kinds
 - description: Provider catalog entries and revisions.
   name: providers
+- description: Helm chart analysis and Wodby manifest scaffolding.
+  name: helm-charts
 - description: Service catalog entries and service options.
   name: services
 - description: Stack catalog entries and stack revisions.
@@ -5238,6 +5240,39 @@ paths:
       summary: Get provider revision
       tags:
       - providers
+  /helm-charts/actions/inspect:
+    post:
+      description: "Renders a Helm chart with optional values and returns detected\
+        \ Kubernetes resources, warnings, and chart metadata."
+      operationId: inspectHelmChart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmChartInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmChartAnalysis'
+          description: Helm chart analysis
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Inspect Helm chart
+      tags:
+      - helm-charts
   /services:
     get:
       description: Returns services matching the request filters.
@@ -5337,6 +5372,103 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Import services from Git
+      tags:
+      - services
+  /services/actions/validate-manifest:
+    post:
+      description: Validates a Wodby service manifest without creating a service.
+      operationId: validateServiceManifest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManifestFromYAMLInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManifestValidationResponse'
+          description: Service manifest validation result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Validate service manifest
+      tags:
+      - services
+  /services/actions/create-from-manifest:
+    post:
+      description: Creates a non-Git Wodby service from a service manifest.
+      operationId: createServiceFromManifest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManifestFromYAMLInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: Created service
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create service from manifest
+      tags:
+      - services
+  /services/actions/scaffold-from-helm-chart:
+    post:
+      description: Renders a Helm chart and returns a best-effort Wodby service manifest
+        for review and validation.
+      operationId: scaffoldServiceFromHelmChart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmChartServiceScaffoldInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmChartServiceScaffoldResponse'
+          description: Generated service manifest
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Scaffold service from Helm chart
       tags:
       - services
   /services/by-name/{name}:
@@ -5623,6 +5755,103 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Import stacks from Git
+      tags:
+      - stacks
+  /stacks/actions/validate-manifest:
+    post:
+      description: Validates a Wodby stack manifest without creating a stack.
+      operationId: validateStackManifest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManifestFromYAMLInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManifestValidationResponse'
+          description: Stack manifest validation result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Validate stack manifest
+      tags:
+      - stacks
+  /stacks/actions/create-from-manifest:
+    post:
+      description: Creates a non-Git Wodby stack from a stack manifest.
+      operationId: createStackFromManifest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManifestFromYAMLInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Created stack
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create stack from manifest
+      tags:
+      - stacks
+  /stacks/actions/scaffold-from-helm-chart:
+    post:
+      description: Renders a Helm chart and returns best-effort Wodby service and
+        stack manifests for review and validation.
+      operationId: scaffoldStackFromHelmChart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmChartStackScaffoldInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmChartStackScaffoldResponse'
+          description: Generated service and stack manifests
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Scaffold stack from Helm chart
       tags:
       - stacks
   /stacks/by-name/{name}:
@@ -9542,6 +9771,1517 @@ components:
       - gitRefType
       - integrationId
       - remoteGitRepoId
+      type: object
+    ManifestFromYAMLInput:
+      example:
+        manifestYaml: manifestYaml
+        files:
+          key: files
+        projectId: 6
+        version: version
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        version:
+          description: Optional revision version label for the generated non-Git resource.
+          type: string
+        manifestYaml:
+          description: Complete Wodby service.yml or stack.yml manifest content.
+          type: string
+        files:
+          additionalProperties:
+            type: string
+          description: "Optional referenced file contents keyed by manifest-relative\
+            \ path, for example Dockerfile or configs/app.conf."
+          type: object
+      required:
+      - manifestYaml
+      type: object
+    ManifestValidationResponse:
+      example:
+        valid: true
+        resource:
+          key: ""
+        manifest:
+          key: ""
+        error: error
+      properties:
+        valid:
+          type: boolean
+        error:
+          type: string
+        resource:
+          additionalProperties: true
+          type: object
+        manifest:
+          additionalProperties: true
+          type: object
+      required:
+      - valid
+      type: object
+    HelmChartInput:
+      example:
+        valuesYaml: valuesYaml
+        release: release
+        values:
+          key: ""
+        namespace: namespace
+        sourceName: sourceName
+        source: source
+        chart: chart
+        version: version
+      properties:
+        sourceName:
+          description: Optional chart source name to use in generated Wodby manifests.
+          type: string
+        source:
+          description: Optional Helm repository or OCI source URL.
+          type: string
+        chart:
+          description: "Helm chart reference, such as bitnami/redis, oci://registry.example.com/chart,\
+            \ a chart archive URL, or a server-local chart path."
+          type: string
+        version:
+          description: Optional Helm chart version.
+          type: string
+        release:
+          description: Optional Helm release name used for rendering analysis.
+          type: string
+        namespace:
+          description: Optional Kubernetes namespace used for rendering analysis.
+          type: string
+        values:
+          additionalProperties: true
+          type: object
+        valuesYaml:
+          description: "Optional Helm values YAML. Use either values or valuesYaml,\
+            \ not both."
+          type: string
+      required:
+      - chart
+      type: object
+    HelmChartServiceScaffoldInput:
+      example:
+        serviceType: serviceType
+        serviceTitle: serviceTitle
+        icon: icon
+        serviceName: serviceName
+        chart:
+          valuesYaml: valuesYaml
+          release: release
+          values:
+            key: ""
+          namespace: namespace
+          sourceName: sourceName
+          source: source
+          chart: chart
+          version: version
+      properties:
+        chart:
+          $ref: '#/components/schemas/HelmChartInput'
+        serviceName:
+          description: Optional generated Wodby service name.
+          type: string
+        serviceTitle:
+          description: Optional generated Wodby service title.
+          type: string
+        serviceType:
+          description: Optional generated Wodby service type. Defaults to service.
+          type: string
+        icon:
+          description: Optional generated service icon.
+          type: string
+      required:
+      - chart
+      type: object
+    HelmChartStackScaffoldInput:
+      example:
+        serviceType: serviceType
+        stackTitle: stackTitle
+        serviceTitle: serviceTitle
+        stackName: stackName
+        icon: icon
+        serviceName: serviceName
+        chart:
+          valuesYaml: valuesYaml
+          release: release
+          values:
+            key: ""
+          namespace: namespace
+          sourceName: sourceName
+          source: source
+          chart: chart
+          version: version
+      properties:
+        chart:
+          $ref: '#/components/schemas/HelmChartInput'
+        serviceName:
+          description: Optional generated Wodby service name.
+          type: string
+        serviceTitle:
+          description: Optional generated Wodby service title.
+          type: string
+        serviceType:
+          description: Optional generated Wodby service type. Defaults to service.
+          type: string
+        stackName:
+          description: Optional generated Wodby stack name.
+          type: string
+        stackTitle:
+          description: Optional generated Wodby stack title.
+          type: string
+        icon:
+          description: Optional generated service and stack icon.
+          type: string
+      required:
+      - chart
+      type: object
+    HelmChartMetadata:
+      example:
+        appVersion: appVersion
+        name: name
+        description: description
+        source: source
+        version: version
+        chart: chart
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+        appVersion:
+          type: string
+        description:
+          type: string
+        source:
+          type: string
+        chart:
+          type: string
+      required:
+      - chart
+      - name
+      type: object
+    HelmChartContainerPort:
+      example:
+        number: 6
+        protocol: protocol
+        name: name
+      properties:
+        name:
+          type: string
+        number:
+          type: integer
+        protocol:
+          type: string
+      required:
+      - number
+      - protocol
+      type: object
+    HelmChartContainer:
+      example:
+        args:
+        - args
+        - args
+        image: image
+        name: name
+        ports:
+        - number: 6
+          protocol: protocol
+          name: name
+        - number: 6
+          protocol: protocol
+          name: name
+        env:
+        - env
+        - env
+        command:
+        - command
+        - command
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        args:
+          items:
+            type: string
+          type: array
+        ports:
+          items:
+            $ref: '#/components/schemas/HelmChartContainerPort'
+          type: array
+        env:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      type: object
+    HelmChartVolumeClaim:
+      example:
+        size: size
+        storageClassName: storageClassName
+        name: name
+        accessModes:
+        - accessModes
+        - accessModes
+      properties:
+        name:
+          type: string
+        size:
+          type: string
+        storageClassName:
+          type: string
+        accessModes:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      type: object
+    HelmChartWorkload:
+      example:
+        podLabels:
+          key: podLabels
+        kind: kind
+        name: name
+        volumes:
+        - size: size
+          storageClassName: storageClassName
+          name: name
+          accessModes:
+          - accessModes
+          - accessModes
+        - size: size
+          storageClassName: storageClassName
+          name: name
+          accessModes:
+          - accessModes
+          - accessModes
+        selector:
+          key: selector
+        containers:
+        - args:
+          - args
+          - args
+          image: image
+          name: name
+          ports:
+          - number: 6
+            protocol: protocol
+            name: name
+          - number: 6
+            protocol: protocol
+            name: name
+          env:
+          - env
+          - env
+          command:
+          - command
+          - command
+        - args:
+          - args
+          - args
+          image: image
+          name: name
+          ports:
+          - number: 6
+            protocol: protocol
+            name: name
+          - number: 6
+            protocol: protocol
+            name: name
+          env:
+          - env
+          - env
+          command:
+          - command
+          - command
+        initContainers:
+        - args:
+          - args
+          - args
+          image: image
+          name: name
+          ports:
+          - number: 6
+            protocol: protocol
+            name: name
+          - number: 6
+            protocol: protocol
+            name: name
+          env:
+          - env
+          - env
+          command:
+          - command
+          - command
+        - args:
+          - args
+          - args
+          image: image
+          name: name
+          ports:
+          - number: 6
+            protocol: protocol
+            name: name
+          - number: 6
+            protocol: protocol
+            name: name
+          env:
+          - env
+          - env
+          command:
+          - command
+          - command
+        labels:
+          key: labels
+      properties:
+        kind:
+          type: string
+        name:
+          type: string
+        labels:
+          additionalProperties:
+            type: string
+          type: object
+        selector:
+          additionalProperties:
+            type: string
+          type: object
+        podLabels:
+          additionalProperties:
+            type: string
+          type: object
+        containers:
+          items:
+            $ref: '#/components/schemas/HelmChartContainer'
+          type: array
+        initContainers:
+          items:
+            $ref: '#/components/schemas/HelmChartContainer'
+          type: array
+        volumes:
+          items:
+            $ref: '#/components/schemas/HelmChartVolumeClaim'
+          type: array
+      required:
+      - kind
+      - name
+      type: object
+    HelmChartServicePort:
+      example:
+        number: 1
+        protocol: protocol
+        name: name
+        targetPort: HelmChartServicePort_targetPort
+      properties:
+        name:
+          type: string
+        number:
+          type: integer
+        targetPort:
+          $ref: '#/components/schemas/HelmChartServicePort_targetPort'
+        protocol:
+          type: string
+      required:
+      - number
+      - protocol
+      type: object
+    HelmChartService:
+      example:
+        headless: true
+        name: name
+        selector:
+          key: selector
+        ports:
+        - number: 1
+          protocol: protocol
+          name: name
+          targetPort: HelmChartServicePort_targetPort
+        - number: 1
+          protocol: protocol
+          name: name
+          targetPort: HelmChartServicePort_targetPort
+        labels:
+          key: labels
+      properties:
+        name:
+          type: string
+        labels:
+          additionalProperties:
+            type: string
+          type: object
+        selector:
+          additionalProperties:
+            type: string
+          type: object
+        ports:
+          items:
+            $ref: '#/components/schemas/HelmChartServicePort'
+          type: array
+        headless:
+          type: boolean
+      required:
+      - headless
+      - name
+      type: object
+    HelmChartResource:
+      example:
+        apiVersion: apiVersion
+        kind: kind
+        name: name
+        namespace: namespace
+        annotations:
+          key: annotations
+        labels:
+          key: labels
+      properties:
+        kind:
+          type: string
+        apiVersion:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        labels:
+          additionalProperties:
+            type: string
+          type: object
+        annotations:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - kind
+      - name
+      type: object
+    HelmChartAnalysis:
+      example:
+        crds:
+        - apiVersion: apiVersion
+          kind: kind
+          name: name
+          namespace: namespace
+          annotations:
+            key: annotations
+          labels:
+            key: labels
+        - apiVersion: apiVersion
+          kind: kind
+          name: name
+          namespace: namespace
+          annotations:
+            key: annotations
+          labels:
+            key: labels
+        clusterResources:
+        - apiVersion: apiVersion
+          kind: kind
+          name: name
+          namespace: namespace
+          annotations:
+            key: annotations
+          labels:
+            key: labels
+        - apiVersion: apiVersion
+          kind: kind
+          name: name
+          namespace: namespace
+          annotations:
+            key: annotations
+          labels:
+            key: labels
+        release: release
+        volumeClaims:
+        - size: size
+          storageClassName: storageClassName
+          name: name
+          accessModes:
+          - accessModes
+          - accessModes
+        - size: size
+          storageClassName: storageClassName
+          name: name
+          accessModes:
+          - accessModes
+          - accessModes
+        resourceCount: 0
+        warnings:
+        - warnings
+        - warnings
+        namespace: namespace
+        workloads:
+        - podLabels:
+            key: podLabels
+          kind: kind
+          name: name
+          volumes:
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          selector:
+            key: selector
+          containers:
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          initContainers:
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          labels:
+            key: labels
+        - podLabels:
+            key: podLabels
+          kind: kind
+          name: name
+          volumes:
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          selector:
+            key: selector
+          containers:
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          initContainers:
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          - args:
+            - args
+            - args
+            image: image
+            name: name
+            ports:
+            - number: 6
+              protocol: protocol
+              name: name
+            - number: 6
+              protocol: protocol
+              name: name
+            env:
+            - env
+            - env
+            command:
+            - command
+            - command
+          labels:
+            key: labels
+        unsupportedKinds:
+        - unsupportedKinds
+        - unsupportedKinds
+        services:
+        - headless: true
+          name: name
+          selector:
+            key: selector
+          ports:
+          - number: 1
+            protocol: protocol
+            name: name
+            targetPort: HelmChartServicePort_targetPort
+          - number: 1
+            protocol: protocol
+            name: name
+            targetPort: HelmChartServicePort_targetPort
+          labels:
+            key: labels
+        - headless: true
+          name: name
+          selector:
+            key: selector
+          ports:
+          - number: 1
+            protocol: protocol
+            name: name
+            targetPort: HelmChartServicePort_targetPort
+          - number: 1
+            protocol: protocol
+            name: name
+            targetPort: HelmChartServicePort_targetPort
+          labels:
+            key: labels
+        chart:
+          appVersion: appVersion
+          name: name
+          description: description
+          source: source
+          version: version
+          chart: chart
+        hooks:
+        - apiVersion: apiVersion
+          kind: kind
+          name: name
+          namespace: namespace
+          annotations:
+            key: annotations
+          labels:
+            key: labels
+        - apiVersion: apiVersion
+          kind: kind
+          name: name
+          namespace: namespace
+          annotations:
+            key: annotations
+          labels:
+            key: labels
+      properties:
+        chart:
+          $ref: '#/components/schemas/HelmChartMetadata'
+        release:
+          type: string
+        namespace:
+          type: string
+        resourceCount:
+          type: integer
+        workloads:
+          items:
+            $ref: '#/components/schemas/HelmChartWorkload'
+          type: array
+        services:
+          items:
+            $ref: '#/components/schemas/HelmChartService'
+          type: array
+        volumeClaims:
+          items:
+            $ref: '#/components/schemas/HelmChartVolumeClaim'
+          type: array
+        crds:
+          items:
+            $ref: '#/components/schemas/HelmChartResource'
+          type: array
+        clusterResources:
+          items:
+            $ref: '#/components/schemas/HelmChartResource'
+          type: array
+        hooks:
+          items:
+            $ref: '#/components/schemas/HelmChartResource'
+          type: array
+        unsupportedKinds:
+          items:
+            type: string
+          type: array
+        warnings:
+          items:
+            type: string
+          type: array
+      required:
+      - chart
+      - namespace
+      - release
+      - resourceCount
+      type: object
+    HelmChartServiceScaffoldResponse:
+      example:
+        manifestYaml: manifestYaml
+        manifest:
+          key: ""
+        warnings:
+        - warnings
+        - warnings
+        analysis:
+          crds:
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          clusterResources:
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          release: release
+          volumeClaims:
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          resourceCount: 0
+          warnings:
+          - warnings
+          - warnings
+          namespace: namespace
+          workloads:
+          - podLabels:
+              key: podLabels
+            kind: kind
+            name: name
+            volumes:
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            selector:
+              key: selector
+            containers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            initContainers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            labels:
+              key: labels
+          - podLabels:
+              key: podLabels
+            kind: kind
+            name: name
+            volumes:
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            selector:
+              key: selector
+            containers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            initContainers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            labels:
+              key: labels
+          unsupportedKinds:
+          - unsupportedKinds
+          - unsupportedKinds
+          services:
+          - headless: true
+            name: name
+            selector:
+              key: selector
+            ports:
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            labels:
+              key: labels
+          - headless: true
+            name: name
+            selector:
+              key: selector
+            ports:
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            labels:
+              key: labels
+          chart:
+            appVersion: appVersion
+            name: name
+            description: description
+            source: source
+            version: version
+            chart: chart
+          hooks:
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+      properties:
+        analysis:
+          $ref: '#/components/schemas/HelmChartAnalysis'
+        manifestYaml:
+          type: string
+        manifest:
+          additionalProperties: true
+          type: object
+        warnings:
+          items:
+            type: string
+          type: array
+      required:
+      - analysis
+      - manifest
+      - manifestYaml
+      type: object
+    HelmChartStackScaffoldResponse:
+      example:
+        stackManifest:
+          key: ""
+        serviceManifestYaml: serviceManifestYaml
+        serviceManifest:
+          key: ""
+        warnings:
+        - warnings
+        - warnings
+        analysis:
+          crds:
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          clusterResources:
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          release: release
+          volumeClaims:
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          - size: size
+            storageClassName: storageClassName
+            name: name
+            accessModes:
+            - accessModes
+            - accessModes
+          resourceCount: 0
+          warnings:
+          - warnings
+          - warnings
+          namespace: namespace
+          workloads:
+          - podLabels:
+              key: podLabels
+            kind: kind
+            name: name
+            volumes:
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            selector:
+              key: selector
+            containers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            initContainers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            labels:
+              key: labels
+          - podLabels:
+              key: podLabels
+            kind: kind
+            name: name
+            volumes:
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            - size: size
+              storageClassName: storageClassName
+              name: name
+              accessModes:
+              - accessModes
+              - accessModes
+            selector:
+              key: selector
+            containers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            initContainers:
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            - args:
+              - args
+              - args
+              image: image
+              name: name
+              ports:
+              - number: 6
+                protocol: protocol
+                name: name
+              - number: 6
+                protocol: protocol
+                name: name
+              env:
+              - env
+              - env
+              command:
+              - command
+              - command
+            labels:
+              key: labels
+          unsupportedKinds:
+          - unsupportedKinds
+          - unsupportedKinds
+          services:
+          - headless: true
+            name: name
+            selector:
+              key: selector
+            ports:
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            labels:
+              key: labels
+          - headless: true
+            name: name
+            selector:
+              key: selector
+            ports:
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            - number: 1
+              protocol: protocol
+              name: name
+              targetPort: HelmChartServicePort_targetPort
+            labels:
+              key: labels
+          chart:
+            appVersion: appVersion
+            name: name
+            description: description
+            source: source
+            version: version
+            chart: chart
+          hooks:
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+          - apiVersion: apiVersion
+            kind: kind
+            name: name
+            namespace: namespace
+            annotations:
+              key: annotations
+            labels:
+              key: labels
+        stackManifestYaml: stackManifestYaml
+      properties:
+        analysis:
+          $ref: '#/components/schemas/HelmChartAnalysis'
+        serviceManifestYaml:
+          type: string
+        serviceManifest:
+          additionalProperties: true
+          type: object
+        stackManifestYaml:
+          type: string
+        stackManifest:
+          additionalProperties: true
+          type: object
+        warnings:
+          items:
+            type: string
+          type: array
+      required:
+      - analysis
+      - serviceManifest
+      - serviceManifestYaml
+      - stackManifest
+      - stackManifestYaml
       type: object
     Org:
       example:
@@ -13573,6 +15313,10 @@ components:
     GenericObject:
       additionalProperties: true
       type: object
+    StringMap:
+      additionalProperties:
+        type: string
+      type: object
     UpdateCurrentUserRequest:
       example:
         name: name
@@ -15621,6 +17365,10 @@ components:
       required:
       - import
       type: object
+    HelmChartServicePort_targetPort:
+      oneOf:
+      - type: string
+      - type: integer
   securitySchemes:
     apiKeyHeader:
       description: Organization-scoped Wodby API key. Requests are restricted to the

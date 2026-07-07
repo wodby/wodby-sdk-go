@@ -22,6 +22,18 @@ func Test_client_StacksAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test StacksAPIService CreateStackFromManifest", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StacksAPI.CreateStackFromManifest(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StacksAPIService DuplicateStack", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -130,6 +142,18 @@ func Test_client_StacksAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test StacksAPIService ScaffoldStackFromHelmChart", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StacksAPI.ScaffoldStackFromHelmChart(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StacksAPIService SyncStackWithOrigin", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -165,6 +189,18 @@ func Test_client_StacksAPIService(t *testing.T) {
 		var id int32
 
 		resp, httpRes, err := apiClient.StacksAPI.UpdateStackSettings(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StacksAPIService ValidateStackManifest", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StacksAPI.ValidateStackManifest(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
