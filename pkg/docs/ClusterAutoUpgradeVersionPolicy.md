@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**AllowSameVersion** | **bool** | Allow newer infrastructure app stack revisions that keep the same stable semantic version. Ignored for cluster-level infrastructure versions. | 
 **AllowPatch** | **bool** |  | 
 **AllowMinor** | **bool** |  | 
 **AllowMajor** | **bool** |  | 
@@ -12,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewClusterAutoUpgradeVersionPolicy
 
-`func NewClusterAutoUpgradeVersionPolicy(allowPatch bool, allowMinor bool, allowMajor bool, ) *ClusterAutoUpgradeVersionPolicy`
+`func NewClusterAutoUpgradeVersionPolicy(allowSameVersion bool, allowPatch bool, allowMinor bool, allowMajor bool, ) *ClusterAutoUpgradeVersionPolicy`
 
 NewClusterAutoUpgradeVersionPolicy instantiates a new ClusterAutoUpgradeVersionPolicy object
 This constructor will assign default values to properties that have it defined,
@@ -26,6 +27,26 @@ will change when the set of required properties is changed
 NewClusterAutoUpgradeVersionPolicyWithDefaults instantiates a new ClusterAutoUpgradeVersionPolicy object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetAllowSameVersion
+
+`func (o *ClusterAutoUpgradeVersionPolicy) GetAllowSameVersion() bool`
+
+GetAllowSameVersion returns the AllowSameVersion field if non-nil, zero value otherwise.
+
+### GetAllowSameVersionOk
+
+`func (o *ClusterAutoUpgradeVersionPolicy) GetAllowSameVersionOk() (*bool, bool)`
+
+GetAllowSameVersionOk returns a tuple with the AllowSameVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowSameVersion
+
+`func (o *ClusterAutoUpgradeVersionPolicy) SetAllowSameVersion(v bool)`
+
+SetAllowSameVersion sets AllowSameVersion field to given value.
+
 
 ### GetAllowPatch
 

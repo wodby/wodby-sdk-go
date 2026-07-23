@@ -5546,6 +5546,47 @@ paths:
       summary: Get service
       tags:
       - services
+  /services/{id}/actions/update-from-manifest:
+    post:
+      description: Updates an existing non-Git Wodby service from a service manifest
+        and starts a service update task.
+      operationId: updateServiceFromManifest
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceManifestUpdateInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Service update task accepted
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update service from manifest
+      tags:
+      - services
   /services/settings/{id}:
     put:
       description: Updates service settings and returns the updated service.
@@ -9586,8 +9627,14 @@ components:
       example:
         allowMajor: true
         allowPatch: true
+        allowSameVersion: true
         allowMinor: true
       properties:
+        allowSameVersion:
+          description: Allow newer infrastructure app stack revisions that keep the
+            same stable semantic version. Ignored for cluster-level infrastructure
+            versions.
+          type: boolean
         allowPatch:
           type: boolean
         allowMinor:
@@ -9598,13 +9645,21 @@ components:
       - allowMajor
       - allowMinor
       - allowPatch
+      - allowSameVersion
       type: object
     ClusterAutoUpgradeVersionPolicyInput:
       example:
         allowMajor: true
         allowPatch: true
+        allowSameVersion: true
         allowMinor: true
       properties:
+        allowSameVersion:
+          description: Allow newer infrastructure app stack revisions that keep the
+            same stable semantic version. Ignored for cluster-level infrastructure
+            versions.
+          nullable: true
+          type: boolean
         allowPatch:
           nullable: true
           type: boolean
@@ -9621,6 +9676,7 @@ components:
         versionPolicy:
           allowMajor: true
           allowPatch: true
+          allowSameVersion: true
           allowMinor: true
       properties:
         enabled:
@@ -9636,6 +9692,7 @@ components:
         versionPolicy:
           allowMajor: true
           allowPatch: true
+          allowSameVersion: true
           allowMinor: true
       properties:
         enabled:
@@ -9651,6 +9708,7 @@ components:
           versionPolicy:
             allowMajor: true
             allowPatch: true
+            allowSameVersion: true
             allowMinor: true
         enabled: true
         apps:
@@ -9658,6 +9716,7 @@ components:
           versionPolicy:
             allowMajor: true
             allowPatch: true
+            allowSameVersion: true
             allowMinor: true
       properties:
         enabled:
@@ -9676,6 +9735,7 @@ components:
           versionPolicy:
             allowMajor: true
             allowPatch: true
+            allowSameVersion: true
             allowMinor: true
         enabled: true
         apps:
@@ -9683,6 +9743,7 @@ components:
           versionPolicy:
             allowMajor: true
             allowPatch: true
+            allowSameVersion: true
             allowMinor: true
       properties:
         enabled:
@@ -9702,6 +9763,7 @@ components:
             versionPolicy:
               allowMajor: true
               allowPatch: true
+              allowSameVersion: true
               allowMinor: true
           enabled: true
           apps:
@@ -9709,6 +9771,7 @@ components:
             versionPolicy:
               allowMajor: true
               allowPatch: true
+              allowSameVersion: true
               allowMinor: true
       properties:
         autoInfrastructureUpgrade:
@@ -9722,6 +9785,7 @@ components:
             versionPolicy:
               allowMajor: true
               allowPatch: true
+              allowSameVersion: true
               allowMinor: true
           enabled: true
           apps:
@@ -9729,6 +9793,7 @@ components:
             versionPolicy:
               allowMajor: true
               allowPatch: true
+              allowSameVersion: true
               allowMinor: true
       properties:
         autoInfrastructureUpgrade:
@@ -9792,6 +9857,29 @@ components:
           type: string
         manifestYaml:
           description: Complete Wodby service.yml or stack.yml manifest content.
+          type: string
+        files:
+          additionalProperties:
+            type: string
+          description: "Optional referenced file contents keyed by manifest-relative\
+            \ path, for example Dockerfile or configs/app.conf."
+          type: object
+      required:
+      - manifestYaml
+      type: object
+    ServiceManifestUpdateInput:
+      example:
+        manifestYaml: manifestYaml
+        files:
+          key: files
+        version: version
+      properties:
+        version:
+          description: Optional service revision version; defaults to the current
+            service version.
+          type: string
+        manifestYaml:
+          description: Complete Wodby service.yml manifest content.
           type: string
         files:
           additionalProperties:
@@ -11611,12 +11699,15 @@ components:
     AppDeployment:
       example:
         startedAt: 2000-01-23T04:56:07.000+00:00
+        postDeploymentTask: "{}"
+        postDeploymentStatus: unknown
+        postDeploymentTaskId: 1
         appServiceDeployments:
         - jobName: jobName
           skipPostDeployment: true
           appServiceId: 1
           createdAt: 2000-01-23T04:56:07.000+00:00
-          appServiceBuildId: 1
+          appServiceBuildId: 6
           endedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           force: true
@@ -11627,7 +11718,7 @@ components:
           skipPostDeployment: true
           appServiceId: 1
           createdAt: 2000-01-23T04:56:07.000+00:00
-          appServiceBuildId: 1
+          appServiceBuildId: 6
           endedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           force: true
@@ -11723,6 +11814,18 @@ components:
           - rolled_back
           - failed
           type: string
+        postDeploymentStatus:
+          enum:
+          - unknown
+          - not_applicable
+          - skipped
+          - not_run
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - canceled
+          type: string
         skipRollback:
           type: boolean
         appInstanceId:
@@ -11735,6 +11838,14 @@ components:
           nullable: true
           type: integer
         task:
+          allOf:
+          - $ref: '#/components/schemas/Task'
+          nullable: true
+          type: object
+        postDeploymentTaskId:
+          nullable: true
+          type: integer
+        postDeploymentTask:
           allOf:
           - $ref: '#/components/schemas/Task'
           nullable: true
@@ -11764,6 +11875,7 @@ components:
       - createdAt
       - id
       - number
+      - postDeploymentStatus
       - rollbackStatus
       - skipRollback
       - status
@@ -11775,7 +11887,7 @@ components:
         skipPostDeployment: true
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
-        appServiceBuildId: 1
+        appServiceBuildId: 6
         endedAt: 2000-01-23T04:56:07.000+00:00
         startedAt: 2000-01-23T04:56:07.000+00:00
         force: true
@@ -11824,16 +11936,19 @@ components:
       type: object
     AppDeploymentsResponse:
       example:
-        nextPage: 7
-        totalCount: 6
+        nextPage: 1
+        totalCount: 7
         items:
         - startedAt: 2000-01-23T04:56:07.000+00:00
+          postDeploymentTask: "{}"
+          postDeploymentStatus: unknown
+          postDeploymentTaskId: 1
           appServiceDeployments:
           - jobName: jobName
             skipPostDeployment: true
             appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
+            appServiceBuildId: 6
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
@@ -11844,7 +11959,7 @@ components:
             skipPostDeployment: true
             appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
+            appServiceBuildId: 6
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
@@ -11928,12 +12043,15 @@ components:
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - startedAt: 2000-01-23T04:56:07.000+00:00
+          postDeploymentTask: "{}"
+          postDeploymentStatus: unknown
+          postDeploymentTaskId: 1
           appServiceDeployments:
           - jobName: jobName
             skipPostDeployment: true
             appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
+            appServiceBuildId: 6
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
@@ -11944,7 +12062,7 @@ components:
             skipPostDeployment: true
             appServiceId: 1
             createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 1
+            appServiceBuildId: 6
             endedAt: 2000-01-23T04:56:07.000+00:00
             startedAt: 2000-01-23T04:56:07.000+00:00
             force: true
@@ -12453,6 +12571,7 @@ components:
               versionPolicy:
                 allowMajor: true
                 allowPatch: true
+                allowSameVersion: true
                 allowMinor: true
             enabled: true
             apps:
@@ -12460,6 +12579,7 @@ components:
               versionPolicy:
                 allowMajor: true
                 allowPatch: true
+                allowSameVersion: true
                 allowMinor: true
         wodby: true
         lastNodesReady: 5

@@ -8,11 +8,14 @@ Name | Type | Description | Notes
 **Number** | **int32** |  | 
 **Status** | **string** |  | 
 **RollbackStatus** | **string** |  | 
+**PostDeploymentStatus** | **string** |  | 
 **SkipRollback** | **bool** |  | 
 **AppInstanceId** | **int32** |  | 
 **Builds** | [**[]AppBuild**](AppBuild.md) |  | 
 **TaskId** | Pointer to **NullableInt32** |  | [optional] 
 **Task** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
+**PostDeploymentTaskId** | Pointer to **NullableInt32** |  | [optional] 
+**PostDeploymentTask** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
 **AppServiceDeployments** | [**[]AppServiceDeployment**](AppServiceDeployment.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -23,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewAppDeployment
 
-`func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
+`func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
 
 NewAppDeployment instantiates a new AppDeployment object
 This constructor will assign default values to properties that have it defined,
@@ -116,6 +119,26 @@ and a boolean to check if the value has been set.
 `func (o *AppDeployment) SetRollbackStatus(v string)`
 
 SetRollbackStatus sets RollbackStatus field to given value.
+
+
+### GetPostDeploymentStatus
+
+`func (o *AppDeployment) GetPostDeploymentStatus() string`
+
+GetPostDeploymentStatus returns the PostDeploymentStatus field if non-nil, zero value otherwise.
+
+### GetPostDeploymentStatusOk
+
+`func (o *AppDeployment) GetPostDeploymentStatusOk() (*string, bool)`
+
+GetPostDeploymentStatusOk returns a tuple with the PostDeploymentStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostDeploymentStatus
+
+`func (o *AppDeployment) SetPostDeploymentStatus(v string)`
+
+SetPostDeploymentStatus sets PostDeploymentStatus field to given value.
 
 
 ### GetSkipRollback
@@ -248,6 +271,76 @@ HasTask returns a boolean if a field has been set.
 `func (o *AppDeployment) UnsetTask()`
 
 UnsetTask ensures that no value is present for Task, not even an explicit nil
+### GetPostDeploymentTaskId
+
+`func (o *AppDeployment) GetPostDeploymentTaskId() int32`
+
+GetPostDeploymentTaskId returns the PostDeploymentTaskId field if non-nil, zero value otherwise.
+
+### GetPostDeploymentTaskIdOk
+
+`func (o *AppDeployment) GetPostDeploymentTaskIdOk() (*int32, bool)`
+
+GetPostDeploymentTaskIdOk returns a tuple with the PostDeploymentTaskId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostDeploymentTaskId
+
+`func (o *AppDeployment) SetPostDeploymentTaskId(v int32)`
+
+SetPostDeploymentTaskId sets PostDeploymentTaskId field to given value.
+
+### HasPostDeploymentTaskId
+
+`func (o *AppDeployment) HasPostDeploymentTaskId() bool`
+
+HasPostDeploymentTaskId returns a boolean if a field has been set.
+
+### SetPostDeploymentTaskIdNil
+
+`func (o *AppDeployment) SetPostDeploymentTaskIdNil(b bool)`
+
+ SetPostDeploymentTaskIdNil sets the value for PostDeploymentTaskId to be an explicit nil
+
+### UnsetPostDeploymentTaskId
+`func (o *AppDeployment) UnsetPostDeploymentTaskId()`
+
+UnsetPostDeploymentTaskId ensures that no value is present for PostDeploymentTaskId, not even an explicit nil
+### GetPostDeploymentTask
+
+`func (o *AppDeployment) GetPostDeploymentTask() Task`
+
+GetPostDeploymentTask returns the PostDeploymentTask field if non-nil, zero value otherwise.
+
+### GetPostDeploymentTaskOk
+
+`func (o *AppDeployment) GetPostDeploymentTaskOk() (*Task, bool)`
+
+GetPostDeploymentTaskOk returns a tuple with the PostDeploymentTask field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostDeploymentTask
+
+`func (o *AppDeployment) SetPostDeploymentTask(v Task)`
+
+SetPostDeploymentTask sets PostDeploymentTask field to given value.
+
+### HasPostDeploymentTask
+
+`func (o *AppDeployment) HasPostDeploymentTask() bool`
+
+HasPostDeploymentTask returns a boolean if a field has been set.
+
+### SetPostDeploymentTaskNil
+
+`func (o *AppDeployment) SetPostDeploymentTaskNil(b bool)`
+
+ SetPostDeploymentTaskNil sets the value for PostDeploymentTask to be an explicit nil
+
+### UnsetPostDeploymentTask
+`func (o *AppDeployment) UnsetPostDeploymentTask()`
+
+UnsetPostDeploymentTask ensures that no value is present for PostDeploymentTask, not even an explicit nil
 ### GetAppServiceDeployments
 
 `func (o *AppDeployment) GetAppServiceDeployments() []AppServiceDeployment`

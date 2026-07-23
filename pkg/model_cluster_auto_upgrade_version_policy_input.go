@@ -19,6 +19,8 @@ var _ MappedNullable = &ClusterAutoUpgradeVersionPolicyInput{}
 
 // ClusterAutoUpgradeVersionPolicyInput struct for ClusterAutoUpgradeVersionPolicyInput
 type ClusterAutoUpgradeVersionPolicyInput struct {
+	// Allow newer infrastructure app stack revisions that keep the same stable semantic version. Ignored for cluster-level infrastructure versions.
+	AllowSameVersion NullableBool `json:"allowSameVersion,omitempty"`
 	AllowPatch NullableBool `json:"allowPatch,omitempty"`
 	AllowMinor NullableBool `json:"allowMinor,omitempty"`
 	AllowMajor NullableBool `json:"allowMajor,omitempty"`
@@ -39,6 +41,48 @@ func NewClusterAutoUpgradeVersionPolicyInput() *ClusterAutoUpgradeVersionPolicyI
 func NewClusterAutoUpgradeVersionPolicyInputWithDefaults() *ClusterAutoUpgradeVersionPolicyInput {
 	this := ClusterAutoUpgradeVersionPolicyInput{}
 	return &this
+}
+
+// GetAllowSameVersion returns the AllowSameVersion field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterAutoUpgradeVersionPolicyInput) GetAllowSameVersion() bool {
+	if o == nil || IsNil(o.AllowSameVersion.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.AllowSameVersion.Get()
+}
+
+// GetAllowSameVersionOk returns a tuple with the AllowSameVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterAutoUpgradeVersionPolicyInput) GetAllowSameVersionOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AllowSameVersion.Get(), o.AllowSameVersion.IsSet()
+}
+
+// HasAllowSameVersion returns a boolean if a field has been set.
+func (o *ClusterAutoUpgradeVersionPolicyInput) HasAllowSameVersion() bool {
+	if o != nil && o.AllowSameVersion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowSameVersion gets a reference to the given NullableBool and assigns it to the AllowSameVersion field.
+func (o *ClusterAutoUpgradeVersionPolicyInput) SetAllowSameVersion(v bool) {
+	o.AllowSameVersion.Set(&v)
+}
+// SetAllowSameVersionNil sets the value for AllowSameVersion to be an explicit nil
+func (o *ClusterAutoUpgradeVersionPolicyInput) SetAllowSameVersionNil() {
+	o.AllowSameVersion.Set(nil)
+}
+
+// UnsetAllowSameVersion ensures that no value is present for AllowSameVersion, not even an explicit nil
+func (o *ClusterAutoUpgradeVersionPolicyInput) UnsetAllowSameVersion() {
+	o.AllowSameVersion.Unset()
 }
 
 // GetAllowPatch returns the AllowPatch field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -177,6 +221,9 @@ func (o ClusterAutoUpgradeVersionPolicyInput) MarshalJSON() ([]byte, error) {
 
 func (o ClusterAutoUpgradeVersionPolicyInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.AllowSameVersion.IsSet() {
+		toSerialize["allowSameVersion"] = o.AllowSameVersion.Get()
+	}
 	if o.AllowPatch.IsSet() {
 		toSerialize["allowPatch"] = o.AllowPatch.Get()
 	}

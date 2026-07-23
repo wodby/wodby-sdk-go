@@ -21,6 +21,8 @@ var _ MappedNullable = &ClusterAutoUpgradeVersionPolicy{}
 
 // ClusterAutoUpgradeVersionPolicy struct for ClusterAutoUpgradeVersionPolicy
 type ClusterAutoUpgradeVersionPolicy struct {
+	// Allow newer infrastructure app stack revisions that keep the same stable semantic version. Ignored for cluster-level infrastructure versions.
+	AllowSameVersion bool `json:"allowSameVersion"`
 	AllowPatch bool `json:"allowPatch"`
 	AllowMinor bool `json:"allowMinor"`
 	AllowMajor bool `json:"allowMajor"`
@@ -32,8 +34,9 @@ type _ClusterAutoUpgradeVersionPolicy ClusterAutoUpgradeVersionPolicy
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewClusterAutoUpgradeVersionPolicy(allowPatch bool, allowMinor bool, allowMajor bool) *ClusterAutoUpgradeVersionPolicy {
+func NewClusterAutoUpgradeVersionPolicy(allowSameVersion bool, allowPatch bool, allowMinor bool, allowMajor bool) *ClusterAutoUpgradeVersionPolicy {
 	this := ClusterAutoUpgradeVersionPolicy{}
+	this.AllowSameVersion = allowSameVersion
 	this.AllowPatch = allowPatch
 	this.AllowMinor = allowMinor
 	this.AllowMajor = allowMajor
@@ -46,6 +49,30 @@ func NewClusterAutoUpgradeVersionPolicy(allowPatch bool, allowMinor bool, allowM
 func NewClusterAutoUpgradeVersionPolicyWithDefaults() *ClusterAutoUpgradeVersionPolicy {
 	this := ClusterAutoUpgradeVersionPolicy{}
 	return &this
+}
+
+// GetAllowSameVersion returns the AllowSameVersion field value
+func (o *ClusterAutoUpgradeVersionPolicy) GetAllowSameVersion() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AllowSameVersion
+}
+
+// GetAllowSameVersionOk returns a tuple with the AllowSameVersion field value
+// and a boolean to check if the value has been set.
+func (o *ClusterAutoUpgradeVersionPolicy) GetAllowSameVersionOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AllowSameVersion, true
+}
+
+// SetAllowSameVersion sets field value
+func (o *ClusterAutoUpgradeVersionPolicy) SetAllowSameVersion(v bool) {
+	o.AllowSameVersion = v
 }
 
 // GetAllowPatch returns the AllowPatch field value
@@ -130,6 +157,7 @@ func (o ClusterAutoUpgradeVersionPolicy) MarshalJSON() ([]byte, error) {
 
 func (o ClusterAutoUpgradeVersionPolicy) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["allowSameVersion"] = o.AllowSameVersion
 	toSerialize["allowPatch"] = o.AllowPatch
 	toSerialize["allowMinor"] = o.AllowMinor
 	toSerialize["allowMajor"] = o.AllowMajor
@@ -141,6 +169,7 @@ func (o *ClusterAutoUpgradeVersionPolicy) UnmarshalJSON(data []byte) (err error)
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"allowSameVersion",
 		"allowPatch",
 		"allowMinor",
 		"allowMajor",

@@ -26,11 +26,14 @@ type AppDeployment struct {
 	Number int32 `json:"number"`
 	Status string `json:"status"`
 	RollbackStatus string `json:"rollbackStatus"`
+	PostDeploymentStatus string `json:"postDeploymentStatus"`
 	SkipRollback bool `json:"skipRollback"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	Builds []AppBuild `json:"builds"`
 	TaskId NullableInt32 `json:"taskId,omitempty"`
 	Task NullableTask `json:"task,omitempty"`
+	PostDeploymentTaskId NullableInt32 `json:"postDeploymentTaskId,omitempty"`
+	PostDeploymentTask NullableTask `json:"postDeploymentTask,omitempty"`
 	AppServiceDeployments []AppServiceDeployment `json:"appServiceDeployments"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -44,12 +47,13 @@ type _AppDeployment AppDeployment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
+func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
 	this := AppDeployment{}
 	this.Id = id
 	this.Number = number
 	this.Status = status
 	this.RollbackStatus = rollbackStatus
+	this.PostDeploymentStatus = postDeploymentStatus
 	this.SkipRollback = skipRollback
 	this.AppInstanceId = appInstanceId
 	this.Builds = builds
@@ -161,6 +165,30 @@ func (o *AppDeployment) GetRollbackStatusOk() (*string, bool) {
 // SetRollbackStatus sets field value
 func (o *AppDeployment) SetRollbackStatus(v string) {
 	o.RollbackStatus = v
+}
+
+// GetPostDeploymentStatus returns the PostDeploymentStatus field value
+func (o *AppDeployment) GetPostDeploymentStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.PostDeploymentStatus
+}
+
+// GetPostDeploymentStatusOk returns a tuple with the PostDeploymentStatus field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetPostDeploymentStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PostDeploymentStatus, true
+}
+
+// SetPostDeploymentStatus sets field value
+func (o *AppDeployment) SetPostDeploymentStatus(v string) {
+	o.PostDeploymentStatus = v
 }
 
 // GetSkipRollback returns the SkipRollback field value
@@ -317,6 +345,90 @@ func (o *AppDeployment) SetTaskNil() {
 // UnsetTask ensures that no value is present for Task, not even an explicit nil
 func (o *AppDeployment) UnsetTask() {
 	o.Task.Unset()
+}
+
+// GetPostDeploymentTaskId returns the PostDeploymentTaskId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetPostDeploymentTaskId() int32 {
+	if o == nil || IsNil(o.PostDeploymentTaskId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.PostDeploymentTaskId.Get()
+}
+
+// GetPostDeploymentTaskIdOk returns a tuple with the PostDeploymentTaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetPostDeploymentTaskIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PostDeploymentTaskId.Get(), o.PostDeploymentTaskId.IsSet()
+}
+
+// HasPostDeploymentTaskId returns a boolean if a field has been set.
+func (o *AppDeployment) HasPostDeploymentTaskId() bool {
+	if o != nil && o.PostDeploymentTaskId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPostDeploymentTaskId gets a reference to the given NullableInt32 and assigns it to the PostDeploymentTaskId field.
+func (o *AppDeployment) SetPostDeploymentTaskId(v int32) {
+	o.PostDeploymentTaskId.Set(&v)
+}
+// SetPostDeploymentTaskIdNil sets the value for PostDeploymentTaskId to be an explicit nil
+func (o *AppDeployment) SetPostDeploymentTaskIdNil() {
+	o.PostDeploymentTaskId.Set(nil)
+}
+
+// UnsetPostDeploymentTaskId ensures that no value is present for PostDeploymentTaskId, not even an explicit nil
+func (o *AppDeployment) UnsetPostDeploymentTaskId() {
+	o.PostDeploymentTaskId.Unset()
+}
+
+// GetPostDeploymentTask returns the PostDeploymentTask field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetPostDeploymentTask() Task {
+	if o == nil || IsNil(o.PostDeploymentTask.Get()) {
+		var ret Task
+		return ret
+	}
+	return *o.PostDeploymentTask.Get()
+}
+
+// GetPostDeploymentTaskOk returns a tuple with the PostDeploymentTask field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetPostDeploymentTaskOk() (*Task, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PostDeploymentTask.Get(), o.PostDeploymentTask.IsSet()
+}
+
+// HasPostDeploymentTask returns a boolean if a field has been set.
+func (o *AppDeployment) HasPostDeploymentTask() bool {
+	if o != nil && o.PostDeploymentTask.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPostDeploymentTask gets a reference to the given NullableTask and assigns it to the PostDeploymentTask field.
+func (o *AppDeployment) SetPostDeploymentTask(v Task) {
+	o.PostDeploymentTask.Set(&v)
+}
+// SetPostDeploymentTaskNil sets the value for PostDeploymentTask to be an explicit nil
+func (o *AppDeployment) SetPostDeploymentTaskNil() {
+	o.PostDeploymentTask.Set(nil)
+}
+
+// UnsetPostDeploymentTask ensures that no value is present for PostDeploymentTask, not even an explicit nil
+func (o *AppDeployment) UnsetPostDeploymentTask() {
+	o.PostDeploymentTask.Unset()
 }
 
 // GetAppServiceDeployments returns the AppServiceDeployments field value
@@ -489,6 +601,7 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	toSerialize["number"] = o.Number
 	toSerialize["status"] = o.Status
 	toSerialize["rollbackStatus"] = o.RollbackStatus
+	toSerialize["postDeploymentStatus"] = o.PostDeploymentStatus
 	toSerialize["skipRollback"] = o.SkipRollback
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["builds"] = o.Builds
@@ -497,6 +610,12 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Task.IsSet() {
 		toSerialize["task"] = o.Task.Get()
+	}
+	if o.PostDeploymentTaskId.IsSet() {
+		toSerialize["postDeploymentTaskId"] = o.PostDeploymentTaskId.Get()
+	}
+	if o.PostDeploymentTask.IsSet() {
+		toSerialize["postDeploymentTask"] = o.PostDeploymentTask.Get()
 	}
 	toSerialize["appServiceDeployments"] = o.AppServiceDeployments
 	toSerialize["createdAt"] = o.CreatedAt
@@ -519,6 +638,7 @@ func (o *AppDeployment) UnmarshalJSON(data []byte) (err error) {
 		"number",
 		"status",
 		"rollbackStatus",
+		"postDeploymentStatus",
 		"skipRollback",
 		"appInstanceId",
 		"builds",

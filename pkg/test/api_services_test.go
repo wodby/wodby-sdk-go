@@ -126,6 +126,20 @@ func Test_client_ServicesAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ServicesAPIService UpdateServiceFromManifest", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.ServicesAPI.UpdateServiceFromManifest(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ServicesAPIService UpdateServiceSettings", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**AllowSameVersion** | Pointer to **NullableBool** | Allow newer infrastructure app stack revisions that keep the same stable semantic version. Ignored for cluster-level infrastructure versions. | [optional] 
 **AllowPatch** | Pointer to **NullableBool** |  | [optional] 
 **AllowMinor** | Pointer to **NullableBool** |  | [optional] 
 **AllowMajor** | Pointer to **NullableBool** |  | [optional] 
@@ -27,6 +28,41 @@ NewClusterAutoUpgradeVersionPolicyInputWithDefaults instantiates a new ClusterAu
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetAllowSameVersion
+
+`func (o *ClusterAutoUpgradeVersionPolicyInput) GetAllowSameVersion() bool`
+
+GetAllowSameVersion returns the AllowSameVersion field if non-nil, zero value otherwise.
+
+### GetAllowSameVersionOk
+
+`func (o *ClusterAutoUpgradeVersionPolicyInput) GetAllowSameVersionOk() (*bool, bool)`
+
+GetAllowSameVersionOk returns a tuple with the AllowSameVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowSameVersion
+
+`func (o *ClusterAutoUpgradeVersionPolicyInput) SetAllowSameVersion(v bool)`
+
+SetAllowSameVersion sets AllowSameVersion field to given value.
+
+### HasAllowSameVersion
+
+`func (o *ClusterAutoUpgradeVersionPolicyInput) HasAllowSameVersion() bool`
+
+HasAllowSameVersion returns a boolean if a field has been set.
+
+### SetAllowSameVersionNil
+
+`func (o *ClusterAutoUpgradeVersionPolicyInput) SetAllowSameVersionNil(b bool)`
+
+ SetAllowSameVersionNil sets the value for AllowSameVersion to be an explicit nil
+
+### UnsetAllowSameVersion
+`func (o *ClusterAutoUpgradeVersionPolicyInput) UnsetAllowSameVersion()`
+
+UnsetAllowSameVersion ensures that no value is present for AllowSameVersion, not even an explicit nil
 ### GetAllowPatch
 
 `func (o *ClusterAutoUpgradeVersionPolicyInput) GetAllowPatch() bool`
