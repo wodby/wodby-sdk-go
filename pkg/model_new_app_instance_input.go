@@ -34,6 +34,7 @@ type NewAppInstanceInput struct {
 	EnvId int32 `json:"envId"`
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
+	Settings *AppInstanceSettingsInput `json:"settings,omitempty"`
 }
 
 type _NewAppInstanceInput NewAppInstanceInput
@@ -377,6 +378,38 @@ func (o *NewAppInstanceInput) UnsetRegistryIntegrationId() {
 	o.RegistryIntegrationId.Unset()
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *NewAppInstanceInput) GetSettings() AppInstanceSettingsInput {
+	if o == nil || IsNil(o.Settings) {
+		var ret AppInstanceSettingsInput
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppInstanceInput) GetSettingsOk() (*AppInstanceSettingsInput, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *NewAppInstanceInput) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given AppInstanceSettingsInput and assigns it to the Settings field.
+func (o *NewAppInstanceInput) SetSettings(v AppInstanceSettingsInput) {
+	o.Settings = &v
+}
+
 func (o NewAppInstanceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -408,6 +441,9 @@ func (o NewAppInstanceInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.RegistryIntegrationId.IsSet() {
 		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
+	}
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
 	}
 	return toSerialize, nil
 }

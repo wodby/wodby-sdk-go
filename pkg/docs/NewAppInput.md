@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **EnvId** | **int32** |  | 
 **CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**Settings** | Pointer to [**AppInstanceSettingsInput**](AppInstanceSettingsInput.md) |  | [optional] 
 
 ## Methods
 
@@ -382,6 +383,31 @@ HasRegistryIntegrationId returns a boolean if a field has been set.
 `func (o *NewAppInput) UnsetRegistryIntegrationId()`
 
 UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+### GetSettings
+
+`func (o *NewAppInput) GetSettings() AppInstanceSettingsInput`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *NewAppInput) GetSettingsOk() (*AppInstanceSettingsInput, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *NewAppInput) SetSettings(v AppInstanceSettingsInput)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *NewAppInput) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

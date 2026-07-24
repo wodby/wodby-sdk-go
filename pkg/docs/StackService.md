@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **Disabled** | **bool** |  | 
 **Required** | **bool** |  | 
 **Replicas** | **int32** |  | 
+**ServiceRevPinned** | **bool** |  | 
 **Outdated** | **bool** |  | 
 **ServiceRevId** | **int32** |  | 
 **ServiceRevName** | **string** |  | 
@@ -26,7 +27,7 @@ Name | Type | Description | Notes
 
 ### NewStackService
 
-`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time, ) *StackService`
+`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time, ) *StackService`
 
 NewStackService instantiates a new StackService object
 This constructor will assign default values to properties that have it defined,
@@ -199,6 +200,26 @@ and a boolean to check if the value has been set.
 `func (o *StackService) SetReplicas(v int32)`
 
 SetReplicas sets Replicas field to given value.
+
+
+### GetServiceRevPinned
+
+`func (o *StackService) GetServiceRevPinned() bool`
+
+GetServiceRevPinned returns the ServiceRevPinned field if non-nil, zero value otherwise.
+
+### GetServiceRevPinnedOk
+
+`func (o *StackService) GetServiceRevPinnedOk() (*bool, bool)`
+
+GetServiceRevPinnedOk returns a tuple with the ServiceRevPinned field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceRevPinned
+
+`func (o *StackService) SetServiceRevPinned(v bool)`
+
+SetServiceRevPinned sets ServiceRevPinned field to given value.
 
 
 ### GetOutdated

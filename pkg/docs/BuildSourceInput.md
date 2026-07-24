@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **BuildSourceType** | **string** |  | 
-**Template** | Pointer to **NullableString** |  | [optional] 
+**Boilerplate** | Pointer to **NullableString** |  | [optional] 
 **NewRepoName** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **RemoteGitRepoId** | Pointer to **NullableString** |  | [optional] 
@@ -51,41 +51,41 @@ and a boolean to check if the value has been set.
 SetBuildSourceType sets BuildSourceType field to given value.
 
 
-### GetTemplate
+### GetBoilerplate
 
-`func (o *BuildSourceInput) GetTemplate() string`
+`func (o *BuildSourceInput) GetBoilerplate() string`
 
-GetTemplate returns the Template field if non-nil, zero value otherwise.
+GetBoilerplate returns the Boilerplate field if non-nil, zero value otherwise.
 
-### GetTemplateOk
+### GetBoilerplateOk
 
-`func (o *BuildSourceInput) GetTemplateOk() (*string, bool)`
+`func (o *BuildSourceInput) GetBoilerplateOk() (*string, bool)`
 
-GetTemplateOk returns a tuple with the Template field if it's non-nil, zero value otherwise
+GetBoilerplateOk returns a tuple with the Boilerplate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTemplate
+### SetBoilerplate
 
-`func (o *BuildSourceInput) SetTemplate(v string)`
+`func (o *BuildSourceInput) SetBoilerplate(v string)`
 
-SetTemplate sets Template field to given value.
+SetBoilerplate sets Boilerplate field to given value.
 
-### HasTemplate
+### HasBoilerplate
 
-`func (o *BuildSourceInput) HasTemplate() bool`
+`func (o *BuildSourceInput) HasBoilerplate() bool`
 
-HasTemplate returns a boolean if a field has been set.
+HasBoilerplate returns a boolean if a field has been set.
 
-### SetTemplateNil
+### SetBoilerplateNil
 
-`func (o *BuildSourceInput) SetTemplateNil(b bool)`
+`func (o *BuildSourceInput) SetBoilerplateNil(b bool)`
 
- SetTemplateNil sets the value for Template to be an explicit nil
+ SetBoilerplateNil sets the value for Boilerplate to be an explicit nil
 
-### UnsetTemplate
-`func (o *BuildSourceInput) UnsetTemplate()`
+### UnsetBoilerplate
+`func (o *BuildSourceInput) UnsetBoilerplate()`
 
-UnsetTemplate ensures that no value is present for Template, not even an explicit nil
+UnsetBoilerplate ensures that no value is present for Boilerplate, not even an explicit nil
 ### GetNewRepoName
 
 `func (o *BuildSourceInput) GetNewRepoName() string`

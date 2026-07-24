@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **Region** | Pointer to **NullableString** |  | [optional] 
 **BillingOption** | Pointer to **NullableString** |  | [optional] 
 **DisableMonitoring** | **bool** |  | 
+**AutoInfrastructureUpgrade** | Pointer to **NullableBool** |  | [optional] 
 
 ## Methods
 
@@ -515,6 +516,41 @@ and a boolean to check if the value has been set.
 SetDisableMonitoring sets DisableMonitoring field to given value.
 
 
+### GetAutoInfrastructureUpgrade
+
+`func (o *NewClusterInput) GetAutoInfrastructureUpgrade() bool`
+
+GetAutoInfrastructureUpgrade returns the AutoInfrastructureUpgrade field if non-nil, zero value otherwise.
+
+### GetAutoInfrastructureUpgradeOk
+
+`func (o *NewClusterInput) GetAutoInfrastructureUpgradeOk() (*bool, bool)`
+
+GetAutoInfrastructureUpgradeOk returns a tuple with the AutoInfrastructureUpgrade field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoInfrastructureUpgrade
+
+`func (o *NewClusterInput) SetAutoInfrastructureUpgrade(v bool)`
+
+SetAutoInfrastructureUpgrade sets AutoInfrastructureUpgrade field to given value.
+
+### HasAutoInfrastructureUpgrade
+
+`func (o *NewClusterInput) HasAutoInfrastructureUpgrade() bool`
+
+HasAutoInfrastructureUpgrade returns a boolean if a field has been set.
+
+### SetAutoInfrastructureUpgradeNil
+
+`func (o *NewClusterInput) SetAutoInfrastructureUpgradeNil(b bool)`
+
+ SetAutoInfrastructureUpgradeNil sets the value for AutoInfrastructureUpgrade to be an explicit nil
+
+### UnsetAutoInfrastructureUpgrade
+`func (o *NewClusterInput) UnsetAutoInfrastructureUpgrade()`
+
+UnsetAutoInfrastructureUpgrade ensures that no value is present for AutoInfrastructureUpgrade, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -156,8 +156,13 @@ Class | Method | HTTP request | Description
 *AppsAPI* | [**ListApps**](docs/AppsAPI.md#listapps) | **Get** /apps | List apps
 *AppsAPI* | [**UpdateApp**](docs/AppsAPI.md#updateapp) | **Put** /apps/{id} | Update app
 *BackupsAPI* | [**CreateBackup**](docs/BackupsAPI.md#createbackup) | **Post** /backups | Create backup
+*BackupsAPI* | [**CreateBackupPreset**](docs/BackupsAPI.md#createbackuppreset) | **Post** /backup-presets | Create backup preset
+*BackupsAPI* | [**DeleteBackupPreset**](docs/BackupsAPI.md#deletebackuppreset) | **Delete** /backup-presets/{id} | Delete backup preset
 *BackupsAPI* | [**GetBackup**](docs/BackupsAPI.md#getbackup) | **Get** /backups/{id} | Get backup
+*BackupsAPI* | [**GetBackupPreset**](docs/BackupsAPI.md#getbackuppreset) | **Get** /backup-presets/{id} | Get backup preset
+*BackupsAPI* | [**ListBackupPresets**](docs/BackupsAPI.md#listbackuppresets) | **Get** /backup-presets | List backup presets
 *BackupsAPI* | [**ListBackups**](docs/BackupsAPI.md#listbackups) | **Get** /backups | List backups
+*BackupsAPI* | [**UpdateBackupPreset**](docs/BackupsAPI.md#updatebackuppreset) | **Put** /backup-presets/{id} | Update backup preset
 *CertsAPI* | [**GetCert**](docs/CertsAPI.md#getcert) | **Get** /certs/{id} | Get cert
 *CertsAPI* | [**ListCerts**](docs/CertsAPI.md#listcerts) | **Get** /certs | List certs
 *ClustersAPI* | [**CreateCluster**](docs/ClustersAPI.md#createcluster) | **Post** /clusters | Create cluster
@@ -350,6 +355,7 @@ Class | Method | HTTP request | Description
  - [AppServiceSettingInput](docs/AppServiceSettingInput.md)
  - [AppServiceToken](docs/AppServiceToken.md)
  - [Backup](docs/Backup.md)
+ - [BackupPreset](docs/BackupPreset.md)
  - [BuildSourceInput](docs/BuildSourceInput.md)
  - [Cert](docs/Cert.md)
  - [Cluster](docs/Cluster.md)
@@ -419,6 +425,7 @@ Class | Method | HTTP request | Description
  - [NewAppServiceEnvVarInput](docs/NewAppServiceEnvVarInput.md)
  - [NewAppServiceLogStreamInput](docs/NewAppServiceLogStreamInput.md)
  - [NewBackupInput](docs/NewBackupInput.md)
+ - [NewBackupPresetInput](docs/NewBackupPresetInput.md)
  - [NewBuildFromCIInput](docs/NewBuildFromCIInput.md)
  - [NewClusterInput](docs/NewClusterInput.md)
  - [NewDatabaseDBInput](docs/NewDatabaseDBInput.md)
@@ -496,6 +503,7 @@ Class | Method | HTTP request | Description
  - [UpdateAppServiceCronScheduleInput](docs/UpdateAppServiceCronScheduleInput.md)
  - [UpdateAppServiceDatabaseInput](docs/UpdateAppServiceDatabaseInput.md)
  - [UpdateAppServiceEnvVarInput](docs/UpdateAppServiceEnvVarInput.md)
+ - [UpdateBackupPresetInput](docs/UpdateBackupPresetInput.md)
  - [UpdateCurrentUserRequest](docs/UpdateCurrentUserRequest.md)
  - [UpdateDatabaseUserDBsInput](docs/UpdateDatabaseUserDBsInput.md)
  - [UpdateEnvRequest](docs/UpdateEnvRequest.md)

@@ -22,7 +22,7 @@ var _ MappedNullable = &BuildSourceInput{}
 // BuildSourceInput struct for BuildSourceInput
 type BuildSourceInput struct {
 	BuildSourceType string `json:"buildSourceType"`
-	Template NullableString `json:"template,omitempty"`
+	Boilerplate NullableString `json:"boilerplate,omitempty"`
 	NewRepoName NullableString `json:"newRepoName,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	RemoteGitRepoId NullableString `json:"remoteGitRepoId,omitempty"`
@@ -74,46 +74,46 @@ func (o *BuildSourceInput) SetBuildSourceType(v string) {
 	o.BuildSourceType = v
 }
 
-// GetTemplate returns the Template field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BuildSourceInput) GetTemplate() string {
-	if o == nil || IsNil(o.Template.Get()) {
+// GetBoilerplate returns the Boilerplate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BuildSourceInput) GetBoilerplate() string {
+	if o == nil || IsNil(o.Boilerplate.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Template.Get()
+	return *o.Boilerplate.Get()
 }
 
-// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
+// GetBoilerplateOk returns a tuple with the Boilerplate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BuildSourceInput) GetTemplateOk() (*string, bool) {
+func (o *BuildSourceInput) GetBoilerplateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Template.Get(), o.Template.IsSet()
+	return o.Boilerplate.Get(), o.Boilerplate.IsSet()
 }
 
-// HasTemplate returns a boolean if a field has been set.
-func (o *BuildSourceInput) HasTemplate() bool {
-	if o != nil && o.Template.IsSet() {
+// HasBoilerplate returns a boolean if a field has been set.
+func (o *BuildSourceInput) HasBoilerplate() bool {
+	if o != nil && o.Boilerplate.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTemplate gets a reference to the given NullableString and assigns it to the Template field.
-func (o *BuildSourceInput) SetTemplate(v string) {
-	o.Template.Set(&v)
+// SetBoilerplate gets a reference to the given NullableString and assigns it to the Boilerplate field.
+func (o *BuildSourceInput) SetBoilerplate(v string) {
+	o.Boilerplate.Set(&v)
 }
-// SetTemplateNil sets the value for Template to be an explicit nil
-func (o *BuildSourceInput) SetTemplateNil() {
-	o.Template.Set(nil)
+// SetBoilerplateNil sets the value for Boilerplate to be an explicit nil
+func (o *BuildSourceInput) SetBoilerplateNil() {
+	o.Boilerplate.Set(nil)
 }
 
-// UnsetTemplate ensures that no value is present for Template, not even an explicit nil
-func (o *BuildSourceInput) UnsetTemplate() {
-	o.Template.Unset()
+// UnsetBoilerplate ensures that no value is present for Boilerplate, not even an explicit nil
+func (o *BuildSourceInput) UnsetBoilerplate() {
+	o.Boilerplate.Unset()
 }
 
 // GetNewRepoName returns the NewRepoName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -337,8 +337,8 @@ func (o BuildSourceInput) MarshalJSON() ([]byte, error) {
 func (o BuildSourceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["buildSourceType"] = o.BuildSourceType
-	if o.Template.IsSet() {
-		toSerialize["template"] = o.Template.Get()
+	if o.Boilerplate.IsSet() {
+		toSerialize["boilerplate"] = o.Boilerplate.Get()
 	}
 	if o.NewRepoName.IsSet() {
 		toSerialize["newRepoName"] = o.NewRepoName.Get()

@@ -38,6 +38,7 @@ type NewClusterInput struct {
 	Region NullableString `json:"region,omitempty"`
 	BillingOption NullableString `json:"billingOption,omitempty"`
 	DisableMonitoring bool `json:"disableMonitoring"`
+	AutoInfrastructureUpgrade NullableBool `json:"autoInfrastructureUpgrade,omitempty"`
 }
 
 type _NewClusterInput NewClusterInput
@@ -636,6 +637,48 @@ func (o *NewClusterInput) SetDisableMonitoring(v bool) {
 	o.DisableMonitoring = v
 }
 
+// GetAutoInfrastructureUpgrade returns the AutoInfrastructureUpgrade field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewClusterInput) GetAutoInfrastructureUpgrade() bool {
+	if o == nil || IsNil(o.AutoInfrastructureUpgrade.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.AutoInfrastructureUpgrade.Get()
+}
+
+// GetAutoInfrastructureUpgradeOk returns a tuple with the AutoInfrastructureUpgrade field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewClusterInput) GetAutoInfrastructureUpgradeOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AutoInfrastructureUpgrade.Get(), o.AutoInfrastructureUpgrade.IsSet()
+}
+
+// HasAutoInfrastructureUpgrade returns a boolean if a field has been set.
+func (o *NewClusterInput) HasAutoInfrastructureUpgrade() bool {
+	if o != nil && o.AutoInfrastructureUpgrade.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoInfrastructureUpgrade gets a reference to the given NullableBool and assigns it to the AutoInfrastructureUpgrade field.
+func (o *NewClusterInput) SetAutoInfrastructureUpgrade(v bool) {
+	o.AutoInfrastructureUpgrade.Set(&v)
+}
+// SetAutoInfrastructureUpgradeNil sets the value for AutoInfrastructureUpgrade to be an explicit nil
+func (o *NewClusterInput) SetAutoInfrastructureUpgradeNil() {
+	o.AutoInfrastructureUpgrade.Set(nil)
+}
+
+// UnsetAutoInfrastructureUpgrade ensures that no value is present for AutoInfrastructureUpgrade, not even an explicit nil
+func (o *NewClusterInput) UnsetAutoInfrastructureUpgrade() {
+	o.AutoInfrastructureUpgrade.Unset()
+}
+
 func (o NewClusterInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -684,6 +727,9 @@ func (o NewClusterInput) ToMap() (map[string]interface{}, error) {
 		toSerialize["billingOption"] = o.BillingOption.Get()
 	}
 	toSerialize["disableMonitoring"] = o.DisableMonitoring
+	if o.AutoInfrastructureUpgrade.IsSet() {
+		toSerialize["autoInfrastructureUpgrade"] = o.AutoInfrastructureUpgrade.Get()
+	}
 	return toSerialize, nil
 }
 

@@ -7690,6 +7690,218 @@ paths:
       summary: Get backup
       tags:
       - backups
+  /backup-presets:
+    get:
+      description: Returns backup presets matching the request filters. At least one
+        target filter is required for user-session requests; API-key requests default
+        to the key's organization.
+      operationId: listBackupPresets
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: appServiceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: databaseDbId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: backupName
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/BackupPreset'
+                type: array
+          description: List of backup presets
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List backup presets
+      tags:
+      - backups
+    post:
+      description: Creates a manual or scheduled backup preset.
+      operationId: createBackupPreset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBackupPresetInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupPreset'
+          description: Created backup preset
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create backup preset
+      tags:
+      - backups
+  /backup-presets/{id}:
+    delete:
+      description: Deletes a backup preset and its schedule.
+      operationId: deleteBackupPreset
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete backup preset
+      tags:
+      - backups
+    get:
+      description: Returns the backup preset identified by the request path.
+      operationId: getBackupPreset
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupPreset'
+          description: Backup preset
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get backup preset
+      tags:
+      - backups
+    put:
+      description: Updates a backup preset's destination and schedule.
+      operationId: updateBackupPreset
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBackupPresetInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupPreset'
+          description: Updated backup preset
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update backup preset
+      tags:
+      - backups
   /imports:
     get:
       description: Returns imports matching the request filters.
@@ -12841,6 +13053,92 @@ components:
       - status
       - updatedAt
       type: object
+    BackupPreset:
+      example:
+        auto: true
+        crontab: crontab
+        integrationId: 9
+        databaseDbId: 5
+        envId: 7
+        orgId: 2
+        appInstanceId: 6
+        bucket: bucket
+        duration: 84
+        appServiceId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        storageClass: storageClass
+        disabled: true
+        id: 0
+        override: true
+        databaseId: 5
+        backupName: backupName
+        nextRunAt: 2000-01-23T04:56:07.000+00:00
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appInstanceId:
+          nullable: true
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        databaseId:
+          nullable: true
+          type: integer
+        databaseDbId:
+          nullable: true
+          type: integer
+        orgId:
+          nullable: true
+          type: integer
+        envId:
+          nullable: true
+          type: integer
+        backupName:
+          nullable: true
+          type: string
+        integrationId:
+          type: integer
+        bucket:
+          type: string
+        storageClass:
+          nullable: true
+          type: string
+        override:
+          type: boolean
+        auto:
+          type: boolean
+        disabled:
+          type: boolean
+        crontab:
+          nullable: true
+          type: string
+        duration:
+          maximum: 180
+          minimum: 30
+          nullable: true
+          type: integer
+        nextRunAt:
+          format: date-time
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - auto
+      - bucket
+      - createdAt
+      - disabled
+      - id
+      - integrationId
+      - override
+      - updatedAt
+      type: object
     Task:
       example:
         startedAt: 2000-01-23T04:56:07.000+00:00
@@ -13449,8 +13747,6 @@ components:
       type: object
     Service:
       example:
-        originStackRevId: 2
-        draftRevId: 1
         settings:
           gitAutoUpdate:
             allowMajor: true
@@ -13459,23 +13755,14 @@ components:
             allowMinor: true
             branches: true
             enabled: true
-        originStackRevNumber: 9
         revId: 6
-        originStackRevName: originStackRevName
         title: title
         type: type
-        gitRepoRefType: gitRepoRefType
-        orgId: 3
-        gitRepoRemoteId: gitRepoRemoteId
+        orgId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
         external: true
-        originStackRevStackId: 7
-        gitRepoRef: gitRepoRef
-        originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
         public: true
-        originStackRevVersion: originStackRevVersion
-        latestRevNumber: 5
-        gitRepoId: 5
+        latestRevNumber: 1
         name: name
         id: 0
         status: status
@@ -13497,42 +13784,8 @@ components:
           type: boolean
         revId:
           type: integer
-        draftRevId:
-          nullable: true
-          type: integer
         latestRevNumber:
           type: integer
-        gitRepoId:
-          nullable: true
-          type: integer
-        gitRepoRemoteId:
-          nullable: true
-          type: string
-        gitRepoRef:
-          nullable: true
-          type: string
-        gitRepoRefType:
-          nullable: true
-          type: string
-        originStackRevId:
-          nullable: true
-          type: integer
-        originStackRevStackId:
-          nullable: true
-          type: integer
-        originStackRevName:
-          nullable: true
-          type: string
-        originStackRevNumber:
-          nullable: true
-          type: integer
-        originStackRevVersion:
-          nullable: true
-          type: string
-        originStackRevCreatedAt:
-          format: date-time
-          nullable: true
-          type: string
         orgId:
           type: integer
         settings:
@@ -13606,12 +13859,10 @@ components:
       type: object
     ServicesResponse:
       example:
-        nextPage: 4
-        totalCount: 2
+        nextPage: 2
+        totalCount: 5
         items:
-        - originStackRevId: 2
-          draftRevId: 1
-          settings:
+        - settings:
             gitAutoUpdate:
               allowMajor: true
               allowPatch: true
@@ -13619,30 +13870,19 @@ components:
               allowMinor: true
               branches: true
               enabled: true
-          originStackRevNumber: 9
           revId: 6
-          originStackRevName: originStackRevName
           title: title
           type: type
-          gitRepoRefType: gitRepoRefType
-          orgId: 3
-          gitRepoRemoteId: gitRepoRemoteId
+          orgId: 5
           createdAt: 2000-01-23T04:56:07.000+00:00
           external: true
-          originStackRevStackId: 7
-          gitRepoRef: gitRepoRef
-          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
           public: true
-          originStackRevVersion: originStackRevVersion
-          latestRevNumber: 5
-          gitRepoId: 5
+          latestRevNumber: 1
           name: name
           id: 0
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - originStackRevId: 2
-          draftRevId: 1
-          settings:
+        - settings:
             gitAutoUpdate:
               allowMajor: true
               allowPatch: true
@@ -13650,23 +13890,14 @@ components:
               allowMinor: true
               branches: true
               enabled: true
-          originStackRevNumber: 9
           revId: 6
-          originStackRevName: originStackRevName
           title: title
           type: type
-          gitRepoRefType: gitRepoRefType
-          orgId: 3
-          gitRepoRemoteId: gitRepoRemoteId
+          orgId: 5
           createdAt: 2000-01-23T04:56:07.000+00:00
           external: true
-          originStackRevStackId: 7
-          gitRepoRef: gitRepoRef
-          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
           public: true
-          originStackRevVersion: originStackRevVersion
-          latestRevNumber: 5
-          gitRepoId: 5
+          latestRevNumber: 1
           name: name
           id: 0
           status: status
@@ -13687,6 +13918,8 @@ components:
       type: object
     Stack:
       example:
+        originStackRevId: 2
+        draftRevId: 1
         settings:
           autoOriginStackUpdate:
             enabled: true
@@ -13718,15 +13951,24 @@ components:
             allowMinor: true
             branches: true
             enabled: true
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        public: true
-        latestRevNumber: 1
-        name: name
+        originStackRevNumber: 9
         icon: icon
         revId: 6
-        id: 0
+        originStackRevName: originStackRevName
         title: title
-        orgId: 5
+        gitRepoRefType: gitRepoRefType
+        orgId: 3
+        gitRepoRemoteId: gitRepoRemoteId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        originStackRevStackId: 7
+        gitRepoRef: gitRepoRef
+        originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+        public: true
+        originStackRevVersion: originStackRevVersion
+        latestRevNumber: 5
+        gitRepoId: 5
+        name: name
+        id: 0
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -13744,8 +13986,42 @@ components:
           type: boolean
         revId:
           type: integer
+        draftRevId:
+          nullable: true
+          type: integer
         latestRevNumber:
           type: integer
+        gitRepoId:
+          nullable: true
+          type: integer
+        gitRepoRemoteId:
+          nullable: true
+          type: string
+        gitRepoRef:
+          nullable: true
+          type: string
+        gitRepoRefType:
+          nullable: true
+          type: string
+        originStackRevId:
+          nullable: true
+          type: integer
+        originStackRevStackId:
+          nullable: true
+          type: integer
+        originStackRevName:
+          nullable: true
+          type: string
+        originStackRevNumber:
+          nullable: true
+          type: integer
+        originStackRevVersion:
+          nullable: true
+          type: string
+        originStackRevCreatedAt:
+          format: date-time
+          nullable: true
+          type: string
         orgId:
           type: integer
         settings:
@@ -13824,6 +14100,7 @@ components:
         title: title
         type: type
         required: true
+        serviceRevPinned: true
         serviceRevId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
         outdated: true
@@ -13851,6 +14128,8 @@ components:
           type: boolean
         replicas:
           type: integer
+        serviceRevPinned:
+          type: boolean
         outdated:
           type: boolean
         serviceRevId:
@@ -13884,6 +14163,7 @@ components:
       - required
       - serviceRevId
       - serviceRevName
+      - serviceRevPinned
       - serviceRevTitle
       - serviceRevVersion
       - title
@@ -13892,10 +14172,12 @@ components:
       type: object
     StacksResponse:
       example:
-        nextPage: 2
-        totalCount: 5
+        nextPage: 4
+        totalCount: 2
         items:
-        - settings:
+        - originStackRevId: 2
+          draftRevId: 1
+          settings:
             autoOriginStackUpdate:
               enabled: true
               versionPolicy:
@@ -13926,18 +14208,29 @@ components:
               allowMinor: true
               branches: true
               enabled: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          public: true
-          latestRevNumber: 1
-          name: name
+          originStackRevNumber: 9
           icon: icon
           revId: 6
-          id: 0
+          originStackRevName: originStackRevName
           title: title
-          orgId: 5
+          gitRepoRefType: gitRepoRefType
+          orgId: 3
+          gitRepoRemoteId: gitRepoRemoteId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          originStackRevStackId: 7
+          gitRepoRef: gitRepoRef
+          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+          public: true
+          originStackRevVersion: originStackRevVersion
+          latestRevNumber: 5
+          gitRepoId: 5
+          name: name
+          id: 0
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - settings:
+        - originStackRevId: 2
+          draftRevId: 1
+          settings:
             autoOriginStackUpdate:
               enabled: true
               versionPolicy:
@@ -13968,15 +14261,24 @@ components:
               allowMinor: true
               branches: true
               enabled: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          public: true
-          latestRevNumber: 1
-          name: name
+          originStackRevNumber: 9
           icon: icon
           revId: 6
-          id: 0
+          originStackRevName: originStackRevName
           title: title
-          orgId: 5
+          gitRepoRefType: gitRepoRefType
+          orgId: 3
+          gitRepoRemoteId: gitRepoRemoteId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          originStackRevStackId: 7
+          gitRepoRef: gitRepoRef
+          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+          public: true
+          originStackRevVersion: originStackRevVersion
+          latestRevNumber: 5
+          gitRepoId: 5
+          name: name
+          id: 0
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -15678,9 +15980,9 @@ components:
         main: true
         buildSource:
           buildSourceType: buildSourceType
-          template: template
           gitRef: gitRef
           remoteGitRepoId: remoteGitRepoId
+          boilerplate: boilerplate
           integrationId: 5
           newRepoName: newRepoName
           gitRefType: gitRefType
@@ -15977,9 +16279,9 @@ components:
         main: true
         buildSource:
           buildSourceType: buildSourceType
-          template: template
           gitRef: gitRef
           remoteGitRepoId: remoteGitRepoId
+          boilerplate: boilerplate
           integrationId: 5
           newRepoName: newRepoName
           gitRefType: gitRefType
@@ -16317,6 +16619,22 @@ components:
       type: object
     NewAppInput:
       example:
+        settings:
+          autoStackUpgrade:
+            upgradeSettings:
+              cron: true
+              settings: true
+              configs: true
+              versions: true
+              replicas: true
+              volumes: true
+              resources: true
+              links: true
+              tokens: true
+              main: true
+              services: true
+              integrations: true
+            enabled: true
         registryIntegrationId: 6
         instanceName: instanceName
         services:
@@ -16361,9 +16679,9 @@ components:
           id: 5
           buildSource:
             buildSourceType: buildSourceType
-            template: template
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
             integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
@@ -16422,9 +16740,9 @@ components:
           id: 5
           buildSource:
             buildSourceType: buildSourceType
-            template: template
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
             integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
@@ -16490,6 +16808,8 @@ components:
         registryIntegrationId:
           nullable: true
           type: integer
+        settings:
+          $ref: '#/components/schemas/AppInstanceSettingsInput'
       required:
       - envId
       - instanceName
@@ -16498,6 +16818,22 @@ components:
       type: object
     NewAppInstanceInput:
       example:
+        settings:
+          autoStackUpgrade:
+            upgradeSettings:
+              cron: true
+              settings: true
+              configs: true
+              versions: true
+              replicas: true
+              volumes: true
+              resources: true
+              links: true
+              tokens: true
+              main: true
+              services: true
+              integrations: true
+            enabled: true
         stackRevId: 6
         registryIntegrationId: 2
         instanceName: instanceName
@@ -16546,9 +16882,9 @@ components:
           id: 5
           buildSource:
             buildSourceType: buildSourceType
-            template: template
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
             integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
@@ -16607,9 +16943,9 @@ components:
           id: 5
           buildSource:
             buildSourceType: buildSourceType
-            template: template
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
             integrationId: 5
             newRepoName: newRepoName
             gitRefType: gitRefType
@@ -16659,6 +16995,8 @@ components:
         registryIntegrationId:
           nullable: true
           type: integer
+        settings:
+          $ref: '#/components/schemas/AppInstanceSettingsInput'
       required:
       - appId
       - envId
@@ -16668,16 +17006,16 @@ components:
     BuildSourceInput:
       example:
         buildSourceType: buildSourceType
-        template: template
         gitRef: gitRef
         remoteGitRepoId: remoteGitRepoId
+        boilerplate: boilerplate
         integrationId: 5
         newRepoName: newRepoName
         gitRefType: gitRefType
       properties:
         buildSourceType:
           type: string
-        template:
+        boilerplate:
           nullable: true
           type: string
         newRepoName:
@@ -16858,6 +17196,7 @@ components:
         name: name
         singleNode: true
         region: region
+        autoInfrastructureUpgrade: true
         projectId: 6
         machineType: machineType
       properties:
@@ -16903,6 +17242,9 @@ components:
           nullable: true
           type: string
         disableMonitoring:
+          type: boolean
+        autoInfrastructureUpgrade:
+          nullable: true
           type: boolean
       required:
       - disableMonitoring
@@ -17172,6 +17514,114 @@ components:
       - bucket
       - integrationId
       type: object
+    NewBackupPresetInput:
+      example:
+        auto: true
+        crontab: crontab
+        integrationId: 7
+        databaseDbId: 5
+        envId: 2
+        orgId: 5
+        appInstanceId: 0
+        bucket: bucket
+        duration: 169
+        appServiceId: 6
+        storageClass: storageClass
+        disabled: true
+        override: true
+        databaseId: 1
+        backupName: backupName
+      properties:
+        appInstanceId:
+          nullable: true
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        databaseId:
+          nullable: true
+          type: integer
+        databaseDbId:
+          nullable: true
+          type: integer
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization
+            when no more specific target is provided.
+          nullable: true
+          type: integer
+        envId:
+          nullable: true
+          type: integer
+        backupName:
+          nullable: true
+          type: string
+        integrationId:
+          type: integer
+        bucket:
+          type: string
+        storageClass:
+          nullable: true
+          type: string
+        disabled:
+          type: boolean
+        override:
+          type: boolean
+        auto:
+          nullable: true
+          type: boolean
+        crontab:
+          nullable: true
+          type: string
+        duration:
+          maximum: 180
+          minimum: 30
+          nullable: true
+          type: integer
+      required:
+      - bucket
+      - disabled
+      - integrationId
+      - override
+      type: object
+    UpdateBackupPresetInput:
+      example:
+        bucket: bucket
+        duration: 120
+        storageClass: storageClass
+        auto: true
+        crontab: crontab
+        integrationId: 0
+        disabled: true
+        override: true
+      properties:
+        integrationId:
+          type: integer
+        bucket:
+          type: string
+        storageClass:
+          nullable: true
+          type: string
+        disabled:
+          type: boolean
+        override:
+          type: boolean
+        auto:
+          type: boolean
+        crontab:
+          nullable: true
+          type: string
+        duration:
+          maximum: 180
+          minimum: 30
+          nullable: true
+          type: integer
+      required:
+      - auto
+      - bucket
+      - disabled
+      - integrationId
+      - override
+      type: object
     NewAppRouteInput:
       example:
         authLogin: authLogin
@@ -17371,9 +17821,9 @@ components:
         id: 5
         buildSource:
           buildSourceType: buildSourceType
-          template: template
           gitRef: gitRef
           remoteGitRepoId: remoteGitRepoId
+          boilerplate: boilerplate
           integrationId: 5
           newRepoName: newRepoName
           gitRefType: gitRefType

@@ -29,7 +29,18 @@ type Stack struct {
 	Status string `json:"status"`
 	Public bool `json:"public"`
 	RevId int32 `json:"revId"`
+	DraftRevId NullableInt32 `json:"draftRevId,omitempty"`
 	LatestRevNumber int32 `json:"latestRevNumber"`
+	GitRepoId NullableInt32 `json:"gitRepoId,omitempty"`
+	GitRepoRemoteId NullableString `json:"gitRepoRemoteId,omitempty"`
+	GitRepoRef NullableString `json:"gitRepoRef,omitempty"`
+	GitRepoRefType NullableString `json:"gitRepoRefType,omitempty"`
+	OriginStackRevId NullableInt32 `json:"originStackRevId,omitempty"`
+	OriginStackRevStackId NullableInt32 `json:"originStackRevStackId,omitempty"`
+	OriginStackRevName NullableString `json:"originStackRevName,omitempty"`
+	OriginStackRevNumber NullableInt32 `json:"originStackRevNumber,omitempty"`
+	OriginStackRevVersion NullableString `json:"originStackRevVersion,omitempty"`
+	OriginStackRevCreatedAt NullableTime `json:"originStackRevCreatedAt,omitempty"`
 	OrgId int32 `json:"orgId"`
 	Settings *StackSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -234,6 +245,48 @@ func (o *Stack) SetRevId(v int32) {
 	o.RevId = v
 }
 
+// GetDraftRevId returns the DraftRevId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetDraftRevId() int32 {
+	if o == nil || IsNil(o.DraftRevId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.DraftRevId.Get()
+}
+
+// GetDraftRevIdOk returns a tuple with the DraftRevId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetDraftRevIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DraftRevId.Get(), o.DraftRevId.IsSet()
+}
+
+// HasDraftRevId returns a boolean if a field has been set.
+func (o *Stack) HasDraftRevId() bool {
+	if o != nil && o.DraftRevId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDraftRevId gets a reference to the given NullableInt32 and assigns it to the DraftRevId field.
+func (o *Stack) SetDraftRevId(v int32) {
+	o.DraftRevId.Set(&v)
+}
+// SetDraftRevIdNil sets the value for DraftRevId to be an explicit nil
+func (o *Stack) SetDraftRevIdNil() {
+	o.DraftRevId.Set(nil)
+}
+
+// UnsetDraftRevId ensures that no value is present for DraftRevId, not even an explicit nil
+func (o *Stack) UnsetDraftRevId() {
+	o.DraftRevId.Unset()
+}
+
 // GetLatestRevNumber returns the LatestRevNumber field value
 func (o *Stack) GetLatestRevNumber() int32 {
 	if o == nil {
@@ -256,6 +309,426 @@ func (o *Stack) GetLatestRevNumberOk() (*int32, bool) {
 // SetLatestRevNumber sets field value
 func (o *Stack) SetLatestRevNumber(v int32) {
 	o.LatestRevNumber = v
+}
+
+// GetGitRepoId returns the GitRepoId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetGitRepoId() int32 {
+	if o == nil || IsNil(o.GitRepoId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.GitRepoId.Get()
+}
+
+// GetGitRepoIdOk returns a tuple with the GitRepoId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetGitRepoIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitRepoId.Get(), o.GitRepoId.IsSet()
+}
+
+// HasGitRepoId returns a boolean if a field has been set.
+func (o *Stack) HasGitRepoId() bool {
+	if o != nil && o.GitRepoId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitRepoId gets a reference to the given NullableInt32 and assigns it to the GitRepoId field.
+func (o *Stack) SetGitRepoId(v int32) {
+	o.GitRepoId.Set(&v)
+}
+// SetGitRepoIdNil sets the value for GitRepoId to be an explicit nil
+func (o *Stack) SetGitRepoIdNil() {
+	o.GitRepoId.Set(nil)
+}
+
+// UnsetGitRepoId ensures that no value is present for GitRepoId, not even an explicit nil
+func (o *Stack) UnsetGitRepoId() {
+	o.GitRepoId.Unset()
+}
+
+// GetGitRepoRemoteId returns the GitRepoRemoteId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetGitRepoRemoteId() string {
+	if o == nil || IsNil(o.GitRepoRemoteId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.GitRepoRemoteId.Get()
+}
+
+// GetGitRepoRemoteIdOk returns a tuple with the GitRepoRemoteId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetGitRepoRemoteIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitRepoRemoteId.Get(), o.GitRepoRemoteId.IsSet()
+}
+
+// HasGitRepoRemoteId returns a boolean if a field has been set.
+func (o *Stack) HasGitRepoRemoteId() bool {
+	if o != nil && o.GitRepoRemoteId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitRepoRemoteId gets a reference to the given NullableString and assigns it to the GitRepoRemoteId field.
+func (o *Stack) SetGitRepoRemoteId(v string) {
+	o.GitRepoRemoteId.Set(&v)
+}
+// SetGitRepoRemoteIdNil sets the value for GitRepoRemoteId to be an explicit nil
+func (o *Stack) SetGitRepoRemoteIdNil() {
+	o.GitRepoRemoteId.Set(nil)
+}
+
+// UnsetGitRepoRemoteId ensures that no value is present for GitRepoRemoteId, not even an explicit nil
+func (o *Stack) UnsetGitRepoRemoteId() {
+	o.GitRepoRemoteId.Unset()
+}
+
+// GetGitRepoRef returns the GitRepoRef field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetGitRepoRef() string {
+	if o == nil || IsNil(o.GitRepoRef.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.GitRepoRef.Get()
+}
+
+// GetGitRepoRefOk returns a tuple with the GitRepoRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetGitRepoRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitRepoRef.Get(), o.GitRepoRef.IsSet()
+}
+
+// HasGitRepoRef returns a boolean if a field has been set.
+func (o *Stack) HasGitRepoRef() bool {
+	if o != nil && o.GitRepoRef.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitRepoRef gets a reference to the given NullableString and assigns it to the GitRepoRef field.
+func (o *Stack) SetGitRepoRef(v string) {
+	o.GitRepoRef.Set(&v)
+}
+// SetGitRepoRefNil sets the value for GitRepoRef to be an explicit nil
+func (o *Stack) SetGitRepoRefNil() {
+	o.GitRepoRef.Set(nil)
+}
+
+// UnsetGitRepoRef ensures that no value is present for GitRepoRef, not even an explicit nil
+func (o *Stack) UnsetGitRepoRef() {
+	o.GitRepoRef.Unset()
+}
+
+// GetGitRepoRefType returns the GitRepoRefType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetGitRepoRefType() string {
+	if o == nil || IsNil(o.GitRepoRefType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.GitRepoRefType.Get()
+}
+
+// GetGitRepoRefTypeOk returns a tuple with the GitRepoRefType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetGitRepoRefTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitRepoRefType.Get(), o.GitRepoRefType.IsSet()
+}
+
+// HasGitRepoRefType returns a boolean if a field has been set.
+func (o *Stack) HasGitRepoRefType() bool {
+	if o != nil && o.GitRepoRefType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitRepoRefType gets a reference to the given NullableString and assigns it to the GitRepoRefType field.
+func (o *Stack) SetGitRepoRefType(v string) {
+	o.GitRepoRefType.Set(&v)
+}
+// SetGitRepoRefTypeNil sets the value for GitRepoRefType to be an explicit nil
+func (o *Stack) SetGitRepoRefTypeNil() {
+	o.GitRepoRefType.Set(nil)
+}
+
+// UnsetGitRepoRefType ensures that no value is present for GitRepoRefType, not even an explicit nil
+func (o *Stack) UnsetGitRepoRefType() {
+	o.GitRepoRefType.Unset()
+}
+
+// GetOriginStackRevId returns the OriginStackRevId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOriginStackRevId() int32 {
+	if o == nil || IsNil(o.OriginStackRevId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OriginStackRevId.Get()
+}
+
+// GetOriginStackRevIdOk returns a tuple with the OriginStackRevId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOriginStackRevIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginStackRevId.Get(), o.OriginStackRevId.IsSet()
+}
+
+// HasOriginStackRevId returns a boolean if a field has been set.
+func (o *Stack) HasOriginStackRevId() bool {
+	if o != nil && o.OriginStackRevId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginStackRevId gets a reference to the given NullableInt32 and assigns it to the OriginStackRevId field.
+func (o *Stack) SetOriginStackRevId(v int32) {
+	o.OriginStackRevId.Set(&v)
+}
+// SetOriginStackRevIdNil sets the value for OriginStackRevId to be an explicit nil
+func (o *Stack) SetOriginStackRevIdNil() {
+	o.OriginStackRevId.Set(nil)
+}
+
+// UnsetOriginStackRevId ensures that no value is present for OriginStackRevId, not even an explicit nil
+func (o *Stack) UnsetOriginStackRevId() {
+	o.OriginStackRevId.Unset()
+}
+
+// GetOriginStackRevStackId returns the OriginStackRevStackId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOriginStackRevStackId() int32 {
+	if o == nil || IsNil(o.OriginStackRevStackId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OriginStackRevStackId.Get()
+}
+
+// GetOriginStackRevStackIdOk returns a tuple with the OriginStackRevStackId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOriginStackRevStackIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginStackRevStackId.Get(), o.OriginStackRevStackId.IsSet()
+}
+
+// HasOriginStackRevStackId returns a boolean if a field has been set.
+func (o *Stack) HasOriginStackRevStackId() bool {
+	if o != nil && o.OriginStackRevStackId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginStackRevStackId gets a reference to the given NullableInt32 and assigns it to the OriginStackRevStackId field.
+func (o *Stack) SetOriginStackRevStackId(v int32) {
+	o.OriginStackRevStackId.Set(&v)
+}
+// SetOriginStackRevStackIdNil sets the value for OriginStackRevStackId to be an explicit nil
+func (o *Stack) SetOriginStackRevStackIdNil() {
+	o.OriginStackRevStackId.Set(nil)
+}
+
+// UnsetOriginStackRevStackId ensures that no value is present for OriginStackRevStackId, not even an explicit nil
+func (o *Stack) UnsetOriginStackRevStackId() {
+	o.OriginStackRevStackId.Unset()
+}
+
+// GetOriginStackRevName returns the OriginStackRevName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOriginStackRevName() string {
+	if o == nil || IsNil(o.OriginStackRevName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OriginStackRevName.Get()
+}
+
+// GetOriginStackRevNameOk returns a tuple with the OriginStackRevName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOriginStackRevNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginStackRevName.Get(), o.OriginStackRevName.IsSet()
+}
+
+// HasOriginStackRevName returns a boolean if a field has been set.
+func (o *Stack) HasOriginStackRevName() bool {
+	if o != nil && o.OriginStackRevName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginStackRevName gets a reference to the given NullableString and assigns it to the OriginStackRevName field.
+func (o *Stack) SetOriginStackRevName(v string) {
+	o.OriginStackRevName.Set(&v)
+}
+// SetOriginStackRevNameNil sets the value for OriginStackRevName to be an explicit nil
+func (o *Stack) SetOriginStackRevNameNil() {
+	o.OriginStackRevName.Set(nil)
+}
+
+// UnsetOriginStackRevName ensures that no value is present for OriginStackRevName, not even an explicit nil
+func (o *Stack) UnsetOriginStackRevName() {
+	o.OriginStackRevName.Unset()
+}
+
+// GetOriginStackRevNumber returns the OriginStackRevNumber field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOriginStackRevNumber() int32 {
+	if o == nil || IsNil(o.OriginStackRevNumber.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OriginStackRevNumber.Get()
+}
+
+// GetOriginStackRevNumberOk returns a tuple with the OriginStackRevNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOriginStackRevNumberOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginStackRevNumber.Get(), o.OriginStackRevNumber.IsSet()
+}
+
+// HasOriginStackRevNumber returns a boolean if a field has been set.
+func (o *Stack) HasOriginStackRevNumber() bool {
+	if o != nil && o.OriginStackRevNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginStackRevNumber gets a reference to the given NullableInt32 and assigns it to the OriginStackRevNumber field.
+func (o *Stack) SetOriginStackRevNumber(v int32) {
+	o.OriginStackRevNumber.Set(&v)
+}
+// SetOriginStackRevNumberNil sets the value for OriginStackRevNumber to be an explicit nil
+func (o *Stack) SetOriginStackRevNumberNil() {
+	o.OriginStackRevNumber.Set(nil)
+}
+
+// UnsetOriginStackRevNumber ensures that no value is present for OriginStackRevNumber, not even an explicit nil
+func (o *Stack) UnsetOriginStackRevNumber() {
+	o.OriginStackRevNumber.Unset()
+}
+
+// GetOriginStackRevVersion returns the OriginStackRevVersion field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOriginStackRevVersion() string {
+	if o == nil || IsNil(o.OriginStackRevVersion.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OriginStackRevVersion.Get()
+}
+
+// GetOriginStackRevVersionOk returns a tuple with the OriginStackRevVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOriginStackRevVersionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginStackRevVersion.Get(), o.OriginStackRevVersion.IsSet()
+}
+
+// HasOriginStackRevVersion returns a boolean if a field has been set.
+func (o *Stack) HasOriginStackRevVersion() bool {
+	if o != nil && o.OriginStackRevVersion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginStackRevVersion gets a reference to the given NullableString and assigns it to the OriginStackRevVersion field.
+func (o *Stack) SetOriginStackRevVersion(v string) {
+	o.OriginStackRevVersion.Set(&v)
+}
+// SetOriginStackRevVersionNil sets the value for OriginStackRevVersion to be an explicit nil
+func (o *Stack) SetOriginStackRevVersionNil() {
+	o.OriginStackRevVersion.Set(nil)
+}
+
+// UnsetOriginStackRevVersion ensures that no value is present for OriginStackRevVersion, not even an explicit nil
+func (o *Stack) UnsetOriginStackRevVersion() {
+	o.OriginStackRevVersion.Unset()
+}
+
+// GetOriginStackRevCreatedAt returns the OriginStackRevCreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOriginStackRevCreatedAt() time.Time {
+	if o == nil || IsNil(o.OriginStackRevCreatedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.OriginStackRevCreatedAt.Get()
+}
+
+// GetOriginStackRevCreatedAtOk returns a tuple with the OriginStackRevCreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOriginStackRevCreatedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginStackRevCreatedAt.Get(), o.OriginStackRevCreatedAt.IsSet()
+}
+
+// HasOriginStackRevCreatedAt returns a boolean if a field has been set.
+func (o *Stack) HasOriginStackRevCreatedAt() bool {
+	if o != nil && o.OriginStackRevCreatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginStackRevCreatedAt gets a reference to the given NullableTime and assigns it to the OriginStackRevCreatedAt field.
+func (o *Stack) SetOriginStackRevCreatedAt(v time.Time) {
+	o.OriginStackRevCreatedAt.Set(&v)
+}
+// SetOriginStackRevCreatedAtNil sets the value for OriginStackRevCreatedAt to be an explicit nil
+func (o *Stack) SetOriginStackRevCreatedAtNil() {
+	o.OriginStackRevCreatedAt.Set(nil)
+}
+
+// UnsetOriginStackRevCreatedAt ensures that no value is present for OriginStackRevCreatedAt, not even an explicit nil
+func (o *Stack) UnsetOriginStackRevCreatedAt() {
+	o.OriginStackRevCreatedAt.Unset()
 }
 
 // GetOrgId returns the OrgId field value
@@ -379,7 +852,40 @@ func (o Stack) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["public"] = o.Public
 	toSerialize["revId"] = o.RevId
+	if o.DraftRevId.IsSet() {
+		toSerialize["draftRevId"] = o.DraftRevId.Get()
+	}
 	toSerialize["latestRevNumber"] = o.LatestRevNumber
+	if o.GitRepoId.IsSet() {
+		toSerialize["gitRepoId"] = o.GitRepoId.Get()
+	}
+	if o.GitRepoRemoteId.IsSet() {
+		toSerialize["gitRepoRemoteId"] = o.GitRepoRemoteId.Get()
+	}
+	if o.GitRepoRef.IsSet() {
+		toSerialize["gitRepoRef"] = o.GitRepoRef.Get()
+	}
+	if o.GitRepoRefType.IsSet() {
+		toSerialize["gitRepoRefType"] = o.GitRepoRefType.Get()
+	}
+	if o.OriginStackRevId.IsSet() {
+		toSerialize["originStackRevId"] = o.OriginStackRevId.Get()
+	}
+	if o.OriginStackRevStackId.IsSet() {
+		toSerialize["originStackRevStackId"] = o.OriginStackRevStackId.Get()
+	}
+	if o.OriginStackRevName.IsSet() {
+		toSerialize["originStackRevName"] = o.OriginStackRevName.Get()
+	}
+	if o.OriginStackRevNumber.IsSet() {
+		toSerialize["originStackRevNumber"] = o.OriginStackRevNumber.Get()
+	}
+	if o.OriginStackRevVersion.IsSet() {
+		toSerialize["originStackRevVersion"] = o.OriginStackRevVersion.Get()
+	}
+	if o.OriginStackRevCreatedAt.IsSet() {
+		toSerialize["originStackRevCreatedAt"] = o.OriginStackRevCreatedAt.Get()
+	}
 	toSerialize["orgId"] = o.OrgId
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings

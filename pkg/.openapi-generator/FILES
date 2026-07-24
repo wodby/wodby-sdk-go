@@ -83,6 +83,7 @@ docs/AppServiceToken.md
 docs/AppServicesAPI.md
 docs/AppsAPI.md
 docs/Backup.md
+docs/BackupPreset.md
 docs/BackupsAPI.md
 docs/BuildSourceInput.md
 docs/Cert.md
@@ -162,6 +163,7 @@ docs/NewAppServiceCronScheduleInput.md
 docs/NewAppServiceEnvVarInput.md
 docs/NewAppServiceLogStreamInput.md
 docs/NewBackupInput.md
+docs/NewBackupPresetInput.md
 docs/NewBuildFromCIInput.md
 docs/NewClusterInput.md
 docs/NewDatabaseDBInput.md
@@ -248,6 +250,7 @@ docs/UpdateAppRouteInput.md
 docs/UpdateAppServiceCronScheduleInput.md
 docs/UpdateAppServiceDatabaseInput.md
 docs/UpdateAppServiceEnvVarInput.md
+docs/UpdateBackupPresetInput.md
 docs/UpdateCurrentUserRequest.md
 docs/UpdateDatabaseUserDBsInput.md
 docs/UpdateEnvRequest.md
@@ -309,6 +312,7 @@ model_app_service_setting.go
 model_app_service_setting_input.go
 model_app_service_token.go
 model_backup.go
+model_backup_preset.go
 model_build_source_input.go
 model_cert.go
 model_cluster.go
@@ -378,6 +382,7 @@ model_new_app_service_cron_schedule_input.go
 model_new_app_service_env_var_input.go
 model_new_app_service_log_stream_input.go
 model_new_backup_input.go
+model_new_backup_preset_input.go
 model_new_build_from_ci_input.go
 model_new_cluster_input.go
 model_new_database_db_input.go
@@ -454,6 +459,7 @@ model_update_app_route_input.go
 model_update_app_service_cron_schedule_input.go
 model_update_app_service_database_input.go
 model_update_app_service_env_var_input.go
+model_update_backup_preset_input.go
 model_update_current_user_request.go
 model_update_database_user_dbs_input.go
 model_update_env_request.go

@@ -11,7 +11,18 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **Public** | **bool** |  | 
 **RevId** | **int32** |  | 
+**DraftRevId** | Pointer to **NullableInt32** |  | [optional] 
 **LatestRevNumber** | **int32** |  | 
+**GitRepoId** | Pointer to **NullableInt32** |  | [optional] 
+**GitRepoRemoteId** | Pointer to **NullableString** |  | [optional] 
+**GitRepoRef** | Pointer to **NullableString** |  | [optional] 
+**GitRepoRefType** | Pointer to **NullableString** |  | [optional] 
+**OriginStackRevId** | Pointer to **NullableInt32** |  | [optional] 
+**OriginStackRevStackId** | Pointer to **NullableInt32** |  | [optional] 
+**OriginStackRevName** | Pointer to **NullableString** |  | [optional] 
+**OriginStackRevNumber** | Pointer to **NullableInt32** |  | [optional] 
+**OriginStackRevVersion** | Pointer to **NullableString** |  | [optional] 
+**OriginStackRevCreatedAt** | Pointer to **NullableTime** |  | [optional] 
 **OrgId** | **int32** |  | 
 **Settings** | Pointer to [**StackSettings**](StackSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
@@ -176,6 +187,41 @@ and a boolean to check if the value has been set.
 SetRevId sets RevId field to given value.
 
 
+### GetDraftRevId
+
+`func (o *Stack) GetDraftRevId() int32`
+
+GetDraftRevId returns the DraftRevId field if non-nil, zero value otherwise.
+
+### GetDraftRevIdOk
+
+`func (o *Stack) GetDraftRevIdOk() (*int32, bool)`
+
+GetDraftRevIdOk returns a tuple with the DraftRevId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDraftRevId
+
+`func (o *Stack) SetDraftRevId(v int32)`
+
+SetDraftRevId sets DraftRevId field to given value.
+
+### HasDraftRevId
+
+`func (o *Stack) HasDraftRevId() bool`
+
+HasDraftRevId returns a boolean if a field has been set.
+
+### SetDraftRevIdNil
+
+`func (o *Stack) SetDraftRevIdNil(b bool)`
+
+ SetDraftRevIdNil sets the value for DraftRevId to be an explicit nil
+
+### UnsetDraftRevId
+`func (o *Stack) UnsetDraftRevId()`
+
+UnsetDraftRevId ensures that no value is present for DraftRevId, not even an explicit nil
 ### GetLatestRevNumber
 
 `func (o *Stack) GetLatestRevNumber() int32`
@@ -196,6 +242,356 @@ and a boolean to check if the value has been set.
 SetLatestRevNumber sets LatestRevNumber field to given value.
 
 
+### GetGitRepoId
+
+`func (o *Stack) GetGitRepoId() int32`
+
+GetGitRepoId returns the GitRepoId field if non-nil, zero value otherwise.
+
+### GetGitRepoIdOk
+
+`func (o *Stack) GetGitRepoIdOk() (*int32, bool)`
+
+GetGitRepoIdOk returns a tuple with the GitRepoId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitRepoId
+
+`func (o *Stack) SetGitRepoId(v int32)`
+
+SetGitRepoId sets GitRepoId field to given value.
+
+### HasGitRepoId
+
+`func (o *Stack) HasGitRepoId() bool`
+
+HasGitRepoId returns a boolean if a field has been set.
+
+### SetGitRepoIdNil
+
+`func (o *Stack) SetGitRepoIdNil(b bool)`
+
+ SetGitRepoIdNil sets the value for GitRepoId to be an explicit nil
+
+### UnsetGitRepoId
+`func (o *Stack) UnsetGitRepoId()`
+
+UnsetGitRepoId ensures that no value is present for GitRepoId, not even an explicit nil
+### GetGitRepoRemoteId
+
+`func (o *Stack) GetGitRepoRemoteId() string`
+
+GetGitRepoRemoteId returns the GitRepoRemoteId field if non-nil, zero value otherwise.
+
+### GetGitRepoRemoteIdOk
+
+`func (o *Stack) GetGitRepoRemoteIdOk() (*string, bool)`
+
+GetGitRepoRemoteIdOk returns a tuple with the GitRepoRemoteId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitRepoRemoteId
+
+`func (o *Stack) SetGitRepoRemoteId(v string)`
+
+SetGitRepoRemoteId sets GitRepoRemoteId field to given value.
+
+### HasGitRepoRemoteId
+
+`func (o *Stack) HasGitRepoRemoteId() bool`
+
+HasGitRepoRemoteId returns a boolean if a field has been set.
+
+### SetGitRepoRemoteIdNil
+
+`func (o *Stack) SetGitRepoRemoteIdNil(b bool)`
+
+ SetGitRepoRemoteIdNil sets the value for GitRepoRemoteId to be an explicit nil
+
+### UnsetGitRepoRemoteId
+`func (o *Stack) UnsetGitRepoRemoteId()`
+
+UnsetGitRepoRemoteId ensures that no value is present for GitRepoRemoteId, not even an explicit nil
+### GetGitRepoRef
+
+`func (o *Stack) GetGitRepoRef() string`
+
+GetGitRepoRef returns the GitRepoRef field if non-nil, zero value otherwise.
+
+### GetGitRepoRefOk
+
+`func (o *Stack) GetGitRepoRefOk() (*string, bool)`
+
+GetGitRepoRefOk returns a tuple with the GitRepoRef field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitRepoRef
+
+`func (o *Stack) SetGitRepoRef(v string)`
+
+SetGitRepoRef sets GitRepoRef field to given value.
+
+### HasGitRepoRef
+
+`func (o *Stack) HasGitRepoRef() bool`
+
+HasGitRepoRef returns a boolean if a field has been set.
+
+### SetGitRepoRefNil
+
+`func (o *Stack) SetGitRepoRefNil(b bool)`
+
+ SetGitRepoRefNil sets the value for GitRepoRef to be an explicit nil
+
+### UnsetGitRepoRef
+`func (o *Stack) UnsetGitRepoRef()`
+
+UnsetGitRepoRef ensures that no value is present for GitRepoRef, not even an explicit nil
+### GetGitRepoRefType
+
+`func (o *Stack) GetGitRepoRefType() string`
+
+GetGitRepoRefType returns the GitRepoRefType field if non-nil, zero value otherwise.
+
+### GetGitRepoRefTypeOk
+
+`func (o *Stack) GetGitRepoRefTypeOk() (*string, bool)`
+
+GetGitRepoRefTypeOk returns a tuple with the GitRepoRefType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitRepoRefType
+
+`func (o *Stack) SetGitRepoRefType(v string)`
+
+SetGitRepoRefType sets GitRepoRefType field to given value.
+
+### HasGitRepoRefType
+
+`func (o *Stack) HasGitRepoRefType() bool`
+
+HasGitRepoRefType returns a boolean if a field has been set.
+
+### SetGitRepoRefTypeNil
+
+`func (o *Stack) SetGitRepoRefTypeNil(b bool)`
+
+ SetGitRepoRefTypeNil sets the value for GitRepoRefType to be an explicit nil
+
+### UnsetGitRepoRefType
+`func (o *Stack) UnsetGitRepoRefType()`
+
+UnsetGitRepoRefType ensures that no value is present for GitRepoRefType, not even an explicit nil
+### GetOriginStackRevId
+
+`func (o *Stack) GetOriginStackRevId() int32`
+
+GetOriginStackRevId returns the OriginStackRevId field if non-nil, zero value otherwise.
+
+### GetOriginStackRevIdOk
+
+`func (o *Stack) GetOriginStackRevIdOk() (*int32, bool)`
+
+GetOriginStackRevIdOk returns a tuple with the OriginStackRevId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginStackRevId
+
+`func (o *Stack) SetOriginStackRevId(v int32)`
+
+SetOriginStackRevId sets OriginStackRevId field to given value.
+
+### HasOriginStackRevId
+
+`func (o *Stack) HasOriginStackRevId() bool`
+
+HasOriginStackRevId returns a boolean if a field has been set.
+
+### SetOriginStackRevIdNil
+
+`func (o *Stack) SetOriginStackRevIdNil(b bool)`
+
+ SetOriginStackRevIdNil sets the value for OriginStackRevId to be an explicit nil
+
+### UnsetOriginStackRevId
+`func (o *Stack) UnsetOriginStackRevId()`
+
+UnsetOriginStackRevId ensures that no value is present for OriginStackRevId, not even an explicit nil
+### GetOriginStackRevStackId
+
+`func (o *Stack) GetOriginStackRevStackId() int32`
+
+GetOriginStackRevStackId returns the OriginStackRevStackId field if non-nil, zero value otherwise.
+
+### GetOriginStackRevStackIdOk
+
+`func (o *Stack) GetOriginStackRevStackIdOk() (*int32, bool)`
+
+GetOriginStackRevStackIdOk returns a tuple with the OriginStackRevStackId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginStackRevStackId
+
+`func (o *Stack) SetOriginStackRevStackId(v int32)`
+
+SetOriginStackRevStackId sets OriginStackRevStackId field to given value.
+
+### HasOriginStackRevStackId
+
+`func (o *Stack) HasOriginStackRevStackId() bool`
+
+HasOriginStackRevStackId returns a boolean if a field has been set.
+
+### SetOriginStackRevStackIdNil
+
+`func (o *Stack) SetOriginStackRevStackIdNil(b bool)`
+
+ SetOriginStackRevStackIdNil sets the value for OriginStackRevStackId to be an explicit nil
+
+### UnsetOriginStackRevStackId
+`func (o *Stack) UnsetOriginStackRevStackId()`
+
+UnsetOriginStackRevStackId ensures that no value is present for OriginStackRevStackId, not even an explicit nil
+### GetOriginStackRevName
+
+`func (o *Stack) GetOriginStackRevName() string`
+
+GetOriginStackRevName returns the OriginStackRevName field if non-nil, zero value otherwise.
+
+### GetOriginStackRevNameOk
+
+`func (o *Stack) GetOriginStackRevNameOk() (*string, bool)`
+
+GetOriginStackRevNameOk returns a tuple with the OriginStackRevName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginStackRevName
+
+`func (o *Stack) SetOriginStackRevName(v string)`
+
+SetOriginStackRevName sets OriginStackRevName field to given value.
+
+### HasOriginStackRevName
+
+`func (o *Stack) HasOriginStackRevName() bool`
+
+HasOriginStackRevName returns a boolean if a field has been set.
+
+### SetOriginStackRevNameNil
+
+`func (o *Stack) SetOriginStackRevNameNil(b bool)`
+
+ SetOriginStackRevNameNil sets the value for OriginStackRevName to be an explicit nil
+
+### UnsetOriginStackRevName
+`func (o *Stack) UnsetOriginStackRevName()`
+
+UnsetOriginStackRevName ensures that no value is present for OriginStackRevName, not even an explicit nil
+### GetOriginStackRevNumber
+
+`func (o *Stack) GetOriginStackRevNumber() int32`
+
+GetOriginStackRevNumber returns the OriginStackRevNumber field if non-nil, zero value otherwise.
+
+### GetOriginStackRevNumberOk
+
+`func (o *Stack) GetOriginStackRevNumberOk() (*int32, bool)`
+
+GetOriginStackRevNumberOk returns a tuple with the OriginStackRevNumber field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginStackRevNumber
+
+`func (o *Stack) SetOriginStackRevNumber(v int32)`
+
+SetOriginStackRevNumber sets OriginStackRevNumber field to given value.
+
+### HasOriginStackRevNumber
+
+`func (o *Stack) HasOriginStackRevNumber() bool`
+
+HasOriginStackRevNumber returns a boolean if a field has been set.
+
+### SetOriginStackRevNumberNil
+
+`func (o *Stack) SetOriginStackRevNumberNil(b bool)`
+
+ SetOriginStackRevNumberNil sets the value for OriginStackRevNumber to be an explicit nil
+
+### UnsetOriginStackRevNumber
+`func (o *Stack) UnsetOriginStackRevNumber()`
+
+UnsetOriginStackRevNumber ensures that no value is present for OriginStackRevNumber, not even an explicit nil
+### GetOriginStackRevVersion
+
+`func (o *Stack) GetOriginStackRevVersion() string`
+
+GetOriginStackRevVersion returns the OriginStackRevVersion field if non-nil, zero value otherwise.
+
+### GetOriginStackRevVersionOk
+
+`func (o *Stack) GetOriginStackRevVersionOk() (*string, bool)`
+
+GetOriginStackRevVersionOk returns a tuple with the OriginStackRevVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginStackRevVersion
+
+`func (o *Stack) SetOriginStackRevVersion(v string)`
+
+SetOriginStackRevVersion sets OriginStackRevVersion field to given value.
+
+### HasOriginStackRevVersion
+
+`func (o *Stack) HasOriginStackRevVersion() bool`
+
+HasOriginStackRevVersion returns a boolean if a field has been set.
+
+### SetOriginStackRevVersionNil
+
+`func (o *Stack) SetOriginStackRevVersionNil(b bool)`
+
+ SetOriginStackRevVersionNil sets the value for OriginStackRevVersion to be an explicit nil
+
+### UnsetOriginStackRevVersion
+`func (o *Stack) UnsetOriginStackRevVersion()`
+
+UnsetOriginStackRevVersion ensures that no value is present for OriginStackRevVersion, not even an explicit nil
+### GetOriginStackRevCreatedAt
+
+`func (o *Stack) GetOriginStackRevCreatedAt() time.Time`
+
+GetOriginStackRevCreatedAt returns the OriginStackRevCreatedAt field if non-nil, zero value otherwise.
+
+### GetOriginStackRevCreatedAtOk
+
+`func (o *Stack) GetOriginStackRevCreatedAtOk() (*time.Time, bool)`
+
+GetOriginStackRevCreatedAtOk returns a tuple with the OriginStackRevCreatedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginStackRevCreatedAt
+
+`func (o *Stack) SetOriginStackRevCreatedAt(v time.Time)`
+
+SetOriginStackRevCreatedAt sets OriginStackRevCreatedAt field to given value.
+
+### HasOriginStackRevCreatedAt
+
+`func (o *Stack) HasOriginStackRevCreatedAt() bool`
+
+HasOriginStackRevCreatedAt returns a boolean if a field has been set.
+
+### SetOriginStackRevCreatedAtNil
+
+`func (o *Stack) SetOriginStackRevCreatedAtNil(b bool)`
+
+ SetOriginStackRevCreatedAtNil sets the value for OriginStackRevCreatedAt to be an explicit nil
+
+### UnsetOriginStackRevCreatedAt
+`func (o *Stack) UnsetOriginStackRevCreatedAt()`
+
+UnsetOriginStackRevCreatedAt ensures that no value is present for OriginStackRevCreatedAt, not even an explicit nil
 ### GetOrgId
 
 `func (o *Stack) GetOrgId() int32`

@@ -30,6 +30,7 @@ type StackService struct {
 	Disabled bool `json:"disabled"`
 	Required bool `json:"required"`
 	Replicas int32 `json:"replicas"`
+	ServiceRevPinned bool `json:"serviceRevPinned"`
 	Outdated bool `json:"outdated"`
 	ServiceRevId int32 `json:"serviceRevId"`
 	ServiceRevName string `json:"serviceRevName"`
@@ -47,7 +48,7 @@ type _StackService StackService
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time) *StackService {
+func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time) *StackService {
 	this := StackService{}
 	this.Id = id
 	this.Name = name
@@ -57,6 +58,7 @@ func NewStackService(id int32, name string, title string, type_ string, main boo
 	this.Disabled = disabled
 	this.Required = required
 	this.Replicas = replicas
+	this.ServiceRevPinned = serviceRevPinned
 	this.Outdated = outdated
 	this.ServiceRevId = serviceRevId
 	this.ServiceRevName = serviceRevName
@@ -265,6 +267,30 @@ func (o *StackService) GetReplicasOk() (*int32, bool) {
 // SetReplicas sets field value
 func (o *StackService) SetReplicas(v int32) {
 	o.Replicas = v
+}
+
+// GetServiceRevPinned returns the ServiceRevPinned field value
+func (o *StackService) GetServiceRevPinned() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.ServiceRevPinned
+}
+
+// GetServiceRevPinnedOk returns a tuple with the ServiceRevPinned field value
+// and a boolean to check if the value has been set.
+func (o *StackService) GetServiceRevPinnedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ServiceRevPinned, true
+}
+
+// SetServiceRevPinned sets field value
+func (o *StackService) SetServiceRevPinned(v bool) {
+	o.ServiceRevPinned = v
 }
 
 // GetOutdated returns the Outdated field value
@@ -537,6 +563,7 @@ func (o StackService) ToMap() (map[string]interface{}, error) {
 	toSerialize["disabled"] = o.Disabled
 	toSerialize["required"] = o.Required
 	toSerialize["replicas"] = o.Replicas
+	toSerialize["serviceRevPinned"] = o.ServiceRevPinned
 	toSerialize["outdated"] = o.Outdated
 	toSerialize["serviceRevId"] = o.ServiceRevId
 	toSerialize["serviceRevName"] = o.ServiceRevName
@@ -566,6 +593,7 @@ func (o *StackService) UnmarshalJSON(data []byte) (err error) {
 		"disabled",
 		"required",
 		"replicas",
+		"serviceRevPinned",
 		"outdated",
 		"serviceRevId",
 		"serviceRevName",

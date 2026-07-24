@@ -34,6 +34,32 @@ func Test_client_BackupsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test BackupsAPIService CreateBackupPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.BackupsAPI.CreateBackupPreset(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test BackupsAPIService DeleteBackupPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.BackupsAPI.DeleteBackupPreset(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test BackupsAPIService GetBackup", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -48,11 +74,51 @@ func Test_client_BackupsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test BackupsAPIService GetBackupPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.BackupsAPI.GetBackupPreset(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test BackupsAPIService ListBackupPresets", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.BackupsAPI.ListBackupPresets(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test BackupsAPIService ListBackups", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.BackupsAPI.ListBackups(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test BackupsAPIService UpdateBackupPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		resp, httpRes, err := apiClient.BackupsAPI.UpdateBackupPreset(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
