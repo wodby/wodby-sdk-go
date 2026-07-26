@@ -43,7 +43,10 @@ type Cluster struct {
 	Hostname NullableString `json:"hostname,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	OrgId int32 `json:"orgId"`
+	Capabilities ClusterCapabilities `json:"capabilities"`
 	Settings *ClusterSettings `json:"settings,omitempty"`
+	StorageClasses []StorageClass `json:"storageClasses,omitempty"`
+	StorageClassesObservedAt NullableTime `json:"storageClassesObservedAt,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -54,7 +57,7 @@ type _Cluster Cluster
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, createdAt time.Time, updatedAt time.Time) *Cluster {
+func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
 	this := Cluster{}
 	this.Id = id
 	this.Name = name
@@ -67,6 +70,7 @@ func NewCluster(id int32, name string, title string, status string, serverless b
 	this.SingleNode = singleNode
 	this.InfraVersion = infraVersion
 	this.OrgId = orgId
+	this.Capabilities = capabilities
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -755,6 +759,30 @@ func (o *Cluster) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetCapabilities returns the Capabilities field value
+func (o *Cluster) GetCapabilities() ClusterCapabilities {
+	if o == nil {
+		var ret ClusterCapabilities
+		return ret
+	}
+
+	return o.Capabilities
+}
+
+// GetCapabilitiesOk returns a tuple with the Capabilities field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetCapabilitiesOk() (*ClusterCapabilities, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Capabilities, true
+}
+
+// SetCapabilities sets field value
+func (o *Cluster) SetCapabilities(v ClusterCapabilities) {
+	o.Capabilities = v
+}
+
 // GetSettings returns the Settings field value if set, zero value otherwise.
 func (o *Cluster) GetSettings() ClusterSettings {
 	if o == nil || IsNil(o.Settings) {
@@ -785,6 +813,81 @@ func (o *Cluster) HasSettings() bool {
 // SetSettings gets a reference to the given ClusterSettings and assigns it to the Settings field.
 func (o *Cluster) SetSettings(v ClusterSettings) {
 	o.Settings = &v
+}
+
+// GetStorageClasses returns the StorageClasses field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetStorageClasses() []StorageClass {
+	if o == nil {
+		var ret []StorageClass
+		return ret
+	}
+	return o.StorageClasses
+}
+
+// GetStorageClassesOk returns a tuple with the StorageClasses field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetStorageClassesOk() ([]StorageClass, bool) {
+	if o == nil || IsNil(o.StorageClasses) {
+		return nil, false
+	}
+	return o.StorageClasses, true
+}
+
+// HasStorageClasses returns a boolean if a field has been set.
+func (o *Cluster) HasStorageClasses() bool {
+	if o != nil && !IsNil(o.StorageClasses) {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageClasses gets a reference to the given []StorageClass and assigns it to the StorageClasses field.
+func (o *Cluster) SetStorageClasses(v []StorageClass) {
+	o.StorageClasses = v
+}
+
+// GetStorageClassesObservedAt returns the StorageClassesObservedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetStorageClassesObservedAt() time.Time {
+	if o == nil || IsNil(o.StorageClassesObservedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.StorageClassesObservedAt.Get()
+}
+
+// GetStorageClassesObservedAtOk returns a tuple with the StorageClassesObservedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetStorageClassesObservedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StorageClassesObservedAt.Get(), o.StorageClassesObservedAt.IsSet()
+}
+
+// HasStorageClassesObservedAt returns a boolean if a field has been set.
+func (o *Cluster) HasStorageClassesObservedAt() bool {
+	if o != nil && o.StorageClassesObservedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageClassesObservedAt gets a reference to the given NullableTime and assigns it to the StorageClassesObservedAt field.
+func (o *Cluster) SetStorageClassesObservedAt(v time.Time) {
+	o.StorageClassesObservedAt.Set(&v)
+}
+// SetStorageClassesObservedAtNil sets the value for StorageClassesObservedAt to be an explicit nil
+func (o *Cluster) SetStorageClassesObservedAtNil() {
+	o.StorageClassesObservedAt.Set(nil)
+}
+
+// UnsetStorageClassesObservedAt ensures that no value is present for StorageClassesObservedAt, not even an explicit nil
+func (o *Cluster) UnsetStorageClassesObservedAt() {
+	o.StorageClassesObservedAt.Unset()
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -886,8 +989,15 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
 	}
 	toSerialize["orgId"] = o.OrgId
+	toSerialize["capabilities"] = o.Capabilities
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
+	}
+	if o.StorageClasses != nil {
+		toSerialize["storageClasses"] = o.StorageClasses
+	}
+	if o.StorageClassesObservedAt.IsSet() {
+		toSerialize["storageClassesObservedAt"] = o.StorageClassesObservedAt.Get()
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -910,6 +1020,7 @@ func (o *Cluster) UnmarshalJSON(data []byte) (err error) {
 		"singleNode",
 		"infraVersion",
 		"orgId",
+		"capabilities",
 		"createdAt",
 		"updatedAt",
 	}

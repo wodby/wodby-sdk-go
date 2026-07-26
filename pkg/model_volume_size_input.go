@@ -23,6 +23,7 @@ var _ MappedNullable = &VolumeSizeInput{}
 type VolumeSizeInput struct {
 	Name string `json:"name"`
 	Size int32 `json:"size"`
+	StorageClassName NullableString `json:"storageClassName,omitempty"`
 }
 
 type _VolumeSizeInput VolumeSizeInput
@@ -94,6 +95,48 @@ func (o *VolumeSizeInput) SetSize(v int32) {
 	o.Size = v
 }
 
+// GetStorageClassName returns the StorageClassName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VolumeSizeInput) GetStorageClassName() string {
+	if o == nil || IsNil(o.StorageClassName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StorageClassName.Get()
+}
+
+// GetStorageClassNameOk returns a tuple with the StorageClassName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VolumeSizeInput) GetStorageClassNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StorageClassName.Get(), o.StorageClassName.IsSet()
+}
+
+// HasStorageClassName returns a boolean if a field has been set.
+func (o *VolumeSizeInput) HasStorageClassName() bool {
+	if o != nil && o.StorageClassName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageClassName gets a reference to the given NullableString and assigns it to the StorageClassName field.
+func (o *VolumeSizeInput) SetStorageClassName(v string) {
+	o.StorageClassName.Set(&v)
+}
+// SetStorageClassNameNil sets the value for StorageClassName to be an explicit nil
+func (o *VolumeSizeInput) SetStorageClassNameNil() {
+	o.StorageClassName.Set(nil)
+}
+
+// UnsetStorageClassName ensures that no value is present for StorageClassName, not even an explicit nil
+func (o *VolumeSizeInput) UnsetStorageClassName() {
+	o.StorageClassName.Unset()
+}
+
 func (o VolumeSizeInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +149,9 @@ func (o VolumeSizeInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["size"] = o.Size
+	if o.StorageClassName.IsSet() {
+		toSerialize["storageClassName"] = o.StorageClassName.Get()
+	}
 	return toSerialize, nil
 }
 

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
+**Name** | **string** |  | 
 **Title** | **string** |  | 
 **Crontab** | **string** |  | 
 **Command** | **string** |  | 
@@ -19,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewAppServiceCronSchedule
 
-`func NewAppServiceCronSchedule(id int32, appServiceId int32, title string, crontab string, command string, disabled bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceCronSchedule`
+`func NewAppServiceCronSchedule(id int32, appServiceId int32, name string, title string, crontab string, command string, disabled bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceCronSchedule`
 
 NewAppServiceCronSchedule instantiates a new AppServiceCronSchedule object
 This constructor will assign default values to properties that have it defined,
@@ -72,6 +73,26 @@ and a boolean to check if the value has been set.
 `func (o *AppServiceCronSchedule) SetAppServiceId(v int32)`
 
 SetAppServiceId sets AppServiceId field to given value.
+
+
+### GetName
+
+`func (o *AppServiceCronSchedule) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *AppServiceCronSchedule) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *AppServiceCronSchedule) SetName(v string)`
+
+SetName sets Name field to given value.
 
 
 ### GetTitle

@@ -25,7 +25,10 @@ Name | Type | Description | Notes
 **Hostname** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **OrgId** | **int32** |  | 
+**Capabilities** | [**ClusterCapabilities**](ClusterCapabilities.md) |  | 
 **Settings** | Pointer to [**ClusterSettings**](ClusterSettings.md) |  | [optional] 
+**StorageClasses** | Pointer to [**[]StorageClass**](StorageClass.md) |  | [optional] 
+**StorageClassesObservedAt** | Pointer to **NullableTime** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -33,7 +36,7 @@ Name | Type | Description | Notes
 
 ### NewCluster
 
-`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Cluster`
+`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
 
 NewCluster instantiates a new Cluster object
 This constructor will assign default values to properties that have it defined,
@@ -618,6 +621,26 @@ and a boolean to check if the value has been set.
 SetOrgId sets OrgId field to given value.
 
 
+### GetCapabilities
+
+`func (o *Cluster) GetCapabilities() ClusterCapabilities`
+
+GetCapabilities returns the Capabilities field if non-nil, zero value otherwise.
+
+### GetCapabilitiesOk
+
+`func (o *Cluster) GetCapabilitiesOk() (*ClusterCapabilities, bool)`
+
+GetCapabilitiesOk returns a tuple with the Capabilities field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCapabilities
+
+`func (o *Cluster) SetCapabilities(v ClusterCapabilities)`
+
+SetCapabilities sets Capabilities field to given value.
+
+
 ### GetSettings
 
 `func (o *Cluster) GetSettings() ClusterSettings`
@@ -643,6 +666,76 @@ SetSettings sets Settings field to given value.
 
 HasSettings returns a boolean if a field has been set.
 
+### GetStorageClasses
+
+`func (o *Cluster) GetStorageClasses() []StorageClass`
+
+GetStorageClasses returns the StorageClasses field if non-nil, zero value otherwise.
+
+### GetStorageClassesOk
+
+`func (o *Cluster) GetStorageClassesOk() (*[]StorageClass, bool)`
+
+GetStorageClassesOk returns a tuple with the StorageClasses field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStorageClasses
+
+`func (o *Cluster) SetStorageClasses(v []StorageClass)`
+
+SetStorageClasses sets StorageClasses field to given value.
+
+### HasStorageClasses
+
+`func (o *Cluster) HasStorageClasses() bool`
+
+HasStorageClasses returns a boolean if a field has been set.
+
+### SetStorageClassesNil
+
+`func (o *Cluster) SetStorageClassesNil(b bool)`
+
+ SetStorageClassesNil sets the value for StorageClasses to be an explicit nil
+
+### UnsetStorageClasses
+`func (o *Cluster) UnsetStorageClasses()`
+
+UnsetStorageClasses ensures that no value is present for StorageClasses, not even an explicit nil
+### GetStorageClassesObservedAt
+
+`func (o *Cluster) GetStorageClassesObservedAt() time.Time`
+
+GetStorageClassesObservedAt returns the StorageClassesObservedAt field if non-nil, zero value otherwise.
+
+### GetStorageClassesObservedAtOk
+
+`func (o *Cluster) GetStorageClassesObservedAtOk() (*time.Time, bool)`
+
+GetStorageClassesObservedAtOk returns a tuple with the StorageClassesObservedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStorageClassesObservedAt
+
+`func (o *Cluster) SetStorageClassesObservedAt(v time.Time)`
+
+SetStorageClassesObservedAt sets StorageClassesObservedAt field to given value.
+
+### HasStorageClassesObservedAt
+
+`func (o *Cluster) HasStorageClassesObservedAt() bool`
+
+HasStorageClassesObservedAt returns a boolean if a field has been set.
+
+### SetStorageClassesObservedAtNil
+
+`func (o *Cluster) SetStorageClassesObservedAtNil(b bool)`
+
+ SetStorageClassesObservedAtNil sets the value for StorageClassesObservedAt to be an explicit nil
+
+### UnsetStorageClassesObservedAt
+`func (o *Cluster) UnsetStorageClassesObservedAt()`
+
+UnsetStorageClassesObservedAt ensures that no value is present for StorageClassesObservedAt, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *Cluster) GetCreatedAt() time.Time`

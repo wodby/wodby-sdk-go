@@ -26,6 +26,9 @@ tags:
   name: apps
 - description: Deployable application instances.
   name: app-instances
+- description: "HTTP basic authentication credentials scoped to app instances, services,\
+    \ or routes."
+  name: app-auths
 - description: Runtime services that belong to app instances.
   name: app-services
 - description: Deployment records and deployment actions.
@@ -1142,6 +1145,153 @@ paths:
       summary: Upgrade app instance stack
       tags:
       - app-instances
+  /app-auths:
+    get:
+      description: Returns HTTP basic authentication entries for an app instance without
+        exposing passwords or secret identifiers.
+      operationId: listAppAuths
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppAuth'
+                type: array
+          description: List of app auths
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app auths
+      tags:
+      - app-auths
+    post:
+      description: "Creates an HTTP basic authentication entry at instance, service,\
+        \ or route scope and returns only non-secret metadata."
+      operationId: createAppAuth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppAuthInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAuth'
+          description: Created app auth
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create app auth
+      tags:
+      - app-auths
+  /app-auths/{id}:
+    delete:
+      description: Deletes an HTTP basic authentication entry and returns the operation
+        result.
+      operationId: deleteAppAuth
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete app auth
+      tags:
+      - app-auths
+    put:
+      description: Updates an HTTP basic authentication entry. Omit both scope identifiers
+        to preserve the current scope. Supplying appServiceId moves the entry to service
+        scope and clears any route unless appRouteId is also supplied. Recreate the
+        entry to move it back to instance scope. Omit password to retain the existing
+        secret.
+      operationId: updateAppAuth
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppAuthInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAuth'
+          description: Updated app auth
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app auth
+      tags:
+      - app-auths
   /app-services:
     get:
       description: Returns app services matching the request filters.
@@ -2278,6 +2428,43 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service containers
+      tags:
+      - app-services
+  /app-services/{id}/volumes:
+    get:
+      description: Returns configured volume metadata together with effective Kubernetes
+        storage-class state.
+      operationId: listAppServiceVolumes
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceVolume'
+                type: array
+          description: List of app service volumes
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app service volumes
       tags:
       - app-services
   /app-services/{id}/resources:
@@ -8057,7 +8244,21 @@ paths:
         schema:
           type: string
         style: form
-      - explode: true
+      - description: Return matching tasks as a flat page or as entity-scoped task
+          trees
+        explode: true
+        in: query
+        name: view
+        required: false
+        schema:
+          enum:
+          - flat
+          - tree
+          type: string
+        style: form
+      - deprecated: true
+        description: Deprecated compatibility alias for view=tree
+        explode: true
         in: query
         name: withoutOrigin
         required: false
@@ -8068,6 +8269,14 @@ paths:
         explode: true
         in: query
         name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Comma-separated exact task names
+        explode: true
+        in: query
+        name: names
         required: false
         schema:
           type: string
@@ -8537,6 +8746,130 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app route
+      tags:
+      - app-routes
+  /app-routes/{id}/settings:
+    get:
+      description: Returns route-specific setting overrides. Inherited app-instance
+        defaults are not included.
+      operationId: listAppRouteSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppRouteSetting'
+                type: array
+          description: List of app route settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app route settings
+      tags:
+      - app-routes
+  /app-routes/{id}/settings/{name}:
+    delete:
+      description: Deletes a named app route setting and restores any applicable default.
+      operationId: deleteAppRouteSetting
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppRouteSettingName'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete app route setting
+      tags:
+      - app-routes
+    put:
+      description: Creates or updates a named app route setting.
+      operationId: setAppRouteSetting
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppRouteSettingName'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetStringValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRouteSetting'
+          description: Updated app route setting
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Set app route setting
       tags:
       - app-routes
   /certs:
@@ -12776,6 +13109,42 @@ components:
       type: object
     Cluster:
       example:
+        storageClasses:
+        - volumeBindingMode: volumeBindingMode
+          provisioner: provisioner
+          isDefault: true
+          reclaimPolicy: reclaimPolicy
+          allowVolumeExpansion: true
+          selectable: true
+          name: name
+          mountOptions:
+          - mountOptions
+          - mountOptions
+        - volumeBindingMode: volumeBindingMode
+          provisioner: provisioner
+          isDefault: true
+          reclaimPolicy: reclaimPolicy
+          allowVolumeExpansion: true
+          selectable: true
+          name: name
+          mountOptions:
+          - mountOptions
+          - mountOptions
+        lastNodesReady: 5
+        lastNodesTotal: 5
+        maxNodeCount: 1
+        k3s: true
+        title: title
+        demo: true
+        orgId: 7
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        hostname: hostname
+        minNodeCount: 6
+        storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
+        zone: zone
+        singleNode: true
+        id: 0
+        updatedAt: 2000-01-23T04:56:07.000+00:00
         settings:
           autoInfrastructureUpgrade:
             infra:
@@ -12794,30 +13163,19 @@ components:
                 allowSameVersion: true
                 allowMinor: true
         wodby: true
-        lastNodesReady: 5
-        lastNodesTotal: 5
-        maxNodeCount: 1
+        capabilities:
+          redirectRoutes: true
+          envoyGateway: true
         serverless: true
         integrationId: 2
-        k3s: true
-        title: title
-        demo: true
         version: version
         ips:
         - ips
         - ips
-        orgId: 7
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        hostname: hostname
-        minNodeCount: 6
         infraVersion: infraVersion
-        zone: zone
         name: name
-        singleNode: true
-        id: 0
         region: region
         status: status
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -12873,8 +13231,19 @@ components:
           type: integer
         orgId:
           type: integer
+        capabilities:
+          $ref: '#/components/schemas/ClusterCapabilities'
         settings:
           $ref: '#/components/schemas/ClusterSettings'
+        storageClasses:
+          items:
+            $ref: '#/components/schemas/StorageClass'
+          nullable: true
+          type: array
+        storageClassesObservedAt:
+          format: date-time
+          nullable: true
+          type: string
         createdAt:
           format: date-time
           type: string
@@ -12882,6 +13251,7 @@ components:
           format: date-time
           type: string
       required:
+      - capabilities
       - createdAt
       - demo
       - id
@@ -12895,6 +13265,62 @@ components:
       - title
       - updatedAt
       - wodby
+      type: object
+    StorageClass:
+      example:
+        volumeBindingMode: volumeBindingMode
+        provisioner: provisioner
+        isDefault: true
+        reclaimPolicy: reclaimPolicy
+        allowVolumeExpansion: true
+        selectable: true
+        name: name
+        mountOptions:
+        - mountOptions
+        - mountOptions
+      properties:
+        name:
+          type: string
+        provisioner:
+          type: string
+        reclaimPolicy:
+          nullable: true
+          type: string
+        allowVolumeExpansion:
+          type: boolean
+        mountOptions:
+          items:
+            type: string
+          type: array
+        volumeBindingMode:
+          nullable: true
+          type: string
+        isDefault:
+          type: boolean
+        selectable:
+          type: boolean
+      required:
+      - allowVolumeExpansion
+      - isDefault
+      - mountOptions
+      - name
+      - provisioner
+      - selectable
+      type: object
+    ClusterCapabilities:
+      example:
+        redirectRoutes: true
+        envoyGateway: true
+      properties:
+        envoyGateway:
+          description: Whether this cluster uses Envoy Gateway for application routing.
+          type: boolean
+        redirectRoutes:
+          description: Whether this cluster supports routes with the REDIRECT action.
+          type: boolean
+      required:
+      - envoyGateway
+      - redirectRoutes
       type: object
     Database:
       example:
@@ -13529,6 +13955,92 @@ components:
       - status
       - updatedAt
       type: object
+    AppAuth:
+      example:
+        appInstanceId: 6
+        appServiceId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        appRouteId: 5
+        realm: realm
+        id: 0
+        login: login
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appInstanceId:
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        appRouteId:
+          nullable: true
+          type: integer
+        login:
+          type: string
+        realm:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appInstanceId
+      - createdAt
+      - id
+      - login
+      - realm
+      - updatedAt
+      type: object
+    AppRouteSetting:
+      example:
+        appInstanceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        default: true
+        routeId: 1
+        name: HTTPS_REDIRECT
+        id: 0
+        value: value
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appInstanceId:
+          type: integer
+        routeId:
+          type: integer
+        default:
+          type: boolean
+        name:
+          $ref: '#/components/schemas/AppRouteSettingName'
+        value:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appInstanceId
+      - createdAt
+      - default
+      - id
+      - name
+      - routeId
+      - updatedAt
+      - value
+      type: object
+    AppRouteSettingName:
+      enum:
+      - HTTPS_REDIRECT
+      - NO_INDEX
+      - REQUEST_BODY_SIZE
+      - SESSION_AFFINITY
+      - PATH_REWRITE
+      type: string
     Cert:
       example:
         issuer: issuer
@@ -14740,12 +15252,80 @@ components:
       - name
       - workload
       type: object
+    AppServiceVolume:
+      example:
+        shared: true
+        effectiveStorageClassNames:
+        - effectiveStorageClassNames
+        - effectiveStorageClassNames
+        readOnly: true
+        appServiceId: 6
+        path: path
+        storageAppServiceId: 5
+        size: 1
+        configuredStorageClassName: configuredStorageClassName
+        storageClassStatus: current
+        name: name
+        storageClassSelectable: true
+        id: 0
+        fromVolumeId: 5
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        shared:
+          type: boolean
+        readOnly:
+          type: boolean
+        size:
+          type: integer
+        configuredStorageClassName:
+          nullable: true
+          type: string
+        effectiveStorageClassNames:
+          items:
+            type: string
+          type: array
+        storageClassStatus:
+          enum:
+          - current
+          - mismatch
+          - mixed
+          - unknown
+          - unavailable
+          type: string
+        storageClassSelectable:
+          type: boolean
+        fromVolumeId:
+          nullable: true
+          type: integer
+        storageAppServiceId:
+          nullable: true
+          type: integer
+      required:
+      - appServiceId
+      - effectiveStorageClassNames
+      - id
+      - name
+      - path
+      - readOnly
+      - shared
+      - size
+      - storageClassSelectable
+      - storageClassStatus
+      type: object
     AppServiceCronSchedule:
       example:
         appServiceId: 6
         createdAt: 2000-01-23T04:56:07.000+00:00
         crontab: crontab
         envType: envType
+        name: name
         workload: workload
         disabled: true
         id: 0
@@ -14757,6 +15337,8 @@ components:
           type: integer
         appServiceId:
           type: integer
+        name:
+          type: string
         title:
           type: string
         crontab:
@@ -14784,6 +15366,7 @@ components:
       - crontab
       - disabled
       - id
+      - name
       - title
       - updatedAt
       type: object
@@ -16165,10 +16748,16 @@ components:
     NewAppServiceCronScheduleInput:
       example:
         crontab: crontab
+        name: name
         workload: workload
         title: title
         command: command
       properties:
+        name:
+          description: "Stable cron schedule identity. When omitted or blank, the\
+            \ server generates a unique name."
+          nullable: true
+          type: string
         title:
           type: string
         crontab:
@@ -16665,8 +17254,10 @@ components:
             url: url
           volumes:
           - size: 3
+            storageClassName: storageClassName
             name: name
           - size: 3
+            storageClassName: storageClassName
             name: name
           resources:
             container: container
@@ -16726,8 +17317,10 @@ components:
             url: url
           volumes:
           - size: 3
+            storageClassName: storageClassName
             name: name
           - size: 3
+            storageClassName: storageClassName
             name: name
           resources:
             container: container
@@ -16868,8 +17461,10 @@ components:
             url: url
           volumes:
           - size: 3
+            storageClassName: storageClassName
             name: name
           - size: 3
+            storageClassName: storageClassName
             name: name
           resources:
             container: container
@@ -16929,8 +17524,10 @@ components:
             url: url
           volumes:
           - size: 3
+            storageClassName: storageClassName
             name: name
           - size: 3
+            storageClassName: storageClassName
             name: name
           resources:
             container: container
@@ -17082,12 +17679,16 @@ components:
     VolumeSizeInput:
       example:
         size: 3
+        storageClassName: storageClassName
         name: name
       properties:
         name:
           type: string
         size:
           type: integer
+        storageClassName:
+          nullable: true
+          type: string
       required:
       - name
       - size
@@ -17624,24 +18225,16 @@ components:
       type: object
     NewAppRouteInput:
       example:
-        authLogin: authLogin
         redirectScheme: redirectScheme
         main: true
         redirectPath: redirectPath
         redirectStatusCode: 1
         pathType: PREFIX
         redirectHost: redirectHost
-        authPassword: authPassword
-        authId: 5
         appServiceId: 0
         path: path
         port: 6
         host: host
-        options:
-        - name: name
-          value: value
-        - name: name
-          value: value
         action: BACKEND
         letsencrypt: true
         primary: true
@@ -17686,19 +18279,6 @@ components:
         letsencrypt:
           nullable: true
           type: boolean
-        authLogin:
-          nullable: true
-          type: string
-        authPassword:
-          nullable: true
-          type: string
-        authId:
-          nullable: true
-          type: integer
-        options:
-          items:
-            $ref: '#/components/schemas/AppEndpointOptionInput'
-          type: array
       required:
       - appServiceId
       - host
@@ -17706,14 +18286,76 @@ components:
       - port
       - primary
       type: object
+    NewAppAuthInput:
+      example:
+        appInstanceId: 0
+        appServiceId: 6
+        password: password
+        appRouteId: 1
+        realm: realm
+        login: login
+      properties:
+        appInstanceId:
+          type: integer
+        appServiceId:
+          description: Optional service scope. Required together with appRouteId for
+            route scope.
+          nullable: true
+          type: integer
+        appRouteId:
+          description: Optional route scope. Requires appServiceId and must belong
+            to that service.
+          nullable: true
+          type: integer
+        login:
+          type: string
+        password:
+          format: password
+          type: string
+          writeOnly: true
+        realm:
+          type: string
+      required:
+      - appInstanceId
+      - login
+      - password
+      - realm
+      type: object
+    UpdateAppAuthInput:
+      example:
+        appServiceId: 0
+        password: password
+        appRouteId: 6
+        realm: realm
+        login: login
+      properties:
+        appServiceId:
+          description: "Omit with appRouteId to preserve the current scope. When supplied\
+            \ alone, moves the entry to service scope and clears any route scope."
+          nullable: true
+          type: integer
+        appRouteId:
+          description: Moves the entry to route scope and must be accompanied by appServiceId.
+          nullable: true
+          type: integer
+        login:
+          type: string
+        password:
+          description: Replaces the existing secret when supplied; omit to keep the
+            current password.
+          format: password
+          nullable: true
+          type: string
+          writeOnly: true
+        realm:
+          type: string
+      required:
+      - login
+      - realm
+      type: object
     UpdateAppRouteInput:
       example:
         path: path
-        options:
-        - name: name
-          value: value
-        - name: name
-          value: value
         action: BACKEND
         redirectScheme: redirectScheme
         disabled: true
@@ -17760,23 +18402,6 @@ components:
         redirectStatusCode:
           nullable: true
           type: integer
-        options:
-          items:
-            $ref: '#/components/schemas/AppEndpointOptionInput'
-          type: array
-      type: object
-    AppEndpointOptionInput:
-      example:
-        name: name
-        value: value
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-      required:
-      - name
-      - value
       type: object
     CreateAppServiceInput:
       example:
@@ -17807,8 +18432,10 @@ components:
           url: url
         volumes:
         - size: 3
+          storageClassName: storageClassName
           name: name
         - size: 3
+          storageClassName: storageClassName
           name: name
         resources:
           container: container

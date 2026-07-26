@@ -34,10 +34,6 @@ type NewAppRouteInput struct {
 	RedirectPath NullableString `json:"redirectPath,omitempty"`
 	RedirectStatusCode NullableInt32 `json:"redirectStatusCode,omitempty"`
 	Letsencrypt NullableBool `json:"letsencrypt,omitempty"`
-	AuthLogin NullableString `json:"authLogin,omitempty"`
-	AuthPassword NullableString `json:"authPassword,omitempty"`
-	AuthId NullableInt32 `json:"authId,omitempty"`
-	Options []AppEndpointOptionInput `json:"options,omitempty"`
 }
 
 type _NewAppRouteInput NewAppRouteInput
@@ -520,164 +516,6 @@ func (o *NewAppRouteInput) UnsetLetsencrypt() {
 	o.Letsencrypt.Unset()
 }
 
-// GetAuthLogin returns the AuthLogin field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppRouteInput) GetAuthLogin() string {
-	if o == nil || IsNil(o.AuthLogin.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.AuthLogin.Get()
-}
-
-// GetAuthLoginOk returns a tuple with the AuthLogin field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppRouteInput) GetAuthLoginOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.AuthLogin.Get(), o.AuthLogin.IsSet()
-}
-
-// HasAuthLogin returns a boolean if a field has been set.
-func (o *NewAppRouteInput) HasAuthLogin() bool {
-	if o != nil && o.AuthLogin.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetAuthLogin gets a reference to the given NullableString and assigns it to the AuthLogin field.
-func (o *NewAppRouteInput) SetAuthLogin(v string) {
-	o.AuthLogin.Set(&v)
-}
-// SetAuthLoginNil sets the value for AuthLogin to be an explicit nil
-func (o *NewAppRouteInput) SetAuthLoginNil() {
-	o.AuthLogin.Set(nil)
-}
-
-// UnsetAuthLogin ensures that no value is present for AuthLogin, not even an explicit nil
-func (o *NewAppRouteInput) UnsetAuthLogin() {
-	o.AuthLogin.Unset()
-}
-
-// GetAuthPassword returns the AuthPassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppRouteInput) GetAuthPassword() string {
-	if o == nil || IsNil(o.AuthPassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.AuthPassword.Get()
-}
-
-// GetAuthPasswordOk returns a tuple with the AuthPassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppRouteInput) GetAuthPasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.AuthPassword.Get(), o.AuthPassword.IsSet()
-}
-
-// HasAuthPassword returns a boolean if a field has been set.
-func (o *NewAppRouteInput) HasAuthPassword() bool {
-	if o != nil && o.AuthPassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetAuthPassword gets a reference to the given NullableString and assigns it to the AuthPassword field.
-func (o *NewAppRouteInput) SetAuthPassword(v string) {
-	o.AuthPassword.Set(&v)
-}
-// SetAuthPasswordNil sets the value for AuthPassword to be an explicit nil
-func (o *NewAppRouteInput) SetAuthPasswordNil() {
-	o.AuthPassword.Set(nil)
-}
-
-// UnsetAuthPassword ensures that no value is present for AuthPassword, not even an explicit nil
-func (o *NewAppRouteInput) UnsetAuthPassword() {
-	o.AuthPassword.Unset()
-}
-
-// GetAuthId returns the AuthId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NewAppRouteInput) GetAuthId() int32 {
-	if o == nil || IsNil(o.AuthId.Get()) {
-		var ret int32
-		return ret
-	}
-	return *o.AuthId.Get()
-}
-
-// GetAuthIdOk returns a tuple with the AuthId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NewAppRouteInput) GetAuthIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.AuthId.Get(), o.AuthId.IsSet()
-}
-
-// HasAuthId returns a boolean if a field has been set.
-func (o *NewAppRouteInput) HasAuthId() bool {
-	if o != nil && o.AuthId.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetAuthId gets a reference to the given NullableInt32 and assigns it to the AuthId field.
-func (o *NewAppRouteInput) SetAuthId(v int32) {
-	o.AuthId.Set(&v)
-}
-// SetAuthIdNil sets the value for AuthId to be an explicit nil
-func (o *NewAppRouteInput) SetAuthIdNil() {
-	o.AuthId.Set(nil)
-}
-
-// UnsetAuthId ensures that no value is present for AuthId, not even an explicit nil
-func (o *NewAppRouteInput) UnsetAuthId() {
-	o.AuthId.Unset()
-}
-
-// GetOptions returns the Options field value if set, zero value otherwise.
-func (o *NewAppRouteInput) GetOptions() []AppEndpointOptionInput {
-	if o == nil || IsNil(o.Options) {
-		var ret []AppEndpointOptionInput
-		return ret
-	}
-	return o.Options
-}
-
-// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NewAppRouteInput) GetOptionsOk() ([]AppEndpointOptionInput, bool) {
-	if o == nil || IsNil(o.Options) {
-		return nil, false
-	}
-	return o.Options, true
-}
-
-// HasOptions returns a boolean if a field has been set.
-func (o *NewAppRouteInput) HasOptions() bool {
-	if o != nil && !IsNil(o.Options) {
-		return true
-	}
-
-	return false
-}
-
-// SetOptions gets a reference to the given []AppEndpointOptionInput and assigns it to the Options field.
-func (o *NewAppRouteInput) SetOptions(v []AppEndpointOptionInput) {
-	o.Options = v
-}
-
 func (o NewAppRouteInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -716,18 +554,6 @@ func (o NewAppRouteInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Letsencrypt.IsSet() {
 		toSerialize["letsencrypt"] = o.Letsencrypt.Get()
-	}
-	if o.AuthLogin.IsSet() {
-		toSerialize["authLogin"] = o.AuthLogin.Get()
-	}
-	if o.AuthPassword.IsSet() {
-		toSerialize["authPassword"] = o.AuthPassword.Get()
-	}
-	if o.AuthId.IsSet() {
-		toSerialize["authId"] = o.AuthId.Get()
-	}
-	if !IsNil(o.Options) {
-		toSerialize["options"] = o.Options
 	}
 	return toSerialize, nil
 }

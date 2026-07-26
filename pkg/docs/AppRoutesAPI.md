@@ -6,8 +6,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateAppRoute**](AppRoutesAPI.md#CreateAppRoute) | **Post** /app-routes | Create app route
 [**DeleteAppRoute**](AppRoutesAPI.md#DeleteAppRoute) | **Delete** /app-routes/{id} | Delete app route
+[**DeleteAppRouteSetting**](AppRoutesAPI.md#DeleteAppRouteSetting) | **Delete** /app-routes/{id}/settings/{name} | Delete app route setting
 [**GetAppRoute**](AppRoutesAPI.md#GetAppRoute) | **Get** /app-routes/{id} | Get app route
+[**ListAppRouteSettings**](AppRoutesAPI.md#ListAppRouteSettings) | **Get** /app-routes/{id}/settings | List app route settings
 [**ListAppRoutes**](AppRoutesAPI.md#ListAppRoutes) | **Get** /app-routes | List app routes
+[**SetAppRouteSetting**](AppRoutesAPI.md#SetAppRouteSetting) | **Put** /app-routes/{id}/settings/{name} | Set app route setting
 [**UpdateAppRoute**](AppRoutesAPI.md#UpdateAppRoute) | **Put** /app-routes/{id} | Update app route
 
 
@@ -148,6 +151,79 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteAppRouteSetting
+
+> OperationResult DeleteAppRouteSetting(ctx, id, name).Execute()
+
+Delete app route setting
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	name := openapiclient.AppRouteSettingName("HTTPS_REDIRECT") // AppRouteSettingName | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.DeleteAppRouteSetting(context.Background(), id, name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.DeleteAppRouteSetting``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteAppRouteSetting`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.DeleteAppRouteSetting`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+**name** | [**AppRouteSettingName**](.md) |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteAppRouteSettingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetAppRoute
 
 > AppRoute GetAppRoute(ctx, id).Execute()
@@ -203,6 +279,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppRoute**](AppRoute.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppRouteSettings
+
+> []AppRouteSetting ListAppRouteSettings(ctx, id).Execute()
+
+List app route settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.ListAppRouteSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.ListAppRouteSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppRouteSettings`: []AppRouteSetting
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.ListAppRouteSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppRouteSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppRouteSetting**](AppRouteSetting.md)
 
 ### Authorization
 
@@ -277,6 +423,81 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetAppRouteSetting
+
+> AppRouteSetting SetAppRouteSetting(ctx, id, name).SetStringValueInput(setStringValueInput).Execute()
+
+Set app route setting
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	name := openapiclient.AppRouteSettingName("HTTPS_REDIRECT") // AppRouteSettingName | 
+	setStringValueInput := *openapiclient.NewSetStringValueInput("Value_example") // SetStringValueInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.SetAppRouteSetting(context.Background(), id, name).SetStringValueInput(setStringValueInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.SetAppRouteSetting``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetAppRouteSetting`: AppRouteSetting
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.SetAppRouteSetting`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+**name** | [**AppRouteSettingName**](.md) |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetAppRouteSettingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **setStringValueInput** | [**SetStringValueInput**](SetStringValueInput.md) |  | 
+
+### Return type
+
+[**AppRouteSetting**](AppRouteSetting.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

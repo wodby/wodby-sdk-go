@@ -2,6 +2,7 @@
 .travis.yml
 README.md
 api/openapi.yaml
+api_app_auths.go
 api_app_builds.go
 api_app_deployments.go
 api_app_instances.go
@@ -32,6 +33,8 @@ api_user.go
 client.go
 configuration.go
 docs/App.md
+docs/AppAuth.md
+docs/AppAuthsAPI.md
 docs/AppBuild.md
 docs/AppBuildConfig.md
 docs/AppBuildsAPI.md
@@ -40,7 +43,6 @@ docs/AppBuildsResponse.md
 docs/AppDeployment.md
 docs/AppDeploymentsAPI.md
 docs/AppDeploymentsResponse.md
-docs/AppEndpointOptionInput.md
 docs/AppInstance.md
 docs/AppInstanceAutoStackUpgradeSettings.md
 docs/AppInstanceAutoStackUpgradeSettingsInput.md
@@ -53,6 +55,8 @@ docs/AppInstancesAPI.md
 docs/AppPort.md
 docs/AppPortsAPI.md
 docs/AppRoute.md
+docs/AppRouteSetting.md
+docs/AppRouteSettingName.md
 docs/AppRoutesAPI.md
 docs/AppService.md
 docs/AppServiceAnnotation.md
@@ -80,6 +84,7 @@ docs/AppServiceLinkInput.md
 docs/AppServiceSetting.md
 docs/AppServiceSettingInput.md
 docs/AppServiceToken.md
+docs/AppServiceVolume.md
 docs/AppServicesAPI.md
 docs/AppsAPI.md
 docs/Backup.md
@@ -95,6 +100,7 @@ docs/ClusterAutoInfrastructureUpgradeSettings.md
 docs/ClusterAutoInfrastructureUpgradeSettingsInput.md
 docs/ClusterAutoUpgradeVersionPolicy.md
 docs/ClusterAutoUpgradeVersionPolicyInput.md
+docs/ClusterCapabilities.md
 docs/ClusterSettings.md
 docs/ClusterSettingsInput.md
 docs/ClustersAPI.md
@@ -156,6 +162,7 @@ docs/ManifestFromYAMLInput.md
 docs/ManifestValidationResponse.md
 docs/NamedSecretValueInput.md
 docs/NewAnnotationInput.md
+docs/NewAppAuthInput.md
 docs/NewAppInput.md
 docs/NewAppInstanceInput.md
 docs/NewAppRouteInput.md
@@ -238,6 +245,7 @@ docs/StackSyncOptions.md
 docs/StackSyncOptionsInput.md
 docs/StacksAPI.md
 docs/StacksResponse.md
+docs/StorageClass.md
 docs/Task.md
 docs/TaskJob.md
 docs/TaskStep.md
@@ -246,6 +254,7 @@ docs/TaskStepsAPI.md
 docs/TasksAPI.md
 docs/TasksResponse.md
 docs/URLResponse.md
+docs/UpdateAppAuthInput.md
 docs/UpdateAppRouteInput.md
 docs/UpdateAppServiceCronScheduleInput.md
 docs/UpdateAppServiceDatabaseInput.md
@@ -268,13 +277,13 @@ docs/UserAPI.md
 docs/VolumeSizeInput.md
 git_push.sh
 model_app.go
+model_app_auth.go
 model_app_build.go
 model_app_build_config.go
 model_app_builds_create_response.go
 model_app_builds_response.go
 model_app_deployment.go
 model_app_deployments_response.go
-model_app_endpoint_option_input.go
 model_app_instance.go
 model_app_instance_auto_stack_upgrade_settings.go
 model_app_instance_auto_stack_upgrade_settings_input.go
@@ -285,6 +294,8 @@ model_app_instance_stack_upgrade_settings.go
 model_app_instance_stack_upgrade_settings_input.go
 model_app_port.go
 model_app_route.go
+model_app_route_setting.go
+model_app_route_setting_name.go
 model_app_service.go
 model_app_service_annotation.go
 model_app_service_annotation_source.go
@@ -311,6 +322,7 @@ model_app_service_link_input.go
 model_app_service_setting.go
 model_app_service_setting_input.go
 model_app_service_token.go
+model_app_service_volume.go
 model_backup.go
 model_backup_preset.go
 model_build_source_input.go
@@ -322,6 +334,7 @@ model_cluster_auto_infrastructure_upgrade_settings.go
 model_cluster_auto_infrastructure_upgrade_settings_input.go
 model_cluster_auto_upgrade_version_policy.go
 model_cluster_auto_upgrade_version_policy_input.go
+model_cluster_capabilities.go
 model_cluster_settings.go
 model_cluster_settings_input.go
 model_config_override_input.go
@@ -375,6 +388,7 @@ model_manifest_from_yaml_input.go
 model_manifest_validation_response.go
 model_named_secret_value_input.go
 model_new_annotation_input.go
+model_new_app_auth_input.go
 model_new_app_input.go
 model_new_app_instance_input.go
 model_new_app_route_input.go
@@ -450,11 +464,13 @@ model_stack_settings_input.go
 model_stack_sync_options.go
 model_stack_sync_options_input.go
 model_stacks_response.go
+model_storage_class.go
 model_task.go
 model_task_job.go
 model_task_step.go
 model_task_step_logs.go
 model_tasks_response.go
+model_update_app_auth_input.go
 model_update_app_route_input.go
 model_update_app_service_cron_schedule_input.go
 model_update_app_service_database_input.go
@@ -476,6 +492,7 @@ model_url_response.go
 model_user.go
 model_volume_size_input.go
 response.go
+test/api_app_auths_test.go
 test/api_app_builds_test.go
 test/api_app_deployments_test.go
 test/api_app_instances_test.go

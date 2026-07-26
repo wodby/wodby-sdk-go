@@ -24,6 +24,7 @@ var _ MappedNullable = &AppServiceCronSchedule{}
 type AppServiceCronSchedule struct {
 	Id int32 `json:"id"`
 	AppServiceId int32 `json:"appServiceId"`
+	Name string `json:"name"`
 	Title string `json:"title"`
 	Crontab string `json:"crontab"`
 	Command string `json:"command"`
@@ -40,10 +41,11 @@ type _AppServiceCronSchedule AppServiceCronSchedule
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceCronSchedule(id int32, appServiceId int32, title string, crontab string, command string, disabled bool, createdAt time.Time, updatedAt time.Time) *AppServiceCronSchedule {
+func NewAppServiceCronSchedule(id int32, appServiceId int32, name string, title string, crontab string, command string, disabled bool, createdAt time.Time, updatedAt time.Time) *AppServiceCronSchedule {
 	this := AppServiceCronSchedule{}
 	this.Id = id
 	this.AppServiceId = appServiceId
+	this.Name = name
 	this.Title = title
 	this.Crontab = crontab
 	this.Command = command
@@ -107,6 +109,30 @@ func (o *AppServiceCronSchedule) GetAppServiceIdOk() (*int32, bool) {
 // SetAppServiceId sets field value
 func (o *AppServiceCronSchedule) SetAppServiceId(v int32) {
 	o.AppServiceId = v
+}
+
+// GetName returns the Name field value
+func (o *AppServiceCronSchedule) GetName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceCronSchedule) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *AppServiceCronSchedule) SetName(v string) {
+	o.Name = v
 }
 
 // GetTitle returns the Title field value
@@ -349,6 +375,7 @@ func (o AppServiceCronSchedule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["appServiceId"] = o.AppServiceId
+	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["crontab"] = o.Crontab
 	toSerialize["command"] = o.Command
@@ -371,6 +398,7 @@ func (o *AppServiceCronSchedule) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"appServiceId",
+		"name",
 		"title",
 		"crontab",
 		"command",

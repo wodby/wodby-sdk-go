@@ -153,7 +153,7 @@ Name | Type | Description  | Notes
 
 ## ListTasks
 
-> TasksResponse ListTasks(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
+> TasksResponse ListTasks(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).View(view).WithoutOrigin(withoutOrigin).Statuses(statuses).Names(names).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 
 List tasks
 
@@ -175,8 +175,10 @@ func main() {
 	scope := "scope_example" // string |  (optional)
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
-	withoutOrigin := true // bool |  (optional)
+	view := "view_example" // string | Return matching tasks as a flat page or as entity-scoped task trees (optional)
+	withoutOrigin := true // bool | Deprecated compatibility alias for view=tree (optional)
 	statuses := "statuses_example" // string | Comma-separated task statuses (optional)
+	names := "names_example" // string | Comma-separated exact task names (optional)
 	search := "search_example" // string |  (optional)
 	appId := int32(56) // int32 |  (optional)
 	appInstanceId := int32(56) // int32 |  (optional)
@@ -191,7 +193,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TasksAPI.ListTasks(context.Background()).Scope(scope).OrgId(orgId).ProjectIds(projectIds).WithoutOrigin(withoutOrigin).Statuses(statuses).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.TasksAPI.ListTasks(context.Background()).Scope(scope).OrgId(orgId).ProjectIds(projectIds).View(view).WithoutOrigin(withoutOrigin).Statuses(statuses).Names(names).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.ListTasks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -215,8 +217,10 @@ Name | Type | Description  | Notes
  **scope** | **string** |  | 
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
- **withoutOrigin** | **bool** |  | 
+ **view** | **string** | Return matching tasks as a flat page or as entity-scoped task trees | 
+ **withoutOrigin** | **bool** | Deprecated compatibility alias for view&#x3D;tree | 
  **statuses** | **string** | Comma-separated task statuses | 
+ **names** | **string** | Comma-separated exact task names | 
  **search** | **string** |  | 
  **appId** | **int32** |  | 
  **appInstanceId** | **int32** |  | 

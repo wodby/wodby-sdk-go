@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
 **Size** | **int32** |  | 
+**StorageClassName** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -66,6 +67,41 @@ and a boolean to check if the value has been set.
 SetSize sets Size field to given value.
 
 
+### GetStorageClassName
+
+`func (o *VolumeSizeInput) GetStorageClassName() string`
+
+GetStorageClassName returns the StorageClassName field if non-nil, zero value otherwise.
+
+### GetStorageClassNameOk
+
+`func (o *VolumeSizeInput) GetStorageClassNameOk() (*string, bool)`
+
+GetStorageClassNameOk returns a tuple with the StorageClassName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStorageClassName
+
+`func (o *VolumeSizeInput) SetStorageClassName(v string)`
+
+SetStorageClassName sets StorageClassName field to given value.
+
+### HasStorageClassName
+
+`func (o *VolumeSizeInput) HasStorageClassName() bool`
+
+HasStorageClassName returns a boolean if a field has been set.
+
+### SetStorageClassNameNil
+
+`func (o *VolumeSizeInput) SetStorageClassNameNil(b bool)`
+
+ SetStorageClassNameNil sets the value for StorageClassName to be an explicit nil
+
+### UnsetStorageClassName
+`func (o *VolumeSizeInput) UnsetStorageClassName()`
+
+UnsetStorageClassName ensures that no value is present for StorageClassName, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

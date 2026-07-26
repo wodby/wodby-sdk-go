@@ -31,6 +31,7 @@ Method | HTTP request | Description
 [**ListAppServiceLinks**](AppServicesAPI.md#ListAppServiceLinks) | **Get** /app-services/{id}/links | List app service links
 [**ListAppServiceSettings**](AppServicesAPI.md#ListAppServiceSettings) | **Get** /app-services/{id}/settings | List app service settings
 [**ListAppServiceTokens**](AppServicesAPI.md#ListAppServiceTokens) | **Get** /app-services/{id}/tokens | List app service tokens
+[**ListAppServiceVolumes**](AppServicesAPI.md#ListAppServiceVolumes) | **Get** /app-services/{id}/volumes | List app service volumes
 [**ListAppServices**](AppServicesAPI.md#ListAppServices) | **Get** /app-services | List app services
 [**RunAppServiceAction**](AppServicesAPI.md#RunAppServiceAction) | **Post** /app-services/{id}/actions/{name} | Run app service action
 [**RunAppServiceCronSchedule**](AppServicesAPI.md#RunAppServiceCronSchedule) | **Post** /app-service-cron-schedules/{id}/run | Run app service cron schedule
@@ -1942,6 +1943,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppServiceToken**](AppServiceToken.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppServiceVolumes
+
+> []AppServiceVolume ListAppServiceVolumes(ctx, id).Execute()
+
+List app service volumes
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListAppServiceVolumes(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListAppServiceVolumes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppServiceVolumes`: []AppServiceVolume
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListAppServiceVolumes`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppServiceVolumesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppServiceVolume**](AppServiceVolume.md)
 
 ### Authorization
 

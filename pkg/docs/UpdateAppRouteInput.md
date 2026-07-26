@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **RedirectHost** | Pointer to **NullableString** |  | [optional] 
 **RedirectPath** | Pointer to **NullableString** |  | [optional] 
 **RedirectStatusCode** | Pointer to **NullableInt32** |  | [optional] 
-**Options** | Pointer to [**[]AppEndpointOptionInput**](AppEndpointOptionInput.md) |  | [optional] 
 
 ## Methods
 
@@ -385,31 +384,6 @@ HasRedirectStatusCode returns a boolean if a field has been set.
 `func (o *UpdateAppRouteInput) UnsetRedirectStatusCode()`
 
 UnsetRedirectStatusCode ensures that no value is present for RedirectStatusCode, not even an explicit nil
-### GetOptions
-
-`func (o *UpdateAppRouteInput) GetOptions() []AppEndpointOptionInput`
-
-GetOptions returns the Options field if non-nil, zero value otherwise.
-
-### GetOptionsOk
-
-`func (o *UpdateAppRouteInput) GetOptionsOk() (*[]AppEndpointOptionInput, bool)`
-
-GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOptions
-
-`func (o *UpdateAppRouteInput) SetOptions(v []AppEndpointOptionInput)`
-
-SetOptions sets Options field to given value.
-
-### HasOptions
-
-`func (o *UpdateAppRouteInput) HasOptions() bool`
-
-HasOptions returns a boolean if a field has been set.
-
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

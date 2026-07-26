@@ -29,7 +29,6 @@ type UpdateAppRouteInput struct {
 	RedirectHost NullableString `json:"redirectHost,omitempty"`
 	RedirectPath NullableString `json:"redirectPath,omitempty"`
 	RedirectStatusCode NullableInt32 `json:"redirectStatusCode,omitempty"`
-	Options []AppEndpointOptionInput `json:"options,omitempty"`
 }
 
 // NewUpdateAppRouteInput instantiates a new UpdateAppRouteInput object
@@ -469,38 +468,6 @@ func (o *UpdateAppRouteInput) UnsetRedirectStatusCode() {
 	o.RedirectStatusCode.Unset()
 }
 
-// GetOptions returns the Options field value if set, zero value otherwise.
-func (o *UpdateAppRouteInput) GetOptions() []AppEndpointOptionInput {
-	if o == nil || IsNil(o.Options) {
-		var ret []AppEndpointOptionInput
-		return ret
-	}
-	return o.Options
-}
-
-// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateAppRouteInput) GetOptionsOk() ([]AppEndpointOptionInput, bool) {
-	if o == nil || IsNil(o.Options) {
-		return nil, false
-	}
-	return o.Options, true
-}
-
-// HasOptions returns a boolean if a field has been set.
-func (o *UpdateAppRouteInput) HasOptions() bool {
-	if o != nil && !IsNil(o.Options) {
-		return true
-	}
-
-	return false
-}
-
-// SetOptions gets a reference to the given []AppEndpointOptionInput and assigns it to the Options field.
-func (o *UpdateAppRouteInput) SetOptions(v []AppEndpointOptionInput) {
-	o.Options = v
-}
-
 func (o UpdateAppRouteInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -540,9 +507,6 @@ func (o UpdateAppRouteInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.RedirectStatusCode.IsSet() {
 		toSerialize["redirectStatusCode"] = o.RedirectStatusCode.Get()
-	}
-	if !IsNil(o.Options) {
-		toSerialize["options"] = o.Options
 	}
 	return toSerialize, nil
 }
