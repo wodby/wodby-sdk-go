@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **Main** | **bool** |  | 
 **Primary** | **bool** |  | 
 **Private** | **bool** |  | 
+**Technical** | **bool** | Whether Wodby generates and manages the route. | [readonly] 
 **AppInstanceId** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
 **PortId** | **int32** |  | 
@@ -30,7 +31,7 @@ Name | Type | Description | Notes
 
 ### NewAppRoute
 
-`func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, disabled bool, main bool, primary bool, private bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time, ) *AppRoute`
+`func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, disabled bool, main bool, primary bool, private bool, technical bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time, ) *AppRoute`
 
 NewAppRoute instantiates a new AppRoute object
 This constructor will assign default values to properties that have it defined,
@@ -383,6 +384,26 @@ and a boolean to check if the value has been set.
 `func (o *AppRoute) SetPrivate(v bool)`
 
 SetPrivate sets Private field to given value.
+
+
+### GetTechnical
+
+`func (o *AppRoute) GetTechnical() bool`
+
+GetTechnical returns the Technical field if non-nil, zero value otherwise.
+
+### GetTechnicalOk
+
+`func (o *AppRoute) GetTechnicalOk() (*bool, bool)`
+
+GetTechnicalOk returns a tuple with the Technical field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTechnical
+
+`func (o *AppRoute) SetTechnical(v bool)`
+
+SetTechnical sets Technical field to given value.
 
 
 ### GetAppInstanceId

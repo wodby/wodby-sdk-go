@@ -19,6 +19,10 @@ var _ MappedNullable = &UpdateAppRouteInput{}
 
 // UpdateAppRouteInput struct for UpdateAppRouteInput
 type UpdateAppRouteInput struct {
+	// Target app service for retargeting. Must be supplied together with port.
+	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
+	// Target public HTTP port for retargeting. Must be supplied together with appServiceId.
+	Port NullableInt32 `json:"port,omitempty"`
 	Disabled NullableBool `json:"disabled,omitempty"`
 	Main NullableBool `json:"main,omitempty"`
 	Primary NullableBool `json:"primary,omitempty"`
@@ -46,6 +50,90 @@ func NewUpdateAppRouteInput() *UpdateAppRouteInput {
 func NewUpdateAppRouteInputWithDefaults() *UpdateAppRouteInput {
 	this := UpdateAppRouteInput{}
 	return &this
+}
+
+// GetAppServiceId returns the AppServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateAppRouteInput) GetAppServiceId() int32 {
+	if o == nil || IsNil(o.AppServiceId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AppServiceId.Get()
+}
+
+// GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateAppRouteInput) GetAppServiceIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppServiceId.Get(), o.AppServiceId.IsSet()
+}
+
+// HasAppServiceId returns a boolean if a field has been set.
+func (o *UpdateAppRouteInput) HasAppServiceId() bool {
+	if o != nil && o.AppServiceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAppServiceId gets a reference to the given NullableInt32 and assigns it to the AppServiceId field.
+func (o *UpdateAppRouteInput) SetAppServiceId(v int32) {
+	o.AppServiceId.Set(&v)
+}
+// SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+func (o *UpdateAppRouteInput) SetAppServiceIdNil() {
+	o.AppServiceId.Set(nil)
+}
+
+// UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
+func (o *UpdateAppRouteInput) UnsetAppServiceId() {
+	o.AppServiceId.Unset()
+}
+
+// GetPort returns the Port field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateAppRouteInput) GetPort() int32 {
+	if o == nil || IsNil(o.Port.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.Port.Get()
+}
+
+// GetPortOk returns a tuple with the Port field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateAppRouteInput) GetPortOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Port.Get(), o.Port.IsSet()
+}
+
+// HasPort returns a boolean if a field has been set.
+func (o *UpdateAppRouteInput) HasPort() bool {
+	if o != nil && o.Port.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPort gets a reference to the given NullableInt32 and assigns it to the Port field.
+func (o *UpdateAppRouteInput) SetPort(v int32) {
+	o.Port.Set(&v)
+}
+// SetPortNil sets the value for Port to be an explicit nil
+func (o *UpdateAppRouteInput) SetPortNil() {
+	o.Port.Set(nil)
+}
+
+// UnsetPort ensures that no value is present for Port, not even an explicit nil
+func (o *UpdateAppRouteInput) UnsetPort() {
+	o.Port.Unset()
 }
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -478,6 +566,12 @@ func (o UpdateAppRouteInput) MarshalJSON() ([]byte, error) {
 
 func (o UpdateAppRouteInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.AppServiceId.IsSet() {
+		toSerialize["appServiceId"] = o.AppServiceId.Get()
+	}
+	if o.Port.IsSet() {
+		toSerialize["port"] = o.Port.Get()
+	}
 	if o.Disabled.IsSet() {
 		toSerialize["disabled"] = o.Disabled.Get()
 	}

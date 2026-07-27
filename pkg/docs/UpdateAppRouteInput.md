@@ -4,6 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**AppServiceId** | Pointer to **NullableInt32** | Target app service for retargeting. Must be supplied together with port. | [optional] 
+**Port** | Pointer to **NullableInt32** | Target public HTTP port for retargeting. Must be supplied together with appServiceId. | [optional] 
 **Disabled** | Pointer to **NullableBool** |  | [optional] 
 **Main** | Pointer to **NullableBool** |  | [optional] 
 **Primary** | Pointer to **NullableBool** |  | [optional] 
@@ -34,6 +36,76 @@ NewUpdateAppRouteInputWithDefaults instantiates a new UpdateAppRouteInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetAppServiceId
+
+`func (o *UpdateAppRouteInput) GetAppServiceId() int32`
+
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
+
+### GetAppServiceIdOk
+
+`func (o *UpdateAppRouteInput) GetAppServiceIdOk() (*int32, bool)`
+
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceId
+
+`func (o *UpdateAppRouteInput) SetAppServiceId(v int32)`
+
+SetAppServiceId sets AppServiceId field to given value.
+
+### HasAppServiceId
+
+`func (o *UpdateAppRouteInput) HasAppServiceId() bool`
+
+HasAppServiceId returns a boolean if a field has been set.
+
+### SetAppServiceIdNil
+
+`func (o *UpdateAppRouteInput) SetAppServiceIdNil(b bool)`
+
+ SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+
+### UnsetAppServiceId
+`func (o *UpdateAppRouteInput) UnsetAppServiceId()`
+
+UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
+### GetPort
+
+`func (o *UpdateAppRouteInput) GetPort() int32`
+
+GetPort returns the Port field if non-nil, zero value otherwise.
+
+### GetPortOk
+
+`func (o *UpdateAppRouteInput) GetPortOk() (*int32, bool)`
+
+GetPortOk returns a tuple with the Port field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPort
+
+`func (o *UpdateAppRouteInput) SetPort(v int32)`
+
+SetPort sets Port field to given value.
+
+### HasPort
+
+`func (o *UpdateAppRouteInput) HasPort() bool`
+
+HasPort returns a boolean if a field has been set.
+
+### SetPortNil
+
+`func (o *UpdateAppRouteInput) SetPortNil(b bool)`
+
+ SetPortNil sets the value for Port to be an explicit nil
+
+### UnsetPort
+`func (o *UpdateAppRouteInput) UnsetPort()`
+
+UnsetPort ensures that no value is present for Port, not even an explicit nil
 ### GetDisabled
 
 `func (o *UpdateAppRouteInput) GetDisabled() bool`

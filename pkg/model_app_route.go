@@ -36,6 +36,8 @@ type AppRoute struct {
 	Main bool `json:"main"`
 	Primary bool `json:"primary"`
 	Private bool `json:"private"`
+	// Whether Wodby generates and manages the route.
+	Technical bool `json:"technical"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	AppServiceId int32 `json:"appServiceId"`
 	PortId int32 `json:"portId"`
@@ -51,7 +53,7 @@ type _AppRoute AppRoute
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, disabled bool, main bool, primary bool, private bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time) *AppRoute {
+func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, disabled bool, main bool, primary bool, private bool, technical bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time) *AppRoute {
 	this := AppRoute{}
 	this.Id = id
 	this.Host = host
@@ -63,6 +65,7 @@ func NewAppRoute(id int32, host string, path string, pathType string, action str
 	this.Main = main
 	this.Primary = primary
 	this.Private = private
+	this.Technical = technical
 	this.AppInstanceId = appInstanceId
 	this.AppServiceId = appServiceId
 	this.PortId = portId
@@ -487,6 +490,30 @@ func (o *AppRoute) SetPrivate(v bool) {
 	o.Private = v
 }
 
+// GetTechnical returns the Technical field value
+func (o *AppRoute) GetTechnical() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Technical
+}
+
+// GetTechnicalOk returns a tuple with the Technical field value
+// and a boolean to check if the value has been set.
+func (o *AppRoute) GetTechnicalOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Technical, true
+}
+
+// SetTechnical sets field value
+func (o *AppRoute) SetTechnical(v bool) {
+	o.Technical = v
+}
+
 // GetAppInstanceId returns the AppInstanceId field value
 func (o *AppRoute) GetAppInstanceId() int32 {
 	if o == nil {
@@ -723,6 +750,7 @@ func (o AppRoute) ToMap() (map[string]interface{}, error) {
 	toSerialize["main"] = o.Main
 	toSerialize["primary"] = o.Primary
 	toSerialize["private"] = o.Private
+	toSerialize["technical"] = o.Technical
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["portId"] = o.PortId
@@ -752,6 +780,7 @@ func (o *AppRoute) UnmarshalJSON(data []byte) (err error) {
 		"main",
 		"primary",
 		"private",
+		"technical",
 		"appInstanceId",
 		"appServiceId",
 		"portId",

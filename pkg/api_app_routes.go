@@ -179,7 +179,7 @@ func (r ApiDeleteAppRouteRequest) Execute() (*OperationResult, *http.Response, e
 /*
 DeleteAppRoute Delete app route
 
-Deletes the app route and returns the operation result.
+Deletes a customer route and returns the operation result. Wodby-managed technical routes cannot be deleted; disable them instead.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

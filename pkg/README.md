@@ -101,6 +101,8 @@ Class | Method | HTTP request | Description
 *AppInstancesAPI* | [**GetAppInstance**](docs/AppInstancesAPI.md#getappinstance) | **Get** /app-instances/{id} | Get app instance
 *AppInstancesAPI* | [**GetAppInstanceByName**](docs/AppInstancesAPI.md#getappinstancebyname) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
 *AppInstancesAPI* | [**ListAppInstances**](docs/AppInstancesAPI.md#listappinstances) | **Get** /app-instances | List app instances
+*AppInstancesAPI* | [**PauseAppInstance**](docs/AppInstancesAPI.md#pauseappinstance) | **Post** /app-instances/{id}/actions/pause | Pause app instance
+*AppInstancesAPI* | [**ResumeAppInstance**](docs/AppInstancesAPI.md#resumeappinstance) | **Post** /app-instances/{id}/actions/resume | Resume app instance
 *AppInstancesAPI* | [**UpdateAppInstance**](docs/AppInstancesAPI.md#updateappinstance) | **Put** /app-instances/{id} | Update app instance
 *AppInstancesAPI* | [**UpdateAppInstanceSettings**](docs/AppInstancesAPI.md#updateappinstancesettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 *AppInstancesAPI* | [**UpgradeAppInstanceStack**](docs/AppInstancesAPI.md#upgradeappinstancestack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
@@ -177,6 +179,8 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**DeleteCluster**](docs/ClustersAPI.md#deletecluster) | **Delete** /clusters/{id} | Delete cluster
 *ClustersAPI* | [**GetCluster**](docs/ClustersAPI.md#getcluster) | **Get** /clusters/{id} | Get cluster
 *ClustersAPI* | [**GetClusterByName**](docs/ClustersAPI.md#getclusterbyname) | **Get** /clusters/by-name/{name} | Get cluster by name
+*ClustersAPI* | [**GetClusterMetrics**](docs/ClustersAPI.md#getclustermetrics) | **Get** /clusters/metrics/{id} | Get cluster metrics
+*ClustersAPI* | [**ListClusterMetrics**](docs/ClustersAPI.md#listclustermetrics) | **Get** /cluster-metrics | Get metrics for multiple clusters
 *ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
 *ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
 *ClustersAPI* | [**UpdateClusterSettings**](docs/ClustersAPI.md#updateclustersettings) | **Put** /clusters/settings/{id} | Update cluster settings
@@ -329,6 +333,9 @@ Class | Method | HTTP request | Description
  - [AppInstance](docs/AppInstance.md)
  - [AppInstanceAutoStackUpgradeSettings](docs/AppInstanceAutoStackUpgradeSettings.md)
  - [AppInstanceAutoStackUpgradeSettingsInput](docs/AppInstanceAutoStackUpgradeSettingsInput.md)
+ - [AppInstanceBackupHealth](docs/AppInstanceBackupHealth.md)
+ - [AppInstanceCronHealth](docs/AppInstanceCronHealth.md)
+ - [AppInstanceHealth](docs/AppInstanceHealth.md)
  - [AppInstanceSettings](docs/AppInstanceSettings.md)
  - [AppInstanceSettingsInput](docs/AppInstanceSettingsInput.md)
  - [AppInstanceStackUpgradeInput](docs/AppInstanceStackUpgradeInput.md)
@@ -368,6 +375,8 @@ Class | Method | HTTP request | Description
  - [Backup](docs/Backup.md)
  - [BackupPreset](docs/BackupPreset.md)
  - [BuildSourceInput](docs/BuildSourceInput.md)
+ - [CapacityMetrics](docs/CapacityMetrics.md)
+ - [CapacityMetricsFloat](docs/CapacityMetricsFloat.md)
  - [Cert](docs/Cert.md)
  - [Cluster](docs/Cluster.md)
  - [ClusterAutoInfrastructureComponentSettings](docs/ClusterAutoInfrastructureComponentSettings.md)
@@ -377,6 +386,7 @@ Class | Method | HTTP request | Description
  - [ClusterAutoUpgradeVersionPolicy](docs/ClusterAutoUpgradeVersionPolicy.md)
  - [ClusterAutoUpgradeVersionPolicyInput](docs/ClusterAutoUpgradeVersionPolicyInput.md)
  - [ClusterCapabilities](docs/ClusterCapabilities.md)
+ - [ClusterMetrics](docs/ClusterMetrics.md)
  - [ClusterSettings](docs/ClusterSettings.md)
  - [ClusterSettingsInput](docs/ClusterSettingsInput.md)
  - [ConfigOverrideInput](docs/ConfigOverrideInput.md)
@@ -423,6 +433,8 @@ Class | Method | HTTP request | Description
  - [Integration](docs/Integration.md)
  - [IntegrationLinkInput](docs/IntegrationLinkInput.md)
  - [IntegrationScope](docs/IntegrationScope.md)
+ - [KubeCPUMetrics](docs/KubeCPUMetrics.md)
+ - [KubeMemoryMetrics](docs/KubeMemoryMetrics.md)
  - [KubeVersion](docs/KubeVersion.md)
  - [LogLine](docs/LogLine.md)
  - [LogStream](docs/LogStream.md)
@@ -451,6 +463,7 @@ Class | Method | HTTP request | Description
  - [NewStackServiceEnvVarInput](docs/NewStackServiceEnvVarInput.md)
  - [NewStackServiceScopedValueInput](docs/NewStackServiceScopedValueInput.md)
  - [NewStackServiceTokenInput](docs/NewStackServiceTokenInput.md)
+ - [NodeDiskMetrics](docs/NodeDiskMetrics.md)
  - [OperationResult](docs/OperationResult.md)
  - [Org](docs/Org.md)
  - [OrgMembership](docs/OrgMembership.md)

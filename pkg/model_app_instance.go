@@ -26,6 +26,7 @@ type AppInstance struct {
 	Name string `json:"name"`
 	Title string `json:"title"`
 	Status string `json:"status"`
+	PausedAt NullableTime `json:"pausedAt,omitempty"`
 	MainDomain NullableString `json:"mainDomain,omitempty"`
 	AppId int32 `json:"appId"`
 	ClusterId int32 `json:"clusterId"`
@@ -38,6 +39,7 @@ type AppInstance struct {
 	StackRevNumber int32 `json:"stackRevNumber"`
 	StackVersion string `json:"stackVersion"`
 	Settings *AppInstanceSettings `json:"settings,omitempty"`
+	Health AppInstanceHealth `json:"health"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -48,7 +50,7 @@ type _AppInstance AppInstance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, createdAt time.Time, updatedAt time.Time) *AppInstance {
+func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time) *AppInstance {
 	this := AppInstance{}
 	this.Id = id
 	this.Name = name
@@ -64,6 +66,7 @@ func NewAppInstance(id int32, name string, title string, status string, appId in
 	this.StackIcon = stackIcon
 	this.StackRevNumber = stackRevNumber
 	this.StackVersion = stackVersion
+	this.Health = health
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -171,6 +174,48 @@ func (o *AppInstance) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *AppInstance) SetStatus(v string) {
 	o.Status = v
+}
+
+// GetPausedAt returns the PausedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppInstance) GetPausedAt() time.Time {
+	if o == nil || IsNil(o.PausedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.PausedAt.Get()
+}
+
+// GetPausedAtOk returns a tuple with the PausedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppInstance) GetPausedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PausedAt.Get(), o.PausedAt.IsSet()
+}
+
+// HasPausedAt returns a boolean if a field has been set.
+func (o *AppInstance) HasPausedAt() bool {
+	if o != nil && o.PausedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPausedAt gets a reference to the given NullableTime and assigns it to the PausedAt field.
+func (o *AppInstance) SetPausedAt(v time.Time) {
+	o.PausedAt.Set(&v)
+}
+// SetPausedAtNil sets the value for PausedAt to be an explicit nil
+func (o *AppInstance) SetPausedAtNil() {
+	o.PausedAt.Set(nil)
+}
+
+// UnsetPausedAt ensures that no value is present for PausedAt, not even an explicit nil
+func (o *AppInstance) UnsetPausedAt() {
+	o.PausedAt.Unset()
 }
 
 // GetMainDomain returns the MainDomain field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -487,6 +532,30 @@ func (o *AppInstance) SetSettings(v AppInstanceSettings) {
 	o.Settings = &v
 }
 
+// GetHealth returns the Health field value
+func (o *AppInstance) GetHealth() AppInstanceHealth {
+	if o == nil {
+		var ret AppInstanceHealth
+		return ret
+	}
+
+	return o.Health
+}
+
+// GetHealthOk returns a tuple with the Health field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetHealthOk() (*AppInstanceHealth, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Health, true
+}
+
+// SetHealth sets field value
+func (o *AppInstance) SetHealth(v AppInstanceHealth) {
+	o.Health = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppInstance) GetCreatedAt() time.Time {
 	if o == nil {
@@ -549,6 +618,9 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["status"] = o.Status
+	if o.PausedAt.IsSet() {
+		toSerialize["pausedAt"] = o.PausedAt.Get()
+	}
 	if o.MainDomain.IsSet() {
 		toSerialize["mainDomain"] = o.MainDomain.Get()
 	}
@@ -565,6 +637,7 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
 	}
+	toSerialize["health"] = o.Health
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -589,6 +662,7 @@ func (o *AppInstance) UnmarshalJSON(data []byte) (err error) {
 		"stackIcon",
 		"stackRevNumber",
 		"stackVersion",
+		"health",
 		"createdAt",
 		"updatedAt",
 	}

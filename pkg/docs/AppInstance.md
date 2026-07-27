@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **Status** | **string** |  | 
+**PausedAt** | Pointer to **NullableTime** |  | [optional] 
 **MainDomain** | Pointer to **NullableString** |  | [optional] 
 **AppId** | **int32** |  | 
 **ClusterId** | **int32** |  | 
@@ -20,6 +21,7 @@ Name | Type | Description | Notes
 **StackRevNumber** | **int32** |  | 
 **StackVersion** | **string** |  | 
 **Settings** | Pointer to [**AppInstanceSettings**](AppInstanceSettings.md) |  | [optional] 
+**Health** | [**AppInstanceHealth**](AppInstanceHealth.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -27,7 +29,7 @@ Name | Type | Description | Notes
 
 ### NewAppInstance
 
-`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
+`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
 
 NewAppInstance instantiates a new AppInstance object
 This constructor will assign default values to properties that have it defined,
@@ -122,6 +124,41 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### GetPausedAt
+
+`func (o *AppInstance) GetPausedAt() time.Time`
+
+GetPausedAt returns the PausedAt field if non-nil, zero value otherwise.
+
+### GetPausedAtOk
+
+`func (o *AppInstance) GetPausedAtOk() (*time.Time, bool)`
+
+GetPausedAtOk returns a tuple with the PausedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPausedAt
+
+`func (o *AppInstance) SetPausedAt(v time.Time)`
+
+SetPausedAt sets PausedAt field to given value.
+
+### HasPausedAt
+
+`func (o *AppInstance) HasPausedAt() bool`
+
+HasPausedAt returns a boolean if a field has been set.
+
+### SetPausedAtNil
+
+`func (o *AppInstance) SetPausedAtNil(b bool)`
+
+ SetPausedAtNil sets the value for PausedAt to be an explicit nil
+
+### UnsetPausedAt
+`func (o *AppInstance) UnsetPausedAt()`
+
+UnsetPausedAt ensures that no value is present for PausedAt, not even an explicit nil
 ### GetMainDomain
 
 `func (o *AppInstance) GetMainDomain() string`
@@ -381,6 +418,26 @@ SetSettings sets Settings field to given value.
 `func (o *AppInstance) HasSettings() bool`
 
 HasSettings returns a boolean if a field has been set.
+
+### GetHealth
+
+`func (o *AppInstance) GetHealth() AppInstanceHealth`
+
+GetHealth returns the Health field if non-nil, zero value otherwise.
+
+### GetHealthOk
+
+`func (o *AppInstance) GetHealthOk() (*AppInstanceHealth, bool)`
+
+GetHealthOk returns a tuple with the Health field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHealth
+
+`func (o *AppInstance) SetHealth(v AppInstanceHealth)`
+
+SetHealth sets Health field to given value.
+
 
 ### GetCreatedAt
 
