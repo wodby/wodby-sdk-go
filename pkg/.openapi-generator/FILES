@@ -94,8 +94,6 @@ docs/Backup.md
 docs/BackupPreset.md
 docs/BackupsAPI.md
 docs/BuildSourceInput.md
-docs/CapacityMetrics.md
-docs/CapacityMetricsFloat.md
 docs/Cert.md
 docs/CertsAPI.md
 docs/Cluster.md
@@ -106,7 +104,6 @@ docs/ClusterAutoInfrastructureUpgradeSettingsInput.md
 docs/ClusterAutoUpgradeVersionPolicy.md
 docs/ClusterAutoUpgradeVersionPolicyInput.md
 docs/ClusterCapabilities.md
-docs/ClusterMetrics.md
 docs/ClusterSettings.md
 docs/ClusterSettingsInput.md
 docs/ClustersAPI.md
@@ -161,8 +158,6 @@ docs/IntegrationKindsAPI.md
 docs/IntegrationLinkInput.md
 docs/IntegrationScope.md
 docs/IntegrationsAPI.md
-docs/KubeCPUMetrics.md
-docs/KubeMemoryMetrics.md
 docs/KubeVersion.md
 docs/LogLine.md
 docs/LogStream.md
@@ -191,7 +186,6 @@ docs/NewStackServiceCronScheduleInput.md
 docs/NewStackServiceEnvVarInput.md
 docs/NewStackServiceScopedValueInput.md
 docs/NewStackServiceTokenInput.md
-docs/NodeDiskMetrics.md
 docs/OperationResult.md
 docs/Org.md
 docs/OrgMembership.md
@@ -338,8 +332,6 @@ model_app_service_volume.go
 model_backup.go
 model_backup_preset.go
 model_build_source_input.go
-model_capacity_metrics.go
-model_capacity_metrics_float.go
 model_cert.go
 model_cluster.go
 model_cluster_auto_infrastructure_component_settings.go
@@ -349,7 +341,6 @@ model_cluster_auto_infrastructure_upgrade_settings_input.go
 model_cluster_auto_upgrade_version_policy.go
 model_cluster_auto_upgrade_version_policy_input.go
 model_cluster_capabilities.go
-model_cluster_metrics.go
 model_cluster_settings.go
 model_cluster_settings_input.go
 model_config_override_input.go
@@ -396,8 +387,6 @@ model_import_input.go
 model_integration.go
 model_integration_link_input.go
 model_integration_scope.go
-model_kube_cpu_metrics.go
-model_kube_memory_metrics.go
 model_kube_version.go
 model_log_line.go
 model_log_stream.go
@@ -426,7 +415,6 @@ model_new_stack_service_cron_schedule_input.go
 model_new_stack_service_env_var_input.go
 model_new_stack_service_scoped_value_input.go
 model_new_stack_service_token_input.go
-model_node_disk_metrics.go
 model_operation_result.go
 model_org.go
 model_org_membership.go
