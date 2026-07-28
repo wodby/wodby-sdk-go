@@ -26,7 +26,6 @@ type AppInstance struct {
 	Name string `json:"name"`
 	Title string `json:"title"`
 	Status string `json:"status"`
-	PausedAt NullableTime `json:"pausedAt,omitempty"`
 	MainDomain NullableString `json:"mainDomain,omitempty"`
 	AppId int32 `json:"appId"`
 	ClusterId int32 `json:"clusterId"`
@@ -174,48 +173,6 @@ func (o *AppInstance) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *AppInstance) SetStatus(v string) {
 	o.Status = v
-}
-
-// GetPausedAt returns the PausedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AppInstance) GetPausedAt() time.Time {
-	if o == nil || IsNil(o.PausedAt.Get()) {
-		var ret time.Time
-		return ret
-	}
-	return *o.PausedAt.Get()
-}
-
-// GetPausedAtOk returns a tuple with the PausedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AppInstance) GetPausedAtOk() (*time.Time, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.PausedAt.Get(), o.PausedAt.IsSet()
-}
-
-// HasPausedAt returns a boolean if a field has been set.
-func (o *AppInstance) HasPausedAt() bool {
-	if o != nil && o.PausedAt.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetPausedAt gets a reference to the given NullableTime and assigns it to the PausedAt field.
-func (o *AppInstance) SetPausedAt(v time.Time) {
-	o.PausedAt.Set(&v)
-}
-// SetPausedAtNil sets the value for PausedAt to be an explicit nil
-func (o *AppInstance) SetPausedAtNil() {
-	o.PausedAt.Set(nil)
-}
-
-// UnsetPausedAt ensures that no value is present for PausedAt, not even an explicit nil
-func (o *AppInstance) UnsetPausedAt() {
-	o.PausedAt.Unset()
 }
 
 // GetMainDomain returns the MainDomain field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -618,9 +575,6 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["status"] = o.Status
-	if o.PausedAt.IsSet() {
-		toSerialize["pausedAt"] = o.PausedAt.Get()
-	}
 	if o.MainDomain.IsSet() {
 		toSerialize["mainDomain"] = o.MainDomain.Get()
 	}

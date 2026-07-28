@@ -1105,74 +1105,6 @@ paths:
       summary: Update app instance settings
       tags:
       - app-instances
-  /app-instances/{id}/actions/pause:
-    post:
-      description: Starts the app instance pause task and returns the task identifier.
-      operationId: pauseAppInstance
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationResult'
-          description: Pause task result
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Pause app instance
-      tags:
-      - app-instances
-  /app-instances/{id}/actions/resume:
-    post:
-      description: Starts the app instance resume task and returns the task identifier.
-      operationId: resumeAppInstance
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationResult'
-          description: Resume task result
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Resume app instance
-      tags:
-      - app-instances
   /app-instances/{id}/actions/upgrade-stack:
     post:
       description: Upgrades an app instance stack using the selected upgrade sections.
@@ -12333,7 +12265,6 @@ components:
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
             failingSchedulesCount: 3
-        pausedAt: 2000-01-23T04:56:07.000+00:00
         clusterId: 1
         envId: 5
         title: title
@@ -12356,10 +12287,6 @@ components:
         title:
           type: string
         status:
-          type: string
-        pausedAt:
-          format: date-time
-          nullable: true
           type: string
         mainDomain:
           nullable: true
