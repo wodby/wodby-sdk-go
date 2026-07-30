@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **Number** | **int32** |  | 
 **Version** | **string** |  | 
 **ServiceId** | **int32** |  | 
-**Manifest** | Pointer to **map[string]interface{}** |  | [optional] 
+**Manifest** | Pointer to [**ServiceManifest**](ServiceManifest.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 
 ## Methods
@@ -196,20 +196,20 @@ SetServiceId sets ServiceId field to given value.
 
 ### GetManifest
 
-`func (o *ServiceRevision) GetManifest() map[string]interface{}`
+`func (o *ServiceRevision) GetManifest() ServiceManifest`
 
 GetManifest returns the Manifest field if non-nil, zero value otherwise.
 
 ### GetManifestOk
 
-`func (o *ServiceRevision) GetManifestOk() (*map[string]interface{}, bool)`
+`func (o *ServiceRevision) GetManifestOk() (*ServiceManifest, bool)`
 
 GetManifestOk returns a tuple with the Manifest field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetManifest
 
-`func (o *ServiceRevision) SetManifest(v map[string]interface{})`
+`func (o *ServiceRevision) SetManifest(v ServiceManifest)`
 
 SetManifest sets Manifest field to given value.
 

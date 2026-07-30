@@ -30,7 +30,7 @@ type ServiceRevision struct {
 	Number int32 `json:"number"`
 	Version string `json:"version"`
 	ServiceId int32 `json:"serviceId"`
-	Manifest map[string]interface{} `json:"manifest,omitempty"`
+	Manifest *ServiceManifest `json:"manifest,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
@@ -255,19 +255,19 @@ func (o *ServiceRevision) SetServiceId(v int32) {
 }
 
 // GetManifest returns the Manifest field value if set, zero value otherwise.
-func (o *ServiceRevision) GetManifest() map[string]interface{} {
+func (o *ServiceRevision) GetManifest() ServiceManifest {
 	if o == nil || IsNil(o.Manifest) {
-		var ret map[string]interface{}
+		var ret ServiceManifest
 		return ret
 	}
-	return o.Manifest
+	return *o.Manifest
 }
 
 // GetManifestOk returns a tuple with the Manifest field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ServiceRevision) GetManifestOk() (map[string]interface{}, bool) {
+func (o *ServiceRevision) GetManifestOk() (*ServiceManifest, bool) {
 	if o == nil || IsNil(o.Manifest) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.Manifest, true
 }
@@ -281,9 +281,9 @@ func (o *ServiceRevision) HasManifest() bool {
 	return false
 }
 
-// SetManifest gets a reference to the given map[string]interface{} and assigns it to the Manifest field.
-func (o *ServiceRevision) SetManifest(v map[string]interface{}) {
-	o.Manifest = v
+// SetManifest gets a reference to the given ServiceManifest and assigns it to the Manifest field.
+func (o *ServiceRevision) SetManifest(v ServiceManifest) {
+	o.Manifest = &v
 }
 
 // GetCreatedAt returns the CreatedAt field value

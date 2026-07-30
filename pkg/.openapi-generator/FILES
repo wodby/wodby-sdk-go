@@ -205,6 +205,7 @@ docs/ResourcesInput.md
 docs/ScalabilityInput.md
 docs/Service.md
 docs/ServiceDeploymentInput.md
+docs/ServiceManifest.md
 docs/ServiceManifestUpdateInput.md
 docs/ServiceRevision.md
 docs/ServiceSettings.md
@@ -430,6 +431,7 @@ model_resources_input.go
 model_scalability_input.go
 model_service.go
 model_service_deployment_input.go
+model_service_manifest.go
 model_service_manifest_update_input.go
 model_service_revision.go
 model_service_settings.go

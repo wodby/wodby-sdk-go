@@ -14390,7 +14390,8 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         external: true
         manifest:
-          key: ""
+          scalable: true
+          raw: raw
         name: name
         id: 0
         title: title
@@ -14415,8 +14416,7 @@ components:
         serviceId:
           type: integer
         manifest:
-          additionalProperties: true
-          type: object
+          $ref: '#/components/schemas/ServiceManifest'
         createdAt:
           format: date-time
           type: string
@@ -14430,6 +14430,20 @@ components:
       - title
       - type
       - version
+      type: object
+    ServiceManifest:
+      additionalProperties: true
+      example:
+        scalable: true
+        raw: raw
+      properties:
+        raw:
+          type: string
+        scalable:
+          type: boolean
+      required:
+      - raw
+      - scalable
       type: object
     ServicesResponse:
       example:
