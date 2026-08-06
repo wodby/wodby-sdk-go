@@ -1105,6 +1105,81 @@ paths:
       summary: Update app instance settings
       tags:
       - app-instances
+  /app-instances/cicd-settings/{id}:
+    get:
+      description: Returns the CI and registry integrations used by future app instance
+        builds. Integration ID 0 identifies the built-in Wodby service.
+      operationId: getAppInstanceCICDSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstanceCICDSettings'
+          description: App instance CI/CD settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app instance CI/CD settings
+      tags:
+      - app-instances
+    put:
+      description: Updates the CI and registry integrations used by future app instance
+        builds. Integration ID 0 selects the built-in Wodby service.
+      operationId: updateAppInstanceCICDSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppInstanceCICDSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstanceCICDSettings'
+          description: Updated app instance CI/CD settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app instance CI/CD settings
+      tags:
+      - app-instances
   /app-instances/{id}/actions/upgrade-stack:
     post:
       description: Upgrades an app instance stack using the selected upgrade sections.
@@ -1444,8 +1519,9 @@ paths:
       - app-services
   /app-services/{id}/log-streams:
     post:
-      description: Creates a log stream for an app service container and returns the
-        stream id.
+      description: Creates a log stream for an app service container across all replicas
+        or for one selected pod and returns the stream id. Log streams are available
+        while the app instance status is ok or deploying.
       operationId: createAppServiceLogStream
       parameters:
       - explode: false
@@ -3342,7 +3418,9 @@ paths:
       - app-builds
   /app-builds/{id}/config:
     get:
-      description: Returns CI build configuration for the app build.
+      description: Returns CI build configuration for the build source owner and image
+        targets linked to that owner. Services with independent build sources are
+        omitted.
       operationId: getAppBuildConfig
       parameters:
       - explode: false
@@ -8244,8 +8322,10 @@ paths:
         schema:
           type: string
         style: form
-      - description: Return matching tasks as a flat page or as entity-scoped task
-          trees
+      - description: "Return matching tasks as a flat page or as filter-scoped task\
+          \ trees. Tree responses support user, organization, project, and resource\
+          \ filters, keep paginated roots in items, and include all current-page tree\
+          \ nodes in treeItems."
         explode: true
         in: query
         name: view
@@ -9497,6 +9577,92 @@ components:
       required:
       - success
       type: object
+    AutomationTimeWindow:
+      example:
+        start: 02:00
+        timeZone: UTC
+        days:
+        - MONDAY
+        - MONDAY
+        end: 04:00
+      properties:
+        start:
+          example: 02:00
+          pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          type: string
+        end:
+          example: 04:00
+          pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          type: string
+        timeZone:
+          example: UTC
+          type: string
+        days:
+          items:
+            enum:
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+            - SUNDAY
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - days
+      - end
+      - start
+      - timeZone
+      type: object
+    AutomationTimeWindowInput:
+      example:
+        start: 02:00
+        timeZone: UTC
+        days:
+        - MONDAY
+        - MONDAY
+        end: 04:00
+        enabled: true
+      properties:
+        enabled:
+          description: Set to false to remove the configured time window.
+          type: boolean
+        start:
+          example: 02:00
+          nullable: true
+          pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          type: string
+        end:
+          example: 04:00
+          nullable: true
+          pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          type: string
+        timeZone:
+          default: UTC
+          example: UTC
+          nullable: true
+          type: string
+        days:
+          description: Selected weekdays. Omit for every day. Overnight windows use
+            the day on which the window starts.
+          items:
+            enum:
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+            - SUNDAY
+            type: string
+          minItems: 1
+          nullable: true
+          type: array
+      required:
+      - enabled
+      type: object
     GitAutoUpdateSettings:
       example:
         allowMajor: true
@@ -9676,6 +9842,13 @@ components:
       type: object
     AppInstanceAutoStackUpgradeSettings:
       example:
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
         upgradeSettings:
           cron: true
           settings: true
@@ -9695,11 +9868,21 @@ components:
           type: boolean
         upgradeSettings:
           $ref: '#/components/schemas/AppInstanceStackUpgradeSettings'
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindow'
       required:
       - enabled
       type: object
     AppInstanceAutoStackUpgradeSettingsInput:
       example:
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
+          enabled: true
         upgradeSettings:
           cron: true
           settings: true
@@ -9719,12 +9902,21 @@ components:
           type: boolean
         upgradeSettings:
           $ref: '#/components/schemas/AppInstanceStackUpgradeSettingsInput'
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindowInput'
       required:
       - enabled
       type: object
     AppInstanceSettings:
       example:
         autoStackUpgrade:
+          timeWindow:
+            start: 02:00
+            timeZone: UTC
+            days:
+            - MONDAY
+            - MONDAY
+            end: 04:00
           upgradeSettings:
             cron: true
             settings: true
@@ -9746,6 +9938,14 @@ components:
     AppInstanceSettingsInput:
       example:
         autoStackUpgrade:
+          timeWindow:
+            start: 02:00
+            timeZone: UTC
+            days:
+            - MONDAY
+            - MONDAY
+            end: 04:00
+            enabled: true
           upgradeSettings:
             cron: true
             settings: true
@@ -9763,6 +9963,48 @@ components:
       properties:
         autoStackUpgrade:
           $ref: '#/components/schemas/AppInstanceAutoStackUpgradeSettingsInput'
+      type: object
+    AppInstanceCICDSettingsInput:
+      example:
+        registryIntegrationId: 6
+        ciIntegrationId: 0
+      properties:
+        ciIntegrationId:
+          description: CI integration ID. Set to zero to use the built-in Wodby CI
+            service.
+          type: integer
+        registryIntegrationId:
+          description: Registry integration ID. Set to zero to use the built-in Wodby
+            registry service.
+          type: integer
+      required:
+      - ciIntegrationId
+      - registryIntegrationId
+      type: object
+    AppInstanceCICDSettings:
+      example:
+        appInstanceId: 0
+        registryRepository: registryRepository
+        registryIntegrationId: 1
+        ciIntegrationId: 6
+      properties:
+        appInstanceId:
+          type: integer
+        ciIntegrationId:
+          description: Effective CI integration ID. Zero selects the built-in Wodby
+            CI service.
+          type: integer
+        registryIntegrationId:
+          description: Effective registry integration ID. Zero selects the built-in
+            Wodby registry service.
+          type: integer
+        registryRepository:
+          type: string
+      required:
+      - appInstanceId
+      - ciIntegrationId
+      - registryIntegrationId
+      - registryRepository
       type: object
     StackAutoUpdateVersionPolicy:
       example:
@@ -10218,6 +10460,13 @@ components:
       type: object
     ClusterAutoInfrastructureComponentSettings:
       example:
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
         enabled: true
         versionPolicy:
           allowMajor: true
@@ -10229,11 +10478,21 @@ components:
           type: boolean
         versionPolicy:
           $ref: '#/components/schemas/ClusterAutoUpgradeVersionPolicy'
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindow'
       required:
       - enabled
       type: object
     ClusterAutoInfrastructureComponentSettingsInput:
       example:
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
+          enabled: true
         enabled: true
         versionPolicy:
           allowMajor: true
@@ -10246,10 +10505,19 @@ components:
           type: boolean
         versionPolicy:
           $ref: '#/components/schemas/ClusterAutoUpgradeVersionPolicyInput'
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindowInput'
       type: object
     ClusterAutoInfrastructureUpgradeSettings:
       example:
         infra:
+          timeWindow:
+            start: 02:00
+            timeZone: UTC
+            days:
+            - MONDAY
+            - MONDAY
+            end: 04:00
           enabled: true
           versionPolicy:
             allowMajor: true
@@ -10258,6 +10526,13 @@ components:
             allowMinor: true
         enabled: true
         apps:
+          timeWindow:
+            start: 02:00
+            timeZone: UTC
+            days:
+            - MONDAY
+            - MONDAY
+            end: 04:00
           enabled: true
           versionPolicy:
             allowMajor: true
@@ -10277,6 +10552,14 @@ components:
     ClusterAutoInfrastructureUpgradeSettingsInput:
       example:
         infra:
+          timeWindow:
+            start: 02:00
+            timeZone: UTC
+            days:
+            - MONDAY
+            - MONDAY
+            end: 04:00
+            enabled: true
           enabled: true
           versionPolicy:
             allowMajor: true
@@ -10285,6 +10568,14 @@ components:
             allowMinor: true
         enabled: true
         apps:
+          timeWindow:
+            start: 02:00
+            timeZone: UTC
+            days:
+            - MONDAY
+            - MONDAY
+            end: 04:00
+            enabled: true
           enabled: true
           versionPolicy:
             allowMajor: true
@@ -10305,6 +10596,13 @@ components:
       example:
         autoInfrastructureUpgrade:
           infra:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
             enabled: true
             versionPolicy:
               allowMajor: true
@@ -10313,6 +10611,13 @@ components:
               allowMinor: true
           enabled: true
           apps:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
             enabled: true
             versionPolicy:
               allowMajor: true
@@ -10327,6 +10632,14 @@ components:
       example:
         autoInfrastructureUpgrade:
           infra:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
+              enabled: true
             enabled: true
             versionPolicy:
               allowMajor: true
@@ -10335,6 +10648,14 @@ components:
               allowMinor: true
           enabled: true
           apps:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
+              enabled: true
             enabled: true
             versionPolicy:
               allowMajor: true
@@ -11920,10 +12241,13 @@ components:
     Org:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        registryIntegrationId: 5
+        defaultTimeZone: America/New_York
         domain: domain
         name: name
         id: 6
         title: title
+        ciIntegrationId: 1
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -11934,6 +12258,17 @@ components:
           type: string
         domain:
           type: string
+        defaultTimeZone:
+          example: America/New_York
+          type: string
+        ciIntegrationId:
+          description: Effective default CI integration ID. Zero selects the built-in
+            Wodby CI service.
+          type: integer
+        registryIntegrationId:
+          description: Effective default registry integration ID. Zero selects the
+            built-in Wodby registry service.
+          type: integer
         createdAt:
           format: date-time
           type: string
@@ -11941,10 +12276,13 @@ components:
           format: date-time
           type: string
       required:
+      - ciIntegrationId
       - createdAt
+      - defaultTimeZone
       - domain
       - id
       - name
+      - registryIntegrationId
       - title
       - updatedAt
       type: object
@@ -11966,29 +12304,35 @@ components:
         defaultProjects:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 1
+          id: 5
           title: title
-          orgId: 5
+          orgId: 2
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 1
+          id: 5
           title: title
-          orgId: 5
+          orgId: 2
           updatedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         orgs:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          registryIntegrationId: 5
+          defaultTimeZone: America/New_York
           domain: domain
           name: name
           id: 6
           title: title
+          ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          registryIntegrationId: 5
+          defaultTimeZone: America/New_York
           domain: domain
           name: name
           id: 6
           title: title
+          ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
         twofa: true
         email: email
@@ -12083,9 +12427,9 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        id: 1
+        id: 5
         title: title
-        orgId: 5
+        orgId: 2
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -12153,6 +12497,13 @@ components:
       example:
         settings:
           autoStackUpgrade:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
             upgradeSettings:
               cron: true
               settings: true
@@ -12798,6 +13149,8 @@ components:
         id:
           type: integer
         number:
+          description: App-instance build-launch number. Build records created by
+            the same Wodby CI launch share this number.
           type: integer
         status:
           type: string
@@ -13204,6 +13557,13 @@ components:
         settings:
           autoInfrastructureUpgrade:
             infra:
+              timeWindow:
+                start: 02:00
+                timeZone: UTC
+                days:
+                - MONDAY
+                - MONDAY
+                end: 04:00
               enabled: true
               versionPolicy:
                 allowMajor: true
@@ -13212,6 +13572,13 @@ components:
                 allowMinor: true
             enabled: true
             apps:
+              timeWindow:
+                start: 02:00
+                timeZone: UTC
+                days:
+                - MONDAY
+                - MONDAY
+                end: 04:00
               enabled: true
               versionPolicy:
                 allowMajor: true
@@ -13538,6 +13905,13 @@ components:
     BackupPreset:
       example:
         auto: true
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
         crontab: crontab
         integrationId: 9
         databaseDbId: 5
@@ -13596,6 +13970,8 @@ components:
         crontab:
           nullable: true
           type: string
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindow'
         duration:
           maximum: 180
           minimum: 30
@@ -13653,6 +14029,7 @@ components:
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
             id: 1
+            position: 1
             status: status
           - isSystem: true
             logStatus: logStatus
@@ -13660,6 +14037,7 @@ components:
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
             id: 1
+            position: 1
             status: status
           timeout: 7
           isSystem: true
@@ -13682,6 +14060,7 @@ components:
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
             id: 1
+            position: 1
             status: status
           - isSystem: true
             logStatus: logStatus
@@ -13689,6 +14068,7 @@ components:
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
             id: 1
+            position: 1
             status: status
           timeout: 7
           isSystem: true
@@ -13814,6 +14194,7 @@ components:
           name: name
           startedAt: 2000-01-23T04:56:07.000+00:00
           id: 1
+          position: 1
           status: status
         - isSystem: true
           logStatus: logStatus
@@ -13821,6 +14202,7 @@ components:
           name: name
           startedAt: 2000-01-23T04:56:07.000+00:00
           id: 1
+          position: 1
           status: status
         timeout: 7
         isSystem: true
@@ -13890,9 +14272,13 @@ components:
         name: name
         startedAt: 2000-01-23T04:56:07.000+00:00
         id: 1
+        position: 1
         status: status
       properties:
         id:
+          type: integer
+        position:
+          minimum: 1
           type: integer
         name:
           type: string
@@ -13915,6 +14301,7 @@ components:
       - isSystem
       - logStatus
       - name
+      - position
       - status
       type: object
     AppRoute:
@@ -14891,6 +15278,7 @@ components:
         title: title
         type: type
         version: version
+        scalability: "{}"
         required: true
         appInstanceId: 1
         serviceRevId: 5
@@ -14917,6 +15305,11 @@ components:
           type: string
         replicas:
           type: integer
+        scalability:
+          allOf:
+          - $ref: '#/components/schemas/AppServiceScalability'
+          nullable: true
+          type: object
         version:
           type: string
         main:
@@ -16058,8 +16451,197 @@ components:
       type: object
     TasksResponse:
       example:
-        nextPage: 6
-        totalCount: 0
+        treeItems:
+        - task:
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            projectIds:
+            - 5
+            - 5
+            clusterId: 9
+            title: title
+            orgId: 5
+            appInstanceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            providerId: 7
+            appId: 2
+            spawnedTaskIds:
+            - 1
+            - 1
+            id: 0
+            serviceId: 2
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            silent: true
+            stackId: 4
+            jobs:
+            - statusTitle: statusTitle
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              title: title
+              steps:
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              timeout: 7
+              isSystem: true
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              id: 6
+              after:
+              - after
+              - after
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - statusTitle: statusTitle
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              title: title
+              steps:
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              timeout: 7
+              isSystem: true
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              id: 6
+              after:
+              - after
+              - after
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            integrationId: 3
+            userId: 1
+            repeatedTaskId: 1
+            system: true
+            originTaskId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            progress: 6
+            user: "{}"
+            status: status
+          parentId: 0
+        - task:
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            projectIds:
+            - 5
+            - 5
+            clusterId: 9
+            title: title
+            orgId: 5
+            appInstanceId: 7
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            providerId: 7
+            appId: 2
+            spawnedTaskIds:
+            - 1
+            - 1
+            id: 0
+            serviceId: 2
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            silent: true
+            stackId: 4
+            jobs:
+            - statusTitle: statusTitle
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              title: title
+              steps:
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              timeout: 7
+              isSystem: true
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              id: 6
+              after:
+              - after
+              - after
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - statusTitle: statusTitle
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              title: title
+              steps:
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              - isSystem: true
+                logStatus: logStatus
+                endedAt: 2000-01-23T04:56:07.000+00:00
+                name: name
+                startedAt: 2000-01-23T04:56:07.000+00:00
+                id: 1
+                position: 1
+                status: status
+              timeout: 7
+              isSystem: true
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              id: 6
+              after:
+              - after
+              - after
+              status: status
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            integrationId: 3
+            userId: 1
+            repeatedTaskId: 1
+            system: true
+            originTaskId: 1
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            progress: 6
+            user: "{}"
+            status: status
+          parentId: 0
+        nextPage: 1
+        totalCount: 6
         items:
         - startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
@@ -16091,6 +16673,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             - isSystem: true
               logStatus: logStatus
@@ -16098,6 +16681,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             timeout: 7
             isSystem: true
@@ -16120,6 +16704,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             - isSystem: true
               logStatus: logStatus
@@ -16127,6 +16712,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             timeout: 7
             isSystem: true
@@ -16179,6 +16765,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             - isSystem: true
               logStatus: logStatus
@@ -16186,6 +16773,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             timeout: 7
             isSystem: true
@@ -16208,6 +16796,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             - isSystem: true
               logStatus: logStatus
@@ -16215,6 +16804,7 @@ components:
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
               id: 1
+              position: 1
               status: status
             timeout: 7
             isSystem: true
@@ -16242,6 +16832,13 @@ components:
           items:
             $ref: '#/components/schemas/Task'
           type: array
+        treeItems:
+          description: "Flat current-page roots and descendants for tree view, linked\
+            \ by parentId."
+          items:
+            $ref: '#/components/schemas/TaskTreeItem'
+          nullable: true
+          type: array
         totalCount:
           type: integer
         nextPage:
@@ -16250,6 +16847,111 @@ components:
       required:
       - items
       - totalCount
+      type: object
+    TaskTreeItem:
+      example:
+        task:
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          projectIds:
+          - 5
+          - 5
+          clusterId: 9
+          title: title
+          orgId: 5
+          appInstanceId: 7
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          providerId: 7
+          appId: 2
+          spawnedTaskIds:
+          - 1
+          - 1
+          id: 0
+          serviceId: 2
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          silent: true
+          stackId: 4
+          jobs:
+          - statusTitle: statusTitle
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            title: title
+            steps:
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              position: 1
+              status: status
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              position: 1
+              status: status
+            timeout: 7
+            isSystem: true
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            id: 6
+            after:
+            - after
+            - after
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - statusTitle: statusTitle
+            startedAt: 2000-01-23T04:56:07.000+00:00
+            title: title
+            steps:
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              position: 1
+              status: status
+            - isSystem: true
+              logStatus: logStatus
+              endedAt: 2000-01-23T04:56:07.000+00:00
+              name: name
+              startedAt: 2000-01-23T04:56:07.000+00:00
+              id: 1
+              position: 1
+              status: status
+            timeout: 7
+            isSystem: true
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            id: 6
+            after:
+            - after
+            - after
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          integrationId: 3
+          userId: 1
+          repeatedTaskId: 1
+          system: true
+          originTaskId: 1
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          progress: 6
+          user: "{}"
+          status: status
+        parentId: 0
+      properties:
+        task:
+          $ref: '#/components/schemas/Task'
+        parentId:
+          nullable: true
+          type: integer
+      required:
+      - task
       type: object
     TaskStepLogs:
       example:
@@ -16410,10 +17112,14 @@ components:
     UpdateOrgRequest:
       example:
         registryIntegrationId: 0
+        defaultTimeZone: America/New_York
         title: title
         ciIntegrationId: 6
       properties:
         title:
+          type: string
+        defaultTimeZone:
+          example: America/New_York
           type: string
         registryIntegrationId:
           nullable: true
@@ -16643,13 +17349,21 @@ components:
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
           integrationId: 5
+          ciWorkflow: ciWorkflow
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version
+        scalability:
+          maxReplicas: 5
+          minReplicas: 1
+          averageCPU: 6
+          enabled: true
       properties:
         replicas:
           nullable: true
           type: integer
+        scalability:
+          $ref: '#/components/schemas/AppServiceScalabilityUpdateInput'
         version:
           nullable: true
           type: string
@@ -16875,12 +17589,16 @@ components:
     NewAppServiceLogStreamInput:
       example:
         container: container
+        pod: pod
         workload: workload
       properties:
         workload:
           nullable: true
           type: string
         container:
+          nullable: true
+          type: string
+        pod:
           nullable: true
           type: string
       type: object
@@ -16948,6 +17666,7 @@ components:
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
           integrationId: 5
+          ciWorkflow: ciWorkflow
           newRepoName: newRepoName
           gitRefType: gitRefType
         title: title
@@ -17286,6 +18005,14 @@ components:
       example:
         settings:
           autoStackUpgrade:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
+              enabled: true
             upgradeSettings:
               cron: true
               settings: true
@@ -17350,6 +18077,7 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
+            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -17413,6 +18141,7 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
+            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -17489,6 +18218,14 @@ components:
       example:
         settings:
           autoStackUpgrade:
+            timeWindow:
+              start: 02:00
+              timeZone: UTC
+              days:
+              - MONDAY
+              - MONDAY
+              end: 04:00
+              enabled: true
             upgradeSettings:
               cron: true
               settings: true
@@ -17557,6 +18294,7 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
+            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -17620,6 +18358,7 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
+            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -17683,6 +18422,7 @@ components:
         remoteGitRepoId: remoteGitRepoId
         boilerplate: boilerplate
         integrationId: 5
+        ciWorkflow: ciWorkflow
         newRepoName: newRepoName
         gitRefType: gitRefType
       properties:
@@ -17704,6 +18444,9 @@ components:
           nullable: true
           type: string
         gitRefType:
+          nullable: true
+          type: string
+        ciWorkflow:
           nullable: true
           type: string
       required:
@@ -17856,6 +18599,40 @@ components:
       - averageCPU
       - maxReplicas
       - minReplicas
+      type: object
+    AppServiceScalability:
+      properties:
+        averageCPU:
+          type: integer
+        minReplicas:
+          type: integer
+        maxReplicas:
+          type: integer
+      required:
+      - averageCPU
+      - maxReplicas
+      - minReplicas
+      type: object
+    AppServiceScalabilityUpdateInput:
+      example:
+        maxReplicas: 5
+        minReplicas: 1
+        averageCPU: 6
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+        averageCPU:
+          nullable: true
+          type: integer
+        minReplicas:
+          nullable: true
+          type: integer
+        maxReplicas:
+          nullable: true
+          type: integer
+      required:
+      - enabled
       type: object
     NewClusterInput:
       example:
@@ -18194,6 +18971,14 @@ components:
     NewBackupPresetInput:
       example:
         auto: true
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
+          enabled: true
         crontab: crontab
         integrationId: 7
         databaseDbId: 5
@@ -18249,6 +19034,8 @@ components:
         crontab:
           nullable: true
           type: string
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindowInput'
         duration:
           maximum: 180
           minimum: 30
@@ -18266,6 +19053,14 @@ components:
         duration: 120
         storageClass: storageClass
         auto: true
+        timeWindow:
+          start: 02:00
+          timeZone: UTC
+          days:
+          - MONDAY
+          - MONDAY
+          end: 04:00
+          enabled: true
         crontab: crontab
         integrationId: 0
         disabled: true
@@ -18287,6 +19082,8 @@ components:
         crontab:
           nullable: true
           type: string
+        timeWindow:
+          $ref: '#/components/schemas/AutomationTimeWindowInput'
         duration:
           maximum: 180
           minimum: 30
@@ -18540,6 +19337,7 @@ components:
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
           integrationId: 5
+          ciWorkflow: ciWorkflow
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Enabled** | **bool** |  | 
 **UpgradeSettings** | Pointer to [**AppInstanceStackUpgradeSettings**](AppInstanceStackUpgradeSettings.md) |  | [optional] 
+**TimeWindow** | Pointer to [**AutomationTimeWindow**](AutomationTimeWindow.md) |  | [optional] 
 
 ## Methods
 
@@ -70,6 +71,31 @@ SetUpgradeSettings sets UpgradeSettings field to given value.
 `func (o *AppInstanceAutoStackUpgradeSettings) HasUpgradeSettings() bool`
 
 HasUpgradeSettings returns a boolean if a field has been set.
+
+### GetTimeWindow
+
+`func (o *AppInstanceAutoStackUpgradeSettings) GetTimeWindow() AutomationTimeWindow`
+
+GetTimeWindow returns the TimeWindow field if non-nil, zero value otherwise.
+
+### GetTimeWindowOk
+
+`func (o *AppInstanceAutoStackUpgradeSettings) GetTimeWindowOk() (*AutomationTimeWindow, bool)`
+
+GetTimeWindowOk returns a tuple with the TimeWindow field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeWindow
+
+`func (o *AppInstanceAutoStackUpgradeSettings) SetTimeWindow(v AutomationTimeWindow)`
+
+SetTimeWindow sets TimeWindow field to given value.
+
+### HasTimeWindow
+
+`func (o *AppInstanceAutoStackUpgradeSettings) HasTimeWindow() bool`
+
+HasTimeWindow returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

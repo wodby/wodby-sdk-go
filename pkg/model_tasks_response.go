@@ -22,6 +22,8 @@ var _ MappedNullable = &TasksResponse{}
 // TasksResponse struct for TasksResponse
 type TasksResponse struct {
 	Items []Task `json:"items"`
+	// Flat current-page roots and descendants for tree view, linked by parentId.
+	TreeItems []TaskTreeItem `json:"treeItems,omitempty"`
 	TotalCount int32 `json:"totalCount"`
 	NextPage NullableInt32 `json:"nextPage,omitempty"`
 }
@@ -69,6 +71,39 @@ func (o *TasksResponse) GetItemsOk() ([]Task, bool) {
 // SetItems sets field value
 func (o *TasksResponse) SetItems(v []Task) {
 	o.Items = v
+}
+
+// GetTreeItems returns the TreeItems field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TasksResponse) GetTreeItems() []TaskTreeItem {
+	if o == nil {
+		var ret []TaskTreeItem
+		return ret
+	}
+	return o.TreeItems
+}
+
+// GetTreeItemsOk returns a tuple with the TreeItems field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TasksResponse) GetTreeItemsOk() ([]TaskTreeItem, bool) {
+	if o == nil || IsNil(o.TreeItems) {
+		return nil, false
+	}
+	return o.TreeItems, true
+}
+
+// HasTreeItems returns a boolean if a field has been set.
+func (o *TasksResponse) HasTreeItems() bool {
+	if o != nil && !IsNil(o.TreeItems) {
+		return true
+	}
+
+	return false
+}
+
+// SetTreeItems gets a reference to the given []TaskTreeItem and assigns it to the TreeItems field.
+func (o *TasksResponse) SetTreeItems(v []TaskTreeItem) {
+	o.TreeItems = v
 }
 
 // GetTotalCount returns the TotalCount field value
@@ -148,6 +183,9 @@ func (o TasksResponse) MarshalJSON() ([]byte, error) {
 func (o TasksResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["items"] = o.Items
+	if o.TreeItems != nil {
+		toSerialize["treeItems"] = o.TreeItems
+	}
 	toSerialize["totalCount"] = o.TotalCount
 	if o.NextPage.IsSet() {
 		toSerialize["nextPage"] = o.NextPage.Get()

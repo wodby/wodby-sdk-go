@@ -28,6 +28,7 @@ type AppService struct {
 	Type string `json:"type"`
 	Status string `json:"status"`
 	Replicas int32 `json:"replicas"`
+	Scalability NullableAppServiceScalability `json:"scalability,omitempty"`
 	Version string `json:"version"`
 	Main bool `json:"main"`
 	Disabled bool `json:"disabled"`
@@ -222,6 +223,48 @@ func (o *AppService) GetReplicasOk() (*int32, bool) {
 // SetReplicas sets field value
 func (o *AppService) SetReplicas(v int32) {
 	o.Replicas = v
+}
+
+// GetScalability returns the Scalability field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetScalability() AppServiceScalability {
+	if o == nil || IsNil(o.Scalability.Get()) {
+		var ret AppServiceScalability
+		return ret
+	}
+	return *o.Scalability.Get()
+}
+
+// GetScalabilityOk returns a tuple with the Scalability field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetScalabilityOk() (*AppServiceScalability, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Scalability.Get(), o.Scalability.IsSet()
+}
+
+// HasScalability returns a boolean if a field has been set.
+func (o *AppService) HasScalability() bool {
+	if o != nil && o.Scalability.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetScalability gets a reference to the given NullableAppServiceScalability and assigns it to the Scalability field.
+func (o *AppService) SetScalability(v AppServiceScalability) {
+	o.Scalability.Set(&v)
+}
+// SetScalabilityNil sets the value for Scalability to be an explicit nil
+func (o *AppService) SetScalabilityNil() {
+	o.Scalability.Set(nil)
+}
+
+// UnsetScalability ensures that no value is present for Scalability, not even an explicit nil
+func (o *AppService) UnsetScalability() {
+	o.Scalability.Unset()
 }
 
 // GetVersion returns the Version field value
@@ -570,6 +613,9 @@ func (o AppService) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	toSerialize["status"] = o.Status
 	toSerialize["replicas"] = o.Replicas
+	if o.Scalability.IsSet() {
+		toSerialize["scalability"] = o.Scalability.Get()
+	}
 	toSerialize["version"] = o.Version
 	toSerialize["main"] = o.Main
 	toSerialize["disabled"] = o.Disabled

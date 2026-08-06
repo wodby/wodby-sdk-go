@@ -23,6 +23,7 @@ var _ MappedNullable = &AppBuild{}
 // AppBuild struct for AppBuild
 type AppBuild struct {
 	Id int32 `json:"id"`
+	// App-instance build-launch number. Build records created by the same Wodby CI launch share this number.
 	Number int32 `json:"number"`
 	Status string `json:"status"`
 	AppInstanceId int32 `json:"appInstanceId"`

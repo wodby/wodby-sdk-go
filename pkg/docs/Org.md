@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **Domain** | **string** |  | 
+**DefaultTimeZone** | **string** |  | 
+**CiIntegrationId** | **int32** | Effective default CI integration ID. Zero selects the built-in Wodby CI service. | 
+**RegistryIntegrationId** | **int32** | Effective default registry integration ID. Zero selects the built-in Wodby registry service. | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -15,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewOrg
 
-`func NewOrg(id int32, name string, title string, domain string, createdAt time.Time, updatedAt time.Time, ) *Org`
+`func NewOrg(id int32, name string, title string, domain string, defaultTimeZone string, ciIntegrationId int32, registryIntegrationId int32, createdAt time.Time, updatedAt time.Time, ) *Org`
 
 NewOrg instantiates a new Org object
 This constructor will assign default values to properties that have it defined,
@@ -108,6 +111,66 @@ and a boolean to check if the value has been set.
 `func (o *Org) SetDomain(v string)`
 
 SetDomain sets Domain field to given value.
+
+
+### GetDefaultTimeZone
+
+`func (o *Org) GetDefaultTimeZone() string`
+
+GetDefaultTimeZone returns the DefaultTimeZone field if non-nil, zero value otherwise.
+
+### GetDefaultTimeZoneOk
+
+`func (o *Org) GetDefaultTimeZoneOk() (*string, bool)`
+
+GetDefaultTimeZoneOk returns a tuple with the DefaultTimeZone field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultTimeZone
+
+`func (o *Org) SetDefaultTimeZone(v string)`
+
+SetDefaultTimeZone sets DefaultTimeZone field to given value.
+
+
+### GetCiIntegrationId
+
+`func (o *Org) GetCiIntegrationId() int32`
+
+GetCiIntegrationId returns the CiIntegrationId field if non-nil, zero value otherwise.
+
+### GetCiIntegrationIdOk
+
+`func (o *Org) GetCiIntegrationIdOk() (*int32, bool)`
+
+GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCiIntegrationId
+
+`func (o *Org) SetCiIntegrationId(v int32)`
+
+SetCiIntegrationId sets CiIntegrationId field to given value.
+
+
+### GetRegistryIntegrationId
+
+`func (o *Org) GetRegistryIntegrationId() int32`
+
+GetRegistryIntegrationId returns the RegistryIntegrationId field if non-nil, zero value otherwise.
+
+### GetRegistryIntegrationIdOk
+
+`func (o *Org) GetRegistryIntegrationIdOk() (*int32, bool)`
+
+GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegistryIntegrationId
+
+`func (o *Org) SetRegistryIntegrationId(v int32)`
+
+SetRegistryIntegrationId sets RegistryIntegrationId field to given value.
 
 
 ### GetCreatedAt

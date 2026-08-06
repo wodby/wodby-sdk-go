@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Title** | **string** |  | 
+**DefaultTimeZone** | Pointer to **string** |  | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 
@@ -46,6 +47,31 @@ and a boolean to check if the value has been set.
 
 SetTitle sets Title field to given value.
 
+
+### GetDefaultTimeZone
+
+`func (o *UpdateOrgRequest) GetDefaultTimeZone() string`
+
+GetDefaultTimeZone returns the DefaultTimeZone field if non-nil, zero value otherwise.
+
+### GetDefaultTimeZoneOk
+
+`func (o *UpdateOrgRequest) GetDefaultTimeZoneOk() (*string, bool)`
+
+GetDefaultTimeZoneOk returns a tuple with the DefaultTimeZone field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultTimeZone
+
+`func (o *UpdateOrgRequest) SetDefaultTimeZone(v string)`
+
+SetDefaultTimeZone sets DefaultTimeZone field to given value.
+
+### HasDefaultTimeZone
+
+`func (o *UpdateOrgRequest) HasDefaultTimeZone() bool`
+
+HasDefaultTimeZone returns a boolean if a field has been set.
 
 ### GetRegistryIntegrationId
 

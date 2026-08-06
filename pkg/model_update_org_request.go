@@ -22,6 +22,7 @@ var _ MappedNullable = &UpdateOrgRequest{}
 // UpdateOrgRequest struct for UpdateOrgRequest
 type UpdateOrgRequest struct {
 	Title string `json:"title"`
+	DefaultTimeZone *string `json:"defaultTimeZone,omitempty"`
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 }
@@ -68,6 +69,38 @@ func (o *UpdateOrgRequest) GetTitleOk() (*string, bool) {
 // SetTitle sets field value
 func (o *UpdateOrgRequest) SetTitle(v string) {
 	o.Title = v
+}
+
+// GetDefaultTimeZone returns the DefaultTimeZone field value if set, zero value otherwise.
+func (o *UpdateOrgRequest) GetDefaultTimeZone() string {
+	if o == nil || IsNil(o.DefaultTimeZone) {
+		var ret string
+		return ret
+	}
+	return *o.DefaultTimeZone
+}
+
+// GetDefaultTimeZoneOk returns a tuple with the DefaultTimeZone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOrgRequest) GetDefaultTimeZoneOk() (*string, bool) {
+	if o == nil || IsNil(o.DefaultTimeZone) {
+		return nil, false
+	}
+	return o.DefaultTimeZone, true
+}
+
+// HasDefaultTimeZone returns a boolean if a field has been set.
+func (o *UpdateOrgRequest) HasDefaultTimeZone() bool {
+	if o != nil && !IsNil(o.DefaultTimeZone) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultTimeZone gets a reference to the given string and assigns it to the DefaultTimeZone field.
+func (o *UpdateOrgRequest) SetDefaultTimeZone(v string) {
+	o.DefaultTimeZone = &v
 }
 
 // GetRegistryIntegrationId returns the RegistryIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -165,6 +198,9 @@ func (o UpdateOrgRequest) MarshalJSON() ([]byte, error) {
 func (o UpdateOrgRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["title"] = o.Title
+	if !IsNil(o.DefaultTimeZone) {
+		toSerialize["defaultTimeZone"] = o.DefaultTimeZone
+	}
 	if o.RegistryIntegrationId.IsSet() {
 		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
 	}

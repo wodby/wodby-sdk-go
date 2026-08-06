@@ -335,7 +335,7 @@ func (r ApiListTasksRequest) ProjectIds(projectIds string) ApiListTasksRequest {
 	return r
 }
 
-// Return matching tasks as a flat page or as entity-scoped task trees
+// Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include all current-page tree nodes in treeItems.
 func (r ApiListTasksRequest) View(view string) ApiListTasksRequest {
 	r.view = &view
 	return r

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Workload** | Pointer to **NullableString** |  | [optional] 
 **Container** | Pointer to **NullableString** |  | [optional] 
+**Pod** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -96,6 +97,41 @@ HasContainer returns a boolean if a field has been set.
 `func (o *NewAppServiceLogStreamInput) UnsetContainer()`
 
 UnsetContainer ensures that no value is present for Container, not even an explicit nil
+### GetPod
+
+`func (o *NewAppServiceLogStreamInput) GetPod() string`
+
+GetPod returns the Pod field if non-nil, zero value otherwise.
+
+### GetPodOk
+
+`func (o *NewAppServiceLogStreamInput) GetPodOk() (*string, bool)`
+
+GetPodOk returns a tuple with the Pod field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPod
+
+`func (o *NewAppServiceLogStreamInput) SetPod(v string)`
+
+SetPod sets Pod field to given value.
+
+### HasPod
+
+`func (o *NewAppServiceLogStreamInput) HasPod() bool`
+
+HasPod returns a boolean if a field has been set.
+
+### SetPodNil
+
+`func (o *NewAppServiceLogStreamInput) SetPodNil(b bool)`
+
+ SetPodNil sets the value for Pod to be an explicit nil
+
+### UnsetPod
+`func (o *NewAppServiceLogStreamInput) UnsetPod()`
+
+UnsetPod ensures that no value is present for Pod, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

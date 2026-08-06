@@ -26,6 +26,11 @@ type Org struct {
 	Name string `json:"name"`
 	Title string `json:"title"`
 	Domain string `json:"domain"`
+	DefaultTimeZone string `json:"defaultTimeZone"`
+	// Effective default CI integration ID. Zero selects the built-in Wodby CI service.
+	CiIntegrationId int32 `json:"ciIntegrationId"`
+	// Effective default registry integration ID. Zero selects the built-in Wodby registry service.
+	RegistryIntegrationId int32 `json:"registryIntegrationId"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -36,12 +41,15 @@ type _Org Org
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrg(id int32, name string, title string, domain string, createdAt time.Time, updatedAt time.Time) *Org {
+func NewOrg(id int32, name string, title string, domain string, defaultTimeZone string, ciIntegrationId int32, registryIntegrationId int32, createdAt time.Time, updatedAt time.Time) *Org {
 	this := Org{}
 	this.Id = id
 	this.Name = name
 	this.Title = title
 	this.Domain = domain
+	this.DefaultTimeZone = defaultTimeZone
+	this.CiIntegrationId = ciIntegrationId
+	this.RegistryIntegrationId = registryIntegrationId
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -151,6 +159,78 @@ func (o *Org) SetDomain(v string) {
 	o.Domain = v
 }
 
+// GetDefaultTimeZone returns the DefaultTimeZone field value
+func (o *Org) GetDefaultTimeZone() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.DefaultTimeZone
+}
+
+// GetDefaultTimeZoneOk returns a tuple with the DefaultTimeZone field value
+// and a boolean to check if the value has been set.
+func (o *Org) GetDefaultTimeZoneOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DefaultTimeZone, true
+}
+
+// SetDefaultTimeZone sets field value
+func (o *Org) SetDefaultTimeZone(v string) {
+	o.DefaultTimeZone = v
+}
+
+// GetCiIntegrationId returns the CiIntegrationId field value
+func (o *Org) GetCiIntegrationId() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.CiIntegrationId
+}
+
+// GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field value
+// and a boolean to check if the value has been set.
+func (o *Org) GetCiIntegrationIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CiIntegrationId, true
+}
+
+// SetCiIntegrationId sets field value
+func (o *Org) SetCiIntegrationId(v int32) {
+	o.CiIntegrationId = v
+}
+
+// GetRegistryIntegrationId returns the RegistryIntegrationId field value
+func (o *Org) GetRegistryIntegrationId() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.RegistryIntegrationId
+}
+
+// GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field value
+// and a boolean to check if the value has been set.
+func (o *Org) GetRegistryIntegrationIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RegistryIntegrationId, true
+}
+
+// SetRegistryIntegrationId sets field value
+func (o *Org) SetRegistryIntegrationId(v int32) {
+	o.RegistryIntegrationId = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Org) GetCreatedAt() time.Time {
 	if o == nil {
@@ -213,6 +293,9 @@ func (o Org) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["domain"] = o.Domain
+	toSerialize["defaultTimeZone"] = o.DefaultTimeZone
+	toSerialize["ciIntegrationId"] = o.CiIntegrationId
+	toSerialize["registryIntegrationId"] = o.RegistryIntegrationId
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -227,6 +310,9 @@ func (o *Org) UnmarshalJSON(data []byte) (err error) {
 		"name",
 		"title",
 		"domain",
+		"defaultTimeZone",
+		"ciIntegrationId",
+		"registryIntegrationId",
 		"createdAt",
 		"updatedAt",
 	}

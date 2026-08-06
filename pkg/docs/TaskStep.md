@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
+**Position** | **int32** |  | 
 **Name** | **string** |  | 
 **Status** | **string** |  | 
 **LogStatus** | **string** |  | 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewTaskStep
 
-`func NewTaskStep(id int32, name string, status string, logStatus string, isSystem bool, ) *TaskStep`
+`func NewTaskStep(id int32, position int32, name string, status string, logStatus string, isSystem bool, ) *TaskStep`
 
 NewTaskStep instantiates a new TaskStep object
 This constructor will assign default values to properties that have it defined,
@@ -49,6 +50,26 @@ and a boolean to check if the value has been set.
 `func (o *TaskStep) SetId(v int32)`
 
 SetId sets Id field to given value.
+
+
+### GetPosition
+
+`func (o *TaskStep) GetPosition() int32`
+
+GetPosition returns the Position field if non-nil, zero value otherwise.
+
+### GetPositionOk
+
+`func (o *TaskStep) GetPositionOk() (*int32, bool)`
+
+GetPositionOk returns a tuple with the Position field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPosition
+
+`func (o *TaskStep) SetPosition(v int32)`
+
+SetPosition sets Position field to given value.
 
 
 ### GetName

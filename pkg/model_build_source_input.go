@@ -28,6 +28,7 @@ type BuildSourceInput struct {
 	RemoteGitRepoId NullableString `json:"remoteGitRepoId,omitempty"`
 	GitRef NullableString `json:"gitRef,omitempty"`
 	GitRefType NullableString `json:"gitRefType,omitempty"`
+	CiWorkflow NullableString `json:"ciWorkflow,omitempty"`
 }
 
 type _BuildSourceInput BuildSourceInput
@@ -326,6 +327,48 @@ func (o *BuildSourceInput) UnsetGitRefType() {
 	o.GitRefType.Unset()
 }
 
+// GetCiWorkflow returns the CiWorkflow field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BuildSourceInput) GetCiWorkflow() string {
+	if o == nil || IsNil(o.CiWorkflow.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CiWorkflow.Get()
+}
+
+// GetCiWorkflowOk returns a tuple with the CiWorkflow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BuildSourceInput) GetCiWorkflowOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CiWorkflow.Get(), o.CiWorkflow.IsSet()
+}
+
+// HasCiWorkflow returns a boolean if a field has been set.
+func (o *BuildSourceInput) HasCiWorkflow() bool {
+	if o != nil && o.CiWorkflow.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCiWorkflow gets a reference to the given NullableString and assigns it to the CiWorkflow field.
+func (o *BuildSourceInput) SetCiWorkflow(v string) {
+	o.CiWorkflow.Set(&v)
+}
+// SetCiWorkflowNil sets the value for CiWorkflow to be an explicit nil
+func (o *BuildSourceInput) SetCiWorkflowNil() {
+	o.CiWorkflow.Set(nil)
+}
+
+// UnsetCiWorkflow ensures that no value is present for CiWorkflow, not even an explicit nil
+func (o *BuildSourceInput) UnsetCiWorkflow() {
+	o.CiWorkflow.Unset()
+}
+
 func (o BuildSourceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -354,6 +397,9 @@ func (o BuildSourceInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.GitRefType.IsSet() {
 		toSerialize["gitRefType"] = o.GitRefType.Get()
+	}
+	if o.CiWorkflow.IsSet() {
+		toSerialize["ciWorkflow"] = o.CiWorkflow.Get()
 	}
 	return toSerialize, nil
 }

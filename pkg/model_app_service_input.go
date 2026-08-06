@@ -20,6 +20,7 @@ var _ MappedNullable = &AppServiceInput{}
 // AppServiceInput struct for AppServiceInput
 type AppServiceInput struct {
 	Replicas NullableInt32 `json:"replicas,omitempty"`
+	Scalability *AppServiceScalabilityUpdateInput `json:"scalability,omitempty"`
 	Version NullableString `json:"version,omitempty"`
 	Disabled NullableBool `json:"disabled,omitempty"`
 	Main NullableBool `json:"main,omitempty"`
@@ -83,6 +84,38 @@ func (o *AppServiceInput) SetReplicasNil() {
 // UnsetReplicas ensures that no value is present for Replicas, not even an explicit nil
 func (o *AppServiceInput) UnsetReplicas() {
 	o.Replicas.Unset()
+}
+
+// GetScalability returns the Scalability field value if set, zero value otherwise.
+func (o *AppServiceInput) GetScalability() AppServiceScalabilityUpdateInput {
+	if o == nil || IsNil(o.Scalability) {
+		var ret AppServiceScalabilityUpdateInput
+		return ret
+	}
+	return *o.Scalability
+}
+
+// GetScalabilityOk returns a tuple with the Scalability field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppServiceInput) GetScalabilityOk() (*AppServiceScalabilityUpdateInput, bool) {
+	if o == nil || IsNil(o.Scalability) {
+		return nil, false
+	}
+	return o.Scalability, true
+}
+
+// HasScalability returns a boolean if a field has been set.
+func (o *AppServiceInput) HasScalability() bool {
+	if o != nil && !IsNil(o.Scalability) {
+		return true
+	}
+
+	return false
+}
+
+// SetScalability gets a reference to the given AppServiceScalabilityUpdateInput and assigns it to the Scalability field.
+func (o *AppServiceInput) SetScalability(v AppServiceScalabilityUpdateInput) {
+	o.Scalability = &v
 }
 
 // GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -255,6 +288,9 @@ func (o AppServiceInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Replicas.IsSet() {
 		toSerialize["replicas"] = o.Replicas.Get()
+	}
+	if !IsNil(o.Scalability) {
+		toSerialize["scalability"] = o.Scalability
 	}
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()

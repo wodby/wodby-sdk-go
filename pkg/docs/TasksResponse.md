@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Items** | [**[]Task**](Task.md) |  | 
+**TreeItems** | Pointer to [**[]TaskTreeItem**](TaskTreeItem.md) | Flat current-page roots and descendants for tree view, linked by parentId. | [optional] 
 **TotalCount** | **int32** |  | 
 **NextPage** | Pointer to **NullableInt32** |  | [optional] 
 
@@ -47,6 +48,41 @@ and a boolean to check if the value has been set.
 SetItems sets Items field to given value.
 
 
+### GetTreeItems
+
+`func (o *TasksResponse) GetTreeItems() []TaskTreeItem`
+
+GetTreeItems returns the TreeItems field if non-nil, zero value otherwise.
+
+### GetTreeItemsOk
+
+`func (o *TasksResponse) GetTreeItemsOk() (*[]TaskTreeItem, bool)`
+
+GetTreeItemsOk returns a tuple with the TreeItems field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTreeItems
+
+`func (o *TasksResponse) SetTreeItems(v []TaskTreeItem)`
+
+SetTreeItems sets TreeItems field to given value.
+
+### HasTreeItems
+
+`func (o *TasksResponse) HasTreeItems() bool`
+
+HasTreeItems returns a boolean if a field has been set.
+
+### SetTreeItemsNil
+
+`func (o *TasksResponse) SetTreeItemsNil(b bool)`
+
+ SetTreeItemsNil sets the value for TreeItems to be an explicit nil
+
+### UnsetTreeItems
+`func (o *TasksResponse) UnsetTreeItems()`
+
+UnsetTreeItems ensures that no value is present for TreeItems, not even an explicit nil
 ### GetTotalCount
 
 `func (o *TasksResponse) GetTotalCount() int32`

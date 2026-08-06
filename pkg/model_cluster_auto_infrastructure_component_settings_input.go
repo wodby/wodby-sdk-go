@@ -21,6 +21,7 @@ var _ MappedNullable = &ClusterAutoInfrastructureComponentSettingsInput{}
 type ClusterAutoInfrastructureComponentSettingsInput struct {
 	Enabled NullableBool `json:"enabled,omitempty"`
 	VersionPolicy *ClusterAutoUpgradeVersionPolicyInput `json:"versionPolicy,omitempty"`
+	TimeWindow *AutomationTimeWindowInput `json:"timeWindow,omitempty"`
 }
 
 // NewClusterAutoInfrastructureComponentSettingsInput instantiates a new ClusterAutoInfrastructureComponentSettingsInput object
@@ -114,6 +115,38 @@ func (o *ClusterAutoInfrastructureComponentSettingsInput) SetVersionPolicy(v Clu
 	o.VersionPolicy = &v
 }
 
+// GetTimeWindow returns the TimeWindow field value if set, zero value otherwise.
+func (o *ClusterAutoInfrastructureComponentSettingsInput) GetTimeWindow() AutomationTimeWindowInput {
+	if o == nil || IsNil(o.TimeWindow) {
+		var ret AutomationTimeWindowInput
+		return ret
+	}
+	return *o.TimeWindow
+}
+
+// GetTimeWindowOk returns a tuple with the TimeWindow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClusterAutoInfrastructureComponentSettingsInput) GetTimeWindowOk() (*AutomationTimeWindowInput, bool) {
+	if o == nil || IsNil(o.TimeWindow) {
+		return nil, false
+	}
+	return o.TimeWindow, true
+}
+
+// HasTimeWindow returns a boolean if a field has been set.
+func (o *ClusterAutoInfrastructureComponentSettingsInput) HasTimeWindow() bool {
+	if o != nil && !IsNil(o.TimeWindow) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeWindow gets a reference to the given AutomationTimeWindowInput and assigns it to the TimeWindow field.
+func (o *ClusterAutoInfrastructureComponentSettingsInput) SetTimeWindow(v AutomationTimeWindowInput) {
+	o.TimeWindow = &v
+}
+
 func (o ClusterAutoInfrastructureComponentSettingsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -129,6 +162,9 @@ func (o ClusterAutoInfrastructureComponentSettingsInput) ToMap() (map[string]int
 	}
 	if !IsNil(o.VersionPolicy) {
 		toSerialize["versionPolicy"] = o.VersionPolicy
+	}
+	if !IsNil(o.TimeWindow) {
+		toSerialize["timeWindow"] = o.TimeWindow
 	}
 	return toSerialize, nil
 }

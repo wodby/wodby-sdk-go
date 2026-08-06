@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Enabled** | **bool** |  | 
 **VersionPolicy** | Pointer to [**ClusterAutoUpgradeVersionPolicy**](ClusterAutoUpgradeVersionPolicy.md) |  | [optional] 
+**TimeWindow** | Pointer to [**AutomationTimeWindow**](AutomationTimeWindow.md) |  | [optional] 
 
 ## Methods
 
@@ -70,6 +71,31 @@ SetVersionPolicy sets VersionPolicy field to given value.
 `func (o *ClusterAutoInfrastructureComponentSettings) HasVersionPolicy() bool`
 
 HasVersionPolicy returns a boolean if a field has been set.
+
+### GetTimeWindow
+
+`func (o *ClusterAutoInfrastructureComponentSettings) GetTimeWindow() AutomationTimeWindow`
+
+GetTimeWindow returns the TimeWindow field if non-nil, zero value otherwise.
+
+### GetTimeWindowOk
+
+`func (o *ClusterAutoInfrastructureComponentSettings) GetTimeWindowOk() (*AutomationTimeWindow, bool)`
+
+GetTimeWindowOk returns a tuple with the TimeWindow field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeWindow
+
+`func (o *ClusterAutoInfrastructureComponentSettings) SetTimeWindow(v AutomationTimeWindow)`
+
+SetTimeWindow sets TimeWindow field to given value.
+
+### HasTimeWindow
+
+`func (o *ClusterAutoInfrastructureComponentSettings) HasTimeWindow() bool`
+
+HasTimeWindow returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

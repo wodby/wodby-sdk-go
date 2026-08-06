@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Status** | **string** |  | 
 **Replicas** | **int32** |  | 
+**Scalability** | Pointer to [**NullableAppServiceScalability**](AppServiceScalability.md) |  | [optional] 
 **Version** | **string** |  | 
 **Main** | **bool** |  | 
 **Disabled** | **bool** |  | 
@@ -163,6 +164,41 @@ and a boolean to check if the value has been set.
 SetReplicas sets Replicas field to given value.
 
 
+### GetScalability
+
+`func (o *AppService) GetScalability() AppServiceScalability`
+
+GetScalability returns the Scalability field if non-nil, zero value otherwise.
+
+### GetScalabilityOk
+
+`func (o *AppService) GetScalabilityOk() (*AppServiceScalability, bool)`
+
+GetScalabilityOk returns a tuple with the Scalability field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScalability
+
+`func (o *AppService) SetScalability(v AppServiceScalability)`
+
+SetScalability sets Scalability field to given value.
+
+### HasScalability
+
+`func (o *AppService) HasScalability() bool`
+
+HasScalability returns a boolean if a field has been set.
+
+### SetScalabilityNil
+
+`func (o *AppService) SetScalabilityNil(b bool)`
+
+ SetScalabilityNil sets the value for Scalability to be an explicit nil
+
+### UnsetScalability
+`func (o *AppService) UnsetScalability()`
+
+UnsetScalability ensures that no value is present for Scalability, not even an explicit nil
 ### GetVersion
 
 `func (o *AppService) GetVersion() string`

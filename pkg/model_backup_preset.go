@@ -37,6 +37,7 @@ type BackupPreset struct {
 	Auto bool `json:"auto"`
 	Disabled bool `json:"disabled"`
 	Crontab NullableString `json:"crontab,omitempty"`
+	TimeWindow *AutomationTimeWindow `json:"timeWindow,omitempty"`
 	Duration NullableInt32 `json:"duration,omitempty"`
 	NextRunAt NullableTime `json:"nextRunAt,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -592,6 +593,38 @@ func (o *BackupPreset) UnsetCrontab() {
 	o.Crontab.Unset()
 }
 
+// GetTimeWindow returns the TimeWindow field value if set, zero value otherwise.
+func (o *BackupPreset) GetTimeWindow() AutomationTimeWindow {
+	if o == nil || IsNil(o.TimeWindow) {
+		var ret AutomationTimeWindow
+		return ret
+	}
+	return *o.TimeWindow
+}
+
+// GetTimeWindowOk returns a tuple with the TimeWindow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BackupPreset) GetTimeWindowOk() (*AutomationTimeWindow, bool) {
+	if o == nil || IsNil(o.TimeWindow) {
+		return nil, false
+	}
+	return o.TimeWindow, true
+}
+
+// HasTimeWindow returns a boolean if a field has been set.
+func (o *BackupPreset) HasTimeWindow() bool {
+	if o != nil && !IsNil(o.TimeWindow) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeWindow gets a reference to the given AutomationTimeWindow and assigns it to the TimeWindow field.
+func (o *BackupPreset) SetTimeWindow(v AutomationTimeWindow) {
+	o.TimeWindow = &v
+}
+
 // GetDuration returns the Duration field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BackupPreset) GetDuration() int32 {
 	if o == nil || IsNil(o.Duration.Get()) {
@@ -766,6 +799,9 @@ func (o BackupPreset) ToMap() (map[string]interface{}, error) {
 	toSerialize["disabled"] = o.Disabled
 	if o.Crontab.IsSet() {
 		toSerialize["crontab"] = o.Crontab.Get()
+	}
+	if !IsNil(o.TimeWindow) {
+		toSerialize["timeWindow"] = o.TimeWindow
 	}
 	if o.Duration.IsSet() {
 		toSerialize["duration"] = o.Duration.Get()

@@ -23,6 +23,7 @@ var _ MappedNullable = &TaskStep{}
 // TaskStep struct for TaskStep
 type TaskStep struct {
 	Id int32 `json:"id"`
+	Position int32 `json:"position"`
 	Name string `json:"name"`
 	Status string `json:"status"`
 	LogStatus string `json:"logStatus"`
@@ -37,9 +38,10 @@ type _TaskStep TaskStep
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTaskStep(id int32, name string, status string, logStatus string, isSystem bool) *TaskStep {
+func NewTaskStep(id int32, position int32, name string, status string, logStatus string, isSystem bool) *TaskStep {
 	this := TaskStep{}
 	this.Id = id
+	this.Position = position
 	this.Name = name
 	this.Status = status
 	this.LogStatus = logStatus
@@ -77,6 +79,30 @@ func (o *TaskStep) GetIdOk() (*int32, bool) {
 // SetId sets field value
 func (o *TaskStep) SetId(v int32) {
 	o.Id = v
+}
+
+// GetPosition returns the Position field value
+func (o *TaskStep) GetPosition() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Position
+}
+
+// GetPositionOk returns a tuple with the Position field value
+// and a boolean to check if the value has been set.
+func (o *TaskStep) GetPositionOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Position, true
+}
+
+// SetPosition sets field value
+func (o *TaskStep) SetPosition(v int32) {
+	o.Position = v
 }
 
 // GetName returns the Name field value
@@ -270,6 +296,7 @@ func (o TaskStep) MarshalJSON() ([]byte, error) {
 func (o TaskStep) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["position"] = o.Position
 	toSerialize["name"] = o.Name
 	toSerialize["status"] = o.Status
 	toSerialize["logStatus"] = o.LogStatus
@@ -289,6 +316,7 @@ func (o *TaskStep) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"position",
 		"name",
 		"status",
 		"logStatus",

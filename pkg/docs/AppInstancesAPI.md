@@ -8,8 +8,10 @@ Method | HTTP request | Description
 [**DeleteAppInstance**](AppInstancesAPI.md#DeleteAppInstance) | **Delete** /app-instances/{id} | Delete app instance
 [**GetAppInstance**](AppInstancesAPI.md#GetAppInstance) | **Get** /app-instances/{id} | Get app instance
 [**GetAppInstanceByName**](AppInstancesAPI.md#GetAppInstanceByName) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
+[**GetAppInstanceCICDSettings**](AppInstancesAPI.md#GetAppInstanceCICDSettings) | **Get** /app-instances/cicd-settings/{id} | Get app instance CI/CD settings
 [**ListAppInstances**](AppInstancesAPI.md#ListAppInstances) | **Get** /app-instances | List app instances
 [**UpdateAppInstance**](AppInstancesAPI.md#UpdateAppInstance) | **Put** /app-instances/{id} | Update app instance
+[**UpdateAppInstanceCICDSettings**](AppInstancesAPI.md#UpdateAppInstanceCICDSettings) | **Put** /app-instances/cicd-settings/{id} | Update app instance CI/CD settings
 [**UpdateAppInstanceSettings**](AppInstancesAPI.md#UpdateAppInstanceSettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 [**UpgradeAppInstanceStack**](AppInstancesAPI.md#UpgradeAppInstanceStack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 
@@ -298,6 +300,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAppInstanceCICDSettings
+
+> AppInstanceCICDSettings GetAppInstanceCICDSettings(ctx, id).Execute()
+
+Get app instance CI/CD settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.GetAppInstanceCICDSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.GetAppInstanceCICDSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppInstanceCICDSettings`: AppInstanceCICDSettings
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.GetAppInstanceCICDSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppInstanceCICDSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppInstanceCICDSettings**](AppInstanceCICDSettings.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAppInstances
 
 > []AppInstance ListAppInstances(ctx).OrgId(orgId).ProjectIds(projectIds).AppId(appId).ClusterId(clusterId).ClusterApp(clusterApp).Execute()
@@ -429,6 +501,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppInstance**](AppInstance.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAppInstanceCICDSettings
+
+> AppInstanceCICDSettings UpdateAppInstanceCICDSettings(ctx, id).AppInstanceCICDSettingsInput(appInstanceCICDSettingsInput).Execute()
+
+Update app instance CI/CD settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appInstanceCICDSettingsInput := *openapiclient.NewAppInstanceCICDSettingsInput(int32(123), int32(123)) // AppInstanceCICDSettingsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.UpdateAppInstanceCICDSettings(context.Background(), id).AppInstanceCICDSettingsInput(appInstanceCICDSettingsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.UpdateAppInstanceCICDSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAppInstanceCICDSettings`: AppInstanceCICDSettings
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.UpdateAppInstanceCICDSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAppInstanceCICDSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appInstanceCICDSettingsInput** | [**AppInstanceCICDSettingsInput**](AppInstanceCICDSettingsInput.md) |  | 
+
+### Return type
+
+[**AppInstanceCICDSettings**](AppInstanceCICDSettings.md)
 
 ### Authorization
 

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Replicas** | Pointer to **NullableInt32** |  | [optional] 
+**Scalability** | Pointer to [**AppServiceScalabilityUpdateInput**](AppServiceScalabilityUpdateInput.md) |  | [optional] 
 **Version** | Pointer to **NullableString** |  | [optional] 
 **Disabled** | Pointer to **NullableBool** |  | [optional] 
 **Main** | Pointer to **NullableBool** |  | [optional] 
@@ -64,6 +65,31 @@ HasReplicas returns a boolean if a field has been set.
 `func (o *AppServiceInput) UnsetReplicas()`
 
 UnsetReplicas ensures that no value is present for Replicas, not even an explicit nil
+### GetScalability
+
+`func (o *AppServiceInput) GetScalability() AppServiceScalabilityUpdateInput`
+
+GetScalability returns the Scalability field if non-nil, zero value otherwise.
+
+### GetScalabilityOk
+
+`func (o *AppServiceInput) GetScalabilityOk() (*AppServiceScalabilityUpdateInput, bool)`
+
+GetScalabilityOk returns a tuple with the Scalability field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScalability
+
+`func (o *AppServiceInput) SetScalability(v AppServiceScalabilityUpdateInput)`
+
+SetScalability sets Scalability field to given value.
+
+### HasScalability
+
+`func (o *AppServiceInput) HasScalability() bool`
+
+HasScalability returns a boolean if a field has been set.
+
 ### GetVersion
 
 `func (o *AppServiceInput) GetVersion() string`

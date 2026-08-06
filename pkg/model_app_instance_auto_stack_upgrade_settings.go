@@ -23,6 +23,7 @@ var _ MappedNullable = &AppInstanceAutoStackUpgradeSettings{}
 type AppInstanceAutoStackUpgradeSettings struct {
 	Enabled bool `json:"enabled"`
 	UpgradeSettings *AppInstanceStackUpgradeSettings `json:"upgradeSettings,omitempty"`
+	TimeWindow *AutomationTimeWindow `json:"timeWindow,omitempty"`
 }
 
 type _AppInstanceAutoStackUpgradeSettings AppInstanceAutoStackUpgradeSettings
@@ -101,6 +102,38 @@ func (o *AppInstanceAutoStackUpgradeSettings) SetUpgradeSettings(v AppInstanceSt
 	o.UpgradeSettings = &v
 }
 
+// GetTimeWindow returns the TimeWindow field value if set, zero value otherwise.
+func (o *AppInstanceAutoStackUpgradeSettings) GetTimeWindow() AutomationTimeWindow {
+	if o == nil || IsNil(o.TimeWindow) {
+		var ret AutomationTimeWindow
+		return ret
+	}
+	return *o.TimeWindow
+}
+
+// GetTimeWindowOk returns a tuple with the TimeWindow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppInstanceAutoStackUpgradeSettings) GetTimeWindowOk() (*AutomationTimeWindow, bool) {
+	if o == nil || IsNil(o.TimeWindow) {
+		return nil, false
+	}
+	return o.TimeWindow, true
+}
+
+// HasTimeWindow returns a boolean if a field has been set.
+func (o *AppInstanceAutoStackUpgradeSettings) HasTimeWindow() bool {
+	if o != nil && !IsNil(o.TimeWindow) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeWindow gets a reference to the given AutomationTimeWindow and assigns it to the TimeWindow field.
+func (o *AppInstanceAutoStackUpgradeSettings) SetTimeWindow(v AutomationTimeWindow) {
+	o.TimeWindow = &v
+}
+
 func (o AppInstanceAutoStackUpgradeSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -114,6 +147,9 @@ func (o AppInstanceAutoStackUpgradeSettings) ToMap() (map[string]interface{}, er
 	toSerialize["enabled"] = o.Enabled
 	if !IsNil(o.UpgradeSettings) {
 		toSerialize["upgradeSettings"] = o.UpgradeSettings
+	}
+	if !IsNil(o.TimeWindow) {
+		toSerialize["timeWindow"] = o.TimeWindow
 	}
 	return toSerialize, nil
 }

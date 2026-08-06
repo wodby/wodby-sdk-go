@@ -21,6 +21,7 @@ var _ MappedNullable = &NewAppServiceLogStreamInput{}
 type NewAppServiceLogStreamInput struct {
 	Workload NullableString `json:"workload,omitempty"`
 	Container NullableString `json:"container,omitempty"`
+	Pod NullableString `json:"pod,omitempty"`
 }
 
 // NewNewAppServiceLogStreamInput instantiates a new NewAppServiceLogStreamInput object
@@ -124,6 +125,48 @@ func (o *NewAppServiceLogStreamInput) UnsetContainer() {
 	o.Container.Unset()
 }
 
+// GetPod returns the Pod field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppServiceLogStreamInput) GetPod() string {
+	if o == nil || IsNil(o.Pod.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Pod.Get()
+}
+
+// GetPodOk returns a tuple with the Pod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewAppServiceLogStreamInput) GetPodOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Pod.Get(), o.Pod.IsSet()
+}
+
+// HasPod returns a boolean if a field has been set.
+func (o *NewAppServiceLogStreamInput) HasPod() bool {
+	if o != nil && o.Pod.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPod gets a reference to the given NullableString and assigns it to the Pod field.
+func (o *NewAppServiceLogStreamInput) SetPod(v string) {
+	o.Pod.Set(&v)
+}
+// SetPodNil sets the value for Pod to be an explicit nil
+func (o *NewAppServiceLogStreamInput) SetPodNil() {
+	o.Pod.Set(nil)
+}
+
+// UnsetPod ensures that no value is present for Pod, not even an explicit nil
+func (o *NewAppServiceLogStreamInput) UnsetPod() {
+	o.Pod.Unset()
+}
+
 func (o NewAppServiceLogStreamInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -139,6 +182,9 @@ func (o NewAppServiceLogStreamInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Container.IsSet() {
 		toSerialize["container"] = o.Container.Get()
+	}
+	if o.Pod.IsSet() {
+		toSerialize["pod"] = o.Pod.Get()
 	}
 	return toSerialize, nil
 }

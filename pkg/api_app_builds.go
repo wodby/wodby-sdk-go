@@ -608,7 +608,7 @@ func (r ApiGetAppBuildConfigRequest) Execute() (*AppBuildConfig, *http.Response,
 /*
 GetAppBuildConfig Get build config
 
-Returns CI build configuration for the app build.
+Returns CI build configuration for the build source owner and image targets linked to that owner. Services with independent build sources are omitted.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

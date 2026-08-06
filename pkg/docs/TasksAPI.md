@@ -175,7 +175,7 @@ func main() {
 	scope := "scope_example" // string |  (optional)
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
-	view := "view_example" // string | Return matching tasks as a flat page or as entity-scoped task trees (optional)
+	view := "view_example" // string | Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include all current-page tree nodes in treeItems. (optional)
 	withoutOrigin := true // bool | Deprecated compatibility alias for view=tree (optional)
 	statuses := "statuses_example" // string | Comma-separated task statuses (optional)
 	names := "names_example" // string | Comma-separated exact task names (optional)
@@ -217,7 +217,7 @@ Name | Type | Description  | Notes
  **scope** | **string** |  | 
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
- **view** | **string** | Return matching tasks as a flat page or as entity-scoped task trees | 
+ **view** | **string** | Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include all current-page tree nodes in treeItems. | 
  **withoutOrigin** | **bool** | Deprecated compatibility alias for view&#x3D;tree | 
  **statuses** | **string** | Comma-separated task statuses | 
  **names** | **string** | Comma-separated exact task names | 

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
-**Number** | **int32** |  | 
+**Number** | **int32** | App-instance build-launch number. Build records created by the same Wodby CI launch share this number. | 
 **Status** | **string** |  | 
 **AppInstanceId** | **int32** |  | 
 **AppServiceId** | **int32** |  | 

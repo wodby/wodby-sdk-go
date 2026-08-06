@@ -100,8 +100,10 @@ Class | Method | HTTP request | Description
 *AppInstancesAPI* | [**DeleteAppInstance**](docs/AppInstancesAPI.md#deleteappinstance) | **Delete** /app-instances/{id} | Delete app instance
 *AppInstancesAPI* | [**GetAppInstance**](docs/AppInstancesAPI.md#getappinstance) | **Get** /app-instances/{id} | Get app instance
 *AppInstancesAPI* | [**GetAppInstanceByName**](docs/AppInstancesAPI.md#getappinstancebyname) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
+*AppInstancesAPI* | [**GetAppInstanceCICDSettings**](docs/AppInstancesAPI.md#getappinstancecicdsettings) | **Get** /app-instances/cicd-settings/{id} | Get app instance CI/CD settings
 *AppInstancesAPI* | [**ListAppInstances**](docs/AppInstancesAPI.md#listappinstances) | **Get** /app-instances | List app instances
 *AppInstancesAPI* | [**UpdateAppInstance**](docs/AppInstancesAPI.md#updateappinstance) | **Put** /app-instances/{id} | Update app instance
+*AppInstancesAPI* | [**UpdateAppInstanceCICDSettings**](docs/AppInstancesAPI.md#updateappinstancecicdsettings) | **Put** /app-instances/cicd-settings/{id} | Update app instance CI/CD settings
 *AppInstancesAPI* | [**UpdateAppInstanceSettings**](docs/AppInstancesAPI.md#updateappinstancesettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 *AppInstancesAPI* | [**UpgradeAppInstanceStack**](docs/AppInstancesAPI.md#upgradeappinstancestack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 *AppPortsAPI* | [**GetAppPort**](docs/AppPortsAPI.md#getappport) | **Get** /app-ports/{id} | Get app port
@@ -330,6 +332,8 @@ Class | Method | HTTP request | Description
  - [AppInstanceAutoStackUpgradeSettings](docs/AppInstanceAutoStackUpgradeSettings.md)
  - [AppInstanceAutoStackUpgradeSettingsInput](docs/AppInstanceAutoStackUpgradeSettingsInput.md)
  - [AppInstanceBackupHealth](docs/AppInstanceBackupHealth.md)
+ - [AppInstanceCICDSettings](docs/AppInstanceCICDSettings.md)
+ - [AppInstanceCICDSettingsInput](docs/AppInstanceCICDSettingsInput.md)
  - [AppInstanceCronHealth](docs/AppInstanceCronHealth.md)
  - [AppInstanceHealth](docs/AppInstanceHealth.md)
  - [AppInstanceSettings](docs/AppInstanceSettings.md)
@@ -364,10 +368,14 @@ Class | Method | HTTP request | Description
  - [AppServiceIntegrationInput](docs/AppServiceIntegrationInput.md)
  - [AppServiceLink](docs/AppServiceLink.md)
  - [AppServiceLinkInput](docs/AppServiceLinkInput.md)
+ - [AppServiceScalability](docs/AppServiceScalability.md)
+ - [AppServiceScalabilityUpdateInput](docs/AppServiceScalabilityUpdateInput.md)
  - [AppServiceSetting](docs/AppServiceSetting.md)
  - [AppServiceSettingInput](docs/AppServiceSettingInput.md)
  - [AppServiceToken](docs/AppServiceToken.md)
  - [AppServiceVolume](docs/AppServiceVolume.md)
+ - [AutomationTimeWindow](docs/AutomationTimeWindow.md)
+ - [AutomationTimeWindowInput](docs/AutomationTimeWindowInput.md)
  - [Backup](docs/Backup.md)
  - [BackupPreset](docs/BackupPreset.md)
  - [BuildSourceInput](docs/BuildSourceInput.md)
@@ -515,6 +523,7 @@ Class | Method | HTTP request | Description
  - [TaskJob](docs/TaskJob.md)
  - [TaskStep](docs/TaskStep.md)
  - [TaskStepLogs](docs/TaskStepLogs.md)
+ - [TaskTreeItem](docs/TaskTreeItem.md)
  - [TasksResponse](docs/TasksResponse.md)
  - [URLResponse](docs/URLResponse.md)
  - [UpdateAppAuthInput](docs/UpdateAppAuthInput.md)

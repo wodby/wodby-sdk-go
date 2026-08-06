@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Override** | **bool** |  | 
 **Auto** | **bool** |  | 
 **Crontab** | Pointer to **NullableString** |  | [optional] 
+**TimeWindow** | Pointer to [**AutomationTimeWindowInput**](AutomationTimeWindowInput.md) |  | [optional] 
 **Duration** | Pointer to **NullableInt32** |  | [optional] 
 
 ## Methods
@@ -202,6 +203,31 @@ HasCrontab returns a boolean if a field has been set.
 `func (o *UpdateBackupPresetInput) UnsetCrontab()`
 
 UnsetCrontab ensures that no value is present for Crontab, not even an explicit nil
+### GetTimeWindow
+
+`func (o *UpdateBackupPresetInput) GetTimeWindow() AutomationTimeWindowInput`
+
+GetTimeWindow returns the TimeWindow field if non-nil, zero value otherwise.
+
+### GetTimeWindowOk
+
+`func (o *UpdateBackupPresetInput) GetTimeWindowOk() (*AutomationTimeWindowInput, bool)`
+
+GetTimeWindowOk returns a tuple with the TimeWindow field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeWindow
+
+`func (o *UpdateBackupPresetInput) SetTimeWindow(v AutomationTimeWindowInput)`
+
+SetTimeWindow sets TimeWindow field to given value.
+
+### HasTimeWindow
+
+`func (o *UpdateBackupPresetInput) HasTimeWindow() bool`
+
+HasTimeWindow returns a boolean if a field has been set.
+
 ### GetDuration
 
 `func (o *UpdateBackupPresetInput) GetDuration() int32`

@@ -23,6 +23,7 @@ var _ MappedNullable = &AppInstanceAutoStackUpgradeSettingsInput{}
 type AppInstanceAutoStackUpgradeSettingsInput struct {
 	Enabled bool `json:"enabled"`
 	UpgradeSettings *AppInstanceStackUpgradeSettingsInput `json:"upgradeSettings,omitempty"`
+	TimeWindow *AutomationTimeWindowInput `json:"timeWindow,omitempty"`
 }
 
 type _AppInstanceAutoStackUpgradeSettingsInput AppInstanceAutoStackUpgradeSettingsInput
@@ -101,6 +102,38 @@ func (o *AppInstanceAutoStackUpgradeSettingsInput) SetUpgradeSettings(v AppInsta
 	o.UpgradeSettings = &v
 }
 
+// GetTimeWindow returns the TimeWindow field value if set, zero value otherwise.
+func (o *AppInstanceAutoStackUpgradeSettingsInput) GetTimeWindow() AutomationTimeWindowInput {
+	if o == nil || IsNil(o.TimeWindow) {
+		var ret AutomationTimeWindowInput
+		return ret
+	}
+	return *o.TimeWindow
+}
+
+// GetTimeWindowOk returns a tuple with the TimeWindow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppInstanceAutoStackUpgradeSettingsInput) GetTimeWindowOk() (*AutomationTimeWindowInput, bool) {
+	if o == nil || IsNil(o.TimeWindow) {
+		return nil, false
+	}
+	return o.TimeWindow, true
+}
+
+// HasTimeWindow returns a boolean if a field has been set.
+func (o *AppInstanceAutoStackUpgradeSettingsInput) HasTimeWindow() bool {
+	if o != nil && !IsNil(o.TimeWindow) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeWindow gets a reference to the given AutomationTimeWindowInput and assigns it to the TimeWindow field.
+func (o *AppInstanceAutoStackUpgradeSettingsInput) SetTimeWindow(v AutomationTimeWindowInput) {
+	o.TimeWindow = &v
+}
+
 func (o AppInstanceAutoStackUpgradeSettingsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -114,6 +147,9 @@ func (o AppInstanceAutoStackUpgradeSettingsInput) ToMap() (map[string]interface{
 	toSerialize["enabled"] = o.Enabled
 	if !IsNil(o.UpgradeSettings) {
 		toSerialize["upgradeSettings"] = o.UpgradeSettings
+	}
+	if !IsNil(o.TimeWindow) {
+		toSerialize["timeWindow"] = o.TimeWindow
 	}
 	return toSerialize, nil
 }
