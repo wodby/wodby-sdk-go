@@ -335,7 +335,7 @@ func (r ApiListTasksRequest) ProjectIds(projectIds string) ApiListTasksRequest {
 	return r
 }
 
-// Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include all current-page tree nodes in treeItems.
+// Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include current-page tree nodes in treeItems. Root pages are capped at 100 tasks. Tree responses include up to 250 authorized tasks and set treeTruncated when additional visible descendants exist; exceeding the 10-level depth limit still returns 422.
 func (r ApiListTasksRequest) View(view string) ApiListTasksRequest {
 	r.view = &view
 	return r

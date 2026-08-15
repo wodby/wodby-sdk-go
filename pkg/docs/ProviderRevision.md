@@ -11,13 +11,14 @@ Name | Type | Description | Notes
 **Version** | **string** |  | 
 **ProviderId** | **int32** |  | 
 **Manifest** | Pointer to **map[string]interface{}** |  | [optional] 
+**PermissionAudit** | **bool** |  | 
 **CreatedAt** | **time.Time** |  | 
 
 ## Methods
 
 ### NewProviderRevision
 
-`func NewProviderRevision(id int32, name string, title string, number int32, version string, providerId int32, createdAt time.Time, ) *ProviderRevision`
+`func NewProviderRevision(id int32, name string, title string, number int32, version string, providerId int32, permissionAudit bool, createdAt time.Time, ) *ProviderRevision`
 
 NewProviderRevision instantiates a new ProviderRevision object
 This constructor will assign default values to properties that have it defined,
@@ -176,6 +177,26 @@ SetManifest sets Manifest field to given value.
 `func (o *ProviderRevision) HasManifest() bool`
 
 HasManifest returns a boolean if a field has been set.
+
+### GetPermissionAudit
+
+`func (o *ProviderRevision) GetPermissionAudit() bool`
+
+GetPermissionAudit returns the PermissionAudit field if non-nil, zero value otherwise.
+
+### GetPermissionAuditOk
+
+`func (o *ProviderRevision) GetPermissionAuditOk() (*bool, bool)`
+
+GetPermissionAuditOk returns a tuple with the PermissionAudit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPermissionAudit
+
+`func (o *ProviderRevision) SetPermissionAudit(v bool)`
+
+SetPermissionAudit sets PermissionAudit field to given value.
+
 
 ### GetCreatedAt
 

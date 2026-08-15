@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Title** | **string** |  | 
 **DefaultTimeZone** | Pointer to **string** |  | [optional] 
-**RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
-**CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**RegistryIntegrationId** | Pointer to **NullableInt32** | Omit or use null to preserve the current default, use 0 for the built-in registry, or use an organization-owned registry integration ID. | [optional] 
+**CiIntegrationId** | Pointer to **NullableInt32** | Omit or use null to preserve the current default, use 0 for the built-in CI service, or use an organization-owned CI integration ID. | [optional] 
 
 ## Methods
 

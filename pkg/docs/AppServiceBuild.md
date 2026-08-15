@@ -10,6 +10,9 @@ Name | Type | Description | Notes
 **ImageDeleted** | **bool** |  | 
 **Size** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
+**PreviouslyDeployed** | **bool** |  | 
+**CurrentlyDeployed** | **bool** |  | 
+**CurrentBuildNumber** | Pointer to **NullableInt32** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -17,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewAppServiceBuild
 
-`func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, size int32, appServiceId int32, createdAt time.Time, updatedAt time.Time, ) *AppServiceBuild`
+`func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, size int32, appServiceId int32, previouslyDeployed bool, currentlyDeployed bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceBuild`
 
 NewAppServiceBuild instantiates a new AppServiceBuild object
 This constructor will assign default values to properties that have it defined,
@@ -152,6 +155,81 @@ and a boolean to check if the value has been set.
 SetAppServiceId sets AppServiceId field to given value.
 
 
+### GetPreviouslyDeployed
+
+`func (o *AppServiceBuild) GetPreviouslyDeployed() bool`
+
+GetPreviouslyDeployed returns the PreviouslyDeployed field if non-nil, zero value otherwise.
+
+### GetPreviouslyDeployedOk
+
+`func (o *AppServiceBuild) GetPreviouslyDeployedOk() (*bool, bool)`
+
+GetPreviouslyDeployedOk returns a tuple with the PreviouslyDeployed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviouslyDeployed
+
+`func (o *AppServiceBuild) SetPreviouslyDeployed(v bool)`
+
+SetPreviouslyDeployed sets PreviouslyDeployed field to given value.
+
+
+### GetCurrentlyDeployed
+
+`func (o *AppServiceBuild) GetCurrentlyDeployed() bool`
+
+GetCurrentlyDeployed returns the CurrentlyDeployed field if non-nil, zero value otherwise.
+
+### GetCurrentlyDeployedOk
+
+`func (o *AppServiceBuild) GetCurrentlyDeployedOk() (*bool, bool)`
+
+GetCurrentlyDeployedOk returns a tuple with the CurrentlyDeployed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrentlyDeployed
+
+`func (o *AppServiceBuild) SetCurrentlyDeployed(v bool)`
+
+SetCurrentlyDeployed sets CurrentlyDeployed field to given value.
+
+
+### GetCurrentBuildNumber
+
+`func (o *AppServiceBuild) GetCurrentBuildNumber() int32`
+
+GetCurrentBuildNumber returns the CurrentBuildNumber field if non-nil, zero value otherwise.
+
+### GetCurrentBuildNumberOk
+
+`func (o *AppServiceBuild) GetCurrentBuildNumberOk() (*int32, bool)`
+
+GetCurrentBuildNumberOk returns a tuple with the CurrentBuildNumber field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrentBuildNumber
+
+`func (o *AppServiceBuild) SetCurrentBuildNumber(v int32)`
+
+SetCurrentBuildNumber sets CurrentBuildNumber field to given value.
+
+### HasCurrentBuildNumber
+
+`func (o *AppServiceBuild) HasCurrentBuildNumber() bool`
+
+HasCurrentBuildNumber returns a boolean if a field has been set.
+
+### SetCurrentBuildNumberNil
+
+`func (o *AppServiceBuild) SetCurrentBuildNumberNil(b bool)`
+
+ SetCurrentBuildNumberNil sets the value for CurrentBuildNumber to be an explicit nil
+
+### UnsetCurrentBuildNumber
+`func (o *AppServiceBuild) UnsetCurrentBuildNumber()`
+
+UnsetCurrentBuildNumber ensures that no value is present for CurrentBuildNumber, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *AppServiceBuild) GetCreatedAt() time.Time`

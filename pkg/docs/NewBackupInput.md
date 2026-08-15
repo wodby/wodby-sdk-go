@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
-**IntegrationId** | **int32** |  | 
-**Bucket** | **string** |  | 
+**IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. | 
+**Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods

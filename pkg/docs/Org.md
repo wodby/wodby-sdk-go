@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **DefaultTimeZone** | **string** |  | 
 **CiIntegrationId** | **int32** | Effective default CI integration ID. Zero selects the built-in Wodby CI service. | 
 **RegistryIntegrationId** | **int32** | Effective default registry integration ID. Zero selects the built-in Wodby registry service. | 
+**Capabilities** | Pointer to [**OrgCapabilities**](OrgCapabilities.md) |  | [optional] 
+**Subscription** | Pointer to [**OrgSubscription**](OrgSubscription.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -172,6 +174,56 @@ and a boolean to check if the value has been set.
 
 SetRegistryIntegrationId sets RegistryIntegrationId field to given value.
 
+
+### GetCapabilities
+
+`func (o *Org) GetCapabilities() OrgCapabilities`
+
+GetCapabilities returns the Capabilities field if non-nil, zero value otherwise.
+
+### GetCapabilitiesOk
+
+`func (o *Org) GetCapabilitiesOk() (*OrgCapabilities, bool)`
+
+GetCapabilitiesOk returns a tuple with the Capabilities field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCapabilities
+
+`func (o *Org) SetCapabilities(v OrgCapabilities)`
+
+SetCapabilities sets Capabilities field to given value.
+
+### HasCapabilities
+
+`func (o *Org) HasCapabilities() bool`
+
+HasCapabilities returns a boolean if a field has been set.
+
+### GetSubscription
+
+`func (o *Org) GetSubscription() OrgSubscription`
+
+GetSubscription returns the Subscription field if non-nil, zero value otherwise.
+
+### GetSubscriptionOk
+
+`func (o *Org) GetSubscriptionOk() (*OrgSubscription, bool)`
+
+GetSubscriptionOk returns a tuple with the Subscription field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscription
+
+`func (o *Org) SetSubscription(v OrgSubscription)`
+
+SetSubscription sets Subscription field to given value.
+
+### HasSubscription
+
+`func (o *Org) HasSubscription() bool`
+
+HasSubscription returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

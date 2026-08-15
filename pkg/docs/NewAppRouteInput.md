@@ -5,18 +5,21 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppServiceId** | **int32** |  | 
+**Disabled** | Pointer to **NullableBool** | Creates the custom domain disabled. Disabled domains do not require custom-domain feature access until enabled. | [optional] 
 **Main** | **bool** |  | 
 **Primary** | **bool** |  | 
 **Port** | **int32** |  | 
 **Host** | **string** |  | 
 **Path** | Pointer to **NullableString** |  | [optional] 
 **PathType** | Pointer to **NullableString** |  | [optional] 
-**Action** | Pointer to **NullableString** |  | [optional] 
+**Action** | Pointer to **NullableString** | SERVE sends requests to the selected app service. BACKEND is accepted for backwards compatibility. | [optional] 
 **RedirectScheme** | Pointer to **NullableString** |  | [optional] 
 **RedirectHost** | Pointer to **NullableString** |  | [optional] 
 **RedirectPath** | Pointer to **NullableString** |  | [optional] 
 **RedirectStatusCode** | Pointer to **NullableInt32** |  | [optional] 
+**Hsts** | Pointer to **NullableBool** | Enables HTTP Strict Transport Security for a serve route when TLS is active. | [optional] 
 **Letsencrypt** | Pointer to **NullableBool** |  | [optional] 
+**Tls** | Pointer to [**AppRouteTLSInput**](AppRouteTLSInput.md) |  | [optional] 
 
 ## Methods
 
@@ -57,6 +60,41 @@ and a boolean to check if the value has been set.
 SetAppServiceId sets AppServiceId field to given value.
 
 
+### GetDisabled
+
+`func (o *NewAppRouteInput) GetDisabled() bool`
+
+GetDisabled returns the Disabled field if non-nil, zero value otherwise.
+
+### GetDisabledOk
+
+`func (o *NewAppRouteInput) GetDisabledOk() (*bool, bool)`
+
+GetDisabledOk returns a tuple with the Disabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisabled
+
+`func (o *NewAppRouteInput) SetDisabled(v bool)`
+
+SetDisabled sets Disabled field to given value.
+
+### HasDisabled
+
+`func (o *NewAppRouteInput) HasDisabled() bool`
+
+HasDisabled returns a boolean if a field has been set.
+
+### SetDisabledNil
+
+`func (o *NewAppRouteInput) SetDisabledNil(b bool)`
+
+ SetDisabledNil sets the value for Disabled to be an explicit nil
+
+### UnsetDisabled
+`func (o *NewAppRouteInput) UnsetDisabled()`
+
+UnsetDisabled ensures that no value is present for Disabled, not even an explicit nil
 ### GetMain
 
 `func (o *NewAppRouteInput) GetMain() bool`
@@ -382,6 +420,41 @@ HasRedirectStatusCode returns a boolean if a field has been set.
 `func (o *NewAppRouteInput) UnsetRedirectStatusCode()`
 
 UnsetRedirectStatusCode ensures that no value is present for RedirectStatusCode, not even an explicit nil
+### GetHsts
+
+`func (o *NewAppRouteInput) GetHsts() bool`
+
+GetHsts returns the Hsts field if non-nil, zero value otherwise.
+
+### GetHstsOk
+
+`func (o *NewAppRouteInput) GetHstsOk() (*bool, bool)`
+
+GetHstsOk returns a tuple with the Hsts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHsts
+
+`func (o *NewAppRouteInput) SetHsts(v bool)`
+
+SetHsts sets Hsts field to given value.
+
+### HasHsts
+
+`func (o *NewAppRouteInput) HasHsts() bool`
+
+HasHsts returns a boolean if a field has been set.
+
+### SetHstsNil
+
+`func (o *NewAppRouteInput) SetHstsNil(b bool)`
+
+ SetHstsNil sets the value for Hsts to be an explicit nil
+
+### UnsetHsts
+`func (o *NewAppRouteInput) UnsetHsts()`
+
+UnsetHsts ensures that no value is present for Hsts, not even an explicit nil
 ### GetLetsencrypt
 
 `func (o *NewAppRouteInput) GetLetsencrypt() bool`
@@ -417,6 +490,31 @@ HasLetsencrypt returns a boolean if a field has been set.
 `func (o *NewAppRouteInput) UnsetLetsencrypt()`
 
 UnsetLetsencrypt ensures that no value is present for Letsencrypt, not even an explicit nil
+### GetTls
+
+`func (o *NewAppRouteInput) GetTls() AppRouteTLSInput`
+
+GetTls returns the Tls field if non-nil, zero value otherwise.
+
+### GetTlsOk
+
+`func (o *NewAppRouteInput) GetTlsOk() (*AppRouteTLSInput, bool)`
+
+GetTlsOk returns a tuple with the Tls field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTls
+
+`func (o *NewAppRouteInput) SetTls(v AppRouteTLSInput)`
+
+SetTls sets Tls field to given value.
+
+### HasTls
+
+`func (o *NewAppRouteInput) HasTls() bool`
+
+HasTls returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

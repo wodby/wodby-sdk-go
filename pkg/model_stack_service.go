@@ -38,6 +38,9 @@ type StackService struct {
 	ServiceRevVersion string `json:"serviceRevVersion"`
 	BuildSourceIntegrationId NullableInt32 `json:"buildSourceIntegrationId,omitempty"`
 	BuildSourceRemoteRepoId NullableString `json:"buildSourceRemoteRepoId,omitempty"`
+	Options []StackServiceOption `json:"options,omitempty"`
+	Settings []StackServiceSetting `json:"settings,omitempty"`
+	Containers []StackServiceContainer `json:"containers,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -497,6 +500,102 @@ func (o *StackService) UnsetBuildSourceRemoteRepoId() {
 	o.BuildSourceRemoteRepoId.Unset()
 }
 
+// GetOptions returns the Options field value if set, zero value otherwise.
+func (o *StackService) GetOptions() []StackServiceOption {
+	if o == nil || IsNil(o.Options) {
+		var ret []StackServiceOption
+		return ret
+	}
+	return o.Options
+}
+
+// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackService) GetOptionsOk() ([]StackServiceOption, bool) {
+	if o == nil || IsNil(o.Options) {
+		return nil, false
+	}
+	return o.Options, true
+}
+
+// HasOptions returns a boolean if a field has been set.
+func (o *StackService) HasOptions() bool {
+	if o != nil && !IsNil(o.Options) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptions gets a reference to the given []StackServiceOption and assigns it to the Options field.
+func (o *StackService) SetOptions(v []StackServiceOption) {
+	o.Options = v
+}
+
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *StackService) GetSettings() []StackServiceSetting {
+	if o == nil || IsNil(o.Settings) {
+		var ret []StackServiceSetting
+		return ret
+	}
+	return o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackService) GetSettingsOk() ([]StackServiceSetting, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *StackService) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given []StackServiceSetting and assigns it to the Settings field.
+func (o *StackService) SetSettings(v []StackServiceSetting) {
+	o.Settings = v
+}
+
+// GetContainers returns the Containers field value if set, zero value otherwise.
+func (o *StackService) GetContainers() []StackServiceContainer {
+	if o == nil || IsNil(o.Containers) {
+		var ret []StackServiceContainer
+		return ret
+	}
+	return o.Containers
+}
+
+// GetContainersOk returns a tuple with the Containers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackService) GetContainersOk() ([]StackServiceContainer, bool) {
+	if o == nil || IsNil(o.Containers) {
+		return nil, false
+	}
+	return o.Containers, true
+}
+
+// HasContainers returns a boolean if a field has been set.
+func (o *StackService) HasContainers() bool {
+	if o != nil && !IsNil(o.Containers) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainers gets a reference to the given []StackServiceContainer and assigns it to the Containers field.
+func (o *StackService) SetContainers(v []StackServiceContainer) {
+	o.Containers = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *StackService) GetCreatedAt() time.Time {
 	if o == nil {
@@ -574,6 +673,15 @@ func (o StackService) ToMap() (map[string]interface{}, error) {
 	}
 	if o.BuildSourceRemoteRepoId.IsSet() {
 		toSerialize["buildSourceRemoteRepoId"] = o.BuildSourceRemoteRepoId.Get()
+	}
+	if !IsNil(o.Options) {
+		toSerialize["options"] = o.Options
+	}
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
+	if !IsNil(o.Containers) {
+		toSerialize["containers"] = o.Containers
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt

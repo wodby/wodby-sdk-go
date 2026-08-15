@@ -31,6 +31,7 @@ type StackRevision struct {
 	Version string `json:"version"`
 	StackId int32 `json:"stackId"`
 	Manifest string `json:"manifest"`
+	LinkIssues []StackRevisionLinkIssue `json:"linkIssues"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
@@ -40,7 +41,7 @@ type _StackRevision StackRevision
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStackRevision(id int32, name string, title string, icon string, number int32, draft bool, version string, stackId int32, manifest string, createdAt time.Time) *StackRevision {
+func NewStackRevision(id int32, name string, title string, icon string, number int32, draft bool, version string, stackId int32, manifest string, linkIssues []StackRevisionLinkIssue, createdAt time.Time) *StackRevision {
 	this := StackRevision{}
 	this.Id = id
 	this.Name = name
@@ -51,6 +52,7 @@ func NewStackRevision(id int32, name string, title string, icon string, number i
 	this.Version = version
 	this.StackId = stackId
 	this.Manifest = manifest
+	this.LinkIssues = linkIssues
 	this.CreatedAt = createdAt
 	return &this
 }
@@ -279,6 +281,30 @@ func (o *StackRevision) SetManifest(v string) {
 	o.Manifest = v
 }
 
+// GetLinkIssues returns the LinkIssues field value
+func (o *StackRevision) GetLinkIssues() []StackRevisionLinkIssue {
+	if o == nil {
+		var ret []StackRevisionLinkIssue
+		return ret
+	}
+
+	return o.LinkIssues
+}
+
+// GetLinkIssuesOk returns a tuple with the LinkIssues field value
+// and a boolean to check if the value has been set.
+func (o *StackRevision) GetLinkIssuesOk() ([]StackRevisionLinkIssue, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LinkIssues, true
+}
+
+// SetLinkIssues sets field value
+func (o *StackRevision) SetLinkIssues(v []StackRevisionLinkIssue) {
+	o.LinkIssues = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *StackRevision) GetCreatedAt() time.Time {
 	if o == nil {
@@ -322,6 +348,7 @@ func (o StackRevision) ToMap() (map[string]interface{}, error) {
 	toSerialize["version"] = o.Version
 	toSerialize["stackId"] = o.StackId
 	toSerialize["manifest"] = o.Manifest
+	toSerialize["linkIssues"] = o.LinkIssues
 	toSerialize["createdAt"] = o.CreatedAt
 	return toSerialize, nil
 }
@@ -340,6 +367,7 @@ func (o *StackRevision) UnmarshalJSON(data []byte) (err error) {
 		"version",
 		"stackId",
 		"manifest",
+		"linkIssues",
 		"createdAt",
 	}
 

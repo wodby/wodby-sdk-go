@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **OrgId** | Pointer to **NullableInt32** | Optional for API-key requests; defaults to the API key&#39;s organization when no more specific target is provided. | [optional] 
 **EnvId** | Pointer to **NullableInt32** |  | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
-**IntegrationId** | **int32** |  | 
-**Bucket** | **string** |  | 
+**IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Free subscriptions may create only an automatic preset that is disabled. | 
+**Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
 **Disabled** | **bool** |  | 
 **Override** | **bool** |  | 

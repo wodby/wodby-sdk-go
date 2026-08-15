@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **AppServiceId** | **int32** |  | 
 **AppServiceBuildId** | Pointer to **NullableInt32** |  | [optional] 
+**PreviousAppServiceBuildId** | Pointer to **NullableInt32** |  | [optional] 
+**BuildSelectionKind** | **string** |  | 
 **SkipPostDeployment** | **bool** |  | 
 **Force** | **bool** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -20,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewAppServiceDeployment
 
-`func NewAppServiceDeployment(id int32, jobName string, status string, appServiceId int32, skipPostDeployment bool, force bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceDeployment`
+`func NewAppServiceDeployment(id int32, jobName string, status string, appServiceId int32, buildSelectionKind string, skipPostDeployment bool, force bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceDeployment`
 
 NewAppServiceDeployment instantiates a new AppServiceDeployment object
 This constructor will assign default values to properties that have it defined,
@@ -150,6 +152,61 @@ HasAppServiceBuildId returns a boolean if a field has been set.
 `func (o *AppServiceDeployment) UnsetAppServiceBuildId()`
 
 UnsetAppServiceBuildId ensures that no value is present for AppServiceBuildId, not even an explicit nil
+### GetPreviousAppServiceBuildId
+
+`func (o *AppServiceDeployment) GetPreviousAppServiceBuildId() int32`
+
+GetPreviousAppServiceBuildId returns the PreviousAppServiceBuildId field if non-nil, zero value otherwise.
+
+### GetPreviousAppServiceBuildIdOk
+
+`func (o *AppServiceDeployment) GetPreviousAppServiceBuildIdOk() (*int32, bool)`
+
+GetPreviousAppServiceBuildIdOk returns a tuple with the PreviousAppServiceBuildId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviousAppServiceBuildId
+
+`func (o *AppServiceDeployment) SetPreviousAppServiceBuildId(v int32)`
+
+SetPreviousAppServiceBuildId sets PreviousAppServiceBuildId field to given value.
+
+### HasPreviousAppServiceBuildId
+
+`func (o *AppServiceDeployment) HasPreviousAppServiceBuildId() bool`
+
+HasPreviousAppServiceBuildId returns a boolean if a field has been set.
+
+### SetPreviousAppServiceBuildIdNil
+
+`func (o *AppServiceDeployment) SetPreviousAppServiceBuildIdNil(b bool)`
+
+ SetPreviousAppServiceBuildIdNil sets the value for PreviousAppServiceBuildId to be an explicit nil
+
+### UnsetPreviousAppServiceBuildId
+`func (o *AppServiceDeployment) UnsetPreviousAppServiceBuildId()`
+
+UnsetPreviousAppServiceBuildId ensures that no value is present for PreviousAppServiceBuildId, not even an explicit nil
+### GetBuildSelectionKind
+
+`func (o *AppServiceDeployment) GetBuildSelectionKind() string`
+
+GetBuildSelectionKind returns the BuildSelectionKind field if non-nil, zero value otherwise.
+
+### GetBuildSelectionKindOk
+
+`func (o *AppServiceDeployment) GetBuildSelectionKindOk() (*string, bool)`
+
+GetBuildSelectionKindOk returns a tuple with the BuildSelectionKind field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuildSelectionKind
+
+`func (o *AppServiceDeployment) SetBuildSelectionKind(v string)`
+
+SetBuildSelectionKind sets BuildSelectionKind field to given value.
+
+
 ### GetSkipPostDeployment
 
 `func (o *AppServiceDeployment) GetSkipPostDeployment() bool`

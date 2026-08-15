@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
 **Value** | **string** |  | 
+**EnvType** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -66,6 +67,41 @@ and a boolean to check if the value has been set.
 SetValue sets Value field to given value.
 
 
+### GetEnvType
+
+`func (o *FieldInput) GetEnvType() string`
+
+GetEnvType returns the EnvType field if non-nil, zero value otherwise.
+
+### GetEnvTypeOk
+
+`func (o *FieldInput) GetEnvTypeOk() (*string, bool)`
+
+GetEnvTypeOk returns a tuple with the EnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvType
+
+`func (o *FieldInput) SetEnvType(v string)`
+
+SetEnvType sets EnvType field to given value.
+
+### HasEnvType
+
+`func (o *FieldInput) HasEnvType() bool`
+
+HasEnvType returns a boolean if a field has been set.
+
+### SetEnvTypeNil
+
+`func (o *FieldInput) SetEnvTypeNil(b bool)`
+
+ SetEnvTypeNil sets the value for EnvType to be an explicit nil
+
+### UnsetEnvType
+`func (o *FieldInput) UnsetEnvType()`
+
+UnsetEnvType ensures that no value is present for EnvType, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

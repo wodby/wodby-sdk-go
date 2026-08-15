@@ -28,6 +28,9 @@ type AppServiceBuild struct {
 	ImageDeleted bool `json:"imageDeleted"`
 	Size int32 `json:"size"`
 	AppServiceId int32 `json:"appServiceId"`
+	PreviouslyDeployed bool `json:"previouslyDeployed"`
+	CurrentlyDeployed bool `json:"currentlyDeployed"`
+	CurrentBuildNumber NullableInt32 `json:"currentBuildNumber,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -38,7 +41,7 @@ type _AppServiceBuild AppServiceBuild
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, size int32, appServiceId int32, createdAt time.Time, updatedAt time.Time) *AppServiceBuild {
+func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, size int32, appServiceId int32, previouslyDeployed bool, currentlyDeployed bool, createdAt time.Time, updatedAt time.Time) *AppServiceBuild {
 	this := AppServiceBuild{}
 	this.Id = id
 	this.Status = status
@@ -46,6 +49,8 @@ func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool
 	this.ImageDeleted = imageDeleted
 	this.Size = size
 	this.AppServiceId = appServiceId
+	this.PreviouslyDeployed = previouslyDeployed
+	this.CurrentlyDeployed = currentlyDeployed
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -203,6 +208,96 @@ func (o *AppServiceBuild) SetAppServiceId(v int32) {
 	o.AppServiceId = v
 }
 
+// GetPreviouslyDeployed returns the PreviouslyDeployed field value
+func (o *AppServiceBuild) GetPreviouslyDeployed() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.PreviouslyDeployed
+}
+
+// GetPreviouslyDeployedOk returns a tuple with the PreviouslyDeployed field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuild) GetPreviouslyDeployedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PreviouslyDeployed, true
+}
+
+// SetPreviouslyDeployed sets field value
+func (o *AppServiceBuild) SetPreviouslyDeployed(v bool) {
+	o.PreviouslyDeployed = v
+}
+
+// GetCurrentlyDeployed returns the CurrentlyDeployed field value
+func (o *AppServiceBuild) GetCurrentlyDeployed() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CurrentlyDeployed
+}
+
+// GetCurrentlyDeployedOk returns a tuple with the CurrentlyDeployed field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuild) GetCurrentlyDeployedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CurrentlyDeployed, true
+}
+
+// SetCurrentlyDeployed sets field value
+func (o *AppServiceBuild) SetCurrentlyDeployed(v bool) {
+	o.CurrentlyDeployed = v
+}
+
+// GetCurrentBuildNumber returns the CurrentBuildNumber field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceBuild) GetCurrentBuildNumber() int32 {
+	if o == nil || IsNil(o.CurrentBuildNumber.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.CurrentBuildNumber.Get()
+}
+
+// GetCurrentBuildNumberOk returns a tuple with the CurrentBuildNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceBuild) GetCurrentBuildNumberOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CurrentBuildNumber.Get(), o.CurrentBuildNumber.IsSet()
+}
+
+// HasCurrentBuildNumber returns a boolean if a field has been set.
+func (o *AppServiceBuild) HasCurrentBuildNumber() bool {
+	if o != nil && o.CurrentBuildNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrentBuildNumber gets a reference to the given NullableInt32 and assigns it to the CurrentBuildNumber field.
+func (o *AppServiceBuild) SetCurrentBuildNumber(v int32) {
+	o.CurrentBuildNumber.Set(&v)
+}
+// SetCurrentBuildNumberNil sets the value for CurrentBuildNumber to be an explicit nil
+func (o *AppServiceBuild) SetCurrentBuildNumberNil() {
+	o.CurrentBuildNumber.Set(nil)
+}
+
+// UnsetCurrentBuildNumber ensures that no value is present for CurrentBuildNumber, not even an explicit nil
+func (o *AppServiceBuild) UnsetCurrentBuildNumber() {
+	o.CurrentBuildNumber.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppServiceBuild) GetCreatedAt() time.Time {
 	if o == nil {
@@ -267,6 +362,11 @@ func (o AppServiceBuild) ToMap() (map[string]interface{}, error) {
 	toSerialize["imageDeleted"] = o.ImageDeleted
 	toSerialize["size"] = o.Size
 	toSerialize["appServiceId"] = o.AppServiceId
+	toSerialize["previouslyDeployed"] = o.PreviouslyDeployed
+	toSerialize["currentlyDeployed"] = o.CurrentlyDeployed
+	if o.CurrentBuildNumber.IsSet() {
+		toSerialize["currentBuildNumber"] = o.CurrentBuildNumber.Get()
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -283,6 +383,8 @@ func (o *AppServiceBuild) UnmarshalJSON(data []byte) (err error) {
 		"imageDeleted",
 		"size",
 		"appServiceId",
+		"previouslyDeployed",
+		"currentlyDeployed",
 		"createdAt",
 		"updatedAt",
 	}

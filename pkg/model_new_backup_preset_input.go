@@ -29,7 +29,9 @@ type NewBackupPresetInput struct {
 	OrgId NullableInt32 `json:"orgId,omitempty"`
 	EnvId NullableInt32 `json:"envId,omitempty"`
 	BackupName NullableString `json:"backupName,omitempty"`
+	// Use 0 for Wodby Blob Storage. Free subscriptions may create only an automatic preset that is disabled.
 	IntegrationId int32 `json:"integrationId"`
+	// Must be empty for Wodby Blob Storage.
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
 	Disabled bool `json:"disabled"`

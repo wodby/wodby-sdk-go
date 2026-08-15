@@ -29,6 +29,7 @@ type ProviderRevision struct {
 	Version string `json:"version"`
 	ProviderId int32 `json:"providerId"`
 	Manifest map[string]interface{} `json:"manifest,omitempty"`
+	PermissionAudit bool `json:"permissionAudit"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
@@ -38,7 +39,7 @@ type _ProviderRevision ProviderRevision
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProviderRevision(id int32, name string, title string, number int32, version string, providerId int32, createdAt time.Time) *ProviderRevision {
+func NewProviderRevision(id int32, name string, title string, number int32, version string, providerId int32, permissionAudit bool, createdAt time.Time) *ProviderRevision {
 	this := ProviderRevision{}
 	this.Id = id
 	this.Name = name
@@ -46,6 +47,7 @@ func NewProviderRevision(id int32, name string, title string, number int32, vers
 	this.Number = number
 	this.Version = version
 	this.ProviderId = providerId
+	this.PermissionAudit = permissionAudit
 	this.CreatedAt = createdAt
 	return &this
 }
@@ -234,6 +236,30 @@ func (o *ProviderRevision) SetManifest(v map[string]interface{}) {
 	o.Manifest = v
 }
 
+// GetPermissionAudit returns the PermissionAudit field value
+func (o *ProviderRevision) GetPermissionAudit() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.PermissionAudit
+}
+
+// GetPermissionAuditOk returns a tuple with the PermissionAudit field value
+// and a boolean to check if the value has been set.
+func (o *ProviderRevision) GetPermissionAuditOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PermissionAudit, true
+}
+
+// SetPermissionAudit sets field value
+func (o *ProviderRevision) SetPermissionAudit(v bool) {
+	o.PermissionAudit = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *ProviderRevision) GetCreatedAt() time.Time {
 	if o == nil {
@@ -277,6 +303,7 @@ func (o ProviderRevision) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Manifest) {
 		toSerialize["manifest"] = o.Manifest
 	}
+	toSerialize["permissionAudit"] = o.PermissionAudit
 	toSerialize["createdAt"] = o.CreatedAt
 	return toSerialize, nil
 }
@@ -292,6 +319,7 @@ func (o *ProviderRevision) UnmarshalJSON(data []byte) (err error) {
 		"number",
 		"version",
 		"providerId",
+		"permissionAudit",
 		"createdAt",
 	}
 

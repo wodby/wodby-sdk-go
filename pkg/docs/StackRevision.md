@@ -13,13 +13,14 @@ Name | Type | Description | Notes
 **Version** | **string** |  | 
 **StackId** | **int32** |  | 
 **Manifest** | **string** |  | 
+**LinkIssues** | [**[]StackRevisionLinkIssue**](StackRevisionLinkIssue.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 
 ## Methods
 
 ### NewStackRevision
 
-`func NewStackRevision(id int32, name string, title string, icon string, number int32, draft bool, version string, stackId int32, manifest string, createdAt time.Time, ) *StackRevision`
+`func NewStackRevision(id int32, name string, title string, icon string, number int32, draft bool, version string, stackId int32, manifest string, linkIssues []StackRevisionLinkIssue, createdAt time.Time, ) *StackRevision`
 
 NewStackRevision instantiates a new StackRevision object
 This constructor will assign default values to properties that have it defined,
@@ -212,6 +213,26 @@ and a boolean to check if the value has been set.
 `func (o *StackRevision) SetManifest(v string)`
 
 SetManifest sets Manifest field to given value.
+
+
+### GetLinkIssues
+
+`func (o *StackRevision) GetLinkIssues() []StackRevisionLinkIssue`
+
+GetLinkIssues returns the LinkIssues field if non-nil, zero value otherwise.
+
+### GetLinkIssuesOk
+
+`func (o *StackRevision) GetLinkIssuesOk() (*[]StackRevisionLinkIssue, bool)`
+
+GetLinkIssuesOk returns a tuple with the LinkIssues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLinkIssues
+
+`func (o *StackRevision) SetLinkIssues(v []StackRevisionLinkIssue)`
+
+SetLinkIssues sets LinkIssues field to given value.
 
 
 ### GetCreatedAt

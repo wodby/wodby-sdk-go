@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **RemoteGitRepoId** | Pointer to **NullableString** |  | [optional] 
 **GitRef** | Pointer to **NullableString** |  | [optional] 
 **GitRefType** | Pointer to **NullableString** |  | [optional] 
-**CiWorkflow** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -262,41 +261,6 @@ HasGitRefType returns a boolean if a field has been set.
 `func (o *BuildSourceInput) UnsetGitRefType()`
 
 UnsetGitRefType ensures that no value is present for GitRefType, not even an explicit nil
-### GetCiWorkflow
-
-`func (o *BuildSourceInput) GetCiWorkflow() string`
-
-GetCiWorkflow returns the CiWorkflow field if non-nil, zero value otherwise.
-
-### GetCiWorkflowOk
-
-`func (o *BuildSourceInput) GetCiWorkflowOk() (*string, bool)`
-
-GetCiWorkflowOk returns a tuple with the CiWorkflow field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCiWorkflow
-
-`func (o *BuildSourceInput) SetCiWorkflow(v string)`
-
-SetCiWorkflow sets CiWorkflow field to given value.
-
-### HasCiWorkflow
-
-`func (o *BuildSourceInput) HasCiWorkflow() bool`
-
-HasCiWorkflow returns a boolean if a field has been set.
-
-### SetCiWorkflowNil
-
-`func (o *BuildSourceInput) SetCiWorkflowNil(b bool)`
-
- SetCiWorkflowNil sets the value for CiWorkflow to be an explicit nil
-
-### UnsetCiWorkflow
-`func (o *BuildSourceInput) UnsetCiWorkflow()`
-
-UnsetCiWorkflow ensures that no value is present for CiWorkflow, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -37,9 +37,14 @@ type NewAppInput struct {
 	Services []CreateAppServiceInput `json:"services,omitempty"`
 	ClusterId NullableInt32 `json:"clusterId,omitempty"`
 	EnvId int32 `json:"envId"`
+	// Omit or use null to inherit the organization default, use 0 for the built-in CI service, or use an accessible CI integration ID. A project-owned integration must be shared with the app's project.
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
+	// Omit or use null to inherit the organization default, use 0 for the built-in registry, or use an accessible registry integration ID. A project-owned integration must be shared with the app's project.
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
+	// Defers the automatic initial build and deployment while preserving app instance initialization. Intended for automation that configures the instance before explicitly starting its first build.
+	DeferInitialDeployment *bool `json:"deferInitialDeployment,omitempty"`
 	Settings *AppInstanceSettingsInput `json:"settings,omitempty"`
+	Access *NewAppInstanceAccessInput `json:"access,omitempty"`
 }
 
 type _NewAppInput NewAppInput
@@ -54,6 +59,8 @@ func NewNewAppInput(name string, instanceName string, stackRevId int32, envId in
 	this.InstanceName = instanceName
 	this.StackRevId = stackRevId
 	this.EnvId = envId
+	var deferInitialDeployment bool = false
+	this.DeferInitialDeployment = &deferInitialDeployment
 	return &this
 }
 
@@ -62,6 +69,8 @@ func NewNewAppInput(name string, instanceName string, stackRevId int32, envId in
 // but it doesn't guarantee that properties required by API are set
 func NewNewAppInputWithDefaults() *NewAppInput {
 	this := NewAppInput{}
+	var deferInitialDeployment bool = false
+	this.DeferInitialDeployment = &deferInitialDeployment
 	return &this
 }
 
@@ -489,6 +498,38 @@ func (o *NewAppInput) UnsetRegistryIntegrationId() {
 	o.RegistryIntegrationId.Unset()
 }
 
+// GetDeferInitialDeployment returns the DeferInitialDeployment field value if set, zero value otherwise.
+func (o *NewAppInput) GetDeferInitialDeployment() bool {
+	if o == nil || IsNil(o.DeferInitialDeployment) {
+		var ret bool
+		return ret
+	}
+	return *o.DeferInitialDeployment
+}
+
+// GetDeferInitialDeploymentOk returns a tuple with the DeferInitialDeployment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppInput) GetDeferInitialDeploymentOk() (*bool, bool) {
+	if o == nil || IsNil(o.DeferInitialDeployment) {
+		return nil, false
+	}
+	return o.DeferInitialDeployment, true
+}
+
+// HasDeferInitialDeployment returns a boolean if a field has been set.
+func (o *NewAppInput) HasDeferInitialDeployment() bool {
+	if o != nil && !IsNil(o.DeferInitialDeployment) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeferInitialDeployment gets a reference to the given bool and assigns it to the DeferInitialDeployment field.
+func (o *NewAppInput) SetDeferInitialDeployment(v bool) {
+	o.DeferInitialDeployment = &v
+}
+
 // GetSettings returns the Settings field value if set, zero value otherwise.
 func (o *NewAppInput) GetSettings() AppInstanceSettingsInput {
 	if o == nil || IsNil(o.Settings) {
@@ -519,6 +560,38 @@ func (o *NewAppInput) HasSettings() bool {
 // SetSettings gets a reference to the given AppInstanceSettingsInput and assigns it to the Settings field.
 func (o *NewAppInput) SetSettings(v AppInstanceSettingsInput) {
 	o.Settings = &v
+}
+
+// GetAccess returns the Access field value if set, zero value otherwise.
+func (o *NewAppInput) GetAccess() NewAppInstanceAccessInput {
+	if o == nil || IsNil(o.Access) {
+		var ret NewAppInstanceAccessInput
+		return ret
+	}
+	return *o.Access
+}
+
+// GetAccessOk returns a tuple with the Access field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppInput) GetAccessOk() (*NewAppInstanceAccessInput, bool) {
+	if o == nil || IsNil(o.Access) {
+		return nil, false
+	}
+	return o.Access, true
+}
+
+// HasAccess returns a boolean if a field has been set.
+func (o *NewAppInput) HasAccess() bool {
+	if o != nil && !IsNil(o.Access) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccess gets a reference to the given NewAppInstanceAccessInput and assigns it to the Access field.
+func (o *NewAppInput) SetAccess(v NewAppInstanceAccessInput) {
+	o.Access = &v
 }
 
 func (o NewAppInput) MarshalJSON() ([]byte, error) {
@@ -562,8 +635,14 @@ func (o NewAppInput) ToMap() (map[string]interface{}, error) {
 	if o.RegistryIntegrationId.IsSet() {
 		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
 	}
+	if !IsNil(o.DeferInitialDeployment) {
+		toSerialize["deferInitialDeployment"] = o.DeferInitialDeployment
+	}
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
+	}
+	if !IsNil(o.Access) {
+		toSerialize["access"] = o.Access
 	}
 	return toSerialize, nil
 }

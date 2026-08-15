@@ -21,7 +21,9 @@ var _ MappedNullable = &UpdateBackupPresetInput{}
 
 // UpdateBackupPresetInput struct for UpdateBackupPresetInput
 type UpdateBackupPresetInput struct {
+	// Use 0 for Wodby Blob Storage. Enabling the preset requires a paid subscription.
 	IntegrationId int32 `json:"integrationId"`
+	// Must be empty for Wodby Blob Storage.
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
 	Disabled bool `json:"disabled"`

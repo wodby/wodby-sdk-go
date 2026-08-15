@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Items** | [**[]Task**](Task.md) |  | 
-**TreeItems** | Pointer to [**[]TaskTreeItem**](TaskTreeItem.md) | Flat current-page roots and descendants for tree view, linked by parentId. | [optional] 
+**TreeItems** | Pointer to [**[]TaskTreeItem**](TaskTreeItem.md) | Bounded current-page roots and authorized descendants for tree view, linked by parentId. | [optional] 
+**TreeTruncated** | **bool** | True when treeItems omitted visible descendants after reaching the 250-item response limit. Always false for flat view. | 
 **TotalCount** | **int32** |  | 
 **NextPage** | Pointer to **NullableInt32** |  | [optional] 
 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewTasksResponse
 
-`func NewTasksResponse(items []Task, totalCount int32, ) *TasksResponse`
+`func NewTasksResponse(items []Task, treeTruncated bool, totalCount int32, ) *TasksResponse`
 
 NewTasksResponse instantiates a new TasksResponse object
 This constructor will assign default values to properties that have it defined,
@@ -83,6 +84,26 @@ HasTreeItems returns a boolean if a field has been set.
 `func (o *TasksResponse) UnsetTreeItems()`
 
 UnsetTreeItems ensures that no value is present for TreeItems, not even an explicit nil
+### GetTreeTruncated
+
+`func (o *TasksResponse) GetTreeTruncated() bool`
+
+GetTreeTruncated returns the TreeTruncated field if non-nil, zero value otherwise.
+
+### GetTreeTruncatedOk
+
+`func (o *TasksResponse) GetTreeTruncatedOk() (*bool, bool)`
+
+GetTreeTruncatedOk returns a tuple with the TreeTruncated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTreeTruncated
+
+`func (o *TasksResponse) SetTreeTruncated(v bool)`
+
+SetTreeTruncated sets TreeTruncated field to given value.
+
+
 ### GetTotalCount
 
 `func (o *TasksResponse) GetTotalCount() int32`

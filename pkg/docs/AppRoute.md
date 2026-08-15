@@ -14,6 +14,9 @@ Name | Type | Description | Notes
 **RedirectPath** | Pointer to **NullableString** |  | [optional] 
 **RedirectStatusCode** | Pointer to **NullableInt32** |  | [optional] 
 **Status** | **string** |  | 
+**AttachmentStatus** | **string** |  | 
+**AttachmentCheckedAt** | Pointer to **NullableTime** |  | [optional] 
+**AttachmentError** | Pointer to **NullableString** |  | [optional] 
 **Disabled** | **bool** |  | 
 **Main** | **bool** |  | 
 **Primary** | **bool** |  | 
@@ -31,7 +34,7 @@ Name | Type | Description | Notes
 
 ### NewAppRoute
 
-`func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, disabled bool, main bool, primary bool, private bool, technical bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time, ) *AppRoute`
+`func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, attachmentStatus string, disabled bool, main bool, primary bool, private bool, technical bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time, ) *AppRoute`
 
 NewAppRoute instantiates a new AppRoute object
 This constructor will assign default values to properties that have it defined,
@@ -306,6 +309,96 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### GetAttachmentStatus
+
+`func (o *AppRoute) GetAttachmentStatus() string`
+
+GetAttachmentStatus returns the AttachmentStatus field if non-nil, zero value otherwise.
+
+### GetAttachmentStatusOk
+
+`func (o *AppRoute) GetAttachmentStatusOk() (*string, bool)`
+
+GetAttachmentStatusOk returns a tuple with the AttachmentStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAttachmentStatus
+
+`func (o *AppRoute) SetAttachmentStatus(v string)`
+
+SetAttachmentStatus sets AttachmentStatus field to given value.
+
+
+### GetAttachmentCheckedAt
+
+`func (o *AppRoute) GetAttachmentCheckedAt() time.Time`
+
+GetAttachmentCheckedAt returns the AttachmentCheckedAt field if non-nil, zero value otherwise.
+
+### GetAttachmentCheckedAtOk
+
+`func (o *AppRoute) GetAttachmentCheckedAtOk() (*time.Time, bool)`
+
+GetAttachmentCheckedAtOk returns a tuple with the AttachmentCheckedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAttachmentCheckedAt
+
+`func (o *AppRoute) SetAttachmentCheckedAt(v time.Time)`
+
+SetAttachmentCheckedAt sets AttachmentCheckedAt field to given value.
+
+### HasAttachmentCheckedAt
+
+`func (o *AppRoute) HasAttachmentCheckedAt() bool`
+
+HasAttachmentCheckedAt returns a boolean if a field has been set.
+
+### SetAttachmentCheckedAtNil
+
+`func (o *AppRoute) SetAttachmentCheckedAtNil(b bool)`
+
+ SetAttachmentCheckedAtNil sets the value for AttachmentCheckedAt to be an explicit nil
+
+### UnsetAttachmentCheckedAt
+`func (o *AppRoute) UnsetAttachmentCheckedAt()`
+
+UnsetAttachmentCheckedAt ensures that no value is present for AttachmentCheckedAt, not even an explicit nil
+### GetAttachmentError
+
+`func (o *AppRoute) GetAttachmentError() string`
+
+GetAttachmentError returns the AttachmentError field if non-nil, zero value otherwise.
+
+### GetAttachmentErrorOk
+
+`func (o *AppRoute) GetAttachmentErrorOk() (*string, bool)`
+
+GetAttachmentErrorOk returns a tuple with the AttachmentError field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAttachmentError
+
+`func (o *AppRoute) SetAttachmentError(v string)`
+
+SetAttachmentError sets AttachmentError field to given value.
+
+### HasAttachmentError
+
+`func (o *AppRoute) HasAttachmentError() bool`
+
+HasAttachmentError returns a boolean if a field has been set.
+
+### SetAttachmentErrorNil
+
+`func (o *AppRoute) SetAttachmentErrorNil(b bool)`
+
+ SetAttachmentErrorNil sets the value for AttachmentError to be an explicit nil
+
+### UnsetAttachmentError
+`func (o *AppRoute) UnsetAttachmentError()`
+
+UnsetAttachmentError ensures that no value is present for AttachmentError, not even an explicit nil
 ### GetDisabled
 
 `func (o *AppRoute) GetDisabled() bool`

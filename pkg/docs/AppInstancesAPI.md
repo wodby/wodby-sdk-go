@@ -4,17 +4,97 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateAppAccess**](AppInstancesAPI.md#CreateAppAccess) | **Post** /app-instance-accesses/{id} | Create app instance access
 [**CreateAppInstance**](AppInstancesAPI.md#CreateAppInstance) | **Post** /app-instances | Create app instance
+[**DeleteAppAccess**](AppInstancesAPI.md#DeleteAppAccess) | **Delete** /app-accesses/{id} | Delete app access
 [**DeleteAppInstance**](AppInstancesAPI.md#DeleteAppInstance) | **Delete** /app-instances/{id} | Delete app instance
 [**GetAppInstance**](AppInstancesAPI.md#GetAppInstance) | **Get** /app-instances/{id} | Get app instance
+[**GetAppInstanceAccess**](AppInstancesAPI.md#GetAppInstanceAccess) | **Get** /app-instance-accesses/{id} | Get app instance access
 [**GetAppInstanceByName**](AppInstancesAPI.md#GetAppInstanceByName) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
 [**GetAppInstanceCICDSettings**](AppInstancesAPI.md#GetAppInstanceCICDSettings) | **Get** /app-instances/cicd-settings/{id} | Get app instance CI/CD settings
+[**GetAppInstanceStackUpgradeChangelog**](AppInstancesAPI.md#GetAppInstanceStackUpgradeChangelog) | **Get** /app-instance-stack-upgrade-changelogs/{id} | Preview app instance stack upgrade
+[**ListAppAccessCleanups**](AppInstancesAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List app-access cleanups
 [**ListAppInstances**](AppInstancesAPI.md#ListAppInstances) | **Get** /app-instances | List app instances
+[**PreflightAppAccess**](AppInstancesAPI.md#PreflightAppAccess) | **Post** /app-accesses/actions/preflight | Preflight app instance access
+[**RetryAppAccessCleanup**](AppInstancesAPI.md#RetryAppAccessCleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
+[**UpdateAppAccess**](AppInstancesAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update app access
 [**UpdateAppInstance**](AppInstancesAPI.md#UpdateAppInstance) | **Put** /app-instances/{id} | Update app instance
 [**UpdateAppInstanceCICDSettings**](AppInstancesAPI.md#UpdateAppInstanceCICDSettings) | **Put** /app-instances/cicd-settings/{id} | Update app instance CI/CD settings
 [**UpdateAppInstanceSettings**](AppInstancesAPI.md#UpdateAppInstanceSettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 [**UpgradeAppInstanceStack**](AppInstancesAPI.md#UpgradeAppInstanceStack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 
+
+
+## CreateAppAccess
+
+> AppAccessOperationResult CreateAppAccess(ctx, id).NewAppAccessInput(newAppAccessInput).Execute()
+
+Create app instance access
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	newAppAccessInput := *openapiclient.NewNewAppAccessInput(int32(123), "Mode_example", "Scope_example", []openapiclient.AppAccessEndpointInput{*openapiclient.NewAppAccessEndpointInput(int32(123), false)}) // NewAppAccessInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.CreateAppAccess(context.Background(), id).NewAppAccessInput(newAppAccessInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.CreateAppAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateAppAccess`: AppAccessOperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.CreateAppAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateAppAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **newAppAccessInput** | [**NewAppAccessInput**](NewAppAccessInput.md) |  | 
+
+### Return type
+
+[**AppAccessOperationResult**](AppAccessOperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateAppInstance
@@ -76,6 +156,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteAppAccess
+
+> OperationResult DeleteAppAccess(ctx, id).Execute()
+
+Delete app access
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.DeleteAppAccess(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.DeleteAppAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteAppAccess`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.DeleteAppAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteAppAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -210,6 +360,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppInstance**](AppInstance.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAppInstanceAccess
+
+> AppAccess GetAppInstanceAccess(ctx, id).Execute()
+
+Get app instance access
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.GetAppInstanceAccess(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.GetAppInstanceAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppInstanceAccess`: AppAccess
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.GetAppInstanceAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppInstanceAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppAccess**](AppAccess.md)
 
 ### Authorization
 
@@ -370,6 +590,144 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAppInstanceStackUpgradeChangelog
+
+> AppInstanceStackUpgradeChangelog GetAppInstanceStackUpgradeChangelog(ctx, id).Execute()
+
+Preview app instance stack upgrade
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.GetAppInstanceStackUpgradeChangelog(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.GetAppInstanceStackUpgradeChangelog``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppInstanceStackUpgradeChangelog`: AppInstanceStackUpgradeChangelog
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.GetAppInstanceStackUpgradeChangelog`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppInstanceStackUpgradeChangelogRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppInstanceStackUpgradeChangelog**](AppInstanceStackUpgradeChangelog.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppAccessCleanups
+
+> []AppAccessCleanup ListAppAccessCleanups(ctx).AppInstanceId(appInstanceId).IntegrationId(integrationId).Execute()
+
+List app-access cleanups
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	appInstanceId := int32(56) // int32 |  (optional)
+	integrationId := int32(56) // int32 |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.ListAppAccessCleanups(context.Background()).AppInstanceId(appInstanceId).IntegrationId(integrationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.ListAppAccessCleanups``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppAccessCleanups`: []AppAccessCleanup
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.ListAppAccessCleanups`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppAccessCleanupsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appInstanceId** | **int32** |  | 
+ **integrationId** | **int32** |  | 
+
+### Return type
+
+[**[]AppAccessCleanup**](AppAccessCleanup.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAppInstances
 
 > []AppInstance ListAppInstances(ctx).OrgId(orgId).ProjectIds(projectIds).AppId(appId).ClusterId(clusterId).ClusterApp(clusterApp).Execute()
@@ -437,6 +795,214 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PreflightAppAccess
+
+> ValidationResult PreflightAppAccess(ctx).NewAppInstanceAccessInput(newAppInstanceAccessInput).Execute()
+
+Preflight app instance access
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	newAppInstanceAccessInput := *openapiclient.NewNewAppInstanceAccessInput(int32(123), "Mode_example", "Scope_example") // NewAppInstanceAccessInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.PreflightAppAccess(context.Background()).NewAppInstanceAccessInput(newAppInstanceAccessInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.PreflightAppAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PreflightAppAccess`: ValidationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.PreflightAppAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPreflightAppAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **newAppInstanceAccessInput** | [**NewAppInstanceAccessInput**](NewAppInstanceAccessInput.md) |  | 
+
+### Return type
+
+[**ValidationResult**](ValidationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RetryAppAccessCleanup
+
+> OperationResult RetryAppAccessCleanup(ctx, id).Execute()
+
+Retry app-access cleanup
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.RetryAppAccessCleanup(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.RetryAppAccessCleanup``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RetryAppAccessCleanup`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.RetryAppAccessCleanup`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRetryAppAccessCleanupRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAppAccess
+
+> AppAccessOperationResult UpdateAppAccess(ctx, id).UpdateAppAccessInput(updateAppAccessInput).Execute()
+
+Update app access
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateAppAccessInput := *openapiclient.NewUpdateAppAccessInput("Scope_example", []openapiclient.AppAccessEndpointInput{*openapiclient.NewAppAccessEndpointInput(int32(123), false)}) // UpdateAppAccessInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.UpdateAppAccess(context.Background(), id).UpdateAppAccessInput(updateAppAccessInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.UpdateAppAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAppAccess`: AppAccessOperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.UpdateAppAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAppAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateAppAccessInput** | [**UpdateAppAccessInput**](UpdateAppAccessInput.md) |  | 
+
+### Return type
+
+[**AppAccessOperationResult**](AppAccessOperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

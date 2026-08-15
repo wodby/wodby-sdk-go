@@ -4,6 +4,7 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AddAppServiceVolume**](AppServicesAPI.md#AddAppServiceVolume) | **Post** /app-services/{id}/volumes | Add an optional app service volume
 [**CreateAppServiceAnnotation**](AppServicesAPI.md#CreateAppServiceAnnotation) | **Post** /app-services/{id}/annotations | Create app service annotation
 [**CreateAppServiceCronSchedule**](AppServicesAPI.md#CreateAppServiceCronSchedule) | **Post** /app-services/{id}/cron-schedules | Create app service cron schedule
 [**CreateAppServiceEnvVar**](AppServicesAPI.md#CreateAppServiceEnvVar) | **Post** /app-services/{id}/env-vars | Create app service env var
@@ -31,6 +32,7 @@ Method | HTTP request | Description
 [**ListAppServiceLinks**](AppServicesAPI.md#ListAppServiceLinks) | **Get** /app-services/{id}/links | List app service links
 [**ListAppServiceSettings**](AppServicesAPI.md#ListAppServiceSettings) | **Get** /app-services/{id}/settings | List app service settings
 [**ListAppServiceTokens**](AppServicesAPI.md#ListAppServiceTokens) | **Get** /app-services/{id}/tokens | List app service tokens
+[**ListAppServiceVolumeStorageClasses**](AppServicesAPI.md#ListAppServiceVolumeStorageClasses) | **Get** /app-services/{id}/options/volume-storage-classes | List app service volume storage-class state
 [**ListAppServiceVolumes**](AppServicesAPI.md#ListAppServiceVolumes) | **Get** /app-services/{id}/volumes | List app service volumes
 [**ListAppServices**](AppServicesAPI.md#ListAppServices) | **Get** /app-services | List app services
 [**RunAppServiceAction**](AppServicesAPI.md#RunAppServiceAction) | **Post** /app-services/{id}/actions/{name} | Run app service action
@@ -48,6 +50,78 @@ Method | HTTP request | Description
 [**UpdateAppServiceHelmValue**](AppServicesAPI.md#UpdateAppServiceHelmValue) | **Put** /app-service-helm-values/{id} | Update app service Helm value
 [**UpdateAppServiceToken**](AppServicesAPI.md#UpdateAppServiceToken) | **Put** /app-service-tokens/{id} | Update app service token
 
+
+
+## AddAppServiceVolume
+
+> OperationResult AddAppServiceVolume(ctx, id).AddAppServiceVolumeInput(addAppServiceVolumeInput).Execute()
+
+Add an optional app service volume
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	addAppServiceVolumeInput := *openapiclient.NewAddAppServiceVolumeInput("Name_example") // AddAppServiceVolumeInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.AddAppServiceVolume(context.Background(), id).AddAppServiceVolumeInput(addAppServiceVolumeInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.AddAppServiceVolume``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddAppServiceVolume`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.AddAppServiceVolume`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAddAppServiceVolumeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **addAppServiceVolumeInput** | [**AddAppServiceVolumeInput**](AddAppServiceVolumeInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateAppServiceAnnotation
@@ -1943,6 +2017,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppServiceToken**](AppServiceToken.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppServiceVolumeStorageClasses
+
+> []AppServiceVolumeStorageClassState ListAppServiceVolumeStorageClasses(ctx, id).Execute()
+
+List app service volume storage-class state
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListAppServiceVolumeStorageClasses(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListAppServiceVolumeStorageClasses``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppServiceVolumeStorageClasses`: []AppServiceVolumeStorageClassState
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListAppServiceVolumeStorageClasses`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppServiceVolumeStorageClassesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppServiceVolumeStorageClassState**](AppServiceVolumeStorageClassState.md)
 
 ### Authorization
 

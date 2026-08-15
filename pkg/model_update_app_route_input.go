@@ -28,11 +28,13 @@ type UpdateAppRouteInput struct {
 	Primary NullableBool `json:"primary,omitempty"`
 	Path NullableString `json:"path,omitempty"`
 	PathType NullableString `json:"pathType,omitempty"`
+	// SERVE sends requests to the selected app service. BACKEND is accepted for backwards compatibility.
 	Action NullableString `json:"action,omitempty"`
 	RedirectScheme NullableString `json:"redirectScheme,omitempty"`
 	RedirectHost NullableString `json:"redirectHost,omitempty"`
 	RedirectPath NullableString `json:"redirectPath,omitempty"`
 	RedirectStatusCode NullableInt32 `json:"redirectStatusCode,omitempty"`
+	Tls *AppRouteTLSInput `json:"tls,omitempty"`
 }
 
 // NewUpdateAppRouteInput instantiates a new UpdateAppRouteInput object
@@ -556,6 +558,38 @@ func (o *UpdateAppRouteInput) UnsetRedirectStatusCode() {
 	o.RedirectStatusCode.Unset()
 }
 
+// GetTls returns the Tls field value if set, zero value otherwise.
+func (o *UpdateAppRouteInput) GetTls() AppRouteTLSInput {
+	if o == nil || IsNil(o.Tls) {
+		var ret AppRouteTLSInput
+		return ret
+	}
+	return *o.Tls
+}
+
+// GetTlsOk returns a tuple with the Tls field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateAppRouteInput) GetTlsOk() (*AppRouteTLSInput, bool) {
+	if o == nil || IsNil(o.Tls) {
+		return nil, false
+	}
+	return o.Tls, true
+}
+
+// HasTls returns a boolean if a field has been set.
+func (o *UpdateAppRouteInput) HasTls() bool {
+	if o != nil && !IsNil(o.Tls) {
+		return true
+	}
+
+	return false
+}
+
+// SetTls gets a reference to the given AppRouteTLSInput and assigns it to the Tls field.
+func (o *UpdateAppRouteInput) SetTls(v AppRouteTLSInput) {
+	o.Tls = &v
+}
+
 func (o UpdateAppRouteInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -601,6 +635,9 @@ func (o UpdateAppRouteInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.RedirectStatusCode.IsSet() {
 		toSerialize["redirectStatusCode"] = o.RedirectStatusCode.Get()
+	}
+	if !IsNil(o.Tls) {
+		toSerialize["tls"] = o.Tls
 	}
 	return toSerialize, nil
 }

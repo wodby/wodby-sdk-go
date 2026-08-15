@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**SourceRevId** | Pointer to **NullableInt32** | Optional immutable source stack revision to duplicate. It must belong to the stack in the request path. | [optional] 
 **Settings** | Pointer to [**CopyStackSettingsInput**](CopyStackSettingsInput.md) |  | [optional] 
 
 ## Methods
@@ -87,6 +88,41 @@ HasProjectId returns a boolean if a field has been set.
 `func (o *DuplicateStackRequest) UnsetProjectId()`
 
 UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetSourceRevId
+
+`func (o *DuplicateStackRequest) GetSourceRevId() int32`
+
+GetSourceRevId returns the SourceRevId field if non-nil, zero value otherwise.
+
+### GetSourceRevIdOk
+
+`func (o *DuplicateStackRequest) GetSourceRevIdOk() (*int32, bool)`
+
+GetSourceRevIdOk returns a tuple with the SourceRevId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceRevId
+
+`func (o *DuplicateStackRequest) SetSourceRevId(v int32)`
+
+SetSourceRevId sets SourceRevId field to given value.
+
+### HasSourceRevId
+
+`func (o *DuplicateStackRequest) HasSourceRevId() bool`
+
+HasSourceRevId returns a boolean if a field has been set.
+
+### SetSourceRevIdNil
+
+`func (o *DuplicateStackRequest) SetSourceRevIdNil(b bool)`
+
+ SetSourceRevIdNil sets the value for SourceRevId to be an explicit nil
+
+### UnsetSourceRevId
+`func (o *DuplicateStackRequest) UnsetSourceRevId()`
+
+UnsetSourceRevId ensures that no value is present for SourceRevId, not even an explicit nil
 ### GetSettings
 
 `func (o *DuplicateStackRequest) GetSettings() CopyStackSettingsInput`

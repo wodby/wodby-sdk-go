@@ -43,6 +43,8 @@ type Cluster struct {
 	Hostname NullableString `json:"hostname,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	OrgId int32 `json:"orgId"`
+	OwnershipScope string `json:"ownershipScope"`
+	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
 	Capabilities ClusterCapabilities `json:"capabilities"`
 	Settings *ClusterSettings `json:"settings,omitempty"`
 	StorageClasses []StorageClass `json:"storageClasses,omitempty"`
@@ -57,7 +59,7 @@ type _Cluster Cluster
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
+func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
 	this := Cluster{}
 	this.Id = id
 	this.Name = name
@@ -70,6 +72,7 @@ func NewCluster(id int32, name string, title string, status string, serverless b
 	this.SingleNode = singleNode
 	this.InfraVersion = infraVersion
 	this.OrgId = orgId
+	this.OwnershipScope = ownershipScope
 	this.Capabilities = capabilities
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -759,6 +762,72 @@ func (o *Cluster) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetOwnershipScope returns the OwnershipScope field value
+func (o *Cluster) GetOwnershipScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.OwnershipScope
+}
+
+// GetOwnershipScopeOk returns a tuple with the OwnershipScope field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetOwnershipScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OwnershipScope, true
+}
+
+// SetOwnershipScope sets field value
+func (o *Cluster) SetOwnershipScope(v string) {
+	o.OwnershipScope = v
+}
+
+// GetOwnerProjectId returns the OwnerProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetOwnerProjectId() int32 {
+	if o == nil || IsNil(o.OwnerProjectId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OwnerProjectId.Get()
+}
+
+// GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetOwnerProjectIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnerProjectId.Get(), o.OwnerProjectId.IsSet()
+}
+
+// HasOwnerProjectId returns a boolean if a field has been set.
+func (o *Cluster) HasOwnerProjectId() bool {
+	if o != nil && o.OwnerProjectId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerProjectId gets a reference to the given NullableInt32 and assigns it to the OwnerProjectId field.
+func (o *Cluster) SetOwnerProjectId(v int32) {
+	o.OwnerProjectId.Set(&v)
+}
+// SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+func (o *Cluster) SetOwnerProjectIdNil() {
+	o.OwnerProjectId.Set(nil)
+}
+
+// UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+func (o *Cluster) UnsetOwnerProjectId() {
+	o.OwnerProjectId.Unset()
+}
+
 // GetCapabilities returns the Capabilities field value
 func (o *Cluster) GetCapabilities() ClusterCapabilities {
 	if o == nil {
@@ -989,6 +1058,10 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
 	}
 	toSerialize["orgId"] = o.OrgId
+	toSerialize["ownershipScope"] = o.OwnershipScope
+	if o.OwnerProjectId.IsSet() {
+		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
+	}
 	toSerialize["capabilities"] = o.Capabilities
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
@@ -1020,6 +1093,7 @@ func (o *Cluster) UnmarshalJSON(data []byte) (err error) {
 		"singleNode",
 		"infraVersion",
 		"orgId",
+		"ownershipScope",
 		"capabilities",
 		"createdAt",
 		"updatedAt",

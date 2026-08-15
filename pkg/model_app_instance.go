@@ -37,6 +37,11 @@ type AppInstance struct {
 	StackIcon string `json:"stackIcon"`
 	StackRevNumber int32 `json:"stackRevNumber"`
 	StackVersion string `json:"stackVersion"`
+	Access NullableAppAccess `json:"access,omitempty"`
+	RoutingMode string `json:"routingMode"`
+	RoutingPending bool `json:"routingPending"`
+	ConfigurationReady bool `json:"configurationReady"`
+	ConfigurationIssues []AppServiceConfigurationIssue `json:"configurationIssues"`
 	Settings *AppInstanceSettings `json:"settings,omitempty"`
 	Health AppInstanceHealth `json:"health"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -49,7 +54,7 @@ type _AppInstance AppInstance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time) *AppInstance {
+func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time) *AppInstance {
 	this := AppInstance{}
 	this.Id = id
 	this.Name = name
@@ -65,6 +70,10 @@ func NewAppInstance(id int32, name string, title string, status string, appId in
 	this.StackIcon = stackIcon
 	this.StackRevNumber = stackRevNumber
 	this.StackVersion = stackVersion
+	this.RoutingMode = routingMode
+	this.RoutingPending = routingPending
+	this.ConfigurationReady = configurationReady
+	this.ConfigurationIssues = configurationIssues
 	this.Health = health
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -457,6 +466,144 @@ func (o *AppInstance) SetStackVersion(v string) {
 	o.StackVersion = v
 }
 
+// GetAccess returns the Access field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppInstance) GetAccess() AppAccess {
+	if o == nil || IsNil(o.Access.Get()) {
+		var ret AppAccess
+		return ret
+	}
+	return *o.Access.Get()
+}
+
+// GetAccessOk returns a tuple with the Access field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppInstance) GetAccessOk() (*AppAccess, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Access.Get(), o.Access.IsSet()
+}
+
+// HasAccess returns a boolean if a field has been set.
+func (o *AppInstance) HasAccess() bool {
+	if o != nil && o.Access.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAccess gets a reference to the given NullableAppAccess and assigns it to the Access field.
+func (o *AppInstance) SetAccess(v AppAccess) {
+	o.Access.Set(&v)
+}
+// SetAccessNil sets the value for Access to be an explicit nil
+func (o *AppInstance) SetAccessNil() {
+	o.Access.Set(nil)
+}
+
+// UnsetAccess ensures that no value is present for Access, not even an explicit nil
+func (o *AppInstance) UnsetAccess() {
+	o.Access.Unset()
+}
+
+// GetRoutingMode returns the RoutingMode field value
+func (o *AppInstance) GetRoutingMode() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.RoutingMode
+}
+
+// GetRoutingModeOk returns a tuple with the RoutingMode field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetRoutingModeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RoutingMode, true
+}
+
+// SetRoutingMode sets field value
+func (o *AppInstance) SetRoutingMode(v string) {
+	o.RoutingMode = v
+}
+
+// GetRoutingPending returns the RoutingPending field value
+func (o *AppInstance) GetRoutingPending() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.RoutingPending
+}
+
+// GetRoutingPendingOk returns a tuple with the RoutingPending field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetRoutingPendingOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RoutingPending, true
+}
+
+// SetRoutingPending sets field value
+func (o *AppInstance) SetRoutingPending(v bool) {
+	o.RoutingPending = v
+}
+
+// GetConfigurationReady returns the ConfigurationReady field value
+func (o *AppInstance) GetConfigurationReady() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.ConfigurationReady
+}
+
+// GetConfigurationReadyOk returns a tuple with the ConfigurationReady field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetConfigurationReadyOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ConfigurationReady, true
+}
+
+// SetConfigurationReady sets field value
+func (o *AppInstance) SetConfigurationReady(v bool) {
+	o.ConfigurationReady = v
+}
+
+// GetConfigurationIssues returns the ConfigurationIssues field value
+func (o *AppInstance) GetConfigurationIssues() []AppServiceConfigurationIssue {
+	if o == nil {
+		var ret []AppServiceConfigurationIssue
+		return ret
+	}
+
+	return o.ConfigurationIssues
+}
+
+// GetConfigurationIssuesOk returns a tuple with the ConfigurationIssues field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetConfigurationIssuesOk() ([]AppServiceConfigurationIssue, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ConfigurationIssues, true
+}
+
+// SetConfigurationIssues sets field value
+func (o *AppInstance) SetConfigurationIssues(v []AppServiceConfigurationIssue) {
+	o.ConfigurationIssues = v
+}
+
 // GetSettings returns the Settings field value if set, zero value otherwise.
 func (o *AppInstance) GetSettings() AppInstanceSettings {
 	if o == nil || IsNil(o.Settings) {
@@ -588,6 +735,13 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize["stackIcon"] = o.StackIcon
 	toSerialize["stackRevNumber"] = o.StackRevNumber
 	toSerialize["stackVersion"] = o.StackVersion
+	if o.Access.IsSet() {
+		toSerialize["access"] = o.Access.Get()
+	}
+	toSerialize["routingMode"] = o.RoutingMode
+	toSerialize["routingPending"] = o.RoutingPending
+	toSerialize["configurationReady"] = o.ConfigurationReady
+	toSerialize["configurationIssues"] = o.ConfigurationIssues
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
 	}
@@ -616,6 +770,10 @@ func (o *AppInstance) UnmarshalJSON(data []byte) (err error) {
 		"stackIcon",
 		"stackRevNumber",
 		"stackVersion",
+		"routingMode",
+		"routingPending",
+		"configurationReady",
+		"configurationIssues",
 		"health",
 		"createdAt",
 		"updatedAt",

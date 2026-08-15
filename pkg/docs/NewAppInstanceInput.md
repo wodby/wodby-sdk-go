@@ -12,9 +12,11 @@ Name | Type | Description | Notes
 **Services** | Pointer to [**[]CreateAppServiceInput**](CreateAppServiceInput.md) | Defaults to the stack revision&#39;s service defaults when omitted. | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvId** | **int32** |  | 
-**CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
-**RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**CiIntegrationId** | Pointer to **NullableInt32** | Omit or use null to inherit the organization default, use 0 for the built-in CI service, or use an accessible CI integration ID. A project-owned integration must be shared with the app&#39;s project. | [optional] 
+**RegistryIntegrationId** | Pointer to **NullableInt32** | Omit or use null to inherit the organization default, use 0 for the built-in registry, or use an accessible registry integration ID. A project-owned integration must be shared with the app&#39;s project. | [optional] 
+**DeferInitialDeployment** | Pointer to **bool** | Defers the automatic initial build and deployment while preserving app instance initialization. Intended for automation that configures the instance before explicitly starting its first build. | [optional] [default to false]
 **Settings** | Pointer to [**AppInstanceSettingsInput**](AppInstanceSettingsInput.md) |  | [optional] 
+**Access** | Pointer to [**NewAppInstanceAccessInput**](NewAppInstanceAccessInput.md) |  | [optional] 
 
 ## Methods
 
@@ -295,6 +297,31 @@ HasRegistryIntegrationId returns a boolean if a field has been set.
 `func (o *NewAppInstanceInput) UnsetRegistryIntegrationId()`
 
 UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+### GetDeferInitialDeployment
+
+`func (o *NewAppInstanceInput) GetDeferInitialDeployment() bool`
+
+GetDeferInitialDeployment returns the DeferInitialDeployment field if non-nil, zero value otherwise.
+
+### GetDeferInitialDeploymentOk
+
+`func (o *NewAppInstanceInput) GetDeferInitialDeploymentOk() (*bool, bool)`
+
+GetDeferInitialDeploymentOk returns a tuple with the DeferInitialDeployment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeferInitialDeployment
+
+`func (o *NewAppInstanceInput) SetDeferInitialDeployment(v bool)`
+
+SetDeferInitialDeployment sets DeferInitialDeployment field to given value.
+
+### HasDeferInitialDeployment
+
+`func (o *NewAppInstanceInput) HasDeferInitialDeployment() bool`
+
+HasDeferInitialDeployment returns a boolean if a field has been set.
+
 ### GetSettings
 
 `func (o *NewAppInstanceInput) GetSettings() AppInstanceSettingsInput`
@@ -319,6 +346,31 @@ SetSettings sets Settings field to given value.
 `func (o *NewAppInstanceInput) HasSettings() bool`
 
 HasSettings returns a boolean if a field has been set.
+
+### GetAccess
+
+`func (o *NewAppInstanceInput) GetAccess() NewAppInstanceAccessInput`
+
+GetAccess returns the Access field if non-nil, zero value otherwise.
+
+### GetAccessOk
+
+`func (o *NewAppInstanceInput) GetAccessOk() (*NewAppInstanceAccessInput, bool)`
+
+GetAccessOk returns a tuple with the Access field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccess
+
+`func (o *NewAppInstanceInput) SetAccess(v NewAppInstanceAccessInput)`
+
+SetAccess sets Access field to given value.
+
+### HasAccess
+
+`func (o *NewAppInstanceInput) HasAccess() bool`
+
+HasAccess returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -5,7 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
-**Issuer** | **string** |  | 
+**Title** | **string** |  | 
+**Custom** | **bool** |  | 
+**Issuer** | **string** | Human-readable certificate authority name parsed from uploaded certificates, or the managed issuer identifier. | 
+**Domain** | **string** |  | 
+**DnsNames** | **[]string** |  | 
+**RouteIds** | **[]int32** |  | 
+**Fingerprint** | Pointer to **NullableString** |  | [optional] 
 **KeyType** | **string** |  | 
 **KeyLength** | **int32** |  | 
 **Status** | **string** |  | 
@@ -22,7 +28,7 @@ Name | Type | Description | Notes
 
 ### NewCert
 
-`func NewCert(id int32, issuer string, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time, ) *Cert`
+`func NewCert(id int32, title string, custom bool, issuer string, domain string, dnsNames []string, routeIds []int32, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time, ) *Cert`
 
 NewCert instantiates a new Cert object
 This constructor will assign default values to properties that have it defined,
@@ -57,6 +63,46 @@ and a boolean to check if the value has been set.
 SetId sets Id field to given value.
 
 
+### GetTitle
+
+`func (o *Cert) GetTitle() string`
+
+GetTitle returns the Title field if non-nil, zero value otherwise.
+
+### GetTitleOk
+
+`func (o *Cert) GetTitleOk() (*string, bool)`
+
+GetTitleOk returns a tuple with the Title field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTitle
+
+`func (o *Cert) SetTitle(v string)`
+
+SetTitle sets Title field to given value.
+
+
+### GetCustom
+
+`func (o *Cert) GetCustom() bool`
+
+GetCustom returns the Custom field if non-nil, zero value otherwise.
+
+### GetCustomOk
+
+`func (o *Cert) GetCustomOk() (*bool, bool)`
+
+GetCustomOk returns a tuple with the Custom field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustom
+
+`func (o *Cert) SetCustom(v bool)`
+
+SetCustom sets Custom field to given value.
+
+
 ### GetIssuer
 
 `func (o *Cert) GetIssuer() string`
@@ -77,6 +123,101 @@ and a boolean to check if the value has been set.
 SetIssuer sets Issuer field to given value.
 
 
+### GetDomain
+
+`func (o *Cert) GetDomain() string`
+
+GetDomain returns the Domain field if non-nil, zero value otherwise.
+
+### GetDomainOk
+
+`func (o *Cert) GetDomainOk() (*string, bool)`
+
+GetDomainOk returns a tuple with the Domain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomain
+
+`func (o *Cert) SetDomain(v string)`
+
+SetDomain sets Domain field to given value.
+
+
+### GetDnsNames
+
+`func (o *Cert) GetDnsNames() []string`
+
+GetDnsNames returns the DnsNames field if non-nil, zero value otherwise.
+
+### GetDnsNamesOk
+
+`func (o *Cert) GetDnsNamesOk() (*[]string, bool)`
+
+GetDnsNamesOk returns a tuple with the DnsNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDnsNames
+
+`func (o *Cert) SetDnsNames(v []string)`
+
+SetDnsNames sets DnsNames field to given value.
+
+
+### GetRouteIds
+
+`func (o *Cert) GetRouteIds() []int32`
+
+GetRouteIds returns the RouteIds field if non-nil, zero value otherwise.
+
+### GetRouteIdsOk
+
+`func (o *Cert) GetRouteIdsOk() (*[]int32, bool)`
+
+GetRouteIdsOk returns a tuple with the RouteIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRouteIds
+
+`func (o *Cert) SetRouteIds(v []int32)`
+
+SetRouteIds sets RouteIds field to given value.
+
+
+### GetFingerprint
+
+`func (o *Cert) GetFingerprint() string`
+
+GetFingerprint returns the Fingerprint field if non-nil, zero value otherwise.
+
+### GetFingerprintOk
+
+`func (o *Cert) GetFingerprintOk() (*string, bool)`
+
+GetFingerprintOk returns a tuple with the Fingerprint field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFingerprint
+
+`func (o *Cert) SetFingerprint(v string)`
+
+SetFingerprint sets Fingerprint field to given value.
+
+### HasFingerprint
+
+`func (o *Cert) HasFingerprint() bool`
+
+HasFingerprint returns a boolean if a field has been set.
+
+### SetFingerprintNil
+
+`func (o *Cert) SetFingerprintNil(b bool)`
+
+ SetFingerprintNil sets the value for Fingerprint to be an explicit nil
+
+### UnsetFingerprint
+`func (o *Cert) UnsetFingerprint()`
+
+UnsetFingerprint ensures that no value is present for Fingerprint, not even an explicit nil
 ### GetKeyType
 
 `func (o *Cert) GetKeyType() string`

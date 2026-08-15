@@ -23,7 +23,14 @@ var _ MappedNullable = &Cert{}
 // Cert struct for Cert
 type Cert struct {
 	Id int32 `json:"id"`
+	Title string `json:"title"`
+	Custom bool `json:"custom"`
+	// Human-readable certificate authority name parsed from uploaded certificates, or the managed issuer identifier.
 	Issuer string `json:"issuer"`
+	Domain string `json:"domain"`
+	DnsNames []string `json:"dnsNames"`
+	RouteIds []int32 `json:"routeIds"`
+	Fingerprint NullableString `json:"fingerprint,omitempty"`
 	KeyType string `json:"keyType"`
 	KeyLength int32 `json:"keyLength"`
 	Status string `json:"status"`
@@ -43,10 +50,15 @@ type _Cert Cert
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCert(id int32, issuer string, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time) *Cert {
+func NewCert(id int32, title string, custom bool, issuer string, domain string, dnsNames []string, routeIds []int32, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time) *Cert {
 	this := Cert{}
 	this.Id = id
+	this.Title = title
+	this.Custom = custom
 	this.Issuer = issuer
+	this.Domain = domain
+	this.DnsNames = dnsNames
+	this.RouteIds = routeIds
 	this.KeyType = keyType
 	this.KeyLength = keyLength
 	this.Status = status
@@ -87,6 +99,54 @@ func (o *Cert) SetId(v int32) {
 	o.Id = v
 }
 
+// GetTitle returns the Title field value
+func (o *Cert) GetTitle() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Title
+}
+
+// GetTitleOk returns a tuple with the Title field value
+// and a boolean to check if the value has been set.
+func (o *Cert) GetTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Title, true
+}
+
+// SetTitle sets field value
+func (o *Cert) SetTitle(v string) {
+	o.Title = v
+}
+
+// GetCustom returns the Custom field value
+func (o *Cert) GetCustom() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Custom
+}
+
+// GetCustomOk returns a tuple with the Custom field value
+// and a boolean to check if the value has been set.
+func (o *Cert) GetCustomOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Custom, true
+}
+
+// SetCustom sets field value
+func (o *Cert) SetCustom(v bool) {
+	o.Custom = v
+}
+
 // GetIssuer returns the Issuer field value
 func (o *Cert) GetIssuer() string {
 	if o == nil {
@@ -109,6 +169,120 @@ func (o *Cert) GetIssuerOk() (*string, bool) {
 // SetIssuer sets field value
 func (o *Cert) SetIssuer(v string) {
 	o.Issuer = v
+}
+
+// GetDomain returns the Domain field value
+func (o *Cert) GetDomain() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Domain
+}
+
+// GetDomainOk returns a tuple with the Domain field value
+// and a boolean to check if the value has been set.
+func (o *Cert) GetDomainOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Domain, true
+}
+
+// SetDomain sets field value
+func (o *Cert) SetDomain(v string) {
+	o.Domain = v
+}
+
+// GetDnsNames returns the DnsNames field value
+func (o *Cert) GetDnsNames() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.DnsNames
+}
+
+// GetDnsNamesOk returns a tuple with the DnsNames field value
+// and a boolean to check if the value has been set.
+func (o *Cert) GetDnsNamesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DnsNames, true
+}
+
+// SetDnsNames sets field value
+func (o *Cert) SetDnsNames(v []string) {
+	o.DnsNames = v
+}
+
+// GetRouteIds returns the RouteIds field value
+func (o *Cert) GetRouteIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+
+	return o.RouteIds
+}
+
+// GetRouteIdsOk returns a tuple with the RouteIds field value
+// and a boolean to check if the value has been set.
+func (o *Cert) GetRouteIdsOk() ([]int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RouteIds, true
+}
+
+// SetRouteIds sets field value
+func (o *Cert) SetRouteIds(v []int32) {
+	o.RouteIds = v
+}
+
+// GetFingerprint returns the Fingerprint field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cert) GetFingerprint() string {
+	if o == nil || IsNil(o.Fingerprint.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Fingerprint.Get()
+}
+
+// GetFingerprintOk returns a tuple with the Fingerprint field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cert) GetFingerprintOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Fingerprint.Get(), o.Fingerprint.IsSet()
+}
+
+// HasFingerprint returns a boolean if a field has been set.
+func (o *Cert) HasFingerprint() bool {
+	if o != nil && o.Fingerprint.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFingerprint gets a reference to the given NullableString and assigns it to the Fingerprint field.
+func (o *Cert) SetFingerprint(v string) {
+	o.Fingerprint.Set(&v)
+}
+// SetFingerprintNil sets the value for Fingerprint to be an explicit nil
+func (o *Cert) SetFingerprintNil() {
+	o.Fingerprint.Set(nil)
+}
+
+// UnsetFingerprint ensures that no value is present for Fingerprint, not even an explicit nil
+func (o *Cert) UnsetFingerprint() {
+	o.Fingerprint.Unset()
 }
 
 // GetKeyType returns the KeyType field value
@@ -494,7 +668,15 @@ func (o Cert) MarshalJSON() ([]byte, error) {
 func (o Cert) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["title"] = o.Title
+	toSerialize["custom"] = o.Custom
 	toSerialize["issuer"] = o.Issuer
+	toSerialize["domain"] = o.Domain
+	toSerialize["dnsNames"] = o.DnsNames
+	toSerialize["routeIds"] = o.RouteIds
+	if o.Fingerprint.IsSet() {
+		toSerialize["fingerprint"] = o.Fingerprint.Get()
+	}
 	toSerialize["keyType"] = o.KeyType
 	toSerialize["keyLength"] = o.KeyLength
 	toSerialize["status"] = o.Status
@@ -527,7 +709,12 @@ func (o *Cert) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"title",
+		"custom",
 		"issuer",
+		"domain",
+		"dnsNames",
+		"routeIds",
 		"keyType",
 		"keyLength",
 		"status",

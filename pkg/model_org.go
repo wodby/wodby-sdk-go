@@ -31,6 +31,8 @@ type Org struct {
 	CiIntegrationId int32 `json:"ciIntegrationId"`
 	// Effective default registry integration ID. Zero selects the built-in Wodby registry service.
 	RegistryIntegrationId int32 `json:"registryIntegrationId"`
+	Capabilities *OrgCapabilities `json:"capabilities,omitempty"`
+	Subscription *OrgSubscription `json:"subscription,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -231,6 +233,70 @@ func (o *Org) SetRegistryIntegrationId(v int32) {
 	o.RegistryIntegrationId = v
 }
 
+// GetCapabilities returns the Capabilities field value if set, zero value otherwise.
+func (o *Org) GetCapabilities() OrgCapabilities {
+	if o == nil || IsNil(o.Capabilities) {
+		var ret OrgCapabilities
+		return ret
+	}
+	return *o.Capabilities
+}
+
+// GetCapabilitiesOk returns a tuple with the Capabilities field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Org) GetCapabilitiesOk() (*OrgCapabilities, bool) {
+	if o == nil || IsNil(o.Capabilities) {
+		return nil, false
+	}
+	return o.Capabilities, true
+}
+
+// HasCapabilities returns a boolean if a field has been set.
+func (o *Org) HasCapabilities() bool {
+	if o != nil && !IsNil(o.Capabilities) {
+		return true
+	}
+
+	return false
+}
+
+// SetCapabilities gets a reference to the given OrgCapabilities and assigns it to the Capabilities field.
+func (o *Org) SetCapabilities(v OrgCapabilities) {
+	o.Capabilities = &v
+}
+
+// GetSubscription returns the Subscription field value if set, zero value otherwise.
+func (o *Org) GetSubscription() OrgSubscription {
+	if o == nil || IsNil(o.Subscription) {
+		var ret OrgSubscription
+		return ret
+	}
+	return *o.Subscription
+}
+
+// GetSubscriptionOk returns a tuple with the Subscription field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Org) GetSubscriptionOk() (*OrgSubscription, bool) {
+	if o == nil || IsNil(o.Subscription) {
+		return nil, false
+	}
+	return o.Subscription, true
+}
+
+// HasSubscription returns a boolean if a field has been set.
+func (o *Org) HasSubscription() bool {
+	if o != nil && !IsNil(o.Subscription) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubscription gets a reference to the given OrgSubscription and assigns it to the Subscription field.
+func (o *Org) SetSubscription(v OrgSubscription) {
+	o.Subscription = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Org) GetCreatedAt() time.Time {
 	if o == nil {
@@ -296,6 +362,12 @@ func (o Org) ToMap() (map[string]interface{}, error) {
 	toSerialize["defaultTimeZone"] = o.DefaultTimeZone
 	toSerialize["ciIntegrationId"] = o.CiIntegrationId
 	toSerialize["registryIntegrationId"] = o.RegistryIntegrationId
+	if !IsNil(o.Capabilities) {
+		toSerialize["capabilities"] = o.Capabilities
+	}
+	if !IsNil(o.Subscription) {
+		toSerialize["subscription"] = o.Subscription
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

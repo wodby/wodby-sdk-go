@@ -22,8 +22,10 @@ var _ MappedNullable = &TasksResponse{}
 // TasksResponse struct for TasksResponse
 type TasksResponse struct {
 	Items []Task `json:"items"`
-	// Flat current-page roots and descendants for tree view, linked by parentId.
+	// Bounded current-page roots and authorized descendants for tree view, linked by parentId.
 	TreeItems []TaskTreeItem `json:"treeItems,omitempty"`
+	// True when treeItems omitted visible descendants after reaching the 250-item response limit. Always false for flat view.
+	TreeTruncated bool `json:"treeTruncated"`
 	TotalCount int32 `json:"totalCount"`
 	NextPage NullableInt32 `json:"nextPage,omitempty"`
 }
@@ -34,9 +36,10 @@ type _TasksResponse TasksResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTasksResponse(items []Task, totalCount int32) *TasksResponse {
+func NewTasksResponse(items []Task, treeTruncated bool, totalCount int32) *TasksResponse {
 	this := TasksResponse{}
 	this.Items = items
+	this.TreeTruncated = treeTruncated
 	this.TotalCount = totalCount
 	return &this
 }
@@ -104,6 +107,30 @@ func (o *TasksResponse) HasTreeItems() bool {
 // SetTreeItems gets a reference to the given []TaskTreeItem and assigns it to the TreeItems field.
 func (o *TasksResponse) SetTreeItems(v []TaskTreeItem) {
 	o.TreeItems = v
+}
+
+// GetTreeTruncated returns the TreeTruncated field value
+func (o *TasksResponse) GetTreeTruncated() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.TreeTruncated
+}
+
+// GetTreeTruncatedOk returns a tuple with the TreeTruncated field value
+// and a boolean to check if the value has been set.
+func (o *TasksResponse) GetTreeTruncatedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TreeTruncated, true
+}
+
+// SetTreeTruncated sets field value
+func (o *TasksResponse) SetTreeTruncated(v bool) {
+	o.TreeTruncated = v
 }
 
 // GetTotalCount returns the TotalCount field value
@@ -186,6 +213,7 @@ func (o TasksResponse) ToMap() (map[string]interface{}, error) {
 	if o.TreeItems != nil {
 		toSerialize["treeItems"] = o.TreeItems
 	}
+	toSerialize["treeTruncated"] = o.TreeTruncated
 	toSerialize["totalCount"] = o.TotalCount
 	if o.NextPage.IsSet() {
 		toSerialize["nextPage"] = o.NextPage.Get()
@@ -199,6 +227,7 @@ func (o *TasksResponse) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"items",
+		"treeTruncated",
 		"totalCount",
 	}
 

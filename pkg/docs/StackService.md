@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **ServiceRevVersion** | **string** |  | 
 **BuildSourceIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **BuildSourceRemoteRepoId** | Pointer to **NullableString** |  | [optional] 
+**Options** | Pointer to [**[]StackServiceOption**](StackServiceOption.md) |  | [optional] 
+**Settings** | Pointer to [**[]StackServiceSetting**](StackServiceSetting.md) |  | [optional] 
+**Containers** | Pointer to [**[]StackServiceContainer**](StackServiceContainer.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -392,6 +395,81 @@ HasBuildSourceRemoteRepoId returns a boolean if a field has been set.
 `func (o *StackService) UnsetBuildSourceRemoteRepoId()`
 
 UnsetBuildSourceRemoteRepoId ensures that no value is present for BuildSourceRemoteRepoId, not even an explicit nil
+### GetOptions
+
+`func (o *StackService) GetOptions() []StackServiceOption`
+
+GetOptions returns the Options field if non-nil, zero value otherwise.
+
+### GetOptionsOk
+
+`func (o *StackService) GetOptionsOk() (*[]StackServiceOption, bool)`
+
+GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptions
+
+`func (o *StackService) SetOptions(v []StackServiceOption)`
+
+SetOptions sets Options field to given value.
+
+### HasOptions
+
+`func (o *StackService) HasOptions() bool`
+
+HasOptions returns a boolean if a field has been set.
+
+### GetSettings
+
+`func (o *StackService) GetSettings() []StackServiceSetting`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *StackService) GetSettingsOk() (*[]StackServiceSetting, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *StackService) SetSettings(v []StackServiceSetting)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *StackService) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
+
+### GetContainers
+
+`func (o *StackService) GetContainers() []StackServiceContainer`
+
+GetContainers returns the Containers field if non-nil, zero value otherwise.
+
+### GetContainersOk
+
+`func (o *StackService) GetContainersOk() (*[]StackServiceContainer, bool)`
+
+GetContainersOk returns a tuple with the Containers field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContainers
+
+`func (o *StackService) SetContainers(v []StackServiceContainer)`
+
+SetContainers sets Containers field to given value.
+
+### HasContainers
+
+`func (o *StackService) HasContainers() bool`
+
+HasContainers returns a boolean if a field has been set.
+
 ### GetCreatedAt
 
 `func (o *StackService) GetCreatedAt() time.Time`

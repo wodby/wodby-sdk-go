@@ -37,6 +37,10 @@ type AppService struct {
 	NeedsRebuild bool `json:"needsRebuild"`
 	NeedsRedeploy bool `json:"needsRedeploy"`
 	ConfigurationReady bool `json:"configurationReady"`
+	BuildSourceBoilerplate NullableString `json:"buildSourceBoilerplate,omitempty"`
+	CiPolicy string `json:"ciPolicy"`
+	EffectiveCiIntegrationId NullableInt32 `json:"effectiveCiIntegrationId,omitempty"`
+	ConfigurationIssues []AppServiceConfigurationIssue `json:"configurationIssues"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	ServiceRevId int32 `json:"serviceRevId"`
 	ParentAppServiceId NullableInt32 `json:"parentAppServiceId,omitempty"`
@@ -50,7 +54,7 @@ type _AppService AppService
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, configurationReady bool, appInstanceId int32, serviceRevId int32, createdAt time.Time, updatedAt time.Time) *AppService {
+func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, configurationReady bool, ciPolicy string, configurationIssues []AppServiceConfigurationIssue, appInstanceId int32, serviceRevId int32, createdAt time.Time, updatedAt time.Time) *AppService {
 	this := AppService{}
 	this.Id = id
 	this.Name = name
@@ -66,6 +70,8 @@ func NewAppService(id int32, name string, title string, type_ string, status str
 	this.NeedsRebuild = needsRebuild
 	this.NeedsRedeploy = needsRedeploy
 	this.ConfigurationReady = configurationReady
+	this.CiPolicy = ciPolicy
+	this.ConfigurationIssues = configurationIssues
 	this.AppInstanceId = appInstanceId
 	this.ServiceRevId = serviceRevId
 	this.CreatedAt = createdAt
@@ -459,6 +465,138 @@ func (o *AppService) SetConfigurationReady(v bool) {
 	o.ConfigurationReady = v
 }
 
+// GetBuildSourceBoilerplate returns the BuildSourceBoilerplate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetBuildSourceBoilerplate() string {
+	if o == nil || IsNil(o.BuildSourceBoilerplate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BuildSourceBoilerplate.Get()
+}
+
+// GetBuildSourceBoilerplateOk returns a tuple with the BuildSourceBoilerplate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetBuildSourceBoilerplateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BuildSourceBoilerplate.Get(), o.BuildSourceBoilerplate.IsSet()
+}
+
+// HasBuildSourceBoilerplate returns a boolean if a field has been set.
+func (o *AppService) HasBuildSourceBoilerplate() bool {
+	if o != nil && o.BuildSourceBoilerplate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildSourceBoilerplate gets a reference to the given NullableString and assigns it to the BuildSourceBoilerplate field.
+func (o *AppService) SetBuildSourceBoilerplate(v string) {
+	o.BuildSourceBoilerplate.Set(&v)
+}
+// SetBuildSourceBoilerplateNil sets the value for BuildSourceBoilerplate to be an explicit nil
+func (o *AppService) SetBuildSourceBoilerplateNil() {
+	o.BuildSourceBoilerplate.Set(nil)
+}
+
+// UnsetBuildSourceBoilerplate ensures that no value is present for BuildSourceBoilerplate, not even an explicit nil
+func (o *AppService) UnsetBuildSourceBoilerplate() {
+	o.BuildSourceBoilerplate.Unset()
+}
+
+// GetCiPolicy returns the CiPolicy field value
+func (o *AppService) GetCiPolicy() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.CiPolicy
+}
+
+// GetCiPolicyOk returns a tuple with the CiPolicy field value
+// and a boolean to check if the value has been set.
+func (o *AppService) GetCiPolicyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CiPolicy, true
+}
+
+// SetCiPolicy sets field value
+func (o *AppService) SetCiPolicy(v string) {
+	o.CiPolicy = v
+}
+
+// GetEffectiveCiIntegrationId returns the EffectiveCiIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetEffectiveCiIntegrationId() int32 {
+	if o == nil || IsNil(o.EffectiveCiIntegrationId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.EffectiveCiIntegrationId.Get()
+}
+
+// GetEffectiveCiIntegrationIdOk returns a tuple with the EffectiveCiIntegrationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetEffectiveCiIntegrationIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EffectiveCiIntegrationId.Get(), o.EffectiveCiIntegrationId.IsSet()
+}
+
+// HasEffectiveCiIntegrationId returns a boolean if a field has been set.
+func (o *AppService) HasEffectiveCiIntegrationId() bool {
+	if o != nil && o.EffectiveCiIntegrationId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEffectiveCiIntegrationId gets a reference to the given NullableInt32 and assigns it to the EffectiveCiIntegrationId field.
+func (o *AppService) SetEffectiveCiIntegrationId(v int32) {
+	o.EffectiveCiIntegrationId.Set(&v)
+}
+// SetEffectiveCiIntegrationIdNil sets the value for EffectiveCiIntegrationId to be an explicit nil
+func (o *AppService) SetEffectiveCiIntegrationIdNil() {
+	o.EffectiveCiIntegrationId.Set(nil)
+}
+
+// UnsetEffectiveCiIntegrationId ensures that no value is present for EffectiveCiIntegrationId, not even an explicit nil
+func (o *AppService) UnsetEffectiveCiIntegrationId() {
+	o.EffectiveCiIntegrationId.Unset()
+}
+
+// GetConfigurationIssues returns the ConfigurationIssues field value
+func (o *AppService) GetConfigurationIssues() []AppServiceConfigurationIssue {
+	if o == nil {
+		var ret []AppServiceConfigurationIssue
+		return ret
+	}
+
+	return o.ConfigurationIssues
+}
+
+// GetConfigurationIssuesOk returns a tuple with the ConfigurationIssues field value
+// and a boolean to check if the value has been set.
+func (o *AppService) GetConfigurationIssuesOk() ([]AppServiceConfigurationIssue, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ConfigurationIssues, true
+}
+
+// SetConfigurationIssues sets field value
+func (o *AppService) SetConfigurationIssues(v []AppServiceConfigurationIssue) {
+	o.ConfigurationIssues = v
+}
+
 // GetAppInstanceId returns the AppInstanceId field value
 func (o *AppService) GetAppInstanceId() int32 {
 	if o == nil {
@@ -624,6 +762,14 @@ func (o AppService) ToMap() (map[string]interface{}, error) {
 	toSerialize["needsRebuild"] = o.NeedsRebuild
 	toSerialize["needsRedeploy"] = o.NeedsRedeploy
 	toSerialize["configurationReady"] = o.ConfigurationReady
+	if o.BuildSourceBoilerplate.IsSet() {
+		toSerialize["buildSourceBoilerplate"] = o.BuildSourceBoilerplate.Get()
+	}
+	toSerialize["ciPolicy"] = o.CiPolicy
+	if o.EffectiveCiIntegrationId.IsSet() {
+		toSerialize["effectiveCiIntegrationId"] = o.EffectiveCiIntegrationId.Get()
+	}
+	toSerialize["configurationIssues"] = o.ConfigurationIssues
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["serviceRevId"] = o.ServiceRevId
 	if o.ParentAppServiceId.IsSet() {
@@ -653,6 +799,8 @@ func (o *AppService) UnmarshalJSON(data []byte) (err error) {
 		"needsRebuild",
 		"needsRedeploy",
 		"configurationReady",
+		"ciPolicy",
+		"configurationIssues",
 		"appInstanceId",
 		"serviceRevId",
 		"createdAt",

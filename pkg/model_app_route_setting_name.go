@@ -25,6 +25,7 @@ const (
 	REQUEST_BODY_SIZE AppRouteSettingName = "REQUEST_BODY_SIZE"
 	SESSION_AFFINITY AppRouteSettingName = "SESSION_AFFINITY"
 	PATH_REWRITE AppRouteSettingName = "PATH_REWRITE"
+	HSTS AppRouteSettingName = "HSTS"
 )
 
 // All allowed values of AppRouteSettingName enum
@@ -34,6 +35,7 @@ var AllowedAppRouteSettingNameEnumValues = []AppRouteSettingName{
 	"REQUEST_BODY_SIZE",
 	"SESSION_AFFINITY",
 	"PATH_REWRITE",
+	"HSTS",
 }
 
 func (v *AppRouteSettingName) UnmarshalJSON(src []byte) error {

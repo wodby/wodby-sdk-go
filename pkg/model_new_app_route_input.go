@@ -22,18 +22,24 @@ var _ MappedNullable = &NewAppRouteInput{}
 // NewAppRouteInput struct for NewAppRouteInput
 type NewAppRouteInput struct {
 	AppServiceId int32 `json:"appServiceId"`
+	// Creates the custom domain disabled. Disabled domains do not require custom-domain feature access until enabled.
+	Disabled NullableBool `json:"disabled,omitempty"`
 	Main bool `json:"main"`
 	Primary bool `json:"primary"`
 	Port int32 `json:"port"`
 	Host string `json:"host"`
 	Path NullableString `json:"path,omitempty"`
 	PathType NullableString `json:"pathType,omitempty"`
+	// SERVE sends requests to the selected app service. BACKEND is accepted for backwards compatibility.
 	Action NullableString `json:"action,omitempty"`
 	RedirectScheme NullableString `json:"redirectScheme,omitempty"`
 	RedirectHost NullableString `json:"redirectHost,omitempty"`
 	RedirectPath NullableString `json:"redirectPath,omitempty"`
 	RedirectStatusCode NullableInt32 `json:"redirectStatusCode,omitempty"`
+	// Enables HTTP Strict Transport Security for a serve route when TLS is active.
+	Hsts NullableBool `json:"hsts,omitempty"`
 	Letsencrypt NullableBool `json:"letsencrypt,omitempty"`
+	Tls *AppRouteTLSInput `json:"tls,omitempty"`
 }
 
 type _NewAppRouteInput NewAppRouteInput
@@ -82,6 +88,48 @@ func (o *NewAppRouteInput) GetAppServiceIdOk() (*int32, bool) {
 // SetAppServiceId sets field value
 func (o *NewAppRouteInput) SetAppServiceId(v int32) {
 	o.AppServiceId = v
+}
+
+// GetDisabled returns the Disabled field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppRouteInput) GetDisabled() bool {
+	if o == nil || IsNil(o.Disabled.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Disabled.Get()
+}
+
+// GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewAppRouteInput) GetDisabledOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Disabled.Get(), o.Disabled.IsSet()
+}
+
+// HasDisabled returns a boolean if a field has been set.
+func (o *NewAppRouteInput) HasDisabled() bool {
+	if o != nil && o.Disabled.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDisabled gets a reference to the given NullableBool and assigns it to the Disabled field.
+func (o *NewAppRouteInput) SetDisabled(v bool) {
+	o.Disabled.Set(&v)
+}
+// SetDisabledNil sets the value for Disabled to be an explicit nil
+func (o *NewAppRouteInput) SetDisabledNil() {
+	o.Disabled.Set(nil)
+}
+
+// UnsetDisabled ensures that no value is present for Disabled, not even an explicit nil
+func (o *NewAppRouteInput) UnsetDisabled() {
+	o.Disabled.Unset()
 }
 
 // GetMain returns the Main field value
@@ -474,6 +522,48 @@ func (o *NewAppRouteInput) UnsetRedirectStatusCode() {
 	o.RedirectStatusCode.Unset()
 }
 
+// GetHsts returns the Hsts field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppRouteInput) GetHsts() bool {
+	if o == nil || IsNil(o.Hsts.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Hsts.Get()
+}
+
+// GetHstsOk returns a tuple with the Hsts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewAppRouteInput) GetHstsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Hsts.Get(), o.Hsts.IsSet()
+}
+
+// HasHsts returns a boolean if a field has been set.
+func (o *NewAppRouteInput) HasHsts() bool {
+	if o != nil && o.Hsts.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHsts gets a reference to the given NullableBool and assigns it to the Hsts field.
+func (o *NewAppRouteInput) SetHsts(v bool) {
+	o.Hsts.Set(&v)
+}
+// SetHstsNil sets the value for Hsts to be an explicit nil
+func (o *NewAppRouteInput) SetHstsNil() {
+	o.Hsts.Set(nil)
+}
+
+// UnsetHsts ensures that no value is present for Hsts, not even an explicit nil
+func (o *NewAppRouteInput) UnsetHsts() {
+	o.Hsts.Unset()
+}
+
 // GetLetsencrypt returns the Letsencrypt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NewAppRouteInput) GetLetsencrypt() bool {
 	if o == nil || IsNil(o.Letsencrypt.Get()) {
@@ -516,6 +606,38 @@ func (o *NewAppRouteInput) UnsetLetsencrypt() {
 	o.Letsencrypt.Unset()
 }
 
+// GetTls returns the Tls field value if set, zero value otherwise.
+func (o *NewAppRouteInput) GetTls() AppRouteTLSInput {
+	if o == nil || IsNil(o.Tls) {
+		var ret AppRouteTLSInput
+		return ret
+	}
+	return *o.Tls
+}
+
+// GetTlsOk returns a tuple with the Tls field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppRouteInput) GetTlsOk() (*AppRouteTLSInput, bool) {
+	if o == nil || IsNil(o.Tls) {
+		return nil, false
+	}
+	return o.Tls, true
+}
+
+// HasTls returns a boolean if a field has been set.
+func (o *NewAppRouteInput) HasTls() bool {
+	if o != nil && !IsNil(o.Tls) {
+		return true
+	}
+
+	return false
+}
+
+// SetTls gets a reference to the given AppRouteTLSInput and assigns it to the Tls field.
+func (o *NewAppRouteInput) SetTls(v AppRouteTLSInput) {
+	o.Tls = &v
+}
+
 func (o NewAppRouteInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -527,6 +649,9 @@ func (o NewAppRouteInput) MarshalJSON() ([]byte, error) {
 func (o NewAppRouteInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["appServiceId"] = o.AppServiceId
+	if o.Disabled.IsSet() {
+		toSerialize["disabled"] = o.Disabled.Get()
+	}
 	toSerialize["main"] = o.Main
 	toSerialize["primary"] = o.Primary
 	toSerialize["port"] = o.Port
@@ -552,8 +677,14 @@ func (o NewAppRouteInput) ToMap() (map[string]interface{}, error) {
 	if o.RedirectStatusCode.IsSet() {
 		toSerialize["redirectStatusCode"] = o.RedirectStatusCode.Get()
 	}
+	if o.Hsts.IsSet() {
+		toSerialize["hsts"] = o.Hsts.Get()
+	}
 	if o.Letsencrypt.IsSet() {
 		toSerialize["letsencrypt"] = o.Letsencrypt.Get()
+	}
+	if !IsNil(o.Tls) {
+		toSerialize["tls"] = o.Tls
 	}
 	return toSerialize, nil
 }

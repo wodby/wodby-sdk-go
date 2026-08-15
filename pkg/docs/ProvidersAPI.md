@@ -4,11 +4,78 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateVariableProvider**](ProvidersAPI.md#CreateVariableProvider) | **Post** /providers/actions/create-variable | Create variable provider
 [**GetProvider**](ProvidersAPI.md#GetProvider) | **Get** /providers/{id} | Get provider
 [**GetProviderByName**](ProvidersAPI.md#GetProviderByName) | **Get** /providers/by-name/{name} | Get provider by name
 [**GetProviderRevision**](ProvidersAPI.md#GetProviderRevision) | **Get** /provider-revisions/{id} | Get provider revision
 [**ListProviders**](ProvidersAPI.md#ListProviders) | **Get** /providers | List providers
 
+
+
+## CreateVariableProvider
+
+> Provider CreateVariableProvider(ctx).NewVariableProviderInput(newVariableProviderInput).Execute()
+
+Create variable provider
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	newVariableProviderInput := *openapiclient.NewNewVariableProviderInput("Name_example", "Title_example", []openapiclient.NewVariableProviderFieldInput{*openapiclient.NewNewVariableProviderFieldInput("Name_example", "Label_example", "Variable_example", false, false)}) // NewVariableProviderInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProvidersAPI.CreateVariableProvider(context.Background()).NewVariableProviderInput(newVariableProviderInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.CreateVariableProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateVariableProvider`: Provider
+	fmt.Fprintf(os.Stdout, "Response from `ProvidersAPI.CreateVariableProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateVariableProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **newVariableProviderInput** | [**NewVariableProviderInput**](NewVariableProviderInput.md) |  | 
+
+### Return type
+
+[**Provider**](Provider.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetProvider

@@ -24,7 +24,9 @@ type NewBackupInput struct {
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
 	BackupName NullableString `json:"backupName,omitempty"`
+	// Use 0 for Wodby Blob Storage.
 	IntegrationId int32 `json:"integrationId"`
+	// Must be empty for Wodby Blob Storage.
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
 }

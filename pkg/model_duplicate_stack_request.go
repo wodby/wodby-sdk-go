@@ -22,6 +22,8 @@ type DuplicateStackRequest struct {
 	// Optional for API-key requests; defaults to the API key's organization.
 	OrgId *int32 `json:"orgId,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
+	// Optional immutable source stack revision to duplicate. It must belong to the stack in the request path.
+	SourceRevId NullableInt32 `json:"sourceRevId,omitempty"`
 	Settings *CopyStackSettingsInput `json:"settings,omitempty"`
 }
 
@@ -116,6 +118,48 @@ func (o *DuplicateStackRequest) UnsetProjectId() {
 	o.ProjectId.Unset()
 }
 
+// GetSourceRevId returns the SourceRevId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DuplicateStackRequest) GetSourceRevId() int32 {
+	if o == nil || IsNil(o.SourceRevId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.SourceRevId.Get()
+}
+
+// GetSourceRevIdOk returns a tuple with the SourceRevId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DuplicateStackRequest) GetSourceRevIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SourceRevId.Get(), o.SourceRevId.IsSet()
+}
+
+// HasSourceRevId returns a boolean if a field has been set.
+func (o *DuplicateStackRequest) HasSourceRevId() bool {
+	if o != nil && o.SourceRevId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceRevId gets a reference to the given NullableInt32 and assigns it to the SourceRevId field.
+func (o *DuplicateStackRequest) SetSourceRevId(v int32) {
+	o.SourceRevId.Set(&v)
+}
+// SetSourceRevIdNil sets the value for SourceRevId to be an explicit nil
+func (o *DuplicateStackRequest) SetSourceRevIdNil() {
+	o.SourceRevId.Set(nil)
+}
+
+// UnsetSourceRevId ensures that no value is present for SourceRevId, not even an explicit nil
+func (o *DuplicateStackRequest) UnsetSourceRevId() {
+	o.SourceRevId.Unset()
+}
+
 // GetSettings returns the Settings field value if set, zero value otherwise.
 func (o *DuplicateStackRequest) GetSettings() CopyStackSettingsInput {
 	if o == nil || IsNil(o.Settings) {
@@ -163,6 +207,9 @@ func (o DuplicateStackRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ProjectId.IsSet() {
 		toSerialize["projectId"] = o.ProjectId.Get()
+	}
+	if o.SourceRevId.IsSet() {
+		toSerialize["sourceRevId"] = o.SourceRevId.Get()
 	}
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings

@@ -27,6 +27,8 @@ type NewAppServiceCronScheduleInput struct {
 	Crontab string `json:"crontab"`
 	Command string `json:"command"`
 	Workload NullableString `json:"workload,omitempty"`
+	// Creates the schedule disabled. Disabled schedules do not require cron feature access.
+	Disabled NullableBool `json:"disabled,omitempty"`
 }
 
 type _NewAppServiceCronScheduleInput NewAppServiceCronScheduleInput
@@ -207,6 +209,48 @@ func (o *NewAppServiceCronScheduleInput) UnsetWorkload() {
 	o.Workload.Unset()
 }
 
+// GetDisabled returns the Disabled field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewAppServiceCronScheduleInput) GetDisabled() bool {
+	if o == nil || IsNil(o.Disabled.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Disabled.Get()
+}
+
+// GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewAppServiceCronScheduleInput) GetDisabledOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Disabled.Get(), o.Disabled.IsSet()
+}
+
+// HasDisabled returns a boolean if a field has been set.
+func (o *NewAppServiceCronScheduleInput) HasDisabled() bool {
+	if o != nil && o.Disabled.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDisabled gets a reference to the given NullableBool and assigns it to the Disabled field.
+func (o *NewAppServiceCronScheduleInput) SetDisabled(v bool) {
+	o.Disabled.Set(&v)
+}
+// SetDisabledNil sets the value for Disabled to be an explicit nil
+func (o *NewAppServiceCronScheduleInput) SetDisabledNil() {
+	o.Disabled.Set(nil)
+}
+
+// UnsetDisabled ensures that no value is present for Disabled, not even an explicit nil
+func (o *NewAppServiceCronScheduleInput) UnsetDisabled() {
+	o.Disabled.Unset()
+}
+
 func (o NewAppServiceCronScheduleInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -225,6 +269,9 @@ func (o NewAppServiceCronScheduleInput) ToMap() (map[string]interface{}, error) 
 	toSerialize["command"] = o.Command
 	if o.Workload.IsSet() {
 		toSerialize["workload"] = o.Workload.Get()
+	}
+	if o.Disabled.IsSet() {
+		toSerialize["disabled"] = o.Disabled.Get()
 	}
 	return toSerialize, nil
 }

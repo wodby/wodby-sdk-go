@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**DeleteCluster**](ClustersAPI.md#DeleteCluster) | **Delete** /clusters/{id} | Delete cluster
 [**GetCluster**](ClustersAPI.md#GetCluster) | **Get** /clusters/{id} | Get cluster
 [**GetClusterByName**](ClustersAPI.md#GetClusterByName) | **Get** /clusters/by-name/{name} | Get cluster by name
+[**GetClusterInfraAppUpgradeChangelog**](ClustersAPI.md#GetClusterInfraAppUpgradeChangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
 [**UpdateClusterSettings**](ClustersAPI.md#UpdateClusterSettings) | **Put** /clusters/settings/{id} | Update cluster settings
@@ -281,6 +282,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Cluster**](Cluster.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetClusterInfraAppUpgradeChangelog
+
+> []ClusterInfraAppUpgradeChangelog GetClusterInfraAppUpgradeChangelog(ctx, id).AppInstanceId(appInstanceId).Execute()
+
+Preview cluster infrastructure app upgrades
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appInstanceId := int32(56) // int32 |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetClusterInfraAppUpgradeChangelog(context.Background(), id).AppInstanceId(appInstanceId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetClusterInfraAppUpgradeChangelog``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetClusterInfraAppUpgradeChangelog`: []ClusterInfraAppUpgradeChangelog
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetClusterInfraAppUpgradeChangelog`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetClusterInfraAppUpgradeChangelogRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appInstanceId** | **int32** |  | 
+
+### Return type
+
+[**[]ClusterInfraAppUpgradeChangelog**](ClusterInfraAppUpgradeChangelog.md)
 
 ### Authorization
 

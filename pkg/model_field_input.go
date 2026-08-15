@@ -23,6 +23,7 @@ var _ MappedNullable = &FieldInput{}
 type FieldInput struct {
 	Name string `json:"name"`
 	Value string `json:"value"`
+	EnvType NullableString `json:"envType,omitempty"`
 }
 
 type _FieldInput FieldInput
@@ -94,6 +95,48 @@ func (o *FieldInput) SetValue(v string) {
 	o.Value = v
 }
 
+// GetEnvType returns the EnvType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *FieldInput) GetEnvType() string {
+	if o == nil || IsNil(o.EnvType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.EnvType.Get()
+}
+
+// GetEnvTypeOk returns a tuple with the EnvType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *FieldInput) GetEnvTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EnvType.Get(), o.EnvType.IsSet()
+}
+
+// HasEnvType returns a boolean if a field has been set.
+func (o *FieldInput) HasEnvType() bool {
+	if o != nil && o.EnvType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvType gets a reference to the given NullableString and assigns it to the EnvType field.
+func (o *FieldInput) SetEnvType(v string) {
+	o.EnvType.Set(&v)
+}
+// SetEnvTypeNil sets the value for EnvType to be an explicit nil
+func (o *FieldInput) SetEnvTypeNil() {
+	o.EnvType.Set(nil)
+}
+
+// UnsetEnvType ensures that no value is present for EnvType, not even an explicit nil
+func (o *FieldInput) UnsetEnvType() {
+	o.EnvType.Unset()
+}
+
 func (o FieldInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +149,9 @@ func (o FieldInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["value"] = o.Value
+	if o.EnvType.IsSet() {
+		toSerialize["envType"] = o.EnvType.Get()
+	}
 	return toSerialize, nil
 }
 

@@ -25,6 +25,7 @@ type Task struct {
 	Id int32 `json:"id"`
 	Name string `json:"name"`
 	Title string `json:"title"`
+	ExecutionScope string `json:"executionScope"`
 	Status string `json:"status"`
 	Progress int32 `json:"progress"`
 	Silent bool `json:"silent"`
@@ -56,11 +57,12 @@ type _Task Task
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTask(id int32, name string, title string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time) *Task {
+func NewTask(id int32, name string, title string, executionScope string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time) *Task {
 	this := Task{}
 	this.Id = id
 	this.Name = name
 	this.Title = title
+	this.ExecutionScope = executionScope
 	this.Status = status
 	this.Progress = progress
 	this.Silent = silent
@@ -150,6 +152,30 @@ func (o *Task) GetTitleOk() (*string, bool) {
 // SetTitle sets field value
 func (o *Task) SetTitle(v string) {
 	o.Title = v
+}
+
+// GetExecutionScope returns the ExecutionScope field value
+func (o *Task) GetExecutionScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ExecutionScope
+}
+
+// GetExecutionScopeOk returns a tuple with the ExecutionScope field value
+// and a boolean to check if the value has been set.
+func (o *Task) GetExecutionScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ExecutionScope, true
+}
+
+// SetExecutionScope sets field value
+func (o *Task) SetExecutionScope(v string) {
+	o.ExecutionScope = v
 }
 
 // GetStatus returns the Status field value
@@ -967,6 +993,7 @@ func (o Task) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
+	toSerialize["executionScope"] = o.ExecutionScope
 	toSerialize["status"] = o.Status
 	toSerialize["progress"] = o.Progress
 	toSerialize["silent"] = o.Silent
@@ -1031,6 +1058,7 @@ func (o *Task) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"name",
 		"title",
+		"executionScope",
 		"status",
 		"progress",
 		"silent",

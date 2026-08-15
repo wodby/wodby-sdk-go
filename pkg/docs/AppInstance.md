@@ -19,6 +19,11 @@ Name | Type | Description | Notes
 **StackIcon** | **string** |  | 
 **StackRevNumber** | **int32** |  | 
 **StackVersion** | **string** |  | 
+**Access** | Pointer to [**NullableAppAccess**](AppAccess.md) |  | [optional] 
+**RoutingMode** | **string** |  | 
+**RoutingPending** | **bool** |  | 
+**ConfigurationReady** | **bool** |  | 
+**ConfigurationIssues** | [**[]AppServiceConfigurationIssue**](AppServiceConfigurationIssue.md) |  | 
 **Settings** | Pointer to [**AppInstanceSettings**](AppInstanceSettings.md) |  | [optional] 
 **Health** | [**AppInstanceHealth**](AppInstanceHealth.md) |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -28,7 +33,7 @@ Name | Type | Description | Notes
 
 ### NewAppInstance
 
-`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
+`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
 
 NewAppInstance instantiates a new AppInstance object
 This constructor will assign default values to properties that have it defined,
@@ -356,6 +361,121 @@ and a boolean to check if the value has been set.
 `func (o *AppInstance) SetStackVersion(v string)`
 
 SetStackVersion sets StackVersion field to given value.
+
+
+### GetAccess
+
+`func (o *AppInstance) GetAccess() AppAccess`
+
+GetAccess returns the Access field if non-nil, zero value otherwise.
+
+### GetAccessOk
+
+`func (o *AppInstance) GetAccessOk() (*AppAccess, bool)`
+
+GetAccessOk returns a tuple with the Access field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccess
+
+`func (o *AppInstance) SetAccess(v AppAccess)`
+
+SetAccess sets Access field to given value.
+
+### HasAccess
+
+`func (o *AppInstance) HasAccess() bool`
+
+HasAccess returns a boolean if a field has been set.
+
+### SetAccessNil
+
+`func (o *AppInstance) SetAccessNil(b bool)`
+
+ SetAccessNil sets the value for Access to be an explicit nil
+
+### UnsetAccess
+`func (o *AppInstance) UnsetAccess()`
+
+UnsetAccess ensures that no value is present for Access, not even an explicit nil
+### GetRoutingMode
+
+`func (o *AppInstance) GetRoutingMode() string`
+
+GetRoutingMode returns the RoutingMode field if non-nil, zero value otherwise.
+
+### GetRoutingModeOk
+
+`func (o *AppInstance) GetRoutingModeOk() (*string, bool)`
+
+GetRoutingModeOk returns a tuple with the RoutingMode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRoutingMode
+
+`func (o *AppInstance) SetRoutingMode(v string)`
+
+SetRoutingMode sets RoutingMode field to given value.
+
+
+### GetRoutingPending
+
+`func (o *AppInstance) GetRoutingPending() bool`
+
+GetRoutingPending returns the RoutingPending field if non-nil, zero value otherwise.
+
+### GetRoutingPendingOk
+
+`func (o *AppInstance) GetRoutingPendingOk() (*bool, bool)`
+
+GetRoutingPendingOk returns a tuple with the RoutingPending field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRoutingPending
+
+`func (o *AppInstance) SetRoutingPending(v bool)`
+
+SetRoutingPending sets RoutingPending field to given value.
+
+
+### GetConfigurationReady
+
+`func (o *AppInstance) GetConfigurationReady() bool`
+
+GetConfigurationReady returns the ConfigurationReady field if non-nil, zero value otherwise.
+
+### GetConfigurationReadyOk
+
+`func (o *AppInstance) GetConfigurationReadyOk() (*bool, bool)`
+
+GetConfigurationReadyOk returns a tuple with the ConfigurationReady field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigurationReady
+
+`func (o *AppInstance) SetConfigurationReady(v bool)`
+
+SetConfigurationReady sets ConfigurationReady field to given value.
+
+
+### GetConfigurationIssues
+
+`func (o *AppInstance) GetConfigurationIssues() []AppServiceConfigurationIssue`
+
+GetConfigurationIssues returns the ConfigurationIssues field if non-nil, zero value otherwise.
+
+### GetConfigurationIssuesOk
+
+`func (o *AppInstance) GetConfigurationIssuesOk() (*[]AppServiceConfigurationIssue, bool)`
+
+GetConfigurationIssuesOk returns a tuple with the ConfigurationIssues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigurationIssues
+
+`func (o *AppInstance) SetConfigurationIssues(v []AppServiceConfigurationIssue)`
+
+SetConfigurationIssues sets ConfigurationIssues field to given value.
 
 
 ### GetSettings

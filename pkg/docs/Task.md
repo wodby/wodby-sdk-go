@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
+**ExecutionScope** | **string** |  | 
 **Status** | **string** |  | 
 **Progress** | **int32** |  | 
 **Silent** | **bool** |  | 
@@ -35,7 +36,7 @@ Name | Type | Description | Notes
 
 ### NewTask
 
-`func NewTask(id int32, name string, title string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time, ) *Task`
+`func NewTask(id int32, name string, title string, executionScope string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time, ) *Task`
 
 NewTask instantiates a new Task object
 This constructor will assign default values to properties that have it defined,
@@ -108,6 +109,26 @@ and a boolean to check if the value has been set.
 `func (o *Task) SetTitle(v string)`
 
 SetTitle sets Title field to given value.
+
+
+### GetExecutionScope
+
+`func (o *Task) GetExecutionScope() string`
+
+GetExecutionScope returns the ExecutionScope field if non-nil, zero value otherwise.
+
+### GetExecutionScopeOk
+
+`func (o *Task) GetExecutionScopeOk() (*string, bool)`
+
+GetExecutionScopeOk returns a tuple with the ExecutionScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecutionScope
+
+`func (o *Task) SetExecutionScope(v string)`
+
+SetExecutionScope sets ExecutionScope field to given value.
 
 
 ### GetStatus

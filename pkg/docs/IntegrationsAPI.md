@@ -4,11 +4,14 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ConfigureIntegration**](IntegrationsAPI.md#ConfigureIntegration) | **Put** /integrations/configuration/{id} | Configure integration
 [**CreateIntegration**](IntegrationsAPI.md#CreateIntegration) | **Post** /integrations | Create integration
 [**DeleteIntegration**](IntegrationsAPI.md#DeleteIntegration) | **Delete** /integrations/{id} | Delete integration
+[**GetAppAccessProviderOptions**](IntegrationsAPI.md#GetAppAccessProviderOptions) | **Get** /integrations/{id}/options/app-access | Get app-access provider options
 [**GetIntegration**](IntegrationsAPI.md#GetIntegration) | **Get** /integrations/{id} | Get integration
 [**GetIntegrationByName**](IntegrationsAPI.md#GetIntegrationByName) | **Get** /integrations/by-name/{name} | Get integration by name
 [**GetIntegrationKubeSettings**](IntegrationsAPI.md#GetIntegrationKubeSettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
+[**GetIntegrationRemoteGitRepoFilePresence**](IntegrationsAPI.md#GetIntegrationRemoteGitRepoFilePresence) | **Get** /integrations/{id}/options/remote-git-repo-file | Check a remote Git repository file
 [**ListIntegrationKubeMachineTypes**](IntegrationsAPI.md#ListIntegrationKubeMachineTypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
 [**ListIntegrationKubeRegions**](IntegrationsAPI.md#ListIntegrationKubeRegions) | **Get** /integrations/{id}/options/kube-regions | List Kubernetes regions
 [**ListIntegrationKubeVersions**](IntegrationsAPI.md#ListIntegrationKubeVersions) | **Get** /integrations/{id}/options/kube-versions | List Kubernetes versions
@@ -20,8 +23,83 @@ Method | HTTP request | Description
 [**ListIntegrationStorageBuckets**](IntegrationsAPI.md#ListIntegrationStorageBuckets) | **Get** /integrations/{id}/options/storage-buckets | List storage buckets
 [**ListIntegrationStorageClasses**](IntegrationsAPI.md#ListIntegrationStorageClasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
 [**ListIntegrations**](IntegrationsAPI.md#ListIntegrations) | **Get** /integrations | List integrations
+[**ResolveIntegration**](IntegrationsAPI.md#ResolveIntegration) | **Post** /integrations/actions/resolve | Resolve or create integration
+[**TestIntegrationPermissions**](IntegrationsAPI.md#TestIntegrationPermissions) | **Post** /integrations/{id}/actions/test-permissions | Test integration permissions
 [**UpdateIntegration**](IntegrationsAPI.md#UpdateIntegration) | **Put** /integrations/{id} | Update integration
+[**ValidateAppAccessHostname**](IntegrationsAPI.md#ValidateAppAccessHostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
 
+
+
+## ConfigureIntegration
+
+> IntegrationConfigurationResult ConfigureIntegration(ctx, id).UpdateIntegrationInput(updateIntegrationInput).Execute()
+
+Configure integration
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateIntegrationInput := *openapiclient.NewUpdateIntegrationInput("Title_example", "Name_example", []string{"Kinds_example"}) // UpdateIntegrationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.ConfigureIntegration(context.Background(), id).UpdateIntegrationInput(updateIntegrationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ConfigureIntegration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ConfigureIntegration`: IntegrationConfigurationResult
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.ConfigureIntegration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConfigureIntegrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateIntegrationInput** | [**UpdateIntegrationInput**](UpdateIntegrationInput.md) |  | 
+
+### Return type
+
+[**IntegrationConfigurationResult**](IntegrationConfigurationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateIntegration
@@ -145,6 +223,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAppAccessProviderOptions
+
+> AppAccessProviderOptions GetAppAccessProviderOptions(ctx, id).Execute()
+
+Get app-access provider options
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.GetAppAccessProviderOptions(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.GetAppAccessProviderOptions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppAccessProviderOptions`: AppAccessProviderOptions
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.GetAppAccessProviderOptions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppAccessProviderOptionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppAccessProviderOptions**](AppAccessProviderOptions.md)
 
 ### Authorization
 
@@ -357,6 +505,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 **map[string]interface{}**
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetIntegrationRemoteGitRepoFilePresence
+
+> RemoteGitRepoFilePresence GetIntegrationRemoteGitRepoFilePresence(ctx, id).RemoteGitRepoId(remoteGitRepoId).Path(path).Ref(ref).Execute()
+
+Check a remote Git repository file
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	remoteGitRepoId := "remoteGitRepoId_example" // string | 
+	path := "path_example" // string | 
+	ref := "ref_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.GetIntegrationRemoteGitRepoFilePresence(context.Background(), id).RemoteGitRepoId(remoteGitRepoId).Path(path).Ref(ref).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.GetIntegrationRemoteGitRepoFilePresence``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetIntegrationRemoteGitRepoFilePresence`: RemoteGitRepoFilePresence
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.GetIntegrationRemoteGitRepoFilePresence`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetIntegrationRemoteGitRepoFilePresenceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **remoteGitRepoId** | **string** |  | 
+ **path** | **string** |  | 
+ **ref** | **string** |  | 
+
+### Return type
+
+[**RemoteGitRepoFilePresence**](RemoteGitRepoFilePresence.md)
 
 ### Authorization
 
@@ -1150,6 +1374,142 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ResolveIntegration
+
+> ResolveIntegrationResult ResolveIntegration(ctx).NewIntegrationInput(newIntegrationInput).Execute()
+
+Resolve or create integration
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	newIntegrationInput := *openapiclient.NewNewIntegrationInput(int32(123), "Name_example", "Title_example", []string{"Kinds_example"}) // NewIntegrationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.ResolveIntegration(context.Background()).NewIntegrationInput(newIntegrationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ResolveIntegration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResolveIntegration`: ResolveIntegrationResult
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.ResolveIntegration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiResolveIntegrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **newIntegrationInput** | [**NewIntegrationInput**](NewIntegrationInput.md) |  | 
+
+### Return type
+
+[**ResolveIntegrationResult**](ResolveIntegrationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TestIntegrationPermissions
+
+> OperationResult TestIntegrationPermissions(ctx, id).Execute()
+
+Test integration permissions
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.TestIntegrationPermissions(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.TestIntegrationPermissions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TestIntegrationPermissions`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.TestIntegrationPermissions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTestIntegrationPermissionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateIntegration
 
 > Integration UpdateIntegration(ctx, id).UpdateIntegrationInput(updateIntegrationInput).Execute()
@@ -1207,6 +1567,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Integration**](Integration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ValidateAppAccessHostname
+
+> ValidationResult ValidateAppAccessHostname(ctx, id).ValidateAppAccessHostnameInput(validateAppAccessHostnameInput).Execute()
+
+Validate an app-access hostname
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	validateAppAccessHostnameInput := *openapiclient.NewValidateAppAccessHostnameInput("Host_example") // ValidateAppAccessHostnameInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.ValidateAppAccessHostname(context.Background(), id).ValidateAppAccessHostnameInput(validateAppAccessHostnameInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ValidateAppAccessHostname``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ValidateAppAccessHostname`: ValidationResult
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.ValidateAppAccessHostname`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiValidateAppAccessHostnameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **validateAppAccessHostnameInput** | [**ValidateAppAccessHostnameInput**](ValidateAppAccessHostnameInput.md) |  | 
+
+### Return type
+
+[**ValidationResult**](ValidationResult.md)
 
 ### Authorization
 

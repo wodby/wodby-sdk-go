@@ -25,6 +25,8 @@ Name | Type | Description | Notes
 **Hostname** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **OrgId** | **int32** |  | 
+**OwnershipScope** | **string** |  | 
+**OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **Capabilities** | [**ClusterCapabilities**](ClusterCapabilities.md) |  | 
 **Settings** | Pointer to [**ClusterSettings**](ClusterSettings.md) |  | [optional] 
 **StorageClasses** | Pointer to [**[]StorageClass**](StorageClass.md) |  | [optional] 
@@ -36,7 +38,7 @@ Name | Type | Description | Notes
 
 ### NewCluster
 
-`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
+`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
 
 NewCluster instantiates a new Cluster object
 This constructor will assign default values to properties that have it defined,
@@ -621,6 +623,61 @@ and a boolean to check if the value has been set.
 SetOrgId sets OrgId field to given value.
 
 
+### GetOwnershipScope
+
+`func (o *Cluster) GetOwnershipScope() string`
+
+GetOwnershipScope returns the OwnershipScope field if non-nil, zero value otherwise.
+
+### GetOwnershipScopeOk
+
+`func (o *Cluster) GetOwnershipScopeOk() (*string, bool)`
+
+GetOwnershipScopeOk returns a tuple with the OwnershipScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipScope
+
+`func (o *Cluster) SetOwnershipScope(v string)`
+
+SetOwnershipScope sets OwnershipScope field to given value.
+
+
+### GetOwnerProjectId
+
+`func (o *Cluster) GetOwnerProjectId() int32`
+
+GetOwnerProjectId returns the OwnerProjectId field if non-nil, zero value otherwise.
+
+### GetOwnerProjectIdOk
+
+`func (o *Cluster) GetOwnerProjectIdOk() (*int32, bool)`
+
+GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnerProjectId
+
+`func (o *Cluster) SetOwnerProjectId(v int32)`
+
+SetOwnerProjectId sets OwnerProjectId field to given value.
+
+### HasOwnerProjectId
+
+`func (o *Cluster) HasOwnerProjectId() bool`
+
+HasOwnerProjectId returns a boolean if a field has been set.
+
+### SetOwnerProjectIdNil
+
+`func (o *Cluster) SetOwnerProjectIdNil(b bool)`
+
+ SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+
+### UnsetOwnerProjectId
+`func (o *Cluster) UnsetOwnerProjectId()`
+
+UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
 ### GetCapabilities
 
 `func (o *Cluster) GetCapabilities() ClusterCapabilities`

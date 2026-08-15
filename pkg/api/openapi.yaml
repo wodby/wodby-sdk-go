@@ -2543,6 +2543,46 @@ paths:
       summary: List app service volumes
       tags:
       - app-services
+    post:
+      description: Adds a volume that is optional in the service manifest and returns
+        the reconciliation task identifier.
+      operationId: addAppServiceVolume
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAppServiceVolumeInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Volume reconciliation task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Add an optional app service volume
+      tags:
+      - app-services
   /app-services/{id}/resources:
     put:
       description: Sets CPU and memory requests or limits for an app service container.
@@ -4506,6 +4546,40 @@ paths:
       summary: Create integration
       tags:
       - integrations
+  /integrations/actions/resolve:
+    post:
+      description: "Reuses an accessible integration when provider, kinds, scope,\
+        \ environment scopes, and credential values match exactly; otherwise creates\
+        \ it."
+      operationId: resolveIntegration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIntegrationInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveIntegrationResult'
+          description: Resolved integration
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Resolve or create integration
+      tags:
+      - integrations
   /integrations/by-name/{name}:
     get:
       description: Returns the integration identified by name.
@@ -4619,6 +4693,62 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List remote Git repositories
+      tags:
+      - integrations
+  /integrations/{id}/options/remote-git-repo-file:
+    get:
+      description: Returns whether a file exists at an exact repository ref through
+        the selected Git integration.
+      operationId: getIntegrationRemoteGitRepoFilePresence
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: remoteGitRepoId
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: path
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: ref
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoteGitRepoFilePresence'
+          description: Remote Git repository file presence
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Check a remote Git repository file
       tags:
       - integrations
   /integrations/{id}/options/remote-git-repo-branches:
@@ -5077,6 +5207,48 @@ paths:
       summary: Update integration
       tags:
       - integrations
+  /integrations/configuration/{id}:
+    put:
+      description: "Atomically updates integration metadata, adds selected kinds,\
+        \ merges field values, and returns any background activation or permission-test\
+        \ task."
+      operationId: configureIntegration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIntegrationInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfigurationResult'
+          description: Integration configuration result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Configure integration
+      tags:
+      - integrations
   /integration-kinds/{id}/database-types:
     get:
       description: Returns database types matching the request filters.
@@ -5401,6 +5573,39 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List providers
+      tags:
+      - providers
+  /providers/actions/create-variable:
+    post:
+      description: Creates a private provider whose integration fields are exposed
+        as service environment variables.
+      operationId: createVariableProvider
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewVariableProviderInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+          description: Variable provider created
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create variable provider
       tags:
       - providers
   /providers/by-name/{name}:
@@ -6029,6 +6234,35 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stacks
+      tags:
+      - stacks
+  /catalog/stacks:
+    get:
+      description: Returns public stacks that can be duplicated into an organization
+        or project.
+      operationId: listPublicStacks
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Stack'
+                type: array
+          description: Public catalog stacks
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List public catalog stacks
       tags:
       - stacks
   /stacks/actions/import:
@@ -8324,8 +8558,11 @@ paths:
         style: form
       - description: "Return matching tasks as a flat page or as filter-scoped task\
           \ trees. Tree responses support user, organization, project, and resource\
-          \ filters, keep paginated roots in items, and include all current-page tree\
-          \ nodes in treeItems."
+          \ filters, keep paginated roots in items, and include current-page tree\
+          \ nodes in treeItems. Root pages are capped at 100 tasks. Tree responses\
+          \ include up to 250 authorized tasks and set treeTruncated when additional\
+          \ visible descendants exist; exceeding the 10-level depth limit still returns\
+          \ 422."
         explode: true
         in: query
         name: view
@@ -8967,6 +9204,15 @@ paths:
         schema:
           type: integer
         style: form
+      - description: "When supplied, returns only usable custom certificates whose\
+          \ DNS names cover this host."
+        explode: true
+        in: query
+        name: host
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -8992,6 +9238,40 @@ paths:
       tags:
       - certs
   /certs/{id}:
+    delete:
+      description: Deletes an uploaded certificate that is not attached to any route
+        or other resource.
+      operationId: deleteCustomCert
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete custom certificate
+      tags:
+      - certs
     get:
       description: Returns certificate metadata identified by the request path within
         the requested organization.
@@ -9253,6 +9533,606 @@ paths:
       summary: Update env
       tags:
       - envs
+  /app-instance-stack-upgrade-changelogs/{id}:
+    get:
+      description: Returns the stack and service revision changes that an app instance
+        stack upgrade would apply.
+      operationId: getAppInstanceStackUpgradeChangelog
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInstanceStackUpgradeChangelog'
+          description: Stack upgrade changelog
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preview app instance stack upgrade
+      tags:
+      - app-instances
+  /app-instance-accesses/{id}:
+    get:
+      description: Returns the external access configuration for the app instance
+        identified by the path.
+      operationId: getAppInstanceAccess
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAccess'
+          description: App access configuration
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app instance access
+      tags:
+      - app-instances
+    post:
+      description: Creates external access for the app instance identified by the
+        path.
+      operationId: createAppAccess
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppAccessInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAccessOperationResult'
+          description: Created app access and provisioning task
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create app instance access
+      tags:
+      - app-instances
+  /app-accesses/actions/preflight:
+    post:
+      description: Validates a proposed app-access configuration before an app instance
+        or access resource is created.
+      operationId: preflightAppAccess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppInstanceAccessInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+          description: Preflight result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preflight app instance access
+      tags:
+      - app-instances
+  /app-accesses/{id}:
+    delete:
+      description: Removes app access and returns the cleanup task identifier.
+      operationId: deleteAppAccess
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete operation result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete app access
+      tags:
+      - app-instances
+    put:
+      description: Updates an existing app-access configuration and starts its reconciliation
+        task.
+      operationId: updateAppAccess
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppAccessInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAccessOperationResult'
+          description: Updated app access and reconciliation task
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app access
+      tags:
+      - app-instances
+  /app-access-cleanups:
+    get:
+      description: Returns cleanup records for exactly one app instance or integration.
+      operationId: listAppAccessCleanups
+      parameters:
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: integrationId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppAccessCleanup'
+                type: array
+          description: Cleanup records
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app-access cleanups
+      tags:
+      - app-instances
+  /app-access-cleanups/{id}/actions/retry:
+    post:
+      description: Retries a failed app-access cleanup and returns its task identifier.
+      operationId: retryAppAccessCleanup
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Retry operation result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Retry app-access cleanup
+      tags:
+      - app-instances
+  /app-services/{id}/options/volume-storage-classes:
+    get:
+      description: Returns configured and effective storage-class choices for each
+        app service volume.
+      operationId: listAppServiceVolumeStorageClasses
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceVolumeStorageClassState'
+                type: array
+          description: Volume storage-class state
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app service volume storage-class state
+      tags:
+      - app-services
+  /cluster-infra-app-upgrade-changelogs/{id}:
+    get:
+      description: Returns stack and service revision changes for infrastructure apps
+        on the cluster.
+      operationId: getClusterInfraAppUpgradeChangelog
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: appInstanceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClusterInfraAppUpgradeChangelog'
+                type: array
+          description: Infrastructure app upgrade changelogs
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preview cluster infrastructure app upgrades
+      tags:
+      - clusters
+  /integrations/{id}/options/app-access:
+    get:
+      description: "Returns supported app-access modes, scopes, fields, and hostname\
+        \ behavior for the integration."
+      operationId: getAppAccessProviderOptions
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAccessProviderOptions'
+          description: App-access provider options
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app-access provider options
+      tags:
+      - integrations
+  /integrations/{id}/actions/validate-app-access-hostname:
+    post:
+      description: Validates an app-access hostname against the provider settings
+        of the integration.
+      operationId: validateAppAccessHostname
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateAppAccessHostnameInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+          description: Hostname validation result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Validate an app-access hostname
+      tags:
+      - integrations
+  /integrations/{id}/actions/test-permissions:
+    post:
+      description: Starts the provider permission audit configured by the integration's
+        provider revision.
+      operationId: testIntegrationPermissions
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Permission-audit task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Test integration permissions
+      tags:
+      - integrations
+  /stacks/{id}/actions/update-service-revisions:
+    post:
+      description: Starts a task that advances unpinned stack services to their eligible
+        revisions.
+      operationId: updateStackServiceRevisions
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Stack update task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update stack service revisions
+      tags:
+      - stacks
+  /stack-service-update-changelogs/{id}:
+    get:
+      description: "Returns eligible service revision changes for a stack, optionally\
+        \ limited to one stack service."
+      operationId: getStackServiceUpdateChangelog
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: stackServiceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackServiceUpdateChangelog'
+                type: array
+          description: Stack service update changelogs
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preview stack service revision updates
+      tags:
+      - stacks
+  /stack-origin-sync-changelogs/{id}:
+    get:
+      description: Returns the origin stack changes that would be synchronized into
+        the stack.
+      operationId: getStackOriginSyncChangelog
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackOriginSyncChangelog'
+          description: Stack origin synchronization changelog
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preview stack origin synchronization
+      tags:
+      - stacks
 components:
   parameters:
     Id:
@@ -10399,6 +11279,7 @@ components:
                 allowMajor: true
                 allowPatch: true
                 allowMinor: true
+        sourceRevId: 1
         projectId: 6
         orgId: 0
       properties:
@@ -10406,6 +11287,11 @@ components:
           description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
         projectId:
+          nullable: true
+          type: integer
+        sourceRevId:
+          description: Optional immutable source stack revision to duplicate. It must
+            belong to the stack in the request path.
           nullable: true
           type: integer
         settings:
@@ -12243,9 +13129,28 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         registryIntegrationId: 5
         defaultTimeZone: America/New_York
+        capabilities:
+          webShell: true
+          projects: true
+          cronSchedules: true
+          customDomains: true
+          autoBackups: true
+          wodbyCloud: true
+          appInstancePause: true
+          autoscale: true
+          users: true
         domain: domain
         name: name
         id: 6
+        subscription:
+          plan:
+            spendingLimit: 7.061401241503109
+            usageIncluded: 2.3021358869347655
+            usage: 5.637376656633329
+            name: name
+            title: title
+            pricePerUnit: 9.301444243932576
+          status: status
         title: title
         ciIntegrationId: 1
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -12269,6 +13174,10 @@ components:
           description: Effective default registry integration ID. Zero selects the
             built-in Wodby registry service.
           type: integer
+        capabilities:
+          $ref: '#/components/schemas/OrgCapabilities'
+        subscription:
+          $ref: '#/components/schemas/OrgSubscription'
         createdAt:
           format: date-time
           type: string
@@ -12285,6 +13194,98 @@ components:
       - registryIntegrationId
       - title
       - updatedAt
+      type: object
+    OrgCapabilities:
+      example:
+        webShell: true
+        projects: true
+        cronSchedules: true
+        customDomains: true
+        autoBackups: true
+        wodbyCloud: true
+        appInstancePause: true
+        autoscale: true
+        users: true
+      properties:
+        customDomains:
+          type: boolean
+        autoBackups:
+          type: boolean
+        users:
+          type: boolean
+        projects:
+          type: boolean
+        cronSchedules:
+          type: boolean
+        autoscale:
+          type: boolean
+        appInstancePause:
+          type: boolean
+        webShell:
+          type: boolean
+        wodbyCloud:
+          type: boolean
+      required:
+      - appInstancePause
+      - autoBackups
+      - autoscale
+      - cronSchedules
+      - customDomains
+      - projects
+      - users
+      - webShell
+      - wodbyCloud
+      type: object
+    OrgSubscription:
+      example:
+        plan:
+          spendingLimit: 7.061401241503109
+          usageIncluded: 2.3021358869347655
+          usage: 5.637376656633329
+          name: name
+          title: title
+          pricePerUnit: 9.301444243932576
+        status: status
+      properties:
+        status:
+          type: string
+        plan:
+          $ref: '#/components/schemas/OrgSubscriptionPlan'
+      required:
+      - status
+      type: object
+    OrgSubscriptionPlan:
+      example:
+        spendingLimit: 7.061401241503109
+        usageIncluded: 2.3021358869347655
+        usage: 5.637376656633329
+        name: name
+        title: title
+        pricePerUnit: 9.301444243932576
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        usage:
+          format: double
+          type: number
+        usageIncluded:
+          format: double
+          type: number
+        spendingLimit:
+          format: double
+          type: number
+        pricePerUnit:
+          format: double
+          type: number
+      required:
+      - name
+      - pricePerUnit
+      - spendingLimit
+      - title
+      - usage
+      - usageIncluded
       type: object
     User:
       properties:
@@ -12304,13 +13305,13 @@ components:
         defaultProjects:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 5
+          id: 3
           title: title
           orgId: 2
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 5
+          id: 3
           title: title
           orgId: 2
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -12319,18 +13320,56 @@ components:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           registryIntegrationId: 5
           defaultTimeZone: America/New_York
+          capabilities:
+            webShell: true
+            projects: true
+            cronSchedules: true
+            customDomains: true
+            autoBackups: true
+            wodbyCloud: true
+            appInstancePause: true
+            autoscale: true
+            users: true
           domain: domain
           name: name
           id: 6
+          subscription:
+            plan:
+              spendingLimit: 7.061401241503109
+              usageIncluded: 2.3021358869347655
+              usage: 5.637376656633329
+              name: name
+              title: title
+              pricePerUnit: 9.301444243932576
+            status: status
           title: title
           ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           registryIntegrationId: 5
           defaultTimeZone: America/New_York
+          capabilities:
+            webShell: true
+            projects: true
+            cronSchedules: true
+            customDomains: true
+            autoBackups: true
+            wodbyCloud: true
+            appInstancePause: true
+            autoscale: true
+            users: true
           domain: domain
           name: name
           id: 6
+          subscription:
+            plan:
+              spendingLimit: 7.061401241503109
+              usageIncluded: 2.3021358869347655
+              usage: 5.637376656633329
+              name: name
+              title: title
+              pricePerUnit: 9.301444243932576
+            status: status
           title: title
           ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -12427,7 +13466,7 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        id: 5
+        id: 3
         title: title
         orgId: 2
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -12518,16 +13557,17 @@ components:
               services: true
               integrations: true
             enabled: true
+        access: "{}"
         stackId: 5
         stackName: stackName
         mainDomain: mainDomain
         health:
           cron:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
-            failingSchedulesCount: 9
+            failingSchedulesCount: 3
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
-            failingSchedulesCount: 3
+            failingSchedulesCount: 2
         clusterId: 1
         envId: 5
         title: title
@@ -12535,12 +13575,30 @@ components:
         stackRevId: 2
         stackTitle: stackTitle
         stackVersion: stackVersion
+        configurationIssues:
+        - appServiceId: 9
+          code: code
+          appServiceName: appServiceName
+          name: name
+          appServiceTitle: appServiceTitle
+          title: title
+          message: message
+        - appServiceId: 9
+          code: code
+          appServiceName: appServiceName
+          name: name
+          appServiceTitle: appServiceTitle
+          title: title
+          message: message
         stackRevNumber: 7
         appId: 6
         name: name
         stackIcon: stackIcon
         id: 0
+        routingMode: routingMode
+        configurationReady: true
         status: status
+        routingPending: true
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -12574,6 +13632,21 @@ components:
           type: integer
         stackVersion:
           type: string
+        access:
+          allOf:
+          - $ref: '#/components/schemas/AppAccess'
+          nullable: true
+          type: object
+        routingMode:
+          type: string
+        routingPending:
+          type: boolean
+        configurationReady:
+          type: boolean
+        configurationIssues:
+          items:
+            $ref: '#/components/schemas/AppServiceConfigurationIssue'
+          type: array
         settings:
           $ref: '#/components/schemas/AppInstanceSettings'
         health:
@@ -12587,11 +13660,15 @@ components:
       required:
       - appId
       - clusterId
+      - configurationIssues
+      - configurationReady
       - createdAt
       - envId
       - health
       - id
       - name
+      - routingMode
+      - routingPending
       - stackIcon
       - stackId
       - stackName
@@ -12607,10 +13684,10 @@ components:
       example:
         cron:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
-          failingSchedulesCount: 9
+          failingSchedulesCount: 3
         backups:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
-          failingSchedulesCount: 3
+          failingSchedulesCount: 2
       properties:
         cron:
           $ref: '#/components/schemas/AppInstanceCronHealth'
@@ -12623,7 +13700,7 @@ components:
     AppInstanceCronHealth:
       example:
         latestFailureAt: 2000-01-23T04:56:07.000+00:00
-        failingSchedulesCount: 9
+        failingSchedulesCount: 3
       properties:
         failingSchedulesCount:
           type: integer
@@ -12637,7 +13714,7 @@ components:
     AppInstanceBackupHealth:
       example:
         latestFailureAt: 2000-01-23T04:56:07.000+00:00
-        failingSchedulesCount: 3
+        failingSchedulesCount: 2
       properties:
         failingSchedulesCount:
           type: integer
@@ -12656,23 +13733,27 @@ components:
         postDeploymentTaskId: 1
         appServiceDeployments:
         - jobName: jobName
-          skipPostDeployment: true
-          appServiceId: 1
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          appServiceBuildId: 6
-          endedAt: 2000-01-23T04:56:07.000+00:00
+          buildSelectionKind: buildSelectionKind
+          appServiceBuildId: 7
           startedAt: 2000-01-23T04:56:07.000+00:00
+          previousAppServiceBuildId: 1
+          skipPostDeployment: true
+          appServiceId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
           force: true
           id: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - jobName: jobName
-          skipPostDeployment: true
-          appServiceId: 1
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          appServiceBuildId: 6
-          endedAt: 2000-01-23T04:56:07.000+00:00
+          buildSelectionKind: buildSelectionKind
+          appServiceBuildId: 7
           startedAt: 2000-01-23T04:56:07.000+00:00
+          previousAppServiceBuildId: 1
+          skipPostDeployment: true
+          appServiceId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
           force: true
           id: 1
           status: status
@@ -12694,18 +13775,24 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
@@ -12726,18 +13813,24 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
@@ -12750,7 +13843,7 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         rollbackStatus: not_attempted
-        taskId: 7
+        taskId: 1
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -12836,12 +13929,14 @@ components:
     AppServiceDeployment:
       example:
         jobName: jobName
-        skipPostDeployment: true
-        appServiceId: 1
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        appServiceBuildId: 6
-        endedAt: 2000-01-23T04:56:07.000+00:00
+        buildSelectionKind: buildSelectionKind
+        appServiceBuildId: 7
         startedAt: 2000-01-23T04:56:07.000+00:00
+        previousAppServiceBuildId: 1
+        skipPostDeployment: true
+        appServiceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
         force: true
         id: 1
         status: status
@@ -12858,6 +13953,11 @@ components:
         appServiceBuildId:
           nullable: true
           type: integer
+        previousAppServiceBuildId:
+          nullable: true
+          type: integer
+        buildSelectionKind:
+          type: string
         skipPostDeployment:
           type: boolean
         force:
@@ -12878,6 +13978,7 @@ components:
           type: string
       required:
       - appServiceId
+      - buildSelectionKind
       - createdAt
       - force
       - id
@@ -12888,8 +13989,8 @@ components:
       type: object
     AppDeploymentsResponse:
       example:
-        nextPage: 1
-        totalCount: 7
+        nextPage: 5
+        totalCount: 4
         items:
         - startedAt: 2000-01-23T04:56:07.000+00:00
           postDeploymentTask: "{}"
@@ -12897,23 +13998,27 @@ components:
           postDeploymentTaskId: 1
           appServiceDeployments:
           - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 1
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 6
-            endedAt: 2000-01-23T04:56:07.000+00:00
+            buildSelectionKind: buildSelectionKind
+            appServiceBuildId: 7
             startedAt: 2000-01-23T04:56:07.000+00:00
+            previousAppServiceBuildId: 1
+            skipPostDeployment: true
+            appServiceId: 6
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
             id: 1
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 1
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 6
-            endedAt: 2000-01-23T04:56:07.000+00:00
+            buildSelectionKind: buildSelectionKind
+            appServiceBuildId: 7
             startedAt: 2000-01-23T04:56:07.000+00:00
+            previousAppServiceBuildId: 1
+            skipPostDeployment: true
+            appServiceId: 6
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
             id: 1
             status: status
@@ -12935,18 +14040,24 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
@@ -12967,18 +14078,24 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
@@ -12991,7 +14108,7 @@ components:
             updatedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           rollbackStatus: not_attempted
-          taskId: 7
+          taskId: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - startedAt: 2000-01-23T04:56:07.000+00:00
@@ -13000,23 +14117,27 @@ components:
           postDeploymentTaskId: 1
           appServiceDeployments:
           - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 1
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 6
-            endedAt: 2000-01-23T04:56:07.000+00:00
+            buildSelectionKind: buildSelectionKind
+            appServiceBuildId: 7
             startedAt: 2000-01-23T04:56:07.000+00:00
+            previousAppServiceBuildId: 1
+            skipPostDeployment: true
+            appServiceId: 6
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
             id: 1
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
-            skipPostDeployment: true
-            appServiceId: 1
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appServiceBuildId: 6
-            endedAt: 2000-01-23T04:56:07.000+00:00
+            buildSelectionKind: buildSelectionKind
+            appServiceBuildId: 7
             startedAt: 2000-01-23T04:56:07.000+00:00
+            previousAppServiceBuildId: 1
+            skipPostDeployment: true
+            appServiceId: 6
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
             id: 1
             status: status
@@ -13038,18 +14159,24 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
@@ -13070,18 +14197,24 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - image: image
+            - previouslyDeployed: true
+              image: image
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
               size: 2
+              currentlyDeployed: true
+              currentBuildNumber: 7
               id: 3
               imageDeleted: true
               status: status
@@ -13094,7 +14227,7 @@ components:
             updatedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           rollbackStatus: not_attempted
-          taskId: 7
+          taskId: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -13123,18 +14256,24 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         task: "{}"
         appServiceBuilds:
-        - image: image
+        - previouslyDeployed: true
+          image: image
           appServiceId: 4
           createdAt: 2000-01-23T04:56:07.000+00:00
           size: 2
+          currentlyDeployed: true
+          currentBuildNumber: 7
           id: 3
           imageDeleted: true
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - image: image
+        - previouslyDeployed: true
+          image: image
           appServiceId: 4
           createdAt: 2000-01-23T04:56:07.000+00:00
           size: 2
+          currentlyDeployed: true
+          currentBuildNumber: 7
           id: 3
           imageDeleted: true
           status: status
@@ -13208,10 +14347,13 @@ components:
       type: object
     AppServiceBuild:
       example:
+        previouslyDeployed: true
         image: image
         appServiceId: 4
         createdAt: 2000-01-23T04:56:07.000+00:00
         size: 2
+        currentlyDeployed: true
+        currentBuildNumber: 7
         id: 3
         imageDeleted: true
         status: status
@@ -13229,6 +14371,13 @@ components:
           type: integer
         appServiceId:
           type: integer
+        previouslyDeployed:
+          type: boolean
+        currentlyDeployed:
+          type: boolean
+        currentBuildNumber:
+          nullable: true
+          type: integer
         createdAt:
           format: date-time
           type: string
@@ -13238,9 +14387,11 @@ components:
       required:
       - appServiceId
       - createdAt
+      - currentlyDeployed
       - id
       - image
       - imageDeleted
+      - previouslyDeployed
       - size
       - status
       - updatedAt
@@ -13260,18 +14411,24 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
@@ -13292,18 +14449,24 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
@@ -13341,18 +14504,24 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
@@ -13373,18 +14542,24 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - image: image
+          - previouslyDeployed: true
+            image: image
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
             size: 2
+            currentlyDeployed: true
+            currentBuildNumber: 7
             id: 3
             imageDeleted: true
             status: status
@@ -13549,6 +14724,7 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         hostname: hostname
         minNodeCount: 6
+        ownerProjectId: 9
         storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
         zone: zone
         singleNode: true
@@ -13598,6 +14774,7 @@ components:
         infraVersion: infraVersion
         name: name
         region: region
+        ownershipScope: org
         status: status
       properties:
         id:
@@ -13654,6 +14831,14 @@ components:
           type: integer
         orgId:
           type: integer
+        ownershipScope:
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          nullable: true
+          type: integer
         capabilities:
           $ref: '#/components/schemas/ClusterCapabilities'
         settings:
@@ -13682,6 +14867,7 @@ components:
       - k3s
       - name
       - orgId
+      - ownershipScope
       - serverless
       - singleNode
       - status
@@ -14086,6 +15272,7 @@ components:
         repeatedTaskId: 1
         system: true
         originTaskId: 1
+        executionScope: user
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
         progress: 6
@@ -14097,6 +15284,13 @@ components:
         name:
           type: string
         title:
+          type: string
+        executionScope:
+          enum:
+          - user
+          - org
+          - project
+          - legacy_unknown
           type: string
         status:
           type: string
@@ -14171,6 +15365,7 @@ components:
           type: string
       required:
       - createdAt
+      - executionScope
       - id
       - jobs
       - name
@@ -14309,25 +15504,28 @@ components:
         private: true
         technical: true
         lastSyncedAt: 2000-01-23T04:56:07.000+00:00
-        redirectScheme: redirectScheme
+        attachmentStatus: UNKNOWN
         redirectPath: redirectPath
         main: true
         cert: "{}"
-        redirectStatusCode: 6
-        pathType: pathType
         redirectHost: redirectHost
         portId: 5
         appInstanceId: 1
         path: path
         appServiceId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
+        attachmentCheckedAt: 2000-01-23T04:56:07.000+00:00
+        attachmentError: attachmentError
         host: host
         action: action
         disabled: true
         id: 0
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        redirectScheme: redirectScheme
+        redirectStatusCode: 6
+        pathType: pathType
         status: status
         primary: true
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -14352,6 +15550,22 @@ components:
           nullable: true
           type: integer
         status:
+          type: string
+        attachmentStatus:
+          enum:
+          - UNKNOWN
+          - CHECKING
+          - AWAITING_DNS
+          - NOT_CONNECTED
+          - CONNECTED
+          - ERROR
+          type: string
+        attachmentCheckedAt:
+          format: date-time
+          nullable: true
+          type: string
+        attachmentError:
+          nullable: true
           type: string
         disabled:
           type: boolean
@@ -14390,6 +15604,7 @@ components:
       - action
       - appInstanceId
       - appServiceId
+      - attachmentStatus
       - createdAt
       - disabled
       - host
@@ -14403,6 +15618,1078 @@ components:
       - status
       - technical
       - updatedAt
+      type: object
+    ValidationResult:
+      example:
+        valid: true
+      properties:
+        valid:
+          type: boolean
+      required:
+      - valid
+      type: object
+    AppServiceConfigurationIssue:
+      example:
+        appServiceId: 9
+        code: code
+        appServiceName: appServiceName
+        name: name
+        appServiceTitle: appServiceTitle
+        title: title
+        message: message
+      properties:
+        appServiceId:
+          type: integer
+        appServiceName:
+          type: string
+        appServiceTitle:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+      required:
+      - appServiceId
+      - appServiceName
+      - appServiceTitle
+      - code
+      - message
+      - name
+      - title
+      type: object
+    StackRevisionLinkIssue:
+      example:
+        targetStackServiceTitle: targetStackServiceTitle
+        code: code
+        stackServiceName: stackServiceName
+        stackServiceId: 5
+        targetStackServiceId: 5
+        targetStackServiceName: targetStackServiceName
+        message: message
+        linkName: linkName
+        stackServiceTitle: stackServiceTitle
+      properties:
+        code:
+          type: string
+        stackServiceId:
+          type: integer
+        stackServiceName:
+          type: string
+        stackServiceTitle:
+          type: string
+        linkName:
+          nullable: true
+          type: string
+        targetStackServiceId:
+          nullable: true
+          type: integer
+        targetStackServiceName:
+          nullable: true
+          type: string
+        targetStackServiceTitle:
+          nullable: true
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+      - stackServiceId
+      - stackServiceName
+      - stackServiceTitle
+      type: object
+    AppAccess:
+      example:
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        endpoints:
+        - host: host
+          id: 1
+          appPortId: 5
+          url: url
+          primary: true
+        - host: host
+          id: 1
+          appPortId: 5
+          url: url
+          primary: true
+        lastError: lastError
+        integrationId: 6
+        resources:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          externalId: externalId
+          id: 5
+          type: type
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          externalId: externalId
+          id: 5
+          type: type
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        mode: protected
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        effectiveUrl: effectiveUrl
+        publicRoutesSuppressed: true
+        scope: entire_app
+        id: 0
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        mode:
+          enum:
+          - protected
+          - private_network
+          type: string
+        scope:
+          enum:
+          - entire_app
+          - selected_endpoints
+          type: string
+        status:
+          type: string
+        settings:
+          items:
+            $ref: '#/components/schemas/AppAccessSetting'
+          type: array
+        publicRoutesSuppressed:
+          type: boolean
+        effectiveUrl:
+          nullable: true
+          type: string
+        lastError:
+          nullable: true
+          type: string
+        integrationId:
+          type: integer
+        endpoints:
+          items:
+            $ref: '#/components/schemas/AppAccessEndpoint'
+          type: array
+        resources:
+          items:
+            $ref: '#/components/schemas/AppAccessResource'
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - endpoints
+      - id
+      - integrationId
+      - mode
+      - publicRoutesSuppressed
+      - resources
+      - scope
+      - settings
+      - status
+      - updatedAt
+      type: object
+    AppAccessSetting:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    AppAccessEndpoint:
+      example:
+        host: host
+        id: 1
+        appPortId: 5
+        url: url
+        primary: true
+      properties:
+        id:
+          type: integer
+        appPortId:
+          type: integer
+        host:
+          type: string
+        primary:
+          type: boolean
+        url:
+          type: string
+      required:
+      - appPortId
+      - host
+      - id
+      - primary
+      - url
+      type: object
+    AppAccessResource:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        externalId: externalId
+        id: 5
+        type: type
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        name:
+          type: string
+        externalId:
+          type: string
+        status:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - externalId
+      - id
+      - name
+      - status
+      - type
+      - updatedAt
+      type: object
+    AppAccessCleanup:
+      example:
+        appInstanceId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        lastError: lastError
+        appAccessId: 6
+        provider: provider
+        integrationId: 5
+        id: 0
+        status: status
+        attempts: 5
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appAccessId:
+          type: integer
+        appInstanceId:
+          type: integer
+        integrationId:
+          type: integer
+        provider:
+          type: string
+        status:
+          type: string
+        attempts:
+          type: integer
+        lastError:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appAccessId
+      - appInstanceId
+      - attempts
+      - createdAt
+      - id
+      - integrationId
+      - provider
+      - status
+      - updatedAt
+      type: object
+    AppAccessOperationResult:
+      example:
+        access:
+          settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          endpoints:
+          - host: host
+            id: 1
+            appPortId: 5
+            url: url
+            primary: true
+          - host: host
+            id: 1
+            appPortId: 5
+            url: url
+            primary: true
+          lastError: lastError
+          integrationId: 6
+          resources:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            externalId: externalId
+            id: 5
+            type: type
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            externalId: externalId
+            id: 5
+            type: type
+            status: status
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          mode: protected
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          effectiveUrl: effectiveUrl
+          publicRoutesSuppressed: true
+          scope: entire_app
+          id: 0
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        taskId: 0
+      properties:
+        access:
+          $ref: '#/components/schemas/AppAccess'
+        taskId:
+          nullable: true
+          type: integer
+      required:
+      - access
+      type: object
+    AppAccessEndpointInput:
+      example:
+        host: host
+        appPortId: 6
+        primary: true
+      properties:
+        appPortId:
+          type: integer
+        host:
+          nullable: true
+          type: string
+        primary:
+          type: boolean
+      required:
+      - appPortId
+      - primary
+      type: object
+    NewAppAccessInput:
+      example:
+        mode: PROTECTED
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        endpoints:
+        - host: host
+          appPortId: 6
+          primary: true
+        - host: host
+          appPortId: 6
+          primary: true
+        scope: ENTIRE_APP
+        integrationId: 0
+      properties:
+        integrationId:
+          type: integer
+        mode:
+          enum:
+          - PROTECTED
+          - PRIVATE_NETWORK
+          type: string
+        scope:
+          enum:
+          - ENTIRE_APP
+          - SELECTED_ENDPOINTS
+          type: string
+        settings:
+          items:
+            $ref: '#/components/schemas/AppAccessSettingInput'
+          type: array
+        endpoints:
+          items:
+            $ref: '#/components/schemas/AppAccessEndpointInput'
+          type: array
+      required:
+      - endpoints
+      - integrationId
+      - mode
+      - scope
+      type: object
+    UpdateAppAccessInput:
+      example:
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        endpoints:
+        - host: host
+          appPortId: 6
+          primary: true
+        - host: host
+          appPortId: 6
+          primary: true
+        scope: ENTIRE_APP
+      properties:
+        scope:
+          enum:
+          - ENTIRE_APP
+          - SELECTED_ENDPOINTS
+          type: string
+        settings:
+          items:
+            $ref: '#/components/schemas/AppAccessSettingInput'
+          type: array
+        endpoints:
+          items:
+            $ref: '#/components/schemas/AppAccessEndpointInput'
+          type: array
+      required:
+      - endpoints
+      - scope
+      type: object
+    ValidateAppAccessHostnameInput:
+      example:
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        host: host
+      properties:
+        settings:
+          items:
+            $ref: '#/components/schemas/AppAccessSettingInput'
+          type: array
+        host:
+          type: string
+      required:
+      - host
+      type: object
+    AppAccessProviderOption:
+      example:
+        flattenHostnamePrefix: true
+        warningUrl: warningUrl
+        warningTitle: warningTitle
+        warning: warning
+        label: label
+        value: value
+      properties:
+        value:
+          type: string
+        label:
+          type: string
+        flattenHostnamePrefix:
+          type: boolean
+        warningTitle:
+          nullable: true
+          type: string
+        warning:
+          nullable: true
+          type: string
+        warningUrl:
+          nullable: true
+          type: string
+      required:
+      - flattenHostnamePrefix
+      - label
+      - value
+      type: object
+    AppAccessProviderField:
+      example:
+        defaultValue: defaultValue
+        name: name
+        options:
+        - flattenHostnamePrefix: true
+          warningUrl: warningUrl
+          warningTitle: warningTitle
+          warning: warning
+          label: label
+          value: value
+        - flattenHostnamePrefix: true
+          warningUrl: warningUrl
+          warningTitle: warningTitle
+          warning: warning
+          label: label
+          value: value
+        description: description
+        hostnameSuffix: true
+        label: label
+        required: true
+        radio: true
+        affectsHostname: true
+      properties:
+        name:
+          type: string
+        label:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+        radio:
+          type: boolean
+        hostnameSuffix:
+          type: boolean
+        affectsHostname:
+          type: boolean
+        defaultValue:
+          nullable: true
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/AppAccessProviderOption'
+          type: array
+      required:
+      - affectsHostname
+      - description
+      - hostnameSuffix
+      - label
+      - name
+      - options
+      - radio
+      - required
+      type: object
+    AppAccessProviderConfiguration:
+      example:
+        mode: mode
+        endpointHostMode: endpointHostMode
+        fields:
+        - defaultValue: defaultValue
+          name: name
+          options:
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          description: description
+          hostnameSuffix: true
+          label: label
+          required: true
+          radio: true
+          affectsHostname: true
+        - defaultValue: defaultValue
+          name: name
+          options:
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          description: description
+          hostnameSuffix: true
+          label: label
+          required: true
+          radio: true
+          affectsHostname: true
+      properties:
+        mode:
+          type: string
+        endpointHostMode:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/AppAccessProviderField'
+          type: array
+      required:
+      - endpointHostMode
+      - fields
+      - mode
+      type: object
+    AppAccessProviderOptions:
+      example:
+        modes:
+        - modes
+        - modes
+        provider: provider
+        configurations:
+        - mode: mode
+          endpointHostMode: endpointHostMode
+          fields:
+          - defaultValue: defaultValue
+            name: name
+            options:
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            description: description
+            hostnameSuffix: true
+            label: label
+            required: true
+            radio: true
+            affectsHostname: true
+          - defaultValue: defaultValue
+            name: name
+            options:
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            description: description
+            hostnameSuffix: true
+            label: label
+            required: true
+            radio: true
+            affectsHostname: true
+        - mode: mode
+          endpointHostMode: endpointHostMode
+          fields:
+          - defaultValue: defaultValue
+            name: name
+            options:
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            description: description
+            hostnameSuffix: true
+            label: label
+            required: true
+            radio: true
+            affectsHostname: true
+          - defaultValue: defaultValue
+            name: name
+            options:
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            - flattenHostnamePrefix: true
+              warningUrl: warningUrl
+              warningTitle: warningTitle
+              warning: warning
+              label: label
+              value: value
+            description: description
+            hostnameSuffix: true
+            label: label
+            required: true
+            radio: true
+            affectsHostname: true
+        scopes:
+        - scopes
+        - scopes
+        endpointHostMode: endpointHostMode
+        fields:
+        - defaultValue: defaultValue
+          name: name
+          options:
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          description: description
+          hostnameSuffix: true
+          label: label
+          required: true
+          radio: true
+          affectsHostname: true
+        - defaultValue: defaultValue
+          name: name
+          options:
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          - flattenHostnamePrefix: true
+            warningUrl: warningUrl
+            warningTitle: warningTitle
+            warning: warning
+            label: label
+            value: value
+          description: description
+          hostnameSuffix: true
+          label: label
+          required: true
+          radio: true
+          affectsHostname: true
+      properties:
+        provider:
+          type: string
+        modes:
+          items:
+            type: string
+          type: array
+        scopes:
+          items:
+            type: string
+          type: array
+        endpointHostMode:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/AppAccessProviderField'
+          type: array
+        configurations:
+          items:
+            $ref: '#/components/schemas/AppAccessProviderConfiguration'
+          type: array
+      required:
+      - configurations
+      - endpointHostMode
+      - fields
+      - modes
+      - provider
+      - scopes
+      type: object
+    AddAppServiceVolumeInput:
+      example:
+        size: 0
+        storageClassName: storageClassName
+        name: name
+      properties:
+        name:
+          type: string
+        size:
+          nullable: true
+          type: integer
+        storageClassName:
+          nullable: true
+          type: string
+      required:
+      - name
+      type: object
+    AppServiceVolumeStorageClassState:
+      example:
+        configuredStorageClassName: configuredStorageClassName
+        effectiveStorageClassNames:
+        - effectiveStorageClassNames
+        - effectiveStorageClassNames
+        volumeId: 0
+        status: status
+      properties:
+        volumeId:
+          type: integer
+        configuredStorageClassName:
+          nullable: true
+          type: string
+        effectiveStorageClassNames:
+          items:
+            type: string
+          type: array
+        status:
+          type: string
+      required:
+      - effectiveStorageClassNames
+      - status
+      - volumeId
+      type: object
+    StackServiceUpdateChangelogEntry:
+      example:
+        description: description
+        tag: tag
+      properties:
+        tag:
+          type: string
+        description:
+          type: string
+      required:
+      - description
+      - tag
+      type: object
+    ServiceRevisionChange:
+      example:
+        revNumber: 5
+        entries:
+        - description: description
+          tag: tag
+        - description: description
+          tag: tag
+        kind: kind
+        previousVersion: previousVersion
+        name: name
+        icon: icon
+        title: title
+        previousRevNumber: 1
+        version: version
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        icon:
+          type: string
+        kind:
+          type: string
+        previousVersion:
+          nullable: true
+          type: string
+        version:
+          nullable: true
+          type: string
+        previousRevNumber:
+          nullable: true
+          type: integer
+        revNumber:
+          nullable: true
+          type: integer
+        entries:
+          items:
+            $ref: '#/components/schemas/StackServiceUpdateChangelogEntry'
+          type: array
+      required:
+      - entries
+      - icon
+      - kind
+      - name
+      - title
+      type: object
+    AppInstanceStackUpgradeChangelog:
+      example:
+        previousStackVersion: previousStackVersion
+        stackVersion: stackVersion
+        serviceChanges:
+        - revNumber: 5
+          entries:
+          - description: description
+            tag: tag
+          - description: description
+            tag: tag
+          kind: kind
+          previousVersion: previousVersion
+          name: name
+          icon: icon
+          title: title
+          previousRevNumber: 1
+          version: version
+        - revNumber: 5
+          entries:
+          - description: description
+            tag: tag
+          - description: description
+            tag: tag
+          kind: kind
+          previousVersion: previousVersion
+          name: name
+          icon: icon
+          title: title
+          previousRevNumber: 1
+          version: version
+        stackRevNumber: 6
+        previousStackRevNumber: 0
+      properties:
+        previousStackVersion:
+          type: string
+        stackVersion:
+          type: string
+        previousStackRevNumber:
+          type: integer
+        stackRevNumber:
+          type: integer
+        serviceChanges:
+          items:
+            $ref: '#/components/schemas/ServiceRevisionChange'
+          type: array
+      required:
+      - previousStackRevNumber
+      - previousStackVersion
+      - serviceChanges
+      - stackRevNumber
+      - stackVersion
+      type: object
+    ClusterInfraAppUpgradeChangelog:
+      example:
+        appInstanceId: 0
+        previousStackVersion: previousStackVersion
+        stackVersion: stackVersion
+        serviceChanges:
+        - revNumber: 5
+          entries:
+          - description: description
+            tag: tag
+          - description: description
+            tag: tag
+          kind: kind
+          previousVersion: previousVersion
+          name: name
+          icon: icon
+          title: title
+          previousRevNumber: 1
+          version: version
+        - revNumber: 5
+          entries:
+          - description: description
+            tag: tag
+          - description: description
+            tag: tag
+          kind: kind
+          previousVersion: previousVersion
+          name: name
+          icon: icon
+          title: title
+          previousRevNumber: 1
+          version: version
+        appName: appName
+        stackRevNumber: 1
+        previousStackRevNumber: 6
+        appTitle: appTitle
+      properties:
+        appInstanceId:
+          type: integer
+        appName:
+          type: string
+        appTitle:
+          type: string
+        previousStackVersion:
+          type: string
+        stackVersion:
+          type: string
+        previousStackRevNumber:
+          type: integer
+        stackRevNumber:
+          type: integer
+        serviceChanges:
+          items:
+            $ref: '#/components/schemas/ServiceRevisionChange'
+          type: array
+      required:
+      - appInstanceId
+      - appName
+      - appTitle
+      - previousStackRevNumber
+      - previousStackVersion
+      - serviceChanges
+      - stackRevNumber
+      - stackVersion
+      type: object
+    StackServiceUpdateChangelog:
+      example:
+        revNumber: 1
+        entries:
+        - description: description
+          tag: tag
+        - description: description
+          tag: tag
+        previousVersion: previousVersion
+        name: name
+        stackServiceId: 0
+        title: title
+        previousRevNumber: 6
+        version: version
+      properties:
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        previousVersion:
+          type: string
+        version:
+          type: string
+        previousRevNumber:
+          type: integer
+        revNumber:
+          type: integer
+        entries:
+          items:
+            $ref: '#/components/schemas/StackServiceUpdateChangelogEntry'
+          type: array
+      required:
+      - entries
+      - name
+      - previousRevNumber
+      - previousVersion
+      - revNumber
+      - stackServiceId
+      - title
+      - version
+      type: object
+    StackOriginSyncChangelog:
+      example:
+        entries:
+        - description: description
+          tag: tag
+        - description: description
+          tag: tag
+        previousVersion: previousVersion
+        version: version
+      properties:
+        previousVersion:
+          type: string
+        version:
+          type: string
+        entries:
+          items:
+            $ref: '#/components/schemas/StackServiceUpdateChangelogEntry'
+          type: array
+      required:
+      - entries
+      - previousVersion
+      - version
       type: object
     AppAuth:
       example:
@@ -14489,26 +16776,56 @@ components:
       - REQUEST_BODY_SIZE
       - SESSION_AFFINITY
       - PATH_REWRITE
+      - HSTS
       type: string
     Cert:
       example:
+        dnsNames:
+        - dnsNames
+        - dnsNames
+        custom: true
+        title: title
         issuer: issuer
         renewsAt: 2000-01-23T04:56:07.000+00:00
         expiresAt: 2000-01-23T04:56:07.000+00:00
-        appInstanceId: 1
+        appInstanceId: 5
         appServiceId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
-        keyLength: 6
+        keyLength: 1
+        domain: domain
+        fingerprint: fingerprint
         id: 0
         issuedAt: 2000-01-23T04:56:07.000+00:00
         keyType: keyType
-        databaseId: 5
+        databaseId: 2
+        routeIds:
+        - 6
+        - 6
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
+        title:
+          type: string
+        custom:
+          type: boolean
         issuer:
+          description: "Human-readable certificate authority name parsed from uploaded\
+            \ certificates, or the managed issuer identifier."
+          type: string
+        domain:
+          type: string
+        dnsNames:
+          items:
+            type: string
+          type: array
+        routeIds:
+          items:
+            type: integer
+          type: array
+        fingerprint:
+          nullable: true
           type: string
         keyType:
           type: string
@@ -14545,11 +16862,16 @@ components:
           type: string
       required:
       - createdAt
+      - custom
+      - dnsNames
+      - domain
       - id
       - issuer
       - keyLength
       - keyType
+      - routeIds
       - status
+      - title
       - updatedAt
       type: object
     Env:
@@ -14641,6 +16963,7 @@ components:
         id: 0
         title: title
         version: version
+        permissionAudit: true
       properties:
         id:
           type: integer
@@ -14657,6 +16980,8 @@ components:
         manifest:
           additionalProperties: true
           type: object
+        permissionAudit:
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -14665,6 +16990,7 @@ components:
       - id
       - name
       - number
+      - permissionAudit
       - providerId
       - title
       - version
@@ -15023,6 +17349,25 @@ components:
     StackRevision:
       example:
         number: 6
+        linkIssues:
+        - targetStackServiceTitle: targetStackServiceTitle
+          code: code
+          stackServiceName: stackServiceName
+          stackServiceId: 5
+          targetStackServiceId: 5
+          targetStackServiceName: targetStackServiceName
+          message: message
+          linkName: linkName
+          stackServiceTitle: stackServiceTitle
+        - targetStackServiceTitle: targetStackServiceTitle
+          code: code
+          stackServiceName: stackServiceName
+          stackServiceId: 5
+          targetStackServiceId: 5
+          targetStackServiceName: targetStackServiceName
+          message: message
+          linkName: linkName
+          stackServiceTitle: stackServiceTitle
         createdAt: 2000-01-23T04:56:07.000+00:00
         manifest: manifest
         draft: true
@@ -15051,6 +17396,10 @@ components:
           type: integer
         manifest:
           type: string
+        linkIssues:
+          items:
+            $ref: '#/components/schemas/StackRevisionLinkIssue'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -15059,6 +17408,7 @@ components:
       - draft
       - icon
       - id
+      - linkIssues
       - manifest
       - name
       - number
@@ -15068,6 +17418,15 @@ components:
       type: object
     StackService:
       example:
+        settings:
+        - name: name
+          stackServiceId: 9
+          id: 7
+          value: value
+        - name: name
+          stackServiceId: 9
+          id: 7
+          value: value
         replicas: 6
         serviceRevTitle: serviceRevTitle
         main: true
@@ -15081,7 +17440,35 @@ components:
         outdated: true
         buildSourceIntegrationId: 5
         name: name
+        options:
+        - default: true
+          stackServiceId: 2
+          disabled: true
+          id: 5
+          version: version
+        - default: true
+          stackServiceId: 2
+          disabled: true
+          id: 5
+          version: version
         disabled: true
+        containers:
+        - limitMem: 1
+          requestMem: 7
+          limitCPU: 1
+          name: name
+          workload: workload
+          stackServiceId: 2
+          id: 3
+          requestCPU: 4
+        - limitMem: 1
+          requestMem: 7
+          limitCPU: 1
+          name: name
+          workload: workload
+          stackServiceId: 2
+          id: 3
+          requestCPU: 4
         id: 0
         serviceRevName: serviceRevName
         serviceRevVersion: serviceRevVersion
@@ -15121,6 +17508,18 @@ components:
         buildSourceRemoteRepoId:
           nullable: true
           type: string
+        options:
+          items:
+            $ref: '#/components/schemas/StackServiceOption'
+          type: array
+        settings:
+          items:
+            $ref: '#/components/schemas/StackServiceSetting'
+          type: array
+        containers:
+          items:
+            $ref: '#/components/schemas/StackServiceContainer'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -15272,19 +17671,37 @@ components:
       type: object
     AppService:
       example:
+        buildSourceBoilerplate: buildSourceBoilerplate
         needsRebuild: true
         replicas: 6
+        effectiveCiIntegrationId: 1
         main: true
         title: title
         type: type
         version: version
+        ciPolicy: INHERIT
         scalability: "{}"
         required: true
-        appInstanceId: 1
+        appInstanceId: 5
         serviceRevId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
         external: true
-        parentAppServiceId: 5
+        parentAppServiceId: 2
+        configurationIssues:
+        - appServiceId: 9
+          code: code
+          appServiceName: appServiceName
+          name: name
+          appServiceTitle: appServiceTitle
+          title: title
+          message: message
+        - appServiceId: 9
+          code: code
+          appServiceName: appServiceName
+          name: name
+          appServiceTitle: appServiceTitle
+          title: title
+          message: message
         name: name
         disabled: true
         id: 0
@@ -15326,6 +17743,22 @@ components:
           type: boolean
         configurationReady:
           type: boolean
+        buildSourceBoilerplate:
+          nullable: true
+          type: string
+        ciPolicy:
+          enum:
+          - INHERIT
+          - WODBY
+          - INTEGRATION
+          type: string
+        effectiveCiIntegrationId:
+          nullable: true
+          type: integer
+        configurationIssues:
+          items:
+            $ref: '#/components/schemas/AppServiceConfigurationIssue'
+          type: array
         appInstanceId:
           type: integer
         serviceRevId:
@@ -15341,6 +17774,8 @@ components:
           type: string
       required:
       - appInstanceId
+      - ciPolicy
+      - configurationIssues
       - configurationReady
       - createdAt
       - disabled
@@ -15720,6 +18155,89 @@ components:
       - appServiceId
       - name
       - workload
+      type: object
+    StackServiceContainer:
+      example:
+        limitMem: 1
+        requestMem: 7
+        limitCPU: 1
+        name: name
+        workload: workload
+        stackServiceId: 2
+        id: 3
+        requestCPU: 4
+      properties:
+        id:
+          nullable: true
+          type: integer
+        stackServiceId:
+          type: integer
+        workload:
+          type: string
+        name:
+          type: string
+        requestCPU:
+          nullable: true
+          type: integer
+        requestMem:
+          nullable: true
+          type: integer
+        limitCPU:
+          nullable: true
+          type: integer
+        limitMem:
+          nullable: true
+          type: integer
+      required:
+      - name
+      - stackServiceId
+      - workload
+      type: object
+    StackServiceOption:
+      example:
+        default: true
+        stackServiceId: 2
+        disabled: true
+        id: 5
+        version: version
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        version:
+          type: string
+        default:
+          type: boolean
+        disabled:
+          type: boolean
+      required:
+      - default
+      - disabled
+      - id
+      - stackServiceId
+      - version
+      type: object
+    StackServiceSetting:
+      example:
+        name: name
+        stackServiceId: 9
+        id: 7
+        value: value
+      properties:
+        id:
+          type: integer
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - name
+      - stackServiceId
+      - value
       type: object
     AppServiceVolume:
       example:
@@ -16540,6 +19058,7 @@ components:
             repeatedTaskId: 1
             system: true
             originTaskId: 1
+            executionScope: user
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             progress: 6
@@ -16634,6 +19153,7 @@ components:
             repeatedTaskId: 1
             system: true
             originTaskId: 1
+            executionScope: user
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             progress: 6
@@ -16641,6 +19161,7 @@ components:
             status: status
           parentId: 0
         nextPage: 1
+        treeTruncated: true
         totalCount: 6
         items:
         - startedAt: 2000-01-23T04:56:07.000+00:00
@@ -16730,6 +19251,7 @@ components:
           repeatedTaskId: 1
           system: true
           originTaskId: 1
+          executionScope: user
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           progress: 6
@@ -16822,6 +19344,7 @@ components:
           repeatedTaskId: 1
           system: true
           originTaskId: 1
+          executionScope: user
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           progress: 6
@@ -16833,12 +19356,16 @@ components:
             $ref: '#/components/schemas/Task'
           type: array
         treeItems:
-          description: "Flat current-page roots and descendants for tree view, linked\
-            \ by parentId."
+          description: "Bounded current-page roots and authorized descendants for\
+            \ tree view, linked by parentId."
           items:
             $ref: '#/components/schemas/TaskTreeItem'
           nullable: true
           type: array
+        treeTruncated:
+          description: True when treeItems omitted visible descendants after reaching
+            the 250-item response limit. Always false for flat view.
+          type: boolean
         totalCount:
           type: integer
         nextPage:
@@ -16847,6 +19374,7 @@ components:
       required:
       - items
       - totalCount
+      - treeTruncated
       type: object
     TaskTreeItem:
       example:
@@ -16938,6 +19466,7 @@ components:
           repeatedTaskId: 1
           system: true
           originTaskId: 1
+          executionScope: user
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           progress: 6
@@ -17026,6 +19555,15 @@ components:
       required:
       - id
       - name
+      type: object
+    RemoteGitRepoFilePresence:
+      example:
+        exists: true
+      properties:
+        exists:
+          type: boolean
+      required:
+      - exists
       type: object
     IntegrationScope:
       example:
@@ -17122,9 +19660,15 @@ components:
           example: America/New_York
           type: string
         registryIntegrationId:
+          description: "Omit or use null to preserve the current default, use 0 for\
+            \ the built-in registry, or use an organization-owned registry integration\
+            \ ID."
           nullable: true
           type: integer
         ciIntegrationId:
+          description: "Omit or use null to preserve the current default, use 0 for\
+            \ the built-in CI service, or use an organization-owned CI integration\
+            \ ID."
           nullable: true
           type: integer
       required:
@@ -17349,7 +19893,6 @@ components:
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
           integrationId: 5
-          ciWorkflow: ciWorkflow
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version
@@ -17540,6 +20083,7 @@ components:
         crontab: crontab
         name: name
         workload: workload
+        disabled: true
         title: title
         command: command
       properties:
@@ -17557,6 +20101,11 @@ components:
         workload:
           nullable: true
           type: string
+        disabled:
+          description: Creates the schedule disabled. Disabled schedules do not require
+            cron feature access.
+          nullable: true
+          type: boolean
       required:
       - command
       - crontab
@@ -17666,7 +20215,6 @@ components:
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
           integrationId: 5
-          ciWorkflow: ciWorkflow
           newRepoName: newRepoName
           gitRefType: gitRefType
         title: title
@@ -18028,7 +20576,25 @@ components:
               integrations: true
             enabled: true
         registryIntegrationId: 6
+        access:
+          mode: PROTECTED
+          settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          endpoints:
+          - appServiceName: appServiceName
+            appPortName: appPortName
+            primary: true
+          - appServiceName: appServiceName
+            appPortName: appPortName
+            primary: true
+          scope: ENTIRE_APP
+          host: host
+          integrationId: 8
         instanceName: instanceName
+        deferInitialDeployment: false
         services:
         - settings:
           - name: name
@@ -18077,7 +20643,6 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
-            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -18141,7 +20706,6 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
-            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -18201,13 +20765,27 @@ components:
         envId:
           type: integer
         ciIntegrationId:
+          description: "Omit or use null to inherit the organization default, use\
+            \ 0 for the built-in CI service, or use an accessible CI integration ID.\
+            \ A project-owned integration must be shared with the app's project."
           nullable: true
           type: integer
         registryIntegrationId:
+          description: "Omit or use null to inherit the organization default, use\
+            \ 0 for the built-in registry, or use an accessible registry integration\
+            \ ID. A project-owned integration must be shared with the app's project."
           nullable: true
           type: integer
+        deferInitialDeployment:
+          default: false
+          description: Defers the automatic initial build and deployment while preserving
+            app instance initialization. Intended for automation that configures the
+            instance before explicitly starting its first build.
+          type: boolean
         settings:
           $ref: '#/components/schemas/AppInstanceSettingsInput'
+        access:
+          $ref: '#/components/schemas/NewAppInstanceAccessInput'
       required:
       - envId
       - instanceName
@@ -18240,12 +20818,26 @@ components:
               services: true
               integrations: true
             enabled: true
-        stackRevId: 6
         registryIntegrationId: 2
+        access:
+          mode: PROTECTED
+          settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          endpoints:
+          - appServiceName: appServiceName
+            appPortName: appPortName
+            primary: true
+          - appServiceName: appServiceName
+            appPortName: appPortName
+            primary: true
+          scope: ENTIRE_APP
+          host: host
+          integrationId: 8
         instanceName: instanceName
-        appId: 0
-        domain: domain
-        instanceTitle: instanceTitle
+        deferInitialDeployment: false
         services:
         - settings:
           - name: name
@@ -18294,7 +20886,6 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
-            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -18358,7 +20949,6 @@ components:
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
             integrationId: 5
-            ciWorkflow: ciWorkflow
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
@@ -18377,6 +20967,10 @@ components:
             averageCPU: 7
         clusterId: 1
         envId: 5
+        stackRevId: 6
+        appId: 0
+        domain: domain
+        instanceTitle: instanceTitle
         ciIntegrationId: 5
       properties:
         appId:
@@ -18402,18 +20996,116 @@ components:
         envId:
           type: integer
         ciIntegrationId:
+          description: "Omit or use null to inherit the organization default, use\
+            \ 0 for the built-in CI service, or use an accessible CI integration ID.\
+            \ A project-owned integration must be shared with the app's project."
           nullable: true
           type: integer
         registryIntegrationId:
+          description: "Omit or use null to inherit the organization default, use\
+            \ 0 for the built-in registry, or use an accessible registry integration\
+            \ ID. A project-owned integration must be shared with the app's project."
           nullable: true
           type: integer
+        deferInitialDeployment:
+          default: false
+          description: Defers the automatic initial build and deployment while preserving
+            app instance initialization. Intended for automation that configures the
+            instance before explicitly starting its first build.
+          type: boolean
         settings:
           $ref: '#/components/schemas/AppInstanceSettingsInput'
+        access:
+          $ref: '#/components/schemas/NewAppInstanceAccessInput'
       required:
       - appId
       - envId
       - instanceName
       - stackRevId
+      type: object
+    NewAppInstanceAccessInput:
+      example:
+        mode: PROTECTED
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        endpoints:
+        - appServiceName: appServiceName
+          appPortName: appPortName
+          primary: true
+        - appServiceName: appServiceName
+          appPortName: appPortName
+          primary: true
+        scope: ENTIRE_APP
+        host: host
+        integrationId: 8
+      properties:
+        integrationId:
+          type: integer
+        mode:
+          enum:
+          - PROTECTED
+          - PRIVATE_NETWORK
+          type: string
+        scope:
+          enum:
+          - ENTIRE_APP
+          - SELECTED_ENDPOINTS
+          type: string
+        settings:
+          items:
+            $ref: '#/components/schemas/AppAccessSettingInput'
+          type: array
+        host:
+          description: Required only when the selected provider uses a customer-assigned
+            hostname.
+          nullable: true
+          type: string
+        endpoints:
+          description: HTTP endpoints selected during creation. Used only with SELECTED_ENDPOINTS
+            scope; older clients may omit it to select the main endpoint.
+          items:
+            $ref: '#/components/schemas/NewAppInstanceAccessEndpointInput'
+          type: array
+      required:
+      - integrationId
+      - mode
+      - scope
+      type: object
+    NewAppInstanceAccessEndpointInput:
+      example:
+        appServiceName: appServiceName
+        appPortName: appPortName
+        primary: true
+      properties:
+        appServiceName:
+          description: Machine name of an enabled app service from the selected stack
+            revision.
+          type: string
+        appPortName:
+          description: Machine name of a public HTTP port from that service manifest.
+          type: string
+        primary:
+          type: boolean
+      required:
+      - appPortName
+      - appServiceName
+      - primary
+      type: object
+    AppAccessSettingInput:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
       type: object
     BuildSourceInput:
       example:
@@ -18422,7 +21114,6 @@ components:
         remoteGitRepoId: remoteGitRepoId
         boilerplate: boilerplate
         integrationId: 5
-        ciWorkflow: ciWorkflow
         newRepoName: newRepoName
         gitRefType: gitRefType
       properties:
@@ -18444,9 +21135,6 @@ components:
           nullable: true
           type: string
         gitRefType:
-          nullable: true
-          type: string
-        ciWorkflow:
           nullable: true
           type: string
       required:
@@ -18845,9 +21533,11 @@ components:
     NewIntegrationInput:
       example:
         fieldsInput:
-        - name: name
+        - envType: dev
+          name: name
           value: value
-        - name: name
+        - envType: dev
+          name: name
           value: value
         auth: auth
         providerId: 6
@@ -18892,12 +21582,100 @@ components:
       - providerId
       - title
       type: object
+    ResolveIntegrationResult:
+      example:
+        created: true
+        integration:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          auth: auth
+          scope: scope
+          providerRevId: 6
+          name: name
+          id: 0
+          title: title
+          orgId: 1
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        integration:
+          $ref: '#/components/schemas/Integration'
+        created:
+          type: boolean
+      required:
+      - created
+      - integration
+      type: object
+    NewVariableProviderInput:
+      example:
+        name: name
+        title: title
+        fields:
+        - name: name
+          variable: variable
+          label: label
+          secret: true
+          required: true
+        - name: name
+          variable: variable
+          label: label
+          secret: true
+          required: true
+        projectId: 6
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/NewVariableProviderFieldInput'
+          minItems: 1
+          type: array
+      required:
+      - fields
+      - name
+      - title
+      type: object
+    NewVariableProviderFieldInput:
+      example:
+        name: name
+        variable: variable
+        label: label
+        secret: true
+        required: true
+      properties:
+        name:
+          type: string
+        label:
+          type: string
+        variable:
+          type: string
+        required:
+          type: boolean
+        secret:
+          type: boolean
+      required:
+      - label
+      - name
+      - required
+      - secret
+      - variable
+      type: object
     UpdateIntegrationInput:
       example:
         fieldsInput:
-        - name: name
+        - envType: dev
+          name: name
           value: value
-        - name: name
+        - envType: dev
+          name: name
           value: value
         scope: scope
         name: name
@@ -18926,14 +21704,55 @@ components:
       - name
       - title
       type: object
+    IntegrationConfigurationResult:
+      example:
+        warnings:
+        - warnings
+        - warnings
+        integration:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          auth: auth
+          scope: scope
+          providerRevId: 6
+          name: name
+          id: 0
+          title: title
+          orgId: 1
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        taskId: 0
+      properties:
+        integration:
+          $ref: '#/components/schemas/Integration'
+        taskId:
+          nullable: true
+          type: integer
+        warnings:
+          items:
+            type: string
+          type: array
+      required:
+      - integration
+      - warnings
+      type: object
     FieldInput:
       example:
+        envType: dev
         name: name
         value: value
       properties:
         name:
           type: string
         value:
+          type: string
+        envType:
+          enum:
+          - dev
+          - feature
+          - test
+          - staging
+          - prod
+          nullable: true
           type: string
       required:
       - name
@@ -18958,8 +21777,10 @@ components:
           nullable: true
           type: string
         integrationId:
+          description: Use 0 for Wodby Blob Storage.
           type: integer
         bucket:
+          description: Must be empty for Wodby Blob Storage.
           type: string
         storageClass:
           nullable: true
@@ -19018,8 +21839,11 @@ components:
           nullable: true
           type: string
         integrationId:
+          description: Use 0 for Wodby Blob Storage. Free subscriptions may create
+            only an automatic preset that is disabled.
           type: integer
         bucket:
+          description: Must be empty for Wodby Blob Storage.
           type: string
         storageClass:
           nullable: true
@@ -19067,8 +21891,11 @@ components:
         override: true
       properties:
         integrationId:
+          description: Use 0 for Wodby Blob Storage. Enabling the preset requires
+            a paid subscription.
           type: integer
         bucket:
+          description: Must be empty for Wodby Blob Storage.
           type: string
         storageClass:
           nullable: true
@@ -19108,12 +21935,22 @@ components:
         path: path
         port: 6
         host: host
-        action: BACKEND
+        action: SERVE
+        disabled: true
+        tls:
+          mode: NONE
+          certId: 5
+        hsts: true
         letsencrypt: true
         primary: true
       properties:
         appServiceId:
           type: integer
+        disabled:
+          description: Creates the custom domain disabled. Disabled domains do not
+            require custom-domain feature access until enabled.
+          nullable: true
+          type: boolean
         main:
           type: boolean
         primary:
@@ -19132,7 +21969,10 @@ components:
           nullable: true
           type: string
         action:
+          description: SERVE sends requests to the selected app service. BACKEND is
+            accepted for backwards compatibility.
           enum:
+          - SERVE
           - BACKEND
           - REDIRECT
           nullable: true
@@ -19149,9 +21989,16 @@ components:
         redirectStatusCode:
           nullable: true
           type: integer
+        hsts:
+          description: Enables HTTP Strict Transport Security for a serve route when
+            TLS is active.
+          nullable: true
+          type: boolean
         letsencrypt:
           nullable: true
           type: boolean
+        tls:
+          $ref: '#/components/schemas/AppRouteTLSInput'
       required:
       - appServiceId
       - host
@@ -19228,17 +22075,20 @@ components:
       type: object
     UpdateAppRouteInput:
       example:
-        appServiceId: 0
-        path: path
-        port: 6
-        action: BACKEND
         redirectScheme: redirectScheme
-        disabled: true
         main: true
         redirectPath: redirectPath
         redirectStatusCode: 1
         pathType: PREFIX
         redirectHost: redirectHost
+        appServiceId: 0
+        path: path
+        port: 6
+        action: SERVE
+        disabled: true
+        tls:
+          mode: NONE
+          certId: 5
         primary: true
       properties:
         appServiceId:
@@ -19270,7 +22120,10 @@ components:
           nullable: true
           type: string
         action:
+          description: SERVE sends requests to the selected app service. BACKEND is
+            accepted for backwards compatibility.
           enum:
+          - SERVE
           - BACKEND
           - REDIRECT
           nullable: true
@@ -19287,6 +22140,26 @@ components:
         redirectStatusCode:
           nullable: true
           type: integer
+        tls:
+          $ref: '#/components/schemas/AppRouteTLSInput'
+      type: object
+    AppRouteTLSInput:
+      example:
+        mode: NONE
+        certId: 5
+      properties:
+        mode:
+          enum:
+          - NONE
+          - LETS_ENCRYPT
+          - CUSTOM
+          type: string
+        certId:
+          description: Required only when mode is CUSTOM.
+          nullable: true
+          type: integer
+      required:
+      - mode
       type: object
     CreateAppServiceInput:
       example:
@@ -19337,7 +22210,6 @@ components:
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
           integrationId: 5
-          ciWorkflow: ciWorkflow
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version

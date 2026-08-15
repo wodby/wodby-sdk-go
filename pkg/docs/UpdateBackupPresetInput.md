@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IntegrationId** | **int32** |  | 
-**Bucket** | **string** |  | 
+**IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Enabling the preset requires a paid subscription. | 
+**Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
 **Disabled** | **bool** |  | 
 **Override** | **bool** |  | 

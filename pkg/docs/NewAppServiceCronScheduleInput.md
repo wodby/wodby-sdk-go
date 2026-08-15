@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Crontab** | **string** |  | 
 **Command** | **string** |  | 
 **Workload** | Pointer to **NullableString** |  | [optional] 
+**Disabled** | Pointer to **NullableBool** | Creates the schedule disabled. Disabled schedules do not require cron feature access. | [optional] 
 
 ## Methods
 
@@ -159,6 +160,41 @@ HasWorkload returns a boolean if a field has been set.
 `func (o *NewAppServiceCronScheduleInput) UnsetWorkload()`
 
 UnsetWorkload ensures that no value is present for Workload, not even an explicit nil
+### GetDisabled
+
+`func (o *NewAppServiceCronScheduleInput) GetDisabled() bool`
+
+GetDisabled returns the Disabled field if non-nil, zero value otherwise.
+
+### GetDisabledOk
+
+`func (o *NewAppServiceCronScheduleInput) GetDisabledOk() (*bool, bool)`
+
+GetDisabledOk returns a tuple with the Disabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisabled
+
+`func (o *NewAppServiceCronScheduleInput) SetDisabled(v bool)`
+
+SetDisabled sets Disabled field to given value.
+
+### HasDisabled
+
+`func (o *NewAppServiceCronScheduleInput) HasDisabled() bool`
+
+HasDisabled returns a boolean if a field has been set.
+
+### SetDisabledNil
+
+`func (o *NewAppServiceCronScheduleInput) SetDisabledNil(b bool)`
+
+ SetDisabledNil sets the value for Disabled to be an explicit nil
+
+### UnsetDisabled
+`func (o *NewAppServiceCronScheduleInput) UnsetDisabled()`
+
+UnsetDisabled ensures that no value is present for Disabled, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

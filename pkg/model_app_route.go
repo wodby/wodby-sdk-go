@@ -32,6 +32,9 @@ type AppRoute struct {
 	RedirectPath NullableString `json:"redirectPath,omitempty"`
 	RedirectStatusCode NullableInt32 `json:"redirectStatusCode,omitempty"`
 	Status string `json:"status"`
+	AttachmentStatus string `json:"attachmentStatus"`
+	AttachmentCheckedAt NullableTime `json:"attachmentCheckedAt,omitempty"`
+	AttachmentError NullableString `json:"attachmentError,omitempty"`
 	Disabled bool `json:"disabled"`
 	Main bool `json:"main"`
 	Primary bool `json:"primary"`
@@ -53,7 +56,7 @@ type _AppRoute AppRoute
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, disabled bool, main bool, primary bool, private bool, technical bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time) *AppRoute {
+func NewAppRoute(id int32, host string, path string, pathType string, action string, status string, attachmentStatus string, disabled bool, main bool, primary bool, private bool, technical bool, appInstanceId int32, appServiceId int32, portId int32, createdAt time.Time, updatedAt time.Time) *AppRoute {
 	this := AppRoute{}
 	this.Id = id
 	this.Host = host
@@ -61,6 +64,7 @@ func NewAppRoute(id int32, host string, path string, pathType string, action str
 	this.PathType = pathType
 	this.Action = action
 	this.Status = status
+	this.AttachmentStatus = attachmentStatus
 	this.Disabled = disabled
 	this.Main = main
 	this.Primary = primary
@@ -392,6 +396,114 @@ func (o *AppRoute) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *AppRoute) SetStatus(v string) {
 	o.Status = v
+}
+
+// GetAttachmentStatus returns the AttachmentStatus field value
+func (o *AppRoute) GetAttachmentStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.AttachmentStatus
+}
+
+// GetAttachmentStatusOk returns a tuple with the AttachmentStatus field value
+// and a boolean to check if the value has been set.
+func (o *AppRoute) GetAttachmentStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AttachmentStatus, true
+}
+
+// SetAttachmentStatus sets field value
+func (o *AppRoute) SetAttachmentStatus(v string) {
+	o.AttachmentStatus = v
+}
+
+// GetAttachmentCheckedAt returns the AttachmentCheckedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppRoute) GetAttachmentCheckedAt() time.Time {
+	if o == nil || IsNil(o.AttachmentCheckedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.AttachmentCheckedAt.Get()
+}
+
+// GetAttachmentCheckedAtOk returns a tuple with the AttachmentCheckedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppRoute) GetAttachmentCheckedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AttachmentCheckedAt.Get(), o.AttachmentCheckedAt.IsSet()
+}
+
+// HasAttachmentCheckedAt returns a boolean if a field has been set.
+func (o *AppRoute) HasAttachmentCheckedAt() bool {
+	if o != nil && o.AttachmentCheckedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachmentCheckedAt gets a reference to the given NullableTime and assigns it to the AttachmentCheckedAt field.
+func (o *AppRoute) SetAttachmentCheckedAt(v time.Time) {
+	o.AttachmentCheckedAt.Set(&v)
+}
+// SetAttachmentCheckedAtNil sets the value for AttachmentCheckedAt to be an explicit nil
+func (o *AppRoute) SetAttachmentCheckedAtNil() {
+	o.AttachmentCheckedAt.Set(nil)
+}
+
+// UnsetAttachmentCheckedAt ensures that no value is present for AttachmentCheckedAt, not even an explicit nil
+func (o *AppRoute) UnsetAttachmentCheckedAt() {
+	o.AttachmentCheckedAt.Unset()
+}
+
+// GetAttachmentError returns the AttachmentError field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppRoute) GetAttachmentError() string {
+	if o == nil || IsNil(o.AttachmentError.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AttachmentError.Get()
+}
+
+// GetAttachmentErrorOk returns a tuple with the AttachmentError field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppRoute) GetAttachmentErrorOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AttachmentError.Get(), o.AttachmentError.IsSet()
+}
+
+// HasAttachmentError returns a boolean if a field has been set.
+func (o *AppRoute) HasAttachmentError() bool {
+	if o != nil && o.AttachmentError.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachmentError gets a reference to the given NullableString and assigns it to the AttachmentError field.
+func (o *AppRoute) SetAttachmentError(v string) {
+	o.AttachmentError.Set(&v)
+}
+// SetAttachmentErrorNil sets the value for AttachmentError to be an explicit nil
+func (o *AppRoute) SetAttachmentErrorNil() {
+	o.AttachmentError.Set(nil)
+}
+
+// UnsetAttachmentError ensures that no value is present for AttachmentError, not even an explicit nil
+func (o *AppRoute) UnsetAttachmentError() {
+	o.AttachmentError.Unset()
 }
 
 // GetDisabled returns the Disabled field value
@@ -746,6 +858,13 @@ func (o AppRoute) ToMap() (map[string]interface{}, error) {
 		toSerialize["redirectStatusCode"] = o.RedirectStatusCode.Get()
 	}
 	toSerialize["status"] = o.Status
+	toSerialize["attachmentStatus"] = o.AttachmentStatus
+	if o.AttachmentCheckedAt.IsSet() {
+		toSerialize["attachmentCheckedAt"] = o.AttachmentCheckedAt.Get()
+	}
+	if o.AttachmentError.IsSet() {
+		toSerialize["attachmentError"] = o.AttachmentError.Get()
+	}
 	toSerialize["disabled"] = o.Disabled
 	toSerialize["main"] = o.Main
 	toSerialize["primary"] = o.Primary
@@ -776,6 +895,7 @@ func (o *AppRoute) UnmarshalJSON(data []byte) (err error) {
 		"pathType",
 		"action",
 		"status",
+		"attachmentStatus",
 		"disabled",
 		"main",
 		"primary",

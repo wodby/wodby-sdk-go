@@ -19,6 +19,10 @@ Name | Type | Description | Notes
 **NeedsRebuild** | **bool** |  | 
 **NeedsRedeploy** | **bool** |  | 
 **ConfigurationReady** | **bool** |  | 
+**BuildSourceBoilerplate** | Pointer to **NullableString** |  | [optional] 
+**CiPolicy** | **string** |  | 
+**EffectiveCiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**ConfigurationIssues** | [**[]AppServiceConfigurationIssue**](AppServiceConfigurationIssue.md) |  | 
 **AppInstanceId** | **int32** |  | 
 **ServiceRevId** | **int32** |  | 
 **ParentAppServiceId** | Pointer to **NullableInt32** |  | [optional] 
@@ -29,7 +33,7 @@ Name | Type | Description | Notes
 
 ### NewAppService
 
-`func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, configurationReady bool, appInstanceId int32, serviceRevId int32, createdAt time.Time, updatedAt time.Time, ) *AppService`
+`func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, configurationReady bool, ciPolicy string, configurationIssues []AppServiceConfigurationIssue, appInstanceId int32, serviceRevId int32, createdAt time.Time, updatedAt time.Time, ) *AppService`
 
 NewAppService instantiates a new AppService object
 This constructor will assign default values to properties that have it defined,
@@ -357,6 +361,116 @@ and a boolean to check if the value has been set.
 `func (o *AppService) SetConfigurationReady(v bool)`
 
 SetConfigurationReady sets ConfigurationReady field to given value.
+
+
+### GetBuildSourceBoilerplate
+
+`func (o *AppService) GetBuildSourceBoilerplate() string`
+
+GetBuildSourceBoilerplate returns the BuildSourceBoilerplate field if non-nil, zero value otherwise.
+
+### GetBuildSourceBoilerplateOk
+
+`func (o *AppService) GetBuildSourceBoilerplateOk() (*string, bool)`
+
+GetBuildSourceBoilerplateOk returns a tuple with the BuildSourceBoilerplate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuildSourceBoilerplate
+
+`func (o *AppService) SetBuildSourceBoilerplate(v string)`
+
+SetBuildSourceBoilerplate sets BuildSourceBoilerplate field to given value.
+
+### HasBuildSourceBoilerplate
+
+`func (o *AppService) HasBuildSourceBoilerplate() bool`
+
+HasBuildSourceBoilerplate returns a boolean if a field has been set.
+
+### SetBuildSourceBoilerplateNil
+
+`func (o *AppService) SetBuildSourceBoilerplateNil(b bool)`
+
+ SetBuildSourceBoilerplateNil sets the value for BuildSourceBoilerplate to be an explicit nil
+
+### UnsetBuildSourceBoilerplate
+`func (o *AppService) UnsetBuildSourceBoilerplate()`
+
+UnsetBuildSourceBoilerplate ensures that no value is present for BuildSourceBoilerplate, not even an explicit nil
+### GetCiPolicy
+
+`func (o *AppService) GetCiPolicy() string`
+
+GetCiPolicy returns the CiPolicy field if non-nil, zero value otherwise.
+
+### GetCiPolicyOk
+
+`func (o *AppService) GetCiPolicyOk() (*string, bool)`
+
+GetCiPolicyOk returns a tuple with the CiPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCiPolicy
+
+`func (o *AppService) SetCiPolicy(v string)`
+
+SetCiPolicy sets CiPolicy field to given value.
+
+
+### GetEffectiveCiIntegrationId
+
+`func (o *AppService) GetEffectiveCiIntegrationId() int32`
+
+GetEffectiveCiIntegrationId returns the EffectiveCiIntegrationId field if non-nil, zero value otherwise.
+
+### GetEffectiveCiIntegrationIdOk
+
+`func (o *AppService) GetEffectiveCiIntegrationIdOk() (*int32, bool)`
+
+GetEffectiveCiIntegrationIdOk returns a tuple with the EffectiveCiIntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEffectiveCiIntegrationId
+
+`func (o *AppService) SetEffectiveCiIntegrationId(v int32)`
+
+SetEffectiveCiIntegrationId sets EffectiveCiIntegrationId field to given value.
+
+### HasEffectiveCiIntegrationId
+
+`func (o *AppService) HasEffectiveCiIntegrationId() bool`
+
+HasEffectiveCiIntegrationId returns a boolean if a field has been set.
+
+### SetEffectiveCiIntegrationIdNil
+
+`func (o *AppService) SetEffectiveCiIntegrationIdNil(b bool)`
+
+ SetEffectiveCiIntegrationIdNil sets the value for EffectiveCiIntegrationId to be an explicit nil
+
+### UnsetEffectiveCiIntegrationId
+`func (o *AppService) UnsetEffectiveCiIntegrationId()`
+
+UnsetEffectiveCiIntegrationId ensures that no value is present for EffectiveCiIntegrationId, not even an explicit nil
+### GetConfigurationIssues
+
+`func (o *AppService) GetConfigurationIssues() []AppServiceConfigurationIssue`
+
+GetConfigurationIssues returns the ConfigurationIssues field if non-nil, zero value otherwise.
+
+### GetConfigurationIssuesOk
+
+`func (o *AppService) GetConfigurationIssuesOk() (*[]AppServiceConfigurationIssue, bool)`
+
+GetConfigurationIssuesOk returns a tuple with the ConfigurationIssues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigurationIssues
+
+`func (o *AppService) SetConfigurationIssues(v []AppServiceConfigurationIssue)`
+
+SetConfigurationIssues sets ConfigurationIssues field to given value.
 
 
 ### GetAppInstanceId

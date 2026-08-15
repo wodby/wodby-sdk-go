@@ -23,7 +23,9 @@ var _ MappedNullable = &UpdateOrgRequest{}
 type UpdateOrgRequest struct {
 	Title string `json:"title"`
 	DefaultTimeZone *string `json:"defaultTimeZone,omitempty"`
+	// Omit or use null to preserve the current default, use 0 for the built-in registry, or use an organization-owned registry integration ID.
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
+	// Omit or use null to preserve the current default, use 0 for the built-in CI service, or use an organization-owned CI integration ID.
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 }
 

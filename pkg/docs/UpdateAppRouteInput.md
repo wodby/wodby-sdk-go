@@ -11,11 +11,12 @@ Name | Type | Description | Notes
 **Primary** | Pointer to **NullableBool** |  | [optional] 
 **Path** | Pointer to **NullableString** |  | [optional] 
 **PathType** | Pointer to **NullableString** |  | [optional] 
-**Action** | Pointer to **NullableString** |  | [optional] 
+**Action** | Pointer to **NullableString** | SERVE sends requests to the selected app service. BACKEND is accepted for backwards compatibility. | [optional] 
 **RedirectScheme** | Pointer to **NullableString** |  | [optional] 
 **RedirectHost** | Pointer to **NullableString** |  | [optional] 
 **RedirectPath** | Pointer to **NullableString** |  | [optional] 
 **RedirectStatusCode** | Pointer to **NullableInt32** |  | [optional] 
+**Tls** | Pointer to [**AppRouteTLSInput**](AppRouteTLSInput.md) |  | [optional] 
 
 ## Methods
 
@@ -456,6 +457,31 @@ HasRedirectStatusCode returns a boolean if a field has been set.
 `func (o *UpdateAppRouteInput) UnsetRedirectStatusCode()`
 
 UnsetRedirectStatusCode ensures that no value is present for RedirectStatusCode, not even an explicit nil
+### GetTls
+
+`func (o *UpdateAppRouteInput) GetTls() AppRouteTLSInput`
+
+GetTls returns the Tls field if non-nil, zero value otherwise.
+
+### GetTlsOk
+
+`func (o *UpdateAppRouteInput) GetTlsOk() (*AppRouteTLSInput, bool)`
+
+GetTlsOk returns a tuple with the Tls field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTls
+
+`func (o *UpdateAppRouteInput) SetTls(v AppRouteTLSInput)`
+
+SetTls sets Tls field to given value.
+
+### HasTls
+
+`func (o *UpdateAppRouteInput) HasTls() bool`
+
+HasTls returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

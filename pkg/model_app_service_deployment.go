@@ -27,6 +27,8 @@ type AppServiceDeployment struct {
 	Status string `json:"status"`
 	AppServiceId int32 `json:"appServiceId"`
 	AppServiceBuildId NullableInt32 `json:"appServiceBuildId,omitempty"`
+	PreviousAppServiceBuildId NullableInt32 `json:"previousAppServiceBuildId,omitempty"`
+	BuildSelectionKind string `json:"buildSelectionKind"`
 	SkipPostDeployment bool `json:"skipPostDeployment"`
 	Force bool `json:"force"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -41,12 +43,13 @@ type _AppServiceDeployment AppServiceDeployment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceDeployment(id int32, jobName string, status string, appServiceId int32, skipPostDeployment bool, force bool, createdAt time.Time, updatedAt time.Time) *AppServiceDeployment {
+func NewAppServiceDeployment(id int32, jobName string, status string, appServiceId int32, buildSelectionKind string, skipPostDeployment bool, force bool, createdAt time.Time, updatedAt time.Time) *AppServiceDeployment {
 	this := AppServiceDeployment{}
 	this.Id = id
 	this.JobName = jobName
 	this.Status = status
 	this.AppServiceId = appServiceId
+	this.BuildSelectionKind = buildSelectionKind
 	this.SkipPostDeployment = skipPostDeployment
 	this.Force = force
 	this.CreatedAt = createdAt
@@ -198,6 +201,72 @@ func (o *AppServiceDeployment) SetAppServiceBuildIdNil() {
 // UnsetAppServiceBuildId ensures that no value is present for AppServiceBuildId, not even an explicit nil
 func (o *AppServiceDeployment) UnsetAppServiceBuildId() {
 	o.AppServiceBuildId.Unset()
+}
+
+// GetPreviousAppServiceBuildId returns the PreviousAppServiceBuildId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceDeployment) GetPreviousAppServiceBuildId() int32 {
+	if o == nil || IsNil(o.PreviousAppServiceBuildId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.PreviousAppServiceBuildId.Get()
+}
+
+// GetPreviousAppServiceBuildIdOk returns a tuple with the PreviousAppServiceBuildId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceDeployment) GetPreviousAppServiceBuildIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PreviousAppServiceBuildId.Get(), o.PreviousAppServiceBuildId.IsSet()
+}
+
+// HasPreviousAppServiceBuildId returns a boolean if a field has been set.
+func (o *AppServiceDeployment) HasPreviousAppServiceBuildId() bool {
+	if o != nil && o.PreviousAppServiceBuildId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPreviousAppServiceBuildId gets a reference to the given NullableInt32 and assigns it to the PreviousAppServiceBuildId field.
+func (o *AppServiceDeployment) SetPreviousAppServiceBuildId(v int32) {
+	o.PreviousAppServiceBuildId.Set(&v)
+}
+// SetPreviousAppServiceBuildIdNil sets the value for PreviousAppServiceBuildId to be an explicit nil
+func (o *AppServiceDeployment) SetPreviousAppServiceBuildIdNil() {
+	o.PreviousAppServiceBuildId.Set(nil)
+}
+
+// UnsetPreviousAppServiceBuildId ensures that no value is present for PreviousAppServiceBuildId, not even an explicit nil
+func (o *AppServiceDeployment) UnsetPreviousAppServiceBuildId() {
+	o.PreviousAppServiceBuildId.Unset()
+}
+
+// GetBuildSelectionKind returns the BuildSelectionKind field value
+func (o *AppServiceDeployment) GetBuildSelectionKind() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.BuildSelectionKind
+}
+
+// GetBuildSelectionKindOk returns a tuple with the BuildSelectionKind field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceDeployment) GetBuildSelectionKindOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BuildSelectionKind, true
+}
+
+// SetBuildSelectionKind sets field value
+func (o *AppServiceDeployment) SetBuildSelectionKind(v string) {
+	o.BuildSelectionKind = v
 }
 
 // GetSkipPostDeployment returns the SkipPostDeployment field value
@@ -397,6 +466,10 @@ func (o AppServiceDeployment) ToMap() (map[string]interface{}, error) {
 	if o.AppServiceBuildId.IsSet() {
 		toSerialize["appServiceBuildId"] = o.AppServiceBuildId.Get()
 	}
+	if o.PreviousAppServiceBuildId.IsSet() {
+		toSerialize["previousAppServiceBuildId"] = o.PreviousAppServiceBuildId.Get()
+	}
+	toSerialize["buildSelectionKind"] = o.BuildSelectionKind
 	toSerialize["skipPostDeployment"] = o.SkipPostDeployment
 	toSerialize["force"] = o.Force
 	toSerialize["createdAt"] = o.CreatedAt
@@ -419,6 +492,7 @@ func (o *AppServiceDeployment) UnmarshalJSON(data []byte) (err error) {
 		"jobName",
 		"status",
 		"appServiceId",
+		"buildSelectionKind",
 		"skipPostDeployment",
 		"force",
 		"createdAt",
