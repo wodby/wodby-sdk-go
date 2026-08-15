@@ -8,12 +8,14 @@ Name | Type | Description | Notes
 **StackServiceId** | **int32** |  | 
 **Name** | **string** |  | 
 **Value** | **string** |  | 
+**Secret** | **bool** |  | 
+**HasValue** | **bool** |  | 
 
 ## Methods
 
 ### NewStackServiceSetting
 
-`func NewStackServiceSetting(id int32, stackServiceId int32, name string, value string, ) *StackServiceSetting`
+`func NewStackServiceSetting(id int32, stackServiceId int32, name string, value string, secret bool, hasValue bool, ) *StackServiceSetting`
 
 NewStackServiceSetting instantiates a new StackServiceSetting object
 This constructor will assign default values to properties that have it defined,
@@ -106,6 +108,46 @@ and a boolean to check if the value has been set.
 `func (o *StackServiceSetting) SetValue(v string)`
 
 SetValue sets Value field to given value.
+
+
+### GetSecret
+
+`func (o *StackServiceSetting) GetSecret() bool`
+
+GetSecret returns the Secret field if non-nil, zero value otherwise.
+
+### GetSecretOk
+
+`func (o *StackServiceSetting) GetSecretOk() (*bool, bool)`
+
+GetSecretOk returns a tuple with the Secret field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecret
+
+`func (o *StackServiceSetting) SetSecret(v bool)`
+
+SetSecret sets Secret field to given value.
+
+
+### GetHasValue
+
+`func (o *StackServiceSetting) GetHasValue() bool`
+
+GetHasValue returns the HasValue field if non-nil, zero value otherwise.
+
+### GetHasValueOk
+
+`func (o *StackServiceSetting) GetHasValueOk() (*bool, bool)`
+
+GetHasValueOk returns a tuple with the HasValue field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasValue
+
+`func (o *StackServiceSetting) SetHasValue(v bool)`
+
+SetHasValue sets HasValue field to given value.
 
 
 

@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **AppServiceId** | **int32** |  | 
 **Name** | **string** |  | 
 **Value** | **string** |  | 
+**Secret** | **bool** |  | 
+**HasValue** | **bool** |  | 
 **Var** | **string** |  | 
 **Runtime** | **bool** |  | 
 **Build** | **bool** |  | 
@@ -17,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewAppServiceSetting
 
-`func NewAppServiceSetting(id int32, appServiceId int32, name string, value string, var_ string, runtime bool, build bool, ) *AppServiceSetting`
+`func NewAppServiceSetting(id int32, appServiceId int32, name string, value string, secret bool, hasValue bool, var_ string, runtime bool, build bool, ) *AppServiceSetting`
 
 NewAppServiceSetting instantiates a new AppServiceSetting object
 This constructor will assign default values to properties that have it defined,
@@ -110,6 +112,46 @@ and a boolean to check if the value has been set.
 `func (o *AppServiceSetting) SetValue(v string)`
 
 SetValue sets Value field to given value.
+
+
+### GetSecret
+
+`func (o *AppServiceSetting) GetSecret() bool`
+
+GetSecret returns the Secret field if non-nil, zero value otherwise.
+
+### GetSecretOk
+
+`func (o *AppServiceSetting) GetSecretOk() (*bool, bool)`
+
+GetSecretOk returns a tuple with the Secret field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecret
+
+`func (o *AppServiceSetting) SetSecret(v bool)`
+
+SetSecret sets Secret field to given value.
+
+
+### GetHasValue
+
+`func (o *AppServiceSetting) GetHasValue() bool`
+
+GetHasValue returns the HasValue field if non-nil, zero value otherwise.
+
+### GetHasValueOk
+
+`func (o *AppServiceSetting) GetHasValueOk() (*bool, bool)`
+
+GetHasValueOk returns a tuple with the HasValue field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasValue
+
+`func (o *AppServiceSetting) SetHasValue(v bool)`
+
+SetHasValue sets HasValue field to given value.
 
 
 ### GetVar

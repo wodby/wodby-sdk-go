@@ -23,7 +23,6 @@ var _ MappedNullable = &Cert{}
 // Cert struct for Cert
 type Cert struct {
 	Id int32 `json:"id"`
-	Title string `json:"title"`
 	Custom bool `json:"custom"`
 	// Human-readable certificate authority name parsed from uploaded certificates, or the managed issuer identifier.
 	Issuer string `json:"issuer"`
@@ -50,10 +49,9 @@ type _Cert Cert
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCert(id int32, title string, custom bool, issuer string, domain string, dnsNames []string, routeIds []int32, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time) *Cert {
+func NewCert(id int32, custom bool, issuer string, domain string, dnsNames []string, routeIds []int32, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time) *Cert {
 	this := Cert{}
 	this.Id = id
-	this.Title = title
 	this.Custom = custom
 	this.Issuer = issuer
 	this.Domain = domain
@@ -97,30 +95,6 @@ func (o *Cert) GetIdOk() (*int32, bool) {
 // SetId sets field value
 func (o *Cert) SetId(v int32) {
 	o.Id = v
-}
-
-// GetTitle returns the Title field value
-func (o *Cert) GetTitle() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Title
-}
-
-// GetTitleOk returns a tuple with the Title field value
-// and a boolean to check if the value has been set.
-func (o *Cert) GetTitleOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Title, true
-}
-
-// SetTitle sets field value
-func (o *Cert) SetTitle(v string) {
-	o.Title = v
 }
 
 // GetCustom returns the Custom field value
@@ -668,7 +642,6 @@ func (o Cert) MarshalJSON() ([]byte, error) {
 func (o Cert) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	toSerialize["title"] = o.Title
 	toSerialize["custom"] = o.Custom
 	toSerialize["issuer"] = o.Issuer
 	toSerialize["domain"] = o.Domain
@@ -709,7 +682,6 @@ func (o *Cert) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"title",
 		"custom",
 		"issuer",
 		"domain",

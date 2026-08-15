@@ -25,6 +25,8 @@ type StackServiceSetting struct {
 	StackServiceId int32 `json:"stackServiceId"`
 	Name string `json:"name"`
 	Value string `json:"value"`
+	Secret bool `json:"secret"`
+	HasValue bool `json:"hasValue"`
 }
 
 type _StackServiceSetting StackServiceSetting
@@ -33,12 +35,14 @@ type _StackServiceSetting StackServiceSetting
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStackServiceSetting(id int32, stackServiceId int32, name string, value string) *StackServiceSetting {
+func NewStackServiceSetting(id int32, stackServiceId int32, name string, value string, secret bool, hasValue bool) *StackServiceSetting {
 	this := StackServiceSetting{}
 	this.Id = id
 	this.StackServiceId = stackServiceId
 	this.Name = name
 	this.Value = value
+	this.Secret = secret
+	this.HasValue = hasValue
 	return &this
 }
 
@@ -146,6 +150,54 @@ func (o *StackServiceSetting) SetValue(v string) {
 	o.Value = v
 }
 
+// GetSecret returns the Secret field value
+func (o *StackServiceSetting) GetSecret() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Secret
+}
+
+// GetSecretOk returns a tuple with the Secret field value
+// and a boolean to check if the value has been set.
+func (o *StackServiceSetting) GetSecretOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Secret, true
+}
+
+// SetSecret sets field value
+func (o *StackServiceSetting) SetSecret(v bool) {
+	o.Secret = v
+}
+
+// GetHasValue returns the HasValue field value
+func (o *StackServiceSetting) GetHasValue() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.HasValue
+}
+
+// GetHasValueOk returns a tuple with the HasValue field value
+// and a boolean to check if the value has been set.
+func (o *StackServiceSetting) GetHasValueOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.HasValue, true
+}
+
+// SetHasValue sets field value
+func (o *StackServiceSetting) SetHasValue(v bool) {
+	o.HasValue = v
+}
+
 func (o StackServiceSetting) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -160,6 +212,8 @@ func (o StackServiceSetting) ToMap() (map[string]interface{}, error) {
 	toSerialize["stackServiceId"] = o.StackServiceId
 	toSerialize["name"] = o.Name
 	toSerialize["value"] = o.Value
+	toSerialize["secret"] = o.Secret
+	toSerialize["hasValue"] = o.HasValue
 	return toSerialize, nil
 }
 
@@ -172,6 +226,8 @@ func (o *StackServiceSetting) UnmarshalJSON(data []byte) (err error) {
 		"stackServiceId",
 		"name",
 		"value",
+		"secret",
+		"hasValue",
 	}
 
 	allProperties := make(map[string]interface{})

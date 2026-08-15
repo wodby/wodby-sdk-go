@@ -25,6 +25,8 @@ type AppServiceSetting struct {
 	AppServiceId int32 `json:"appServiceId"`
 	Name string `json:"name"`
 	Value string `json:"value"`
+	Secret bool `json:"secret"`
+	HasValue bool `json:"hasValue"`
 	Var string `json:"var"`
 	Runtime bool `json:"runtime"`
 	Build bool `json:"build"`
@@ -37,12 +39,14 @@ type _AppServiceSetting AppServiceSetting
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceSetting(id int32, appServiceId int32, name string, value string, var_ string, runtime bool, build bool) *AppServiceSetting {
+func NewAppServiceSetting(id int32, appServiceId int32, name string, value string, secret bool, hasValue bool, var_ string, runtime bool, build bool) *AppServiceSetting {
 	this := AppServiceSetting{}
 	this.Id = id
 	this.AppServiceId = appServiceId
 	this.Name = name
 	this.Value = value
+	this.Secret = secret
+	this.HasValue = hasValue
 	this.Var = var_
 	this.Runtime = runtime
 	this.Build = build
@@ -151,6 +155,54 @@ func (o *AppServiceSetting) GetValueOk() (*string, bool) {
 // SetValue sets field value
 func (o *AppServiceSetting) SetValue(v string) {
 	o.Value = v
+}
+
+// GetSecret returns the Secret field value
+func (o *AppServiceSetting) GetSecret() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Secret
+}
+
+// GetSecretOk returns a tuple with the Secret field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceSetting) GetSecretOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Secret, true
+}
+
+// SetSecret sets field value
+func (o *AppServiceSetting) SetSecret(v bool) {
+	o.Secret = v
+}
+
+// GetHasValue returns the HasValue field value
+func (o *AppServiceSetting) GetHasValue() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.HasValue
+}
+
+// GetHasValueOk returns a tuple with the HasValue field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceSetting) GetHasValueOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.HasValue, true
+}
+
+// SetHasValue sets field value
+func (o *AppServiceSetting) SetHasValue(v bool) {
+	o.HasValue = v
 }
 
 // GetVar returns the Var field value
@@ -281,6 +333,8 @@ func (o AppServiceSetting) ToMap() (map[string]interface{}, error) {
 	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["name"] = o.Name
 	toSerialize["value"] = o.Value
+	toSerialize["secret"] = o.Secret
+	toSerialize["hasValue"] = o.HasValue
 	toSerialize["var"] = o.Var
 	toSerialize["runtime"] = o.Runtime
 	toSerialize["build"] = o.Build
@@ -299,6 +353,8 @@ func (o *AppServiceSetting) UnmarshalJSON(data []byte) (err error) {
 		"appServiceId",
 		"name",
 		"value",
+		"secret",
+		"hasValue",
 		"var",
 		"runtime",
 		"build",

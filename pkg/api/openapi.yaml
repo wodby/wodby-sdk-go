@@ -13496,11 +13496,13 @@ components:
     App:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        ownerProjectId: 1
         clusterApp: true
         name: name
         id: 0
         title: title
         orgId: 6
+        ownershipScope: org
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -13516,6 +13518,14 @@ components:
           type: boolean
         orgId:
           type: integer
+        ownershipScope:
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          nullable: true
+          type: integer
         createdAt:
           format: date-time
           type: string
@@ -13528,6 +13538,7 @@ components:
       - id
       - name
       - orgId
+      - ownershipScope
       - status
       - title
       - updatedAt
@@ -16784,7 +16795,6 @@ components:
         - dnsNames
         - dnsNames
         custom: true
-        title: title
         issuer: issuer
         renewsAt: 2000-01-23T04:56:07.000+00:00
         expiresAt: 2000-01-23T04:56:07.000+00:00
@@ -16806,8 +16816,6 @@ components:
       properties:
         id:
           type: integer
-        title:
-          type: string
         custom:
           type: boolean
         issuer:
@@ -16871,7 +16879,6 @@ components:
       - keyType
       - routeIds
       - status
-      - title
       - updatedAt
       type: object
     Env:
@@ -17421,11 +17428,15 @@ components:
         settings:
         - name: name
           stackServiceId: 9
+          hasValue: true
           id: 7
+          secret: true
           value: value
         - name: name
           stackServiceId: 9
+          hasValue: true
           id: 7
+          secret: true
           value: value
         replicas: 6
         serviceRevTitle: serviceRevTitle
@@ -18040,7 +18051,9 @@ components:
         var: var
         name: name
         runtime: true
+        hasValue: true
         id: 0
+        secret: true
         value: value
       properties:
         id:
@@ -18051,6 +18064,10 @@ components:
           type: string
         value:
           type: string
+        secret:
+          type: boolean
+        hasValue:
+          type: boolean
         var:
           type: string
         runtime:
@@ -18063,9 +18080,11 @@ components:
       required:
       - appServiceId
       - build
+      - hasValue
       - id
       - name
       - runtime
+      - secret
       - value
       - var
       type: object
@@ -18222,7 +18241,9 @@ components:
       example:
         name: name
         stackServiceId: 9
+        hasValue: true
         id: 7
+        secret: true
         value: value
       properties:
         id:
@@ -18233,9 +18254,15 @@ components:
           type: string
         value:
           type: string
+        secret:
+          type: boolean
+        hasValue:
+          type: boolean
       required:
+      - hasValue
       - id
       - name
+      - secret
       - stackServiceId
       - value
       type: object

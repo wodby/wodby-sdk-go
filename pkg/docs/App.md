@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **ClusterApp** | **bool** |  | 
 **OrgId** | **int32** |  | 
+**OwnershipScope** | **string** |  | 
+**OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -17,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewApp
 
-`func NewApp(id int32, name string, title string, status string, clusterApp bool, orgId int32, createdAt time.Time, updatedAt time.Time, ) *App`
+`func NewApp(id int32, name string, title string, status string, clusterApp bool, orgId int32, ownershipScope string, createdAt time.Time, updatedAt time.Time, ) *App`
 
 NewApp instantiates a new App object
 This constructor will assign default values to properties that have it defined,
@@ -152,6 +154,61 @@ and a boolean to check if the value has been set.
 SetOrgId sets OrgId field to given value.
 
 
+### GetOwnershipScope
+
+`func (o *App) GetOwnershipScope() string`
+
+GetOwnershipScope returns the OwnershipScope field if non-nil, zero value otherwise.
+
+### GetOwnershipScopeOk
+
+`func (o *App) GetOwnershipScopeOk() (*string, bool)`
+
+GetOwnershipScopeOk returns a tuple with the OwnershipScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipScope
+
+`func (o *App) SetOwnershipScope(v string)`
+
+SetOwnershipScope sets OwnershipScope field to given value.
+
+
+### GetOwnerProjectId
+
+`func (o *App) GetOwnerProjectId() int32`
+
+GetOwnerProjectId returns the OwnerProjectId field if non-nil, zero value otherwise.
+
+### GetOwnerProjectIdOk
+
+`func (o *App) GetOwnerProjectIdOk() (*int32, bool)`
+
+GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnerProjectId
+
+`func (o *App) SetOwnerProjectId(v int32)`
+
+SetOwnerProjectId sets OwnerProjectId field to given value.
+
+### HasOwnerProjectId
+
+`func (o *App) HasOwnerProjectId() bool`
+
+HasOwnerProjectId returns a boolean if a field has been set.
+
+### SetOwnerProjectIdNil
+
+`func (o *App) SetOwnerProjectIdNil(b bool)`
+
+ SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+
+### UnsetOwnerProjectId
+`func (o *App) UnsetOwnerProjectId()`
+
+UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *App) GetCreatedAt() time.Time`

@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
-**Title** | **string** |  | 
 **Custom** | **bool** |  | 
 **Issuer** | **string** | Human-readable certificate authority name parsed from uploaded certificates, or the managed issuer identifier. | 
 **Domain** | **string** |  | 
@@ -28,7 +27,7 @@ Name | Type | Description | Notes
 
 ### NewCert
 
-`func NewCert(id int32, title string, custom bool, issuer string, domain string, dnsNames []string, routeIds []int32, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time, ) *Cert`
+`func NewCert(id int32, custom bool, issuer string, domain string, dnsNames []string, routeIds []int32, keyType string, keyLength int32, status string, createdAt time.Time, updatedAt time.Time, ) *Cert`
 
 NewCert instantiates a new Cert object
 This constructor will assign default values to properties that have it defined,
@@ -61,26 +60,6 @@ and a boolean to check if the value has been set.
 `func (o *Cert) SetId(v int32)`
 
 SetId sets Id field to given value.
-
-
-### GetTitle
-
-`func (o *Cert) GetTitle() string`
-
-GetTitle returns the Title field if non-nil, zero value otherwise.
-
-### GetTitleOk
-
-`func (o *Cert) GetTitleOk() (*string, bool)`
-
-GetTitleOk returns a tuple with the Title field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTitle
-
-`func (o *Cert) SetTitle(v string)`
-
-SetTitle sets Title field to given value.
 
 
 ### GetCustom
