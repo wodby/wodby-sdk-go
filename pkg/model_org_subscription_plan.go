@@ -23,10 +23,6 @@ var _ MappedNullable = &OrgSubscriptionPlan{}
 type OrgSubscriptionPlan struct {
 	Name string `json:"name"`
 	Title string `json:"title"`
-	Usage float64 `json:"usage"`
-	UsageIncluded float64 `json:"usageIncluded"`
-	SpendingLimit float64 `json:"spendingLimit"`
-	PricePerUnit float64 `json:"pricePerUnit"`
 }
 
 type _OrgSubscriptionPlan OrgSubscriptionPlan
@@ -35,14 +31,10 @@ type _OrgSubscriptionPlan OrgSubscriptionPlan
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrgSubscriptionPlan(name string, title string, usage float64, usageIncluded float64, spendingLimit float64, pricePerUnit float64) *OrgSubscriptionPlan {
+func NewOrgSubscriptionPlan(name string, title string) *OrgSubscriptionPlan {
 	this := OrgSubscriptionPlan{}
 	this.Name = name
 	this.Title = title
-	this.Usage = usage
-	this.UsageIncluded = usageIncluded
-	this.SpendingLimit = spendingLimit
-	this.PricePerUnit = pricePerUnit
 	return &this
 }
 
@@ -102,102 +94,6 @@ func (o *OrgSubscriptionPlan) SetTitle(v string) {
 	o.Title = v
 }
 
-// GetUsage returns the Usage field value
-func (o *OrgSubscriptionPlan) GetUsage() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.Usage
-}
-
-// GetUsageOk returns a tuple with the Usage field value
-// and a boolean to check if the value has been set.
-func (o *OrgSubscriptionPlan) GetUsageOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Usage, true
-}
-
-// SetUsage sets field value
-func (o *OrgSubscriptionPlan) SetUsage(v float64) {
-	o.Usage = v
-}
-
-// GetUsageIncluded returns the UsageIncluded field value
-func (o *OrgSubscriptionPlan) GetUsageIncluded() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.UsageIncluded
-}
-
-// GetUsageIncludedOk returns a tuple with the UsageIncluded field value
-// and a boolean to check if the value has been set.
-func (o *OrgSubscriptionPlan) GetUsageIncludedOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UsageIncluded, true
-}
-
-// SetUsageIncluded sets field value
-func (o *OrgSubscriptionPlan) SetUsageIncluded(v float64) {
-	o.UsageIncluded = v
-}
-
-// GetSpendingLimit returns the SpendingLimit field value
-func (o *OrgSubscriptionPlan) GetSpendingLimit() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.SpendingLimit
-}
-
-// GetSpendingLimitOk returns a tuple with the SpendingLimit field value
-// and a boolean to check if the value has been set.
-func (o *OrgSubscriptionPlan) GetSpendingLimitOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.SpendingLimit, true
-}
-
-// SetSpendingLimit sets field value
-func (o *OrgSubscriptionPlan) SetSpendingLimit(v float64) {
-	o.SpendingLimit = v
-}
-
-// GetPricePerUnit returns the PricePerUnit field value
-func (o *OrgSubscriptionPlan) GetPricePerUnit() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.PricePerUnit
-}
-
-// GetPricePerUnitOk returns a tuple with the PricePerUnit field value
-// and a boolean to check if the value has been set.
-func (o *OrgSubscriptionPlan) GetPricePerUnitOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.PricePerUnit, true
-}
-
-// SetPricePerUnit sets field value
-func (o *OrgSubscriptionPlan) SetPricePerUnit(v float64) {
-	o.PricePerUnit = v
-}
-
 func (o OrgSubscriptionPlan) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -210,10 +106,6 @@ func (o OrgSubscriptionPlan) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
-	toSerialize["usage"] = o.Usage
-	toSerialize["usageIncluded"] = o.UsageIncluded
-	toSerialize["spendingLimit"] = o.SpendingLimit
-	toSerialize["pricePerUnit"] = o.PricePerUnit
 	return toSerialize, nil
 }
 
@@ -224,10 +116,6 @@ func (o *OrgSubscriptionPlan) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"name",
 		"title",
-		"usage",
-		"usageIncluded",
-		"spendingLimit",
-		"pricePerUnit",
 	}
 
 	allProperties := make(map[string]interface{})

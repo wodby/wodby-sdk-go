@@ -282,6 +282,82 @@ paths:
       summary: Update org
       tags:
       - orgs
+  /orgs/{id}/actions/preflight-app-service-capacity:
+    post:
+      description: Evaluates whether the organization can add the requested number
+        of enabled app services under the backend's effective billing policy.
+      operationId: preflightAppServiceCapacity
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppServiceCapacityPreflightRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceCapacityPreflight'
+          description: Effective app-service capacity decision
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preflight app-service capacity
+      tags:
+      - orgs
+  /orgs/{id}/subscription:
+    get:
+      description: Returns usage and pricing details for callers with billing-view
+        access to the organization.
+      operationId: getOrgSubscription
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgSubscriptionDetails'
+          description: Organization subscription details
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get org subscription
+      tags:
+      - orgs
   /org-memberships:
     get:
       description: Returns org memberships matching the request filters.
@@ -13843,15 +13919,7 @@ components:
         domain: domain
         name: name
         id: 6
-        subscription:
-          plan:
-            spendingLimit: 7.061401241503109
-            usageIncluded: 2.3021358869347655
-            usage: 5.637376656633329
-            name: name
-            title: title
-            pricePerUnit: 9.301444243932576
-          status: status
+        subscription: ""
         title: title
         ciIntegrationId: 1
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13878,7 +13946,10 @@ components:
         capabilities:
           $ref: '#/components/schemas/OrgCapabilities'
         subscription:
-          $ref: '#/components/schemas/OrgSubscription'
+          allOf:
+          - $ref: '#/components/schemas/OrgSubscription'
+          description: Billing summary. Omitted when the caller does not have billing-view
+            access.
         createdAt:
           format: date-time
           type: string
@@ -13938,31 +14009,53 @@ components:
       - wodbyCloud
       type: object
     OrgSubscription:
-      example:
-        plan:
-          spendingLimit: 7.061401241503109
-          usageIncluded: 2.3021358869347655
-          usage: 5.637376656633329
-          name: name
-          title: title
-          pricePerUnit: 9.301444243932576
-        status: status
       properties:
         status:
-          type: string
+          $ref: '#/components/schemas/BillingSubscriptionStatus'
         plan:
           $ref: '#/components/schemas/OrgSubscriptionPlan'
       required:
       - status
       type: object
     OrgSubscriptionPlan:
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - name
+      - title
+      type: object
+    OrgSubscriptionDetails:
       example:
-        spendingLimit: 7.061401241503109
-        usageIncluded: 2.3021358869347655
-        usage: 5.637376656633329
+        plan:
+          spendingLimit: 1.4658129805029452
+          unit: unit
+          usageIncluded: 6.027456183070403
+          usage: 0.8008281904610115
+          name: name
+          title: title
+          pricePerUnit: 5.962133916683182
+        status: ACTIVE
+      properties:
+        status:
+          $ref: '#/components/schemas/BillingSubscriptionStatus'
+        plan:
+          $ref: '#/components/schemas/OrgSubscriptionPlanDetails'
+      required:
+      - plan
+      - status
+      type: object
+    OrgSubscriptionPlanDetails:
+      example:
+        spendingLimit: 1.4658129805029452
+        unit: unit
+        usageIncluded: 6.027456183070403
+        usage: 0.8008281904610115
         name: name
         title: title
-        pricePerUnit: 9.301444243932576
+        pricePerUnit: 5.962133916683182
       properties:
         name:
           type: string
@@ -13980,11 +14073,67 @@ components:
         pricePerUnit:
           format: double
           type: number
+        unit:
+          type: string
       required:
       - name
       - pricePerUnit
       - spendingLimit
       - title
+      - unit
+      - usage
+      - usageIncluded
+      type: object
+    BillingSubscriptionStatus:
+      enum:
+      - ACTIVE
+      - EXPIRED
+      - CREATING
+      - UPDATING
+      - ERRORED
+      - RENEWING
+      - CANCELING
+      type: string
+    AppServiceCapacityPreflightRequest:
+      additionalProperties: false
+      example:
+        additionalUsage: 0
+      properties:
+        additionalUsage:
+          description: Number of enabled app services the operation would add.
+          minimum: 0
+          type: integer
+      required:
+      - additionalUsage
+      type: object
+    AppServiceCapacityPreflight:
+      example:
+        enforced: true
+        usageIncluded: 6.027456183070403
+        allowed: true
+        usage: 0.8008281904610115
+        projectedUsage: 1.4658129805029452
+      properties:
+        allowed:
+          description: Whether the proposed usage increase is permitted by the effective
+            backend policy.
+          type: boolean
+        enforced:
+          description: Whether subscription capacity limits apply to this organization.
+          type: boolean
+        usage:
+          format: double
+          type: number
+        usageIncluded:
+          format: double
+          type: number
+        projectedUsage:
+          format: double
+          type: number
+      required:
+      - allowed
+      - enforced
+      - projectedUsage
       - usage
       - usageIncluded
       type: object
@@ -14006,13 +14155,13 @@ components:
         defaultProjects:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 3
+          id: 5
           title: title
           orgId: 2
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 3
+          id: 5
           title: title
           orgId: 2
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -14034,15 +14183,7 @@ components:
           domain: domain
           name: name
           id: 6
-          subscription:
-            plan:
-              spendingLimit: 7.061401241503109
-              usageIncluded: 2.3021358869347655
-              usage: 5.637376656633329
-              name: name
-              title: title
-              pricePerUnit: 9.301444243932576
-            status: status
+          subscription: ""
           title: title
           ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -14062,15 +14203,7 @@ components:
           domain: domain
           name: name
           id: 6
-          subscription:
-            plan:
-              spendingLimit: 7.061401241503109
-              usageIncluded: 2.3021358869347655
-              usage: 5.637376656633329
-              name: name
-              title: title
-              pricePerUnit: 9.301444243932576
-            status: status
+          subscription: ""
           title: title
           ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -14167,7 +14300,7 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        id: 3
+        id: 5
         title: title
         orgId: 2
         updatedAt: 2000-01-23T04:56:07.000+00:00

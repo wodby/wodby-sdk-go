@@ -88,6 +88,8 @@ docs/AppServiceAnnotationSource.md
 docs/AppServiceBuild.md
 docs/AppServiceBuildArg.md
 docs/AppServiceBuildConfig.md
+docs/AppServiceCapacityPreflight.md
+docs/AppServiceCapacityPreflightRequest.md
 docs/AppServiceConfig.md
 docs/AppServiceConfigurationIssue.md
 docs/AppServiceContainer.md
@@ -120,6 +122,7 @@ docs/AutomationTimeWindowInput.md
 docs/Backup.md
 docs/BackupPreset.md
 docs/BackupsAPI.md
+docs/BillingSubscriptionStatus.md
 docs/BuildSourceInput.md
 docs/Cert.md
 docs/CertsAPI.md
@@ -234,7 +237,9 @@ docs/OrgCapabilities.md
 docs/OrgMembership.md
 docs/OrgMembershipsAPI.md
 docs/OrgSubscription.md
+docs/OrgSubscriptionDetails.md
 docs/OrgSubscriptionPlan.md
+docs/OrgSubscriptionPlanDetails.md
 docs/OrgsAPI.md
 docs/ProblemDetails.md
 docs/ProblemFieldError.md
@@ -396,6 +401,8 @@ model_app_service_annotation_source.go
 model_app_service_build.go
 model_app_service_build_arg.go
 model_app_service_build_config.go
+model_app_service_capacity_preflight.go
+model_app_service_capacity_preflight_request.go
 model_app_service_config.go
 model_app_service_configuration_issue.go
 model_app_service_container.go
@@ -425,6 +432,7 @@ model_automation_time_window.go
 model_automation_time_window_input.go
 model_backup.go
 model_backup_preset.go
+model_billing_subscription_status.go
 model_build_source_input.go
 model_cert.go
 model_cluster.go
@@ -528,7 +536,9 @@ model_org.go
 model_org_capabilities.go
 model_org_membership.go
 model_org_subscription.go
+model_org_subscription_details.go
 model_org_subscription_plan.go
+model_org_subscription_plan_details.go
 model_problem_details.go
 model_problem_field_error.go
 model_project.go

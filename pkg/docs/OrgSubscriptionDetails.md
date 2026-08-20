@@ -1,75 +1,70 @@
-# OrgSubscription
+# OrgSubscriptionDetails
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Status** | [**BillingSubscriptionStatus**](BillingSubscriptionStatus.md) |  | 
-**Plan** | Pointer to [**OrgSubscriptionPlan**](OrgSubscriptionPlan.md) |  | [optional] 
+**Plan** | [**OrgSubscriptionPlanDetails**](OrgSubscriptionPlanDetails.md) |  | 
 
 ## Methods
 
-### NewOrgSubscription
+### NewOrgSubscriptionDetails
 
-`func NewOrgSubscription(status BillingSubscriptionStatus, ) *OrgSubscription`
+`func NewOrgSubscriptionDetails(status BillingSubscriptionStatus, plan OrgSubscriptionPlanDetails, ) *OrgSubscriptionDetails`
 
-NewOrgSubscription instantiates a new OrgSubscription object
+NewOrgSubscriptionDetails instantiates a new OrgSubscriptionDetails object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewOrgSubscriptionWithDefaults
+### NewOrgSubscriptionDetailsWithDefaults
 
-`func NewOrgSubscriptionWithDefaults() *OrgSubscription`
+`func NewOrgSubscriptionDetailsWithDefaults() *OrgSubscriptionDetails`
 
-NewOrgSubscriptionWithDefaults instantiates a new OrgSubscription object
+NewOrgSubscriptionDetailsWithDefaults instantiates a new OrgSubscriptionDetails object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetStatus
 
-`func (o *OrgSubscription) GetStatus() BillingSubscriptionStatus`
+`func (o *OrgSubscriptionDetails) GetStatus() BillingSubscriptionStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *OrgSubscription) GetStatusOk() (*BillingSubscriptionStatus, bool)`
+`func (o *OrgSubscriptionDetails) GetStatusOk() (*BillingSubscriptionStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *OrgSubscription) SetStatus(v BillingSubscriptionStatus)`
+`func (o *OrgSubscriptionDetails) SetStatus(v BillingSubscriptionStatus)`
 
 SetStatus sets Status field to given value.
 
 
 ### GetPlan
 
-`func (o *OrgSubscription) GetPlan() OrgSubscriptionPlan`
+`func (o *OrgSubscriptionDetails) GetPlan() OrgSubscriptionPlanDetails`
 
 GetPlan returns the Plan field if non-nil, zero value otherwise.
 
 ### GetPlanOk
 
-`func (o *OrgSubscription) GetPlanOk() (*OrgSubscriptionPlan, bool)`
+`func (o *OrgSubscriptionDetails) GetPlanOk() (*OrgSubscriptionPlanDetails, bool)`
 
 GetPlanOk returns a tuple with the Plan field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPlan
 
-`func (o *OrgSubscription) SetPlan(v OrgSubscriptionPlan)`
+`func (o *OrgSubscriptionDetails) SetPlan(v OrgSubscriptionPlanDetails)`
 
 SetPlan sets Plan field to given value.
 
-### HasPlan
-
-`func (o *OrgSubscription) HasPlan() bool`
-
-HasPlan returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

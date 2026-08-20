@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **CiIntegrationId** | **int32** | Effective default CI integration ID. Zero selects the built-in Wodby CI service. | 
 **RegistryIntegrationId** | **int32** | Effective default registry integration ID. Zero selects the built-in Wodby registry service. | 
 **Capabilities** | Pointer to [**OrgCapabilities**](OrgCapabilities.md) |  | [optional] 
-**Subscription** | Pointer to [**OrgSubscription**](OrgSubscription.md) |  | [optional] 
+**Subscription** | Pointer to [**OrgSubscription**](OrgSubscription.md) | Billing summary. Omitted when the caller does not have billing-view access. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 

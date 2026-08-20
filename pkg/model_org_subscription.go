@@ -21,7 +21,7 @@ var _ MappedNullable = &OrgSubscription{}
 
 // OrgSubscription struct for OrgSubscription
 type OrgSubscription struct {
-	Status string `json:"status"`
+	Status BillingSubscriptionStatus `json:"status"`
 	Plan *OrgSubscriptionPlan `json:"plan,omitempty"`
 }
 
@@ -31,7 +31,7 @@ type _OrgSubscription OrgSubscription
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrgSubscription(status string) *OrgSubscription {
+func NewOrgSubscription(status BillingSubscriptionStatus) *OrgSubscription {
 	this := OrgSubscription{}
 	this.Status = status
 	return &this
@@ -46,9 +46,9 @@ func NewOrgSubscriptionWithDefaults() *OrgSubscription {
 }
 
 // GetStatus returns the Status field value
-func (o *OrgSubscription) GetStatus() string {
+func (o *OrgSubscription) GetStatus() BillingSubscriptionStatus {
 	if o == nil {
-		var ret string
+		var ret BillingSubscriptionStatus
 		return ret
 	}
 
@@ -57,7 +57,7 @@ func (o *OrgSubscription) GetStatus() string {
 
 // GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
-func (o *OrgSubscription) GetStatusOk() (*string, bool) {
+func (o *OrgSubscription) GetStatusOk() (*BillingSubscriptionStatus, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -65,7 +65,7 @@ func (o *OrgSubscription) GetStatusOk() (*string, bool) {
 }
 
 // SetStatus sets field value
-func (o *OrgSubscription) SetStatus(v string) {
+func (o *OrgSubscription) SetStatus(v BillingSubscriptionStatus) {
 	o.Status = v
 }
 

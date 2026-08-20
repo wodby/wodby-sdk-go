@@ -32,6 +32,7 @@ type Org struct {
 	// Effective default registry integration ID. Zero selects the built-in Wodby registry service.
 	RegistryIntegrationId int32 `json:"registryIntegrationId"`
 	Capabilities *OrgCapabilities `json:"capabilities,omitempty"`
+	// Billing summary. Omitted when the caller does not have billing-view access.
 	Subscription *OrgSubscription `json:"subscription,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
