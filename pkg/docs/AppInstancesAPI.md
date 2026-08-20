@@ -20,6 +20,7 @@ Method | HTTP request | Description
 [**UpdateAppAccess**](AppInstancesAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update app access
 [**UpdateAppInstance**](AppInstancesAPI.md#UpdateAppInstance) | **Put** /app-instances/{id} | Update app instance
 [**UpdateAppInstanceCICDSettings**](AppInstancesAPI.md#UpdateAppInstanceCICDSettings) | **Put** /app-instances/cicd-settings/{id} | Update app instance CI/CD settings
+[**UpdateAppInstanceMaintenanceMode**](AppInstancesAPI.md#UpdateAppInstanceMaintenanceMode) | **Put** /app-instances/{id}/actions/maintenance-mode | Update app instance maintenance mode
 [**UpdateAppInstanceSettings**](AppInstancesAPI.md#UpdateAppInstanceSettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 [**UpgradeAppInstanceStack**](AppInstancesAPI.md#UpgradeAppInstanceStack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 
@@ -1139,6 +1140,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppInstanceCICDSettings**](AppInstanceCICDSettings.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAppInstanceMaintenanceMode
+
+> OperationResult UpdateAppInstanceMaintenanceMode(ctx, id).AppInstanceMaintenanceModeInput(appInstanceMaintenanceModeInput).Execute()
+
+Update app instance maintenance mode
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appInstanceMaintenanceModeInput := *openapiclient.NewAppInstanceMaintenanceModeInput(false) // AppInstanceMaintenanceModeInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppInstancesAPI.UpdateAppInstanceMaintenanceMode(context.Background(), id).AppInstanceMaintenanceModeInput(appInstanceMaintenanceModeInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppInstancesAPI.UpdateAppInstanceMaintenanceMode``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAppInstanceMaintenanceMode`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppInstancesAPI.UpdateAppInstanceMaintenanceMode`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAppInstanceMaintenanceModeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appInstanceMaintenanceModeInput** | [**AppInstanceMaintenanceModeInput**](AppInstanceMaintenanceModeInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 

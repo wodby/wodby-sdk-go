@@ -112,6 +112,7 @@ Class | Method | HTTP request | Description
 *AppInstancesAPI* | [**UpdateAppAccess**](docs/AppInstancesAPI.md#updateappaccess) | **Put** /app-accesses/{id} | Update app access
 *AppInstancesAPI* | [**UpdateAppInstance**](docs/AppInstancesAPI.md#updateappinstance) | **Put** /app-instances/{id} | Update app instance
 *AppInstancesAPI* | [**UpdateAppInstanceCICDSettings**](docs/AppInstancesAPI.md#updateappinstancecicdsettings) | **Put** /app-instances/cicd-settings/{id} | Update app instance CI/CD settings
+*AppInstancesAPI* | [**UpdateAppInstanceMaintenanceMode**](docs/AppInstancesAPI.md#updateappinstancemaintenancemode) | **Put** /app-instances/{id}/actions/maintenance-mode | Update app instance maintenance mode
 *AppInstancesAPI* | [**UpdateAppInstanceSettings**](docs/AppInstancesAPI.md#updateappinstancesettings) | **Put** /app-instances/settings/{id} | Update app instance settings
 *AppInstancesAPI* | [**UpgradeAppInstanceStack**](docs/AppInstancesAPI.md#upgradeappinstancestack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
 *AppPortsAPI* | [**GetAppPort**](docs/AppPortsAPI.md#getappport) | **Get** /app-ports/{id} | Get app port
@@ -122,6 +123,7 @@ Class | Method | HTTP request | Description
 *AppRoutesAPI* | [**GetAppRoute**](docs/AppRoutesAPI.md#getapproute) | **Get** /app-routes/{id} | Get app route
 *AppRoutesAPI* | [**ListAppRouteSettings**](docs/AppRoutesAPI.md#listapproutesettings) | **Get** /app-routes/{id}/settings | List app route settings
 *AppRoutesAPI* | [**ListAppRoutes**](docs/AppRoutesAPI.md#listapproutes) | **Get** /app-routes | List app routes
+*AppRoutesAPI* | [**RetryAppRouteCertificate**](docs/AppRoutesAPI.md#retryapproutecertificate) | **Post** /app-routes/{id}/actions/retry-certificate | Retry app route certificate
 *AppRoutesAPI* | [**SetAppRouteSetting**](docs/AppRoutesAPI.md#setapproutesetting) | **Put** /app-routes/{id}/settings/{name} | Set app route setting
 *AppRoutesAPI* | [**UpdateAppRoute**](docs/AppRoutesAPI.md#updateapproute) | **Put** /app-routes/{id} | Update app route
 *AppServicesAPI* | [**AddAppServiceVolume**](docs/AppServicesAPI.md#addappservicevolume) | **Post** /app-services/{id}/volumes | Add an optional app service volume
@@ -219,6 +221,8 @@ Class | Method | HTTP request | Description
 *EnvsAPI* | [**GetEnvByName**](docs/EnvsAPI.md#getenvbyname) | **Get** /envs/by-name/{name} | Get env by name
 *EnvsAPI* | [**ListEnvs**](docs/EnvsAPI.md#listenvs) | **Get** /envs | List envs
 *EnvsAPI* | [**UpdateEnv**](docs/EnvsAPI.md#updateenv) | **Put** /envs/{id} | Update env
+*GitReposAPI* | [**GetGitRepoUsages**](docs/GitReposAPI.md#getgitrepousages) | **Get** /git-repos/{id}/usages | Get Git repository usages
+*GitReposAPI* | [**UpdateGitRepoFromGit**](docs/GitReposAPI.md#updategitrepofromgit) | **Post** /git-repos/{id}/actions/update-from-git | Update all Git repository usages
 *HelmChartsAPI* | [**InspectHelmChart**](docs/HelmChartsAPI.md#inspecthelmchart) | **Post** /helm-charts/actions/inspect | Inspect Helm chart
 *ImportsAPI* | [**CreateImport**](docs/ImportsAPI.md#createimport) | **Post** /imports | Create import
 *ImportsAPI* | [**GetImport**](docs/ImportsAPI.md#getimport) | **Get** /imports/{id} | Get import
@@ -233,7 +237,6 @@ Class | Method | HTTP request | Description
 *IntegrationsAPI* | [**DeleteIntegration**](docs/IntegrationsAPI.md#deleteintegration) | **Delete** /integrations/{id} | Delete integration
 *IntegrationsAPI* | [**GetAppAccessProviderOptions**](docs/IntegrationsAPI.md#getappaccessprovideroptions) | **Get** /integrations/{id}/options/app-access | Get app-access provider options
 *IntegrationsAPI* | [**GetIntegration**](docs/IntegrationsAPI.md#getintegration) | **Get** /integrations/{id} | Get integration
-*IntegrationsAPI* | [**GetIntegrationByName**](docs/IntegrationsAPI.md#getintegrationbyname) | **Get** /integrations/by-name/{name} | Get integration by name
 *IntegrationsAPI* | [**GetIntegrationKubeSettings**](docs/IntegrationsAPI.md#getintegrationkubesettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
 *IntegrationsAPI* | [**GetIntegrationRemoteGitRepoFilePresence**](docs/IntegrationsAPI.md#getintegrationremotegitrepofilepresence) | **Get** /integrations/{id}/options/remote-git-repo-file | Check a remote Git repository file
 *IntegrationsAPI* | [**ListIntegrationKubeMachineTypes**](docs/IntegrationsAPI.md#listintegrationkubemachinetypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
@@ -248,8 +251,10 @@ Class | Method | HTTP request | Description
 *IntegrationsAPI* | [**ListIntegrationStorageClasses**](docs/IntegrationsAPI.md#listintegrationstorageclasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
 *IntegrationsAPI* | [**ListIntegrations**](docs/IntegrationsAPI.md#listintegrations) | **Get** /integrations | List integrations
 *IntegrationsAPI* | [**ResolveIntegration**](docs/IntegrationsAPI.md#resolveintegration) | **Post** /integrations/actions/resolve | Resolve or create integration
+*IntegrationsAPI* | [**SearchIntegrations**](docs/IntegrationsAPI.md#searchintegrations) | **Post** /integrations/actions/search | Search integrations
 *IntegrationsAPI* | [**TestIntegrationPermissions**](docs/IntegrationsAPI.md#testintegrationpermissions) | **Post** /integrations/{id}/actions/test-permissions | Test integration permissions
 *IntegrationsAPI* | [**UpdateIntegration**](docs/IntegrationsAPI.md#updateintegration) | **Put** /integrations/{id} | Update integration
+*IntegrationsAPI* | [**UpdateIntegrationEnvironmentPolicy**](docs/IntegrationsAPI.md#updateintegrationenvironmentpolicy) | **Put** /integrations/environment-policy/{id} | Update integration environment policy
 *IntegrationsAPI* | [**ValidateAppAccessHostname**](docs/IntegrationsAPI.md#validateappaccesshostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
 *OrgMembershipsAPI* | [**GetOrgMembership**](docs/OrgMembershipsAPI.md#getorgmembership) | **Get** /org-memberships/{id} | Get org membership
 *OrgMembershipsAPI* | [**ListOrgMemberships**](docs/OrgMembershipsAPI.md#listorgmemberships) | **Get** /org-memberships | List org memberships
@@ -262,11 +267,16 @@ Class | Method | HTTP request | Description
 *ProjectsAPI* | [**GetProjectByName**](docs/ProjectsAPI.md#getprojectbyname) | **Get** /projects/by-name/{name} | Get project by name
 *ProjectsAPI* | [**ListProjects**](docs/ProjectsAPI.md#listprojects) | **Get** /projects | List projects
 *ProjectsAPI* | [**UpdateProject**](docs/ProjectsAPI.md#updateproject) | **Put** /projects/{id} | Update project
+*ProvidersAPI* | [**CreateProviderFromManifest**](docs/ProvidersAPI.md#createproviderfrommanifest) | **Post** /providers/actions/create-from-manifest | Create provider from manifest
 *ProvidersAPI* | [**CreateVariableProvider**](docs/ProvidersAPI.md#createvariableprovider) | **Post** /providers/actions/create-variable | Create variable provider
 *ProvidersAPI* | [**GetProvider**](docs/ProvidersAPI.md#getprovider) | **Get** /providers/{id} | Get provider
 *ProvidersAPI* | [**GetProviderByName**](docs/ProvidersAPI.md#getproviderbyname) | **Get** /providers/by-name/{name} | Get provider by name
 *ProvidersAPI* | [**GetProviderRevision**](docs/ProvidersAPI.md#getproviderrevision) | **Get** /provider-revisions/{id} | Get provider revision
+*ProvidersAPI* | [**ImportProviders**](docs/ProvidersAPI.md#importproviders) | **Post** /providers/actions/import | Import providers from Git
 *ProvidersAPI* | [**ListProviders**](docs/ProvidersAPI.md#listproviders) | **Get** /providers | List providers
+*ProvidersAPI* | [**UpdateProviderFromGit**](docs/ProvidersAPI.md#updateproviderfromgit) | **Post** /providers/{id}/actions/update-from-git | Update provider from Git
+*ProvidersAPI* | [**UpdateProviderFromManifest**](docs/ProvidersAPI.md#updateproviderfrommanifest) | **Post** /providers/{id}/actions/update-from-manifest | Update provider from manifest
+*ProvidersAPI* | [**UpdateProviderSettings**](docs/ProvidersAPI.md#updateprovidersettings) | **Put** /providers/settings/{id} | Update provider settings
 *ServicesAPI* | [**CreateServiceFromManifest**](docs/ServicesAPI.md#createservicefrommanifest) | **Post** /services/actions/create-from-manifest | Create service from manifest
 *ServicesAPI* | [**GetService**](docs/ServicesAPI.md#getservice) | **Get** /services/{id} | Get service
 *ServicesAPI* | [**GetServiceByName**](docs/ServicesAPI.md#getservicebyname) | **Get** /services/by-name/{name} | Get service by name
@@ -313,7 +323,10 @@ Class | Method | HTTP request | Description
 *StackServicesAPI* | [**UpdateStackServiceEnvVar**](docs/StackServicesAPI.md#updatestackserviceenvvar) | **Put** /stack-service-env-vars/{id} | Update stack service env var
 *StackServicesAPI* | [**UpdateStackServiceHelmValue**](docs/StackServicesAPI.md#updatestackservicehelmvalue) | **Put** /stack-service-helm-values/{id} | Update stack service Helm value
 *StackServicesAPI* | [**UpdateStackServiceToken**](docs/StackServicesAPI.md#updatestackservicetoken) | **Put** /stack-service-tokens/{id} | Update stack service token
+*StacksAPI* | [**CreateStackEnvVar**](docs/StacksAPI.md#createstackenvvar) | **Post** /stacks/{id}/configuration/env-vars | Create stack env var
 *StacksAPI* | [**CreateStackFromManifest**](docs/StacksAPI.md#createstackfrommanifest) | **Post** /stacks/actions/create-from-manifest | Create stack from manifest
+*StacksAPI* | [**DeleteStack**](docs/StacksAPI.md#deletestack) | **Delete** /stacks/{id} | Delete stack
+*StacksAPI* | [**DeleteStackEnvVar**](docs/StacksAPI.md#deletestackenvvar) | **Delete** /stack-env-vars/{id} | Delete stack env var
 *StacksAPI* | [**DuplicateStack**](docs/StacksAPI.md#duplicatestack) | **Post** /stacks/{id}/actions/duplicate | Duplicate stack
 *StacksAPI* | [**GetStack**](docs/StacksAPI.md#getstack) | **Get** /stacks/{id} | Get stack
 *StacksAPI* | [**GetStackByName**](docs/StacksAPI.md#getstackbyname) | **Get** /stacks/by-name/{name} | Get stack by name
@@ -322,11 +335,14 @@ Class | Method | HTTP request | Description
 *StacksAPI* | [**GetStackServiceUpdateChangelog**](docs/StacksAPI.md#getstackserviceupdatechangelog) | **Get** /stack-service-update-changelogs/{id} | Preview stack service revision updates
 *StacksAPI* | [**ImportStacks**](docs/StacksAPI.md#importstacks) | **Post** /stacks/actions/import | Import stacks from Git
 *StacksAPI* | [**ListPublicStacks**](docs/StacksAPI.md#listpublicstacks) | **Get** /catalog/stacks | List public catalog stacks
+*StacksAPI* | [**ListStackEnvVars**](docs/StacksAPI.md#liststackenvvars) | **Get** /stack-revisions/{id}/env-vars | List stack env vars
 *StacksAPI* | [**ListStackRevisionServices**](docs/StacksAPI.md#liststackrevisionservices) | **Get** /stack-revisions/{id}/services | List stack services
 *StacksAPI* | [**ListStacks**](docs/StacksAPI.md#liststacks) | **Get** /stacks | List stacks
 *StacksAPI* | [**PublishStackDraft**](docs/StacksAPI.md#publishstackdraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
 *StacksAPI* | [**ScaffoldStackFromHelmChart**](docs/StacksAPI.md#scaffoldstackfromhelmchart) | **Post** /stacks/actions/scaffold-from-helm-chart | Scaffold stack from Helm chart
 *StacksAPI* | [**SyncStackWithOrigin**](docs/StacksAPI.md#syncstackwithorigin) | **Post** /stacks/{id}/actions/sync-origin | Sync stack with origin
+*StacksAPI* | [**UpdateStack**](docs/StacksAPI.md#updatestack) | **Put** /stacks/{id} | Rename stack
+*StacksAPI* | [**UpdateStackEnvVar**](docs/StacksAPI.md#updatestackenvvar) | **Put** /stack-env-vars/{id} | Update stack env var
 *StacksAPI* | [**UpdateStackFromGit**](docs/StacksAPI.md#updatestackfromgit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
 *StacksAPI* | [**UpdateStackServiceRevisions**](docs/StacksAPI.md#updatestackservicerevisions) | **Post** /stacks/{id}/actions/update-service-revisions | Update stack service revisions
 *StacksAPI* | [**UpdateStackSettings**](docs/StacksAPI.md#updatestacksettings) | **Put** /stacks/settings/{id} | Update stack settings
@@ -358,6 +374,7 @@ Class | Method | HTTP request | Description
  - [AppAccessSetting](docs/AppAccessSetting.md)
  - [AppAccessSettingInput](docs/AppAccessSettingInput.md)
  - [AppAuth](docs/AppAuth.md)
+ - [AppAuthScope](docs/AppAuthScope.md)
  - [AppBuild](docs/AppBuild.md)
  - [AppBuildConfig](docs/AppBuildConfig.md)
  - [AppBuildsCreateResponse](docs/AppBuildsCreateResponse.md)
@@ -372,6 +389,8 @@ Class | Method | HTTP request | Description
  - [AppInstanceCICDSettingsInput](docs/AppInstanceCICDSettingsInput.md)
  - [AppInstanceCronHealth](docs/AppInstanceCronHealth.md)
  - [AppInstanceHealth](docs/AppInstanceHealth.md)
+ - [AppInstanceMainRouteCert](docs/AppInstanceMainRouteCert.md)
+ - [AppInstanceMaintenanceModeInput](docs/AppInstanceMaintenanceModeInput.md)
  - [AppInstanceSettings](docs/AppInstanceSettings.md)
  - [AppInstanceSettingsInput](docs/AppInstanceSettingsInput.md)
  - [AppInstanceStackUpgradeChangelog](docs/AppInstanceStackUpgradeChangelog.md)
@@ -453,6 +472,8 @@ Class | Method | HTTP request | Description
  - [FieldInput](docs/FieldInput.md)
  - [GitAutoUpdateSettings](docs/GitAutoUpdateSettings.md)
  - [GitAutoUpdateSettingsInput](docs/GitAutoUpdateSettingsInput.md)
+ - [GitRepoUsage](docs/GitRepoUsage.md)
+ - [GitRepoUsages](docs/GitRepoUsages.md)
  - [HelmChartAnalysis](docs/HelmChartAnalysis.md)
  - [HelmChartContainer](docs/HelmChartContainer.md)
  - [HelmChartContainerPort](docs/HelmChartContainerPort.md)
@@ -472,10 +493,14 @@ Class | Method | HTTP request | Description
  - [ImportCatalogFromGitInput](docs/ImportCatalogFromGitInput.md)
  - [ImportFromInput](docs/ImportFromInput.md)
  - [ImportInput](docs/ImportInput.md)
+ - [ImportServicesFromGitInput](docs/ImportServicesFromGitInput.md)
  - [Integration](docs/Integration.md)
  - [IntegrationConfigurationResult](docs/IntegrationConfigurationResult.md)
+ - [IntegrationEnvironmentPolicyInput](docs/IntegrationEnvironmentPolicyInput.md)
  - [IntegrationLinkInput](docs/IntegrationLinkInput.md)
  - [IntegrationScope](docs/IntegrationScope.md)
+ - [IntegrationVariableRequirement](docs/IntegrationVariableRequirement.md)
+ - [IntegrationVariableRequirementInput](docs/IntegrationVariableRequirementInput.md)
  - [KubeVersion](docs/KubeVersion.md)
  - [LogLine](docs/LogLine.md)
  - [LogStream](docs/LogStream.md)
@@ -502,6 +527,7 @@ Class | Method | HTTP request | Description
  - [NewDatabaseUserInput](docs/NewDatabaseUserInput.md)
  - [NewIntegrationInput](docs/NewIntegrationInput.md)
  - [NewProjectInput](docs/NewProjectInput.md)
+ - [NewStackEnvVarInput](docs/NewStackEnvVarInput.md)
  - [NewStackServiceAnnotationInput](docs/NewStackServiceAnnotationInput.md)
  - [NewStackServiceCronScheduleInput](docs/NewStackServiceCronScheduleInput.md)
  - [NewStackServiceEnvVarInput](docs/NewStackServiceEnvVarInput.md)
@@ -519,7 +545,10 @@ Class | Method | HTTP request | Description
  - [ProblemFieldError](docs/ProblemFieldError.md)
  - [Project](docs/Project.md)
  - [Provider](docs/Provider.md)
+ - [ProviderManifestInput](docs/ProviderManifestInput.md)
+ - [ProviderManifestUpdateInput](docs/ProviderManifestUpdateInput.md)
  - [ProviderRevision](docs/ProviderRevision.md)
+ - [ProviderSettingsInput](docs/ProviderSettingsInput.md)
  - [ProvidersResponse](docs/ProvidersResponse.md)
  - [RemoteGitRepo](docs/RemoteGitRepo.md)
  - [RemoteGitRepoFilePresence](docs/RemoteGitRepoFilePresence.md)
@@ -527,8 +556,10 @@ Class | Method | HTTP request | Description
  - [ResolveIntegrationResult](docs/ResolveIntegrationResult.md)
  - [ResourcesInput](docs/ResourcesInput.md)
  - [ScalabilityInput](docs/ScalabilityInput.md)
+ - [SearchIntegrationsInput](docs/SearchIntegrationsInput.md)
  - [Service](docs/Service.md)
  - [ServiceDeploymentInput](docs/ServiceDeploymentInput.md)
+ - [ServiceIntegrationRequirement](docs/ServiceIntegrationRequirement.md)
  - [ServiceManifest](docs/ServiceManifest.md)
  - [ServiceManifestUpdateInput](docs/ServiceManifestUpdateInput.md)
  - [ServiceRevision](docs/ServiceRevision.md)
@@ -549,6 +580,7 @@ Class | Method | HTTP request | Description
  - [StackAutoUpdatePolicyInput](docs/StackAutoUpdatePolicyInput.md)
  - [StackAutoUpdateVersionPolicy](docs/StackAutoUpdateVersionPolicy.md)
  - [StackAutoUpdateVersionPolicyInput](docs/StackAutoUpdateVersionPolicyInput.md)
+ - [StackEnvVar](docs/StackEnvVar.md)
  - [StackOriginSyncChangelog](docs/StackOriginSyncChangelog.md)
  - [StackRevision](docs/StackRevision.md)
  - [StackRevisionLinkIssue](docs/StackRevisionLinkIssue.md)
@@ -600,7 +632,9 @@ Class | Method | HTTP request | Description
  - [UpdateOrgRequest](docs/UpdateOrgRequest.md)
  - [UpdateProjectInput](docs/UpdateProjectInput.md)
  - [UpdateSecretValueInput](docs/UpdateSecretValueInput.md)
+ - [UpdateStackEnvVarInput](docs/UpdateStackEnvVarInput.md)
  - [UpdateStackFromGitRequest](docs/UpdateStackFromGitRequest.md)
+ - [UpdateStackRequest](docs/UpdateStackRequest.md)
  - [UpdateStackServiceCronScheduleInput](docs/UpdateStackServiceCronScheduleInput.md)
  - [UpdateStackServiceEnvVarInput](docs/UpdateStackServiceEnvVarInput.md)
  - [UpdateStackServiceTokenInput](docs/UpdateStackServiceTokenInput.md)

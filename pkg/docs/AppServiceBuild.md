@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **Image** | **string** |  | 
 **ImageDeleted** | **bool** |  | 
+**UnmanagedImage** | **bool** | True when the image was built from a Dockerfile that does not derive from the service image, so it no longer tracks service image updates. | 
+**DockerfilePath** | **string** | Repository path of an author-provided Dockerfile. Empty when the build used a service-provided or generated Dockerfile. | 
+**DockerfileHash** | **string** | SHA-256 of the Dockerfile that produced the image. Empty when the build did not report it. | 
 **Size** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
 **PreviouslyDeployed** | **bool** |  | 
@@ -20,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewAppServiceBuild
 
-`func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, size int32, appServiceId int32, previouslyDeployed bool, currentlyDeployed bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceBuild`
+`func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, unmanagedImage bool, dockerfilePath string, dockerfileHash string, size int32, appServiceId int32, previouslyDeployed bool, currentlyDeployed bool, createdAt time.Time, updatedAt time.Time, ) *AppServiceBuild`
 
 NewAppServiceBuild instantiates a new AppServiceBuild object
 This constructor will assign default values to properties that have it defined,
@@ -113,6 +116,66 @@ and a boolean to check if the value has been set.
 `func (o *AppServiceBuild) SetImageDeleted(v bool)`
 
 SetImageDeleted sets ImageDeleted field to given value.
+
+
+### GetUnmanagedImage
+
+`func (o *AppServiceBuild) GetUnmanagedImage() bool`
+
+GetUnmanagedImage returns the UnmanagedImage field if non-nil, zero value otherwise.
+
+### GetUnmanagedImageOk
+
+`func (o *AppServiceBuild) GetUnmanagedImageOk() (*bool, bool)`
+
+GetUnmanagedImageOk returns a tuple with the UnmanagedImage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUnmanagedImage
+
+`func (o *AppServiceBuild) SetUnmanagedImage(v bool)`
+
+SetUnmanagedImage sets UnmanagedImage field to given value.
+
+
+### GetDockerfilePath
+
+`func (o *AppServiceBuild) GetDockerfilePath() string`
+
+GetDockerfilePath returns the DockerfilePath field if non-nil, zero value otherwise.
+
+### GetDockerfilePathOk
+
+`func (o *AppServiceBuild) GetDockerfilePathOk() (*string, bool)`
+
+GetDockerfilePathOk returns a tuple with the DockerfilePath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDockerfilePath
+
+`func (o *AppServiceBuild) SetDockerfilePath(v string)`
+
+SetDockerfilePath sets DockerfilePath field to given value.
+
+
+### GetDockerfileHash
+
+`func (o *AppServiceBuild) GetDockerfileHash() string`
+
+GetDockerfileHash returns the DockerfileHash field if non-nil, zero value otherwise.
+
+### GetDockerfileHashOk
+
+`func (o *AppServiceBuild) GetDockerfileHashOk() (*string, bool)`
+
+GetDockerfileHashOk returns a tuple with the DockerfileHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDockerfileHash
+
+`func (o *AppServiceBuild) SetDockerfileHash(v string)`
+
+SetDockerfileHash sets DockerfileHash field to given value.
 
 
 ### GetSize

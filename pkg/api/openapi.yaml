@@ -52,6 +52,8 @@ tags:
   name: integration-kinds
 - description: Provider catalog entries and revisions.
   name: providers
+- description: Shared Git repository usages and repository-wide update actions.
+  name: git-repos
 - description: Helm chart analysis and Wodby manifest scaffolding.
   name: helm-charts
 - description: Service catalog entries and service options.
@@ -1103,6 +1105,47 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update app instance settings
+      tags:
+      - app-instances
+  /app-instances/{id}/actions/maintenance-mode:
+    put:
+      description: Enables or disables the fixed maintenance response on all public
+        HTTP routes while application workloads continue running.
+      operationId: updateAppInstanceMaintenanceMode
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppInstanceMaintenanceModeInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Maintenance mode update result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app instance maintenance mode
       tags:
       - app-instances
   /app-instances/cicd-settings/{id}:
@@ -4491,6 +4534,15 @@ paths:
         schema:
           type: string
         style: form
+      - description: Return only integrations allowed in this environment
+        explode: true
+        in: query
+        name: envId
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
       responses:
         "200":
           content:
@@ -4580,34 +4632,26 @@ paths:
       summary: Resolve or create integration
       tags:
       - integrations
-  /integrations/by-name/{name}:
-    get:
-      description: Returns the integration identified by name.
-      operationId: getIntegrationByName
-      parameters:
-      - explode: false
-        in: path
-        name: name
+  /integrations/actions/search:
+    post:
+      description: "Returns accessible integrations matching structured type, status,\
+        \ label, variable, project, and environment requirements."
+      operationId: searchIntegrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchIntegrationsInput'
         required: true
-        schema:
-          type: string
-        style: simple
-      - description: "Optional for API-key requests; defaults to the API key's organization.\
-          \ If provided, it must match the key's organization."
-        explode: true
-        in: query
-        name: orgId
-        required: false
-        schema:
-          type: integer
-        style: form
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Integration'
-          description: Integration
+                items:
+                  $ref: '#/components/schemas/Integration'
+                type: array
+          description: Matching integrations
         default:
           content:
             application/problem+json:
@@ -4620,7 +4664,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get integration by name
+      summary: Search integrations
       tags:
       - integrations
   /integrations/{id}/options/scopes:
@@ -5207,6 +5251,47 @@ paths:
       summary: Update integration
       tags:
       - integrations
+  /integrations/environment-policy/{id}:
+    put:
+      description: Updates the associated environment and exact allowed environment
+        scope. Scope reductions that conflict with existing references are rejected.
+      operationId: updateIntegrationEnvironmentPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationEnvironmentPolicyInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+          description: Updated integration
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update integration environment policy
+      tags:
+      - integrations
   /integrations/configuration/{id}:
     put:
       description: "Atomically updates integration metadata, adds selected kinds,\
@@ -5608,6 +5693,194 @@ paths:
       summary: Create variable provider
       tags:
       - providers
+  /providers/actions/create-from-manifest:
+    post:
+      description: "Creates a namespaced, versioned variable provider from manifest\
+        \ YAML."
+      operationId: createProviderFromManifest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProviderManifestInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+          description: Provider created
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create provider from manifest
+      tags:
+      - providers
+  /providers/actions/import:
+    post:
+      description: Starts a task that imports provider.yml or all providers listed
+        by index.yml from a Git repository.
+      operationId: importProviders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportCatalogFromGitInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Provider import task accepted
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Import providers from Git
+      tags:
+      - providers
+  /providers/{id}/actions/update-from-git:
+    post:
+      description: Starts an update from the selected ref. Changing a shared repository
+        ref updates all repository usages.
+      operationId: updateProviderFromGit
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackFromGitRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Provider update task accepted
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update provider from Git
+      tags:
+      - providers
+  /providers/{id}/actions/update-from-manifest:
+    post:
+      description: Starts an update of a non-Git provider from versioned manifest
+        YAML.
+      operationId: updateProviderFromManifest
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProviderManifestUpdateInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Provider update task accepted
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update provider from manifest
+      tags:
+      - providers
+  /providers/settings/{id}:
+    put:
+      description: Updates Git auto-update settings shared by the repository usages.
+      operationId: updateProviderSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProviderSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+          description: Updated provider
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update provider settings
+      tags:
+      - providers
   /providers/by-name/{name}:
     get:
       description: Returns the provider identified by name.
@@ -5710,6 +5983,82 @@ paths:
       summary: Get provider revision
       tags:
       - providers
+  /git-repos/{id}/usages:
+    get:
+      description: "Returns every service, stack, and provider that shares the Git\
+        \ repository."
+      operationId: getGitRepoUsages
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepoUsages'
+          description: Git repository usages
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get Git repository usages
+      tags:
+      - git-repos
+  /git-repos/{id}/actions/update-from-git:
+    post:
+      description: "Starts one parent task that updates every service, stack, and\
+        \ provider sharing the selected repository to the requested ref."
+      operationId: updateGitRepoFromGit
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackFromGitRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Repository update task accepted
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update all Git repository usages
+      tags:
+      - git-repos
   /helm-charts/actions/inspect:
     post:
       description: "Renders a Helm chart with optional values and returns detected\
@@ -5820,7 +6169,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ImportCatalogFromGitInput'
+              $ref: '#/components/schemas/ImportServicesFromGitInput'
         required: true
       responses:
         "201":
@@ -6436,6 +6785,39 @@ paths:
       tags:
       - stacks
   /stacks/{id}:
+    delete:
+      description: Deletes an unused stack and returns the operation result.
+      operationId: deleteStack
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete stack
+      tags:
+      - stacks
     get:
       description: Returns the stack identified by the request path.
       operationId: getStack
@@ -6467,6 +6849,46 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get stack
+      tags:
+      - stacks
+    put:
+      description: Updates the name and title of the stack identified by the request
+        path.
+      operationId: updateStack
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Updated stack
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Rename stack
       tags:
       - stacks
   /stacks/settings/{id}:
@@ -6873,6 +7295,155 @@ paths:
       summary: Update stack service
       tags:
       - stack-services
+  /stack-revisions/{id}/env-vars:
+    get:
+      description: Returns stack-wide environment variables for a stack revision.
+      operationId: listStackEnvVars
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackEnvVar'
+                type: array
+          description: List of stack env vars
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List stack env vars
+      tags:
+      - stacks
+  /stacks/{id}/configuration/env-vars:
+    post:
+      description: Creates a stack-wide environment variable.
+      operationId: createStackEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackEnvVarInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackEnvVar'
+          description: Created stack env var
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create stack env var
+      tags:
+      - stacks
+  /stack-env-vars/{id}:
+    delete:
+      description: Deletes a stack-wide environment variable.
+      operationId: deleteStackEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete stack env var
+      tags:
+      - stacks
+    put:
+      description: Updates a stack-wide environment variable.
+      operationId: updateStackEnvVar
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackEnvVarInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackEnvVar'
+          description: Updated stack env var
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update stack env var
+      tags:
+      - stacks
   /stack-services/{id}/env-vars:
     get:
       description: Returns environment variables configured for a stack service.
@@ -9103,6 +9674,41 @@ paths:
       summary: List app route settings
       tags:
       - app-routes
+  /app-routes/{id}/actions/retry-certificate:
+    post:
+      description: Starts certificate reconciliation again for a route whose managed
+        certificate issuance failed or stalled.
+      operationId: retryAppRouteCertificate
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Certificate retry result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Retry app route certificate
+      tags:
+      - app-routes
   /app-routes/{id}/settings/{name}:
     delete:
       description: Deletes a named app route setting and restores any applicable default.
@@ -10627,6 +11233,21 @@ components:
         gitAutoUpdate:
           $ref: '#/components/schemas/GitAutoUpdateSettingsInput'
       type: object
+    ProviderSettingsInput:
+      example:
+        gitAutoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+      properties:
+        gitAutoUpdate:
+          $ref: '#/components/schemas/GitAutoUpdateSettingsInput'
+      required:
+      - gitAutoUpdate
+      type: object
     AppInstanceStackUpgradeSettings:
       example:
         cron: true
@@ -10843,6 +11464,15 @@ components:
       properties:
         autoStackUpgrade:
           $ref: '#/components/schemas/AppInstanceAutoStackUpgradeSettingsInput'
+      type: object
+    AppInstanceMaintenanceModeInput:
+      example:
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+      required:
+      - enabled
       type: object
     AppInstanceCICDSettingsInput:
       example:
@@ -11253,6 +11883,24 @@ components:
         autoOriginStackUpdate:
           $ref: '#/components/schemas/StackAutoOriginUpdateSettingsInput'
       type: object
+    UpdateStackRequest:
+      additionalProperties: false
+      example:
+        name: name
+        title: title
+      properties:
+        name:
+          description: Unique stack machine name within the organization.
+          minLength: 1
+          type: string
+        title:
+          description: Human-readable stack title.
+          minLength: 1
+          type: string
+      required:
+      - name
+      - title
+      type: object
     DuplicateStackRequest:
       example:
         settings:
@@ -11590,6 +12238,31 @@ components:
       - integrationId
       - remoteGitRepoId
       type: object
+    ImportServicesFromGitInput:
+      allOf:
+      - $ref: '#/components/schemas/ImportCatalogFromGitInput'
+      - properties:
+          registryIntegrationId:
+            description: Optional registry integration used when an imported service
+              image requires authentication.
+            nullable: true
+            type: integer
+        type: object
+      example:
+        gitRef: gitRef
+        remoteGitRepoId: remoteGitRepoId
+        registryIntegrationId: 5
+        autoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+        integrationId: 1
+        projectId: 6
+        orgId: 0
+        gitRefType: gitRefType
     ManifestFromYAMLInput:
       example:
         manifestYaml: manifestYaml
@@ -11617,6 +12290,34 @@ components:
           description: "Optional referenced file contents keyed by manifest-relative\
             \ path, for example Dockerfile or configs/app.conf."
           type: object
+      required:
+      - manifestYaml
+      type: object
+    ProviderManifestInput:
+      example:
+        manifestYaml: manifestYaml
+        projectId: 6
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        manifestYaml:
+          description: Complete variable provider manifest YAML.
+          type: string
+      required:
+      - manifestYaml
+      type: object
+    ProviderManifestUpdateInput:
+      example:
+        manifestYaml: manifestYaml
+      properties:
+        manifestYaml:
+          description: Complete versioned variable provider manifest YAML.
+          type: string
       required:
       - manifestYaml
       type: object
@@ -13545,6 +14246,21 @@ components:
       type: object
     AppInstance:
       example:
+        access: "{}"
+        stackName: stackName
+        mainDomain: mainDomain
+        mainRouteCert: "{}"
+        maintenanceModeActive: true
+        clusterId: 1
+        title: title
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        stackRevId: 2
+        outdated: true
+        appId: 6
+        stackIcon: stackIcon
+        id: 0
+        configurationReady: true
+        updatedAt: 2000-01-23T04:56:07.000+00:00
         settings:
           autoStackUpgrade:
             timeWindow:
@@ -13568,10 +14284,7 @@ components:
               services: true
               integrations: true
             enabled: true
-        access: "{}"
         stackId: 5
-        stackName: stackName
-        mainDomain: mainDomain
         health:
           cron:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
@@ -13579,11 +14292,7 @@ components:
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
             failingSchedulesCount: 2
-        clusterId: 1
         envId: 5
-        title: title
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        stackRevId: 2
         stackTitle: stackTitle
         stackVersion: stackVersion
         configurationIssues:
@@ -13602,15 +14311,11 @@ components:
           title: title
           message: message
         stackRevNumber: 7
-        appId: 6
         name: name
-        stackIcon: stackIcon
-        id: 0
         routingMode: routingMode
-        configurationReady: true
+        maintenanceMode: true
         status: status
         routingPending: true
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -13620,9 +14325,16 @@ components:
           type: string
         status:
           type: string
+        outdated:
+          type: boolean
         mainDomain:
           nullable: true
           type: string
+        mainRouteCert:
+          allOf:
+          - $ref: '#/components/schemas/AppInstanceMainRouteCert'
+          nullable: true
+          type: object
         appId:
           type: integer
         clusterId:
@@ -13652,6 +14364,10 @@ components:
           type: string
         routingPending:
           type: boolean
+        maintenanceMode:
+          type: boolean
+        maintenanceModeActive:
+          type: boolean
         configurationReady:
           type: boolean
         configurationIssues:
@@ -13677,7 +14393,11 @@ components:
       - envId
       - health
       - id
+      - mainRouteCert
+      - maintenanceMode
+      - maintenanceModeActive
       - name
+      - outdated
       - routingMode
       - routingPending
       - stackIcon
@@ -13690,6 +14410,16 @@ components:
       - status
       - title
       - updatedAt
+      type: object
+    AppInstanceMainRouteCert:
+      properties:
+        issuer:
+          type: string
+        custom:
+          type: boolean
+      required:
+      - custom
+      - issuer
       type: object
     AppInstanceHealth:
       example:
@@ -13786,26 +14516,32 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
@@ -13824,26 +14560,32 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14051,26 +14793,32 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14089,26 +14837,32 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14170,26 +14924,32 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14208,26 +14968,32 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             task: "{}"
             appServiceBuilds:
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            - previouslyDeployed: true
-              image: image
+            - image: image
+              unmanagedImage: true
+              imageDeleted: true
+              previouslyDeployed: true
               appServiceId: 4
               createdAt: 2000-01-23T04:56:07.000+00:00
+              dockerfilePath: dockerfilePath
               size: 2
               currentlyDeployed: true
+              dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
-              imageDeleted: true
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14267,26 +15033,32 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         task: "{}"
         appServiceBuilds:
-        - previouslyDeployed: true
-          image: image
+        - image: image
+          unmanagedImage: true
+          imageDeleted: true
+          previouslyDeployed: true
           appServiceId: 4
           createdAt: 2000-01-23T04:56:07.000+00:00
+          dockerfilePath: dockerfilePath
           size: 2
           currentlyDeployed: true
+          dockerfileHash: dockerfileHash
           currentBuildNumber: 7
           id: 3
-          imageDeleted: true
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - previouslyDeployed: true
-          image: image
+        - image: image
+          unmanagedImage: true
+          imageDeleted: true
+          previouslyDeployed: true
           appServiceId: 4
           createdAt: 2000-01-23T04:56:07.000+00:00
+          dockerfilePath: dockerfilePath
           size: 2
           currentlyDeployed: true
+          dockerfileHash: dockerfileHash
           currentBuildNumber: 7
           id: 3
-          imageDeleted: true
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14358,15 +15130,18 @@ components:
       type: object
     AppServiceBuild:
       example:
-        previouslyDeployed: true
         image: image
+        unmanagedImage: true
+        imageDeleted: true
+        previouslyDeployed: true
         appServiceId: 4
         createdAt: 2000-01-23T04:56:07.000+00:00
+        dockerfilePath: dockerfilePath
         size: 2
         currentlyDeployed: true
+        dockerfileHash: dockerfileHash
         currentBuildNumber: 7
         id: 3
-        imageDeleted: true
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -14378,6 +15153,19 @@ components:
           type: string
         imageDeleted:
           type: boolean
+        unmanagedImage:
+          description: "True when the image was built from a Dockerfile that does\
+            \ not derive from the service image, so it no longer tracks service image\
+            \ updates."
+          type: boolean
+        dockerfilePath:
+          description: Repository path of an author-provided Dockerfile. Empty when
+            the build used a service-provided or generated Dockerfile.
+          type: string
+        dockerfileHash:
+          description: SHA-256 of the Dockerfile that produced the image. Empty when
+            the build did not report it.
+          type: string
         size:
           type: integer
         appServiceId:
@@ -14399,12 +15187,15 @@ components:
       - appServiceId
       - createdAt
       - currentlyDeployed
+      - dockerfileHash
+      - dockerfilePath
       - id
       - image
       - imageDeleted
       - previouslyDeployed
       - size
       - status
+      - unmanagedImage
       - updatedAt
       type: object
     AppBuildsResponse:
@@ -14422,26 +15213,32 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14460,26 +15257,32 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14515,26 +15318,32 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14553,26 +15362,32 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
           appServiceBuilds:
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          - previouslyDeployed: true
-            image: image
+          - image: image
+            unmanagedImage: true
+            imageDeleted: true
+            previouslyDeployed: true
             appServiceId: 4
             createdAt: 2000-01-23T04:56:07.000+00:00
+            dockerfilePath: dockerfilePath
             size: 2
             currentlyDeployed: true
+            dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
-            imageDeleted: true
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
@@ -14598,7 +15413,8 @@ components:
         registryRepository: registryRepository
         registryHost: registryHost
         services:
-        - args:
+        - copyTo: copyTo
+          args:
           - name: name
             secret: true
             value: value
@@ -14612,7 +15428,9 @@ components:
           main: true
           dockerignore: dockerignore
           title: title
-        - args:
+          copyFrom: copyFrom
+        - copyTo: copyTo
+          args:
           - name: name
             secret: true
             value: value
@@ -14626,6 +15444,7 @@ components:
           main: true
           dockerignore: dockerignore
           title: title
+          copyFrom: copyFrom
       properties:
         registryHost:
           type: string
@@ -14642,6 +15461,7 @@ components:
       type: object
     AppServiceBuildConfig:
       example:
+        copyTo: copyTo
         args:
         - name: name
           secret: true
@@ -14656,6 +15476,7 @@ components:
         main: true
         dockerignore: dockerignore
         title: title
+        copyFrom: copyFrom
       properties:
         name:
           type: string
@@ -14673,12 +15494,22 @@ components:
         dockerignore:
           nullable: true
           type: string
+        copyFrom:
+          description: "Build context subdirectory to copy, relative to the CI --from\
+            \ path. Empty means the whole context."
+          type: string
+        copyTo:
+          description: "Image subdirectory to copy into, relative to the CI --to path.\
+            \ Empty means the image working directory."
+          type: string
         args:
           items:
             $ref: '#/components/schemas/AppServiceBuildArg'
           nullable: true
           type: array
       required:
+      - copyFrom
+      - copyTo
       - image
       - main
       - managed
@@ -15011,11 +15842,15 @@ components:
       type: object
     Integration:
       example:
+        allowedEnvIds:
+        - 5
+        - 5
         createdAt: 2000-01-23T04:56:07.000+00:00
+        primaryEnvId: 5
         auth: auth
         scope: scope
         providerRevId: 6
-        name: name
+        envScope: all
         id: 0
         title: title
         orgId: 1
@@ -15024,8 +15859,6 @@ components:
       properties:
         id:
           type: integer
-        name:
-          type: string
         title:
           type: string
         status:
@@ -15040,6 +15873,18 @@ components:
           type: integer
         orgId:
           type: integer
+        primaryEnvId:
+          nullable: true
+          type: integer
+        envScope:
+          enum:
+          - all
+          - selected
+          type: string
+        allowedEnvIds:
+          items:
+            type: integer
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -15047,9 +15892,10 @@ components:
           format: date-time
           type: string
       required:
+      - allowedEnvIds
       - createdAt
+      - envScope
       - id
-      - name
       - orgId
       - providerRevId
       - status
@@ -15058,13 +15904,17 @@ components:
       type: object
     Backup:
       example:
+        integrationId: 2
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        databaseDbId: 5
         appInstanceId: 6
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        databaseDbId: 5
         id: 0
         databaseId: 5
+        taskId: 7
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -15086,15 +15936,32 @@ components:
         databaseDbId:
           nullable: true
           type: integer
+        integrationId:
+          description: Storage integration that owns the backup. Null identifies Wodby's
+            built-in blob storage.
+          nullable: true
+          type: integer
+        taskId:
+          nullable: true
+          type: integer
         createdAt:
           format: date-time
           type: string
         updatedAt:
           format: date-time
           type: string
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
       required:
       - createdAt
       - id
+      - integrationId
       - name
       - status
       - updatedAt
@@ -16705,11 +17572,15 @@ components:
     AppAuth:
       example:
         appInstanceId: 6
-        appServiceId: 1
+        appServiceId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
         appRouteId: 5
+        scope: APP
         realm: realm
         id: 0
+        appServiceIds:
+        - 1
+        - 1
         login: login
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -16717,7 +17588,18 @@ components:
           type: integer
         appInstanceId:
           type: integer
+        scope:
+          $ref: '#/components/schemas/AppAuthScope'
+        appServiceIds:
+          description: App services protected by this entry. Empty unless scope is
+            SERVICE.
+          items:
+            type: integer
+          type: array
         appServiceId:
+          deprecated: true
+          description: Single protected app service. Null when the entry protects
+            several services or the whole app instance.
           nullable: true
           type: integer
         appRouteId:
@@ -16735,12 +17617,22 @@ components:
           type: string
       required:
       - appInstanceId
+      - appServiceIds
       - createdAt
       - id
       - login
       - realm
+      - scope
       - updatedAt
       type: object
+    AppAuthScope:
+      description: "What a basic auth entry protects. Route beats service, service\
+        \ beats app."
+      enum:
+      - APP
+      - SERVICE
+      - ROUTE
+      type: string
     AppRouteSetting:
       example:
         appInstanceId: 6
@@ -17002,6 +17894,64 @@ components:
       - title
       - version
       type: object
+    GitRepoUsage:
+      example:
+        name: name
+        id: 0
+        title: title
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - id
+      - name
+      - title
+      type: object
+    GitRepoUsages:
+      example:
+        stacks:
+        - name: name
+          id: 0
+          title: title
+        - name: name
+          id: 0
+          title: title
+        services:
+        - name: name
+          id: 0
+          title: title
+        - name: name
+          id: 0
+          title: title
+        providers:
+        - name: name
+          id: 0
+          title: title
+        - name: name
+          id: 0
+          title: title
+      properties:
+        services:
+          items:
+            $ref: '#/components/schemas/GitRepoUsage'
+          type: array
+        stacks:
+          items:
+            $ref: '#/components/schemas/GitRepoUsage'
+          type: array
+        providers:
+          items:
+            $ref: '#/components/schemas/GitRepoUsage'
+          type: array
+      required:
+      - providers
+      - services
+      - stacks
+      type: object
     ProvidersResponse:
       example:
         nextPage: 5
@@ -17112,6 +18062,37 @@ components:
         manifest:
           scalable: true
           raw: raw
+          integrations:
+          - variables:
+            - name: name
+              optional: true
+              secret: true
+            - name: name
+              optional: true
+              secret: true
+            name: name
+            multiple: true
+            title: title
+            type: GIT
+            required: true
+            labels:
+            - labels
+            - labels
+          - variables:
+            - name: name
+              optional: true
+              secret: true
+            - name: name
+              optional: true
+              secret: true
+            name: name
+            multiple: true
+            title: title
+            type: GIT
+            required: true
+            labels:
+            - labels
+            - labels
         name: name
         id: 0
         title: title
@@ -17156,14 +18137,105 @@ components:
       example:
         scalable: true
         raw: raw
+        integrations:
+        - variables:
+          - name: name
+            optional: true
+            secret: true
+          - name: name
+            optional: true
+            secret: true
+          name: name
+          multiple: true
+          title: title
+          type: GIT
+          required: true
+          labels:
+          - labels
+          - labels
+        - variables:
+          - name: name
+            optional: true
+            secret: true
+          - name: name
+            optional: true
+            secret: true
+          name: name
+          multiple: true
+          title: title
+          type: GIT
+          required: true
+          labels:
+          - labels
+          - labels
       properties:
         raw:
           type: string
         scalable:
           type: boolean
+        integrations:
+          items:
+            $ref: '#/components/schemas/ServiceIntegrationRequirement'
+          type: array
       required:
       - raw
       - scalable
+      type: object
+    ServiceIntegrationRequirement:
+      example:
+        variables:
+        - name: name
+          optional: true
+          secret: true
+        - name: name
+          optional: true
+          secret: true
+        name: name
+        multiple: true
+        title: title
+        type: GIT
+        required: true
+        labels:
+        - labels
+        - labels
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          enum:
+          - GIT
+          - STORAGE
+          - KUBERNETES
+          - DB
+          - VARIABLE
+          - REGISTRY
+          - NFS
+          - CI
+          - SMTP
+          - APPLICATION_ACCESS
+          - VPN
+          type: string
+        labels:
+          items:
+            type: string
+          type: array
+        variables:
+          items:
+            $ref: '#/components/schemas/IntegrationVariableRequirement'
+          type: array
+        required:
+          type: boolean
+        multiple:
+          type: boolean
+      required:
+      - multiple
+      - name
+      - required
+      - title
+      - type
+      - variables
       type: object
     ServicesResponse:
       example:
@@ -17271,6 +18343,7 @@ components:
         originStackRevStackId: 7
         gitRepoRef: gitRepoRef
         originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+        outdated: true
         public: true
         originStackRevVersion: originStackRevVersion
         latestRevNumber: 5
@@ -17290,6 +18363,8 @@ components:
           type: string
         status:
           type: string
+        outdated:
+          type: boolean
         public:
           type: boolean
         revId:
@@ -17347,6 +18422,7 @@ components:
       - latestRevNumber
       - name
       - orgId
+      - outdated
       - public
       - revId
       - status
@@ -17605,6 +18681,7 @@ components:
           originStackRevStackId: 7
           gitRepoRef: gitRepoRef
           originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+          outdated: true
           public: true
           originStackRevVersion: originStackRevVersion
           latestRevNumber: 5
@@ -17658,6 +18735,7 @@ components:
           originStackRevStackId: 7
           gitRepoRef: gitRepoRef
           originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+          outdated: true
           public: true
           originStackRevVersion: originStackRevVersion
           latestRevNumber: 5
@@ -18515,6 +19593,36 @@ components:
       - stackServiceId
       - workload
       type: object
+    StackEnvVar:
+      example:
+        valueSecretId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: envType
+        name: name
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        envType:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      type: object
     StackServiceHelmValue:
       example:
         valueSecretId: 1
@@ -18927,19 +20035,21 @@ components:
       type: object
     Import:
       example:
-        backupId: 9
+        backupId: 3
         startedAt: 2000-01-23T04:56:07.000+00:00
-        databaseDbId: 5
+        databaseDbId: 2
         source: source
-        appInstanceId: 6
-        appServiceId: 1
+        appInstanceId: 1
+        appServiceId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
+        filename: filename
+        size: 6
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
         id: 0
         databaseId: 5
-        appServiceDeploymentId: 2
-        taskId: 7
+        appServiceDeploymentId: 7
+        taskId: 9
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -18951,6 +20061,13 @@ components:
           type: string
         status:
           type: string
+        filename:
+          nullable: true
+          type: string
+        size:
+          format: int64
+          nullable: true
+          type: integer
         appInstanceId:
           nullable: true
           type: integer
@@ -19865,9 +20982,15 @@ components:
         skipPostDeployment: true
         services:
         - image: image
+          dockerfilePath: dockerfilePath
           name: name
+          dockerfileHash: dockerfileHash
+          unmanagedImage: true
         - image: image
+          dockerfilePath: dockerfilePath
           name: name
+          dockerfileHash: dockerfileHash
+          unmanagedImage: true
         appBuildId: 0
       properties:
         appBuildId:
@@ -19886,11 +21009,29 @@ components:
     ServiceDeploymentInput:
       example:
         image: image
+        dockerfilePath: dockerfilePath
         name: name
+        dockerfileHash: dockerfileHash
+        unmanagedImage: true
       properties:
         name:
           type: string
         image:
+          type: string
+        unmanagedImage:
+          description: Set by the CI build when the image was produced from a Dockerfile
+            that does not derive from the service image.
+          nullable: true
+          type: boolean
+        dockerfilePath:
+          description: "Repository path of an author-provided Dockerfile, reported\
+            \ by the CI build."
+          nullable: true
+          type: string
+        dockerfileHash:
+          description: "SHA-256 of the Dockerfile that produced the image, reported\
+            \ by the CI build."
+          nullable: true
           type: string
       required:
       - image
@@ -20295,6 +21436,40 @@ components:
           type: string
       required:
       - name
+      - secret
+      - value
+      type: object
+    NewStackEnvVarInput:
+      example:
+        envType: envType
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+        envType:
+          nullable: true
+          type: string
+      required:
+      - name
+      - secret
+      - value
+      type: object
+    UpdateStackEnvVarInput:
+      example:
+        secret: true
+        value: value
+      properties:
+        value:
+          type: string
+        secret:
+          type: boolean
+      required:
       - secret
       - value
       type: object
@@ -21557,6 +22732,119 @@ components:
       required:
       - databaseDbIds
       type: object
+    SearchIntegrationsInput:
+      additionalProperties: false
+      example:
+        types:
+        - GIT
+        - GIT
+        variables:
+        - name: name
+          optional: false
+          secret: false
+        - name: name
+          optional: false
+          secret: false
+        statuses:
+        - OK
+        - OK
+        projectIds:
+        - 6
+        - 6
+        envId: 1
+        orgId: 0
+        labels:
+        - labels
+        - labels
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectIds:
+          items:
+            type: integer
+          type: array
+        types:
+          items:
+            enum:
+            - GIT
+            - STORAGE
+            - KUBERNETES
+            - DB
+            - VARIABLE
+            - REGISTRY
+            - NFS
+            - CI
+            - SMTP
+            - APPLICATION_ACCESS
+            - VPN
+            type: string
+          type: array
+        statuses:
+          items:
+            enum:
+            - OK
+            - CREATING
+            - DELETING
+            - DELETED
+            - DISABLED
+            - DEPRECATED
+            - EOL
+            - ABANDONED
+            - ERRORED
+            - UPDATING
+            - EXPIRED
+            type: string
+          type: array
+        labels:
+          items:
+            type: string
+          type: array
+        variables:
+          items:
+            $ref: '#/components/schemas/IntegrationVariableRequirementInput'
+          type: array
+        envId:
+          minimum: 1
+          nullable: true
+          type: integer
+      type: object
+    IntegrationVariableRequirementInput:
+      additionalProperties: false
+      example:
+        name: name
+        optional: false
+        secret: false
+      properties:
+        name:
+          minLength: 1
+          type: string
+        secret:
+          default: false
+          type: boolean
+        optional:
+          default: false
+          type: boolean
+      required:
+      - name
+      type: object
+    IntegrationVariableRequirement:
+      example:
+        name: name
+        optional: true
+        secret: true
+      properties:
+        name:
+          type: string
+        secret:
+          type: boolean
+        optional:
+          type: boolean
+      required:
+      - name
+      - optional
+      - secret
+      type: object
     NewIntegrationInput:
       example:
         fieldsInput:
@@ -21569,7 +22857,12 @@ components:
         auth: auth
         providerId: 6
         scope: scope
-        name: name
+        environmentPolicy:
+          allowedEnvIds:
+          - 5
+          - 5
+          primaryEnvId: 5
+          scope: all
         kinds:
         - kinds
         - kinds
@@ -21582,8 +22875,6 @@ components:
           type: integer
         providerId:
           type: integer
-        name:
-          type: string
         title:
           type: string
         kinds:
@@ -21603,21 +22894,50 @@ components:
         scope:
           nullable: true
           type: string
+        environmentPolicy:
+          $ref: '#/components/schemas/IntegrationEnvironmentPolicyInput'
       required:
       - kinds
-      - name
       - providerId
       - title
+      type: object
+    IntegrationEnvironmentPolicyInput:
+      example:
+        allowedEnvIds:
+        - 5
+        - 5
+        primaryEnvId: 5
+        scope: all
+      properties:
+        primaryEnvId:
+          nullable: true
+          type: integer
+        scope:
+          enum:
+          - all
+          - selected
+          type: string
+        allowedEnvIds:
+          items:
+            type: integer
+          type: array
+      required:
+      - allowedEnvIds
+      - scope
       type: object
     ResolveIntegrationResult:
       example:
         created: true
         integration:
+          allowedEnvIds:
+          - 5
+          - 5
           createdAt: 2000-01-23T04:56:07.000+00:00
+          primaryEnvId: 5
           auth: auth
           scope: scope
           providerRevId: 6
-          name: name
+          envScope: all
           id: 0
           title: title
           orgId: 1
@@ -21705,15 +23025,12 @@ components:
           name: name
           value: value
         scope: scope
-        name: name
         kinds:
         - kinds
         - kinds
         title: title
       properties:
         title:
-          type: string
-        name:
           type: string
         kinds:
           items:
@@ -21728,7 +23045,6 @@ components:
           type: array
       required:
       - kinds
-      - name
       - title
       type: object
     IntegrationConfigurationResult:
@@ -21737,11 +23053,15 @@ components:
         - warnings
         - warnings
         integration:
+          allowedEnvIds:
+          - 5
+          - 5
           createdAt: 2000-01-23T04:56:07.000+00:00
+          primaryEnvId: 5
           auth: auth
           scope: scope
           providerRevId: 6
-          name: name
+          envScope: all
           id: 0
           title: title
           orgId: 1
@@ -22036,22 +23356,31 @@ components:
     NewAppAuthInput:
       example:
         appInstanceId: 0
-        appServiceId: 6
+        appServiceId: 1
         password: password
-        appRouteId: 1
+        appRouteId: 5
         realm: realm
+        appServiceIds:
+        - 6
+        - 6
         login: login
       properties:
         appInstanceId:
           type: integer
+        appServiceIds:
+          description: App services to protect. Omit or pass an empty list to protect
+            the whole app instance.
+          items:
+            type: integer
+          nullable: true
+          type: array
         appServiceId:
-          description: Optional service scope. Required together with appRouteId for
-            route scope.
+          deprecated: true
+          description: Single-service scope. Ignored when appServiceIds is supplied.
           nullable: true
           type: integer
         appRouteId:
-          description: Optional route scope. Requires appServiceId and must belong
-            to that service.
+          description: Route scope. The owning app service is derived from the route.
           nullable: true
           type: integer
         login:
@@ -22070,19 +23399,30 @@ components:
       type: object
     UpdateAppAuthInput:
       example:
-        appServiceId: 0
+        appServiceId: 6
         password: password
-        appRouteId: 6
+        appRouteId: 1
         realm: realm
+        appServiceIds:
+        - 0
+        - 0
         login: login
       properties:
+        appServiceIds:
+          description: "App services to protect. Omit every scope field to preserve\
+            \ the current scope, or pass an empty list to protect the whole app instance."
+          items:
+            type: integer
+          nullable: true
+          type: array
         appServiceId:
-          description: "Omit with appRouteId to preserve the current scope. When supplied\
-            \ alone, moves the entry to service scope and clears any route scope."
+          deprecated: true
+          description: Single-service scope. Ignored when appServiceIds is supplied.
           nullable: true
           type: integer
         appRouteId:
-          description: Moves the entry to route scope and must be accompanied by appServiceId.
+          description: Moves the entry to route scope. The owning app service is derived
+            from the route.
           nullable: true
           type: integer
         login:

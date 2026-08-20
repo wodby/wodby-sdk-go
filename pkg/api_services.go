@@ -586,11 +586,11 @@ func (a *ServicesAPIService) GetServiceRevisionExecute(r ApiGetServiceRevisionRe
 type ApiImportServicesRequest struct {
 	ctx context.Context
 	ApiService *ServicesAPIService
-	importCatalogFromGitInput *ImportCatalogFromGitInput
+	importServicesFromGitInput *ImportServicesFromGitInput
 }
 
-func (r ApiImportServicesRequest) ImportCatalogFromGitInput(importCatalogFromGitInput ImportCatalogFromGitInput) ApiImportServicesRequest {
-	r.importCatalogFromGitInput = &importCatalogFromGitInput
+func (r ApiImportServicesRequest) ImportServicesFromGitInput(importServicesFromGitInput ImportServicesFromGitInput) ApiImportServicesRequest {
+	r.importServicesFromGitInput = &importServicesFromGitInput
 	return r
 }
 
@@ -633,8 +633,8 @@ func (a *ServicesAPIService) ImportServicesExecute(r ApiImportServicesRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.importCatalogFromGitInput == nil {
-		return localVarReturnValue, nil, reportError("importCatalogFromGitInput is required and must be specified")
+	if r.importServicesFromGitInput == nil {
+		return localVarReturnValue, nil, reportError("importServicesFromGitInput is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -655,7 +655,7 @@ func (a *ServicesAPIService) ImportServicesExecute(r ApiImportServicesRequest) (
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.importCatalogFromGitInput
+	localVarPostBody = r.importServicesFromGitInput
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

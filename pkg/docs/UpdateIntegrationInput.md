@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Title** | **string** |  | 
-**Name** | **string** |  | 
 **Kinds** | **[]string** |  | 
 **Scope** | Pointer to **NullableString** |  | [optional] 
 **FieldsInput** | Pointer to [**[]FieldInput**](FieldInput.md) |  | [optional] 
@@ -14,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewUpdateIntegrationInput
 
-`func NewUpdateIntegrationInput(title string, name string, kinds []string, ) *UpdateIntegrationInput`
+`func NewUpdateIntegrationInput(title string, kinds []string, ) *UpdateIntegrationInput`
 
 NewUpdateIntegrationInput instantiates a new UpdateIntegrationInput object
 This constructor will assign default values to properties that have it defined,
@@ -47,26 +46,6 @@ and a boolean to check if the value has been set.
 `func (o *UpdateIntegrationInput) SetTitle(v string)`
 
 SetTitle sets Title field to given value.
-
-
-### GetName
-
-`func (o *UpdateIntegrationInput) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *UpdateIntegrationInput) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *UpdateIntegrationInput) SetName(v string)`
-
-SetName sets Name field to given value.
 
 
 ### GetKinds

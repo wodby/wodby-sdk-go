@@ -29,8 +29,13 @@ type Backup struct {
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	DatabaseId NullableInt32 `json:"databaseId,omitempty"`
 	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
+	// Storage integration that owns the backup. Null identifies Wodby's built-in blob storage.
+	IntegrationId NullableInt32 `json:"integrationId"`
+	TaskId NullableInt32 `json:"taskId,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
+	StartedAt NullableTime `json:"startedAt,omitempty"`
+	EndedAt NullableTime `json:"endedAt,omitempty"`
 }
 
 type _Backup Backup
@@ -39,11 +44,12 @@ type _Backup Backup
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackup(id int32, name string, status string, createdAt time.Time, updatedAt time.Time) *Backup {
+func NewBackup(id int32, name string, status string, integrationId NullableInt32, createdAt time.Time, updatedAt time.Time) *Backup {
 	this := Backup{}
 	this.Id = id
 	this.Name = name
 	this.Status = status
+	this.IntegrationId = integrationId
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -297,6 +303,74 @@ func (o *Backup) UnsetDatabaseDbId() {
 	o.DatabaseDbId.Unset()
 }
 
+// GetIntegrationId returns the IntegrationId field value
+// If the value is explicit nil, the zero value for int32 will be returned
+func (o *Backup) GetIntegrationId() int32 {
+	if o == nil || o.IntegrationId.Get() == nil {
+		var ret int32
+		return ret
+	}
+
+	return *o.IntegrationId.Get()
+}
+
+// GetIntegrationIdOk returns a tuple with the IntegrationId field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetIntegrationIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IntegrationId.Get(), o.IntegrationId.IsSet()
+}
+
+// SetIntegrationId sets field value
+func (o *Backup) SetIntegrationId(v int32) {
+	o.IntegrationId.Set(&v)
+}
+
+// GetTaskId returns the TaskId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Backup) GetTaskId() int32 {
+	if o == nil || IsNil(o.TaskId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.TaskId.Get()
+}
+
+// GetTaskIdOk returns a tuple with the TaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetTaskIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TaskId.Get(), o.TaskId.IsSet()
+}
+
+// HasTaskId returns a boolean if a field has been set.
+func (o *Backup) HasTaskId() bool {
+	if o != nil && o.TaskId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTaskId gets a reference to the given NullableInt32 and assigns it to the TaskId field.
+func (o *Backup) SetTaskId(v int32) {
+	o.TaskId.Set(&v)
+}
+// SetTaskIdNil sets the value for TaskId to be an explicit nil
+func (o *Backup) SetTaskIdNil() {
+	o.TaskId.Set(nil)
+}
+
+// UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
+func (o *Backup) UnsetTaskId() {
+	o.TaskId.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Backup) GetCreatedAt() time.Time {
 	if o == nil {
@@ -345,6 +419,90 @@ func (o *Backup) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = v
 }
 
+// GetStartedAt returns the StartedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Backup) GetStartedAt() time.Time {
+	if o == nil || IsNil(o.StartedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.StartedAt.Get()
+}
+
+// GetStartedAtOk returns a tuple with the StartedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetStartedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StartedAt.Get(), o.StartedAt.IsSet()
+}
+
+// HasStartedAt returns a boolean if a field has been set.
+func (o *Backup) HasStartedAt() bool {
+	if o != nil && o.StartedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStartedAt gets a reference to the given NullableTime and assigns it to the StartedAt field.
+func (o *Backup) SetStartedAt(v time.Time) {
+	o.StartedAt.Set(&v)
+}
+// SetStartedAtNil sets the value for StartedAt to be an explicit nil
+func (o *Backup) SetStartedAtNil() {
+	o.StartedAt.Set(nil)
+}
+
+// UnsetStartedAt ensures that no value is present for StartedAt, not even an explicit nil
+func (o *Backup) UnsetStartedAt() {
+	o.StartedAt.Unset()
+}
+
+// GetEndedAt returns the EndedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Backup) GetEndedAt() time.Time {
+	if o == nil || IsNil(o.EndedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.EndedAt.Get()
+}
+
+// GetEndedAtOk returns a tuple with the EndedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetEndedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EndedAt.Get(), o.EndedAt.IsSet()
+}
+
+// HasEndedAt returns a boolean if a field has been set.
+func (o *Backup) HasEndedAt() bool {
+	if o != nil && o.EndedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEndedAt gets a reference to the given NullableTime and assigns it to the EndedAt field.
+func (o *Backup) SetEndedAt(v time.Time) {
+	o.EndedAt.Set(&v)
+}
+// SetEndedAtNil sets the value for EndedAt to be an explicit nil
+func (o *Backup) SetEndedAtNil() {
+	o.EndedAt.Set(nil)
+}
+
+// UnsetEndedAt ensures that no value is present for EndedAt, not even an explicit nil
+func (o *Backup) UnsetEndedAt() {
+	o.EndedAt.Unset()
+}
+
 func (o Backup) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -370,8 +528,18 @@ func (o Backup) ToMap() (map[string]interface{}, error) {
 	if o.DatabaseDbId.IsSet() {
 		toSerialize["databaseDbId"] = o.DatabaseDbId.Get()
 	}
+	toSerialize["integrationId"] = o.IntegrationId.Get()
+	if o.TaskId.IsSet() {
+		toSerialize["taskId"] = o.TaskId.Get()
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
+	if o.StartedAt.IsSet() {
+		toSerialize["startedAt"] = o.StartedAt.Get()
+	}
+	if o.EndedAt.IsSet() {
+		toSerialize["endedAt"] = o.EndedAt.Get()
+	}
 	return toSerialize, nil
 }
 
@@ -383,6 +551,7 @@ func (o *Backup) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"name",
 		"status",
+		"integrationId",
 		"createdAt",
 		"updatedAt",
 	}

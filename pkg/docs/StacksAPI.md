@@ -4,7 +4,10 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateStackEnvVar**](StacksAPI.md#CreateStackEnvVar) | **Post** /stacks/{id}/configuration/env-vars | Create stack env var
 [**CreateStackFromManifest**](StacksAPI.md#CreateStackFromManifest) | **Post** /stacks/actions/create-from-manifest | Create stack from manifest
+[**DeleteStack**](StacksAPI.md#DeleteStack) | **Delete** /stacks/{id} | Delete stack
+[**DeleteStackEnvVar**](StacksAPI.md#DeleteStackEnvVar) | **Delete** /stack-env-vars/{id} | Delete stack env var
 [**DuplicateStack**](StacksAPI.md#DuplicateStack) | **Post** /stacks/{id}/actions/duplicate | Duplicate stack
 [**GetStack**](StacksAPI.md#GetStack) | **Get** /stacks/{id} | Get stack
 [**GetStackByName**](StacksAPI.md#GetStackByName) | **Get** /stacks/by-name/{name} | Get stack by name
@@ -13,16 +16,91 @@ Method | HTTP request | Description
 [**GetStackServiceUpdateChangelog**](StacksAPI.md#GetStackServiceUpdateChangelog) | **Get** /stack-service-update-changelogs/{id} | Preview stack service revision updates
 [**ImportStacks**](StacksAPI.md#ImportStacks) | **Post** /stacks/actions/import | Import stacks from Git
 [**ListPublicStacks**](StacksAPI.md#ListPublicStacks) | **Get** /catalog/stacks | List public catalog stacks
+[**ListStackEnvVars**](StacksAPI.md#ListStackEnvVars) | **Get** /stack-revisions/{id}/env-vars | List stack env vars
 [**ListStackRevisionServices**](StacksAPI.md#ListStackRevisionServices) | **Get** /stack-revisions/{id}/services | List stack services
 [**ListStacks**](StacksAPI.md#ListStacks) | **Get** /stacks | List stacks
 [**PublishStackDraft**](StacksAPI.md#PublishStackDraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
 [**ScaffoldStackFromHelmChart**](StacksAPI.md#ScaffoldStackFromHelmChart) | **Post** /stacks/actions/scaffold-from-helm-chart | Scaffold stack from Helm chart
 [**SyncStackWithOrigin**](StacksAPI.md#SyncStackWithOrigin) | **Post** /stacks/{id}/actions/sync-origin | Sync stack with origin
+[**UpdateStack**](StacksAPI.md#UpdateStack) | **Put** /stacks/{id} | Rename stack
+[**UpdateStackEnvVar**](StacksAPI.md#UpdateStackEnvVar) | **Put** /stack-env-vars/{id} | Update stack env var
 [**UpdateStackFromGit**](StacksAPI.md#UpdateStackFromGit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
 [**UpdateStackServiceRevisions**](StacksAPI.md#UpdateStackServiceRevisions) | **Post** /stacks/{id}/actions/update-service-revisions | Update stack service revisions
 [**UpdateStackSettings**](StacksAPI.md#UpdateStackSettings) | **Put** /stacks/settings/{id} | Update stack settings
 [**ValidateStackManifest**](StacksAPI.md#ValidateStackManifest) | **Post** /stacks/actions/validate-manifest | Validate stack manifest
 
+
+
+## CreateStackEnvVar
+
+> StackEnvVar CreateStackEnvVar(ctx, id).NewStackEnvVarInput(newStackEnvVarInput).Execute()
+
+Create stack env var
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	newStackEnvVarInput := *openapiclient.NewNewStackEnvVarInput("Name_example", "Value_example", false) // NewStackEnvVarInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.CreateStackEnvVar(context.Background(), id).NewStackEnvVarInput(newStackEnvVarInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.CreateStackEnvVar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStackEnvVar`: StackEnvVar
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.CreateStackEnvVar`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStackEnvVarRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **newStackEnvVarInput** | [**NewStackEnvVarInput**](NewStackEnvVarInput.md) |  | 
+
+### Return type
+
+[**StackEnvVar**](StackEnvVar.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateStackFromManifest
@@ -84,6 +162,146 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteStack
+
+> OperationResult DeleteStack(ctx, id).Execute()
+
+Delete stack
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DeleteStack(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DeleteStack``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteStack`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DeleteStack`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteStackRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteStackEnvVar
+
+> OperationResult DeleteStackEnvVar(ctx, id).Execute()
+
+Delete stack env var
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DeleteStackEnvVar(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DeleteStackEnvVar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteStackEnvVar`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DeleteStackEnvVar`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteStackEnvVarRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -644,6 +862,76 @@ Other parameters are passed through a pointer to a apiListPublicStacksRequest st
 [[Back to README]](../README.md)
 
 
+## ListStackEnvVars
+
+> []StackEnvVar ListStackEnvVars(ctx, id).Execute()
+
+List stack env vars
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ListStackEnvVars(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListStackEnvVars``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListStackEnvVars`: []StackEnvVar
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListStackEnvVars`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListStackEnvVarsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]StackEnvVar**](StackEnvVar.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListStackRevisionServices
 
 > []StackService ListStackRevisionServices(ctx, id).Execute()
@@ -981,6 +1269,150 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateStack
+
+> Stack UpdateStack(ctx, id).UpdateStackRequest(updateStackRequest).Execute()
+
+Rename stack
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateStackRequest := *openapiclient.NewUpdateStackRequest("Name_example", "Title_example") // UpdateStackRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.UpdateStack(context.Background(), id).UpdateStackRequest(updateStackRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStack``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateStack`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.UpdateStack`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateStackRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateStackRequest** | [**UpdateStackRequest**](UpdateStackRequest.md) |  | 
+
+### Return type
+
+[**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateStackEnvVar
+
+> StackEnvVar UpdateStackEnvVar(ctx, id).UpdateStackEnvVarInput(updateStackEnvVarInput).Execute()
+
+Update stack env var
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateStackEnvVarInput := *openapiclient.NewUpdateStackEnvVarInput("Value_example", false) // UpdateStackEnvVarInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.UpdateStackEnvVar(context.Background(), id).UpdateStackEnvVarInput(updateStackEnvVarInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackEnvVar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateStackEnvVar`: StackEnvVar
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.UpdateStackEnvVar`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateStackEnvVarRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateStackEnvVarInput** | [**UpdateStackEnvVarInput**](UpdateStackEnvVarInput.md) |  | 
+
+### Return type
+
+[**StackEnvVar**](StackEnvVar.md)
 
 ### Authorization
 

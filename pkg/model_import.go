@@ -26,6 +26,8 @@ type Import struct {
 	Name string `json:"name"`
 	Source string `json:"source"`
 	Status string `json:"status"`
+	Filename NullableString `json:"filename,omitempty"`
+	Size NullableInt64 `json:"size,omitempty"`
 	AppInstanceId NullableInt32 `json:"appInstanceId,omitempty"`
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	DatabaseId NullableInt32 `json:"databaseId,omitempty"`
@@ -158,6 +160,90 @@ func (o *Import) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *Import) SetStatus(v string) {
 	o.Status = v
+}
+
+// GetFilename returns the Filename field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Import) GetFilename() string {
+	if o == nil || IsNil(o.Filename.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Filename.Get()
+}
+
+// GetFilenameOk returns a tuple with the Filename field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Import) GetFilenameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Filename.Get(), o.Filename.IsSet()
+}
+
+// HasFilename returns a boolean if a field has been set.
+func (o *Import) HasFilename() bool {
+	if o != nil && o.Filename.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFilename gets a reference to the given NullableString and assigns it to the Filename field.
+func (o *Import) SetFilename(v string) {
+	o.Filename.Set(&v)
+}
+// SetFilenameNil sets the value for Filename to be an explicit nil
+func (o *Import) SetFilenameNil() {
+	o.Filename.Set(nil)
+}
+
+// UnsetFilename ensures that no value is present for Filename, not even an explicit nil
+func (o *Import) UnsetFilename() {
+	o.Filename.Unset()
+}
+
+// GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Import) GetSize() int64 {
+	if o == nil || IsNil(o.Size.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.Size.Get()
+}
+
+// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Import) GetSizeOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Size.Get(), o.Size.IsSet()
+}
+
+// HasSize returns a boolean if a field has been set.
+func (o *Import) HasSize() bool {
+	if o != nil && o.Size.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSize gets a reference to the given NullableInt64 and assigns it to the Size field.
+func (o *Import) SetSize(v int64) {
+	o.Size.Set(&v)
+}
+// SetSizeNil sets the value for Size to be an explicit nil
+func (o *Import) SetSizeNil() {
+	o.Size.Set(nil)
+}
+
+// UnsetSize ensures that no value is present for Size, not even an explicit nil
+func (o *Import) UnsetSize() {
+	o.Size.Unset()
 }
 
 // GetAppInstanceId returns the AppInstanceId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -600,6 +686,12 @@ func (o Import) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["source"] = o.Source
 	toSerialize["status"] = o.Status
+	if o.Filename.IsSet() {
+		toSerialize["filename"] = o.Filename.Get()
+	}
+	if o.Size.IsSet() {
+		toSerialize["size"] = o.Size.Get()
+	}
 	if o.AppInstanceId.IsSet() {
 		toSerialize["appInstanceId"] = o.AppInstanceId.Get()
 	}

@@ -27,6 +27,7 @@ type Stack struct {
 	Title string `json:"title"`
 	Icon string `json:"icon"`
 	Status string `json:"status"`
+	Outdated bool `json:"outdated"`
 	Public bool `json:"public"`
 	RevId int32 `json:"revId"`
 	DraftRevId NullableInt32 `json:"draftRevId,omitempty"`
@@ -53,13 +54,14 @@ type _Stack Stack
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStack(id int32, name string, title string, icon string, status string, public bool, revId int32, latestRevNumber int32, orgId int32, createdAt time.Time, updatedAt time.Time) *Stack {
+func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, createdAt time.Time, updatedAt time.Time) *Stack {
 	this := Stack{}
 	this.Id = id
 	this.Name = name
 	this.Title = title
 	this.Icon = icon
 	this.Status = status
+	this.Outdated = outdated
 	this.Public = public
 	this.RevId = revId
 	this.LatestRevNumber = latestRevNumber
@@ -195,6 +197,30 @@ func (o *Stack) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *Stack) SetStatus(v string) {
 	o.Status = v
+}
+
+// GetOutdated returns the Outdated field value
+func (o *Stack) GetOutdated() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Outdated
+}
+
+// GetOutdatedOk returns a tuple with the Outdated field value
+// and a boolean to check if the value has been set.
+func (o *Stack) GetOutdatedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Outdated, true
+}
+
+// SetOutdated sets field value
+func (o *Stack) SetOutdated(v bool) {
+	o.Outdated = v
 }
 
 // GetPublic returns the Public field value
@@ -850,6 +876,7 @@ func (o Stack) ToMap() (map[string]interface{}, error) {
 	toSerialize["title"] = o.Title
 	toSerialize["icon"] = o.Icon
 	toSerialize["status"] = o.Status
+	toSerialize["outdated"] = o.Outdated
 	toSerialize["public"] = o.Public
 	toSerialize["revId"] = o.RevId
 	if o.DraftRevId.IsSet() {
@@ -905,6 +932,7 @@ func (o *Stack) UnmarshalJSON(data []byte) (err error) {
 		"title",
 		"icon",
 		"status",
+		"outdated",
 		"public",
 		"revId",
 		"latestRevNumber",

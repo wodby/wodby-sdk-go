@@ -28,6 +28,10 @@ type AppServiceBuildConfig struct {
 	Image string `json:"image"`
 	Dockerfile NullableString `json:"dockerfile,omitempty"`
 	Dockerignore NullableString `json:"dockerignore,omitempty"`
+	// Build context subdirectory to copy, relative to the CI --from path. Empty means the whole context.
+	CopyFrom string `json:"copyFrom"`
+	// Image subdirectory to copy into, relative to the CI --to path. Empty means the image working directory.
+	CopyTo string `json:"copyTo"`
 	Args []AppServiceBuildArg `json:"args,omitempty"`
 }
 
@@ -37,13 +41,15 @@ type _AppServiceBuildConfig AppServiceBuildConfig
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceBuildConfig(name string, title string, managed bool, main bool, image string) *AppServiceBuildConfig {
+func NewAppServiceBuildConfig(name string, title string, managed bool, main bool, image string, copyFrom string, copyTo string) *AppServiceBuildConfig {
 	this := AppServiceBuildConfig{}
 	this.Name = name
 	this.Title = title
 	this.Managed = managed
 	this.Main = main
 	this.Image = image
+	this.CopyFrom = copyFrom
+	this.CopyTo = copyTo
 	return &this
 }
 
@@ -259,6 +265,54 @@ func (o *AppServiceBuildConfig) UnsetDockerignore() {
 	o.Dockerignore.Unset()
 }
 
+// GetCopyFrom returns the CopyFrom field value
+func (o *AppServiceBuildConfig) GetCopyFrom() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.CopyFrom
+}
+
+// GetCopyFromOk returns a tuple with the CopyFrom field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuildConfig) GetCopyFromOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CopyFrom, true
+}
+
+// SetCopyFrom sets field value
+func (o *AppServiceBuildConfig) SetCopyFrom(v string) {
+	o.CopyFrom = v
+}
+
+// GetCopyTo returns the CopyTo field value
+func (o *AppServiceBuildConfig) GetCopyTo() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.CopyTo
+}
+
+// GetCopyToOk returns a tuple with the CopyTo field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuildConfig) GetCopyToOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CopyTo, true
+}
+
+// SetCopyTo sets field value
+func (o *AppServiceBuildConfig) SetCopyTo(v string) {
+	o.CopyTo = v
+}
+
 // GetArgs returns the Args field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *AppServiceBuildConfig) GetArgs() []AppServiceBuildArg {
 	if o == nil {
@@ -313,6 +367,8 @@ func (o AppServiceBuildConfig) ToMap() (map[string]interface{}, error) {
 	if o.Dockerignore.IsSet() {
 		toSerialize["dockerignore"] = o.Dockerignore.Get()
 	}
+	toSerialize["copyFrom"] = o.CopyFrom
+	toSerialize["copyTo"] = o.CopyTo
 	if o.Args != nil {
 		toSerialize["args"] = o.Args
 	}
@@ -329,6 +385,8 @@ func (o *AppServiceBuildConfig) UnmarshalJSON(data []byte) (err error) {
 		"managed",
 		"main",
 		"image",
+		"copyFrom",
+		"copyTo",
 	}
 
 	allProperties := make(map[string]interface{})

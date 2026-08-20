@@ -8,7 +8,9 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **Status** | **string** |  | 
+**Outdated** | **bool** |  | 
 **MainDomain** | Pointer to **NullableString** |  | [optional] 
+**MainRouteCert** | [**NullableAppInstanceMainRouteCert**](AppInstanceMainRouteCert.md) |  | 
 **AppId** | **int32** |  | 
 **ClusterId** | **int32** |  | 
 **EnvId** | **int32** |  | 
@@ -22,6 +24,8 @@ Name | Type | Description | Notes
 **Access** | Pointer to [**NullableAppAccess**](AppAccess.md) |  | [optional] 
 **RoutingMode** | **string** |  | 
 **RoutingPending** | **bool** |  | 
+**MaintenanceMode** | **bool** |  | 
+**MaintenanceModeActive** | **bool** |  | 
 **ConfigurationReady** | **bool** |  | 
 **ConfigurationIssues** | [**[]AppServiceConfigurationIssue**](AppServiceConfigurationIssue.md) |  | 
 **Settings** | Pointer to [**AppInstanceSettings**](AppInstanceSettings.md) |  | [optional] 
@@ -33,7 +37,7 @@ Name | Type | Description | Notes
 
 ### NewAppInstance
 
-`func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
+`func NewAppInstance(id int32, name string, title string, status string, outdated bool, mainRouteCert NullableAppInstanceMainRouteCert, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time, ) *AppInstance`
 
 NewAppInstance instantiates a new AppInstance object
 This constructor will assign default values to properties that have it defined,
@@ -128,6 +132,26 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### GetOutdated
+
+`func (o *AppInstance) GetOutdated() bool`
+
+GetOutdated returns the Outdated field if non-nil, zero value otherwise.
+
+### GetOutdatedOk
+
+`func (o *AppInstance) GetOutdatedOk() (*bool, bool)`
+
+GetOutdatedOk returns a tuple with the Outdated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOutdated
+
+`func (o *AppInstance) SetOutdated(v bool)`
+
+SetOutdated sets Outdated field to given value.
+
+
 ### GetMainDomain
 
 `func (o *AppInstance) GetMainDomain() string`
@@ -163,6 +187,36 @@ HasMainDomain returns a boolean if a field has been set.
 `func (o *AppInstance) UnsetMainDomain()`
 
 UnsetMainDomain ensures that no value is present for MainDomain, not even an explicit nil
+### GetMainRouteCert
+
+`func (o *AppInstance) GetMainRouteCert() AppInstanceMainRouteCert`
+
+GetMainRouteCert returns the MainRouteCert field if non-nil, zero value otherwise.
+
+### GetMainRouteCertOk
+
+`func (o *AppInstance) GetMainRouteCertOk() (*AppInstanceMainRouteCert, bool)`
+
+GetMainRouteCertOk returns a tuple with the MainRouteCert field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMainRouteCert
+
+`func (o *AppInstance) SetMainRouteCert(v AppInstanceMainRouteCert)`
+
+SetMainRouteCert sets MainRouteCert field to given value.
+
+
+### SetMainRouteCertNil
+
+`func (o *AppInstance) SetMainRouteCertNil(b bool)`
+
+ SetMainRouteCertNil sets the value for MainRouteCert to be an explicit nil
+
+### UnsetMainRouteCert
+`func (o *AppInstance) UnsetMainRouteCert()`
+
+UnsetMainRouteCert ensures that no value is present for MainRouteCert, not even an explicit nil
 ### GetAppId
 
 `func (o *AppInstance) GetAppId() int32`
@@ -436,6 +490,46 @@ and a boolean to check if the value has been set.
 `func (o *AppInstance) SetRoutingPending(v bool)`
 
 SetRoutingPending sets RoutingPending field to given value.
+
+
+### GetMaintenanceMode
+
+`func (o *AppInstance) GetMaintenanceMode() bool`
+
+GetMaintenanceMode returns the MaintenanceMode field if non-nil, zero value otherwise.
+
+### GetMaintenanceModeOk
+
+`func (o *AppInstance) GetMaintenanceModeOk() (*bool, bool)`
+
+GetMaintenanceModeOk returns a tuple with the MaintenanceMode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaintenanceMode
+
+`func (o *AppInstance) SetMaintenanceMode(v bool)`
+
+SetMaintenanceMode sets MaintenanceMode field to given value.
+
+
+### GetMaintenanceModeActive
+
+`func (o *AppInstance) GetMaintenanceModeActive() bool`
+
+GetMaintenanceModeActive returns the MaintenanceModeActive field if non-nil, zero value otherwise.
+
+### GetMaintenanceModeActiveOk
+
+`func (o *AppInstance) GetMaintenanceModeActiveOk() (*bool, bool)`
+
+GetMaintenanceModeActiveOk returns a tuple with the MaintenanceModeActive field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaintenanceModeActive
+
+`func (o *AppInstance) SetMaintenanceModeActive(v bool)`
+
+SetMaintenanceModeActive sets MaintenanceModeActive field to given value.
 
 
 ### GetConfigurationReady

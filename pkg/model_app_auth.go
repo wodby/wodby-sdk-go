@@ -24,6 +24,11 @@ var _ MappedNullable = &AppAuth{}
 type AppAuth struct {
 	Id int32 `json:"id"`
 	AppInstanceId int32 `json:"appInstanceId"`
+	Scope AppAuthScope `json:"scope"`
+	// App services protected by this entry. Empty unless scope is SERVICE.
+	AppServiceIds []int32 `json:"appServiceIds"`
+	// Single protected app service. Null when the entry protects several services or the whole app instance.
+	// Deprecated
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	AppRouteId NullableInt32 `json:"appRouteId,omitempty"`
 	Login string `json:"login"`
@@ -38,10 +43,12 @@ type _AppAuth AppAuth
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppAuth(id int32, appInstanceId int32, login string, realm string, createdAt time.Time, updatedAt time.Time) *AppAuth {
+func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds []int32, login string, realm string, createdAt time.Time, updatedAt time.Time) *AppAuth {
 	this := AppAuth{}
 	this.Id = id
 	this.AppInstanceId = appInstanceId
+	this.Scope = scope
+	this.AppServiceIds = appServiceIds
 	this.Login = login
 	this.Realm = realm
 	this.CreatedAt = createdAt
@@ -105,7 +112,56 @@ func (o *AppAuth) SetAppInstanceId(v int32) {
 	o.AppInstanceId = v
 }
 
+// GetScope returns the Scope field value
+func (o *AppAuth) GetScope() AppAuthScope {
+	if o == nil {
+		var ret AppAuthScope
+		return ret
+	}
+
+	return o.Scope
+}
+
+// GetScopeOk returns a tuple with the Scope field value
+// and a boolean to check if the value has been set.
+func (o *AppAuth) GetScopeOk() (*AppAuthScope, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Scope, true
+}
+
+// SetScope sets field value
+func (o *AppAuth) SetScope(v AppAuthScope) {
+	o.Scope = v
+}
+
+// GetAppServiceIds returns the AppServiceIds field value
+func (o *AppAuth) GetAppServiceIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+
+	return o.AppServiceIds
+}
+
+// GetAppServiceIdsOk returns a tuple with the AppServiceIds field value
+// and a boolean to check if the value has been set.
+func (o *AppAuth) GetAppServiceIdsOk() ([]int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppServiceIds, true
+}
+
+// SetAppServiceIds sets field value
+func (o *AppAuth) SetAppServiceIds(v []int32) {
+	o.AppServiceIds = v
+}
+
 // GetAppServiceId returns the AppServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *AppAuth) GetAppServiceId() int32 {
 	if o == nil || IsNil(o.AppServiceId.Get()) {
 		var ret int32
@@ -117,6 +173,7 @@ func (o *AppAuth) GetAppServiceId() int32 {
 // GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *AppAuth) GetAppServiceIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -134,6 +191,7 @@ func (o *AppAuth) HasAppServiceId() bool {
 }
 
 // SetAppServiceId gets a reference to the given NullableInt32 and assigns it to the AppServiceId field.
+// Deprecated
 func (o *AppAuth) SetAppServiceId(v int32) {
 	o.AppServiceId.Set(&v)
 }
@@ -297,6 +355,8 @@ func (o AppAuth) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["appInstanceId"] = o.AppInstanceId
+	toSerialize["scope"] = o.Scope
+	toSerialize["appServiceIds"] = o.AppServiceIds
 	if o.AppServiceId.IsSet() {
 		toSerialize["appServiceId"] = o.AppServiceId.Get()
 	}
@@ -317,6 +377,8 @@ func (o *AppAuth) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"appInstanceId",
+		"scope",
+		"appServiceIds",
 		"login",
 		"realm",
 		"createdAt",

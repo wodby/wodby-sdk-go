@@ -22,6 +22,7 @@ var _ MappedNullable = &ServiceManifest{}
 type ServiceManifest struct {
 	Raw string `json:"raw"`
 	Scalable bool `json:"scalable"`
+	Integrations []ServiceIntegrationRequirement `json:"integrations,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -94,6 +95,38 @@ func (o *ServiceManifest) SetScalable(v bool) {
 	o.Scalable = v
 }
 
+// GetIntegrations returns the Integrations field value if set, zero value otherwise.
+func (o *ServiceManifest) GetIntegrations() []ServiceIntegrationRequirement {
+	if o == nil || IsNil(o.Integrations) {
+		var ret []ServiceIntegrationRequirement
+		return ret
+	}
+	return o.Integrations
+}
+
+// GetIntegrationsOk returns a tuple with the Integrations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetIntegrationsOk() ([]ServiceIntegrationRequirement, bool) {
+	if o == nil || IsNil(o.Integrations) {
+		return nil, false
+	}
+	return o.Integrations, true
+}
+
+// HasIntegrations returns a boolean if a field has been set.
+func (o *ServiceManifest) HasIntegrations() bool {
+	if o != nil && !IsNil(o.Integrations) {
+		return true
+	}
+
+	return false
+}
+
+// SetIntegrations gets a reference to the given []ServiceIntegrationRequirement and assigns it to the Integrations field.
+func (o *ServiceManifest) SetIntegrations(v []ServiceIntegrationRequirement) {
+	o.Integrations = v
+}
+
 func (o ServiceManifest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +139,9 @@ func (o ServiceManifest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["raw"] = o.Raw
 	toSerialize["scalable"] = o.Scalable
+	if !IsNil(o.Integrations) {
+		toSerialize["integrations"] = o.Integrations
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -152,6 +188,7 @@ func (o *ServiceManifest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "raw")
 		delete(additionalProperties, "scalable")
+		delete(additionalProperties, "integrations")
 		o.AdditionalProperties = additionalProperties
 	}
 

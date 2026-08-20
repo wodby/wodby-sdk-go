@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
 
 ## ImportServices
 
-> OperationResult ImportServices(ctx).ImportCatalogFromGitInput(importCatalogFromGitInput).Execute()
+> OperationResult ImportServices(ctx).ImportServicesFromGitInput(importServicesFromGitInput).Execute()
 
 Import services from Git
 
@@ -317,11 +317,11 @@ import (
 )
 
 func main() {
-	importCatalogFromGitInput := *openapiclient.NewImportCatalogFromGitInput(int32(123), "RemoteGitRepoId_example", "GitRef_example", "GitRefType_example") // ImportCatalogFromGitInput | 
+	importServicesFromGitInput := *openapiclient.NewImportServicesFromGitInput(int32(123), "RemoteGitRepoId_example", "GitRef_example", "GitRefType_example") // ImportServicesFromGitInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ServicesAPI.ImportServices(context.Background()).ImportCatalogFromGitInput(importCatalogFromGitInput).Execute()
+	resp, r, err := apiClient.ServicesAPI.ImportServices(context.Background()).ImportServicesFromGitInput(importServicesFromGitInput).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ImportServices``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -342,7 +342,7 @@ Other parameters are passed through a pointer to a apiImportServicesRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **importCatalogFromGitInput** | [**ImportCatalogFromGitInput**](ImportCatalogFromGitInput.md) |  | 
+ **importServicesFromGitInput** | [**ImportServicesFromGitInput**](ImportServicesFromGitInput.md) |  | 
 
 ### Return type
 

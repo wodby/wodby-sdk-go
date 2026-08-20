@@ -24,13 +24,13 @@ type NewIntegrationInput struct {
 	// Optional for API-key requests; defaults to the API key's organization.
 	OrgId *int32 `json:"orgId,omitempty"`
 	ProviderId int32 `json:"providerId"`
-	Name string `json:"name"`
 	Title string `json:"title"`
 	Kinds []string `json:"kinds"`
 	Auth NullableString `json:"auth,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
 	FieldsInput []FieldInput `json:"fieldsInput,omitempty"`
 	Scope NullableString `json:"scope,omitempty"`
+	EnvironmentPolicy *IntegrationEnvironmentPolicyInput `json:"environmentPolicy,omitempty"`
 }
 
 type _NewIntegrationInput NewIntegrationInput
@@ -39,10 +39,9 @@ type _NewIntegrationInput NewIntegrationInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewIntegrationInput(providerId int32, name string, title string, kinds []string) *NewIntegrationInput {
+func NewNewIntegrationInput(providerId int32, title string, kinds []string) *NewIntegrationInput {
 	this := NewIntegrationInput{}
 	this.ProviderId = providerId
-	this.Name = name
 	this.Title = title
 	this.Kinds = kinds
 	return &this
@@ -110,30 +109,6 @@ func (o *NewIntegrationInput) GetProviderIdOk() (*int32, bool) {
 // SetProviderId sets field value
 func (o *NewIntegrationInput) SetProviderId(v int32) {
 	o.ProviderId = v
-}
-
-// GetName returns the Name field value
-func (o *NewIntegrationInput) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *NewIntegrationInput) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *NewIntegrationInput) SetName(v string) {
-	o.Name = v
 }
 
 // GetTitle returns the Title field value
@@ -342,6 +317,38 @@ func (o *NewIntegrationInput) UnsetScope() {
 	o.Scope.Unset()
 }
 
+// GetEnvironmentPolicy returns the EnvironmentPolicy field value if set, zero value otherwise.
+func (o *NewIntegrationInput) GetEnvironmentPolicy() IntegrationEnvironmentPolicyInput {
+	if o == nil || IsNil(o.EnvironmentPolicy) {
+		var ret IntegrationEnvironmentPolicyInput
+		return ret
+	}
+	return *o.EnvironmentPolicy
+}
+
+// GetEnvironmentPolicyOk returns a tuple with the EnvironmentPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewIntegrationInput) GetEnvironmentPolicyOk() (*IntegrationEnvironmentPolicyInput, bool) {
+	if o == nil || IsNil(o.EnvironmentPolicy) {
+		return nil, false
+	}
+	return o.EnvironmentPolicy, true
+}
+
+// HasEnvironmentPolicy returns a boolean if a field has been set.
+func (o *NewIntegrationInput) HasEnvironmentPolicy() bool {
+	if o != nil && !IsNil(o.EnvironmentPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentPolicy gets a reference to the given IntegrationEnvironmentPolicyInput and assigns it to the EnvironmentPolicy field.
+func (o *NewIntegrationInput) SetEnvironmentPolicy(v IntegrationEnvironmentPolicyInput) {
+	o.EnvironmentPolicy = &v
+}
+
 func (o NewIntegrationInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -356,7 +363,6 @@ func (o NewIntegrationInput) ToMap() (map[string]interface{}, error) {
 		toSerialize["orgId"] = o.OrgId
 	}
 	toSerialize["providerId"] = o.ProviderId
-	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["kinds"] = o.Kinds
 	if o.Auth.IsSet() {
@@ -371,6 +377,9 @@ func (o NewIntegrationInput) ToMap() (map[string]interface{}, error) {
 	if o.Scope.IsSet() {
 		toSerialize["scope"] = o.Scope.Get()
 	}
+	if !IsNil(o.EnvironmentPolicy) {
+		toSerialize["environmentPolicy"] = o.EnvironmentPolicy
+	}
 	return toSerialize, nil
 }
 
@@ -380,7 +389,6 @@ func (o *NewIntegrationInput) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"providerId",
-		"name",
 		"title",
 		"kinds",
 	}

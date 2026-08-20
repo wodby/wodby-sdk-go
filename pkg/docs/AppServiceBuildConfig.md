@@ -11,13 +11,15 @@ Name | Type | Description | Notes
 **Image** | **string** |  | 
 **Dockerfile** | Pointer to **NullableString** |  | [optional] 
 **Dockerignore** | Pointer to **NullableString** |  | [optional] 
+**CopyFrom** | **string** | Build context subdirectory to copy, relative to the CI --from path. Empty means the whole context. | 
+**CopyTo** | **string** | Image subdirectory to copy into, relative to the CI --to path. Empty means the image working directory. | 
 **Args** | Pointer to [**[]AppServiceBuildArg**](AppServiceBuildArg.md) |  | [optional] 
 
 ## Methods
 
 ### NewAppServiceBuildConfig
 
-`func NewAppServiceBuildConfig(name string, title string, managed bool, main bool, image string, ) *AppServiceBuildConfig`
+`func NewAppServiceBuildConfig(name string, title string, managed bool, main bool, image string, copyFrom string, copyTo string, ) *AppServiceBuildConfig`
 
 NewAppServiceBuildConfig instantiates a new AppServiceBuildConfig object
 This constructor will assign default values to properties that have it defined,
@@ -202,6 +204,46 @@ HasDockerignore returns a boolean if a field has been set.
 `func (o *AppServiceBuildConfig) UnsetDockerignore()`
 
 UnsetDockerignore ensures that no value is present for Dockerignore, not even an explicit nil
+### GetCopyFrom
+
+`func (o *AppServiceBuildConfig) GetCopyFrom() string`
+
+GetCopyFrom returns the CopyFrom field if non-nil, zero value otherwise.
+
+### GetCopyFromOk
+
+`func (o *AppServiceBuildConfig) GetCopyFromOk() (*string, bool)`
+
+GetCopyFromOk returns a tuple with the CopyFrom field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCopyFrom
+
+`func (o *AppServiceBuildConfig) SetCopyFrom(v string)`
+
+SetCopyFrom sets CopyFrom field to given value.
+
+
+### GetCopyTo
+
+`func (o *AppServiceBuildConfig) GetCopyTo() string`
+
+GetCopyTo returns the CopyTo field if non-nil, zero value otherwise.
+
+### GetCopyToOk
+
+`func (o *AppServiceBuildConfig) GetCopyToOk() (*string, bool)`
+
+GetCopyToOk returns a tuple with the CopyTo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCopyTo
+
+`func (o *AppServiceBuildConfig) SetCopyTo(v string)`
+
+SetCopyTo sets CopyTo field to given value.
+
+
 ### GetArgs
 
 `func (o *AppServiceBuildConfig) GetArgs() []AppServiceBuildArg`

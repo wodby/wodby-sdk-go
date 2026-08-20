@@ -23,6 +23,12 @@ var _ MappedNullable = &ServiceDeploymentInput{}
 type ServiceDeploymentInput struct {
 	Name string `json:"name"`
 	Image string `json:"image"`
+	// Set by the CI build when the image was produced from a Dockerfile that does not derive from the service image.
+	UnmanagedImage NullableBool `json:"unmanagedImage,omitempty"`
+	// Repository path of an author-provided Dockerfile, reported by the CI build.
+	DockerfilePath NullableString `json:"dockerfilePath,omitempty"`
+	// SHA-256 of the Dockerfile that produced the image, reported by the CI build.
+	DockerfileHash NullableString `json:"dockerfileHash,omitempty"`
 }
 
 type _ServiceDeploymentInput ServiceDeploymentInput
@@ -94,6 +100,132 @@ func (o *ServiceDeploymentInput) SetImage(v string) {
 	o.Image = v
 }
 
+// GetUnmanagedImage returns the UnmanagedImage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ServiceDeploymentInput) GetUnmanagedImage() bool {
+	if o == nil || IsNil(o.UnmanagedImage.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.UnmanagedImage.Get()
+}
+
+// GetUnmanagedImageOk returns a tuple with the UnmanagedImage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ServiceDeploymentInput) GetUnmanagedImageOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UnmanagedImage.Get(), o.UnmanagedImage.IsSet()
+}
+
+// HasUnmanagedImage returns a boolean if a field has been set.
+func (o *ServiceDeploymentInput) HasUnmanagedImage() bool {
+	if o != nil && o.UnmanagedImage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUnmanagedImage gets a reference to the given NullableBool and assigns it to the UnmanagedImage field.
+func (o *ServiceDeploymentInput) SetUnmanagedImage(v bool) {
+	o.UnmanagedImage.Set(&v)
+}
+// SetUnmanagedImageNil sets the value for UnmanagedImage to be an explicit nil
+func (o *ServiceDeploymentInput) SetUnmanagedImageNil() {
+	o.UnmanagedImage.Set(nil)
+}
+
+// UnsetUnmanagedImage ensures that no value is present for UnmanagedImage, not even an explicit nil
+func (o *ServiceDeploymentInput) UnsetUnmanagedImage() {
+	o.UnmanagedImage.Unset()
+}
+
+// GetDockerfilePath returns the DockerfilePath field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ServiceDeploymentInput) GetDockerfilePath() string {
+	if o == nil || IsNil(o.DockerfilePath.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DockerfilePath.Get()
+}
+
+// GetDockerfilePathOk returns a tuple with the DockerfilePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ServiceDeploymentInput) GetDockerfilePathOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DockerfilePath.Get(), o.DockerfilePath.IsSet()
+}
+
+// HasDockerfilePath returns a boolean if a field has been set.
+func (o *ServiceDeploymentInput) HasDockerfilePath() bool {
+	if o != nil && o.DockerfilePath.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDockerfilePath gets a reference to the given NullableString and assigns it to the DockerfilePath field.
+func (o *ServiceDeploymentInput) SetDockerfilePath(v string) {
+	o.DockerfilePath.Set(&v)
+}
+// SetDockerfilePathNil sets the value for DockerfilePath to be an explicit nil
+func (o *ServiceDeploymentInput) SetDockerfilePathNil() {
+	o.DockerfilePath.Set(nil)
+}
+
+// UnsetDockerfilePath ensures that no value is present for DockerfilePath, not even an explicit nil
+func (o *ServiceDeploymentInput) UnsetDockerfilePath() {
+	o.DockerfilePath.Unset()
+}
+
+// GetDockerfileHash returns the DockerfileHash field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ServiceDeploymentInput) GetDockerfileHash() string {
+	if o == nil || IsNil(o.DockerfileHash.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DockerfileHash.Get()
+}
+
+// GetDockerfileHashOk returns a tuple with the DockerfileHash field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ServiceDeploymentInput) GetDockerfileHashOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DockerfileHash.Get(), o.DockerfileHash.IsSet()
+}
+
+// HasDockerfileHash returns a boolean if a field has been set.
+func (o *ServiceDeploymentInput) HasDockerfileHash() bool {
+	if o != nil && o.DockerfileHash.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDockerfileHash gets a reference to the given NullableString and assigns it to the DockerfileHash field.
+func (o *ServiceDeploymentInput) SetDockerfileHash(v string) {
+	o.DockerfileHash.Set(&v)
+}
+// SetDockerfileHashNil sets the value for DockerfileHash to be an explicit nil
+func (o *ServiceDeploymentInput) SetDockerfileHashNil() {
+	o.DockerfileHash.Set(nil)
+}
+
+// UnsetDockerfileHash ensures that no value is present for DockerfileHash, not even an explicit nil
+func (o *ServiceDeploymentInput) UnsetDockerfileHash() {
+	o.DockerfileHash.Unset()
+}
+
 func (o ServiceDeploymentInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +238,15 @@ func (o ServiceDeploymentInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["image"] = o.Image
+	if o.UnmanagedImage.IsSet() {
+		toSerialize["unmanagedImage"] = o.UnmanagedImage.Get()
+	}
+	if o.DockerfilePath.IsSet() {
+		toSerialize["dockerfilePath"] = o.DockerfilePath.Get()
+	}
+	if o.DockerfileHash.IsSet() {
+		toSerialize["dockerfileHash"] = o.DockerfileHash.Get()
+	}
 	return toSerialize, nil
 }
 

@@ -16,6 +16,7 @@ api_clusters.go
 api_databases.go
 api_default.go
 api_envs.go
+api_git_repos.go
 api_helm_charts.go
 api_imports.go
 api_integration_kinds.go
@@ -47,6 +48,7 @@ docs/AppAccessResource.md
 docs/AppAccessSetting.md
 docs/AppAccessSettingInput.md
 docs/AppAuth.md
+docs/AppAuthScope.md
 docs/AppAuthsAPI.md
 docs/AppBuild.md
 docs/AppBuildConfig.md
@@ -64,6 +66,8 @@ docs/AppInstanceCICDSettings.md
 docs/AppInstanceCICDSettingsInput.md
 docs/AppInstanceCronHealth.md
 docs/AppInstanceHealth.md
+docs/AppInstanceMainRouteCert.md
+docs/AppInstanceMaintenanceModeInput.md
 docs/AppInstanceSettings.md
 docs/AppInstanceSettingsInput.md
 docs/AppInstanceStackUpgradeChangelog.md
@@ -156,6 +160,9 @@ docs/EnvsAPI.md
 docs/FieldInput.md
 docs/GitAutoUpdateSettings.md
 docs/GitAutoUpdateSettingsInput.md
+docs/GitRepoUsage.md
+docs/GitRepoUsages.md
+docs/GitReposAPI.md
 docs/HelmChartAnalysis.md
 docs/HelmChartContainer.md
 docs/HelmChartContainerPort.md
@@ -176,12 +183,16 @@ docs/Import.md
 docs/ImportCatalogFromGitInput.md
 docs/ImportFromInput.md
 docs/ImportInput.md
+docs/ImportServicesFromGitInput.md
 docs/ImportsAPI.md
 docs/Integration.md
 docs/IntegrationConfigurationResult.md
+docs/IntegrationEnvironmentPolicyInput.md
 docs/IntegrationKindsAPI.md
 docs/IntegrationLinkInput.md
 docs/IntegrationScope.md
+docs/IntegrationVariableRequirement.md
+docs/IntegrationVariableRequirementInput.md
 docs/IntegrationsAPI.md
 docs/KubeVersion.md
 docs/LogLine.md
@@ -209,6 +220,7 @@ docs/NewDatabaseInput.md
 docs/NewDatabaseUserInput.md
 docs/NewIntegrationInput.md
 docs/NewProjectInput.md
+docs/NewStackEnvVarInput.md
 docs/NewStackServiceAnnotationInput.md
 docs/NewStackServiceCronScheduleInput.md
 docs/NewStackServiceEnvVarInput.md
@@ -229,7 +241,10 @@ docs/ProblemFieldError.md
 docs/Project.md
 docs/ProjectsAPI.md
 docs/Provider.md
+docs/ProviderManifestInput.md
+docs/ProviderManifestUpdateInput.md
 docs/ProviderRevision.md
+docs/ProviderSettingsInput.md
 docs/ProvidersAPI.md
 docs/ProvidersResponse.md
 docs/RemoteGitRepo.md
@@ -238,8 +253,10 @@ docs/RepeatTaskRequest.md
 docs/ResolveIntegrationResult.md
 docs/ResourcesInput.md
 docs/ScalabilityInput.md
+docs/SearchIntegrationsInput.md
 docs/Service.md
 docs/ServiceDeploymentInput.md
+docs/ServiceIntegrationRequirement.md
 docs/ServiceManifest.md
 docs/ServiceManifestUpdateInput.md
 docs/ServiceRevision.md
@@ -261,6 +278,7 @@ docs/StackAutoUpdatePolicy.md
 docs/StackAutoUpdatePolicyInput.md
 docs/StackAutoUpdateVersionPolicy.md
 docs/StackAutoUpdateVersionPolicyInput.md
+docs/StackEnvVar.md
 docs/StackOriginSyncChangelog.md
 docs/StackRevision.md
 docs/StackRevisionLinkIssue.md
@@ -316,7 +334,9 @@ docs/UpdateIntegrationInput.md
 docs/UpdateOrgRequest.md
 docs/UpdateProjectInput.md
 docs/UpdateSecretValueInput.md
+docs/UpdateStackEnvVarInput.md
 docs/UpdateStackFromGitRequest.md
+docs/UpdateStackRequest.md
 docs/UpdateStackServiceCronScheduleInput.md
 docs/UpdateStackServiceEnvVarInput.md
 docs/UpdateStackServiceTokenInput.md
@@ -342,6 +362,7 @@ model_app_access_resource.go
 model_app_access_setting.go
 model_app_access_setting_input.go
 model_app_auth.go
+model_app_auth_scope.go
 model_app_build.go
 model_app_build_config.go
 model_app_builds_create_response.go
@@ -356,6 +377,8 @@ model_app_instance_cicd_settings.go
 model_app_instance_cicd_settings_input.go
 model_app_instance_cron_health.go
 model_app_instance_health.go
+model_app_instance_main_route_cert.go
+model_app_instance_maintenance_mode_input.go
 model_app_instance_settings.go
 model_app_instance_settings_input.go
 model_app_instance_stack_upgrade_changelog.go
@@ -437,6 +460,8 @@ model_env.go
 model_field_input.go
 model_git_auto_update_settings.go
 model_git_auto_update_settings_input.go
+model_git_repo_usage.go
+model_git_repo_usages.go
 model_helm_chart_analysis.go
 model_helm_chart_container.go
 model_helm_chart_container_port.go
@@ -456,10 +481,14 @@ model_import.go
 model_import_catalog_from_git_input.go
 model_import_from_input.go
 model_import_input.go
+model_import_services_from_git_input.go
 model_integration.go
 model_integration_configuration_result.go
+model_integration_environment_policy_input.go
 model_integration_link_input.go
 model_integration_scope.go
+model_integration_variable_requirement.go
+model_integration_variable_requirement_input.go
 model_kube_version.go
 model_log_line.go
 model_log_stream.go
@@ -486,6 +515,7 @@ model_new_database_input.go
 model_new_database_user_input.go
 model_new_integration_input.go
 model_new_project_input.go
+model_new_stack_env_var_input.go
 model_new_stack_service_annotation_input.go
 model_new_stack_service_cron_schedule_input.go
 model_new_stack_service_env_var_input.go
@@ -503,7 +533,10 @@ model_problem_details.go
 model_problem_field_error.go
 model_project.go
 model_provider.go
+model_provider_manifest_input.go
+model_provider_manifest_update_input.go
 model_provider_revision.go
+model_provider_settings_input.go
 model_providers_response.go
 model_remote_git_repo.go
 model_remote_git_repo_file_presence.go
@@ -511,8 +544,10 @@ model_repeat_task_request.go
 model_resolve_integration_result.go
 model_resources_input.go
 model_scalability_input.go
+model_search_integrations_input.go
 model_service.go
 model_service_deployment_input.go
+model_service_integration_requirement.go
 model_service_manifest.go
 model_service_manifest_update_input.go
 model_service_revision.go
@@ -533,6 +568,7 @@ model_stack_auto_update_policy.go
 model_stack_auto_update_policy_input.go
 model_stack_auto_update_version_policy.go
 model_stack_auto_update_version_policy_input.go
+model_stack_env_var.go
 model_stack_origin_sync_changelog.go
 model_stack_revision.go
 model_stack_revision_link_issue.go
@@ -583,7 +619,9 @@ model_update_integration_input.go
 model_update_org_request.go
 model_update_project_input.go
 model_update_secret_value_input.go
+model_update_stack_env_var_input.go
 model_update_stack_from_git_request.go
+model_update_stack_request.go
 model_update_stack_service_cron_schedule_input.go
 model_update_stack_service_env_var_input.go
 model_update_stack_service_token_input.go
@@ -608,6 +646,7 @@ test/api_clusters_test.go
 test/api_databases_test.go
 test/api_default_test.go
 test/api_envs_test.go
+test/api_git_repos_test.go
 test/api_helm_charts_test.go
 test/api_imports_test.go
 test/api_integration_kinds_test.go

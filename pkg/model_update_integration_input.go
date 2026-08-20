@@ -22,7 +22,6 @@ var _ MappedNullable = &UpdateIntegrationInput{}
 // UpdateIntegrationInput struct for UpdateIntegrationInput
 type UpdateIntegrationInput struct {
 	Title string `json:"title"`
-	Name string `json:"name"`
 	Kinds []string `json:"kinds"`
 	Scope NullableString `json:"scope,omitempty"`
 	FieldsInput []FieldInput `json:"fieldsInput,omitempty"`
@@ -34,10 +33,9 @@ type _UpdateIntegrationInput UpdateIntegrationInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateIntegrationInput(title string, name string, kinds []string) *UpdateIntegrationInput {
+func NewUpdateIntegrationInput(title string, kinds []string) *UpdateIntegrationInput {
 	this := UpdateIntegrationInput{}
 	this.Title = title
-	this.Name = name
 	this.Kinds = kinds
 	return &this
 }
@@ -72,30 +70,6 @@ func (o *UpdateIntegrationInput) GetTitleOk() (*string, bool) {
 // SetTitle sets field value
 func (o *UpdateIntegrationInput) SetTitle(v string) {
 	o.Title = v
-}
-
-// GetName returns the Name field value
-func (o *UpdateIntegrationInput) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *UpdateIntegrationInput) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *UpdateIntegrationInput) SetName(v string) {
-	o.Name = v
 }
 
 // GetKinds returns the Kinds field value
@@ -207,7 +181,6 @@ func (o UpdateIntegrationInput) MarshalJSON() ([]byte, error) {
 func (o UpdateIntegrationInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["title"] = o.Title
-	toSerialize["name"] = o.Name
 	toSerialize["kinds"] = o.Kinds
 	if o.Scope.IsSet() {
 		toSerialize["scope"] = o.Scope.Get()
@@ -224,7 +197,6 @@ func (o *UpdateIntegrationInput) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"title",
-		"name",
 		"kinds",
 	}
 

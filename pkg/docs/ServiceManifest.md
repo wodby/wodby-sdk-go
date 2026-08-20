@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Raw** | **string** |  | 
 **Scalable** | **bool** |  | 
+**Integrations** | Pointer to [**[]ServiceIntegrationRequirement**](ServiceIntegrationRequirement.md) |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetScalable sets Scalable field to given value.
 
+
+### GetIntegrations
+
+`func (o *ServiceManifest) GetIntegrations() []ServiceIntegrationRequirement`
+
+GetIntegrations returns the Integrations field if non-nil, zero value otherwise.
+
+### GetIntegrationsOk
+
+`func (o *ServiceManifest) GetIntegrationsOk() (*[]ServiceIntegrationRequirement, bool)`
+
+GetIntegrationsOk returns a tuple with the Integrations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegrations
+
+`func (o *ServiceManifest) SetIntegrations(v []ServiceIntegrationRequirement)`
+
+SetIntegrations sets Integrations field to given value.
+
+### HasIntegrations
+
+`func (o *ServiceManifest) HasIntegrations() bool`
+
+HasIntegrations returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

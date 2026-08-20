@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**DeleteIntegration**](IntegrationsAPI.md#DeleteIntegration) | **Delete** /integrations/{id} | Delete integration
 [**GetAppAccessProviderOptions**](IntegrationsAPI.md#GetAppAccessProviderOptions) | **Get** /integrations/{id}/options/app-access | Get app-access provider options
 [**GetIntegration**](IntegrationsAPI.md#GetIntegration) | **Get** /integrations/{id} | Get integration
-[**GetIntegrationByName**](IntegrationsAPI.md#GetIntegrationByName) | **Get** /integrations/by-name/{name} | Get integration by name
 [**GetIntegrationKubeSettings**](IntegrationsAPI.md#GetIntegrationKubeSettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
 [**GetIntegrationRemoteGitRepoFilePresence**](IntegrationsAPI.md#GetIntegrationRemoteGitRepoFilePresence) | **Get** /integrations/{id}/options/remote-git-repo-file | Check a remote Git repository file
 [**ListIntegrationKubeMachineTypes**](IntegrationsAPI.md#ListIntegrationKubeMachineTypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
@@ -24,8 +23,10 @@ Method | HTTP request | Description
 [**ListIntegrationStorageClasses**](IntegrationsAPI.md#ListIntegrationStorageClasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
 [**ListIntegrations**](IntegrationsAPI.md#ListIntegrations) | **Get** /integrations | List integrations
 [**ResolveIntegration**](IntegrationsAPI.md#ResolveIntegration) | **Post** /integrations/actions/resolve | Resolve or create integration
+[**SearchIntegrations**](IntegrationsAPI.md#SearchIntegrations) | **Post** /integrations/actions/search | Search integrations
 [**TestIntegrationPermissions**](IntegrationsAPI.md#TestIntegrationPermissions) | **Post** /integrations/{id}/actions/test-permissions | Test integration permissions
 [**UpdateIntegration**](IntegrationsAPI.md#UpdateIntegration) | **Put** /integrations/{id} | Update integration
+[**UpdateIntegrationEnvironmentPolicy**](IntegrationsAPI.md#UpdateIntegrationEnvironmentPolicy) | **Put** /integrations/environment-policy/{id} | Update integration environment policy
 [**ValidateAppAccessHostname**](IntegrationsAPI.md#ValidateAppAccessHostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
 
 
@@ -52,7 +53,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	updateIntegrationInput := *openapiclient.NewUpdateIntegrationInput("Title_example", "Name_example", []string{"Kinds_example"}) // UpdateIntegrationInput | 
+	updateIntegrationInput := *openapiclient.NewUpdateIntegrationInput("Title_example", []string{"Kinds_example"}) // UpdateIntegrationInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -123,7 +124,7 @@ import (
 )
 
 func main() {
-	newIntegrationInput := *openapiclient.NewNewIntegrationInput(int32(123), "Name_example", "Title_example", []string{"Kinds_example"}) // NewIntegrationInput | 
+	newIntegrationInput := *openapiclient.NewNewIntegrationInput(int32(123), "Title_example", []string{"Kinds_example"}) // NewIntegrationInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -359,78 +360,6 @@ Other parameters are passed through a pointer to a apiGetIntegrationRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
-
-### Return type
-
-[**Integration**](Integration.md)
-
-### Authorization
-
-[apiKeyHeader](../README.md#apiKeyHeader)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json, application/problem+json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetIntegrationByName
-
-> Integration GetIntegrationByName(ctx, name).OrgId(orgId).Execute()
-
-Get integration by name
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
-)
-
-func main() {
-	name := "name_example" // string | 
-	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationsAPI.GetIntegrationByName(context.Background(), name).OrgId(orgId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.GetIntegrationByName``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetIntegrationByName`: Integration
-	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.GetIntegrationByName`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**name** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetIntegrationByNameRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
 
 ### Return type
 
@@ -1306,7 +1235,7 @@ Name | Type | Description  | Notes
 
 ## ListIntegrations
 
-> []Integration ListIntegrations(ctx).OrgId(orgId).ProjectIds(projectIds).Labels(labels).Execute()
+> []Integration ListIntegrations(ctx).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).Execute()
 
 List integrations
 
@@ -1328,10 +1257,11 @@ func main() {
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	labels := "labels_example" // string | Comma-separated labels (optional)
+	envId := int32(56) // int32 | Return only integrations allowed in this environment (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationsAPI.ListIntegrations(context.Background()).OrgId(orgId).ProjectIds(projectIds).Labels(labels).Execute()
+	resp, r, err := apiClient.IntegrationsAPI.ListIntegrations(context.Background()).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ListIntegrations``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1355,6 +1285,7 @@ Name | Type | Description  | Notes
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
  **labels** | **string** | Comma-separated labels | 
+ **envId** | **int32** | Return only integrations allowed in this environment | 
 
 ### Return type
 
@@ -1395,7 +1326,7 @@ import (
 )
 
 func main() {
-	newIntegrationInput := *openapiclient.NewNewIntegrationInput(int32(123), "Name_example", "Title_example", []string{"Kinds_example"}) // NewIntegrationInput | 
+	newIntegrationInput := *openapiclient.NewNewIntegrationInput(int32(123), "Title_example", []string{"Kinds_example"}) // NewIntegrationInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1425,6 +1356,72 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ResolveIntegrationResult**](ResolveIntegrationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SearchIntegrations
+
+> []Integration SearchIntegrations(ctx).SearchIntegrationsInput(searchIntegrationsInput).Execute()
+
+Search integrations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	searchIntegrationsInput := *openapiclient.NewSearchIntegrationsInput() // SearchIntegrationsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.SearchIntegrations(context.Background()).SearchIntegrationsInput(searchIntegrationsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.SearchIntegrations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SearchIntegrations`: []Integration
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.SearchIntegrations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchIntegrationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **searchIntegrationsInput** | [**SearchIntegrationsInput**](SearchIntegrationsInput.md) |  | 
+
+### Return type
+
+[**[]Integration**](Integration.md)
 
 ### Authorization
 
@@ -1532,7 +1529,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	updateIntegrationInput := *openapiclient.NewUpdateIntegrationInput("Title_example", "Name_example", []string{"Kinds_example"}) // UpdateIntegrationInput | 
+	updateIntegrationInput := *openapiclient.NewUpdateIntegrationInput("Title_example", []string{"Kinds_example"}) // UpdateIntegrationInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1563,6 +1560,78 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateIntegrationInput** | [**UpdateIntegrationInput**](UpdateIntegrationInput.md) |  | 
+
+### Return type
+
+[**Integration**](Integration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateIntegrationEnvironmentPolicy
+
+> Integration UpdateIntegrationEnvironmentPolicy(ctx, id).IntegrationEnvironmentPolicyInput(integrationEnvironmentPolicyInput).Execute()
+
+Update integration environment policy
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	integrationEnvironmentPolicyInput := *openapiclient.NewIntegrationEnvironmentPolicyInput("Scope_example", []int32{int32(123)}) // IntegrationEnvironmentPolicyInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.UpdateIntegrationEnvironmentPolicy(context.Background(), id).IntegrationEnvironmentPolicyInput(integrationEnvironmentPolicyInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.UpdateIntegrationEnvironmentPolicy``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateIntegrationEnvironmentPolicy`: Integration
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.UpdateIntegrationEnvironmentPolicy`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateIntegrationEnvironmentPolicyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **integrationEnvironmentPolicyInput** | [**IntegrationEnvironmentPolicyInput**](IntegrationEnvironmentPolicyInput.md) |  | 
 
 ### Return type
 

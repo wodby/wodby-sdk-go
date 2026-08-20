@@ -4,8 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppServiceId** | Pointer to **NullableInt32** | Omit with appRouteId to preserve the current scope. When supplied alone, moves the entry to service scope and clears any route scope. | [optional] 
-**AppRouteId** | Pointer to **NullableInt32** | Moves the entry to route scope and must be accompanied by appServiceId. | [optional] 
+**AppServiceIds** | Pointer to **[]int32** | App services to protect. Omit every scope field to preserve the current scope, or pass an empty list to protect the whole app instance. | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** | Single-service scope. Ignored when appServiceIds is supplied. | [optional] 
+**AppRouteId** | Pointer to **NullableInt32** | Moves the entry to route scope. The owning app service is derived from the route. | [optional] 
 **Login** | **string** |  | 
 **Password** | Pointer to **NullableString** | Replaces the existing secret when supplied; omit to keep the current password. | [optional] 
 **Realm** | **string** |  | 
@@ -29,6 +30,41 @@ NewUpdateAppAuthInputWithDefaults instantiates a new UpdateAppAuthInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetAppServiceIds
+
+`func (o *UpdateAppAuthInput) GetAppServiceIds() []int32`
+
+GetAppServiceIds returns the AppServiceIds field if non-nil, zero value otherwise.
+
+### GetAppServiceIdsOk
+
+`func (o *UpdateAppAuthInput) GetAppServiceIdsOk() (*[]int32, bool)`
+
+GetAppServiceIdsOk returns a tuple with the AppServiceIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceIds
+
+`func (o *UpdateAppAuthInput) SetAppServiceIds(v []int32)`
+
+SetAppServiceIds sets AppServiceIds field to given value.
+
+### HasAppServiceIds
+
+`func (o *UpdateAppAuthInput) HasAppServiceIds() bool`
+
+HasAppServiceIds returns a boolean if a field has been set.
+
+### SetAppServiceIdsNil
+
+`func (o *UpdateAppAuthInput) SetAppServiceIdsNil(b bool)`
+
+ SetAppServiceIdsNil sets the value for AppServiceIds to be an explicit nil
+
+### UnsetAppServiceIds
+`func (o *UpdateAppAuthInput) UnsetAppServiceIds()`
+
+UnsetAppServiceIds ensures that no value is present for AppServiceIds, not even an explicit nil
 ### GetAppServiceId
 
 `func (o *UpdateAppAuthInput) GetAppServiceId() int32`

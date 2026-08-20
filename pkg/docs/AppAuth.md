@@ -6,7 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
 **AppInstanceId** | **int32** |  | 
-**AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
+**Scope** | [**AppAuthScope**](AppAuthScope.md) |  | 
+**AppServiceIds** | **[]int32** | App services protected by this entry. Empty unless scope is SERVICE. | 
+**AppServiceId** | Pointer to **NullableInt32** | Single protected app service. Null when the entry protects several services or the whole app instance. | [optional] 
 **AppRouteId** | Pointer to **NullableInt32** |  | [optional] 
 **Login** | **string** |  | 
 **Realm** | **string** |  | 
@@ -17,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewAppAuth
 
-`func NewAppAuth(id int32, appInstanceId int32, login string, realm string, createdAt time.Time, updatedAt time.Time, ) *AppAuth`
+`func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds []int32, login string, realm string, createdAt time.Time, updatedAt time.Time, ) *AppAuth`
 
 NewAppAuth instantiates a new AppAuth object
 This constructor will assign default values to properties that have it defined,
@@ -70,6 +72,46 @@ and a boolean to check if the value has been set.
 `func (o *AppAuth) SetAppInstanceId(v int32)`
 
 SetAppInstanceId sets AppInstanceId field to given value.
+
+
+### GetScope
+
+`func (o *AppAuth) GetScope() AppAuthScope`
+
+GetScope returns the Scope field if non-nil, zero value otherwise.
+
+### GetScopeOk
+
+`func (o *AppAuth) GetScopeOk() (*AppAuthScope, bool)`
+
+GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScope
+
+`func (o *AppAuth) SetScope(v AppAuthScope)`
+
+SetScope sets Scope field to given value.
+
+
+### GetAppServiceIds
+
+`func (o *AppAuth) GetAppServiceIds() []int32`
+
+GetAppServiceIds returns the AppServiceIds field if non-nil, zero value otherwise.
+
+### GetAppServiceIdsOk
+
+`func (o *AppAuth) GetAppServiceIdsOk() (*[]int32, bool)`
+
+GetAppServiceIdsOk returns a tuple with the AppServiceIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceIds
+
+`func (o *AppAuth) SetAppServiceIds(v []int32)`
+
+SetAppServiceIds sets AppServiceIds field to given value.
 
 
 ### GetAppServiceId

@@ -26,6 +26,12 @@ type AppServiceBuild struct {
 	Status string `json:"status"`
 	Image string `json:"image"`
 	ImageDeleted bool `json:"imageDeleted"`
+	// True when the image was built from a Dockerfile that does not derive from the service image, so it no longer tracks service image updates.
+	UnmanagedImage bool `json:"unmanagedImage"`
+	// Repository path of an author-provided Dockerfile. Empty when the build used a service-provided or generated Dockerfile.
+	DockerfilePath string `json:"dockerfilePath"`
+	// SHA-256 of the Dockerfile that produced the image. Empty when the build did not report it.
+	DockerfileHash string `json:"dockerfileHash"`
 	Size int32 `json:"size"`
 	AppServiceId int32 `json:"appServiceId"`
 	PreviouslyDeployed bool `json:"previouslyDeployed"`
@@ -41,12 +47,15 @@ type _AppServiceBuild AppServiceBuild
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, size int32, appServiceId int32, previouslyDeployed bool, currentlyDeployed bool, createdAt time.Time, updatedAt time.Time) *AppServiceBuild {
+func NewAppServiceBuild(id int32, status string, image string, imageDeleted bool, unmanagedImage bool, dockerfilePath string, dockerfileHash string, size int32, appServiceId int32, previouslyDeployed bool, currentlyDeployed bool, createdAt time.Time, updatedAt time.Time) *AppServiceBuild {
 	this := AppServiceBuild{}
 	this.Id = id
 	this.Status = status
 	this.Image = image
 	this.ImageDeleted = imageDeleted
+	this.UnmanagedImage = unmanagedImage
+	this.DockerfilePath = dockerfilePath
+	this.DockerfileHash = dockerfileHash
 	this.Size = size
 	this.AppServiceId = appServiceId
 	this.PreviouslyDeployed = previouslyDeployed
@@ -158,6 +167,78 @@ func (o *AppServiceBuild) GetImageDeletedOk() (*bool, bool) {
 // SetImageDeleted sets field value
 func (o *AppServiceBuild) SetImageDeleted(v bool) {
 	o.ImageDeleted = v
+}
+
+// GetUnmanagedImage returns the UnmanagedImage field value
+func (o *AppServiceBuild) GetUnmanagedImage() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.UnmanagedImage
+}
+
+// GetUnmanagedImageOk returns a tuple with the UnmanagedImage field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuild) GetUnmanagedImageOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UnmanagedImage, true
+}
+
+// SetUnmanagedImage sets field value
+func (o *AppServiceBuild) SetUnmanagedImage(v bool) {
+	o.UnmanagedImage = v
+}
+
+// GetDockerfilePath returns the DockerfilePath field value
+func (o *AppServiceBuild) GetDockerfilePath() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.DockerfilePath
+}
+
+// GetDockerfilePathOk returns a tuple with the DockerfilePath field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuild) GetDockerfilePathOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DockerfilePath, true
+}
+
+// SetDockerfilePath sets field value
+func (o *AppServiceBuild) SetDockerfilePath(v string) {
+	o.DockerfilePath = v
+}
+
+// GetDockerfileHash returns the DockerfileHash field value
+func (o *AppServiceBuild) GetDockerfileHash() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.DockerfileHash
+}
+
+// GetDockerfileHashOk returns a tuple with the DockerfileHash field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceBuild) GetDockerfileHashOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DockerfileHash, true
+}
+
+// SetDockerfileHash sets field value
+func (o *AppServiceBuild) SetDockerfileHash(v string) {
+	o.DockerfileHash = v
 }
 
 // GetSize returns the Size field value
@@ -360,6 +441,9 @@ func (o AppServiceBuild) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["image"] = o.Image
 	toSerialize["imageDeleted"] = o.ImageDeleted
+	toSerialize["unmanagedImage"] = o.UnmanagedImage
+	toSerialize["dockerfilePath"] = o.DockerfilePath
+	toSerialize["dockerfileHash"] = o.DockerfileHash
 	toSerialize["size"] = o.Size
 	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["previouslyDeployed"] = o.PreviouslyDeployed
@@ -381,6 +465,9 @@ func (o *AppServiceBuild) UnmarshalJSON(data []byte) (err error) {
 		"status",
 		"image",
 		"imageDeleted",
+		"unmanagedImage",
+		"dockerfilePath",
+		"dockerfileHash",
 		"size",
 		"appServiceId",
 		"previouslyDeployed",

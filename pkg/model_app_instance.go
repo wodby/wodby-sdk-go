@@ -26,7 +26,9 @@ type AppInstance struct {
 	Name string `json:"name"`
 	Title string `json:"title"`
 	Status string `json:"status"`
+	Outdated bool `json:"outdated"`
 	MainDomain NullableString `json:"mainDomain,omitempty"`
+	MainRouteCert NullableAppInstanceMainRouteCert `json:"mainRouteCert"`
 	AppId int32 `json:"appId"`
 	ClusterId int32 `json:"clusterId"`
 	EnvId int32 `json:"envId"`
@@ -40,6 +42,8 @@ type AppInstance struct {
 	Access NullableAppAccess `json:"access,omitempty"`
 	RoutingMode string `json:"routingMode"`
 	RoutingPending bool `json:"routingPending"`
+	MaintenanceMode bool `json:"maintenanceMode"`
+	MaintenanceModeActive bool `json:"maintenanceModeActive"`
 	ConfigurationReady bool `json:"configurationReady"`
 	ConfigurationIssues []AppServiceConfigurationIssue `json:"configurationIssues"`
 	Settings *AppInstanceSettings `json:"settings,omitempty"`
@@ -54,12 +58,14 @@ type _AppInstance AppInstance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppInstance(id int32, name string, title string, status string, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time) *AppInstance {
+func NewAppInstance(id int32, name string, title string, status string, outdated bool, mainRouteCert NullableAppInstanceMainRouteCert, appId int32, clusterId int32, envId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppInstanceHealth, createdAt time.Time, updatedAt time.Time) *AppInstance {
 	this := AppInstance{}
 	this.Id = id
 	this.Name = name
 	this.Title = title
 	this.Status = status
+	this.Outdated = outdated
+	this.MainRouteCert = mainRouteCert
 	this.AppId = appId
 	this.ClusterId = clusterId
 	this.EnvId = envId
@@ -72,6 +78,8 @@ func NewAppInstance(id int32, name string, title string, status string, appId in
 	this.StackVersion = stackVersion
 	this.RoutingMode = routingMode
 	this.RoutingPending = routingPending
+	this.MaintenanceMode = maintenanceMode
+	this.MaintenanceModeActive = maintenanceModeActive
 	this.ConfigurationReady = configurationReady
 	this.ConfigurationIssues = configurationIssues
 	this.Health = health
@@ -184,6 +192,30 @@ func (o *AppInstance) SetStatus(v string) {
 	o.Status = v
 }
 
+// GetOutdated returns the Outdated field value
+func (o *AppInstance) GetOutdated() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Outdated
+}
+
+// GetOutdatedOk returns a tuple with the Outdated field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetOutdatedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Outdated, true
+}
+
+// SetOutdated sets field value
+func (o *AppInstance) SetOutdated(v bool) {
+	o.Outdated = v
+}
+
 // GetMainDomain returns the MainDomain field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *AppInstance) GetMainDomain() string {
 	if o == nil || IsNil(o.MainDomain.Get()) {
@@ -224,6 +256,32 @@ func (o *AppInstance) SetMainDomainNil() {
 // UnsetMainDomain ensures that no value is present for MainDomain, not even an explicit nil
 func (o *AppInstance) UnsetMainDomain() {
 	o.MainDomain.Unset()
+}
+
+// GetMainRouteCert returns the MainRouteCert field value
+// If the value is explicit nil, the zero value for AppInstanceMainRouteCert will be returned
+func (o *AppInstance) GetMainRouteCert() AppInstanceMainRouteCert {
+	if o == nil || o.MainRouteCert.Get() == nil {
+		var ret AppInstanceMainRouteCert
+		return ret
+	}
+
+	return *o.MainRouteCert.Get()
+}
+
+// GetMainRouteCertOk returns a tuple with the MainRouteCert field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppInstance) GetMainRouteCertOk() (*AppInstanceMainRouteCert, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MainRouteCert.Get(), o.MainRouteCert.IsSet()
+}
+
+// SetMainRouteCert sets field value
+func (o *AppInstance) SetMainRouteCert(v AppInstanceMainRouteCert) {
+	o.MainRouteCert.Set(&v)
 }
 
 // GetAppId returns the AppId field value
@@ -556,6 +614,54 @@ func (o *AppInstance) SetRoutingPending(v bool) {
 	o.RoutingPending = v
 }
 
+// GetMaintenanceMode returns the MaintenanceMode field value
+func (o *AppInstance) GetMaintenanceMode() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.MaintenanceMode
+}
+
+// GetMaintenanceModeOk returns a tuple with the MaintenanceMode field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetMaintenanceModeOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MaintenanceMode, true
+}
+
+// SetMaintenanceMode sets field value
+func (o *AppInstance) SetMaintenanceMode(v bool) {
+	o.MaintenanceMode = v
+}
+
+// GetMaintenanceModeActive returns the MaintenanceModeActive field value
+func (o *AppInstance) GetMaintenanceModeActive() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.MaintenanceModeActive
+}
+
+// GetMaintenanceModeActiveOk returns a tuple with the MaintenanceModeActive field value
+// and a boolean to check if the value has been set.
+func (o *AppInstance) GetMaintenanceModeActiveOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MaintenanceModeActive, true
+}
+
+// SetMaintenanceModeActive sets field value
+func (o *AppInstance) SetMaintenanceModeActive(v bool) {
+	o.MaintenanceModeActive = v
+}
+
 // GetConfigurationReady returns the ConfigurationReady field value
 func (o *AppInstance) GetConfigurationReady() bool {
 	if o == nil {
@@ -722,9 +828,11 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["status"] = o.Status
+	toSerialize["outdated"] = o.Outdated
 	if o.MainDomain.IsSet() {
 		toSerialize["mainDomain"] = o.MainDomain.Get()
 	}
+	toSerialize["mainRouteCert"] = o.MainRouteCert.Get()
 	toSerialize["appId"] = o.AppId
 	toSerialize["clusterId"] = o.ClusterId
 	toSerialize["envId"] = o.EnvId
@@ -740,6 +848,8 @@ func (o AppInstance) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["routingMode"] = o.RoutingMode
 	toSerialize["routingPending"] = o.RoutingPending
+	toSerialize["maintenanceMode"] = o.MaintenanceMode
+	toSerialize["maintenanceModeActive"] = o.MaintenanceModeActive
 	toSerialize["configurationReady"] = o.ConfigurationReady
 	toSerialize["configurationIssues"] = o.ConfigurationIssues
 	if !IsNil(o.Settings) {
@@ -760,6 +870,8 @@ func (o *AppInstance) UnmarshalJSON(data []byte) (err error) {
 		"name",
 		"title",
 		"status",
+		"outdated",
+		"mainRouteCert",
 		"appId",
 		"clusterId",
 		"envId",
@@ -772,6 +884,8 @@ func (o *AppInstance) UnmarshalJSON(data []byte) (err error) {
 		"stackVersion",
 		"routingMode",
 		"routingPending",
+		"maintenanceMode",
+		"maintenanceModeActive",
 		"configurationReady",
 		"configurationIssues",
 		"health",

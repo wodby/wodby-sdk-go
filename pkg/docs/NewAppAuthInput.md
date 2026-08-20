@@ -5,8 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppInstanceId** | **int32** |  | 
-**AppServiceId** | Pointer to **NullableInt32** | Optional service scope. Required together with appRouteId for route scope. | [optional] 
-**AppRouteId** | Pointer to **NullableInt32** | Optional route scope. Requires appServiceId and must belong to that service. | [optional] 
+**AppServiceIds** | Pointer to **[]int32** | App services to protect. Omit or pass an empty list to protect the whole app instance. | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** | Single-service scope. Ignored when appServiceIds is supplied. | [optional] 
+**AppRouteId** | Pointer to **NullableInt32** | Route scope. The owning app service is derived from the route. | [optional] 
 **Login** | **string** |  | 
 **Password** | **string** |  | 
 **Realm** | **string** |  | 
@@ -50,6 +51,41 @@ and a boolean to check if the value has been set.
 SetAppInstanceId sets AppInstanceId field to given value.
 
 
+### GetAppServiceIds
+
+`func (o *NewAppAuthInput) GetAppServiceIds() []int32`
+
+GetAppServiceIds returns the AppServiceIds field if non-nil, zero value otherwise.
+
+### GetAppServiceIdsOk
+
+`func (o *NewAppAuthInput) GetAppServiceIdsOk() (*[]int32, bool)`
+
+GetAppServiceIdsOk returns a tuple with the AppServiceIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceIds
+
+`func (o *NewAppAuthInput) SetAppServiceIds(v []int32)`
+
+SetAppServiceIds sets AppServiceIds field to given value.
+
+### HasAppServiceIds
+
+`func (o *NewAppAuthInput) HasAppServiceIds() bool`
+
+HasAppServiceIds returns a boolean if a field has been set.
+
+### SetAppServiceIdsNil
+
+`func (o *NewAppAuthInput) SetAppServiceIdsNil(b bool)`
+
+ SetAppServiceIdsNil sets the value for AppServiceIds to be an explicit nil
+
+### UnsetAppServiceIds
+`func (o *NewAppAuthInput) UnsetAppServiceIds()`
+
+UnsetAppServiceIds ensures that no value is present for AppServiceIds, not even an explicit nil
 ### GetAppServiceId
 
 `func (o *NewAppAuthInput) GetAppServiceId() int32`

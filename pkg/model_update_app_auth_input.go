@@ -21,9 +21,12 @@ var _ MappedNullable = &UpdateAppAuthInput{}
 
 // UpdateAppAuthInput struct for UpdateAppAuthInput
 type UpdateAppAuthInput struct {
-	// Omit with appRouteId to preserve the current scope. When supplied alone, moves the entry to service scope and clears any route scope.
+	// App services to protect. Omit every scope field to preserve the current scope, or pass an empty list to protect the whole app instance.
+	AppServiceIds []int32 `json:"appServiceIds,omitempty"`
+	// Single-service scope. Ignored when appServiceIds is supplied.
+	// Deprecated
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
-	// Moves the entry to route scope and must be accompanied by appServiceId.
+	// Moves the entry to route scope. The owning app service is derived from the route.
 	AppRouteId NullableInt32 `json:"appRouteId,omitempty"`
 	Login string `json:"login"`
 	// Replaces the existing secret when supplied; omit to keep the current password.
@@ -52,7 +55,41 @@ func NewUpdateAppAuthInputWithDefaults() *UpdateAppAuthInput {
 	return &this
 }
 
+// GetAppServiceIds returns the AppServiceIds field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateAppAuthInput) GetAppServiceIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+	return o.AppServiceIds
+}
+
+// GetAppServiceIdsOk returns a tuple with the AppServiceIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateAppAuthInput) GetAppServiceIdsOk() ([]int32, bool) {
+	if o == nil || IsNil(o.AppServiceIds) {
+		return nil, false
+	}
+	return o.AppServiceIds, true
+}
+
+// HasAppServiceIds returns a boolean if a field has been set.
+func (o *UpdateAppAuthInput) HasAppServiceIds() bool {
+	if o != nil && !IsNil(o.AppServiceIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppServiceIds gets a reference to the given []int32 and assigns it to the AppServiceIds field.
+func (o *UpdateAppAuthInput) SetAppServiceIds(v []int32) {
+	o.AppServiceIds = v
+}
+
 // GetAppServiceId returns the AppServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *UpdateAppAuthInput) GetAppServiceId() int32 {
 	if o == nil || IsNil(o.AppServiceId.Get()) {
 		var ret int32
@@ -64,6 +101,7 @@ func (o *UpdateAppAuthInput) GetAppServiceId() int32 {
 // GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *UpdateAppAuthInput) GetAppServiceIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -81,6 +119,7 @@ func (o *UpdateAppAuthInput) HasAppServiceId() bool {
 }
 
 // SetAppServiceId gets a reference to the given NullableInt32 and assigns it to the AppServiceId field.
+// Deprecated
 func (o *UpdateAppAuthInput) SetAppServiceId(v int32) {
 	o.AppServiceId.Set(&v)
 }
@@ -236,6 +275,9 @@ func (o UpdateAppAuthInput) MarshalJSON() ([]byte, error) {
 
 func (o UpdateAppAuthInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.AppServiceIds != nil {
+		toSerialize["appServiceIds"] = o.AppServiceIds
+	}
 	if o.AppServiceId.IsSet() {
 		toSerialize["appServiceId"] = o.AppServiceId.Get()
 	}

@@ -23,13 +23,15 @@ var _ MappedNullable = &Integration{}
 // Integration struct for Integration
 type Integration struct {
 	Id int32 `json:"id"`
-	Name string `json:"name"`
 	Title string `json:"title"`
 	Status string `json:"status"`
 	Scope NullableString `json:"scope,omitempty"`
 	Auth NullableString `json:"auth,omitempty"`
 	ProviderRevId int32 `json:"providerRevId"`
 	OrgId int32 `json:"orgId"`
+	PrimaryEnvId NullableInt32 `json:"primaryEnvId,omitempty"`
+	EnvScope string `json:"envScope"`
+	AllowedEnvIds []int32 `json:"allowedEnvIds"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -40,14 +42,15 @@ type _Integration Integration
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIntegration(id int32, name string, title string, status string, providerRevId int32, orgId int32, createdAt time.Time, updatedAt time.Time) *Integration {
+func NewIntegration(id int32, title string, status string, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, createdAt time.Time, updatedAt time.Time) *Integration {
 	this := Integration{}
 	this.Id = id
-	this.Name = name
 	this.Title = title
 	this.Status = status
 	this.ProviderRevId = providerRevId
 	this.OrgId = orgId
+	this.EnvScope = envScope
+	this.AllowedEnvIds = allowedEnvIds
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -83,30 +86,6 @@ func (o *Integration) GetIdOk() (*int32, bool) {
 // SetId sets field value
 func (o *Integration) SetId(v int32) {
 	o.Id = v
-}
-
-// GetName returns the Name field value
-func (o *Integration) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *Integration) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *Integration) SetName(v string) {
-	o.Name = v
 }
 
 // GetTitle returns the Title field value
@@ -289,6 +268,96 @@ func (o *Integration) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetPrimaryEnvId returns the PrimaryEnvId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Integration) GetPrimaryEnvId() int32 {
+	if o == nil || IsNil(o.PrimaryEnvId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.PrimaryEnvId.Get()
+}
+
+// GetPrimaryEnvIdOk returns a tuple with the PrimaryEnvId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Integration) GetPrimaryEnvIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PrimaryEnvId.Get(), o.PrimaryEnvId.IsSet()
+}
+
+// HasPrimaryEnvId returns a boolean if a field has been set.
+func (o *Integration) HasPrimaryEnvId() bool {
+	if o != nil && o.PrimaryEnvId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEnvId gets a reference to the given NullableInt32 and assigns it to the PrimaryEnvId field.
+func (o *Integration) SetPrimaryEnvId(v int32) {
+	o.PrimaryEnvId.Set(&v)
+}
+// SetPrimaryEnvIdNil sets the value for PrimaryEnvId to be an explicit nil
+func (o *Integration) SetPrimaryEnvIdNil() {
+	o.PrimaryEnvId.Set(nil)
+}
+
+// UnsetPrimaryEnvId ensures that no value is present for PrimaryEnvId, not even an explicit nil
+func (o *Integration) UnsetPrimaryEnvId() {
+	o.PrimaryEnvId.Unset()
+}
+
+// GetEnvScope returns the EnvScope field value
+func (o *Integration) GetEnvScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.EnvScope
+}
+
+// GetEnvScopeOk returns a tuple with the EnvScope field value
+// and a boolean to check if the value has been set.
+func (o *Integration) GetEnvScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.EnvScope, true
+}
+
+// SetEnvScope sets field value
+func (o *Integration) SetEnvScope(v string) {
+	o.EnvScope = v
+}
+
+// GetAllowedEnvIds returns the AllowedEnvIds field value
+func (o *Integration) GetAllowedEnvIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+
+	return o.AllowedEnvIds
+}
+
+// GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field value
+// and a boolean to check if the value has been set.
+func (o *Integration) GetAllowedEnvIdsOk() ([]int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AllowedEnvIds, true
+}
+
+// SetAllowedEnvIds sets field value
+func (o *Integration) SetAllowedEnvIds(v []int32) {
+	o.AllowedEnvIds = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Integration) GetCreatedAt() time.Time {
 	if o == nil {
@@ -348,7 +417,6 @@ func (o Integration) MarshalJSON() ([]byte, error) {
 func (o Integration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["status"] = o.Status
 	if o.Scope.IsSet() {
@@ -359,6 +427,11 @@ func (o Integration) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["providerRevId"] = o.ProviderRevId
 	toSerialize["orgId"] = o.OrgId
+	if o.PrimaryEnvId.IsSet() {
+		toSerialize["primaryEnvId"] = o.PrimaryEnvId.Get()
+	}
+	toSerialize["envScope"] = o.EnvScope
+	toSerialize["allowedEnvIds"] = o.AllowedEnvIds
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -370,11 +443,12 @@ func (o *Integration) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"name",
 		"title",
 		"status",
 		"providerRevId",
 		"orgId",
+		"envScope",
+		"allowedEnvIds",
 		"createdAt",
 		"updatedAt",
 	}

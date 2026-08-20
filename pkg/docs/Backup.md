@@ -11,14 +11,18 @@ Name | Type | Description | Notes
 **AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
+**IntegrationId** | **NullableInt32** | Storage integration that owns the backup. Null identifies Wodby&#39;s built-in blob storage. | 
+**TaskId** | Pointer to **NullableInt32** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
+**StartedAt** | Pointer to **NullableTime** |  | [optional] 
+**EndedAt** | Pointer to **NullableTime** |  | [optional] 
 
 ## Methods
 
 ### NewBackup
 
-`func NewBackup(id int32, name string, status string, createdAt time.Time, updatedAt time.Time, ) *Backup`
+`func NewBackup(id int32, name string, status string, integrationId NullableInt32, createdAt time.Time, updatedAt time.Time, ) *Backup`
 
 NewBackup instantiates a new Backup object
 This constructor will assign default values to properties that have it defined,
@@ -233,6 +237,71 @@ HasDatabaseDbId returns a boolean if a field has been set.
 `func (o *Backup) UnsetDatabaseDbId()`
 
 UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+### GetIntegrationId
+
+`func (o *Backup) GetIntegrationId() int32`
+
+GetIntegrationId returns the IntegrationId field if non-nil, zero value otherwise.
+
+### GetIntegrationIdOk
+
+`func (o *Backup) GetIntegrationIdOk() (*int32, bool)`
+
+GetIntegrationIdOk returns a tuple with the IntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegrationId
+
+`func (o *Backup) SetIntegrationId(v int32)`
+
+SetIntegrationId sets IntegrationId field to given value.
+
+
+### SetIntegrationIdNil
+
+`func (o *Backup) SetIntegrationIdNil(b bool)`
+
+ SetIntegrationIdNil sets the value for IntegrationId to be an explicit nil
+
+### UnsetIntegrationId
+`func (o *Backup) UnsetIntegrationId()`
+
+UnsetIntegrationId ensures that no value is present for IntegrationId, not even an explicit nil
+### GetTaskId
+
+`func (o *Backup) GetTaskId() int32`
+
+GetTaskId returns the TaskId field if non-nil, zero value otherwise.
+
+### GetTaskIdOk
+
+`func (o *Backup) GetTaskIdOk() (*int32, bool)`
+
+GetTaskIdOk returns a tuple with the TaskId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTaskId
+
+`func (o *Backup) SetTaskId(v int32)`
+
+SetTaskId sets TaskId field to given value.
+
+### HasTaskId
+
+`func (o *Backup) HasTaskId() bool`
+
+HasTaskId returns a boolean if a field has been set.
+
+### SetTaskIdNil
+
+`func (o *Backup) SetTaskIdNil(b bool)`
+
+ SetTaskIdNil sets the value for TaskId to be an explicit nil
+
+### UnsetTaskId
+`func (o *Backup) UnsetTaskId()`
+
+UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *Backup) GetCreatedAt() time.Time`
@@ -273,6 +342,76 @@ and a boolean to check if the value has been set.
 SetUpdatedAt sets UpdatedAt field to given value.
 
 
+### GetStartedAt
+
+`func (o *Backup) GetStartedAt() time.Time`
+
+GetStartedAt returns the StartedAt field if non-nil, zero value otherwise.
+
+### GetStartedAtOk
+
+`func (o *Backup) GetStartedAtOk() (*time.Time, bool)`
+
+GetStartedAtOk returns a tuple with the StartedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStartedAt
+
+`func (o *Backup) SetStartedAt(v time.Time)`
+
+SetStartedAt sets StartedAt field to given value.
+
+### HasStartedAt
+
+`func (o *Backup) HasStartedAt() bool`
+
+HasStartedAt returns a boolean if a field has been set.
+
+### SetStartedAtNil
+
+`func (o *Backup) SetStartedAtNil(b bool)`
+
+ SetStartedAtNil sets the value for StartedAt to be an explicit nil
+
+### UnsetStartedAt
+`func (o *Backup) UnsetStartedAt()`
+
+UnsetStartedAt ensures that no value is present for StartedAt, not even an explicit nil
+### GetEndedAt
+
+`func (o *Backup) GetEndedAt() time.Time`
+
+GetEndedAt returns the EndedAt field if non-nil, zero value otherwise.
+
+### GetEndedAtOk
+
+`func (o *Backup) GetEndedAtOk() (*time.Time, bool)`
+
+GetEndedAtOk returns a tuple with the EndedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEndedAt
+
+`func (o *Backup) SetEndedAt(v time.Time)`
+
+SetEndedAt sets EndedAt field to given value.
+
+### HasEndedAt
+
+`func (o *Backup) HasEndedAt() bool`
+
+HasEndedAt returns a boolean if a field has been set.
+
+### SetEndedAtNil
+
+`func (o *Backup) SetEndedAtNil(b bool)`
+
+ SetEndedAtNil sets the value for EndedAt to be an explicit nil
+
+### UnsetEndedAt
+`func (o *Backup) UnsetEndedAt()`
+
+UnsetEndedAt ensures that no value is present for EndedAt, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

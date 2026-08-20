@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **Icon** | **string** |  | 
 **Status** | **string** |  | 
+**Outdated** | **bool** |  | 
 **Public** | **bool** |  | 
 **RevId** | **int32** |  | 
 **DraftRevId** | Pointer to **NullableInt32** |  | [optional] 
@@ -32,7 +33,7 @@ Name | Type | Description | Notes
 
 ### NewStack
 
-`func NewStack(id int32, name string, title string, icon string, status string, public bool, revId int32, latestRevNumber int32, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Stack`
+`func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Stack`
 
 NewStack instantiates a new Stack object
 This constructor will assign default values to properties that have it defined,
@@ -145,6 +146,26 @@ and a boolean to check if the value has been set.
 `func (o *Stack) SetStatus(v string)`
 
 SetStatus sets Status field to given value.
+
+
+### GetOutdated
+
+`func (o *Stack) GetOutdated() bool`
+
+GetOutdated returns the Outdated field if non-nil, zero value otherwise.
+
+### GetOutdatedOk
+
+`func (o *Stack) GetOutdatedOk() (*bool, bool)`
+
+GetOutdatedOk returns a tuple with the Outdated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOutdated
+
+`func (o *Stack) SetOutdated(v bool)`
+
+SetOutdated sets Outdated field to given value.
 
 
 ### GetPublic

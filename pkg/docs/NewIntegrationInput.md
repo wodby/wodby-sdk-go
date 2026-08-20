@@ -6,19 +6,19 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProviderId** | **int32** |  | 
-**Name** | **string** |  | 
 **Title** | **string** |  | 
 **Kinds** | **[]string** |  | 
 **Auth** | Pointer to **NullableString** |  | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **FieldsInput** | Pointer to [**[]FieldInput**](FieldInput.md) |  | [optional] 
 **Scope** | Pointer to **NullableString** |  | [optional] 
+**EnvironmentPolicy** | Pointer to [**IntegrationEnvironmentPolicyInput**](IntegrationEnvironmentPolicyInput.md) |  | [optional] 
 
 ## Methods
 
 ### NewNewIntegrationInput
 
-`func NewNewIntegrationInput(providerId int32, name string, title string, kinds []string, ) *NewIntegrationInput`
+`func NewNewIntegrationInput(providerId int32, title string, kinds []string, ) *NewIntegrationInput`
 
 NewNewIntegrationInput instantiates a new NewIntegrationInput object
 This constructor will assign default values to properties that have it defined,
@@ -76,26 +76,6 @@ and a boolean to check if the value has been set.
 `func (o *NewIntegrationInput) SetProviderId(v int32)`
 
 SetProviderId sets ProviderId field to given value.
-
-
-### GetName
-
-`func (o *NewIntegrationInput) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *NewIntegrationInput) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *NewIntegrationInput) SetName(v string)`
-
-SetName sets Name field to given value.
 
 
 ### GetTitle
@@ -268,6 +248,31 @@ HasScope returns a boolean if a field has been set.
 `func (o *NewIntegrationInput) UnsetScope()`
 
 UnsetScope ensures that no value is present for Scope, not even an explicit nil
+### GetEnvironmentPolicy
+
+`func (o *NewIntegrationInput) GetEnvironmentPolicy() IntegrationEnvironmentPolicyInput`
+
+GetEnvironmentPolicy returns the EnvironmentPolicy field if non-nil, zero value otherwise.
+
+### GetEnvironmentPolicyOk
+
+`func (o *NewIntegrationInput) GetEnvironmentPolicyOk() (*IntegrationEnvironmentPolicyInput, bool)`
+
+GetEnvironmentPolicyOk returns a tuple with the EnvironmentPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvironmentPolicy
+
+`func (o *NewIntegrationInput) SetEnvironmentPolicy(v IntegrationEnvironmentPolicyInput)`
+
+SetEnvironmentPolicy sets EnvironmentPolicy field to given value.
+
+### HasEnvironmentPolicy
+
+`func (o *NewIntegrationInput) HasEnvironmentPolicy() bool`
+
+HasEnvironmentPolicy returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

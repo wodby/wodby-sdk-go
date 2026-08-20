@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Source** | **string** |  | 
 **Status** | **string** |  | 
+**Filename** | Pointer to **NullableString** |  | [optional] 
+**Size** | Pointer to **NullableInt64** |  | [optional] 
 **AppInstanceId** | Pointer to **NullableInt32** |  | [optional] 
 **AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseId** | Pointer to **NullableInt32** |  | [optional] 
@@ -119,6 +121,76 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### GetFilename
+
+`func (o *Import) GetFilename() string`
+
+GetFilename returns the Filename field if non-nil, zero value otherwise.
+
+### GetFilenameOk
+
+`func (o *Import) GetFilenameOk() (*string, bool)`
+
+GetFilenameOk returns a tuple with the Filename field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilename
+
+`func (o *Import) SetFilename(v string)`
+
+SetFilename sets Filename field to given value.
+
+### HasFilename
+
+`func (o *Import) HasFilename() bool`
+
+HasFilename returns a boolean if a field has been set.
+
+### SetFilenameNil
+
+`func (o *Import) SetFilenameNil(b bool)`
+
+ SetFilenameNil sets the value for Filename to be an explicit nil
+
+### UnsetFilename
+`func (o *Import) UnsetFilename()`
+
+UnsetFilename ensures that no value is present for Filename, not even an explicit nil
+### GetSize
+
+`func (o *Import) GetSize() int64`
+
+GetSize returns the Size field if non-nil, zero value otherwise.
+
+### GetSizeOk
+
+`func (o *Import) GetSizeOk() (*int64, bool)`
+
+GetSizeOk returns a tuple with the Size field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSize
+
+`func (o *Import) SetSize(v int64)`
+
+SetSize sets Size field to given value.
+
+### HasSize
+
+`func (o *Import) HasSize() bool`
+
+HasSize returns a boolean if a field has been set.
+
+### SetSizeNil
+
+`func (o *Import) SetSizeNil(b bool)`
+
+ SetSizeNil sets the value for Size to be an explicit nil
+
+### UnsetSize
+`func (o *Import) UnsetSize()`
+
+UnsetSize ensures that no value is present for Size, not even an explicit nil
 ### GetAppInstanceId
 
 `func (o *Import) GetAppInstanceId() int32`

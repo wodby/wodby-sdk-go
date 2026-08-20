@@ -5,13 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
-**Name** | **string** |  | 
 **Title** | **string** |  | 
 **Status** | **string** |  | 
 **Scope** | Pointer to **NullableString** |  | [optional] 
 **Auth** | Pointer to **NullableString** |  | [optional] 
 **ProviderRevId** | **int32** |  | 
 **OrgId** | **int32** |  | 
+**PrimaryEnvId** | Pointer to **NullableInt32** |  | [optional] 
+**EnvScope** | **string** |  | 
+**AllowedEnvIds** | **[]int32** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -19,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewIntegration
 
-`func NewIntegration(id int32, name string, title string, status string, providerRevId int32, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Integration`
+`func NewIntegration(id int32, title string, status string, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, createdAt time.Time, updatedAt time.Time, ) *Integration`
 
 NewIntegration instantiates a new Integration object
 This constructor will assign default values to properties that have it defined,
@@ -52,26 +54,6 @@ and a boolean to check if the value has been set.
 `func (o *Integration) SetId(v int32)`
 
 SetId sets Id field to given value.
-
-
-### GetName
-
-`func (o *Integration) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *Integration) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *Integration) SetName(v string)`
-
-SetName sets Name field to given value.
 
 
 ### GetTitle
@@ -222,6 +204,81 @@ and a boolean to check if the value has been set.
 `func (o *Integration) SetOrgId(v int32)`
 
 SetOrgId sets OrgId field to given value.
+
+
+### GetPrimaryEnvId
+
+`func (o *Integration) GetPrimaryEnvId() int32`
+
+GetPrimaryEnvId returns the PrimaryEnvId field if non-nil, zero value otherwise.
+
+### GetPrimaryEnvIdOk
+
+`func (o *Integration) GetPrimaryEnvIdOk() (*int32, bool)`
+
+GetPrimaryEnvIdOk returns a tuple with the PrimaryEnvId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrimaryEnvId
+
+`func (o *Integration) SetPrimaryEnvId(v int32)`
+
+SetPrimaryEnvId sets PrimaryEnvId field to given value.
+
+### HasPrimaryEnvId
+
+`func (o *Integration) HasPrimaryEnvId() bool`
+
+HasPrimaryEnvId returns a boolean if a field has been set.
+
+### SetPrimaryEnvIdNil
+
+`func (o *Integration) SetPrimaryEnvIdNil(b bool)`
+
+ SetPrimaryEnvIdNil sets the value for PrimaryEnvId to be an explicit nil
+
+### UnsetPrimaryEnvId
+`func (o *Integration) UnsetPrimaryEnvId()`
+
+UnsetPrimaryEnvId ensures that no value is present for PrimaryEnvId, not even an explicit nil
+### GetEnvScope
+
+`func (o *Integration) GetEnvScope() string`
+
+GetEnvScope returns the EnvScope field if non-nil, zero value otherwise.
+
+### GetEnvScopeOk
+
+`func (o *Integration) GetEnvScopeOk() (*string, bool)`
+
+GetEnvScopeOk returns a tuple with the EnvScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvScope
+
+`func (o *Integration) SetEnvScope(v string)`
+
+SetEnvScope sets EnvScope field to given value.
+
+
+### GetAllowedEnvIds
+
+`func (o *Integration) GetAllowedEnvIds() []int32`
+
+GetAllowedEnvIds returns the AllowedEnvIds field if non-nil, zero value otherwise.
+
+### GetAllowedEnvIdsOk
+
+`func (o *Integration) GetAllowedEnvIdsOk() (*[]int32, bool)`
+
+GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedEnvIds
+
+`func (o *Integration) SetAllowedEnvIds(v []int32)`
+
+SetAllowedEnvIds sets AllowedEnvIds field to given value.
 
 
 ### GetCreatedAt
