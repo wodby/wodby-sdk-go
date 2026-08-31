@@ -16045,6 +16045,15 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
+        options:
+        - values:
+          - values
+          - values
+          name: name
+        - values:
+          - values
+          - values
+          name: name
         id: 0
         databaseId: 5
         taskId: 7
@@ -16077,6 +16086,10 @@ components:
         taskId:
           nullable: true
           type: integer
+        options:
+          items:
+            $ref: '#/components/schemas/BackupOption'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -16096,6 +16109,7 @@ components:
       - id
       - integrationId
       - name
+      - options
       - status
       - updatedAt
       type: object
@@ -16120,6 +16134,15 @@ components:
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
         storageClass: storageClass
+        options:
+        - values:
+          - values
+          - values
+          name: name
+        - values:
+          - values
+          - values
+          name: name
         disabled: true
         id: 0
         override: true
@@ -16158,6 +16181,10 @@ components:
         storageClass:
           nullable: true
           type: string
+        options:
+          items:
+            $ref: '#/components/schemas/BackupOption'
+          type: array
         override:
           type: boolean
         auto:
@@ -16191,8 +16218,26 @@ components:
       - disabled
       - id
       - integrationId
+      - options
       - override
       - updatedAt
+      type: object
+    BackupOption:
+      example:
+        values:
+        - values
+        - values
+        name: name
+      properties:
+        name:
+          type: string
+        values:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      - values
       type: object
     Task:
       example:
@@ -23243,6 +23288,15 @@ components:
         bucket: bucket
         appServiceId: 0
         storageClass: storageClass
+        options:
+        - values:
+          - values
+          - values
+          name: name
+        - values:
+          - values
+          - values
+          name: name
         integrationId: 1
         databaseDbId: 6
         backupName: backupName
@@ -23265,6 +23319,11 @@ components:
         storageClass:
           nullable: true
           type: string
+        options:
+          items:
+            $ref: '#/components/schemas/BackupOption'
+          nullable: true
+          type: array
       required:
       - bucket
       - integrationId
@@ -23290,6 +23349,15 @@ components:
         duration: 169
         appServiceId: 6
         storageClass: storageClass
+        options:
+        - values:
+          - values
+          - values
+          name: name
+        - values:
+          - values
+          - values
+          name: name
         disabled: true
         override: true
         databaseId: 1
@@ -23328,6 +23396,11 @@ components:
         storageClass:
           nullable: true
           type: string
+        options:
+          items:
+            $ref: '#/components/schemas/BackupOption'
+          nullable: true
+          type: array
         disabled:
           type: boolean
         override:
@@ -23366,6 +23439,15 @@ components:
           end: 04:00
           enabled: true
         crontab: crontab
+        options:
+        - values:
+          - values
+          - values
+          name: name
+        - values:
+          - values
+          - values
+          name: name
         integrationId: 0
         disabled: true
         override: true
@@ -23380,6 +23462,11 @@ components:
         storageClass:
           nullable: true
           type: string
+        options:
+          items:
+            $ref: '#/components/schemas/BackupOption'
+          nullable: true
+          type: array
         disabled:
           type: boolean
         override:

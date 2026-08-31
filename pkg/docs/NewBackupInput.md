@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
+**Options** | Pointer to [**[]BackupOption**](BackupOption.md) |  | [optional] 
 
 ## Methods
 
@@ -210,6 +211,41 @@ HasStorageClass returns a boolean if a field has been set.
 `func (o *NewBackupInput) UnsetStorageClass()`
 
 UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
+### GetOptions
+
+`func (o *NewBackupInput) GetOptions() []BackupOption`
+
+GetOptions returns the Options field if non-nil, zero value otherwise.
+
+### GetOptionsOk
+
+`func (o *NewBackupInput) GetOptionsOk() (*[]BackupOption, bool)`
+
+GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptions
+
+`func (o *NewBackupInput) SetOptions(v []BackupOption)`
+
+SetOptions sets Options field to given value.
+
+### HasOptions
+
+`func (o *NewBackupInput) HasOptions() bool`
+
+HasOptions returns a boolean if a field has been set.
+
+### SetOptionsNil
+
+`func (o *NewBackupInput) SetOptionsNil(b bool)`
+
+ SetOptionsNil sets the value for Options to be an explicit nil
+
+### UnsetOptions
+`func (o *NewBackupInput) UnsetOptions()`
+
+UnsetOptions ensures that no value is present for Options, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

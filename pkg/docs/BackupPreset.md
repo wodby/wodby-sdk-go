@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **IntegrationId** | **int32** |  | 
 **Bucket** | **string** |  | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
+**Options** | [**[]BackupOption**](BackupOption.md) |  | 
 **Override** | **bool** |  | 
 **Auto** | **bool** |  | 
 **Disabled** | **bool** |  | 
@@ -29,7 +30,7 @@ Name | Type | Description | Notes
 
 ### NewBackupPreset
 
-`func NewBackupPreset(id int32, integrationId int32, bucket string, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time, ) *BackupPreset`
+`func NewBackupPreset(id int32, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time, ) *BackupPreset`
 
 NewBackupPreset instantiates a new BackupPreset object
 This constructor will assign default values to properties that have it defined,
@@ -384,6 +385,26 @@ HasStorageClass returns a boolean if a field has been set.
 `func (o *BackupPreset) UnsetStorageClass()`
 
 UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
+### GetOptions
+
+`func (o *BackupPreset) GetOptions() []BackupOption`
+
+GetOptions returns the Options field if non-nil, zero value otherwise.
+
+### GetOptionsOk
+
+`func (o *BackupPreset) GetOptionsOk() (*[]BackupOption, bool)`
+
+GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptions
+
+`func (o *BackupPreset) SetOptions(v []BackupOption)`
+
+SetOptions sets Options field to given value.
+
+
 ### GetOverride
 
 `func (o *BackupPreset) GetOverride() bool`

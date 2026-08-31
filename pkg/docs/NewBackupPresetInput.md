@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Free subscriptions may create only an automatic preset that is disabled. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
+**Options** | Pointer to [**[]BackupOption**](BackupOption.md) |  | [optional] 
 **Disabled** | **bool** |  | 
 **Override** | **bool** |  | 
 **Auto** | Pointer to **NullableBool** |  | [optional] 
@@ -360,6 +361,41 @@ HasStorageClass returns a boolean if a field has been set.
 `func (o *NewBackupPresetInput) UnsetStorageClass()`
 
 UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
+### GetOptions
+
+`func (o *NewBackupPresetInput) GetOptions() []BackupOption`
+
+GetOptions returns the Options field if non-nil, zero value otherwise.
+
+### GetOptionsOk
+
+`func (o *NewBackupPresetInput) GetOptionsOk() (*[]BackupOption, bool)`
+
+GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptions
+
+`func (o *NewBackupPresetInput) SetOptions(v []BackupOption)`
+
+SetOptions sets Options field to given value.
+
+### HasOptions
+
+`func (o *NewBackupPresetInput) HasOptions() bool`
+
+HasOptions returns a boolean if a field has been set.
+
+### SetOptionsNil
+
+`func (o *NewBackupPresetInput) SetOptionsNil(b bool)`
+
+ SetOptionsNil sets the value for Options to be an explicit nil
+
+### UnsetOptions
+`func (o *NewBackupPresetInput) UnsetOptions()`
+
+UnsetOptions ensures that no value is present for Options, not even an explicit nil
 ### GetDisabled
 
 `func (o *NewBackupPresetInput) GetDisabled() bool`

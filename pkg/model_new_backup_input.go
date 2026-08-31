@@ -29,6 +29,7 @@ type NewBackupInput struct {
 	// Must be empty for Wodby Blob Storage.
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
+	Options []BackupOption `json:"options,omitempty"`
 }
 
 type _NewBackupInput NewBackupInput
@@ -268,6 +269,39 @@ func (o *NewBackupInput) UnsetStorageClass() {
 	o.StorageClass.Unset()
 }
 
+// GetOptions returns the Options field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewBackupInput) GetOptions() []BackupOption {
+	if o == nil {
+		var ret []BackupOption
+		return ret
+	}
+	return o.Options
+}
+
+// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewBackupInput) GetOptionsOk() ([]BackupOption, bool) {
+	if o == nil || IsNil(o.Options) {
+		return nil, false
+	}
+	return o.Options, true
+}
+
+// HasOptions returns a boolean if a field has been set.
+func (o *NewBackupInput) HasOptions() bool {
+	if o != nil && !IsNil(o.Options) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptions gets a reference to the given []BackupOption and assigns it to the Options field.
+func (o *NewBackupInput) SetOptions(v []BackupOption) {
+	o.Options = v
+}
+
 func (o NewBackupInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -291,6 +325,9 @@ func (o NewBackupInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["bucket"] = o.Bucket
 	if o.StorageClass.IsSet() {
 		toSerialize["storageClass"] = o.StorageClass.Get()
+	}
+	if o.Options != nil {
+		toSerialize["options"] = o.Options
 	}
 	return toSerialize, nil
 }

@@ -32,6 +32,7 @@ type Backup struct {
 	// Storage integration that owns the backup. Null identifies Wodby's built-in blob storage.
 	IntegrationId NullableInt32 `json:"integrationId"`
 	TaskId NullableInt32 `json:"taskId,omitempty"`
+	Options []BackupOption `json:"options"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	StartedAt NullableTime `json:"startedAt,omitempty"`
@@ -44,12 +45,13 @@ type _Backup Backup
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackup(id int32, name string, status string, integrationId NullableInt32, createdAt time.Time, updatedAt time.Time) *Backup {
+func NewBackup(id int32, name string, status string, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time) *Backup {
 	this := Backup{}
 	this.Id = id
 	this.Name = name
 	this.Status = status
 	this.IntegrationId = integrationId
+	this.Options = options
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -371,6 +373,30 @@ func (o *Backup) UnsetTaskId() {
 	o.TaskId.Unset()
 }
 
+// GetOptions returns the Options field value
+func (o *Backup) GetOptions() []BackupOption {
+	if o == nil {
+		var ret []BackupOption
+		return ret
+	}
+
+	return o.Options
+}
+
+// GetOptionsOk returns a tuple with the Options field value
+// and a boolean to check if the value has been set.
+func (o *Backup) GetOptionsOk() ([]BackupOption, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Options, true
+}
+
+// SetOptions sets field value
+func (o *Backup) SetOptions(v []BackupOption) {
+	o.Options = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Backup) GetCreatedAt() time.Time {
 	if o == nil {
@@ -532,6 +558,7 @@ func (o Backup) ToMap() (map[string]interface{}, error) {
 	if o.TaskId.IsSet() {
 		toSerialize["taskId"] = o.TaskId.Get()
 	}
+	toSerialize["options"] = o.Options
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	if o.StartedAt.IsSet() {
@@ -552,6 +579,7 @@ func (o *Backup) UnmarshalJSON(data []byte) (err error) {
 		"name",
 		"status",
 		"integrationId",
+		"options",
 		"createdAt",
 		"updatedAt",
 	}

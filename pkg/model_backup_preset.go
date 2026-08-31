@@ -33,6 +33,7 @@ type BackupPreset struct {
 	IntegrationId int32 `json:"integrationId"`
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
+	Options []BackupOption `json:"options"`
 	Override bool `json:"override"`
 	Auto bool `json:"auto"`
 	Disabled bool `json:"disabled"`
@@ -50,11 +51,12 @@ type _BackupPreset BackupPreset
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackupPreset(id int32, integrationId int32, bucket string, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time) *BackupPreset {
+func NewBackupPreset(id int32, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time) *BackupPreset {
 	this := BackupPreset{}
 	this.Id = id
 	this.IntegrationId = integrationId
 	this.Bucket = bucket
+	this.Options = options
 	this.Override = override
 	this.Auto = auto
 	this.Disabled = disabled
@@ -479,6 +481,30 @@ func (o *BackupPreset) UnsetStorageClass() {
 	o.StorageClass.Unset()
 }
 
+// GetOptions returns the Options field value
+func (o *BackupPreset) GetOptions() []BackupOption {
+	if o == nil {
+		var ret []BackupOption
+		return ret
+	}
+
+	return o.Options
+}
+
+// GetOptionsOk returns a tuple with the Options field value
+// and a boolean to check if the value has been set.
+func (o *BackupPreset) GetOptionsOk() ([]BackupOption, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Options, true
+}
+
+// SetOptions sets field value
+func (o *BackupPreset) SetOptions(v []BackupOption) {
+	o.Options = v
+}
+
 // GetOverride returns the Override field value
 func (o *BackupPreset) GetOverride() bool {
 	if o == nil {
@@ -794,6 +820,7 @@ func (o BackupPreset) ToMap() (map[string]interface{}, error) {
 	if o.StorageClass.IsSet() {
 		toSerialize["storageClass"] = o.StorageClass.Get()
 	}
+	toSerialize["options"] = o.Options
 	toSerialize["override"] = o.Override
 	toSerialize["auto"] = o.Auto
 	toSerialize["disabled"] = o.Disabled
@@ -822,6 +849,7 @@ func (o *BackupPreset) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"integrationId",
 		"bucket",
+		"options",
 		"override",
 		"auto",
 		"disabled",

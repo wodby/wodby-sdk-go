@@ -26,6 +26,7 @@ type UpdateBackupPresetInput struct {
 	// Must be empty for Wodby Blob Storage.
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
+	Options []BackupOption `json:"options,omitempty"`
 	Disabled bool `json:"disabled"`
 	Override bool `json:"override"`
 	Auto bool `json:"auto"`
@@ -146,6 +147,39 @@ func (o *UpdateBackupPresetInput) SetStorageClassNil() {
 // UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
 func (o *UpdateBackupPresetInput) UnsetStorageClass() {
 	o.StorageClass.Unset()
+}
+
+// GetOptions returns the Options field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateBackupPresetInput) GetOptions() []BackupOption {
+	if o == nil {
+		var ret []BackupOption
+		return ret
+	}
+	return o.Options
+}
+
+// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateBackupPresetInput) GetOptionsOk() ([]BackupOption, bool) {
+	if o == nil || IsNil(o.Options) {
+		return nil, false
+	}
+	return o.Options, true
+}
+
+// HasOptions returns a boolean if a field has been set.
+func (o *UpdateBackupPresetInput) HasOptions() bool {
+	if o != nil && !IsNil(o.Options) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptions gets a reference to the given []BackupOption and assigns it to the Options field.
+func (o *UpdateBackupPresetInput) SetOptions(v []BackupOption) {
+	o.Options = v
 }
 
 // GetDisabled returns the Disabled field value
@@ -350,6 +384,9 @@ func (o UpdateBackupPresetInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["bucket"] = o.Bucket
 	if o.StorageClass.IsSet() {
 		toSerialize["storageClass"] = o.StorageClass.Get()
+	}
+	if o.Options != nil {
+		toSerialize["options"] = o.Options
 	}
 	toSerialize["disabled"] = o.Disabled
 	toSerialize["override"] = o.Override

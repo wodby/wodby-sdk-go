@@ -120,6 +120,7 @@ docs/AppsAPI.md
 docs/AutomationTimeWindow.md
 docs/AutomationTimeWindowInput.md
 docs/Backup.md
+docs/BackupOption.md
 docs/BackupPreset.md
 docs/BackupsAPI.md
 docs/BillingSubscriptionStatus.md
@@ -431,6 +432,7 @@ model_app_service_volume_storage_class_state.go
 model_automation_time_window.go
 model_automation_time_window_input.go
 model_backup.go
+model_backup_option.go
 model_backup_preset.go
 model_billing_subscription_status.go
 model_build_source_input.go

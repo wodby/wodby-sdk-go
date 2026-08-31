@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
 **IntegrationId** | **NullableInt32** | Storage integration that owns the backup. Null identifies Wodby&#39;s built-in blob storage. | 
 **TaskId** | Pointer to **NullableInt32** |  | [optional] 
+**Options** | [**[]BackupOption**](BackupOption.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **StartedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -22,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewBackup
 
-`func NewBackup(id int32, name string, status string, integrationId NullableInt32, createdAt time.Time, updatedAt time.Time, ) *Backup`
+`func NewBackup(id int32, name string, status string, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time, ) *Backup`
 
 NewBackup instantiates a new Backup object
 This constructor will assign default values to properties that have it defined,
@@ -302,6 +303,26 @@ HasTaskId returns a boolean if a field has been set.
 `func (o *Backup) UnsetTaskId()`
 
 UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
+### GetOptions
+
+`func (o *Backup) GetOptions() []BackupOption`
+
+GetOptions returns the Options field if non-nil, zero value otherwise.
+
+### GetOptionsOk
+
+`func (o *Backup) GetOptionsOk() (*[]BackupOption, bool)`
+
+GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptions
+
+`func (o *Backup) SetOptions(v []BackupOption)`
+
+SetOptions sets Options field to given value.
+
+
 ### GetCreatedAt
 
 `func (o *Backup) GetCreatedAt() time.Time`
