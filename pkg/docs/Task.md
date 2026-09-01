@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
+**CompactTitle** | **string** |  | 
 **ExecutionScope** | **string** |  | 
 **Status** | **string** |  | 
 **Progress** | **int32** |  | 
@@ -18,7 +19,9 @@ Name | Type | Description | Notes
 **ProjectIds** | Pointer to **[]int32** |  | [optional] 
 **AppId** | Pointer to **NullableInt32** |  | [optional] 
 **AppInstanceId** | Pointer to **NullableInt32** |  | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
+**DatabaseId** | Pointer to **NullableInt32** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **ServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **StackId** | Pointer to **NullableInt32** |  | [optional] 
@@ -36,7 +39,7 @@ Name | Type | Description | Notes
 
 ### NewTask
 
-`func NewTask(id int32, name string, title string, executionScope string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time, ) *Task`
+`func NewTask(id int32, name string, title string, compactTitle string, executionScope string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time, ) *Task`
 
 NewTask instantiates a new Task object
 This constructor will assign default values to properties that have it defined,
@@ -109,6 +112,26 @@ and a boolean to check if the value has been set.
 `func (o *Task) SetTitle(v string)`
 
 SetTitle sets Title field to given value.
+
+
+### GetCompactTitle
+
+`func (o *Task) GetCompactTitle() string`
+
+GetCompactTitle returns the CompactTitle field if non-nil, zero value otherwise.
+
+### GetCompactTitleOk
+
+`func (o *Task) GetCompactTitleOk() (*string, bool)`
+
+GetCompactTitleOk returns a tuple with the CompactTitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompactTitle
+
+`func (o *Task) SetCompactTitle(v string)`
+
+SetCompactTitle sets CompactTitle field to given value.
 
 
 ### GetExecutionScope
@@ -396,6 +419,41 @@ HasAppInstanceId returns a boolean if a field has been set.
 `func (o *Task) UnsetAppInstanceId()`
 
 UnsetAppInstanceId ensures that no value is present for AppInstanceId, not even an explicit nil
+### GetAppServiceId
+
+`func (o *Task) GetAppServiceId() int32`
+
+GetAppServiceId returns the AppServiceId field if non-nil, zero value otherwise.
+
+### GetAppServiceIdOk
+
+`func (o *Task) GetAppServiceIdOk() (*int32, bool)`
+
+GetAppServiceIdOk returns a tuple with the AppServiceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppServiceId
+
+`func (o *Task) SetAppServiceId(v int32)`
+
+SetAppServiceId sets AppServiceId field to given value.
+
+### HasAppServiceId
+
+`func (o *Task) HasAppServiceId() bool`
+
+HasAppServiceId returns a boolean if a field has been set.
+
+### SetAppServiceIdNil
+
+`func (o *Task) SetAppServiceIdNil(b bool)`
+
+ SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+
+### UnsetAppServiceId
+`func (o *Task) UnsetAppServiceId()`
+
+UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
 ### GetClusterId
 
 `func (o *Task) GetClusterId() int32`
@@ -431,6 +489,41 @@ HasClusterId returns a boolean if a field has been set.
 `func (o *Task) UnsetClusterId()`
 
 UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
+### GetDatabaseId
+
+`func (o *Task) GetDatabaseId() int32`
+
+GetDatabaseId returns the DatabaseId field if non-nil, zero value otherwise.
+
+### GetDatabaseIdOk
+
+`func (o *Task) GetDatabaseIdOk() (*int32, bool)`
+
+GetDatabaseIdOk returns a tuple with the DatabaseId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatabaseId
+
+`func (o *Task) SetDatabaseId(v int32)`
+
+SetDatabaseId sets DatabaseId field to given value.
+
+### HasDatabaseId
+
+`func (o *Task) HasDatabaseId() bool`
+
+HasDatabaseId returns a boolean if a field has been set.
+
+### SetDatabaseIdNil
+
+`func (o *Task) SetDatabaseIdNil(b bool)`
+
+ SetDatabaseIdNil sets the value for DatabaseId to be an explicit nil
+
+### UnsetDatabaseId
+`func (o *Task) UnsetDatabaseId()`
+
+UnsetDatabaseId ensures that no value is present for DatabaseId, not even an explicit nil
 ### GetIntegrationId
 
 `func (o *Task) GetIntegrationId() int32`

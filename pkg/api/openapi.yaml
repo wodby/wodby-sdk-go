@@ -24,12 +24,12 @@ tags:
   name: projects
 - description: Applications and app-level configuration.
   name: apps
-- description: Deployable application instances.
-  name: app-instances
-- description: "HTTP basic authentication credentials scoped to app instances, services,\
-    \ or routes."
+- description: "Persistent, independently deployable application environments."
+  name: app-environments
+- description: "HTTP basic authentication credentials scoped to app environments,\
+    \ services, or routes."
   name: app-auths
-- description: Runtime services that belong to app instances.
+- description: Runtime services that belong to app environments.
   name: app-services
 - description: Deployment records and deployment actions.
   name: app-deployments
@@ -37,9 +37,9 @@ tags:
   name: app-builds
 - description: Network ports exposed by app services and app endpoints.
   name: app-ports
-- description: HTTP routing rules for app instances.
+- description: HTTP routing rules for app environments.
   name: app-routes
-- description: "TLS certificate metadata for routes, app services, app instances,\
+- description: "TLS certificate metadata for routes, app services, app environments,\
     \ and databases."
   name: certs
 - description: Kubernetes clusters connected to or managed by Wodby.
@@ -881,10 +881,10 @@ paths:
       summary: Update app
       tags:
       - apps
-  /app-instances:
+  /app-environments:
     get:
-      description: Returns app instances matching the request filters.
-      operationId: listAppInstances
+      description: Returns app environments matching the request filters.
+      operationId: listAppEnvironments
       parameters:
       - description: "Optional for API-key requests; defaults to the API key's organization.\
           \ If provided, it must match the key's organization."
@@ -930,9 +930,9 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/AppInstance'
+                  $ref: '#/components/schemas/AppEnvironment'
                 type: array
-          description: List of app instances
+          description: List of app environments
         default:
           content:
             application/problem+json:
@@ -945,25 +945,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: List app instances
+      summary: List app environments
       tags:
-      - app-instances
+      - app-environments
     post:
-      description: Creates an app instance and returns the created resource.
-      operationId: createAppInstance
+      description: Creates an app environment and returns the created resource.
+      operationId: createAppEnvironment
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewAppInstanceInput'
+              $ref: '#/components/schemas/NewAppEnvironmentInput'
         required: true
       responses:
         "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstance'
-          description: Created app instance
+                $ref: '#/components/schemas/AppEnvironment'
+          description: Created app environment
         default:
           content:
             application/problem+json:
@@ -976,13 +976,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Create app instance
+      summary: Create app environment
       tags:
-      - app-instances
-  /app-instances/by-name/{appName}/{instanceName}:
+      - app-environments
+  /app-environments/by-name/{appName}/{environmentName}:
     get:
-      description: Returns the app instance identified by app and instance name.
-      operationId: getAppInstanceByName
+      description: Returns the app environment identified by app and environment name.
+      operationId: getAppEnvironmentByName
       parameters:
       - explode: false
         in: path
@@ -993,7 +993,7 @@ paths:
         style: simple
       - explode: false
         in: path
-        name: instanceName
+        name: environmentName
         required: true
         schema:
           type: string
@@ -1012,8 +1012,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstance'
-          description: App instance
+                $ref: '#/components/schemas/AppEnvironment'
+          description: App environment
         default:
           content:
             application/problem+json:
@@ -1026,13 +1026,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app instance by app and instance name
+      summary: Get app environment by name
       tags:
-      - app-instances
-  /app-instances/{id}:
+      - app-environments
+  /app-environments/{id}:
     delete:
-      description: Deletes the app instance and returns the operation result.
-      operationId: deleteAppInstance
+      description: Deletes the app environment and returns the operation result.
+      operationId: deleteAppEnvironment
       parameters:
       - explode: false
         in: path
@@ -1068,12 +1068,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Delete app instance
+      summary: Delete app environment
       tags:
-      - app-instances
+      - app-environments
     get:
-      description: Returns the app instance identified by the request path.
-      operationId: getAppInstance
+      description: Returns the app environment identified by the request path.
+      operationId: getAppEnvironment
       parameters:
       - explode: false
         in: path
@@ -1087,8 +1087,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstance'
-          description: App instance
+                $ref: '#/components/schemas/AppEnvironment'
+          description: App environment
         default:
           content:
             application/problem+json:
@@ -1101,12 +1101,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app instance
+      summary: Get app environment
       tags:
-      - app-instances
+      - app-environments
     put:
-      description: Updates the app instance and returns the updated resource.
-      operationId: updateAppInstance
+      description: Updates the app environment and returns the updated resource.
+      operationId: updateAppEnvironment
       parameters:
       - explode: false
         in: path
@@ -1126,8 +1126,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstance'
-          description: Updated app instance
+                $ref: '#/components/schemas/AppEnvironment'
+          description: Updated app environment
         default:
           content:
             application/problem+json:
@@ -1140,13 +1140,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Update app instance
+      summary: Update app environment
       tags:
-      - app-instances
-  /app-instances/settings/{id}:
+      - app-environments
+  /app-environments/settings/{id}:
     put:
-      description: Updates app instance settings and returns the updated app instance.
-      operationId: updateAppInstanceSettings
+      description: Updates app environment settings and returns the updated app environment.
+      operationId: updateAppEnvironmentSettings
       parameters:
       - explode: false
         in: path
@@ -1159,15 +1159,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AppInstanceSettingsInput'
+              $ref: '#/components/schemas/AppEnvironmentSettingsInput'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstance'
-          description: Updated app instance
+                $ref: '#/components/schemas/AppEnvironment'
+          description: Updated app environment
         default:
           content:
             application/problem+json:
@@ -1180,14 +1180,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Update app instance settings
+      summary: Update app environment settings
       tags:
-      - app-instances
-  /app-instances/{id}/actions/maintenance-mode:
+      - app-environments
+  /app-environments/{id}/actions/maintenance-mode:
     put:
       description: Enables or disables the fixed maintenance response on all public
         HTTP routes while application workloads continue running.
-      operationId: updateAppInstanceMaintenanceMode
+      operationId: updateAppEnvironmentMaintenanceMode
       parameters:
       - explode: false
         in: path
@@ -1200,7 +1200,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AppInstanceMaintenanceModeInput'
+              $ref: '#/components/schemas/AppEnvironmentMaintenanceModeInput'
         required: true
       responses:
         "200":
@@ -1221,14 +1221,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Update app instance maintenance mode
+      summary: Update app environment maintenance mode
       tags:
-      - app-instances
-  /app-instances/cicd-settings/{id}:
+      - app-environments
+  /app-environments/cicd-settings/{id}:
     get:
-      description: Returns the CI and registry integrations used by future app instance
+      description: Returns the CI and registry integrations used by future app environment
         builds. Integration ID 0 identifies the built-in Wodby service.
-      operationId: getAppInstanceCICDSettings
+      operationId: getAppEnvironmentCICDSettings
       parameters:
       - explode: false
         in: path
@@ -1242,8 +1242,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstanceCICDSettings'
-          description: App instance CI/CD settings
+                $ref: '#/components/schemas/AppEnvironmentCICDSettings'
+          description: App environment CI/CD settings
         default:
           content:
             application/problem+json:
@@ -1256,13 +1256,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app instance CI/CD settings
+      summary: Get app environment CI/CD settings
       tags:
-      - app-instances
+      - app-environments
     put:
-      description: Updates the CI and registry integrations used by future app instance
+      description: Updates the CI and registry integrations used by future app environment
         builds. Integration ID 0 selects the built-in Wodby service.
-      operationId: updateAppInstanceCICDSettings
+      operationId: updateAppEnvironmentCICDSettings
       parameters:
       - explode: false
         in: path
@@ -1275,15 +1275,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AppInstanceCICDSettingsInput'
+              $ref: '#/components/schemas/AppEnvironmentCICDSettingsInput'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstanceCICDSettings'
-          description: Updated app instance CI/CD settings
+                $ref: '#/components/schemas/AppEnvironmentCICDSettings'
+          description: Updated app environment CI/CD settings
         default:
           content:
             application/problem+json:
@@ -1296,13 +1296,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Update app instance CI/CD settings
+      summary: Update app environment CI/CD settings
       tags:
-      - app-instances
-  /app-instances/{id}/actions/upgrade-stack:
+      - app-environments
+  /app-environments/{id}/actions/upgrade-stack:
     post:
-      description: Upgrades an app instance stack using the selected upgrade sections.
-      operationId: upgradeAppInstanceStack
+      description: Upgrades an app environment stack using the selected upgrade sections.
+      operationId: upgradeAppEnvironmentStack
       parameters:
       - explode: false
         in: path
@@ -1315,7 +1315,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AppInstanceStackUpgradeInput'
+              $ref: '#/components/schemas/AppEnvironmentStackUpgradeInput'
         required: true
       responses:
         "200":
@@ -1336,13 +1336,54 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Upgrade app instance stack
+      summary: Upgrade app environment stack
       tags:
-      - app-instances
+      - app-environments
+  /app-environments/{id}/actions/reconcile-stack:
+    post:
+      description: Reapplies the app environment's assigned stack revision using the
+        selected override sections without changing its stack revision.
+      operationId: reconcileAppEnvironmentStack
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppEnvironmentStackReconciliationInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Reconciliation result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Reconcile app environment stack
+      tags:
+      - app-environments
   /app-auths:
     get:
-      description: Returns HTTP basic authentication entries for an app instance without
-        exposing passwords or secret identifiers.
+      description: Returns HTTP basic authentication entries for an app environment
+        without exposing passwords or secret identifiers.
       operationId: listAppAuths
       parameters:
       - explode: true
@@ -1640,7 +1681,7 @@ paths:
     post:
       description: Creates a log stream for an app service container across all replicas
         or for one selected pod and returns the stream id. Log streams are available
-        while the app instance status is ok or deploying.
+        while the app environment status is ok or deploying.
       operationId: createAppServiceLogStream
       parameters:
       - explode: false
@@ -3423,6 +3464,40 @@ paths:
       summary: Redeploy deployment
       tags:
       - app-deployments
+  /app-deployments/{id}/actions/cancel:
+    post:
+      description: Cancels an active deployment and returns its updated state.
+      operationId: cancelAppDeployment
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDeployment'
+          description: Canceled deployment
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Cancel deployment
+      tags:
+      - app-deployments
   /app-builds:
     get:
       description: Returns app builds matching the request filters.
@@ -3714,6 +3789,13 @@ paths:
         schema:
           type: integer
         style: form
+      - explode: true
+        in: query
+        name: environmentId
+        required: false
+        schema:
+          type: integer
+        style: form
       responses:
         "200":
           content:
@@ -3926,6 +4008,41 @@ paths:
       summary: Update cluster
       tags:
       - clusters
+  /cluster-kubernetes-version-upgrade-plans/{id}:
+    get:
+      description: "Returns supported Kubernetes upgrade targets, blockers, and warnings\
+        \ for a cluster."
+      operationId: getKubernetesVersionUpgradePlan
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesVersionUpgradePlan'
+          description: Kubernetes version upgrade plan
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get Kubernetes version upgrade plan
+      tags:
+      - clusters
   /clusters/settings/{id}:
     put:
       description: Updates cluster settings and returns the updated cluster.
@@ -3964,6 +4081,48 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update cluster settings
+      tags:
+      - clusters
+  /clusters/environment-policy/{id}:
+    put:
+      description: Updates the cluster's environment type and allowed environment-type
+        scope. Scope reductions that conflict with existing non-infrastructure app
+        environments are rejected.
+      operationId: updateClusterEnvironmentPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterEnvironmentPolicyInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Updated cluster
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update cluster environment policy
       tags:
       - clusters
   /clusters/{id}/actions/upgrade-infra:
@@ -4610,7 +4769,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: Return only integrations allowed in this environment
+      - deprecated: true
+        description: Legacy environment entity filter. Use envType.
         explode: true
         in: query
         name: envId
@@ -4618,6 +4778,20 @@ paths:
         schema:
           minimum: 1
           type: integer
+        style: form
+      - description: Return only integrations allowed for this fixed environment type.
+        explode: true
+        in: query
+        name: envType
+        required: false
+        schema:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          type: string
         style: form
       responses:
         "200":
@@ -5325,6 +5499,41 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update integration
+      tags:
+      - integrations
+  /integration-provider-revision-upgrades/{id}:
+    get:
+      description: Returns the compatibility decision and revision details for upgrading
+        an integration.
+      operationId: getIntegrationProviderRevisionUpgrade
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationProviderRevisionUpgrade'
+          description: Provider revision upgrade preview
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preview provider revision upgrade
       tags:
       - integrations
   /integrations/environment-policy/{id}:
@@ -8887,6 +9096,25 @@ paths:
         schema:
           type: string
         style: form
+      - description: Return only presets that apply to this environment.
+        explode: true
+        in: query
+        name: applicableEnvId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Return only presets that apply to this backup category.
+        explode: true
+        in: query
+        name: applicableBackupCategory
+        required: false
+        schema:
+          enum:
+          - files
+          - database
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -9046,6 +9274,58 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update backup preset
+      tags:
+      - backups
+  /backup-presets/{id}/backups:
+    get:
+      description: Returns a paginated list of backups created from the preset.
+      operationId: listBackupPresetBackups
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupsResponse'
+          description: Paginated backups
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List backup preset backups
       tags:
       - backups
   /imports:
@@ -9227,6 +9507,15 @@ paths:
         name: withoutOrigin
         required: false
         schema:
+          type: boolean
+        style: form
+      - description: Include operator-only system tasks when authorized
+        explode: true
+        in: query
+        name: includeSystem
+        required: false
+        schema:
+          default: false
           type: boolean
         style: form
       - description: Comma-separated task statuses
@@ -9715,7 +10004,7 @@ paths:
       - app-routes
   /app-routes/{id}/settings:
     get:
-      description: Returns route-specific setting overrides. Inherited app-instance
+      description: Returns route-specific setting overrides. Inherited app-environment
         defaults are not included.
       operationId: listAppRouteSettings
       parameters:
@@ -9748,6 +10037,43 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app route settings
+      tags:
+      - app-routes
+  /app-routes/{id}/effective-settings:
+    get:
+      description: "Returns the resolved route settings together with whether each\
+        \ value came from the app defaults, active service manifest, or route override."
+      operationId: listEffectiveAppRouteSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/EffectiveAppRouteSetting'
+                type: array
+          description: List of effective app route settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List effective app route settings
       tags:
       - app-routes
   /app-routes/{id}/actions/retry-certificate:
@@ -9997,229 +10323,11 @@ paths:
       summary: Get cert
       tags:
       - certs
-  /envs:
+  /app-environment-stack-upgrade-changelogs/{id}:
     get:
-      description: Returns envs matching the request filters.
-      operationId: listEnvs
-      parameters:
-      - description: "Optional for API-key requests; defaults to the API key's organization.\
-          \ If provided, it must match the key's organization."
-        explode: true
-        in: query
-        name: orgId
-        required: false
-        schema:
-          type: integer
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/Env'
-                type: array
-          description: List of envs
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: List envs
-      tags:
-      - envs
-    post:
-      description: Creates an env and returns the created resource.
-      operationId: createEnv
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateEnvRequest'
-        required: true
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Env'
-          description: Created env
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Create env
-      tags:
-      - envs
-  /envs/by-name/{name}:
-    get:
-      description: Returns the env identified by name.
-      operationId: getEnvByName
-      parameters:
-      - explode: false
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: "Optional for API-key requests; defaults to the API key's organization.\
-          \ If provided, it must match the key's organization."
-        explode: true
-        in: query
-        name: orgId
-        required: false
-        schema:
-          type: integer
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Env'
-          description: Env
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Get env by name
-      tags:
-      - envs
-  /envs/{id}:
-    delete:
-      description: Deletes the env and returns the operation result.
-      operationId: deleteEnv
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationResult'
-          description: Delete result
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Delete env
-      tags:
-      - envs
-    get:
-      description: Returns the env identified by the request path.
-      operationId: getEnv
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Env'
-          description: Env
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Get env
-      tags:
-      - envs
-    put:
-      description: Updates the env and returns the updated resource.
-      operationId: updateEnv
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateEnvRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Env'
-          description: Updated env
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Update env
-      tags:
-      - envs
-  /app-instance-stack-upgrade-changelogs/{id}:
-    get:
-      description: Returns the stack and service revision changes that an app instance
+      description: Returns the stack and service revision changes that an app environment
         stack upgrade would apply.
-      operationId: getAppInstanceStackUpgradeChangelog
+      operationId: getAppEnvironmentStackUpgradeChangelog
       parameters:
       - explode: false
         in: path
@@ -10233,7 +10341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppInstanceStackUpgradeChangelog'
+                $ref: '#/components/schemas/AppEnvironmentStackUpgradeChangelog'
           description: Stack upgrade changelog
         default:
           content:
@@ -10247,14 +10355,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Preview app instance stack upgrade
+      summary: Preview app environment stack upgrade
       tags:
-      - app-instances
-  /app-instance-accesses/{id}:
+      - app-environments
+  /app-environment-accesses/{id}:
     get:
-      description: Returns the external access configuration for the app instance
+      description: Returns the external access configuration for the app environment
         identified by the path.
-      operationId: getAppInstanceAccess
+      operationId: getAppEnvironmentAccess
       parameters:
       - explode: false
         in: path
@@ -10282,12 +10390,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app instance access
+      summary: Get app environment access
       tags:
-      - app-instances
+      - app-environments
     post:
-      description: Creates external access for the app instance identified by the
-        path.
+      description: Creates external access for the app environment identified by the
+        path. An active paid subscription is required.
       operationId: createAppAccess
       parameters:
       - explode: false
@@ -10322,19 +10430,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Create app instance access
+      summary: Create app environment access
       tags:
-      - app-instances
+      - app-environments
   /app-accesses/actions/preflight:
     post:
-      description: Validates a proposed app-access configuration before an app instance
-        or access resource is created.
+      description: Validates a proposed app-access configuration before an app environment
+        or access resource is created. An active paid subscription is required.
       operationId: preflightAppAccess
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewAppInstanceAccessInput'
+              $ref: '#/components/schemas/NewAppEnvironmentAccessInput'
         required: true
       responses:
         "200":
@@ -10355,9 +10463,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Preflight app instance access
+      summary: Preflight app environment access
       tags:
-      - app-instances
+      - app-environments
   /app-accesses/{id}:
     delete:
       description: Removes app access and returns the cleanup task identifier.
@@ -10391,10 +10499,10 @@ paths:
           description: Error response
       summary: Delete app access
       tags:
-      - app-instances
+      - app-environments
     put:
       description: Updates an existing app-access configuration and starts its reconciliation
-        task.
+        task. An active paid subscription is required.
       operationId: updateAppAccess
       parameters:
       - explode: false
@@ -10431,7 +10539,7 @@ paths:
           description: Error response
       summary: Update app access
       tags:
-      - app-instances
+      - app-environments
   /app-access-cleanups:
     get:
       description: Returns cleanup records for exactly one app instance or integration.
@@ -10474,7 +10582,7 @@ paths:
           description: Error response
       summary: List app-access cleanups
       tags:
-      - app-instances
+      - app-environments
   /app-access-cleanups/{id}/actions/retry:
     post:
       description: Retries a failed app-access cleanup and returns its task identifier.
@@ -10508,7 +10616,7 @@ paths:
           description: Error response
       summary: Retry app-access cleanup
       tags:
-      - app-instances
+      - app-environments
   /app-services/{id}/options/volume-storage-classes:
     get:
       description: Returns configured and effective storage-class choices for each
@@ -10544,6 +10652,50 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List app service volume storage-class state
+      tags:
+      - app-services
+  /app-services/{id}/options/backup-option-defaults:
+    get:
+      description: Returns the effective default option values for an app service
+        backup definition.
+      operationId: listAppServiceBackupOptionDefaults
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: backupName
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/BackupOption'
+                type: array
+          description: Effective backup options
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List effective backup option defaults
       tags:
       - app-services
   /cluster-infra-app-upgrade-changelogs/{id}:
@@ -10701,6 +10853,47 @@ paths:
       summary: Test integration permissions
       tags:
       - integrations
+  /integrations/{id}/actions/upgrade-provider-revision:
+    post:
+      description: Upgrades an integration to its eligible provider revision and optionally
+        drops fields removed by the target contract.
+      operationId: upgradeIntegrationProviderRevision
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpgradeIntegrationProviderRevisionInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Upgrade task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Upgrade integration provider revision
+      tags:
+      - integrations
   /stacks/{id}/actions/update-service-revisions:
     post:
       description: Starts a task that advances unpinned stack services to their eligible
@@ -10714,6 +10907,19 @@ paths:
         schema:
           type: integer
         style: simple
+      - description: Limits the update to all services or stateless services. Defaults
+          to all.
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          default: all
+          enum:
+          - all
+          - stateless_only
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -11020,7 +11226,7 @@ components:
         default: false
         type: boolean
       style: form
-    AppInstanceId:
+    AppEnvironmentId:
       explode: true
       in: query
       name: appInstanceId
@@ -11028,7 +11234,7 @@ components:
       schema:
         type: integer
       style: form
-    AppInstanceIdOptional:
+    AppEnvironmentIdOptional:
       explode: true
       in: query
       name: appInstanceId
@@ -11138,6 +11344,97 @@ components:
           type: integer
       required:
       - success
+      type: object
+    UpgradeIntegrationProviderRevisionInput:
+      example:
+        dropRemovedFields: true
+      properties:
+        dropRemovedFields:
+          description: Permanently deletes fields absent from the target revision
+            when the preview allows it.
+          type: boolean
+      required:
+      - dropRemovedFields
+      type: object
+    KubernetesVersionUpgradeTarget:
+      example:
+        preview: true
+        kind: patch
+        title: title
+        version: version
+      properties:
+        version:
+          type: string
+        title:
+          type: string
+        kind:
+          enum:
+          - patch
+          - minor
+          type: string
+        preview:
+          type: boolean
+      required:
+      - kind
+      - preview
+      - title
+      - version
+      type: object
+    KubernetesVersionUpgradePlan:
+      example:
+        providerVersion: providerVersion
+        provider: provider
+        observedAt: 2000-01-23T04:56:07.000+00:00
+        warnings:
+        - warnings
+        - warnings
+        blockers:
+        - blockers
+        - blockers
+        targets:
+        - preview: true
+          kind: patch
+          title: title
+          version: version
+        - preview: true
+          kind: patch
+          title: title
+          version: version
+        currentVersion: currentVersion
+        supported: true
+      properties:
+        currentVersion:
+          type: string
+        providerVersion:
+          type: string
+        provider:
+          type: string
+        supported:
+          type: boolean
+        targets:
+          items:
+            $ref: '#/components/schemas/KubernetesVersionUpgradeTarget'
+          type: array
+        blockers:
+          items:
+            type: string
+          type: array
+        warnings:
+          items:
+            type: string
+          type: array
+        observedAt:
+          format: date-time
+          type: string
+      required:
+      - blockers
+      - currentVersion
+      - observedAt
+      - provider
+      - providerVersion
+      - supported
+      - targets
+      - warnings
       type: object
     AutomationTimeWindow:
       example:
@@ -11292,9 +11589,13 @@ components:
           allowMinor: true
           branches: true
           enabled: true
+        autoBaseRevisionUpdate:
+          enabled: true
       properties:
         gitAutoUpdate:
           $ref: '#/components/schemas/GitAutoUpdateSettings'
+        autoBaseRevisionUpdate:
+          $ref: '#/components/schemas/ServiceAutoBaseRevisionUpdateSettings'
       type: object
     ServiceSettingsInput:
       example:
@@ -11305,9 +11606,31 @@ components:
           allowMinor: true
           branches: true
           enabled: true
+        autoBaseRevisionUpdate:
+          enabled: true
       properties:
         gitAutoUpdate:
           $ref: '#/components/schemas/GitAutoUpdateSettingsInput'
+        autoBaseRevisionUpdate:
+          $ref: '#/components/schemas/ServiceAutoBaseRevisionUpdateSettingsInput'
+      type: object
+    ServiceAutoBaseRevisionUpdateSettings:
+      example:
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+      required:
+      - enabled
+      type: object
+    ServiceAutoBaseRevisionUpdateSettingsInput:
+      example:
+        enabled: true
+      properties:
+        enabled:
+          type: boolean
+      required:
+      - enabled
       type: object
     ProviderSettingsInput:
       example:
@@ -11324,7 +11647,7 @@ components:
       required:
       - gitAutoUpdate
       type: object
-    AppInstanceStackUpgradeSettings:
+    AppEnvironmentStackUpgradeSettings:
       example:
         cron: true
         settings: true
@@ -11377,7 +11700,7 @@ components:
       - versions
       - volumes
       type: object
-    AppInstanceStackUpgradeSettingsInput:
+    AppEnvironmentStackUpgradeSettingsInput:
       example:
         cron: true
         settings: true
@@ -11417,7 +11740,7 @@ components:
         main:
           type: boolean
       type: object
-    AppInstanceAutoStackUpgradeSettings:
+    AppEnvironmentAutoStackUpgradeSettings:
       example:
         timeWindow:
           start: 02:00
@@ -11444,13 +11767,13 @@ components:
         enabled:
           type: boolean
         upgradeSettings:
-          $ref: '#/components/schemas/AppInstanceStackUpgradeSettings'
+          $ref: '#/components/schemas/AppEnvironmentStackUpgradeSettings'
         timeWindow:
           $ref: '#/components/schemas/AutomationTimeWindow'
       required:
       - enabled
       type: object
-    AppInstanceAutoStackUpgradeSettingsInput:
+    AppEnvironmentAutoStackUpgradeSettingsInput:
       example:
         timeWindow:
           start: 02:00
@@ -11478,13 +11801,13 @@ components:
         enabled:
           type: boolean
         upgradeSettings:
-          $ref: '#/components/schemas/AppInstanceStackUpgradeSettingsInput'
+          $ref: '#/components/schemas/AppEnvironmentStackUpgradeSettingsInput'
         timeWindow:
           $ref: '#/components/schemas/AutomationTimeWindowInput'
       required:
       - enabled
       type: object
-    AppInstanceSettings:
+    AppEnvironmentSettings:
       example:
         autoStackUpgrade:
           timeWindow:
@@ -11510,9 +11833,9 @@ components:
           enabled: true
       properties:
         autoStackUpgrade:
-          $ref: '#/components/schemas/AppInstanceAutoStackUpgradeSettings'
+          $ref: '#/components/schemas/AppEnvironmentAutoStackUpgradeSettings'
       type: object
-    AppInstanceSettingsInput:
+    AppEnvironmentSettingsInput:
       example:
         autoStackUpgrade:
           timeWindow:
@@ -11539,9 +11862,9 @@ components:
           enabled: true
       properties:
         autoStackUpgrade:
-          $ref: '#/components/schemas/AppInstanceAutoStackUpgradeSettingsInput'
+          $ref: '#/components/schemas/AppEnvironmentAutoStackUpgradeSettingsInput'
       type: object
-    AppInstanceMaintenanceModeInput:
+    AppEnvironmentMaintenanceModeInput:
       example:
         enabled: true
       properties:
@@ -11550,7 +11873,7 @@ components:
       required:
       - enabled
       type: object
-    AppInstanceCICDSettingsInput:
+    AppEnvironmentCICDSettingsInput:
       example:
         registryIntegrationId: 6
         ciIntegrationId: 0
@@ -11567,14 +11890,14 @@ components:
       - ciIntegrationId
       - registryIntegrationId
       type: object
-    AppInstanceCICDSettings:
+    AppEnvironmentCICDSettings:
       example:
-        appInstanceId: 0
         registryRepository: registryRepository
         registryIntegrationId: 1
+        appEnvironmentId: 0
         ciIntegrationId: 6
       properties:
-        appInstanceId:
+        appEnvironmentId:
           type: integer
         ciIntegrationId:
           description: Effective CI integration ID. Zero selects the built-in Wodby
@@ -11587,7 +11910,7 @@ components:
         registryRepository:
           type: string
       required:
-      - appInstanceId
+      - appEnvironmentId
       - ciIntegrationId
       - registryIntegrationId
       - registryRepository
@@ -13914,7 +14237,9 @@ components:
           autoBackups: true
           wodbyCloud: true
           appInstancePause: true
+          orgSSO: true
           autoscale: true
+          appAccess: true
           users: true
         domain: domain
         name: name
@@ -13976,7 +14301,9 @@ components:
         autoBackups: true
         wodbyCloud: true
         appInstancePause: true
+        orgSSO: true
         autoscale: true
+        appAccess: true
         users: true
       properties:
         customDomains:
@@ -13995,14 +14322,20 @@ components:
           type: boolean
         webShell:
           type: boolean
+        appAccess:
+          type: boolean
+        orgSSO:
+          type: boolean
         wodbyCloud:
           type: boolean
       required:
+      - appAccess
       - appInstancePause
       - autoBackups
       - autoscale
       - cronSchedules
       - customDomains
+      - orgSSO
       - projects
       - users
       - webShell
@@ -14178,7 +14511,9 @@ components:
             autoBackups: true
             wodbyCloud: true
             appInstancePause: true
+            orgSSO: true
             autoscale: true
+            appAccess: true
             users: true
           domain: domain
           name: name
@@ -14198,7 +14533,9 @@ components:
             autoBackups: true
             wodbyCloud: true
             appInstancePause: true
+            orgSSO: true
             autoscale: true
+            appAccess: true
             users: true
           domain: domain
           name: name
@@ -14377,9 +14714,10 @@ components:
       - title
       - updatedAt
       type: object
-    AppInstance:
+    AppEnvironment:
       example:
         access: "{}"
+        environmentType: prod
         stackName: stackName
         mainDomain: mainDomain
         mainRouteCert: "{}"
@@ -14387,7 +14725,7 @@ components:
         clusterId: 1
         title: title
         createdAt: 2000-01-23T04:56:07.000+00:00
-        stackRevId: 2
+        stackRevId: 5
         outdated: true
         appId: 6
         stackIcon: stackIcon
@@ -14421,29 +14759,28 @@ components:
         health:
           cron:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
-            failingSchedulesCount: 3
+            failingSchedulesCount: 9
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
-            failingSchedulesCount: 2
-        envId: 5
+            failingSchedulesCount: 3
         stackTitle: stackTitle
         stackVersion: stackVersion
         configurationIssues:
-        - appServiceId: 9
+        - appServiceId: 7
           code: code
           appServiceName: appServiceName
           name: name
           appServiceTitle: appServiceTitle
           title: title
           message: message
-        - appServiceId: 9
+        - appServiceId: 7
           code: code
           appServiceName: appServiceName
           name: name
           appServiceTitle: appServiceTitle
           title: title
           message: message
-        stackRevNumber: 7
+        stackRevNumber: 2
         name: name
         routingMode: routingMode
         maintenanceMode: true
@@ -14456,6 +14793,14 @@ components:
           type: string
         title:
           type: string
+        environmentType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          type: string
         status:
           type: string
         outdated:
@@ -14465,14 +14810,12 @@ components:
           type: string
         mainRouteCert:
           allOf:
-          - $ref: '#/components/schemas/AppInstanceMainRouteCert'
+          - $ref: '#/components/schemas/AppEnvironmentMainRouteCert'
           nullable: true
           type: object
         appId:
           type: integer
         clusterId:
-          type: integer
-        envId:
           type: integer
         stackId:
           type: integer
@@ -14508,9 +14851,9 @@ components:
             $ref: '#/components/schemas/AppServiceConfigurationIssue'
           type: array
         settings:
-          $ref: '#/components/schemas/AppInstanceSettings'
+          $ref: '#/components/schemas/AppEnvironmentSettings'
         health:
-          $ref: '#/components/schemas/AppInstanceHealth'
+          $ref: '#/components/schemas/AppEnvironmentHealth'
         createdAt:
           format: date-time
           type: string
@@ -14523,7 +14866,7 @@ components:
       - configurationIssues
       - configurationReady
       - createdAt
-      - envId
+      - environmentType
       - health
       - id
       - mainRouteCert
@@ -14544,7 +14887,7 @@ components:
       - title
       - updatedAt
       type: object
-    AppInstanceMainRouteCert:
+    AppEnvironmentMainRouteCert:
       properties:
         issuer:
           type: string
@@ -14554,24 +14897,38 @@ components:
       - custom
       - issuer
       type: object
-    AppInstanceHealth:
+    AppEnvironmentHealth:
       example:
         cron:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
-          failingSchedulesCount: 3
+          failingSchedulesCount: 9
         backups:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
-          failingSchedulesCount: 2
+          failingSchedulesCount: 3
       properties:
         cron:
-          $ref: '#/components/schemas/AppInstanceCronHealth'
+          $ref: '#/components/schemas/AppEnvironmentCronHealth'
         backups:
-          $ref: '#/components/schemas/AppInstanceBackupHealth'
+          $ref: '#/components/schemas/AppEnvironmentBackupHealth'
       required:
       - backups
       - cron
       type: object
-    AppInstanceCronHealth:
+    AppEnvironmentCronHealth:
+      example:
+        latestFailureAt: 2000-01-23T04:56:07.000+00:00
+        failingSchedulesCount: 9
+      properties:
+        failingSchedulesCount:
+          type: integer
+        latestFailureAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - failingSchedulesCount
+      type: object
+    AppEnvironmentBackupHealth:
       example:
         latestFailureAt: 2000-01-23T04:56:07.000+00:00
         failingSchedulesCount: 3
@@ -14585,22 +14942,9 @@ components:
       required:
       - failingSchedulesCount
       type: object
-    AppInstanceBackupHealth:
-      example:
-        latestFailureAt: 2000-01-23T04:56:07.000+00:00
-        failingSchedulesCount: 2
-      properties:
-        failingSchedulesCount:
-          type: integer
-        latestFailureAt:
-          format: date-time
-          nullable: true
-          type: string
-      required:
-      - failingSchedulesCount
-      type: object
     AppDeployment:
       example:
+        preparationTaskId: 1
         startedAt: 2000-01-23T04:56:07.000+00:00
         postDeploymentTask: "{}"
         postDeploymentStatus: unknown
@@ -14608,32 +14952,33 @@ components:
         appServiceDeployments:
         - jobName: jobName
           buildSelectionKind: buildSelectionKind
-          appServiceBuildId: 7
+          appServiceBuildId: 1
           startedAt: 2000-01-23T04:56:07.000+00:00
-          previousAppServiceBuildId: 1
+          previousAppServiceBuildId: 4
           skipPostDeployment: true
-          appServiceId: 6
+          appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           force: true
-          id: 1
+          id: 6
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - jobName: jobName
           buildSelectionKind: buildSelectionKind
-          appServiceBuildId: 7
+          appServiceBuildId: 1
           startedAt: 2000-01-23T04:56:07.000+00:00
-          previousAppServiceBuildId: 1
+          previousAppServiceBuildId: 4
           skipPostDeployment: true
-          appServiceId: 6
+          appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           force: true
-          id: 1
+          id: 6
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         skipRollback: true
         appInstanceId: 1
+        preparationTask: "{}"
         number: 6
         createdAt: 2000-01-23T04:56:07.000+00:00
         task: "{}"
@@ -14731,6 +15076,7 @@ components:
         rollbackStatus: not_attempted
         taskId: 1
         status: status
+        canCancel: true
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -14759,12 +15105,22 @@ components:
           type: string
         skipRollback:
           type: boolean
+        canCancel:
+          type: boolean
         appInstanceId:
           type: integer
         builds:
           items:
             $ref: '#/components/schemas/AppBuild'
           type: array
+        preparationTaskId:
+          nullable: true
+          type: integer
+        preparationTask:
+          allOf:
+          - $ref: '#/components/schemas/Task'
+          nullable: true
+          type: object
         taskId:
           nullable: true
           type: integer
@@ -14803,6 +15159,7 @@ components:
       - appInstanceId
       - appServiceDeployments
       - builds
+      - canCancel
       - createdAt
       - id
       - number
@@ -14816,15 +15173,15 @@ components:
       example:
         jobName: jobName
         buildSelectionKind: buildSelectionKind
-        appServiceBuildId: 7
+        appServiceBuildId: 1
         startedAt: 2000-01-23T04:56:07.000+00:00
-        previousAppServiceBuildId: 1
+        previousAppServiceBuildId: 4
         skipPostDeployment: true
-        appServiceId: 6
+        appServiceId: 7
         createdAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
         force: true
-        id: 1
+        id: 6
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -14875,42 +15232,44 @@ components:
       type: object
     AppDeploymentsResponse:
       example:
-        nextPage: 5
-        totalCount: 4
+        nextPage: 9
+        totalCount: 5
         items:
-        - startedAt: 2000-01-23T04:56:07.000+00:00
+        - preparationTaskId: 1
+          startedAt: 2000-01-23T04:56:07.000+00:00
           postDeploymentTask: "{}"
           postDeploymentStatus: unknown
           postDeploymentTaskId: 1
           appServiceDeployments:
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 7
+            appServiceBuildId: 1
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 1
+            previousAppServiceBuildId: 4
             skipPostDeployment: true
-            appServiceId: 6
+            appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 1
+            id: 6
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 7
+            appServiceBuildId: 1
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 1
+            previousAppServiceBuildId: 4
             skipPostDeployment: true
-            appServiceId: 6
+            appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 1
+            id: 6
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           skipRollback: true
           appInstanceId: 1
+          preparationTask: "{}"
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
@@ -15008,40 +15367,43 @@ components:
           rollbackStatus: not_attempted
           taskId: 1
           status: status
+          canCancel: true
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - startedAt: 2000-01-23T04:56:07.000+00:00
+        - preparationTaskId: 1
+          startedAt: 2000-01-23T04:56:07.000+00:00
           postDeploymentTask: "{}"
           postDeploymentStatus: unknown
           postDeploymentTaskId: 1
           appServiceDeployments:
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 7
+            appServiceBuildId: 1
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 1
+            previousAppServiceBuildId: 4
             skipPostDeployment: true
-            appServiceId: 6
+            appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 1
+            id: 6
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 7
+            appServiceBuildId: 1
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 1
+            previousAppServiceBuildId: 4
             skipPostDeployment: true
-            appServiceId: 6
+            appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 1
+            id: 6
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           skipRollback: true
           appInstanceId: 1
+          preparationTask: "{}"
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
           task: "{}"
@@ -15139,6 +15501,7 @@ components:
           rollbackStatus: not_attempted
           taskId: 1
           status: status
+          canCancel: true
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         items:
@@ -15546,8 +15909,7 @@ components:
         registryRepository: registryRepository
         registryHost: registryHost
         services:
-        - copyTo: copyTo
-          args:
+        - args:
           - name: name
             secret: true
             value: value
@@ -15560,10 +15922,9 @@ components:
           name: name
           main: true
           dockerignore: dockerignore
+          copySubdir: copySubdir
           title: title
-          copyFrom: copyFrom
-        - copyTo: copyTo
-          args:
+        - args:
           - name: name
             secret: true
             value: value
@@ -15576,8 +15937,8 @@ components:
           name: name
           main: true
           dockerignore: dockerignore
+          copySubdir: copySubdir
           title: title
-          copyFrom: copyFrom
       properties:
         registryHost:
           type: string
@@ -15594,7 +15955,6 @@ components:
       type: object
     AppServiceBuildConfig:
       example:
-        copyTo: copyTo
         args:
         - name: name
           secret: true
@@ -15608,8 +15968,8 @@ components:
         name: name
         main: true
         dockerignore: dockerignore
+        copySubdir: copySubdir
         title: title
-        copyFrom: copyFrom
       properties:
         name:
           type: string
@@ -15627,13 +15987,9 @@ components:
         dockerignore:
           nullable: true
           type: string
-        copyFrom:
-          description: "Build context subdirectory to copy, relative to the CI --from\
-            \ path. Empty means the whole context."
-          type: string
-        copyTo:
-          description: "Image subdirectory to copy into, relative to the CI --to path.\
-            \ Empty means the image working directory."
+        copySubdir:
+          description: "Resolved subdirectory this build copies, applied under both\
+            \ the CI --from and --to paths. Empty means the whole context."
           type: string
         args:
           items:
@@ -15641,8 +15997,7 @@ components:
           nullable: true
           type: array
       required:
-      - copyFrom
-      - copyTo
+      - copySubdir
       - image
       - main
       - managed
@@ -15691,15 +16046,22 @@ components:
           - mountOptions
         lastNodesReady: 5
         lastNodesTotal: 5
+        envScope: all
         maxNodeCount: 1
         k3s: true
         title: title
+        allowedEnvTypes:
+        - prod
+        - prod
         demo: true
-        orgId: 7
+        orgId: 3
+        allowedEnvIds:
+        - 9
+        - 9
         createdAt: 2000-01-23T04:56:07.000+00:00
         hostname: hostname
         minNodeCount: 6
-        ownerProjectId: 9
+        ownerProjectId: 2
         storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
         zone: zone
         singleNode: true
@@ -15742,11 +16104,13 @@ components:
           envoyGateway: true
         serverless: true
         integrationId: 2
+        envId: 7
         version: version
         ips:
         - ips
         - ips
         infraVersion: infraVersion
+        envType: prod
         name: name
         region: region
         ownershipScope: org
@@ -15804,6 +16168,39 @@ components:
         integrationId:
           nullable: true
           type: integer
+        envId:
+          deprecated: true
+          description: Legacy internal environment entity ID. Use envType.
+          type: integer
+        envType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          type: string
+        envScope:
+          enum:
+          - all
+          - selected
+          type: string
+        allowedEnvIds:
+          deprecated: true
+          description: Legacy internal environment entity IDs. Use allowedEnvTypes.
+          items:
+            type: integer
+          type: array
+        allowedEnvTypes:
+          items:
+            enum:
+            - prod
+            - test
+            - staging
+            - dev
+            - feature
+            type: string
+          type: array
         orgId:
           type: integer
         ownershipScope:
@@ -15834,9 +16231,14 @@ components:
           format: date-time
           type: string
       required:
+      - allowedEnvIds
+      - allowedEnvTypes
       - capabilities
       - createdAt
       - demo
+      - envId
+      - envScope
+      - envType
       - id
       - infraVersion
       - k3s
@@ -15918,6 +16320,7 @@ components:
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
         zone: zone
+        envType: prod
         name: name
         id: 0
         region: region
@@ -15951,7 +16354,17 @@ components:
           nullable: true
           type: integer
         envId:
+          deprecated: true
+          description: Legacy internal environment entity ID. Use envType.
           type: integer
+        envType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          type: string
         orgId:
           type: integer
         createdAt:
@@ -15963,6 +16376,7 @@ components:
       required:
       - createdAt
       - envId
+      - envType
       - id
       - kind
       - name
@@ -15975,18 +16389,23 @@ components:
       type: object
     Integration:
       example:
+        primaryEnvId: 5
+        auth: auth
+        primaryEnvType: prod
+        providerRevId: 6
+        envScope: all
+        title: title
+        allowedEnvTypes:
+        - prod
+        - prod
+        orgId: 1
         allowedEnvIds:
         - 5
         - 5
         createdAt: 2000-01-23T04:56:07.000+00:00
-        primaryEnvId: 5
-        auth: auth
+        outdated: true
         scope: scope
-        providerRevId: 6
-        envScope: all
         id: 0
-        title: title
-        orgId: 1
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -16002,21 +16421,46 @@ components:
         auth:
           nullable: true
           type: string
+        outdated:
+          type: boolean
         providerRevId:
           type: integer
         orgId:
           type: integer
         primaryEnvId:
+          deprecated: true
+          description: Legacy internal environment entity ID. Use primaryEnvType.
           nullable: true
           type: integer
+        primaryEnvType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
         envScope:
           enum:
           - all
           - selected
           type: string
         allowedEnvIds:
+          deprecated: true
+          description: Legacy internal environment entity IDs. Use allowedEnvTypes.
           items:
             type: integer
+          type: array
+        allowedEnvTypes:
+          items:
+            enum:
+            - prod
+            - test
+            - staging
+            - dev
+            - feature
+            type: string
           type: array
         createdAt:
           format: date-time
@@ -16026,10 +16470,12 @@ components:
           type: string
       required:
       - allowedEnvIds
+      - allowedEnvTypes
       - createdAt
       - envScope
       - id
       - orgId
+      - outdated
       - providerRevId
       - status
       - title
@@ -16037,12 +16483,15 @@ components:
       type: object
     Backup:
       example:
-        integrationId: 2
+        backupPresetId: 2
+        integrationId: 7
         startedAt: 2000-01-23T04:56:07.000+00:00
         databaseDbId: 5
+        manual: true
         appInstanceId: 6
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
+        size: 0
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
         options:
@@ -16056,7 +16505,7 @@ components:
           name: name
         id: 0
         databaseId: 5
-        taskId: 7
+        taskId: 9
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -16078,12 +16527,24 @@ components:
         databaseDbId:
           nullable: true
           type: integer
+        backupPresetId:
+          nullable: true
+          type: integer
+        manual:
+          type: boolean
         integrationId:
           description: Storage integration that owns the backup. Null identifies Wodby's
             built-in blob storage.
           nullable: true
           type: integer
         taskId:
+          nullable: true
+          type: integer
+        size:
+          description: Final stored archive size in bytes. Null when the size has
+            not been recorded.
+          format: int64
+          minimum: 0
           nullable: true
           type: integer
         options:
@@ -16108,10 +16569,80 @@ components:
       - createdAt
       - id
       - integrationId
+      - manual
       - name
       - options
       - status
       - updatedAt
+      type: object
+    BackupsResponse:
+      example:
+        nextPage: 6
+        totalCount: 0
+        items:
+        - backupPresetId: 2
+          integrationId: 7
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          databaseDbId: 5
+          manual: true
+          appInstanceId: 6
+          appServiceId: 1
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          size: 0
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          options:
+          - values:
+            - values
+            - values
+            name: name
+          - values:
+            - values
+            - values
+            name: name
+          id: 0
+          databaseId: 5
+          taskId: 9
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - backupPresetId: 2
+          integrationId: 7
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          databaseDbId: 5
+          manual: true
+          appInstanceId: 6
+          appServiceId: 1
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          size: 0
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          options:
+          - values:
+            - values
+            - values
+            name: name
+          - values:
+            - values
+            - values
+            name: name
+          id: 0
+          databaseId: 5
+          taskId: 9
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Backup'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
       type: object
     BackupPreset:
       example:
@@ -16134,6 +16665,10 @@ components:
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
         storageClass: storageClass
+        envTypes:
+        - dev
+        - dev
+        backupCategory: any
         options:
         - values:
           - values
@@ -16171,6 +16706,22 @@ components:
         envId:
           nullable: true
           type: integer
+        envTypes:
+          items:
+            enum:
+            - dev
+            - feature
+            - test
+            - staging
+            - prod
+            type: string
+          type: array
+        backupCategory:
+          enum:
+          - any
+          - files
+          - database
+          type: string
         backupName:
           nullable: true
           type: string
@@ -16213,53 +16764,41 @@ components:
           type: string
       required:
       - auto
+      - backupCategory
       - bucket
       - createdAt
       - disabled
+      - envTypes
       - id
       - integrationId
       - options
       - override
       - updatedAt
       type: object
-    BackupOption:
-      example:
-        values:
-        - values
-        - values
-        name: name
-      properties:
-        name:
-          type: string
-        values:
-          items:
-            type: string
-          type: array
-      required:
-      - name
-      - values
-      type: object
     Task:
       example:
+        compactTitle: compactTitle
         startedAt: 2000-01-23T04:56:07.000+00:00
         projectIds:
         - 5
         - 5
-        clusterId: 9
+        clusterId: 3
         title: title
         orgId: 5
         appInstanceId: 7
+        appServiceId: 9
         createdAt: 2000-01-23T04:56:07.000+00:00
-        providerId: 7
+        providerId: 1
         appId: 2
         spawnedTaskIds:
-        - 1
-        - 1
+        - 6
+        - 6
         id: 0
-        serviceId: 2
+        databaseId: 2
+        serviceId: 7
         updatedAt: 2000-01-23T04:56:07.000+00:00
         silent: true
-        stackId: 4
+        stackId: 1
         jobs:
         - statusTitle: statusTitle
           startedAt: 2000-01-23T04:56:07.000+00:00
@@ -16270,7 +16809,7 @@ components:
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
-            id: 1
+            id: 5
             position: 1
             status: status
           - isSystem: true
@@ -16278,15 +16817,15 @@ components:
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
-            id: 1
+            id: 5
             position: 1
             status: status
-          timeout: 7
+          timeout: 4
           isSystem: true
           createdAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 6
+          id: 1
           after:
           - after
           - after
@@ -16301,7 +16840,7 @@ components:
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
-            id: 1
+            id: 5
             position: 1
             status: status
           - isSystem: true
@@ -16309,23 +16848,23 @@ components:
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             startedAt: 2000-01-23T04:56:07.000+00:00
-            id: 1
+            id: 5
             position: 1
             status: status
-          timeout: 7
+          timeout: 4
           isSystem: true
           createdAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          id: 6
+          id: 1
           after:
           - after
           - after
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        integrationId: 3
+        integrationId: 4
         userId: 1
-        repeatedTaskId: 1
+        repeatedTaskId: 7
         system: true
         originTaskId: 1
         executionScope: user
@@ -16340,6 +16879,8 @@ components:
         name:
           type: string
         title:
+          type: string
+        compactTitle:
           type: string
         executionScope:
           enum:
@@ -16376,7 +16917,13 @@ components:
         appInstanceId:
           nullable: true
           type: integer
+        appServiceId:
+          nullable: true
+          type: integer
         clusterId:
+          nullable: true
+          type: integer
+        databaseId:
           nullable: true
           type: integer
         integrationId:
@@ -16420,6 +16967,7 @@ components:
           nullable: true
           type: string
       required:
+      - compactTitle
       - createdAt
       - executionScope
       - id
@@ -16433,6 +16981,23 @@ components:
       - updatedAt
       - userId
       type: object
+    BackupOption:
+      example:
+        values:
+        - values
+        - values
+        name: name
+      properties:
+        name:
+          type: string
+        values:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      - values
+      type: object
     TaskJob:
       example:
         statusTitle: statusTitle
@@ -16444,7 +17009,7 @@ components:
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           startedAt: 2000-01-23T04:56:07.000+00:00
-          id: 1
+          id: 5
           position: 1
           status: status
         - isSystem: true
@@ -16452,15 +17017,15 @@ components:
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           startedAt: 2000-01-23T04:56:07.000+00:00
-          id: 1
+          id: 5
           position: 1
           status: status
-        timeout: 7
+        timeout: 4
         isSystem: true
         createdAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        id: 6
+        id: 1
         after:
         - after
         - after
@@ -16522,7 +17087,7 @@ components:
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
         startedAt: 2000-01-23T04:56:07.000+00:00
-        id: 1
+        id: 5
         position: 1
         status: status
       properties:
@@ -16686,7 +17251,7 @@ components:
       type: object
     AppServiceConfigurationIssue:
       example:
-        appServiceId: 9
+        appServiceId: 7
         code: code
         appServiceName: appServiceName
         name: name
@@ -17563,7 +18128,7 @@ components:
       - name
       - title
       type: object
-    AppInstanceStackUpgradeChangelog:
+    AppEnvironmentStackUpgradeChangelog:
       example:
         previousStackVersion: previousStackVersion
         stackVersion: stackVersion
@@ -17777,7 +18342,7 @@ components:
         appServiceId:
           deprecated: true
           description: Single protected app service. Null when the entry protects
-            several services or the whole app instance.
+            several services or the whole app environment.
           nullable: true
           type: integer
         appRouteId:
@@ -17858,7 +18423,32 @@ components:
       - SESSION_AFFINITY
       - PATH_REWRITE
       - HSTS
+      - REQUEST_TIMEOUT
+      - BACKEND_REQUEST_TIMEOUT
       type: string
+    AppRouteSettingSource:
+      enum:
+      - APP_DEFAULT
+      - SERVICE_DEFAULT
+      - ROUTE_OVERRIDE
+      type: string
+    EffectiveAppRouteSetting:
+      example:
+        name: HTTPS_REDIRECT
+        source: APP_DEFAULT
+        value: value
+      properties:
+        name:
+          $ref: '#/components/schemas/AppRouteSettingName'
+        value:
+          type: string
+        source:
+          $ref: '#/components/schemas/AppRouteSettingSource'
+      required:
+      - name
+      - source
+      - value
+      type: object
     Cert:
       example:
         dnsNames:
@@ -17951,41 +18541,6 @@ components:
       - status
       - updatedAt
       type: object
-    Env:
-      example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        name: name
-        id: 0
-        title: title
-        type: type
-        orgId: 6
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        title:
-          type: string
-        type:
-          type: string
-        orgId:
-          type: integer
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      required:
-      - createdAt
-      - id
-      - name
-      - orgId
-      - title
-      - type
-      - updatedAt
-      type: object
     Provider:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -18037,6 +18592,7 @@ components:
         manifest:
           key: ""
         name: name
+        icon: icon
         id: 0
         title: title
         version: version
@@ -18045,6 +18601,8 @@ components:
         id:
           type: integer
         name:
+          type: string
+        icon:
           type: string
         title:
           type: string
@@ -18064,6 +18622,7 @@ components:
           type: string
       required:
       - createdAt
+      - icon
       - id
       - name
       - number
@@ -18071,6 +18630,71 @@ components:
       - providerId
       - title
       - version
+      type: object
+    IntegrationProviderRevisionUpgrade:
+      example:
+        currentRevision:
+          number: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          providerId: 1
+          manifest:
+            key: ""
+          name: name
+          icon: icon
+          id: 0
+          title: title
+          version: version
+          permissionAudit: true
+        reasons:
+        - reasons
+        - reasons
+        targetRevision:
+          number: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          providerId: 1
+          manifest:
+            key: ""
+          name: name
+          icon: icon
+          id: 0
+          title: title
+          version: version
+          permissionAudit: true
+        state: current
+        removedFields:
+        - removedFields
+        - removedFields
+        canDropRemovedFields: true
+      properties:
+        state:
+          enum:
+          - current
+          - safe
+          - blocked
+          - migration_required
+          - error
+          type: string
+        reasons:
+          items:
+            type: string
+          type: array
+        removedFields:
+          items:
+            type: string
+          type: array
+        canDropRemovedFields:
+          type: boolean
+        currentRevision:
+          $ref: '#/components/schemas/ProviderRevision'
+        targetRevision:
+          $ref: '#/components/schemas/ProviderRevision'
+      required:
+      - canDropRemovedFields
+      - currentRevision
+      - reasons
+      - removedFields
+      - state
+      - targetRevision
       type: object
     GitRepoUsage:
       example:
@@ -18177,6 +18801,8 @@ components:
             allowMinor: true
             branches: true
             enabled: true
+          autoBaseRevisionUpdate:
+            enabled: true
         revId: 6
         title: title
         type: type
@@ -18252,6 +18878,19 @@ components:
             multiple: true
             title: title
             type: GIT
+            env:
+            - build: true
+              name: name
+              runtime: true
+              secret: true
+              env: env
+              value: value
+            - build: true
+              name: name
+              runtime: true
+              secret: true
+              env: env
+              value: value
             required: true
             labels:
             - labels
@@ -18267,6 +18906,19 @@ components:
             multiple: true
             title: title
             type: GIT
+            env:
+            - build: true
+              name: name
+              runtime: true
+              secret: true
+              env: env
+              value: value
+            - build: true
+              name: name
+              runtime: true
+              secret: true
+              env: env
+              value: value
             required: true
             labels:
             - labels
@@ -18327,6 +18979,19 @@ components:
           multiple: true
           title: title
           type: GIT
+          env:
+          - build: true
+            name: name
+            runtime: true
+            secret: true
+            env: env
+            value: value
+          - build: true
+            name: name
+            runtime: true
+            secret: true
+            env: env
+            value: value
           required: true
           labels:
           - labels
@@ -18342,6 +19007,19 @@ components:
           multiple: true
           title: title
           type: GIT
+          env:
+          - build: true
+            name: name
+            runtime: true
+            secret: true
+            env: env
+            value: value
+          - build: true
+            name: name
+            runtime: true
+            secret: true
+            env: env
+            value: value
           required: true
           labels:
           - labels
@@ -18372,6 +19050,19 @@ components:
         multiple: true
         title: title
         type: GIT
+        env:
+        - build: true
+          name: name
+          runtime: true
+          secret: true
+          env: env
+          value: value
+        - build: true
+          name: name
+          runtime: true
+          secret: true
+          env: env
+          value: value
         required: true
         labels:
         - labels
@@ -18403,17 +19094,50 @@ components:
           items:
             $ref: '#/components/schemas/IntegrationVariableRequirement'
           type: array
+        env:
+          items:
+            $ref: '#/components/schemas/ServiceManifestEnvVar'
+          type: array
         required:
           type: boolean
         multiple:
           type: boolean
       required:
+      - env
       - multiple
       - name
       - required
       - title
       - type
       - variables
+      type: object
+    ServiceManifestEnvVar:
+      example:
+        build: true
+        name: name
+        runtime: true
+        secret: true
+        env: env
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+        env:
+          type: string
+        runtime:
+          type: boolean
+        build:
+          type: boolean
+      required:
+      - build
+      - name
+      - runtime
+      - secret
+      - value
       type: object
     ServicesResponse:
       example:
@@ -18427,6 +19151,8 @@ components:
               semverTags: true
               allowMinor: true
               branches: true
+              enabled: true
+            autoBaseRevisionUpdate:
               enabled: true
           revId: 6
           title: title
@@ -18447,6 +19173,8 @@ components:
               semverTags: true
               allowMinor: true
               branches: true
+              enabled: true
+            autoBaseRevisionUpdate:
               enabled: true
           revId: 6
           title: title
@@ -18702,6 +19430,54 @@ components:
         serviceRevPinned: true
         serviceRevId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
+        deploymentConfiguration:
+          effective:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+          workloads:
+          - effective:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+            kind: deployment
+            name: name
+            override:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+          - effective:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+            kind: deployment
+            name: name
+            override:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+          override:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
         outdated: true
         buildSourceIntegrationId: 5
         name: name
@@ -18785,6 +19561,8 @@ components:
           items:
             $ref: '#/components/schemas/StackServiceContainer'
           type: array
+        deploymentConfiguration:
+          $ref: '#/components/schemas/ServiceDeploymentConfiguration'
         createdAt:
           format: date-time
           type: string
@@ -18793,6 +19571,7 @@ components:
           type: string
       required:
       - createdAt
+      - deploymentConfiguration
       - disabled
       - id
       - main
@@ -18938,31 +19717,84 @@ components:
       type: object
     AppService:
       example:
-        buildSourceBoilerplate: buildSourceBoilerplate
-        needsRebuild: true
-        replicas: 6
         effectiveCiIntegrationId: 1
         main: true
         title: title
         type: type
-        version: version
-        ciPolicy: INHERIT
         scalability: "{}"
         required: true
+        stackState: current
         appInstanceId: 5
         serviceRevId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
-        external: true
         parentAppServiceId: 2
+        deploymentConfiguration:
+          effective:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+          workloads:
+          - effective:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+            kind: deployment
+            name: name
+            override:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+          - effective:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+            kind: deployment
+            name: name
+            override:
+              maxSurge: maxSurge
+              shutdownGracePeriod: shutdownGracePeriod
+              maxUnavailable: maxUnavailable
+              minReady: minReady
+              strategy: ROLLING
+              progressDeadline: progressDeadline
+          override:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+        disabled: true
+        id: 0
+        configurationReady: true
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        buildSourceBoilerplate: buildSourceBoilerplate
+        needsRebuild: true
+        replicas: 6
+        version: version
+        ciPolicy: INHERIT
+        external: true
         configurationIssues:
-        - appServiceId: 9
+        - appServiceId: 7
           code: code
           appServiceName: appServiceName
           name: name
           appServiceTitle: appServiceTitle
           title: title
           message: message
-        - appServiceId: 9
+        - appServiceId: 7
           code: code
           appServiceName: appServiceName
           name: name
@@ -18970,12 +19802,8 @@ components:
           title: title
           message: message
         name: name
-        disabled: true
-        id: 0
-        configurationReady: true
         needsRedeploy: true
         status: status
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -19008,6 +19836,12 @@ components:
           type: boolean
         needsRedeploy:
           type: boolean
+        stackState:
+          enum:
+          - current
+          - needs_rebuild
+          - needs_redeploy
+          type: string
         configurationReady:
           type: boolean
         buildSourceBoilerplate:
@@ -19033,6 +19867,8 @@ components:
         parentAppServiceId:
           nullable: true
           type: integer
+        deploymentConfiguration:
+          $ref: '#/components/schemas/ServiceDeploymentConfiguration'
         createdAt:
           format: date-time
           type: string
@@ -19045,6 +19881,7 @@ components:
       - configurationIssues
       - configurationReady
       - createdAt
+      - deploymentConfiguration
       - disabled
       - external
       - id
@@ -19055,6 +19892,7 @@ components:
       - replicas
       - required
       - serviceRevId
+      - stackState
       - status
       - title
       - type
@@ -20293,25 +21131,28 @@ components:
       example:
         treeItems:
         - task:
+            compactTitle: compactTitle
             startedAt: 2000-01-23T04:56:07.000+00:00
             projectIds:
             - 5
             - 5
-            clusterId: 9
+            clusterId: 3
             title: title
             orgId: 5
             appInstanceId: 7
+            appServiceId: 9
             createdAt: 2000-01-23T04:56:07.000+00:00
-            providerId: 7
+            providerId: 1
             appId: 2
             spawnedTaskIds:
-            - 1
-            - 1
+            - 6
+            - 6
             id: 0
-            serviceId: 2
+            databaseId: 2
+            serviceId: 7
             updatedAt: 2000-01-23T04:56:07.000+00:00
             silent: true
-            stackId: 4
+            stackId: 1
             jobs:
             - statusTitle: statusTitle
               startedAt: 2000-01-23T04:56:07.000+00:00
@@ -20322,7 +21163,7 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
               - isSystem: true
@@ -20330,15 +21171,15 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
-              timeout: 7
+              timeout: 4
               isSystem: true
               createdAt: 2000-01-23T04:56:07.000+00:00
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
-              id: 6
+              id: 1
               after:
               - after
               - after
@@ -20353,7 +21194,7 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
               - isSystem: true
@@ -20361,23 +21202,23 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
-              timeout: 7
+              timeout: 4
               isSystem: true
               createdAt: 2000-01-23T04:56:07.000+00:00
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
-              id: 6
+              id: 1
               after:
               - after
               - after
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            integrationId: 3
+            integrationId: 4
             userId: 1
-            repeatedTaskId: 1
+            repeatedTaskId: 7
             system: true
             originTaskId: 1
             executionScope: user
@@ -20388,25 +21229,28 @@ components:
             status: status
           parentId: 0
         - task:
+            compactTitle: compactTitle
             startedAt: 2000-01-23T04:56:07.000+00:00
             projectIds:
             - 5
             - 5
-            clusterId: 9
+            clusterId: 3
             title: title
             orgId: 5
             appInstanceId: 7
+            appServiceId: 9
             createdAt: 2000-01-23T04:56:07.000+00:00
-            providerId: 7
+            providerId: 1
             appId: 2
             spawnedTaskIds:
-            - 1
-            - 1
+            - 6
+            - 6
             id: 0
-            serviceId: 2
+            databaseId: 2
+            serviceId: 7
             updatedAt: 2000-01-23T04:56:07.000+00:00
             silent: true
-            stackId: 4
+            stackId: 1
             jobs:
             - statusTitle: statusTitle
               startedAt: 2000-01-23T04:56:07.000+00:00
@@ -20417,7 +21261,7 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
               - isSystem: true
@@ -20425,15 +21269,15 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
-              timeout: 7
+              timeout: 4
               isSystem: true
               createdAt: 2000-01-23T04:56:07.000+00:00
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
-              id: 6
+              id: 1
               after:
               - after
               - after
@@ -20448,7 +21292,7 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
               - isSystem: true
@@ -20456,23 +21300,23 @@ components:
                 endedAt: 2000-01-23T04:56:07.000+00:00
                 name: name
                 startedAt: 2000-01-23T04:56:07.000+00:00
-                id: 1
+                id: 5
                 position: 1
                 status: status
-              timeout: 7
+              timeout: 4
               isSystem: true
               createdAt: 2000-01-23T04:56:07.000+00:00
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
-              id: 6
+              id: 1
               after:
               - after
               - after
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
-            integrationId: 3
+            integrationId: 4
             userId: 1
-            repeatedTaskId: 1
+            repeatedTaskId: 7
             system: true
             originTaskId: 1
             executionScope: user
@@ -20486,25 +21330,28 @@ components:
         treeTruncated: true
         totalCount: 6
         items:
-        - startedAt: 2000-01-23T04:56:07.000+00:00
+        - compactTitle: compactTitle
+          startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
           - 5
           - 5
-          clusterId: 9
+          clusterId: 3
           title: title
           orgId: 5
           appInstanceId: 7
+          appServiceId: 9
           createdAt: 2000-01-23T04:56:07.000+00:00
-          providerId: 7
+          providerId: 1
           appId: 2
           spawnedTaskIds:
-          - 1
-          - 1
+          - 6
+          - 6
           id: 0
-          serviceId: 2
+          databaseId: 2
+          serviceId: 7
           updatedAt: 2000-01-23T04:56:07.000+00:00
           silent: true
-          stackId: 4
+          stackId: 1
           jobs:
           - statusTitle: statusTitle
             startedAt: 2000-01-23T04:56:07.000+00:00
@@ -20515,7 +21362,7 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
             - isSystem: true
@@ -20523,15 +21370,15 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
-            timeout: 7
+            timeout: 4
             isSystem: true
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
-            id: 6
+            id: 1
             after:
             - after
             - after
@@ -20546,7 +21393,7 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
             - isSystem: true
@@ -20554,23 +21401,23 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
-            timeout: 7
+            timeout: 4
             isSystem: true
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
-            id: 6
+            id: 1
             after:
             - after
             - after
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          integrationId: 3
+          integrationId: 4
           userId: 1
-          repeatedTaskId: 1
+          repeatedTaskId: 7
           system: true
           originTaskId: 1
           executionScope: user
@@ -20579,25 +21426,28 @@ components:
           progress: 6
           user: "{}"
           status: status
-        - startedAt: 2000-01-23T04:56:07.000+00:00
+        - compactTitle: compactTitle
+          startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
           - 5
           - 5
-          clusterId: 9
+          clusterId: 3
           title: title
           orgId: 5
           appInstanceId: 7
+          appServiceId: 9
           createdAt: 2000-01-23T04:56:07.000+00:00
-          providerId: 7
+          providerId: 1
           appId: 2
           spawnedTaskIds:
-          - 1
-          - 1
+          - 6
+          - 6
           id: 0
-          serviceId: 2
+          databaseId: 2
+          serviceId: 7
           updatedAt: 2000-01-23T04:56:07.000+00:00
           silent: true
-          stackId: 4
+          stackId: 1
           jobs:
           - statusTitle: statusTitle
             startedAt: 2000-01-23T04:56:07.000+00:00
@@ -20608,7 +21458,7 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
             - isSystem: true
@@ -20616,15 +21466,15 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
-            timeout: 7
+            timeout: 4
             isSystem: true
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
-            id: 6
+            id: 1
             after:
             - after
             - after
@@ -20639,7 +21489,7 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
             - isSystem: true
@@ -20647,23 +21497,23 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
-            timeout: 7
+            timeout: 4
             isSystem: true
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
-            id: 6
+            id: 1
             after:
             - after
             - after
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          integrationId: 3
+          integrationId: 4
           userId: 1
-          repeatedTaskId: 1
+          repeatedTaskId: 7
           system: true
           originTaskId: 1
           executionScope: user
@@ -20672,6 +21522,7 @@ components:
           progress: 6
           user: "{}"
           status: status
+        canIncludeSystem: true
       properties:
         items:
           items:
@@ -20688,12 +21539,17 @@ components:
           description: True when treeItems omitted visible descendants after reaching
             the 250-item response limit. Always false for flat view.
           type: boolean
+        canIncludeSystem:
+          description: True when the current user may request operator-only system
+            tasks.
+          type: boolean
         totalCount:
           type: integer
         nextPage:
           nullable: true
           type: integer
       required:
+      - canIncludeSystem
       - items
       - totalCount
       - treeTruncated
@@ -20701,25 +21557,28 @@ components:
     TaskTreeItem:
       example:
         task:
+          compactTitle: compactTitle
           startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
           - 5
           - 5
-          clusterId: 9
+          clusterId: 3
           title: title
           orgId: 5
           appInstanceId: 7
+          appServiceId: 9
           createdAt: 2000-01-23T04:56:07.000+00:00
-          providerId: 7
+          providerId: 1
           appId: 2
           spawnedTaskIds:
-          - 1
-          - 1
+          - 6
+          - 6
           id: 0
-          serviceId: 2
+          databaseId: 2
+          serviceId: 7
           updatedAt: 2000-01-23T04:56:07.000+00:00
           silent: true
-          stackId: 4
+          stackId: 1
           jobs:
           - statusTitle: statusTitle
             startedAt: 2000-01-23T04:56:07.000+00:00
@@ -20730,7 +21589,7 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
             - isSystem: true
@@ -20738,15 +21597,15 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
-            timeout: 7
+            timeout: 4
             isSystem: true
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
-            id: 6
+            id: 1
             after:
             - after
             - after
@@ -20761,7 +21620,7 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
             - isSystem: true
@@ -20769,23 +21628,23 @@ components:
               endedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               startedAt: 2000-01-23T04:56:07.000+00:00
-              id: 1
+              id: 5
               position: 1
               status: status
-            timeout: 7
+            timeout: 4
             isSystem: true
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             name: name
-            id: 6
+            id: 1
             after:
             - after
             - after
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          integrationId: 3
+          integrationId: 4
           userId: 1
-          repeatedTaskId: 1
+          repeatedTaskId: 7
           system: true
           originTaskId: 1
           executionScope: user
@@ -21005,44 +21864,6 @@ components:
       required:
       - title
       type: object
-    CreateEnvRequest:
-      example:
-        name: name
-        title: title
-        type: type
-        orgId: 0
-      properties:
-        orgId:
-          description: Optional for API-key requests; defaults to the API key's organization.
-          type: integer
-        name:
-          type: string
-        title:
-          type: string
-        type:
-          type: string
-      required:
-      - name
-      - title
-      - type
-      type: object
-    UpdateEnvRequest:
-      example:
-        name: name
-        title: title
-        type: type
-      properties:
-        name:
-          type: string
-        title:
-          type: string
-        type:
-          type: string
-      required:
-      - name
-      - title
-      - type
-      type: object
     CreateDeploymentRequest:
       example:
         skipRollback: true
@@ -21228,6 +22049,191 @@ components:
       - password
       - username
       type: object
+    ServiceDeploymentStrategy:
+      enum:
+      - ROLLING
+      - RECREATE
+      - ON_DELETE
+      type: string
+    ServiceDeploymentPolicy:
+      example:
+        maxSurge: maxSurge
+        shutdownGracePeriod: shutdownGracePeriod
+        maxUnavailable: maxUnavailable
+        minReady: minReady
+        strategy: ROLLING
+        progressDeadline: progressDeadline
+      properties:
+        strategy:
+          $ref: '#/components/schemas/ServiceDeploymentStrategy'
+        maxUnavailable:
+          description: "Absolute number or percentage, such as `0` or `25%`."
+          type: string
+        maxSurge:
+          description: "Absolute number or percentage, such as `1` or `25%`."
+          type: string
+        minReady:
+          description: "Go duration, such as `10s`."
+          type: string
+        progressDeadline:
+          description: "Go duration, such as `15m`."
+          type: string
+        shutdownGracePeriod:
+          description: "Go duration, such as `11m`."
+          type: string
+      type: object
+    ServiceWorkloadDeploymentConfiguration:
+      example:
+        effective:
+          maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          strategy: ROLLING
+          progressDeadline: progressDeadline
+        kind: deployment
+        name: name
+        override:
+          maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          strategy: ROLLING
+          progressDeadline: progressDeadline
+      properties:
+        name:
+          type: string
+        kind:
+          enum:
+          - deployment
+          - statefulset
+          - daemonset
+          type: string
+        override:
+          $ref: '#/components/schemas/ServiceDeploymentPolicy'
+        effective:
+          $ref: '#/components/schemas/ServiceDeploymentPolicy'
+      required:
+      - effective
+      - kind
+      - name
+      - override
+      type: object
+    ServiceDeploymentConfiguration:
+      example:
+        effective:
+          maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          strategy: ROLLING
+          progressDeadline: progressDeadline
+        workloads:
+        - effective:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+          kind: deployment
+          name: name
+          override:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+        - effective:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+          kind: deployment
+          name: name
+          override:
+            maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            strategy: ROLLING
+            progressDeadline: progressDeadline
+        override:
+          maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          strategy: ROLLING
+          progressDeadline: progressDeadline
+      properties:
+        override:
+          $ref: '#/components/schemas/ServiceDeploymentPolicy'
+        effective:
+          $ref: '#/components/schemas/ServiceDeploymentPolicy'
+        workloads:
+          items:
+            $ref: '#/components/schemas/ServiceWorkloadDeploymentConfiguration'
+          type: array
+      required:
+      - effective
+      - override
+      - workloads
+      type: object
+    ServiceWorkloadDeploymentInput:
+      allOf:
+      - $ref: '#/components/schemas/ServiceDeploymentPolicy'
+      - properties:
+          name:
+            type: string
+        type: object
+      example:
+        maxSurge: maxSurge
+        shutdownGracePeriod: shutdownGracePeriod
+        maxUnavailable: maxUnavailable
+        minReady: minReady
+        name: name
+        strategy: null
+        progressDeadline: progressDeadline
+      required:
+      - name
+      type: object
+    ServiceDeploymentConfigurationInput:
+      allOf:
+      - $ref: '#/components/schemas/ServiceDeploymentPolicy'
+      - properties:
+          workloads:
+            items:
+              $ref: '#/components/schemas/ServiceWorkloadDeploymentInput'
+            type: array
+        type: object
+      description: Replaces the complete service-level deployment override. An empty
+        object clears it.
+      example:
+        maxSurge: maxSurge
+        shutdownGracePeriod: shutdownGracePeriod
+        maxUnavailable: maxUnavailable
+        minReady: minReady
+        workloads:
+        - maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          name: name
+          strategy: null
+          progressDeadline: progressDeadline
+        - maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          name: name
+          strategy: null
+          progressDeadline: progressDeadline
+        strategy: ROLLING
+        progressDeadline: progressDeadline
+      type: object
     AppServiceInput:
       example:
         replicas: 0
@@ -21247,6 +22253,28 @@ components:
           minReplicas: 1
           averageCPU: 6
           enabled: true
+        deployment:
+          maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          workloads:
+          - maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            name: name
+            strategy: null
+            progressDeadline: progressDeadline
+          - maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            name: name
+            strategy: null
+            progressDeadline: progressDeadline
+          strategy: ROLLING
+          progressDeadline: progressDeadline
       properties:
         replicas:
           nullable: true
@@ -21264,6 +22292,8 @@ components:
           type: boolean
         buildSource:
           $ref: '#/components/schemas/BuildSourceInput'
+        deployment:
+          $ref: '#/components/schemas/ServiceDeploymentConfigurationInput'
       type: object
     NewAppServiceEnvVarInput:
       example:
@@ -21284,6 +22314,7 @@ components:
         name:
           type: string
         value:
+          minLength: 1
           type: string
         secret:
           type: boolean
@@ -21306,6 +22337,7 @@ components:
         value: value
       properties:
         value:
+          minLength: 1
           nullable: true
           type: string
         secret:
@@ -21497,7 +22529,66 @@ components:
           nullable: true
           type: string
       type: object
-    AppInstanceStackUpgradeInput:
+    AppEnvironmentStackUpgradeInput:
+      example:
+        cron: true
+        settings: true
+        configs: true
+        replicas: true
+        volumes: true
+        resources: true
+        main: true
+        services: true
+        versions: true
+        links: true
+        tokens: true
+        integrations: true
+        deployment: true
+      properties:
+        deployment:
+          default: true
+          description: Build affected services when required and deploy the upgraded
+            stack configuration.
+          type: boolean
+        versions:
+          type: boolean
+        replicas:
+          type: boolean
+        resources:
+          type: boolean
+        integrations:
+          type: boolean
+        services:
+          type: boolean
+        settings:
+          type: boolean
+        links:
+          type: boolean
+        tokens:
+          type: boolean
+        configs:
+          type: boolean
+        cron:
+          type: boolean
+        volumes:
+          type: boolean
+        main:
+          type: boolean
+      required:
+      - configs
+      - cron
+      - integrations
+      - links
+      - main
+      - replicas
+      - resources
+      - services
+      - settings
+      - tokens
+      - versions
+      - volumes
+      type: object
+    AppEnvironmentStackReconciliationInput:
       example:
         cron: true
         settings: true
@@ -21566,6 +22657,28 @@ components:
         title: title
         required: true
         serviceRevPinned: true
+        deployment:
+          maxSurge: maxSurge
+          shutdownGracePeriod: shutdownGracePeriod
+          maxUnavailable: maxUnavailable
+          minReady: minReady
+          workloads:
+          - maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            name: name
+            strategy: null
+            progressDeadline: progressDeadline
+          - maxSurge: maxSurge
+            shutdownGracePeriod: shutdownGracePeriod
+            maxUnavailable: maxUnavailable
+            minReady: minReady
+            name: name
+            strategy: null
+            progressDeadline: progressDeadline
+          strategy: ROLLING
+          progressDeadline: progressDeadline
       properties:
         replicas:
           nullable: true
@@ -21587,6 +22700,8 @@ components:
           type: string
         buildSource:
           $ref: '#/components/schemas/BuildSourceInput'
+        deployment:
+          $ref: '#/components/schemas/ServiceDeploymentConfigurationInput'
       type: object
     NewStackServiceEnvVarInput:
       example:
@@ -21606,6 +22721,7 @@ components:
         name:
           type: string
         value:
+          minLength: 1
           type: string
         secret:
           type: boolean
@@ -21627,6 +22743,7 @@ components:
         name:
           type: string
         value:
+          minLength: 1
           type: string
         secret:
           type: boolean
@@ -21644,6 +22761,7 @@ components:
         value: value
       properties:
         value:
+          minLength: 1
           type: string
         secret:
           type: boolean
@@ -21657,6 +22775,7 @@ components:
         value: value
       properties:
         value:
+          minLength: 1
           type: string
         secret:
           type: boolean
@@ -21955,7 +23074,7 @@ components:
               services: true
               integrations: true
             enabled: true
-        registryIntegrationId: 6
+        registryIntegrationId: 9
         access:
           mode: PROTECTED
           settings:
@@ -21972,8 +23091,8 @@ components:
             primary: true
           scope: ENTIRE_APP
           host: host
-          integrationId: 8
-        instanceName: instanceName
+          integrationId: 6
+        environmentType: prod
         deferInitialDeployment: false
         services:
         - settings:
@@ -22103,13 +23222,13 @@ components:
             minReplicas: 1
             averageCPU: 7
         clusterId: 5
-        envId: 9
         title: title
         orgId: 0
+        environmentTitle: environmentTitle
         stackRevId: 1
+        environmentName: environmentName
         domain: domain
         name: name
-        instanceTitle: instanceTitle
         projectId: 6
         ciIntegrationId: 9
       properties:
@@ -22121,13 +23240,23 @@ components:
         title:
           description: Defaults to name when omitted.
           type: string
-        instanceName:
+        environmentName:
+          description: Required for the canonical app environment contract.
           type: string
-        instanceTitle:
-          description: Defaults to instanceName when omitted.
+        environmentTitle:
+          description: Defaults to environmentName when omitted.
+          type: string
+        environmentType:
+          description: Required for the canonical app environment contract.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
           type: string
         domain:
-          description: Defaults to instanceName.name.orgDomain when omitted.
+          description: Defaults to environmentName.name.orgDomain.
           type: string
         projectId:
           nullable: true
@@ -22141,8 +23270,6 @@ components:
           type: array
         clusterId:
           nullable: true
-          type: integer
-        envId:
           type: integer
         ciIntegrationId:
           description: "Omit or use null to inherit the organization default, use\
@@ -22159,20 +23286,20 @@ components:
         deferInitialDeployment:
           default: false
           description: Defers the automatic initial build and deployment while preserving
-            app instance initialization. Intended for automation that configures the
-            instance before explicitly starting its first build.
+            app environment initialization. Intended for automation that configures
+            the environment before explicitly starting its first build.
           type: boolean
         settings:
-          $ref: '#/components/schemas/AppInstanceSettingsInput'
+          $ref: '#/components/schemas/AppEnvironmentSettingsInput'
         access:
-          $ref: '#/components/schemas/NewAppInstanceAccessInput'
+          $ref: '#/components/schemas/NewAppEnvironmentAccessInput'
       required:
-      - envId
-      - instanceName
+      - environmentName
+      - environmentType
       - name
       - stackRevId
       type: object
-    NewAppInstanceInput:
+    NewAppEnvironmentInput:
       example:
         settings:
           autoStackUpgrade:
@@ -22198,7 +23325,7 @@ components:
               services: true
               integrations: true
             enabled: true
-        registryIntegrationId: 2
+        registryIntegrationId: 5
         access:
           mode: PROTECTED
           settings:
@@ -22215,8 +23342,8 @@ components:
             primary: true
           scope: ENTIRE_APP
           host: host
-          integrationId: 8
-        instanceName: instanceName
+          integrationId: 6
+        environmentType: prod
         deferInitialDeployment: false
         services:
         - settings:
@@ -22346,22 +23473,30 @@ components:
             minReplicas: 1
             averageCPU: 7
         clusterId: 1
-        envId: 5
+        environmentTitle: environmentTitle
         stackRevId: 6
+        environmentName: environmentName
         appId: 0
         domain: domain
-        instanceTitle: instanceTitle
         ciIntegrationId: 5
       properties:
         appId:
           type: integer
-        instanceName:
+        environmentName:
           type: string
-        instanceTitle:
-          description: Defaults to instanceName when omitted.
+        environmentTitle:
+          description: Defaults to environmentName when omitted.
+          type: string
+        environmentType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
           type: string
         domain:
-          description: Defaults to instanceName.appName.orgDomain when omitted.
+          description: Defaults to environmentName.appName.orgDomain when omitted.
           type: string
         stackRevId:
           type: integer
@@ -22373,37 +23508,26 @@ components:
         clusterId:
           nullable: true
           type: integer
-        envId:
-          type: integer
         ciIntegrationId:
-          description: "Omit or use null to inherit the organization default, use\
-            \ 0 for the built-in CI service, or use an accessible CI integration ID.\
-            \ A project-owned integration must be shared with the app's project."
           nullable: true
           type: integer
         registryIntegrationId:
-          description: "Omit or use null to inherit the organization default, use\
-            \ 0 for the built-in registry, or use an accessible registry integration\
-            \ ID. A project-owned integration must be shared with the app's project."
           nullable: true
           type: integer
         deferInitialDeployment:
           default: false
-          description: Defers the automatic initial build and deployment while preserving
-            app instance initialization. Intended for automation that configures the
-            instance before explicitly starting its first build.
           type: boolean
         settings:
-          $ref: '#/components/schemas/AppInstanceSettingsInput'
+          $ref: '#/components/schemas/AppEnvironmentSettingsInput'
         access:
-          $ref: '#/components/schemas/NewAppInstanceAccessInput'
+          $ref: '#/components/schemas/NewAppEnvironmentAccessInput'
       required:
       - appId
-      - envId
-      - instanceName
+      - environmentName
+      - environmentType
       - stackRevId
       type: object
-    NewAppInstanceAccessInput:
+    NewAppEnvironmentAccessInput:
       example:
         mode: PROTECTED
         settings:
@@ -22420,7 +23544,7 @@ components:
           primary: true
         scope: ENTIRE_APP
         host: host
-        integrationId: 8
+        integrationId: 6
       properties:
         integrationId:
           type: integer
@@ -22447,14 +23571,14 @@ components:
           description: HTTP endpoints selected during creation. Used only with SELECTED_ENDPOINTS
             scope; older clients may omit it to select the main endpoint.
           items:
-            $ref: '#/components/schemas/NewAppInstanceAccessEndpointInput'
+            $ref: '#/components/schemas/NewAppEnvironmentAccessEndpointInput'
           type: array
       required:
       - integrationId
       - mode
       - scope
       type: object
-    NewAppInstanceAccessEndpointInput:
+    NewAppEnvironmentAccessEndpointInput:
       example:
         appServiceName: appServiceName
         appPortName: appPortName
@@ -22717,6 +23841,16 @@ components:
         zone: zone
         name: name
         singleNode: true
+        environmentPolicy:
+          allowedEnvIds:
+          - 9
+          - 9
+          envType: prod
+          scope: all
+          envId: 7
+          allowedEnvTypes:
+          - prod
+          - prod
         region: region
         autoInfrastructureUpgrade: true
         projectId: 6
@@ -22768,6 +23902,8 @@ components:
         autoInfrastructureUpgrade:
           nullable: true
           type: boolean
+        environmentPolicy:
+          $ref: '#/components/schemas/ClusterEnvironmentPolicyInput'
       required:
       - disableMonitoring
       - integrationId
@@ -22775,7 +23911,57 @@ components:
       - serverless
       - title
       type: object
+    ClusterEnvironmentPolicyInput:
+      description: Use envType and allowedEnvTypes. Legacy ID fields remain accepted
+        but cannot be mixed with their type equivalents.
+      example:
+        allowedEnvIds:
+        - 9
+        - 9
+        envType: prod
+        scope: all
+        envId: 7
+        allowedEnvTypes:
+        - prod
+        - prod
+      properties:
+        envId:
+          deprecated: true
+          type: integer
+        envType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          type: string
+        scope:
+          enum:
+          - all
+          - selected
+          type: string
+        allowedEnvIds:
+          deprecated: true
+          items:
+            type: integer
+          type: array
+        allowedEnvTypes:
+          items:
+            enum:
+            - prod
+            - test
+            - staging
+            - dev
+            - feature
+            type: string
+          type: array
+      required:
+      - scope
+      type: object
     NewDatabaseInput:
+      description: "envType is required for the canonical contract. The legacy envId\
+        \ alternative remains accepted, but the two fields cannot be combined."
       example:
         integrationKindId: 5
         storageAutoscaling: true
@@ -22787,6 +23973,7 @@ components:
         highAvailability: true
         password: password
         zone: zone
+        envType: prod
         storageSize: 5
         name: name
         iops: 7
@@ -22802,7 +23989,16 @@ components:
           nullable: true
           type: integer
         envId:
+          deprecated: true
           type: integer
+        envType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          type: string
         name:
           type: string
         title:
@@ -22840,7 +24036,6 @@ components:
           nullable: true
           type: integer
       required:
-      - envId
       - integrationKindId
       - machineType
       - name
@@ -22923,6 +24118,7 @@ components:
         - name: name
           optional: false
           secret: false
+        envType: prod
         statuses:
         - OK
         - OK
@@ -22983,9 +24179,19 @@ components:
             $ref: '#/components/schemas/IntegrationVariableRequirementInput'
           type: array
         envId:
+          deprecated: true
           minimum: 1
           nullable: true
           type: integer
+        envType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
       type: object
     IntegrationVariableRequirementInput:
       additionalProperties: false
@@ -23040,7 +24246,11 @@ components:
           - 5
           - 5
           primaryEnvId: 5
+          primaryEnvType: prod
           scope: all
+          allowedEnvTypes:
+          - prod
+          - prod
         kinds:
         - kinds
         - kinds
@@ -23080,45 +24290,76 @@ components:
       - title
       type: object
     IntegrationEnvironmentPolicyInput:
+      description: Use primaryEnvType and allowedEnvTypes. Legacy ID fields remain
+        accepted but cannot be mixed with their type equivalents.
       example:
         allowedEnvIds:
         - 5
         - 5
         primaryEnvId: 5
+        primaryEnvType: prod
         scope: all
+        allowedEnvTypes:
+        - prod
+        - prod
       properties:
         primaryEnvId:
+          deprecated: true
           nullable: true
           type: integer
+        primaryEnvType:
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
         scope:
           enum:
           - all
           - selected
           type: string
         allowedEnvIds:
+          deprecated: true
           items:
             type: integer
           type: array
+        allowedEnvTypes:
+          items:
+            enum:
+            - prod
+            - test
+            - staging
+            - dev
+            - feature
+            type: string
+          type: array
       required:
-      - allowedEnvIds
       - scope
       type: object
     ResolveIntegrationResult:
       example:
         created: true
         integration:
+          primaryEnvId: 5
+          auth: auth
+          primaryEnvType: prod
+          providerRevId: 6
+          envScope: all
+          title: title
+          allowedEnvTypes:
+          - prod
+          - prod
+          orgId: 1
           allowedEnvIds:
           - 5
           - 5
           createdAt: 2000-01-23T04:56:07.000+00:00
-          primaryEnvId: 5
-          auth: auth
+          outdated: true
           scope: scope
-          providerRevId: 6
-          envScope: all
           id: 0
-          title: title
-          orgId: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -23231,18 +24472,23 @@ components:
         - warnings
         - warnings
         integration:
+          primaryEnvId: 5
+          auth: auth
+          primaryEnvType: prod
+          providerRevId: 6
+          envScope: all
+          title: title
+          allowedEnvTypes:
+          - prod
+          - prod
+          orgId: 1
           allowedEnvIds:
           - 5
           - 5
           createdAt: 2000-01-23T04:56:07.000+00:00
-          primaryEnvId: 5
-          auth: auth
+          outdated: true
           scope: scope
-          providerRevId: 6
-          envScope: all
           id: 0
-          title: title
-          orgId: 1
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         taskId: 0
@@ -23349,6 +24595,10 @@ components:
         duration: 169
         appServiceId: 6
         storageClass: storageClass
+        envTypes:
+        - dev
+        - dev
+        backupCategory: any
         options:
         - values:
           - values
@@ -23383,6 +24633,24 @@ components:
         envId:
           nullable: true
           type: integer
+        envTypes:
+          items:
+            enum:
+            - dev
+            - feature
+            - test
+            - staging
+            - prod
+            type: string
+          nullable: true
+          type: array
+        backupCategory:
+          enum:
+          - any
+          - files
+          - database
+          nullable: true
+          type: string
         backupName:
           nullable: true
           type: string
@@ -23438,6 +24706,10 @@ components:
           - MONDAY
           end: 04:00
           enabled: true
+        envTypes:
+        - dev
+        - dev
+        backupCategory: any
         crontab: crontab
         options:
         - values:
@@ -23452,6 +24724,27 @@ components:
         disabled: true
         override: true
       properties:
+        envTypes:
+          description: Omit to preserve the current filter; use an empty array to
+            clear it.
+          items:
+            enum:
+            - dev
+            - feature
+            - test
+            - staging
+            - prod
+            type: string
+          nullable: true
+          type: array
+        backupCategory:
+          description: Omit to preserve the current category.
+          enum:
+          - any
+          - files
+          - database
+          nullable: true
+          type: string
         integrationId:
           description: Use 0 for Wodby Blob Storage. Enabling the preset requires
             a paid subscription.
@@ -23589,7 +24882,7 @@ components:
           type: integer
         appServiceIds:
           description: App services to protect. Omit or pass an empty list to protect
-            the whole app instance.
+            the whole app environment.
           items:
             type: integer
           nullable: true
@@ -23630,7 +24923,7 @@ components:
       properties:
         appServiceIds:
           description: "App services to protect. Omit every scope field to preserve\
-            \ the current scope, or pass an empty list to protect the whole app instance."
+            \ the current scope, or pass an empty list to protect the whole app environment."
           items:
             type: integer
           nullable: true

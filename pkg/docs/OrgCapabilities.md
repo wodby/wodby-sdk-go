@@ -12,13 +12,15 @@ Name | Type | Description | Notes
 **Autoscale** | **bool** |  | 
 **AppInstancePause** | **bool** |  | 
 **WebShell** | **bool** |  | 
+**AppAccess** | **bool** |  | 
+**OrgSSO** | **bool** |  | 
 **WodbyCloud** | **bool** |  | 
 
 ## Methods
 
 ### NewOrgCapabilities
 
-`func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, wodbyCloud bool, ) *OrgCapabilities`
+`func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, appAccess bool, orgSSO bool, wodbyCloud bool, ) *OrgCapabilities`
 
 NewOrgCapabilities instantiates a new OrgCapabilities object
 This constructor will assign default values to properties that have it defined,
@@ -191,6 +193,46 @@ and a boolean to check if the value has been set.
 `func (o *OrgCapabilities) SetWebShell(v bool)`
 
 SetWebShell sets WebShell field to given value.
+
+
+### GetAppAccess
+
+`func (o *OrgCapabilities) GetAppAccess() bool`
+
+GetAppAccess returns the AppAccess field if non-nil, zero value otherwise.
+
+### GetAppAccessOk
+
+`func (o *OrgCapabilities) GetAppAccessOk() (*bool, bool)`
+
+GetAppAccessOk returns a tuple with the AppAccess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppAccess
+
+`func (o *OrgCapabilities) SetAppAccess(v bool)`
+
+SetAppAccess sets AppAccess field to given value.
+
+
+### GetOrgSSO
+
+`func (o *OrgCapabilities) GetOrgSSO() bool`
+
+GetOrgSSO returns the OrgSSO field if non-nil, zero value otherwise.
+
+### GetOrgSSOOk
+
+`func (o *OrgCapabilities) GetOrgSSOOk() (*bool, bool)`
+
+GetOrgSSOOk returns a tuple with the OrgSSO field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrgSSO
+
+`func (o *OrgCapabilities) SetOrgSSO(v bool)`
+
+SetOrgSSO sets OrgSSO field to given value.
 
 
 ### GetWodbyCloud

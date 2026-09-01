@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Labels** | Pointer to **[]string** |  | [optional] 
 **Variables** | [**[]IntegrationVariableRequirement**](IntegrationVariableRequirement.md) |  | 
+**Env** | [**[]ServiceManifestEnvVar**](ServiceManifestEnvVar.md) |  | 
 **Required** | **bool** |  | 
 **Multiple** | **bool** |  | 
 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewServiceIntegrationRequirement
 
-`func NewServiceIntegrationRequirement(name string, title string, type_ string, variables []IntegrationVariableRequirement, required bool, multiple bool, ) *ServiceIntegrationRequirement`
+`func NewServiceIntegrationRequirement(name string, title string, type_ string, variables []IntegrationVariableRequirement, env []ServiceManifestEnvVar, required bool, multiple bool, ) *ServiceIntegrationRequirement`
 
 NewServiceIntegrationRequirement instantiates a new ServiceIntegrationRequirement object
 This constructor will assign default values to properties that have it defined,
@@ -134,6 +135,26 @@ and a boolean to check if the value has been set.
 `func (o *ServiceIntegrationRequirement) SetVariables(v []IntegrationVariableRequirement)`
 
 SetVariables sets Variables field to given value.
+
+
+### GetEnv
+
+`func (o *ServiceIntegrationRequirement) GetEnv() []ServiceManifestEnvVar`
+
+GetEnv returns the Env field if non-nil, zero value otherwise.
+
+### GetEnvOk
+
+`func (o *ServiceIntegrationRequirement) GetEnvOk() (*[]ServiceManifestEnvVar, bool)`
+
+GetEnvOk returns a tuple with the Env field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnv
+
+`func (o *ServiceIntegrationRequirement) SetEnv(v []ServiceManifestEnvVar)`
+
+SetEnv sets Env field to given value.
 
 
 ### GetRequired

@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **Options** | Pointer to [**[]StackServiceOption**](StackServiceOption.md) |  | [optional] 
 **Settings** | Pointer to [**[]StackServiceSetting**](StackServiceSetting.md) |  | [optional] 
 **Containers** | Pointer to [**[]StackServiceContainer**](StackServiceContainer.md) |  | [optional] 
+**DeploymentConfiguration** | [**ServiceDeploymentConfiguration**](ServiceDeploymentConfiguration.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -30,7 +31,7 @@ Name | Type | Description | Notes
 
 ### NewStackService
 
-`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time, ) *StackService`
+`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time, ) *StackService`
 
 NewStackService instantiates a new StackService object
 This constructor will assign default values to properties that have it defined,
@@ -469,6 +470,26 @@ SetContainers sets Containers field to given value.
 `func (o *StackService) HasContainers() bool`
 
 HasContainers returns a boolean if a field has been set.
+
+### GetDeploymentConfiguration
+
+`func (o *StackService) GetDeploymentConfiguration() ServiceDeploymentConfiguration`
+
+GetDeploymentConfiguration returns the DeploymentConfiguration field if non-nil, zero value otherwise.
+
+### GetDeploymentConfigurationOk
+
+`func (o *StackService) GetDeploymentConfigurationOk() (*ServiceDeploymentConfiguration, bool)`
+
+GetDeploymentConfigurationOk returns a tuple with the DeploymentConfiguration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeploymentConfiguration
+
+`func (o *StackService) SetDeploymentConfiguration(v ServiceDeploymentConfiguration)`
+
+SetDeploymentConfiguration sets DeploymentConfiguration field to given value.
+
 
 ### GetCreatedAt
 

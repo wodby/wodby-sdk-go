@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **Required** | **bool** |  | 
 **NeedsRebuild** | **bool** |  | 
 **NeedsRedeploy** | **bool** |  | 
+**StackState** | **string** |  | 
 **ConfigurationReady** | **bool** |  | 
 **BuildSourceBoilerplate** | Pointer to **NullableString** |  | [optional] 
 **CiPolicy** | **string** |  | 
@@ -26,6 +27,7 @@ Name | Type | Description | Notes
 **AppInstanceId** | **int32** |  | 
 **ServiceRevId** | **int32** |  | 
 **ParentAppServiceId** | Pointer to **NullableInt32** |  | [optional] 
+**DeploymentConfiguration** | [**ServiceDeploymentConfiguration**](ServiceDeploymentConfiguration.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -33,7 +35,7 @@ Name | Type | Description | Notes
 
 ### NewAppService
 
-`func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, configurationReady bool, ciPolicy string, configurationIssues []AppServiceConfigurationIssue, appInstanceId int32, serviceRevId int32, createdAt time.Time, updatedAt time.Time, ) *AppService`
+`func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, stackState string, configurationReady bool, ciPolicy string, configurationIssues []AppServiceConfigurationIssue, appInstanceId int32, serviceRevId int32, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time, ) *AppService`
 
 NewAppService instantiates a new AppService object
 This constructor will assign default values to properties that have it defined,
@@ -343,6 +345,26 @@ and a boolean to check if the value has been set.
 SetNeedsRedeploy sets NeedsRedeploy field to given value.
 
 
+### GetStackState
+
+`func (o *AppService) GetStackState() string`
+
+GetStackState returns the StackState field if non-nil, zero value otherwise.
+
+### GetStackStateOk
+
+`func (o *AppService) GetStackStateOk() (*string, bool)`
+
+GetStackStateOk returns a tuple with the StackState field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackState
+
+`func (o *AppService) SetStackState(v string)`
+
+SetStackState sets StackState field to given value.
+
+
 ### GetConfigurationReady
 
 `func (o *AppService) GetConfigurationReady() bool`
@@ -548,6 +570,26 @@ HasParentAppServiceId returns a boolean if a field has been set.
 `func (o *AppService) UnsetParentAppServiceId()`
 
 UnsetParentAppServiceId ensures that no value is present for ParentAppServiceId, not even an explicit nil
+### GetDeploymentConfiguration
+
+`func (o *AppService) GetDeploymentConfiguration() ServiceDeploymentConfiguration`
+
+GetDeploymentConfiguration returns the DeploymentConfiguration field if non-nil, zero value otherwise.
+
+### GetDeploymentConfigurationOk
+
+`func (o *AppService) GetDeploymentConfigurationOk() (*ServiceDeploymentConfiguration, bool)`
+
+GetDeploymentConfigurationOk returns a tuple with the DeploymentConfiguration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeploymentConfiguration
+
+`func (o *AppService) SetDeploymentConfiguration(v ServiceDeploymentConfiguration)`
+
+SetDeploymentConfiguration sets DeploymentConfiguration field to given value.
+
+
 ### GetCreatedAt
 
 `func (o *AppService) GetCreatedAt() time.Time`

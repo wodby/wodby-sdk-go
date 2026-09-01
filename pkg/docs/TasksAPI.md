@@ -153,7 +153,7 @@ Name | Type | Description  | Notes
 
 ## ListTasks
 
-> TasksResponse ListTasks(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).View(view).WithoutOrigin(withoutOrigin).Statuses(statuses).Names(names).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
+> TasksResponse ListTasks(ctx).Scope(scope).OrgId(orgId).ProjectIds(projectIds).View(view).WithoutOrigin(withoutOrigin).IncludeSystem(includeSystem).Statuses(statuses).Names(names).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 
 List tasks
 
@@ -177,6 +177,7 @@ func main() {
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	view := "view_example" // string | Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include current-page tree nodes in treeItems. Root pages are capped at 100 tasks. Tree responses include up to 250 authorized tasks and set treeTruncated when additional visible descendants exist; exceeding the 10-level depth limit still returns 422. (optional)
 	withoutOrigin := true // bool | Deprecated compatibility alias for view=tree (optional)
+	includeSystem := true // bool | Include operator-only system tasks when authorized (optional) (default to false)
 	statuses := "statuses_example" // string | Comma-separated task statuses (optional)
 	names := "names_example" // string | Comma-separated exact task names (optional)
 	search := "search_example" // string |  (optional)
@@ -193,7 +194,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TasksAPI.ListTasks(context.Background()).Scope(scope).OrgId(orgId).ProjectIds(projectIds).View(view).WithoutOrigin(withoutOrigin).Statuses(statuses).Names(names).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.TasksAPI.ListTasks(context.Background()).Scope(scope).OrgId(orgId).ProjectIds(projectIds).View(view).WithoutOrigin(withoutOrigin).IncludeSystem(includeSystem).Statuses(statuses).Names(names).Search(search).AppId(appId).AppInstanceId(appInstanceId).StackId(stackId).DatabaseId(databaseId).ClusterId(clusterId).ServiceId(serviceId).IntegrationId(integrationId).ProviderId(providerId).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TasksAPI.ListTasks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -219,6 +220,7 @@ Name | Type | Description  | Notes
  **projectIds** | **string** | Comma-separated project ids | 
  **view** | **string** | Return matching tasks as a flat page or as filter-scoped task trees. Tree responses support user, organization, project, and resource filters, keep paginated roots in items, and include current-page tree nodes in treeItems. Root pages are capped at 100 tasks. Tree responses include up to 250 authorized tasks and set treeTruncated when additional visible descendants exist; exceeding the 10-level depth limit still returns 422. | 
  **withoutOrigin** | **bool** | Deprecated compatibility alias for view&#x3D;tree | 
+ **includeSystem** | **bool** | Include operator-only system tasks when authorized | [default to false]
  **statuses** | **string** | Comma-separated task statuses | 
  **names** | **string** | Comma-separated exact task names | 
  **search** | **string** |  | 

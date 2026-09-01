@@ -857,6 +857,142 @@ func (a *IntegrationsAPIService) GetIntegrationKubeSettingsExecute(r ApiGetInteg
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetIntegrationProviderRevisionUpgradeRequest struct {
+	ctx context.Context
+	ApiService *IntegrationsAPIService
+	id int32
+}
+
+func (r ApiGetIntegrationProviderRevisionUpgradeRequest) Execute() (*IntegrationProviderRevisionUpgrade, *http.Response, error) {
+	return r.ApiService.GetIntegrationProviderRevisionUpgradeExecute(r)
+}
+
+/*
+GetIntegrationProviderRevisionUpgrade Preview provider revision upgrade
+
+Returns the compatibility decision and revision details for upgrading an integration.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetIntegrationProviderRevisionUpgradeRequest
+*/
+func (a *IntegrationsAPIService) GetIntegrationProviderRevisionUpgrade(ctx context.Context, id int32) ApiGetIntegrationProviderRevisionUpgradeRequest {
+	return ApiGetIntegrationProviderRevisionUpgradeRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return IntegrationProviderRevisionUpgrade
+func (a *IntegrationsAPIService) GetIntegrationProviderRevisionUpgradeExecute(r ApiGetIntegrationProviderRevisionUpgradeRequest) (*IntegrationProviderRevisionUpgrade, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *IntegrationProviderRevisionUpgrade
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationsAPIService.GetIntegrationProviderRevisionUpgrade")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/integration-provider-revision-upgrades/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetIntegrationRemoteGitRepoFilePresenceRequest struct {
 	ctx context.Context
 	ApiService *IntegrationsAPIService
@@ -2430,6 +2566,7 @@ type ApiListIntegrationsRequest struct {
 	projectIds *string
 	labels *string
 	envId *int32
+	envType *string
 }
 
 // Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization.
@@ -2450,9 +2587,16 @@ func (r ApiListIntegrationsRequest) Labels(labels string) ApiListIntegrationsReq
 	return r
 }
 
-// Return only integrations allowed in this environment
+// Legacy environment entity filter. Use envType.
+// Deprecated
 func (r ApiListIntegrationsRequest) EnvId(envId int32) ApiListIntegrationsRequest {
 	r.envId = &envId
+	return r
+}
+
+// Return only integrations allowed for this fixed environment type.
+func (r ApiListIntegrationsRequest) EnvType(envType string) ApiListIntegrationsRequest {
+	r.envType = &envType
 	return r
 }
 
@@ -2507,6 +2651,9 @@ func (a *IntegrationsAPIService) ListIntegrationsExecute(r ApiListIntegrationsRe
 	}
 	if r.envId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "envId", r.envId, "form", "")
+	}
+	if r.envType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "envType", r.envType, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3241,6 +3388,153 @@ func (a *IntegrationsAPIService) UpdateIntegrationEnvironmentPolicyExecute(r Api
 	}
 	// body params
 	localVarPostBody = r.integrationEnvironmentPolicyInput
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpgradeIntegrationProviderRevisionRequest struct {
+	ctx context.Context
+	ApiService *IntegrationsAPIService
+	id int32
+	upgradeIntegrationProviderRevisionInput *UpgradeIntegrationProviderRevisionInput
+}
+
+func (r ApiUpgradeIntegrationProviderRevisionRequest) UpgradeIntegrationProviderRevisionInput(upgradeIntegrationProviderRevisionInput UpgradeIntegrationProviderRevisionInput) ApiUpgradeIntegrationProviderRevisionRequest {
+	r.upgradeIntegrationProviderRevisionInput = &upgradeIntegrationProviderRevisionInput
+	return r
+}
+
+func (r ApiUpgradeIntegrationProviderRevisionRequest) Execute() (*OperationResult, *http.Response, error) {
+	return r.ApiService.UpgradeIntegrationProviderRevisionExecute(r)
+}
+
+/*
+UpgradeIntegrationProviderRevision Upgrade integration provider revision
+
+Upgrades an integration to its eligible provider revision and optionally drops fields removed by the target contract.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpgradeIntegrationProviderRevisionRequest
+*/
+func (a *IntegrationsAPIService) UpgradeIntegrationProviderRevision(ctx context.Context, id int32) ApiUpgradeIntegrationProviderRevisionRequest {
+	return ApiUpgradeIntegrationProviderRevisionRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return OperationResult
+func (a *IntegrationsAPIService) UpgradeIntegrationProviderRevisionExecute(r ApiUpgradeIntegrationProviderRevisionRequest) (*OperationResult, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OperationResult
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationsAPIService.UpgradeIntegrationProviderRevision")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/integrations/{id}/actions/upgrade-provider-revision"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.upgradeIntegrationProviderRevisionInput == nil {
+		return localVarReturnValue, nil, reportError("upgradeIntegrationProviderRevisionInput is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.upgradeIntegrationProviderRevisionInput
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

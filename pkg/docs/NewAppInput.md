@@ -7,25 +7,25 @@ Name | Type | Description | Notes
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **Name** | **string** |  | 
 **Title** | Pointer to **string** | Defaults to name when omitted. | [optional] 
-**InstanceName** | **string** |  | 
-**InstanceTitle** | Pointer to **string** | Defaults to instanceName when omitted. | [optional] 
-**Domain** | Pointer to **string** | Defaults to instanceName.name.orgDomain when omitted. | [optional] 
+**EnvironmentName** | **string** | Required for the canonical app environment contract. | 
+**EnvironmentTitle** | Pointer to **string** | Defaults to environmentName when omitted. | [optional] 
+**EnvironmentType** | **string** | Required for the canonical app environment contract. | 
+**Domain** | Pointer to **string** | Defaults to environmentName.name.orgDomain. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **StackRevId** | **int32** |  | 
 **Services** | Pointer to [**[]CreateAppServiceInput**](CreateAppServiceInput.md) | Defaults to the stack revision&#39;s service defaults when omitted. | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
-**EnvId** | **int32** |  | 
 **CiIntegrationId** | Pointer to **NullableInt32** | Omit or use null to inherit the organization default, use 0 for the built-in CI service, or use an accessible CI integration ID. A project-owned integration must be shared with the app&#39;s project. | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** | Omit or use null to inherit the organization default, use 0 for the built-in registry, or use an accessible registry integration ID. A project-owned integration must be shared with the app&#39;s project. | [optional] 
-**DeferInitialDeployment** | Pointer to **bool** | Defers the automatic initial build and deployment while preserving app instance initialization. Intended for automation that configures the instance before explicitly starting its first build. | [optional] [default to false]
-**Settings** | Pointer to [**AppInstanceSettingsInput**](AppInstanceSettingsInput.md) |  | [optional] 
-**Access** | Pointer to [**NewAppInstanceAccessInput**](NewAppInstanceAccessInput.md) |  | [optional] 
+**DeferInitialDeployment** | Pointer to **bool** | Defers the automatic initial build and deployment while preserving app environment initialization. Intended for automation that configures the environment before explicitly starting its first build. | [optional] [default to false]
+**Settings** | Pointer to [**AppEnvironmentSettingsInput**](AppEnvironmentSettingsInput.md) |  | [optional] 
+**Access** | Pointer to [**NewAppEnvironmentAccessInput**](NewAppEnvironmentAccessInput.md) |  | [optional] 
 
 ## Methods
 
 ### NewNewAppInput
 
-`func NewNewAppInput(name string, instanceName string, stackRevId int32, envId int32, ) *NewAppInput`
+`func NewNewAppInput(name string, environmentName string, environmentType string, stackRevId int32, ) *NewAppInput`
 
 NewNewAppInput instantiates a new NewAppInput object
 This constructor will assign default values to properties that have it defined,
@@ -110,50 +110,70 @@ SetTitle sets Title field to given value.
 
 HasTitle returns a boolean if a field has been set.
 
-### GetInstanceName
+### GetEnvironmentName
 
-`func (o *NewAppInput) GetInstanceName() string`
+`func (o *NewAppInput) GetEnvironmentName() string`
 
-GetInstanceName returns the InstanceName field if non-nil, zero value otherwise.
+GetEnvironmentName returns the EnvironmentName field if non-nil, zero value otherwise.
 
-### GetInstanceNameOk
+### GetEnvironmentNameOk
 
-`func (o *NewAppInput) GetInstanceNameOk() (*string, bool)`
+`func (o *NewAppInput) GetEnvironmentNameOk() (*string, bool)`
 
-GetInstanceNameOk returns a tuple with the InstanceName field if it's non-nil, zero value otherwise
+GetEnvironmentNameOk returns a tuple with the EnvironmentName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInstanceName
+### SetEnvironmentName
 
-`func (o *NewAppInput) SetInstanceName(v string)`
+`func (o *NewAppInput) SetEnvironmentName(v string)`
 
-SetInstanceName sets InstanceName field to given value.
+SetEnvironmentName sets EnvironmentName field to given value.
 
 
-### GetInstanceTitle
+### GetEnvironmentTitle
 
-`func (o *NewAppInput) GetInstanceTitle() string`
+`func (o *NewAppInput) GetEnvironmentTitle() string`
 
-GetInstanceTitle returns the InstanceTitle field if non-nil, zero value otherwise.
+GetEnvironmentTitle returns the EnvironmentTitle field if non-nil, zero value otherwise.
 
-### GetInstanceTitleOk
+### GetEnvironmentTitleOk
 
-`func (o *NewAppInput) GetInstanceTitleOk() (*string, bool)`
+`func (o *NewAppInput) GetEnvironmentTitleOk() (*string, bool)`
 
-GetInstanceTitleOk returns a tuple with the InstanceTitle field if it's non-nil, zero value otherwise
+GetEnvironmentTitleOk returns a tuple with the EnvironmentTitle field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInstanceTitle
+### SetEnvironmentTitle
 
-`func (o *NewAppInput) SetInstanceTitle(v string)`
+`func (o *NewAppInput) SetEnvironmentTitle(v string)`
 
-SetInstanceTitle sets InstanceTitle field to given value.
+SetEnvironmentTitle sets EnvironmentTitle field to given value.
 
-### HasInstanceTitle
+### HasEnvironmentTitle
 
-`func (o *NewAppInput) HasInstanceTitle() bool`
+`func (o *NewAppInput) HasEnvironmentTitle() bool`
 
-HasInstanceTitle returns a boolean if a field has been set.
+HasEnvironmentTitle returns a boolean if a field has been set.
+
+### GetEnvironmentType
+
+`func (o *NewAppInput) GetEnvironmentType() string`
+
+GetEnvironmentType returns the EnvironmentType field if non-nil, zero value otherwise.
+
+### GetEnvironmentTypeOk
+
+`func (o *NewAppInput) GetEnvironmentTypeOk() (*string, bool)`
+
+GetEnvironmentTypeOk returns a tuple with the EnvironmentType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvironmentType
+
+`func (o *NewAppInput) SetEnvironmentType(v string)`
+
+SetEnvironmentType sets EnvironmentType field to given value.
+
 
 ### GetDomain
 
@@ -295,26 +315,6 @@ HasClusterId returns a boolean if a field has been set.
 `func (o *NewAppInput) UnsetClusterId()`
 
 UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
-### GetEnvId
-
-`func (o *NewAppInput) GetEnvId() int32`
-
-GetEnvId returns the EnvId field if non-nil, zero value otherwise.
-
-### GetEnvIdOk
-
-`func (o *NewAppInput) GetEnvIdOk() (*int32, bool)`
-
-GetEnvIdOk returns a tuple with the EnvId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEnvId
-
-`func (o *NewAppInput) SetEnvId(v int32)`
-
-SetEnvId sets EnvId field to given value.
-
-
 ### GetCiIntegrationId
 
 `func (o *NewAppInput) GetCiIntegrationId() int32`
@@ -412,20 +412,20 @@ HasDeferInitialDeployment returns a boolean if a field has been set.
 
 ### GetSettings
 
-`func (o *NewAppInput) GetSettings() AppInstanceSettingsInput`
+`func (o *NewAppInput) GetSettings() AppEnvironmentSettingsInput`
 
 GetSettings returns the Settings field if non-nil, zero value otherwise.
 
 ### GetSettingsOk
 
-`func (o *NewAppInput) GetSettingsOk() (*AppInstanceSettingsInput, bool)`
+`func (o *NewAppInput) GetSettingsOk() (*AppEnvironmentSettingsInput, bool)`
 
 GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSettings
 
-`func (o *NewAppInput) SetSettings(v AppInstanceSettingsInput)`
+`func (o *NewAppInput) SetSettings(v AppEnvironmentSettingsInput)`
 
 SetSettings sets Settings field to given value.
 
@@ -437,20 +437,20 @@ HasSettings returns a boolean if a field has been set.
 
 ### GetAccess
 
-`func (o *NewAppInput) GetAccess() NewAppInstanceAccessInput`
+`func (o *NewAppInput) GetAccess() NewAppEnvironmentAccessInput`
 
 GetAccess returns the Access field if non-nil, zero value otherwise.
 
 ### GetAccessOk
 
-`func (o *NewAppInput) GetAccessOk() (*NewAppInstanceAccessInput, bool)`
+`func (o *NewAppInput) GetAccessOk() (*NewAppEnvironmentAccessInput, bool)`
 
 GetAccessOk returns a tuple with the Access field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccess
 
-`func (o *NewAppInput) SetAccess(v NewAppInstanceAccessInput)`
+`func (o *NewAppInput) SetAccess(v NewAppEnvironmentAccessInput)`
 
 SetAccess sets Access field to given value.
 

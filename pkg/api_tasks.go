@@ -303,6 +303,7 @@ type ApiListTasksRequest struct {
 	projectIds *string
 	view *string
 	withoutOrigin *bool
+	includeSystem *bool
 	statuses *string
 	names *string
 	search *string
@@ -345,6 +346,12 @@ func (r ApiListTasksRequest) View(view string) ApiListTasksRequest {
 // Deprecated
 func (r ApiListTasksRequest) WithoutOrigin(withoutOrigin bool) ApiListTasksRequest {
 	r.withoutOrigin = &withoutOrigin
+	return r
+}
+
+// Include operator-only system tasks when authorized
+func (r ApiListTasksRequest) IncludeSystem(includeSystem bool) ApiListTasksRequest {
+	r.includeSystem = &includeSystem
 	return r
 }
 
@@ -471,6 +478,12 @@ func (a *TasksAPIService) ListTasksExecute(r ApiListTasksRequest) (*TasksRespons
 	}
 	if r.withoutOrigin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "withoutOrigin", r.withoutOrigin, "form", "")
+	}
+	if r.includeSystem != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeSystem", r.includeSystem, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.includeSystem = &defaultValue
 	}
 	if r.statuses != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "form", "")

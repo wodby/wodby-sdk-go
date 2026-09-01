@@ -28,10 +28,8 @@ type AppServiceBuildConfig struct {
 	Image string `json:"image"`
 	Dockerfile NullableString `json:"dockerfile,omitempty"`
 	Dockerignore NullableString `json:"dockerignore,omitempty"`
-	// Build context subdirectory to copy, relative to the CI --from path. Empty means the whole context.
-	CopyFrom string `json:"copyFrom"`
-	// Image subdirectory to copy into, relative to the CI --to path. Empty means the image working directory.
-	CopyTo string `json:"copyTo"`
+	// Resolved subdirectory this build copies, applied under both the CI --from and --to paths. Empty means the whole context.
+	CopySubdir string `json:"copySubdir"`
 	Args []AppServiceBuildArg `json:"args,omitempty"`
 }
 
@@ -41,15 +39,14 @@ type _AppServiceBuildConfig AppServiceBuildConfig
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceBuildConfig(name string, title string, managed bool, main bool, image string, copyFrom string, copyTo string) *AppServiceBuildConfig {
+func NewAppServiceBuildConfig(name string, title string, managed bool, main bool, image string, copySubdir string) *AppServiceBuildConfig {
 	this := AppServiceBuildConfig{}
 	this.Name = name
 	this.Title = title
 	this.Managed = managed
 	this.Main = main
 	this.Image = image
-	this.CopyFrom = copyFrom
-	this.CopyTo = copyTo
+	this.CopySubdir = copySubdir
 	return &this
 }
 
@@ -265,52 +262,28 @@ func (o *AppServiceBuildConfig) UnsetDockerignore() {
 	o.Dockerignore.Unset()
 }
 
-// GetCopyFrom returns the CopyFrom field value
-func (o *AppServiceBuildConfig) GetCopyFrom() string {
+// GetCopySubdir returns the CopySubdir field value
+func (o *AppServiceBuildConfig) GetCopySubdir() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.CopyFrom
+	return o.CopySubdir
 }
 
-// GetCopyFromOk returns a tuple with the CopyFrom field value
+// GetCopySubdirOk returns a tuple with the CopySubdir field value
 // and a boolean to check if the value has been set.
-func (o *AppServiceBuildConfig) GetCopyFromOk() (*string, bool) {
+func (o *AppServiceBuildConfig) GetCopySubdirOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CopyFrom, true
+	return &o.CopySubdir, true
 }
 
-// SetCopyFrom sets field value
-func (o *AppServiceBuildConfig) SetCopyFrom(v string) {
-	o.CopyFrom = v
-}
-
-// GetCopyTo returns the CopyTo field value
-func (o *AppServiceBuildConfig) GetCopyTo() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.CopyTo
-}
-
-// GetCopyToOk returns a tuple with the CopyTo field value
-// and a boolean to check if the value has been set.
-func (o *AppServiceBuildConfig) GetCopyToOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CopyTo, true
-}
-
-// SetCopyTo sets field value
-func (o *AppServiceBuildConfig) SetCopyTo(v string) {
-	o.CopyTo = v
+// SetCopySubdir sets field value
+func (o *AppServiceBuildConfig) SetCopySubdir(v string) {
+	o.CopySubdir = v
 }
 
 // GetArgs returns the Args field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -367,8 +340,7 @@ func (o AppServiceBuildConfig) ToMap() (map[string]interface{}, error) {
 	if o.Dockerignore.IsSet() {
 		toSerialize["dockerignore"] = o.Dockerignore.Get()
 	}
-	toSerialize["copyFrom"] = o.CopyFrom
-	toSerialize["copyTo"] = o.CopyTo
+	toSerialize["copySubdir"] = o.CopySubdir
 	if o.Args != nil {
 		toSerialize["args"] = o.Args
 	}
@@ -385,8 +357,7 @@ func (o *AppServiceBuildConfig) UnmarshalJSON(data []byte) (err error) {
 		"managed",
 		"main",
 		"image",
-		"copyFrom",
-		"copyTo",
+		"copySubdir",
 	}
 
 	allProperties := make(map[string]interface{})

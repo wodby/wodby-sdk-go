@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**DeleteBackupPreset**](BackupsAPI.md#DeleteBackupPreset) | **Delete** /backup-presets/{id} | Delete backup preset
 [**GetBackup**](BackupsAPI.md#GetBackup) | **Get** /backups/{id} | Get backup
 [**GetBackupPreset**](BackupsAPI.md#GetBackupPreset) | **Get** /backup-presets/{id} | Get backup preset
+[**ListBackupPresetBackups**](BackupsAPI.md#ListBackupPresetBackups) | **Get** /backup-presets/{id}/backups | List backup preset backups
 [**ListBackupPresets**](BackupsAPI.md#ListBackupPresets) | **Get** /backup-presets | List backup presets
 [**ListBackups**](BackupsAPI.md#ListBackups) | **Get** /backups | List backups
 [**UpdateBackupPreset**](BackupsAPI.md#UpdateBackupPreset) | **Put** /backup-presets/{id} | Update backup preset
@@ -357,9 +358,83 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListBackupPresetBackups
+
+> BackupsResponse ListBackupPresetBackups(ctx, id).Page(page).PageSize(pageSize).Execute()
+
+List backup preset backups
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	page := int32(56) // int32 | Page number, defaults to 1 (optional)
+	pageSize := int32(56) // int32 | Page size, defaults to 30 (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BackupsAPI.ListBackupPresetBackups(context.Background(), id).Page(page).PageSize(pageSize).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.ListBackupPresetBackups``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBackupPresetBackups`: BackupsResponse
+	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.ListBackupPresetBackups`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBackupPresetBackupsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **page** | **int32** | Page number, defaults to 1 | 
+ **pageSize** | **int32** | Page size, defaults to 30 | 
+
+### Return type
+
+[**BackupsResponse**](BackupsResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListBackupPresets
 
-> []BackupPreset ListBackupPresets(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).Execute()
+> []BackupPreset ListBackupPresets(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).ApplicableEnvId(applicableEnvId).ApplicableBackupCategory(applicableBackupCategory).Execute()
 
 List backup presets
 
@@ -384,10 +459,12 @@ func main() {
 	databaseDbId := int32(56) // int32 |  (optional)
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	backupName := "backupName_example" // string |  (optional)
+	applicableEnvId := int32(56) // int32 | Return only presets that apply to this environment. (optional)
+	applicableBackupCategory := "applicableBackupCategory_example" // string | Return only presets that apply to this backup category. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BackupsAPI.ListBackupPresets(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).Execute()
+	resp, r, err := apiClient.BackupsAPI.ListBackupPresets(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).ApplicableEnvId(applicableEnvId).ApplicableBackupCategory(applicableBackupCategory).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.ListBackupPresets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -414,6 +491,8 @@ Name | Type | Description  | Notes
  **databaseDbId** | **int32** |  | 
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **backupName** | **string** |  | 
+ **applicableEnvId** | **int32** | Return only presets that apply to this environment. | 
+ **applicableBackupCategory** | **string** | Return only presets that apply to this backup category. | 
 
 ### Return type
 

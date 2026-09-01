@@ -22,6 +22,7 @@ Method | HTTP request | Description
 [**GetAppServiceCronJob**](AppServicesAPI.md#GetAppServiceCronJob) | **Get** /app-service-cron-jobs/{id} | Get app service cron job
 [**KeepLogStreamAlive**](AppServicesAPI.md#KeepLogStreamAlive) | **Post** /log-streams/{id}/keep-alive | Keep log stream alive
 [**ListAppServiceAnnotations**](AppServicesAPI.md#ListAppServiceAnnotations) | **Get** /app-services/{id}/annotations | List app service annotations
+[**ListAppServiceBackupOptionDefaults**](AppServicesAPI.md#ListAppServiceBackupOptionDefaults) | **Get** /app-services/{id}/options/backup-option-defaults | List effective backup option defaults
 [**ListAppServiceConfigs**](AppServicesAPI.md#ListAppServiceConfigs) | **Get** /app-services/{id}/configs | List app service configs
 [**ListAppServiceContainers**](AppServicesAPI.md#ListAppServiceContainers) | **Get** /app-services/{id}/containers | List app service containers
 [**ListAppServiceCronJobs**](AppServicesAPI.md#ListAppServiceCronJobs) | **Get** /app-service-cron-jobs | List app service cron jobs
@@ -1313,6 +1314,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppServiceAnnotation**](AppServiceAnnotation.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppServiceBackupOptionDefaults
+
+> []BackupOption ListAppServiceBackupOptionDefaults(ctx, id).BackupName(backupName).Execute()
+
+List effective backup option defaults
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	backupName := "backupName_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListAppServiceBackupOptionDefaults(context.Background(), id).BackupName(backupName).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListAppServiceBackupOptionDefaults``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppServiceBackupOptionDefaults`: []BackupOption
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListAppServiceBackupOptionDefaults`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppServiceBackupOptionDefaultsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **backupName** | **string** |  | 
+
+### Return type
+
+[**[]BackupOption**](BackupOption.md)
 
 ### Authorization
 

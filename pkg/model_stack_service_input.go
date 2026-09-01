@@ -26,6 +26,7 @@ type StackServiceInput struct {
 	ServiceRevPinned NullableBool `json:"serviceRevPinned,omitempty"`
 	Title NullableString `json:"title,omitempty"`
 	BuildSource *BuildSourceInput `json:"buildSource,omitempty"`
+	Deployment *ServiceDeploymentConfigurationInput `json:"deployment,omitempty"`
 }
 
 // NewStackServiceInput instantiates a new StackServiceInput object
@@ -329,6 +330,38 @@ func (o *StackServiceInput) SetBuildSource(v BuildSourceInput) {
 	o.BuildSource = &v
 }
 
+// GetDeployment returns the Deployment field value if set, zero value otherwise.
+func (o *StackServiceInput) GetDeployment() ServiceDeploymentConfigurationInput {
+	if o == nil || IsNil(o.Deployment) {
+		var ret ServiceDeploymentConfigurationInput
+		return ret
+	}
+	return *o.Deployment
+}
+
+// GetDeploymentOk returns a tuple with the Deployment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackServiceInput) GetDeploymentOk() (*ServiceDeploymentConfigurationInput, bool) {
+	if o == nil || IsNil(o.Deployment) {
+		return nil, false
+	}
+	return o.Deployment, true
+}
+
+// HasDeployment returns a boolean if a field has been set.
+func (o *StackServiceInput) HasDeployment() bool {
+	if o != nil && !IsNil(o.Deployment) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeployment gets a reference to the given ServiceDeploymentConfigurationInput and assigns it to the Deployment field.
+func (o *StackServiceInput) SetDeployment(v ServiceDeploymentConfigurationInput) {
+	o.Deployment = &v
+}
+
 func (o StackServiceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -359,6 +392,9 @@ func (o StackServiceInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BuildSource) {
 		toSerialize["buildSource"] = o.BuildSource
+	}
+	if !IsNil(o.Deployment) {
+		toSerialize["deployment"] = o.Deployment
 	}
 	return toSerialize, nil
 }

@@ -26,6 +26,8 @@ type TasksResponse struct {
 	TreeItems []TaskTreeItem `json:"treeItems,omitempty"`
 	// True when treeItems omitted visible descendants after reaching the 250-item response limit. Always false for flat view.
 	TreeTruncated bool `json:"treeTruncated"`
+	// True when the current user may request operator-only system tasks.
+	CanIncludeSystem bool `json:"canIncludeSystem"`
 	TotalCount int32 `json:"totalCount"`
 	NextPage NullableInt32 `json:"nextPage,omitempty"`
 }
@@ -36,10 +38,11 @@ type _TasksResponse TasksResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTasksResponse(items []Task, treeTruncated bool, totalCount int32) *TasksResponse {
+func NewTasksResponse(items []Task, treeTruncated bool, canIncludeSystem bool, totalCount int32) *TasksResponse {
 	this := TasksResponse{}
 	this.Items = items
 	this.TreeTruncated = treeTruncated
+	this.CanIncludeSystem = canIncludeSystem
 	this.TotalCount = totalCount
 	return &this
 }
@@ -133,6 +136,30 @@ func (o *TasksResponse) SetTreeTruncated(v bool) {
 	o.TreeTruncated = v
 }
 
+// GetCanIncludeSystem returns the CanIncludeSystem field value
+func (o *TasksResponse) GetCanIncludeSystem() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CanIncludeSystem
+}
+
+// GetCanIncludeSystemOk returns a tuple with the CanIncludeSystem field value
+// and a boolean to check if the value has been set.
+func (o *TasksResponse) GetCanIncludeSystemOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CanIncludeSystem, true
+}
+
+// SetCanIncludeSystem sets field value
+func (o *TasksResponse) SetCanIncludeSystem(v bool) {
+	o.CanIncludeSystem = v
+}
+
 // GetTotalCount returns the TotalCount field value
 func (o *TasksResponse) GetTotalCount() int32 {
 	if o == nil {
@@ -214,6 +241,7 @@ func (o TasksResponse) ToMap() (map[string]interface{}, error) {
 		toSerialize["treeItems"] = o.TreeItems
 	}
 	toSerialize["treeTruncated"] = o.TreeTruncated
+	toSerialize["canIncludeSystem"] = o.CanIncludeSystem
 	toSerialize["totalCount"] = o.TotalCount
 	if o.NextPage.IsSet() {
 		toSerialize["nextPage"] = o.NextPage.Get()
@@ -228,6 +256,7 @@ func (o *TasksResponse) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"items",
 		"treeTruncated",
+		"canIncludeSystem",
 		"totalCount",
 	}
 

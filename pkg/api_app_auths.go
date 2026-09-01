@@ -320,7 +320,7 @@ func (r ApiListAppAuthsRequest) Execute() ([]AppAuth, *http.Response, error) {
 /*
 ListAppAuths List app auths
 
-Returns HTTP basic authentication entries for an app instance without exposing passwords or secret identifiers.
+Returns HTTP basic authentication entries for an app environment without exposing passwords or secret identifiers.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAppAuthsRequest

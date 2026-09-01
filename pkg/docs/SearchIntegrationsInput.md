@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Labels** | Pointer to **[]string** |  | [optional] 
 **Variables** | Pointer to [**[]IntegrationVariableRequirementInput**](IntegrationVariableRequirementInput.md) |  | [optional] 
 **EnvId** | Pointer to **NullableInt32** |  | [optional] 
+**EnvType** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -216,6 +217,41 @@ HasEnvId returns a boolean if a field has been set.
 `func (o *SearchIntegrationsInput) UnsetEnvId()`
 
 UnsetEnvId ensures that no value is present for EnvId, not even an explicit nil
+### GetEnvType
+
+`func (o *SearchIntegrationsInput) GetEnvType() string`
+
+GetEnvType returns the EnvType field if non-nil, zero value otherwise.
+
+### GetEnvTypeOk
+
+`func (o *SearchIntegrationsInput) GetEnvTypeOk() (*string, bool)`
+
+GetEnvTypeOk returns a tuple with the EnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvType
+
+`func (o *SearchIntegrationsInput) SetEnvType(v string)`
+
+SetEnvType sets EnvType field to given value.
+
+### HasEnvType
+
+`func (o *SearchIntegrationsInput) HasEnvType() bool`
+
+HasEnvType returns a boolean if a field has been set.
+
+### SetEnvTypeNil
+
+`func (o *SearchIntegrationsInput) SetEnvTypeNil(b bool)`
+
+ SetEnvTypeNil sets the value for EnvType to be an explicit nil
+
+### UnsetEnvType
+`func (o *SearchIntegrationsInput) UnsetEnvType()`
+
+UnsetEnvType ensures that no value is present for EnvType, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

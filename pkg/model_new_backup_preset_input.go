@@ -28,6 +28,8 @@ type NewBackupPresetInput struct {
 	// Optional for API-key requests; defaults to the API key's organization when no more specific target is provided.
 	OrgId NullableInt32 `json:"orgId,omitempty"`
 	EnvId NullableInt32 `json:"envId,omitempty"`
+	EnvTypes []string `json:"envTypes,omitempty"`
+	BackupCategory NullableString `json:"backupCategory,omitempty"`
 	BackupName NullableString `json:"backupName,omitempty"`
 	// Use 0 for Wodby Blob Storage. Free subscriptions may create only an automatic preset that is disabled.
 	IntegrationId int32 `json:"integrationId"`
@@ -316,6 +318,81 @@ func (o *NewBackupPresetInput) SetEnvIdNil() {
 // UnsetEnvId ensures that no value is present for EnvId, not even an explicit nil
 func (o *NewBackupPresetInput) UnsetEnvId() {
 	o.EnvId.Unset()
+}
+
+// GetEnvTypes returns the EnvTypes field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewBackupPresetInput) GetEnvTypes() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.EnvTypes
+}
+
+// GetEnvTypesOk returns a tuple with the EnvTypes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewBackupPresetInput) GetEnvTypesOk() ([]string, bool) {
+	if o == nil || IsNil(o.EnvTypes) {
+		return nil, false
+	}
+	return o.EnvTypes, true
+}
+
+// HasEnvTypes returns a boolean if a field has been set.
+func (o *NewBackupPresetInput) HasEnvTypes() bool {
+	if o != nil && !IsNil(o.EnvTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvTypes gets a reference to the given []string and assigns it to the EnvTypes field.
+func (o *NewBackupPresetInput) SetEnvTypes(v []string) {
+	o.EnvTypes = v
+}
+
+// GetBackupCategory returns the BackupCategory field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewBackupPresetInput) GetBackupCategory() string {
+	if o == nil || IsNil(o.BackupCategory.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BackupCategory.Get()
+}
+
+// GetBackupCategoryOk returns a tuple with the BackupCategory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewBackupPresetInput) GetBackupCategoryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BackupCategory.Get(), o.BackupCategory.IsSet()
+}
+
+// HasBackupCategory returns a boolean if a field has been set.
+func (o *NewBackupPresetInput) HasBackupCategory() bool {
+	if o != nil && o.BackupCategory.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupCategory gets a reference to the given NullableString and assigns it to the BackupCategory field.
+func (o *NewBackupPresetInput) SetBackupCategory(v string) {
+	o.BackupCategory.Set(&v)
+}
+// SetBackupCategoryNil sets the value for BackupCategory to be an explicit nil
+func (o *NewBackupPresetInput) SetBackupCategoryNil() {
+	o.BackupCategory.Set(nil)
+}
+
+// UnsetBackupCategory ensures that no value is present for BackupCategory, not even an explicit nil
+func (o *NewBackupPresetInput) UnsetBackupCategory() {
+	o.BackupCategory.Unset()
 }
 
 // GetBackupName returns the BackupName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -716,6 +793,12 @@ func (o NewBackupPresetInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.EnvId.IsSet() {
 		toSerialize["envId"] = o.EnvId.Get()
+	}
+	if o.EnvTypes != nil {
+		toSerialize["envTypes"] = o.EnvTypes
+	}
+	if o.BackupCategory.IsSet() {
+		toSerialize["backupCategory"] = o.BackupCategory.Get()
 	}
 	if o.BackupName.IsSet() {
 		toSerialize["backupName"] = o.BackupName.Get()

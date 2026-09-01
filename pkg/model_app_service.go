@@ -36,6 +36,7 @@ type AppService struct {
 	Required bool `json:"required"`
 	NeedsRebuild bool `json:"needsRebuild"`
 	NeedsRedeploy bool `json:"needsRedeploy"`
+	StackState string `json:"stackState"`
 	ConfigurationReady bool `json:"configurationReady"`
 	BuildSourceBoilerplate NullableString `json:"buildSourceBoilerplate,omitempty"`
 	CiPolicy string `json:"ciPolicy"`
@@ -44,6 +45,7 @@ type AppService struct {
 	AppInstanceId int32 `json:"appInstanceId"`
 	ServiceRevId int32 `json:"serviceRevId"`
 	ParentAppServiceId NullableInt32 `json:"parentAppServiceId,omitempty"`
+	DeploymentConfiguration ServiceDeploymentConfiguration `json:"deploymentConfiguration"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -54,7 +56,7 @@ type _AppService AppService
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, configurationReady bool, ciPolicy string, configurationIssues []AppServiceConfigurationIssue, appInstanceId int32, serviceRevId int32, createdAt time.Time, updatedAt time.Time) *AppService {
+func NewAppService(id int32, name string, title string, type_ string, status string, replicas int32, version string, main bool, disabled bool, external bool, required bool, needsRebuild bool, needsRedeploy bool, stackState string, configurationReady bool, ciPolicy string, configurationIssues []AppServiceConfigurationIssue, appInstanceId int32, serviceRevId int32, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time) *AppService {
 	this := AppService{}
 	this.Id = id
 	this.Name = name
@@ -69,11 +71,13 @@ func NewAppService(id int32, name string, title string, type_ string, status str
 	this.Required = required
 	this.NeedsRebuild = needsRebuild
 	this.NeedsRedeploy = needsRedeploy
+	this.StackState = stackState
 	this.ConfigurationReady = configurationReady
 	this.CiPolicy = ciPolicy
 	this.ConfigurationIssues = configurationIssues
 	this.AppInstanceId = appInstanceId
 	this.ServiceRevId = serviceRevId
+	this.DeploymentConfiguration = deploymentConfiguration
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -441,6 +445,30 @@ func (o *AppService) SetNeedsRedeploy(v bool) {
 	o.NeedsRedeploy = v
 }
 
+// GetStackState returns the StackState field value
+func (o *AppService) GetStackState() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.StackState
+}
+
+// GetStackStateOk returns a tuple with the StackState field value
+// and a boolean to check if the value has been set.
+func (o *AppService) GetStackStateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.StackState, true
+}
+
+// SetStackState sets field value
+func (o *AppService) SetStackState(v string) {
+	o.StackState = v
+}
+
 // GetConfigurationReady returns the ConfigurationReady field value
 func (o *AppService) GetConfigurationReady() bool {
 	if o == nil {
@@ -687,6 +715,30 @@ func (o *AppService) UnsetParentAppServiceId() {
 	o.ParentAppServiceId.Unset()
 }
 
+// GetDeploymentConfiguration returns the DeploymentConfiguration field value
+func (o *AppService) GetDeploymentConfiguration() ServiceDeploymentConfiguration {
+	if o == nil {
+		var ret ServiceDeploymentConfiguration
+		return ret
+	}
+
+	return o.DeploymentConfiguration
+}
+
+// GetDeploymentConfigurationOk returns a tuple with the DeploymentConfiguration field value
+// and a boolean to check if the value has been set.
+func (o *AppService) GetDeploymentConfigurationOk() (*ServiceDeploymentConfiguration, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DeploymentConfiguration, true
+}
+
+// SetDeploymentConfiguration sets field value
+func (o *AppService) SetDeploymentConfiguration(v ServiceDeploymentConfiguration) {
+	o.DeploymentConfiguration = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppService) GetCreatedAt() time.Time {
 	if o == nil {
@@ -761,6 +813,7 @@ func (o AppService) ToMap() (map[string]interface{}, error) {
 	toSerialize["required"] = o.Required
 	toSerialize["needsRebuild"] = o.NeedsRebuild
 	toSerialize["needsRedeploy"] = o.NeedsRedeploy
+	toSerialize["stackState"] = o.StackState
 	toSerialize["configurationReady"] = o.ConfigurationReady
 	if o.BuildSourceBoilerplate.IsSet() {
 		toSerialize["buildSourceBoilerplate"] = o.BuildSourceBoilerplate.Get()
@@ -775,6 +828,7 @@ func (o AppService) ToMap() (map[string]interface{}, error) {
 	if o.ParentAppServiceId.IsSet() {
 		toSerialize["parentAppServiceId"] = o.ParentAppServiceId.Get()
 	}
+	toSerialize["deploymentConfiguration"] = o.DeploymentConfiguration
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -798,11 +852,13 @@ func (o *AppService) UnmarshalJSON(data []byte) (err error) {
 		"required",
 		"needsRebuild",
 		"needsRedeploy",
+		"stackState",
 		"configurationReady",
 		"ciPolicy",
 		"configurationIssues",
 		"appInstanceId",
 		"serviceRevId",
+		"deploymentConfiguration",
 		"createdAt",
 		"updatedAt",
 	}

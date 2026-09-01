@@ -5,14 +5,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PrimaryEnvId** | Pointer to **NullableInt32** |  | [optional] 
+**PrimaryEnvType** | Pointer to **NullableString** |  | [optional] 
 **Scope** | **string** |  | 
-**AllowedEnvIds** | **[]int32** |  | 
+**AllowedEnvIds** | Pointer to **[]int32** |  | [optional] 
+**AllowedEnvTypes** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
 ### NewIntegrationEnvironmentPolicyInput
 
-`func NewIntegrationEnvironmentPolicyInput(scope string, allowedEnvIds []int32, ) *IntegrationEnvironmentPolicyInput`
+`func NewIntegrationEnvironmentPolicyInput(scope string, ) *IntegrationEnvironmentPolicyInput`
 
 NewIntegrationEnvironmentPolicyInput instantiates a new IntegrationEnvironmentPolicyInput object
 This constructor will assign default values to properties that have it defined,
@@ -62,6 +64,41 @@ HasPrimaryEnvId returns a boolean if a field has been set.
 `func (o *IntegrationEnvironmentPolicyInput) UnsetPrimaryEnvId()`
 
 UnsetPrimaryEnvId ensures that no value is present for PrimaryEnvId, not even an explicit nil
+### GetPrimaryEnvType
+
+`func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvType() string`
+
+GetPrimaryEnvType returns the PrimaryEnvType field if non-nil, zero value otherwise.
+
+### GetPrimaryEnvTypeOk
+
+`func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvTypeOk() (*string, bool)`
+
+GetPrimaryEnvTypeOk returns a tuple with the PrimaryEnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrimaryEnvType
+
+`func (o *IntegrationEnvironmentPolicyInput) SetPrimaryEnvType(v string)`
+
+SetPrimaryEnvType sets PrimaryEnvType field to given value.
+
+### HasPrimaryEnvType
+
+`func (o *IntegrationEnvironmentPolicyInput) HasPrimaryEnvType() bool`
+
+HasPrimaryEnvType returns a boolean if a field has been set.
+
+### SetPrimaryEnvTypeNil
+
+`func (o *IntegrationEnvironmentPolicyInput) SetPrimaryEnvTypeNil(b bool)`
+
+ SetPrimaryEnvTypeNil sets the value for PrimaryEnvType to be an explicit nil
+
+### UnsetPrimaryEnvType
+`func (o *IntegrationEnvironmentPolicyInput) UnsetPrimaryEnvType()`
+
+UnsetPrimaryEnvType ensures that no value is present for PrimaryEnvType, not even an explicit nil
 ### GetScope
 
 `func (o *IntegrationEnvironmentPolicyInput) GetScope() string`
@@ -101,6 +138,36 @@ and a boolean to check if the value has been set.
 
 SetAllowedEnvIds sets AllowedEnvIds field to given value.
 
+### HasAllowedEnvIds
+
+`func (o *IntegrationEnvironmentPolicyInput) HasAllowedEnvIds() bool`
+
+HasAllowedEnvIds returns a boolean if a field has been set.
+
+### GetAllowedEnvTypes
+
+`func (o *IntegrationEnvironmentPolicyInput) GetAllowedEnvTypes() []string`
+
+GetAllowedEnvTypes returns the AllowedEnvTypes field if non-nil, zero value otherwise.
+
+### GetAllowedEnvTypesOk
+
+`func (o *IntegrationEnvironmentPolicyInput) GetAllowedEnvTypesOk() (*[]string, bool)`
+
+GetAllowedEnvTypesOk returns a tuple with the AllowedEnvTypes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedEnvTypes
+
+`func (o *IntegrationEnvironmentPolicyInput) SetAllowedEnvTypes(v []string)`
+
+SetAllowedEnvTypes sets AllowedEnvTypes field to given value.
+
+### HasAllowedEnvTypes
+
+`func (o *IntegrationEnvironmentPolicyInput) HasAllowedEnvTypes() bool`
+
+HasAllowedEnvTypes returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

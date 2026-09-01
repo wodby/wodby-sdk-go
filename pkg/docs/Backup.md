@@ -11,8 +11,11 @@ Name | Type | Description | Notes
 **AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
+**BackupPresetId** | Pointer to **NullableInt32** |  | [optional] 
+**Manual** | **bool** |  | 
 **IntegrationId** | **NullableInt32** | Storage integration that owns the backup. Null identifies Wodby&#39;s built-in blob storage. | 
 **TaskId** | Pointer to **NullableInt32** |  | [optional] 
+**Size** | Pointer to **NullableInt64** | Final stored archive size in bytes. Null when the size has not been recorded. | [optional] 
 **Options** | [**[]BackupOption**](BackupOption.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -23,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewBackup
 
-`func NewBackup(id int32, name string, status string, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time, ) *Backup`
+`func NewBackup(id int32, name string, status string, manual bool, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time, ) *Backup`
 
 NewBackup instantiates a new Backup object
 This constructor will assign default values to properties that have it defined,
@@ -238,6 +241,61 @@ HasDatabaseDbId returns a boolean if a field has been set.
 `func (o *Backup) UnsetDatabaseDbId()`
 
 UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+### GetBackupPresetId
+
+`func (o *Backup) GetBackupPresetId() int32`
+
+GetBackupPresetId returns the BackupPresetId field if non-nil, zero value otherwise.
+
+### GetBackupPresetIdOk
+
+`func (o *Backup) GetBackupPresetIdOk() (*int32, bool)`
+
+GetBackupPresetIdOk returns a tuple with the BackupPresetId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBackupPresetId
+
+`func (o *Backup) SetBackupPresetId(v int32)`
+
+SetBackupPresetId sets BackupPresetId field to given value.
+
+### HasBackupPresetId
+
+`func (o *Backup) HasBackupPresetId() bool`
+
+HasBackupPresetId returns a boolean if a field has been set.
+
+### SetBackupPresetIdNil
+
+`func (o *Backup) SetBackupPresetIdNil(b bool)`
+
+ SetBackupPresetIdNil sets the value for BackupPresetId to be an explicit nil
+
+### UnsetBackupPresetId
+`func (o *Backup) UnsetBackupPresetId()`
+
+UnsetBackupPresetId ensures that no value is present for BackupPresetId, not even an explicit nil
+### GetManual
+
+`func (o *Backup) GetManual() bool`
+
+GetManual returns the Manual field if non-nil, zero value otherwise.
+
+### GetManualOk
+
+`func (o *Backup) GetManualOk() (*bool, bool)`
+
+GetManualOk returns a tuple with the Manual field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetManual
+
+`func (o *Backup) SetManual(v bool)`
+
+SetManual sets Manual field to given value.
+
+
 ### GetIntegrationId
 
 `func (o *Backup) GetIntegrationId() int32`
@@ -303,6 +361,41 @@ HasTaskId returns a boolean if a field has been set.
 `func (o *Backup) UnsetTaskId()`
 
 UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
+### GetSize
+
+`func (o *Backup) GetSize() int64`
+
+GetSize returns the Size field if non-nil, zero value otherwise.
+
+### GetSizeOk
+
+`func (o *Backup) GetSizeOk() (*int64, bool)`
+
+GetSizeOk returns a tuple with the Size field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSize
+
+`func (o *Backup) SetSize(v int64)`
+
+SetSize sets Size field to given value.
+
+### HasSize
+
+`func (o *Backup) HasSize() bool`
+
+HasSize returns a boolean if a field has been set.
+
+### SetSizeNil
+
+`func (o *Backup) SetSizeNil(b bool)`
+
+ SetSizeNil sets the value for Size to be an explicit nil
+
+### UnsetSize
+`func (o *Backup) UnsetSize()`
+
+UnsetSize ensures that no value is present for Size, not even an explicit nil
 ### GetOptions
 
 `func (o *Backup) GetOptions() []BackupOption`

@@ -741,12 +741,149 @@ func (a *ClustersAPIService) GetClusterInfraAppUpgradeChangelogExecute(r ApiGetC
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetKubernetesVersionUpgradePlanRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+}
+
+func (r ApiGetKubernetesVersionUpgradePlanRequest) Execute() (*KubernetesVersionUpgradePlan, *http.Response, error) {
+	return r.ApiService.GetKubernetesVersionUpgradePlanExecute(r)
+}
+
+/*
+GetKubernetesVersionUpgradePlan Get Kubernetes version upgrade plan
+
+Returns supported Kubernetes upgrade targets, blockers, and warnings for a cluster.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetKubernetesVersionUpgradePlanRequest
+*/
+func (a *ClustersAPIService) GetKubernetesVersionUpgradePlan(ctx context.Context, id int32) ApiGetKubernetesVersionUpgradePlanRequest {
+	return ApiGetKubernetesVersionUpgradePlanRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return KubernetesVersionUpgradePlan
+func (a *ClustersAPIService) GetKubernetesVersionUpgradePlanExecute(r ApiGetKubernetesVersionUpgradePlanRequest) (*KubernetesVersionUpgradePlan, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *KubernetesVersionUpgradePlan
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.GetKubernetesVersionUpgradePlan")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cluster-kubernetes-version-upgrade-plans/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListClustersRequest struct {
 	ctx context.Context
 	ApiService *ClustersAPIService
 	orgId *int32
 	projectIds *string
 	integrationId *int32
+	environmentId *int32
 }
 
 // Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization.
@@ -763,6 +900,11 @@ func (r ApiListClustersRequest) ProjectIds(projectIds string) ApiListClustersReq
 
 func (r ApiListClustersRequest) IntegrationId(integrationId int32) ApiListClustersRequest {
 	r.integrationId = &integrationId
+	return r
+}
+
+func (r ApiListClustersRequest) EnvironmentId(environmentId int32) ApiListClustersRequest {
+	r.environmentId = &environmentId
 	return r
 }
 
@@ -814,6 +956,9 @@ func (a *ClustersAPIService) ListClustersExecute(r ApiListClustersRequest) ([]Cl
 	}
 	if r.integrationId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "integrationId", r.integrationId, "form", "")
+	}
+	if r.environmentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "environmentId", r.environmentId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -979,6 +1124,153 @@ func (a *ClustersAPIService) UpdateClusterExecute(r ApiUpdateClusterRequest) (*C
 	}
 	// body params
 	localVarPostBody = r.updateTitleRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateClusterEnvironmentPolicyRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+	clusterEnvironmentPolicyInput *ClusterEnvironmentPolicyInput
+}
+
+func (r ApiUpdateClusterEnvironmentPolicyRequest) ClusterEnvironmentPolicyInput(clusterEnvironmentPolicyInput ClusterEnvironmentPolicyInput) ApiUpdateClusterEnvironmentPolicyRequest {
+	r.clusterEnvironmentPolicyInput = &clusterEnvironmentPolicyInput
+	return r
+}
+
+func (r ApiUpdateClusterEnvironmentPolicyRequest) Execute() (*Cluster, *http.Response, error) {
+	return r.ApiService.UpdateClusterEnvironmentPolicyExecute(r)
+}
+
+/*
+UpdateClusterEnvironmentPolicy Update cluster environment policy
+
+Updates the cluster's environment type and allowed environment-type scope. Scope reductions that conflict with existing non-infrastructure app environments are rejected.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateClusterEnvironmentPolicyRequest
+*/
+func (a *ClustersAPIService) UpdateClusterEnvironmentPolicy(ctx context.Context, id int32) ApiUpdateClusterEnvironmentPolicyRequest {
+	return ApiUpdateClusterEnvironmentPolicyRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return Cluster
+func (a *ClustersAPIService) UpdateClusterEnvironmentPolicyExecute(r ApiUpdateClusterEnvironmentPolicyRequest) (*Cluster, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Cluster
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.UpdateClusterEnvironmentPolicy")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/clusters/environment-policy/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.clusterEnvironmentPolicyInput == nil {
+		return localVarReturnValue, nil, reportError("clusterEnvironmentPolicyInput is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.clusterEnvironmentPolicyInput
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

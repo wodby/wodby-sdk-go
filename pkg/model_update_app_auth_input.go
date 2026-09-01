@@ -21,7 +21,7 @@ var _ MappedNullable = &UpdateAppAuthInput{}
 
 // UpdateAppAuthInput struct for UpdateAppAuthInput
 type UpdateAppAuthInput struct {
-	// App services to protect. Omit every scope field to preserve the current scope, or pass an empty list to protect the whole app instance.
+	// App services to protect. Omit every scope field to preserve the current scope, or pass an empty list to protect the whole app environment.
 	AppServiceIds []int32 `json:"appServiceIds,omitempty"`
 	// Single-service scope. Ignored when appServiceIds is supplied.
 	// Deprecated

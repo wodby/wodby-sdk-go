@@ -24,6 +24,11 @@ Name | Type | Description | Notes
 **Ips** | Pointer to **[]string** |  | [optional] 
 **Hostname** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**EnvId** | **int32** | Legacy internal environment entity ID. Use envType. | 
+**EnvType** | **string** |  | 
+**EnvScope** | **string** |  | 
+**AllowedEnvIds** | **[]int32** | Legacy internal environment entity IDs. Use allowedEnvTypes. | 
+**AllowedEnvTypes** | **[]string** |  | 
 **OrgId** | **int32** |  | 
 **OwnershipScope** | **string** |  | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
@@ -38,7 +43,7 @@ Name | Type | Description | Notes
 
 ### NewCluster
 
-`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
+`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
 
 NewCluster instantiates a new Cluster object
 This constructor will assign default values to properties that have it defined,
@@ -603,6 +608,106 @@ HasIntegrationId returns a boolean if a field has been set.
 `func (o *Cluster) UnsetIntegrationId()`
 
 UnsetIntegrationId ensures that no value is present for IntegrationId, not even an explicit nil
+### GetEnvId
+
+`func (o *Cluster) GetEnvId() int32`
+
+GetEnvId returns the EnvId field if non-nil, zero value otherwise.
+
+### GetEnvIdOk
+
+`func (o *Cluster) GetEnvIdOk() (*int32, bool)`
+
+GetEnvIdOk returns a tuple with the EnvId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvId
+
+`func (o *Cluster) SetEnvId(v int32)`
+
+SetEnvId sets EnvId field to given value.
+
+
+### GetEnvType
+
+`func (o *Cluster) GetEnvType() string`
+
+GetEnvType returns the EnvType field if non-nil, zero value otherwise.
+
+### GetEnvTypeOk
+
+`func (o *Cluster) GetEnvTypeOk() (*string, bool)`
+
+GetEnvTypeOk returns a tuple with the EnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvType
+
+`func (o *Cluster) SetEnvType(v string)`
+
+SetEnvType sets EnvType field to given value.
+
+
+### GetEnvScope
+
+`func (o *Cluster) GetEnvScope() string`
+
+GetEnvScope returns the EnvScope field if non-nil, zero value otherwise.
+
+### GetEnvScopeOk
+
+`func (o *Cluster) GetEnvScopeOk() (*string, bool)`
+
+GetEnvScopeOk returns a tuple with the EnvScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvScope
+
+`func (o *Cluster) SetEnvScope(v string)`
+
+SetEnvScope sets EnvScope field to given value.
+
+
+### GetAllowedEnvIds
+
+`func (o *Cluster) GetAllowedEnvIds() []int32`
+
+GetAllowedEnvIds returns the AllowedEnvIds field if non-nil, zero value otherwise.
+
+### GetAllowedEnvIdsOk
+
+`func (o *Cluster) GetAllowedEnvIdsOk() (*[]int32, bool)`
+
+GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedEnvIds
+
+`func (o *Cluster) SetAllowedEnvIds(v []int32)`
+
+SetAllowedEnvIds sets AllowedEnvIds field to given value.
+
+
+### GetAllowedEnvTypes
+
+`func (o *Cluster) GetAllowedEnvTypes() []string`
+
+GetAllowedEnvTypes returns the AllowedEnvTypes field if non-nil, zero value otherwise.
+
+### GetAllowedEnvTypesOk
+
+`func (o *Cluster) GetAllowedEnvTypesOk() (*[]string, bool)`
+
+GetAllowedEnvTypesOk returns a tuple with the AllowedEnvTypes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedEnvTypes
+
+`func (o *Cluster) SetAllowedEnvTypes(v []string)`
+
+SetAllowedEnvTypes sets AllowedEnvTypes field to given value.
+
+
 ### GetOrgId
 
 `func (o *Cluster) GetOrgId() int32`

@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**GetAppRoute**](AppRoutesAPI.md#GetAppRoute) | **Get** /app-routes/{id} | Get app route
 [**ListAppRouteSettings**](AppRoutesAPI.md#ListAppRouteSettings) | **Get** /app-routes/{id}/settings | List app route settings
 [**ListAppRoutes**](AppRoutesAPI.md#ListAppRoutes) | **Get** /app-routes | List app routes
+[**ListEffectiveAppRouteSettings**](AppRoutesAPI.md#ListEffectiveAppRouteSettings) | **Get** /app-routes/{id}/effective-settings | List effective app route settings
 [**RetryAppRouteCertificate**](AppRoutesAPI.md#RetryAppRouteCertificate) | **Post** /app-routes/{id}/actions/retry-certificate | Retry app route certificate
 [**SetAppRouteSetting**](AppRoutesAPI.md#SetAppRouteSetting) | **Put** /app-routes/{id}/settings/{name} | Set app route setting
 [**UpdateAppRoute**](AppRoutesAPI.md#UpdateAppRoute) | **Put** /app-routes/{id} | Update app route
@@ -416,6 +417,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppRoute**](AppRoute.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListEffectiveAppRouteSettings
+
+> []EffectiveAppRouteSetting ListEffectiveAppRouteSettings(ctx, id).Execute()
+
+List effective app route settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.ListEffectiveAppRouteSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.ListEffectiveAppRouteSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListEffectiveAppRouteSettings`: []EffectiveAppRouteSetting
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.ListEffectiveAppRouteSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListEffectiveAppRouteSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]EffectiveAppRouteSetting**](EffectiveAppRouteSetting.md)
 
 ### Authorization
 

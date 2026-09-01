@@ -10,8 +10,11 @@ Name | Type | Description | Notes
 **RollbackStatus** | **string** |  | 
 **PostDeploymentStatus** | **string** |  | 
 **SkipRollback** | **bool** |  | 
+**CanCancel** | **bool** |  | 
 **AppInstanceId** | **int32** |  | 
 **Builds** | [**[]AppBuild**](AppBuild.md) |  | 
+**PreparationTaskId** | Pointer to **NullableInt32** |  | [optional] 
+**PreparationTask** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
 **TaskId** | Pointer to **NullableInt32** |  | [optional] 
 **Task** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
 **PostDeploymentTaskId** | Pointer to **NullableInt32** |  | [optional] 
@@ -26,7 +29,7 @@ Name | Type | Description | Notes
 
 ### NewAppDeployment
 
-`func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
+`func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, canCancel bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
 
 NewAppDeployment instantiates a new AppDeployment object
 This constructor will assign default values to properties that have it defined,
@@ -161,6 +164,26 @@ and a boolean to check if the value has been set.
 SetSkipRollback sets SkipRollback field to given value.
 
 
+### GetCanCancel
+
+`func (o *AppDeployment) GetCanCancel() bool`
+
+GetCanCancel returns the CanCancel field if non-nil, zero value otherwise.
+
+### GetCanCancelOk
+
+`func (o *AppDeployment) GetCanCancelOk() (*bool, bool)`
+
+GetCanCancelOk returns a tuple with the CanCancel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanCancel
+
+`func (o *AppDeployment) SetCanCancel(v bool)`
+
+SetCanCancel sets CanCancel field to given value.
+
+
 ### GetAppInstanceId
 
 `func (o *AppDeployment) GetAppInstanceId() int32`
@@ -201,6 +224,76 @@ and a boolean to check if the value has been set.
 SetBuilds sets Builds field to given value.
 
 
+### GetPreparationTaskId
+
+`func (o *AppDeployment) GetPreparationTaskId() int32`
+
+GetPreparationTaskId returns the PreparationTaskId field if non-nil, zero value otherwise.
+
+### GetPreparationTaskIdOk
+
+`func (o *AppDeployment) GetPreparationTaskIdOk() (*int32, bool)`
+
+GetPreparationTaskIdOk returns a tuple with the PreparationTaskId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreparationTaskId
+
+`func (o *AppDeployment) SetPreparationTaskId(v int32)`
+
+SetPreparationTaskId sets PreparationTaskId field to given value.
+
+### HasPreparationTaskId
+
+`func (o *AppDeployment) HasPreparationTaskId() bool`
+
+HasPreparationTaskId returns a boolean if a field has been set.
+
+### SetPreparationTaskIdNil
+
+`func (o *AppDeployment) SetPreparationTaskIdNil(b bool)`
+
+ SetPreparationTaskIdNil sets the value for PreparationTaskId to be an explicit nil
+
+### UnsetPreparationTaskId
+`func (o *AppDeployment) UnsetPreparationTaskId()`
+
+UnsetPreparationTaskId ensures that no value is present for PreparationTaskId, not even an explicit nil
+### GetPreparationTask
+
+`func (o *AppDeployment) GetPreparationTask() Task`
+
+GetPreparationTask returns the PreparationTask field if non-nil, zero value otherwise.
+
+### GetPreparationTaskOk
+
+`func (o *AppDeployment) GetPreparationTaskOk() (*Task, bool)`
+
+GetPreparationTaskOk returns a tuple with the PreparationTask field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreparationTask
+
+`func (o *AppDeployment) SetPreparationTask(v Task)`
+
+SetPreparationTask sets PreparationTask field to given value.
+
+### HasPreparationTask
+
+`func (o *AppDeployment) HasPreparationTask() bool`
+
+HasPreparationTask returns a boolean if a field has been set.
+
+### SetPreparationTaskNil
+
+`func (o *AppDeployment) SetPreparationTaskNil(b bool)`
+
+ SetPreparationTaskNil sets the value for PreparationTask to be an explicit nil
+
+### UnsetPreparationTask
+`func (o *AppDeployment) UnsetPreparationTask()`
+
+UnsetPreparationTask ensures that no value is present for PreparationTask, not even an explicit nil
 ### GetTaskId
 
 `func (o *AppDeployment) GetTaskId() int32`

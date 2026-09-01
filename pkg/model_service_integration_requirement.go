@@ -26,6 +26,7 @@ type ServiceIntegrationRequirement struct {
 	Type string `json:"type"`
 	Labels []string `json:"labels,omitempty"`
 	Variables []IntegrationVariableRequirement `json:"variables"`
+	Env []ServiceManifestEnvVar `json:"env"`
 	Required bool `json:"required"`
 	Multiple bool `json:"multiple"`
 }
@@ -36,12 +37,13 @@ type _ServiceIntegrationRequirement ServiceIntegrationRequirement
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewServiceIntegrationRequirement(name string, title string, type_ string, variables []IntegrationVariableRequirement, required bool, multiple bool) *ServiceIntegrationRequirement {
+func NewServiceIntegrationRequirement(name string, title string, type_ string, variables []IntegrationVariableRequirement, env []ServiceManifestEnvVar, required bool, multiple bool) *ServiceIntegrationRequirement {
 	this := ServiceIntegrationRequirement{}
 	this.Name = name
 	this.Title = title
 	this.Type = type_
 	this.Variables = variables
+	this.Env = env
 	this.Required = required
 	this.Multiple = multiple
 	return &this
@@ -183,6 +185,30 @@ func (o *ServiceIntegrationRequirement) SetVariables(v []IntegrationVariableRequ
 	o.Variables = v
 }
 
+// GetEnv returns the Env field value
+func (o *ServiceIntegrationRequirement) GetEnv() []ServiceManifestEnvVar {
+	if o == nil {
+		var ret []ServiceManifestEnvVar
+		return ret
+	}
+
+	return o.Env
+}
+
+// GetEnvOk returns a tuple with the Env field value
+// and a boolean to check if the value has been set.
+func (o *ServiceIntegrationRequirement) GetEnvOk() ([]ServiceManifestEnvVar, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Env, true
+}
+
+// SetEnv sets field value
+func (o *ServiceIntegrationRequirement) SetEnv(v []ServiceManifestEnvVar) {
+	o.Env = v
+}
+
 // GetRequired returns the Required field value
 func (o *ServiceIntegrationRequirement) GetRequired() bool {
 	if o == nil {
@@ -248,6 +274,7 @@ func (o ServiceIntegrationRequirement) ToMap() (map[string]interface{}, error) {
 		toSerialize["labels"] = o.Labels
 	}
 	toSerialize["variables"] = o.Variables
+	toSerialize["env"] = o.Env
 	toSerialize["required"] = o.Required
 	toSerialize["multiple"] = o.Multiple
 	return toSerialize, nil
@@ -262,6 +289,7 @@ func (o *ServiceIntegrationRequirement) UnmarshalJSON(data []byte) (err error) {
 		"title",
 		"type",
 		"variables",
+		"env",
 		"required",
 		"multiple",
 	}

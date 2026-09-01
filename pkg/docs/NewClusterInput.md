@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **BillingOption** | Pointer to **NullableString** |  | [optional] 
 **DisableMonitoring** | **bool** |  | 
 **AutoInfrastructureUpgrade** | Pointer to **NullableBool** |  | [optional] 
+**EnvironmentPolicy** | Pointer to [**ClusterEnvironmentPolicyInput**](ClusterEnvironmentPolicyInput.md) |  | [optional] 
 
 ## Methods
 
@@ -551,6 +552,31 @@ HasAutoInfrastructureUpgrade returns a boolean if a field has been set.
 `func (o *NewClusterInput) UnsetAutoInfrastructureUpgrade()`
 
 UnsetAutoInfrastructureUpgrade ensures that no value is present for AutoInfrastructureUpgrade, not even an explicit nil
+### GetEnvironmentPolicy
+
+`func (o *NewClusterInput) GetEnvironmentPolicy() ClusterEnvironmentPolicyInput`
+
+GetEnvironmentPolicy returns the EnvironmentPolicy field if non-nil, zero value otherwise.
+
+### GetEnvironmentPolicyOk
+
+`func (o *NewClusterInput) GetEnvironmentPolicyOk() (*ClusterEnvironmentPolicyInput, bool)`
+
+GetEnvironmentPolicyOk returns a tuple with the EnvironmentPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvironmentPolicy
+
+`func (o *NewClusterInput) SetEnvironmentPolicy(v ClusterEnvironmentPolicyInput)`
+
+SetEnvironmentPolicy sets EnvironmentPolicy field to given value.
+
+### HasEnvironmentPolicy
+
+`func (o *NewClusterInput) HasEnvironmentPolicy() bool`
+
+HasEnvironmentPolicy returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

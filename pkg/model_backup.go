@@ -29,9 +29,13 @@ type Backup struct {
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	DatabaseId NullableInt32 `json:"databaseId,omitempty"`
 	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
+	BackupPresetId NullableInt32 `json:"backupPresetId,omitempty"`
+	Manual bool `json:"manual"`
 	// Storage integration that owns the backup. Null identifies Wodby's built-in blob storage.
 	IntegrationId NullableInt32 `json:"integrationId"`
 	TaskId NullableInt32 `json:"taskId,omitempty"`
+	// Final stored archive size in bytes. Null when the size has not been recorded.
+	Size NullableInt64 `json:"size,omitempty"`
 	Options []BackupOption `json:"options"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -45,11 +49,12 @@ type _Backup Backup
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackup(id int32, name string, status string, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time) *Backup {
+func NewBackup(id int32, name string, status string, manual bool, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time) *Backup {
 	this := Backup{}
 	this.Id = id
 	this.Name = name
 	this.Status = status
+	this.Manual = manual
 	this.IntegrationId = integrationId
 	this.Options = options
 	this.CreatedAt = createdAt
@@ -305,6 +310,72 @@ func (o *Backup) UnsetDatabaseDbId() {
 	o.DatabaseDbId.Unset()
 }
 
+// GetBackupPresetId returns the BackupPresetId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Backup) GetBackupPresetId() int32 {
+	if o == nil || IsNil(o.BackupPresetId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.BackupPresetId.Get()
+}
+
+// GetBackupPresetIdOk returns a tuple with the BackupPresetId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetBackupPresetIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BackupPresetId.Get(), o.BackupPresetId.IsSet()
+}
+
+// HasBackupPresetId returns a boolean if a field has been set.
+func (o *Backup) HasBackupPresetId() bool {
+	if o != nil && o.BackupPresetId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupPresetId gets a reference to the given NullableInt32 and assigns it to the BackupPresetId field.
+func (o *Backup) SetBackupPresetId(v int32) {
+	o.BackupPresetId.Set(&v)
+}
+// SetBackupPresetIdNil sets the value for BackupPresetId to be an explicit nil
+func (o *Backup) SetBackupPresetIdNil() {
+	o.BackupPresetId.Set(nil)
+}
+
+// UnsetBackupPresetId ensures that no value is present for BackupPresetId, not even an explicit nil
+func (o *Backup) UnsetBackupPresetId() {
+	o.BackupPresetId.Unset()
+}
+
+// GetManual returns the Manual field value
+func (o *Backup) GetManual() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Manual
+}
+
+// GetManualOk returns a tuple with the Manual field value
+// and a boolean to check if the value has been set.
+func (o *Backup) GetManualOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Manual, true
+}
+
+// SetManual sets field value
+func (o *Backup) SetManual(v bool) {
+	o.Manual = v
+}
+
 // GetIntegrationId returns the IntegrationId field value
 // If the value is explicit nil, the zero value for int32 will be returned
 func (o *Backup) GetIntegrationId() int32 {
@@ -371,6 +442,48 @@ func (o *Backup) SetTaskIdNil() {
 // UnsetTaskId ensures that no value is present for TaskId, not even an explicit nil
 func (o *Backup) UnsetTaskId() {
 	o.TaskId.Unset()
+}
+
+// GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Backup) GetSize() int64 {
+	if o == nil || IsNil(o.Size.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.Size.Get()
+}
+
+// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetSizeOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Size.Get(), o.Size.IsSet()
+}
+
+// HasSize returns a boolean if a field has been set.
+func (o *Backup) HasSize() bool {
+	if o != nil && o.Size.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSize gets a reference to the given NullableInt64 and assigns it to the Size field.
+func (o *Backup) SetSize(v int64) {
+	o.Size.Set(&v)
+}
+// SetSizeNil sets the value for Size to be an explicit nil
+func (o *Backup) SetSizeNil() {
+	o.Size.Set(nil)
+}
+
+// UnsetSize ensures that no value is present for Size, not even an explicit nil
+func (o *Backup) UnsetSize() {
+	o.Size.Unset()
 }
 
 // GetOptions returns the Options field value
@@ -554,9 +667,16 @@ func (o Backup) ToMap() (map[string]interface{}, error) {
 	if o.DatabaseDbId.IsSet() {
 		toSerialize["databaseDbId"] = o.DatabaseDbId.Get()
 	}
+	if o.BackupPresetId.IsSet() {
+		toSerialize["backupPresetId"] = o.BackupPresetId.Get()
+	}
+	toSerialize["manual"] = o.Manual
 	toSerialize["integrationId"] = o.IntegrationId.Get()
 	if o.TaskId.IsSet() {
 		toSerialize["taskId"] = o.TaskId.Get()
+	}
+	if o.Size.IsSet() {
+		toSerialize["size"] = o.Size.Get()
 	}
 	toSerialize["options"] = o.Options
 	toSerialize["createdAt"] = o.CreatedAt
@@ -578,6 +698,7 @@ func (o *Backup) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"name",
 		"status",
+		"manual",
 		"integrationId",
 		"options",
 		"createdAt",

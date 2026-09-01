@@ -19,11 +19,15 @@ import (
 // checks if the IntegrationEnvironmentPolicyInput type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &IntegrationEnvironmentPolicyInput{}
 
-// IntegrationEnvironmentPolicyInput struct for IntegrationEnvironmentPolicyInput
+// IntegrationEnvironmentPolicyInput Use primaryEnvType and allowedEnvTypes. Legacy ID fields remain accepted but cannot be mixed with their type equivalents.
 type IntegrationEnvironmentPolicyInput struct {
+	// Deprecated
 	PrimaryEnvId NullableInt32 `json:"primaryEnvId,omitempty"`
+	PrimaryEnvType NullableString `json:"primaryEnvType,omitempty"`
 	Scope string `json:"scope"`
-	AllowedEnvIds []int32 `json:"allowedEnvIds"`
+	// Deprecated
+	AllowedEnvIds []int32 `json:"allowedEnvIds,omitempty"`
+	AllowedEnvTypes []string `json:"allowedEnvTypes,omitempty"`
 }
 
 type _IntegrationEnvironmentPolicyInput IntegrationEnvironmentPolicyInput
@@ -32,10 +36,9 @@ type _IntegrationEnvironmentPolicyInput IntegrationEnvironmentPolicyInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIntegrationEnvironmentPolicyInput(scope string, allowedEnvIds []int32) *IntegrationEnvironmentPolicyInput {
+func NewIntegrationEnvironmentPolicyInput(scope string) *IntegrationEnvironmentPolicyInput {
 	this := IntegrationEnvironmentPolicyInput{}
 	this.Scope = scope
-	this.AllowedEnvIds = allowedEnvIds
 	return &this
 }
 
@@ -48,6 +51,7 @@ func NewIntegrationEnvironmentPolicyInputWithDefaults() *IntegrationEnvironmentP
 }
 
 // GetPrimaryEnvId returns the PrimaryEnvId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvId() int32 {
 	if o == nil || IsNil(o.PrimaryEnvId.Get()) {
 		var ret int32
@@ -59,6 +63,7 @@ func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvId() int32 {
 // GetPrimaryEnvIdOk returns a tuple with the PrimaryEnvId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -76,6 +81,7 @@ func (o *IntegrationEnvironmentPolicyInput) HasPrimaryEnvId() bool {
 }
 
 // SetPrimaryEnvId gets a reference to the given NullableInt32 and assigns it to the PrimaryEnvId field.
+// Deprecated
 func (o *IntegrationEnvironmentPolicyInput) SetPrimaryEnvId(v int32) {
 	o.PrimaryEnvId.Set(&v)
 }
@@ -87,6 +93,48 @@ func (o *IntegrationEnvironmentPolicyInput) SetPrimaryEnvIdNil() {
 // UnsetPrimaryEnvId ensures that no value is present for PrimaryEnvId, not even an explicit nil
 func (o *IntegrationEnvironmentPolicyInput) UnsetPrimaryEnvId() {
 	o.PrimaryEnvId.Unset()
+}
+
+// GetPrimaryEnvType returns the PrimaryEnvType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvType() string {
+	if o == nil || IsNil(o.PrimaryEnvType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEnvType.Get()
+}
+
+// GetPrimaryEnvTypeOk returns a tuple with the PrimaryEnvType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *IntegrationEnvironmentPolicyInput) GetPrimaryEnvTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PrimaryEnvType.Get(), o.PrimaryEnvType.IsSet()
+}
+
+// HasPrimaryEnvType returns a boolean if a field has been set.
+func (o *IntegrationEnvironmentPolicyInput) HasPrimaryEnvType() bool {
+	if o != nil && o.PrimaryEnvType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEnvType gets a reference to the given NullableString and assigns it to the PrimaryEnvType field.
+func (o *IntegrationEnvironmentPolicyInput) SetPrimaryEnvType(v string) {
+	o.PrimaryEnvType.Set(&v)
+}
+// SetPrimaryEnvTypeNil sets the value for PrimaryEnvType to be an explicit nil
+func (o *IntegrationEnvironmentPolicyInput) SetPrimaryEnvTypeNil() {
+	o.PrimaryEnvType.Set(nil)
+}
+
+// UnsetPrimaryEnvType ensures that no value is present for PrimaryEnvType, not even an explicit nil
+func (o *IntegrationEnvironmentPolicyInput) UnsetPrimaryEnvType() {
+	o.PrimaryEnvType.Unset()
 }
 
 // GetScope returns the Scope field value
@@ -113,28 +161,71 @@ func (o *IntegrationEnvironmentPolicyInput) SetScope(v string) {
 	o.Scope = v
 }
 
-// GetAllowedEnvIds returns the AllowedEnvIds field value
+// GetAllowedEnvIds returns the AllowedEnvIds field value if set, zero value otherwise.
+// Deprecated
 func (o *IntegrationEnvironmentPolicyInput) GetAllowedEnvIds() []int32 {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedEnvIds) {
 		var ret []int32
 		return ret
 	}
-
 	return o.AllowedEnvIds
 }
 
-// GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field value
+// GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *IntegrationEnvironmentPolicyInput) GetAllowedEnvIdsOk() ([]int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedEnvIds) {
 		return nil, false
 	}
 	return o.AllowedEnvIds, true
 }
 
-// SetAllowedEnvIds sets field value
+// HasAllowedEnvIds returns a boolean if a field has been set.
+func (o *IntegrationEnvironmentPolicyInput) HasAllowedEnvIds() bool {
+	if o != nil && !IsNil(o.AllowedEnvIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedEnvIds gets a reference to the given []int32 and assigns it to the AllowedEnvIds field.
+// Deprecated
 func (o *IntegrationEnvironmentPolicyInput) SetAllowedEnvIds(v []int32) {
 	o.AllowedEnvIds = v
+}
+
+// GetAllowedEnvTypes returns the AllowedEnvTypes field value if set, zero value otherwise.
+func (o *IntegrationEnvironmentPolicyInput) GetAllowedEnvTypes() []string {
+	if o == nil || IsNil(o.AllowedEnvTypes) {
+		var ret []string
+		return ret
+	}
+	return o.AllowedEnvTypes
+}
+
+// GetAllowedEnvTypesOk returns a tuple with the AllowedEnvTypes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IntegrationEnvironmentPolicyInput) GetAllowedEnvTypesOk() ([]string, bool) {
+	if o == nil || IsNil(o.AllowedEnvTypes) {
+		return nil, false
+	}
+	return o.AllowedEnvTypes, true
+}
+
+// HasAllowedEnvTypes returns a boolean if a field has been set.
+func (o *IntegrationEnvironmentPolicyInput) HasAllowedEnvTypes() bool {
+	if o != nil && !IsNil(o.AllowedEnvTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedEnvTypes gets a reference to the given []string and assigns it to the AllowedEnvTypes field.
+func (o *IntegrationEnvironmentPolicyInput) SetAllowedEnvTypes(v []string) {
+	o.AllowedEnvTypes = v
 }
 
 func (o IntegrationEnvironmentPolicyInput) MarshalJSON() ([]byte, error) {
@@ -150,8 +241,16 @@ func (o IntegrationEnvironmentPolicyInput) ToMap() (map[string]interface{}, erro
 	if o.PrimaryEnvId.IsSet() {
 		toSerialize["primaryEnvId"] = o.PrimaryEnvId.Get()
 	}
+	if o.PrimaryEnvType.IsSet() {
+		toSerialize["primaryEnvType"] = o.PrimaryEnvType.Get()
+	}
 	toSerialize["scope"] = o.Scope
-	toSerialize["allowedEnvIds"] = o.AllowedEnvIds
+	if !IsNil(o.AllowedEnvIds) {
+		toSerialize["allowedEnvIds"] = o.AllowedEnvIds
+	}
+	if !IsNil(o.AllowedEnvTypes) {
+		toSerialize["allowedEnvTypes"] = o.AllowedEnvTypes
+	}
 	return toSerialize, nil
 }
 
@@ -161,7 +260,6 @@ func (o *IntegrationEnvironmentPolicyInput) UnmarshalJSON(data []byte) (err erro
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"scope",
-		"allowedEnvIds",
 	}
 
 	allProperties := make(map[string]interface{})

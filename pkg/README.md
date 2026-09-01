@@ -91,30 +91,32 @@ Class | Method | HTTP request | Description
 *AppBuildsAPI* | [**GetAppBuildConfig**](docs/AppBuildsAPI.md#getappbuildconfig) | **Get** /app-builds/{id}/config | Get build config
 *AppBuildsAPI* | [**GetAppBuildDockerRegistryCredentials**](docs/AppBuildsAPI.md#getappbuilddockerregistrycredentials) | **Get** /app-builds/{id}/docker-registry-credentials | Get Docker registry credentials for build
 *AppBuildsAPI* | [**ListAppBuilds**](docs/AppBuildsAPI.md#listappbuilds) | **Get** /app-builds | List app builds
+*AppDeploymentsAPI* | [**CancelAppDeployment**](docs/AppDeploymentsAPI.md#cancelappdeployment) | **Post** /app-deployments/{id}/actions/cancel | Cancel deployment
 *AppDeploymentsAPI* | [**CreateAppDeployment**](docs/AppDeploymentsAPI.md#createappdeployment) | **Post** /app-deployments | Create deployment
 *AppDeploymentsAPI* | [**CreateAppDeploymentFromCi**](docs/AppDeploymentsAPI.md#createappdeploymentfromci) | **Post** /app-deployments/from-ci | Create deployment from CI
 *AppDeploymentsAPI* | [**GetAppDeployment**](docs/AppDeploymentsAPI.md#getappdeployment) | **Get** /app-deployments/{id} | Get deployment
 *AppDeploymentsAPI* | [**ListAppDeployments**](docs/AppDeploymentsAPI.md#listappdeployments) | **Get** /app-deployments | List app deployments
 *AppDeploymentsAPI* | [**RedeployAppDeployment**](docs/AppDeploymentsAPI.md#redeployappdeployment) | **Post** /app-deployments/{id}/redeploy | Redeploy deployment
-*AppInstancesAPI* | [**CreateAppAccess**](docs/AppInstancesAPI.md#createappaccess) | **Post** /app-instance-accesses/{id} | Create app instance access
-*AppInstancesAPI* | [**CreateAppInstance**](docs/AppInstancesAPI.md#createappinstance) | **Post** /app-instances | Create app instance
-*AppInstancesAPI* | [**DeleteAppAccess**](docs/AppInstancesAPI.md#deleteappaccess) | **Delete** /app-accesses/{id} | Delete app access
-*AppInstancesAPI* | [**DeleteAppInstance**](docs/AppInstancesAPI.md#deleteappinstance) | **Delete** /app-instances/{id} | Delete app instance
-*AppInstancesAPI* | [**GetAppInstance**](docs/AppInstancesAPI.md#getappinstance) | **Get** /app-instances/{id} | Get app instance
-*AppInstancesAPI* | [**GetAppInstanceAccess**](docs/AppInstancesAPI.md#getappinstanceaccess) | **Get** /app-instance-accesses/{id} | Get app instance access
-*AppInstancesAPI* | [**GetAppInstanceByName**](docs/AppInstancesAPI.md#getappinstancebyname) | **Get** /app-instances/by-name/{appName}/{instanceName} | Get app instance by app and instance name
-*AppInstancesAPI* | [**GetAppInstanceCICDSettings**](docs/AppInstancesAPI.md#getappinstancecicdsettings) | **Get** /app-instances/cicd-settings/{id} | Get app instance CI/CD settings
-*AppInstancesAPI* | [**GetAppInstanceStackUpgradeChangelog**](docs/AppInstancesAPI.md#getappinstancestackupgradechangelog) | **Get** /app-instance-stack-upgrade-changelogs/{id} | Preview app instance stack upgrade
-*AppInstancesAPI* | [**ListAppAccessCleanups**](docs/AppInstancesAPI.md#listappaccesscleanups) | **Get** /app-access-cleanups | List app-access cleanups
-*AppInstancesAPI* | [**ListAppInstances**](docs/AppInstancesAPI.md#listappinstances) | **Get** /app-instances | List app instances
-*AppInstancesAPI* | [**PreflightAppAccess**](docs/AppInstancesAPI.md#preflightappaccess) | **Post** /app-accesses/actions/preflight | Preflight app instance access
-*AppInstancesAPI* | [**RetryAppAccessCleanup**](docs/AppInstancesAPI.md#retryappaccesscleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
-*AppInstancesAPI* | [**UpdateAppAccess**](docs/AppInstancesAPI.md#updateappaccess) | **Put** /app-accesses/{id} | Update app access
-*AppInstancesAPI* | [**UpdateAppInstance**](docs/AppInstancesAPI.md#updateappinstance) | **Put** /app-instances/{id} | Update app instance
-*AppInstancesAPI* | [**UpdateAppInstanceCICDSettings**](docs/AppInstancesAPI.md#updateappinstancecicdsettings) | **Put** /app-instances/cicd-settings/{id} | Update app instance CI/CD settings
-*AppInstancesAPI* | [**UpdateAppInstanceMaintenanceMode**](docs/AppInstancesAPI.md#updateappinstancemaintenancemode) | **Put** /app-instances/{id}/actions/maintenance-mode | Update app instance maintenance mode
-*AppInstancesAPI* | [**UpdateAppInstanceSettings**](docs/AppInstancesAPI.md#updateappinstancesettings) | **Put** /app-instances/settings/{id} | Update app instance settings
-*AppInstancesAPI* | [**UpgradeAppInstanceStack**](docs/AppInstancesAPI.md#upgradeappinstancestack) | **Post** /app-instances/{id}/actions/upgrade-stack | Upgrade app instance stack
+*AppEnvironmentsAPI* | [**CreateAppAccess**](docs/AppEnvironmentsAPI.md#createappaccess) | **Post** /app-environment-accesses/{id} | Create app environment access
+*AppEnvironmentsAPI* | [**CreateAppEnvironment**](docs/AppEnvironmentsAPI.md#createappenvironment) | **Post** /app-environments | Create app environment
+*AppEnvironmentsAPI* | [**DeleteAppAccess**](docs/AppEnvironmentsAPI.md#deleteappaccess) | **Delete** /app-accesses/{id} | Delete app access
+*AppEnvironmentsAPI* | [**DeleteAppEnvironment**](docs/AppEnvironmentsAPI.md#deleteappenvironment) | **Delete** /app-environments/{id} | Delete app environment
+*AppEnvironmentsAPI* | [**GetAppEnvironment**](docs/AppEnvironmentsAPI.md#getappenvironment) | **Get** /app-environments/{id} | Get app environment
+*AppEnvironmentsAPI* | [**GetAppEnvironmentAccess**](docs/AppEnvironmentsAPI.md#getappenvironmentaccess) | **Get** /app-environment-accesses/{id} | Get app environment access
+*AppEnvironmentsAPI* | [**GetAppEnvironmentByName**](docs/AppEnvironmentsAPI.md#getappenvironmentbyname) | **Get** /app-environments/by-name/{appName}/{environmentName} | Get app environment by name
+*AppEnvironmentsAPI* | [**GetAppEnvironmentCICDSettings**](docs/AppEnvironmentsAPI.md#getappenvironmentcicdsettings) | **Get** /app-environments/cicd-settings/{id} | Get app environment CI/CD settings
+*AppEnvironmentsAPI* | [**GetAppEnvironmentStackUpgradeChangelog**](docs/AppEnvironmentsAPI.md#getappenvironmentstackupgradechangelog) | **Get** /app-environment-stack-upgrade-changelogs/{id} | Preview app environment stack upgrade
+*AppEnvironmentsAPI* | [**ListAppAccessCleanups**](docs/AppEnvironmentsAPI.md#listappaccesscleanups) | **Get** /app-access-cleanups | List app-access cleanups
+*AppEnvironmentsAPI* | [**ListAppEnvironments**](docs/AppEnvironmentsAPI.md#listappenvironments) | **Get** /app-environments | List app environments
+*AppEnvironmentsAPI* | [**PreflightAppAccess**](docs/AppEnvironmentsAPI.md#preflightappaccess) | **Post** /app-accesses/actions/preflight | Preflight app environment access
+*AppEnvironmentsAPI* | [**ReconcileAppEnvironmentStack**](docs/AppEnvironmentsAPI.md#reconcileappenvironmentstack) | **Post** /app-environments/{id}/actions/reconcile-stack | Reconcile app environment stack
+*AppEnvironmentsAPI* | [**RetryAppAccessCleanup**](docs/AppEnvironmentsAPI.md#retryappaccesscleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
+*AppEnvironmentsAPI* | [**UpdateAppAccess**](docs/AppEnvironmentsAPI.md#updateappaccess) | **Put** /app-accesses/{id} | Update app access
+*AppEnvironmentsAPI* | [**UpdateAppEnvironment**](docs/AppEnvironmentsAPI.md#updateappenvironment) | **Put** /app-environments/{id} | Update app environment
+*AppEnvironmentsAPI* | [**UpdateAppEnvironmentCICDSettings**](docs/AppEnvironmentsAPI.md#updateappenvironmentcicdsettings) | **Put** /app-environments/cicd-settings/{id} | Update app environment CI/CD settings
+*AppEnvironmentsAPI* | [**UpdateAppEnvironmentMaintenanceMode**](docs/AppEnvironmentsAPI.md#updateappenvironmentmaintenancemode) | **Put** /app-environments/{id}/actions/maintenance-mode | Update app environment maintenance mode
+*AppEnvironmentsAPI* | [**UpdateAppEnvironmentSettings**](docs/AppEnvironmentsAPI.md#updateappenvironmentsettings) | **Put** /app-environments/settings/{id} | Update app environment settings
+*AppEnvironmentsAPI* | [**UpgradeAppEnvironmentStack**](docs/AppEnvironmentsAPI.md#upgradeappenvironmentstack) | **Post** /app-environments/{id}/actions/upgrade-stack | Upgrade app environment stack
 *AppPortsAPI* | [**GetAppPort**](docs/AppPortsAPI.md#getappport) | **Get** /app-ports/{id} | Get app port
 *AppPortsAPI* | [**ListAppPorts**](docs/AppPortsAPI.md#listappports) | **Get** /app-ports | List app ports
 *AppRoutesAPI* | [**CreateAppRoute**](docs/AppRoutesAPI.md#createapproute) | **Post** /app-routes | Create app route
@@ -123,6 +125,7 @@ Class | Method | HTTP request | Description
 *AppRoutesAPI* | [**GetAppRoute**](docs/AppRoutesAPI.md#getapproute) | **Get** /app-routes/{id} | Get app route
 *AppRoutesAPI* | [**ListAppRouteSettings**](docs/AppRoutesAPI.md#listapproutesettings) | **Get** /app-routes/{id}/settings | List app route settings
 *AppRoutesAPI* | [**ListAppRoutes**](docs/AppRoutesAPI.md#listapproutes) | **Get** /app-routes | List app routes
+*AppRoutesAPI* | [**ListEffectiveAppRouteSettings**](docs/AppRoutesAPI.md#listeffectiveapproutesettings) | **Get** /app-routes/{id}/effective-settings | List effective app route settings
 *AppRoutesAPI* | [**RetryAppRouteCertificate**](docs/AppRoutesAPI.md#retryapproutecertificate) | **Post** /app-routes/{id}/actions/retry-certificate | Retry app route certificate
 *AppRoutesAPI* | [**SetAppRouteSetting**](docs/AppRoutesAPI.md#setapproutesetting) | **Put** /app-routes/{id}/settings/{name} | Set app route setting
 *AppRoutesAPI* | [**UpdateAppRoute**](docs/AppRoutesAPI.md#updateapproute) | **Put** /app-routes/{id} | Update app route
@@ -144,6 +147,7 @@ Class | Method | HTTP request | Description
 *AppServicesAPI* | [**GetAppServiceCronJob**](docs/AppServicesAPI.md#getappservicecronjob) | **Get** /app-service-cron-jobs/{id} | Get app service cron job
 *AppServicesAPI* | [**KeepLogStreamAlive**](docs/AppServicesAPI.md#keeplogstreamalive) | **Post** /log-streams/{id}/keep-alive | Keep log stream alive
 *AppServicesAPI* | [**ListAppServiceAnnotations**](docs/AppServicesAPI.md#listappserviceannotations) | **Get** /app-services/{id}/annotations | List app service annotations
+*AppServicesAPI* | [**ListAppServiceBackupOptionDefaults**](docs/AppServicesAPI.md#listappservicebackupoptiondefaults) | **Get** /app-services/{id}/options/backup-option-defaults | List effective backup option defaults
 *AppServicesAPI* | [**ListAppServiceConfigs**](docs/AppServicesAPI.md#listappserviceconfigs) | **Get** /app-services/{id}/configs | List app service configs
 *AppServicesAPI* | [**ListAppServiceContainers**](docs/AppServicesAPI.md#listappservicecontainers) | **Get** /app-services/{id}/containers | List app service containers
 *AppServicesAPI* | [**ListAppServiceCronJobs**](docs/AppServicesAPI.md#listappservicecronjobs) | **Get** /app-service-cron-jobs | List app service cron jobs
@@ -182,6 +186,7 @@ Class | Method | HTTP request | Description
 *BackupsAPI* | [**DeleteBackupPreset**](docs/BackupsAPI.md#deletebackuppreset) | **Delete** /backup-presets/{id} | Delete backup preset
 *BackupsAPI* | [**GetBackup**](docs/BackupsAPI.md#getbackup) | **Get** /backups/{id} | Get backup
 *BackupsAPI* | [**GetBackupPreset**](docs/BackupsAPI.md#getbackuppreset) | **Get** /backup-presets/{id} | Get backup preset
+*BackupsAPI* | [**ListBackupPresetBackups**](docs/BackupsAPI.md#listbackuppresetbackups) | **Get** /backup-presets/{id}/backups | List backup preset backups
 *BackupsAPI* | [**ListBackupPresets**](docs/BackupsAPI.md#listbackuppresets) | **Get** /backup-presets | List backup presets
 *BackupsAPI* | [**ListBackups**](docs/BackupsAPI.md#listbackups) | **Get** /backups | List backups
 *BackupsAPI* | [**UpdateBackupPreset**](docs/BackupsAPI.md#updatebackuppreset) | **Put** /backup-presets/{id} | Update backup preset
@@ -193,8 +198,10 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**GetCluster**](docs/ClustersAPI.md#getcluster) | **Get** /clusters/{id} | Get cluster
 *ClustersAPI* | [**GetClusterByName**](docs/ClustersAPI.md#getclusterbyname) | **Get** /clusters/by-name/{name} | Get cluster by name
 *ClustersAPI* | [**GetClusterInfraAppUpgradeChangelog**](docs/ClustersAPI.md#getclusterinfraappupgradechangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
+*ClustersAPI* | [**GetKubernetesVersionUpgradePlan**](docs/ClustersAPI.md#getkubernetesversionupgradeplan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 *ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
 *ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
+*ClustersAPI* | [**UpdateClusterEnvironmentPolicy**](docs/ClustersAPI.md#updateclusterenvironmentpolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
 *ClustersAPI* | [**UpdateClusterSettings**](docs/ClustersAPI.md#updateclustersettings) | **Put** /clusters/settings/{id} | Update cluster settings
 *ClustersAPI* | [**UpgradeClusterInfra**](docs/ClustersAPI.md#upgradeclusterinfra) | **Post** /clusters/{id}/actions/upgrade-infra | Upgrade cluster infrastructure
 *ClustersAPI* | [**UpgradeClusterInfraApps**](docs/ClustersAPI.md#upgradeclusterinfraapps) | **Post** /clusters/{id}/actions/upgrade-infra-apps | Upgrade cluster infrastructure app stacks
@@ -215,12 +222,6 @@ Class | Method | HTTP request | Description
 *DatabasesAPI* | [**UpdateDatabaseUserDBs**](docs/DatabasesAPI.md#updatedatabaseuserdbs) | **Put** /database-users/{id}/dbs | Update database user DB grants
 *DefaultAPI* | [**GetOpenApiJson**](docs/DefaultAPI.md#getopenapijson) | **Get** /openapi.json | Get OpenAPI JSON
 *DefaultAPI* | [**GetOpenApiYaml**](docs/DefaultAPI.md#getopenapiyaml) | **Get** /openapi.yaml | Get OpenAPI YAML
-*EnvsAPI* | [**CreateEnv**](docs/EnvsAPI.md#createenv) | **Post** /envs | Create env
-*EnvsAPI* | [**DeleteEnv**](docs/EnvsAPI.md#deleteenv) | **Delete** /envs/{id} | Delete env
-*EnvsAPI* | [**GetEnv**](docs/EnvsAPI.md#getenv) | **Get** /envs/{id} | Get env
-*EnvsAPI* | [**GetEnvByName**](docs/EnvsAPI.md#getenvbyname) | **Get** /envs/by-name/{name} | Get env by name
-*EnvsAPI* | [**ListEnvs**](docs/EnvsAPI.md#listenvs) | **Get** /envs | List envs
-*EnvsAPI* | [**UpdateEnv**](docs/EnvsAPI.md#updateenv) | **Put** /envs/{id} | Update env
 *GitReposAPI* | [**GetGitRepoUsages**](docs/GitReposAPI.md#getgitrepousages) | **Get** /git-repos/{id}/usages | Get Git repository usages
 *GitReposAPI* | [**UpdateGitRepoFromGit**](docs/GitReposAPI.md#updategitrepofromgit) | **Post** /git-repos/{id}/actions/update-from-git | Update all Git repository usages
 *HelmChartsAPI* | [**InspectHelmChart**](docs/HelmChartsAPI.md#inspecthelmchart) | **Post** /helm-charts/actions/inspect | Inspect Helm chart
@@ -238,6 +239,7 @@ Class | Method | HTTP request | Description
 *IntegrationsAPI* | [**GetAppAccessProviderOptions**](docs/IntegrationsAPI.md#getappaccessprovideroptions) | **Get** /integrations/{id}/options/app-access | Get app-access provider options
 *IntegrationsAPI* | [**GetIntegration**](docs/IntegrationsAPI.md#getintegration) | **Get** /integrations/{id} | Get integration
 *IntegrationsAPI* | [**GetIntegrationKubeSettings**](docs/IntegrationsAPI.md#getintegrationkubesettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
+*IntegrationsAPI* | [**GetIntegrationProviderRevisionUpgrade**](docs/IntegrationsAPI.md#getintegrationproviderrevisionupgrade) | **Get** /integration-provider-revision-upgrades/{id} | Preview provider revision upgrade
 *IntegrationsAPI* | [**GetIntegrationRemoteGitRepoFilePresence**](docs/IntegrationsAPI.md#getintegrationremotegitrepofilepresence) | **Get** /integrations/{id}/options/remote-git-repo-file | Check a remote Git repository file
 *IntegrationsAPI* | [**ListIntegrationKubeMachineTypes**](docs/IntegrationsAPI.md#listintegrationkubemachinetypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
 *IntegrationsAPI* | [**ListIntegrationKubeRegions**](docs/IntegrationsAPI.md#listintegrationkuberegions) | **Get** /integrations/{id}/options/kube-regions | List Kubernetes regions
@@ -255,6 +257,7 @@ Class | Method | HTTP request | Description
 *IntegrationsAPI* | [**TestIntegrationPermissions**](docs/IntegrationsAPI.md#testintegrationpermissions) | **Post** /integrations/{id}/actions/test-permissions | Test integration permissions
 *IntegrationsAPI* | [**UpdateIntegration**](docs/IntegrationsAPI.md#updateintegration) | **Put** /integrations/{id} | Update integration
 *IntegrationsAPI* | [**UpdateIntegrationEnvironmentPolicy**](docs/IntegrationsAPI.md#updateintegrationenvironmentpolicy) | **Put** /integrations/environment-policy/{id} | Update integration environment policy
+*IntegrationsAPI* | [**UpgradeIntegrationProviderRevision**](docs/IntegrationsAPI.md#upgradeintegrationproviderrevision) | **Post** /integrations/{id}/actions/upgrade-provider-revision | Upgrade integration provider revision
 *IntegrationsAPI* | [**ValidateAppAccessHostname**](docs/IntegrationsAPI.md#validateappaccesshostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
 *OrgMembershipsAPI* | [**GetOrgMembership**](docs/OrgMembershipsAPI.md#getorgmembership) | **Get** /org-memberships/{id} | Get org membership
 *OrgMembershipsAPI* | [**ListOrgMemberships**](docs/OrgMembershipsAPI.md#listorgmemberships) | **Get** /org-memberships | List org memberships
@@ -383,26 +386,28 @@ Class | Method | HTTP request | Description
  - [AppBuildsResponse](docs/AppBuildsResponse.md)
  - [AppDeployment](docs/AppDeployment.md)
  - [AppDeploymentsResponse](docs/AppDeploymentsResponse.md)
- - [AppInstance](docs/AppInstance.md)
- - [AppInstanceAutoStackUpgradeSettings](docs/AppInstanceAutoStackUpgradeSettings.md)
- - [AppInstanceAutoStackUpgradeSettingsInput](docs/AppInstanceAutoStackUpgradeSettingsInput.md)
- - [AppInstanceBackupHealth](docs/AppInstanceBackupHealth.md)
- - [AppInstanceCICDSettings](docs/AppInstanceCICDSettings.md)
- - [AppInstanceCICDSettingsInput](docs/AppInstanceCICDSettingsInput.md)
- - [AppInstanceCronHealth](docs/AppInstanceCronHealth.md)
- - [AppInstanceHealth](docs/AppInstanceHealth.md)
- - [AppInstanceMainRouteCert](docs/AppInstanceMainRouteCert.md)
- - [AppInstanceMaintenanceModeInput](docs/AppInstanceMaintenanceModeInput.md)
- - [AppInstanceSettings](docs/AppInstanceSettings.md)
- - [AppInstanceSettingsInput](docs/AppInstanceSettingsInput.md)
- - [AppInstanceStackUpgradeChangelog](docs/AppInstanceStackUpgradeChangelog.md)
- - [AppInstanceStackUpgradeInput](docs/AppInstanceStackUpgradeInput.md)
- - [AppInstanceStackUpgradeSettings](docs/AppInstanceStackUpgradeSettings.md)
- - [AppInstanceStackUpgradeSettingsInput](docs/AppInstanceStackUpgradeSettingsInput.md)
+ - [AppEnvironment](docs/AppEnvironment.md)
+ - [AppEnvironmentAutoStackUpgradeSettings](docs/AppEnvironmentAutoStackUpgradeSettings.md)
+ - [AppEnvironmentAutoStackUpgradeSettingsInput](docs/AppEnvironmentAutoStackUpgradeSettingsInput.md)
+ - [AppEnvironmentBackupHealth](docs/AppEnvironmentBackupHealth.md)
+ - [AppEnvironmentCICDSettings](docs/AppEnvironmentCICDSettings.md)
+ - [AppEnvironmentCICDSettingsInput](docs/AppEnvironmentCICDSettingsInput.md)
+ - [AppEnvironmentCronHealth](docs/AppEnvironmentCronHealth.md)
+ - [AppEnvironmentHealth](docs/AppEnvironmentHealth.md)
+ - [AppEnvironmentMainRouteCert](docs/AppEnvironmentMainRouteCert.md)
+ - [AppEnvironmentMaintenanceModeInput](docs/AppEnvironmentMaintenanceModeInput.md)
+ - [AppEnvironmentSettings](docs/AppEnvironmentSettings.md)
+ - [AppEnvironmentSettingsInput](docs/AppEnvironmentSettingsInput.md)
+ - [AppEnvironmentStackReconciliationInput](docs/AppEnvironmentStackReconciliationInput.md)
+ - [AppEnvironmentStackUpgradeChangelog](docs/AppEnvironmentStackUpgradeChangelog.md)
+ - [AppEnvironmentStackUpgradeInput](docs/AppEnvironmentStackUpgradeInput.md)
+ - [AppEnvironmentStackUpgradeSettings](docs/AppEnvironmentStackUpgradeSettings.md)
+ - [AppEnvironmentStackUpgradeSettingsInput](docs/AppEnvironmentStackUpgradeSettingsInput.md)
  - [AppPort](docs/AppPort.md)
  - [AppRoute](docs/AppRoute.md)
  - [AppRouteSetting](docs/AppRouteSetting.md)
  - [AppRouteSettingName](docs/AppRouteSettingName.md)
+ - [AppRouteSettingSource](docs/AppRouteSettingSource.md)
  - [AppRouteTLSInput](docs/AppRouteTLSInput.md)
  - [AppService](docs/AppService.md)
  - [AppServiceAnnotation](docs/AppServiceAnnotation.md)
@@ -442,6 +447,7 @@ Class | Method | HTTP request | Description
  - [Backup](docs/Backup.md)
  - [BackupOption](docs/BackupOption.md)
  - [BackupPreset](docs/BackupPreset.md)
+ - [BackupsResponse](docs/BackupsResponse.md)
  - [BillingSubscriptionStatus](docs/BillingSubscriptionStatus.md)
  - [BuildSourceInput](docs/BuildSourceInput.md)
  - [Cert](docs/Cert.md)
@@ -453,6 +459,7 @@ Class | Method | HTTP request | Description
  - [ClusterAutoUpgradeVersionPolicy](docs/ClusterAutoUpgradeVersionPolicy.md)
  - [ClusterAutoUpgradeVersionPolicyInput](docs/ClusterAutoUpgradeVersionPolicyInput.md)
  - [ClusterCapabilities](docs/ClusterCapabilities.md)
+ - [ClusterEnvironmentPolicyInput](docs/ClusterEnvironmentPolicyInput.md)
  - [ClusterInfraAppUpgradeChangelog](docs/ClusterInfraAppUpgradeChangelog.md)
  - [ClusterSettings](docs/ClusterSettings.md)
  - [ClusterSettingsInput](docs/ClusterSettingsInput.md)
@@ -461,7 +468,6 @@ Class | Method | HTTP request | Description
  - [CreateAppServiceInput](docs/CreateAppServiceInput.md)
  - [CreateBuildRequest](docs/CreateBuildRequest.md)
  - [CreateDeploymentRequest](docs/CreateDeploymentRequest.md)
- - [CreateEnvRequest](docs/CreateEnvRequest.md)
  - [CreateImportInput](docs/CreateImportInput.md)
  - [CreateStackServiceInput](docs/CreateStackServiceInput.md)
  - [CurrentUser](docs/CurrentUser.md)
@@ -474,7 +480,7 @@ Class | Method | HTTP request | Description
  - [DeploymentFromCIInput](docs/DeploymentFromCIInput.md)
  - [DockerRegistryCredentials](docs/DockerRegistryCredentials.md)
  - [DuplicateStackRequest](docs/DuplicateStackRequest.md)
- - [Env](docs/Env.md)
+ - [EffectiveAppRouteSetting](docs/EffectiveAppRouteSetting.md)
  - [FieldInput](docs/FieldInput.md)
  - [GitAutoUpdateSettings](docs/GitAutoUpdateSettings.md)
  - [GitAutoUpdateSettingsInput](docs/GitAutoUpdateSettingsInput.md)
@@ -504,10 +510,13 @@ Class | Method | HTTP request | Description
  - [IntegrationConfigurationResult](docs/IntegrationConfigurationResult.md)
  - [IntegrationEnvironmentPolicyInput](docs/IntegrationEnvironmentPolicyInput.md)
  - [IntegrationLinkInput](docs/IntegrationLinkInput.md)
+ - [IntegrationProviderRevisionUpgrade](docs/IntegrationProviderRevisionUpgrade.md)
  - [IntegrationScope](docs/IntegrationScope.md)
  - [IntegrationVariableRequirement](docs/IntegrationVariableRequirement.md)
  - [IntegrationVariableRequirementInput](docs/IntegrationVariableRequirementInput.md)
  - [KubeVersion](docs/KubeVersion.md)
+ - [KubernetesVersionUpgradePlan](docs/KubernetesVersionUpgradePlan.md)
+ - [KubernetesVersionUpgradeTarget](docs/KubernetesVersionUpgradeTarget.md)
  - [LogLine](docs/LogLine.md)
  - [LogStream](docs/LogStream.md)
  - [ManifestFromYAMLInput](docs/ManifestFromYAMLInput.md)
@@ -516,10 +525,10 @@ Class | Method | HTTP request | Description
  - [NewAnnotationInput](docs/NewAnnotationInput.md)
  - [NewAppAccessInput](docs/NewAppAccessInput.md)
  - [NewAppAuthInput](docs/NewAppAuthInput.md)
+ - [NewAppEnvironmentAccessEndpointInput](docs/NewAppEnvironmentAccessEndpointInput.md)
+ - [NewAppEnvironmentAccessInput](docs/NewAppEnvironmentAccessInput.md)
+ - [NewAppEnvironmentInput](docs/NewAppEnvironmentInput.md)
  - [NewAppInput](docs/NewAppInput.md)
- - [NewAppInstanceAccessEndpointInput](docs/NewAppInstanceAccessEndpointInput.md)
- - [NewAppInstanceAccessInput](docs/NewAppInstanceAccessInput.md)
- - [NewAppInstanceInput](docs/NewAppInstanceInput.md)
  - [NewAppRouteInput](docs/NewAppRouteInput.md)
  - [NewAppServiceCronScheduleInput](docs/NewAppServiceCronScheduleInput.md)
  - [NewAppServiceEnvVarInput](docs/NewAppServiceEnvVarInput.md)
@@ -566,14 +575,23 @@ Class | Method | HTTP request | Description
  - [ScalabilityInput](docs/ScalabilityInput.md)
  - [SearchIntegrationsInput](docs/SearchIntegrationsInput.md)
  - [Service](docs/Service.md)
+ - [ServiceAutoBaseRevisionUpdateSettings](docs/ServiceAutoBaseRevisionUpdateSettings.md)
+ - [ServiceAutoBaseRevisionUpdateSettingsInput](docs/ServiceAutoBaseRevisionUpdateSettingsInput.md)
+ - [ServiceDeploymentConfiguration](docs/ServiceDeploymentConfiguration.md)
+ - [ServiceDeploymentConfigurationInput](docs/ServiceDeploymentConfigurationInput.md)
  - [ServiceDeploymentInput](docs/ServiceDeploymentInput.md)
+ - [ServiceDeploymentPolicy](docs/ServiceDeploymentPolicy.md)
+ - [ServiceDeploymentStrategy](docs/ServiceDeploymentStrategy.md)
  - [ServiceIntegrationRequirement](docs/ServiceIntegrationRequirement.md)
  - [ServiceManifest](docs/ServiceManifest.md)
+ - [ServiceManifestEnvVar](docs/ServiceManifestEnvVar.md)
  - [ServiceManifestUpdateInput](docs/ServiceManifestUpdateInput.md)
  - [ServiceRevision](docs/ServiceRevision.md)
  - [ServiceRevisionChange](docs/ServiceRevisionChange.md)
  - [ServiceSettings](docs/ServiceSettings.md)
  - [ServiceSettingsInput](docs/ServiceSettingsInput.md)
+ - [ServiceWorkloadDeploymentConfiguration](docs/ServiceWorkloadDeploymentConfiguration.md)
+ - [ServiceWorkloadDeploymentInput](docs/ServiceWorkloadDeploymentInput.md)
  - [ServicesResponse](docs/ServicesResponse.md)
  - [SetNullableStringValueInput](docs/SetNullableStringValueInput.md)
  - [SetStringValueInput](docs/SetStringValueInput.md)
@@ -635,7 +653,6 @@ Class | Method | HTTP request | Description
  - [UpdateBackupPresetInput](docs/UpdateBackupPresetInput.md)
  - [UpdateCurrentUserRequest](docs/UpdateCurrentUserRequest.md)
  - [UpdateDatabaseUserDBsInput](docs/UpdateDatabaseUserDBsInput.md)
- - [UpdateEnvRequest](docs/UpdateEnvRequest.md)
  - [UpdateIntegrationInput](docs/UpdateIntegrationInput.md)
  - [UpdateOrgRequest](docs/UpdateOrgRequest.md)
  - [UpdateProjectInput](docs/UpdateProjectInput.md)
@@ -647,6 +664,7 @@ Class | Method | HTTP request | Description
  - [UpdateStackServiceEnvVarInput](docs/UpdateStackServiceEnvVarInput.md)
  - [UpdateStackServiceTokenInput](docs/UpdateStackServiceTokenInput.md)
  - [UpdateTitleRequest](docs/UpdateTitleRequest.md)
+ - [UpgradeIntegrationProviderRevisionInput](docs/UpgradeIntegrationProviderRevisionInput.md)
  - [User](docs/User.md)
  - [ValidateAppAccessHostnameInput](docs/ValidateAppAccessHostnameInput.md)
  - [ValidationResult](docs/ValidationResult.md)

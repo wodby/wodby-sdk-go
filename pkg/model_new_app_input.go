@@ -26,25 +26,27 @@ type NewAppInput struct {
 	Name string `json:"name"`
 	// Defaults to name when omitted.
 	Title *string `json:"title,omitempty"`
-	InstanceName string `json:"instanceName"`
-	// Defaults to instanceName when omitted.
-	InstanceTitle *string `json:"instanceTitle,omitempty"`
-	// Defaults to instanceName.name.orgDomain when omitted.
+	// Required for the canonical app environment contract.
+	EnvironmentName string `json:"environmentName"`
+	// Defaults to environmentName when omitted.
+	EnvironmentTitle *string `json:"environmentTitle,omitempty"`
+	// Required for the canonical app environment contract.
+	EnvironmentType string `json:"environmentType"`
+	// Defaults to environmentName.name.orgDomain.
 	Domain *string `json:"domain,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
 	StackRevId int32 `json:"stackRevId"`
 	// Defaults to the stack revision's service defaults when omitted.
 	Services []CreateAppServiceInput `json:"services,omitempty"`
 	ClusterId NullableInt32 `json:"clusterId,omitempty"`
-	EnvId int32 `json:"envId"`
 	// Omit or use null to inherit the organization default, use 0 for the built-in CI service, or use an accessible CI integration ID. A project-owned integration must be shared with the app's project.
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 	// Omit or use null to inherit the organization default, use 0 for the built-in registry, or use an accessible registry integration ID. A project-owned integration must be shared with the app's project.
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
-	// Defers the automatic initial build and deployment while preserving app instance initialization. Intended for automation that configures the instance before explicitly starting its first build.
+	// Defers the automatic initial build and deployment while preserving app environment initialization. Intended for automation that configures the environment before explicitly starting its first build.
 	DeferInitialDeployment *bool `json:"deferInitialDeployment,omitempty"`
-	Settings *AppInstanceSettingsInput `json:"settings,omitempty"`
-	Access *NewAppInstanceAccessInput `json:"access,omitempty"`
+	Settings *AppEnvironmentSettingsInput `json:"settings,omitempty"`
+	Access *NewAppEnvironmentAccessInput `json:"access,omitempty"`
 }
 
 type _NewAppInput NewAppInput
@@ -53,12 +55,12 @@ type _NewAppInput NewAppInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAppInput(name string, instanceName string, stackRevId int32, envId int32) *NewAppInput {
+func NewNewAppInput(name string, environmentName string, environmentType string, stackRevId int32) *NewAppInput {
 	this := NewAppInput{}
 	this.Name = name
-	this.InstanceName = instanceName
+	this.EnvironmentName = environmentName
+	this.EnvironmentType = environmentType
 	this.StackRevId = stackRevId
-	this.EnvId = envId
 	var deferInitialDeployment bool = false
 	this.DeferInitialDeployment = &deferInitialDeployment
 	return &this
@@ -162,60 +164,84 @@ func (o *NewAppInput) SetTitle(v string) {
 	o.Title = &v
 }
 
-// GetInstanceName returns the InstanceName field value
-func (o *NewAppInput) GetInstanceName() string {
+// GetEnvironmentName returns the EnvironmentName field value
+func (o *NewAppInput) GetEnvironmentName() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.InstanceName
+	return o.EnvironmentName
 }
 
-// GetInstanceNameOk returns a tuple with the InstanceName field value
+// GetEnvironmentNameOk returns a tuple with the EnvironmentName field value
 // and a boolean to check if the value has been set.
-func (o *NewAppInput) GetInstanceNameOk() (*string, bool) {
+func (o *NewAppInput) GetEnvironmentNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.InstanceName, true
+	return &o.EnvironmentName, true
 }
 
-// SetInstanceName sets field value
-func (o *NewAppInput) SetInstanceName(v string) {
-	o.InstanceName = v
+// SetEnvironmentName sets field value
+func (o *NewAppInput) SetEnvironmentName(v string) {
+	o.EnvironmentName = v
 }
 
-// GetInstanceTitle returns the InstanceTitle field value if set, zero value otherwise.
-func (o *NewAppInput) GetInstanceTitle() string {
-	if o == nil || IsNil(o.InstanceTitle) {
+// GetEnvironmentTitle returns the EnvironmentTitle field value if set, zero value otherwise.
+func (o *NewAppInput) GetEnvironmentTitle() string {
+	if o == nil || IsNil(o.EnvironmentTitle) {
 		var ret string
 		return ret
 	}
-	return *o.InstanceTitle
+	return *o.EnvironmentTitle
 }
 
-// GetInstanceTitleOk returns a tuple with the InstanceTitle field value if set, nil otherwise
+// GetEnvironmentTitleOk returns a tuple with the EnvironmentTitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppInput) GetInstanceTitleOk() (*string, bool) {
-	if o == nil || IsNil(o.InstanceTitle) {
+func (o *NewAppInput) GetEnvironmentTitleOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentTitle) {
 		return nil, false
 	}
-	return o.InstanceTitle, true
+	return o.EnvironmentTitle, true
 }
 
-// HasInstanceTitle returns a boolean if a field has been set.
-func (o *NewAppInput) HasInstanceTitle() bool {
-	if o != nil && !IsNil(o.InstanceTitle) {
+// HasEnvironmentTitle returns a boolean if a field has been set.
+func (o *NewAppInput) HasEnvironmentTitle() bool {
+	if o != nil && !IsNil(o.EnvironmentTitle) {
 		return true
 	}
 
 	return false
 }
 
-// SetInstanceTitle gets a reference to the given string and assigns it to the InstanceTitle field.
-func (o *NewAppInput) SetInstanceTitle(v string) {
-	o.InstanceTitle = &v
+// SetEnvironmentTitle gets a reference to the given string and assigns it to the EnvironmentTitle field.
+func (o *NewAppInput) SetEnvironmentTitle(v string) {
+	o.EnvironmentTitle = &v
+}
+
+// GetEnvironmentType returns the EnvironmentType field value
+func (o *NewAppInput) GetEnvironmentType() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.EnvironmentType
+}
+
+// GetEnvironmentTypeOk returns a tuple with the EnvironmentType field value
+// and a boolean to check if the value has been set.
+func (o *NewAppInput) GetEnvironmentTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.EnvironmentType, true
+}
+
+// SetEnvironmentType sets field value
+func (o *NewAppInput) SetEnvironmentType(v string) {
+	o.EnvironmentType = v
 }
 
 // GetDomain returns the Domain field value if set, zero value otherwise.
@@ -390,30 +416,6 @@ func (o *NewAppInput) UnsetClusterId() {
 	o.ClusterId.Unset()
 }
 
-// GetEnvId returns the EnvId field value
-func (o *NewAppInput) GetEnvId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.EnvId
-}
-
-// GetEnvIdOk returns a tuple with the EnvId field value
-// and a boolean to check if the value has been set.
-func (o *NewAppInput) GetEnvIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.EnvId, true
-}
-
-// SetEnvId sets field value
-func (o *NewAppInput) SetEnvId(v int32) {
-	o.EnvId = v
-}
-
 // GetCiIntegrationId returns the CiIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NewAppInput) GetCiIntegrationId() int32 {
 	if o == nil || IsNil(o.CiIntegrationId.Get()) {
@@ -531,9 +533,9 @@ func (o *NewAppInput) SetDeferInitialDeployment(v bool) {
 }
 
 // GetSettings returns the Settings field value if set, zero value otherwise.
-func (o *NewAppInput) GetSettings() AppInstanceSettingsInput {
+func (o *NewAppInput) GetSettings() AppEnvironmentSettingsInput {
 	if o == nil || IsNil(o.Settings) {
-		var ret AppInstanceSettingsInput
+		var ret AppEnvironmentSettingsInput
 		return ret
 	}
 	return *o.Settings
@@ -541,7 +543,7 @@ func (o *NewAppInput) GetSettings() AppInstanceSettingsInput {
 
 // GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppInput) GetSettingsOk() (*AppInstanceSettingsInput, bool) {
+func (o *NewAppInput) GetSettingsOk() (*AppEnvironmentSettingsInput, bool) {
 	if o == nil || IsNil(o.Settings) {
 		return nil, false
 	}
@@ -557,15 +559,15 @@ func (o *NewAppInput) HasSettings() bool {
 	return false
 }
 
-// SetSettings gets a reference to the given AppInstanceSettingsInput and assigns it to the Settings field.
-func (o *NewAppInput) SetSettings(v AppInstanceSettingsInput) {
+// SetSettings gets a reference to the given AppEnvironmentSettingsInput and assigns it to the Settings field.
+func (o *NewAppInput) SetSettings(v AppEnvironmentSettingsInput) {
 	o.Settings = &v
 }
 
 // GetAccess returns the Access field value if set, zero value otherwise.
-func (o *NewAppInput) GetAccess() NewAppInstanceAccessInput {
+func (o *NewAppInput) GetAccess() NewAppEnvironmentAccessInput {
 	if o == nil || IsNil(o.Access) {
-		var ret NewAppInstanceAccessInput
+		var ret NewAppEnvironmentAccessInput
 		return ret
 	}
 	return *o.Access
@@ -573,7 +575,7 @@ func (o *NewAppInput) GetAccess() NewAppInstanceAccessInput {
 
 // GetAccessOk returns a tuple with the Access field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewAppInput) GetAccessOk() (*NewAppInstanceAccessInput, bool) {
+func (o *NewAppInput) GetAccessOk() (*NewAppEnvironmentAccessInput, bool) {
 	if o == nil || IsNil(o.Access) {
 		return nil, false
 	}
@@ -589,8 +591,8 @@ func (o *NewAppInput) HasAccess() bool {
 	return false
 }
 
-// SetAccess gets a reference to the given NewAppInstanceAccessInput and assigns it to the Access field.
-func (o *NewAppInput) SetAccess(v NewAppInstanceAccessInput) {
+// SetAccess gets a reference to the given NewAppEnvironmentAccessInput and assigns it to the Access field.
+func (o *NewAppInput) SetAccess(v NewAppEnvironmentAccessInput) {
 	o.Access = &v
 }
 
@@ -611,10 +613,11 @@ func (o NewAppInput) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Title) {
 		toSerialize["title"] = o.Title
 	}
-	toSerialize["instanceName"] = o.InstanceName
-	if !IsNil(o.InstanceTitle) {
-		toSerialize["instanceTitle"] = o.InstanceTitle
+	toSerialize["environmentName"] = o.EnvironmentName
+	if !IsNil(o.EnvironmentTitle) {
+		toSerialize["environmentTitle"] = o.EnvironmentTitle
 	}
+	toSerialize["environmentType"] = o.EnvironmentType
 	if !IsNil(o.Domain) {
 		toSerialize["domain"] = o.Domain
 	}
@@ -628,7 +631,6 @@ func (o NewAppInput) ToMap() (map[string]interface{}, error) {
 	if o.ClusterId.IsSet() {
 		toSerialize["clusterId"] = o.ClusterId.Get()
 	}
-	toSerialize["envId"] = o.EnvId
 	if o.CiIntegrationId.IsSet() {
 		toSerialize["ciIntegrationId"] = o.CiIntegrationId.Get()
 	}
@@ -653,9 +655,9 @@ func (o *NewAppInput) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"name",
-		"instanceName",
+		"environmentName",
+		"environmentType",
 		"stackRevId",
-		"envId",
 	}
 
 	allProperties := make(map[string]interface{})

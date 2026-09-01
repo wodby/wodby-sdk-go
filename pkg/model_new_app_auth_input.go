@@ -22,7 +22,7 @@ var _ MappedNullable = &NewAppAuthInput{}
 // NewAppAuthInput struct for NewAppAuthInput
 type NewAppAuthInput struct {
 	AppInstanceId int32 `json:"appInstanceId"`
-	// App services to protect. Omit or pass an empty list to protect the whole app instance.
+	// App services to protect. Omit or pass an empty list to protect the whole app environment.
 	AppServiceIds []int32 `json:"appServiceIds,omitempty"`
 	// Single-service scope. Ignored when appServiceIds is supplied.
 	// Deprecated

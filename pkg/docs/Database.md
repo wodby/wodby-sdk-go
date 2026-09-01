@@ -15,7 +15,8 @@ Name | Type | Description | Notes
 **Zone** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
-**EnvId** | **int32** |  | 
+**EnvId** | **int32** | Legacy internal environment entity ID. Use envType. | 
+**EnvType** | **string** |  | 
 **OrgId** | **int32** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -24,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewDatabase
 
-`func NewDatabase(id int32, name string, title string, type_ string, kind string, status string, version string, envId int32, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Database`
+`func NewDatabase(id int32, name string, title string, type_ string, kind string, status string, version string, envId int32, envType string, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Database`
 
 NewDatabase instantiates a new Database object
 This constructor will assign default values to properties that have it defined,
@@ -337,6 +338,26 @@ and a boolean to check if the value has been set.
 `func (o *Database) SetEnvId(v int32)`
 
 SetEnvId sets EnvId field to given value.
+
+
+### GetEnvType
+
+`func (o *Database) GetEnvType() string`
+
+GetEnvType returns the EnvType field if non-nil, zero value otherwise.
+
+### GetEnvTypeOk
+
+`func (o *Database) GetEnvTypeOk() (*string, bool)`
+
+GetEnvTypeOk returns a tuple with the EnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvType
+
+`func (o *Database) SetEnvType(v string)`
+
+SetEnvType sets EnvType field to given value.
 
 
 ### GetOrgId

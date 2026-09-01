@@ -3026,6 +3026,13 @@ type ApiUpdateStackServiceRevisionsRequest struct {
 	ctx context.Context
 	ApiService *StacksAPIService
 	id int32
+	scope *string
+}
+
+// Limits the update to all services or stateless services. Defaults to all.
+func (r ApiUpdateStackServiceRevisionsRequest) Scope(scope string) ApiUpdateStackServiceRevisionsRequest {
+	r.scope = &scope
+	return r
 }
 
 func (r ApiUpdateStackServiceRevisionsRequest) Execute() (*OperationResult, *http.Response, error) {
@@ -3071,6 +3078,12 @@ func (a *StacksAPIService) UpdateStackServiceRevisionsExecute(r ApiUpdateStackSe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
+	} else {
+		var defaultValue string = "all"
+		r.scope = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

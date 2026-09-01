@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
 **OrgId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvId** | Pointer to **NullableInt32** |  | [optional] 
+**EnvTypes** | **[]string** |  | 
+**BackupCategory** | **string** |  | 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | **int32** |  | 
 **Bucket** | **string** |  | 
@@ -30,7 +32,7 @@ Name | Type | Description | Notes
 
 ### NewBackupPreset
 
-`func NewBackupPreset(id int32, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time, ) *BackupPreset`
+`func NewBackupPreset(id int32, envTypes []string, backupCategory string, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time, ) *BackupPreset`
 
 NewBackupPreset instantiates a new BackupPreset object
 This constructor will assign default values to properties that have it defined,
@@ -275,6 +277,46 @@ HasEnvId returns a boolean if a field has been set.
 `func (o *BackupPreset) UnsetEnvId()`
 
 UnsetEnvId ensures that no value is present for EnvId, not even an explicit nil
+### GetEnvTypes
+
+`func (o *BackupPreset) GetEnvTypes() []string`
+
+GetEnvTypes returns the EnvTypes field if non-nil, zero value otherwise.
+
+### GetEnvTypesOk
+
+`func (o *BackupPreset) GetEnvTypesOk() (*[]string, bool)`
+
+GetEnvTypesOk returns a tuple with the EnvTypes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvTypes
+
+`func (o *BackupPreset) SetEnvTypes(v []string)`
+
+SetEnvTypes sets EnvTypes field to given value.
+
+
+### GetBackupCategory
+
+`func (o *BackupPreset) GetBackupCategory() string`
+
+GetBackupCategory returns the BackupCategory field if non-nil, zero value otherwise.
+
+### GetBackupCategoryOk
+
+`func (o *BackupPreset) GetBackupCategoryOk() (*string, bool)`
+
+GetBackupCategoryOk returns a tuple with the BackupCategory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBackupCategory
+
+`func (o *BackupPreset) SetBackupCategory(v string)`
+
+SetBackupCategory sets BackupCategory field to given value.
+
+
 ### GetBackupName
 
 `func (o *BackupPreset) GetBackupName() string`

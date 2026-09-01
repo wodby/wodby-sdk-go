@@ -6,7 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
-**EnvId** | **int32** |  | 
+**EnvId** | Pointer to **int32** |  | [optional] 
+**EnvType** | Pointer to **string** |  | [optional] 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
 **IntegrationKindId** | **int32** |  | 
@@ -26,7 +27,7 @@ Name | Type | Description | Notes
 
 ### NewNewDatabaseInput
 
-`func NewNewDatabaseInput(envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string, ) *NewDatabaseInput`
+`func NewNewDatabaseInput(name string, title string, integrationKindId int32, type_ string, version string, machineType string, ) *NewDatabaseInput`
 
 NewNewDatabaseInput instantiates a new NewDatabaseInput object
 This constructor will assign default values to properties that have it defined,
@@ -120,6 +121,36 @@ and a boolean to check if the value has been set.
 
 SetEnvId sets EnvId field to given value.
 
+### HasEnvId
+
+`func (o *NewDatabaseInput) HasEnvId() bool`
+
+HasEnvId returns a boolean if a field has been set.
+
+### GetEnvType
+
+`func (o *NewDatabaseInput) GetEnvType() string`
+
+GetEnvType returns the EnvType field if non-nil, zero value otherwise.
+
+### GetEnvTypeOk
+
+`func (o *NewDatabaseInput) GetEnvTypeOk() (*string, bool)`
+
+GetEnvTypeOk returns a tuple with the EnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvType
+
+`func (o *NewDatabaseInput) SetEnvType(v string)`
+
+SetEnvType sets EnvType field to given value.
+
+### HasEnvType
+
+`func (o *NewDatabaseInput) HasEnvType() bool`
+
+HasEnvType returns a boolean if a field has been set.
 
 ### GetName
 

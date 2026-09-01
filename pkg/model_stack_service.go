@@ -41,6 +41,7 @@ type StackService struct {
 	Options []StackServiceOption `json:"options,omitempty"`
 	Settings []StackServiceSetting `json:"settings,omitempty"`
 	Containers []StackServiceContainer `json:"containers,omitempty"`
+	DeploymentConfiguration ServiceDeploymentConfiguration `json:"deploymentConfiguration"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -51,7 +52,7 @@ type _StackService StackService
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, createdAt time.Time, updatedAt time.Time) *StackService {
+func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time) *StackService {
 	this := StackService{}
 	this.Id = id
 	this.Name = name
@@ -67,6 +68,7 @@ func NewStackService(id int32, name string, title string, type_ string, main boo
 	this.ServiceRevName = serviceRevName
 	this.ServiceRevTitle = serviceRevTitle
 	this.ServiceRevVersion = serviceRevVersion
+	this.DeploymentConfiguration = deploymentConfiguration
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -596,6 +598,30 @@ func (o *StackService) SetContainers(v []StackServiceContainer) {
 	o.Containers = v
 }
 
+// GetDeploymentConfiguration returns the DeploymentConfiguration field value
+func (o *StackService) GetDeploymentConfiguration() ServiceDeploymentConfiguration {
+	if o == nil {
+		var ret ServiceDeploymentConfiguration
+		return ret
+	}
+
+	return o.DeploymentConfiguration
+}
+
+// GetDeploymentConfigurationOk returns a tuple with the DeploymentConfiguration field value
+// and a boolean to check if the value has been set.
+func (o *StackService) GetDeploymentConfigurationOk() (*ServiceDeploymentConfiguration, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DeploymentConfiguration, true
+}
+
+// SetDeploymentConfiguration sets field value
+func (o *StackService) SetDeploymentConfiguration(v ServiceDeploymentConfiguration) {
+	o.DeploymentConfiguration = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *StackService) GetCreatedAt() time.Time {
 	if o == nil {
@@ -683,6 +709,7 @@ func (o StackService) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Containers) {
 		toSerialize["containers"] = o.Containers
 	}
+	toSerialize["deploymentConfiguration"] = o.DeploymentConfiguration
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -707,6 +734,7 @@ func (o *StackService) UnmarshalJSON(data []byte) (err error) {
 		"serviceRevName",
 		"serviceRevTitle",
 		"serviceRevVersion",
+		"deploymentConfiguration",
 		"createdAt",
 		"updatedAt",
 	}

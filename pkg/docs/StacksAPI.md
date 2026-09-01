@@ -1502,7 +1502,7 @@ Name | Type | Description  | Notes
 
 ## UpdateStackServiceRevisions
 
-> OperationResult UpdateStackServiceRevisions(ctx, id).Execute()
+> OperationResult UpdateStackServiceRevisions(ctx, id).Scope(scope).Execute()
 
 Update stack service revisions
 
@@ -1522,10 +1522,11 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
+	scope := "scope_example" // string | Limits the update to all services or stateless services. Defaults to all. (optional) (default to "all")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.UpdateStackServiceRevisions(context.Background(), id).Execute()
+	resp, r, err := apiClient.StacksAPI.UpdateStackServiceRevisions(context.Background(), id).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackServiceRevisions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1551,6 +1552,7 @@ Other parameters are passed through a pointer to a apiUpdateStackServiceRevision
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **scope** | **string** | Limits the update to all services or stateless services. Defaults to all. | [default to &quot;all&quot;]
 
 ### Return type
 

@@ -33,7 +33,10 @@ type Database struct {
 	Zone NullableString `json:"zone,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
+	// Legacy internal environment entity ID. Use envType.
+	// Deprecated
 	EnvId int32 `json:"envId"`
+	EnvType string `json:"envType"`
 	OrgId int32 `json:"orgId"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -45,7 +48,7 @@ type _Database Database
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDatabase(id int32, name string, title string, type_ string, kind string, status string, version string, envId int32, orgId int32, createdAt time.Time, updatedAt time.Time) *Database {
+func NewDatabase(id int32, name string, title string, type_ string, kind string, status string, version string, envId int32, envType string, orgId int32, createdAt time.Time, updatedAt time.Time) *Database {
 	this := Database{}
 	this.Id = id
 	this.Name = name
@@ -55,6 +58,7 @@ func NewDatabase(id int32, name string, title string, type_ string, kind string,
 	this.Status = status
 	this.Version = version
 	this.EnvId = envId
+	this.EnvType = envType
 	this.OrgId = orgId
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -406,6 +410,7 @@ func (o *Database) UnsetAppServiceId() {
 }
 
 // GetEnvId returns the EnvId field value
+// Deprecated
 func (o *Database) GetEnvId() int32 {
 	if o == nil {
 		var ret int32
@@ -417,6 +422,7 @@ func (o *Database) GetEnvId() int32 {
 
 // GetEnvIdOk returns a tuple with the EnvId field value
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *Database) GetEnvIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -425,8 +431,33 @@ func (o *Database) GetEnvIdOk() (*int32, bool) {
 }
 
 // SetEnvId sets field value
+// Deprecated
 func (o *Database) SetEnvId(v int32) {
 	o.EnvId = v
+}
+
+// GetEnvType returns the EnvType field value
+func (o *Database) GetEnvType() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.EnvType
+}
+
+// GetEnvTypeOk returns a tuple with the EnvType field value
+// and a boolean to check if the value has been set.
+func (o *Database) GetEnvTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.EnvType, true
+}
+
+// SetEnvType sets field value
+func (o *Database) SetEnvType(v string) {
+	o.EnvType = v
 }
 
 // GetOrgId returns the OrgId field value
@@ -531,6 +562,7 @@ func (o Database) ToMap() (map[string]interface{}, error) {
 		toSerialize["appServiceId"] = o.AppServiceId.Get()
 	}
 	toSerialize["envId"] = o.EnvId
+	toSerialize["envType"] = o.EnvType
 	toSerialize["orgId"] = o.OrgId
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -550,6 +582,7 @@ func (o *Database) UnmarshalJSON(data []byte) (err error) {
 		"status",
 		"version",
 		"envId",
+		"envType",
 		"orgId",
 		"createdAt",
 		"updatedAt",

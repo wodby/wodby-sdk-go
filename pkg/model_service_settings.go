@@ -20,6 +20,7 @@ var _ MappedNullable = &ServiceSettings{}
 // ServiceSettings struct for ServiceSettings
 type ServiceSettings struct {
 	GitAutoUpdate *GitAutoUpdateSettings `json:"gitAutoUpdate,omitempty"`
+	AutoBaseRevisionUpdate *ServiceAutoBaseRevisionUpdateSettings `json:"autoBaseRevisionUpdate,omitempty"`
 }
 
 // NewServiceSettings instantiates a new ServiceSettings object
@@ -71,6 +72,38 @@ func (o *ServiceSettings) SetGitAutoUpdate(v GitAutoUpdateSettings) {
 	o.GitAutoUpdate = &v
 }
 
+// GetAutoBaseRevisionUpdate returns the AutoBaseRevisionUpdate field value if set, zero value otherwise.
+func (o *ServiceSettings) GetAutoBaseRevisionUpdate() ServiceAutoBaseRevisionUpdateSettings {
+	if o == nil || IsNil(o.AutoBaseRevisionUpdate) {
+		var ret ServiceAutoBaseRevisionUpdateSettings
+		return ret
+	}
+	return *o.AutoBaseRevisionUpdate
+}
+
+// GetAutoBaseRevisionUpdateOk returns a tuple with the AutoBaseRevisionUpdate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceSettings) GetAutoBaseRevisionUpdateOk() (*ServiceAutoBaseRevisionUpdateSettings, bool) {
+	if o == nil || IsNil(o.AutoBaseRevisionUpdate) {
+		return nil, false
+	}
+	return o.AutoBaseRevisionUpdate, true
+}
+
+// HasAutoBaseRevisionUpdate returns a boolean if a field has been set.
+func (o *ServiceSettings) HasAutoBaseRevisionUpdate() bool {
+	if o != nil && !IsNil(o.AutoBaseRevisionUpdate) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoBaseRevisionUpdate gets a reference to the given ServiceAutoBaseRevisionUpdateSettings and assigns it to the AutoBaseRevisionUpdate field.
+func (o *ServiceSettings) SetAutoBaseRevisionUpdate(v ServiceAutoBaseRevisionUpdateSettings) {
+	o.AutoBaseRevisionUpdate = &v
+}
+
 func (o ServiceSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -83,6 +116,9 @@ func (o ServiceSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.GitAutoUpdate) {
 		toSerialize["gitAutoUpdate"] = o.GitAutoUpdate
+	}
+	if !IsNil(o.AutoBaseRevisionUpdate) {
+		toSerialize["autoBaseRevisionUpdate"] = o.AutoBaseRevisionUpdate
 	}
 	return toSerialize, nil
 }

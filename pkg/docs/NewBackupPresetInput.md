@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
 **OrgId** | Pointer to **NullableInt32** | Optional for API-key requests; defaults to the API key&#39;s organization when no more specific target is provided. | [optional] 
 **EnvId** | Pointer to **NullableInt32** |  | [optional] 
+**EnvTypes** | Pointer to **[]string** |  | [optional] 
+**BackupCategory** | Pointer to **NullableString** |  | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Free subscriptions may create only an automatic preset that is disabled. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
@@ -251,6 +253,76 @@ HasEnvId returns a boolean if a field has been set.
 `func (o *NewBackupPresetInput) UnsetEnvId()`
 
 UnsetEnvId ensures that no value is present for EnvId, not even an explicit nil
+### GetEnvTypes
+
+`func (o *NewBackupPresetInput) GetEnvTypes() []string`
+
+GetEnvTypes returns the EnvTypes field if non-nil, zero value otherwise.
+
+### GetEnvTypesOk
+
+`func (o *NewBackupPresetInput) GetEnvTypesOk() (*[]string, bool)`
+
+GetEnvTypesOk returns a tuple with the EnvTypes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvTypes
+
+`func (o *NewBackupPresetInput) SetEnvTypes(v []string)`
+
+SetEnvTypes sets EnvTypes field to given value.
+
+### HasEnvTypes
+
+`func (o *NewBackupPresetInput) HasEnvTypes() bool`
+
+HasEnvTypes returns a boolean if a field has been set.
+
+### SetEnvTypesNil
+
+`func (o *NewBackupPresetInput) SetEnvTypesNil(b bool)`
+
+ SetEnvTypesNil sets the value for EnvTypes to be an explicit nil
+
+### UnsetEnvTypes
+`func (o *NewBackupPresetInput) UnsetEnvTypes()`
+
+UnsetEnvTypes ensures that no value is present for EnvTypes, not even an explicit nil
+### GetBackupCategory
+
+`func (o *NewBackupPresetInput) GetBackupCategory() string`
+
+GetBackupCategory returns the BackupCategory field if non-nil, zero value otherwise.
+
+### GetBackupCategoryOk
+
+`func (o *NewBackupPresetInput) GetBackupCategoryOk() (*string, bool)`
+
+GetBackupCategoryOk returns a tuple with the BackupCategory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBackupCategory
+
+`func (o *NewBackupPresetInput) SetBackupCategory(v string)`
+
+SetBackupCategory sets BackupCategory field to given value.
+
+### HasBackupCategory
+
+`func (o *NewBackupPresetInput) HasBackupCategory() bool`
+
+HasBackupCategory returns a boolean if a field has been set.
+
+### SetBackupCategoryNil
+
+`func (o *NewBackupPresetInput) SetBackupCategoryNil(b bool)`
+
+ SetBackupCategoryNil sets the value for BackupCategory to be an explicit nil
+
+### UnsetBackupCategory
+`func (o *NewBackupPresetInput) UnsetBackupCategory()`
+
+UnsetBackupCategory ensures that no value is present for BackupCategory, not even an explicit nil
 ### GetBackupName
 
 `func (o *NewBackupPresetInput) GetBackupName() string`

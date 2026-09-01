@@ -26,7 +26,9 @@ type SearchIntegrationsInput struct {
 	Statuses []string `json:"statuses,omitempty"`
 	Labels []string `json:"labels,omitempty"`
 	Variables []IntegrationVariableRequirementInput `json:"variables,omitempty"`
+	// Deprecated
 	EnvId NullableInt32 `json:"envId,omitempty"`
+	EnvType NullableString `json:"envType,omitempty"`
 }
 
 // NewSearchIntegrationsInput instantiates a new SearchIntegrationsInput object
@@ -239,6 +241,7 @@ func (o *SearchIntegrationsInput) SetVariables(v []IntegrationVariableRequiremen
 }
 
 // GetEnvId returns the EnvId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *SearchIntegrationsInput) GetEnvId() int32 {
 	if o == nil || IsNil(o.EnvId.Get()) {
 		var ret int32
@@ -250,6 +253,7 @@ func (o *SearchIntegrationsInput) GetEnvId() int32 {
 // GetEnvIdOk returns a tuple with the EnvId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *SearchIntegrationsInput) GetEnvIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -267,6 +271,7 @@ func (o *SearchIntegrationsInput) HasEnvId() bool {
 }
 
 // SetEnvId gets a reference to the given NullableInt32 and assigns it to the EnvId field.
+// Deprecated
 func (o *SearchIntegrationsInput) SetEnvId(v int32) {
 	o.EnvId.Set(&v)
 }
@@ -278,6 +283,48 @@ func (o *SearchIntegrationsInput) SetEnvIdNil() {
 // UnsetEnvId ensures that no value is present for EnvId, not even an explicit nil
 func (o *SearchIntegrationsInput) UnsetEnvId() {
 	o.EnvId.Unset()
+}
+
+// GetEnvType returns the EnvType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SearchIntegrationsInput) GetEnvType() string {
+	if o == nil || IsNil(o.EnvType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.EnvType.Get()
+}
+
+// GetEnvTypeOk returns a tuple with the EnvType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *SearchIntegrationsInput) GetEnvTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EnvType.Get(), o.EnvType.IsSet()
+}
+
+// HasEnvType returns a boolean if a field has been set.
+func (o *SearchIntegrationsInput) HasEnvType() bool {
+	if o != nil && o.EnvType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvType gets a reference to the given NullableString and assigns it to the EnvType field.
+func (o *SearchIntegrationsInput) SetEnvType(v string) {
+	o.EnvType.Set(&v)
+}
+// SetEnvTypeNil sets the value for EnvType to be an explicit nil
+func (o *SearchIntegrationsInput) SetEnvTypeNil() {
+	o.EnvType.Set(nil)
+}
+
+// UnsetEnvType ensures that no value is present for EnvType, not even an explicit nil
+func (o *SearchIntegrationsInput) UnsetEnvType() {
+	o.EnvType.Unset()
 }
 
 func (o SearchIntegrationsInput) MarshalJSON() ([]byte, error) {
@@ -310,6 +357,9 @@ func (o SearchIntegrationsInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.EnvId.IsSet() {
 		toSerialize["envId"] = o.EnvId.Get()
+	}
+	if o.EnvType.IsSet() {
+		toSerialize["envType"] = o.EnvType.Get()
 	}
 	return toSerialize, nil
 }

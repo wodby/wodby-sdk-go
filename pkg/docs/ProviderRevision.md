@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
 **Name** | **string** |  | 
+**Icon** | **string** |  | 
 **Title** | **string** |  | 
 **Number** | **int32** |  | 
 **Version** | **string** |  | 
@@ -18,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewProviderRevision
 
-`func NewProviderRevision(id int32, name string, title string, number int32, version string, providerId int32, permissionAudit bool, createdAt time.Time, ) *ProviderRevision`
+`func NewProviderRevision(id int32, name string, icon string, title string, number int32, version string, providerId int32, permissionAudit bool, createdAt time.Time, ) *ProviderRevision`
 
 NewProviderRevision instantiates a new ProviderRevision object
 This constructor will assign default values to properties that have it defined,
@@ -71,6 +72,26 @@ and a boolean to check if the value has been set.
 `func (o *ProviderRevision) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetIcon
+
+`func (o *ProviderRevision) GetIcon() string`
+
+GetIcon returns the Icon field if non-nil, zero value otherwise.
+
+### GetIconOk
+
+`func (o *ProviderRevision) GetIconOk() (*string, bool)`
+
+GetIconOk returns a tuple with the Icon field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIcon
+
+`func (o *ProviderRevision) SetIcon(v string)`
+
+SetIcon sets Icon field to given value.
 
 
 ### GetTitle

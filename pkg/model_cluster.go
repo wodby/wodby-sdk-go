@@ -42,6 +42,15 @@ type Cluster struct {
 	Ips []string `json:"ips,omitempty"`
 	Hostname NullableString `json:"hostname,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
+	// Legacy internal environment entity ID. Use envType.
+	// Deprecated
+	EnvId int32 `json:"envId"`
+	EnvType string `json:"envType"`
+	EnvScope string `json:"envScope"`
+	// Legacy internal environment entity IDs. Use allowedEnvTypes.
+	// Deprecated
+	AllowedEnvIds []int32 `json:"allowedEnvIds"`
+	AllowedEnvTypes []string `json:"allowedEnvTypes"`
 	OrgId int32 `json:"orgId"`
 	OwnershipScope string `json:"ownershipScope"`
 	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
@@ -59,7 +68,7 @@ type _Cluster Cluster
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
+func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
 	this := Cluster{}
 	this.Id = id
 	this.Name = name
@@ -71,6 +80,11 @@ func NewCluster(id int32, name string, title string, status string, serverless b
 	this.K3s = k3s
 	this.SingleNode = singleNode
 	this.InfraVersion = infraVersion
+	this.EnvId = envId
+	this.EnvType = envType
+	this.EnvScope = envScope
+	this.AllowedEnvIds = allowedEnvIds
+	this.AllowedEnvTypes = allowedEnvTypes
 	this.OrgId = orgId
 	this.OwnershipScope = ownershipScope
 	this.Capabilities = capabilities
@@ -738,6 +752,132 @@ func (o *Cluster) UnsetIntegrationId() {
 	o.IntegrationId.Unset()
 }
 
+// GetEnvId returns the EnvId field value
+// Deprecated
+func (o *Cluster) GetEnvId() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.EnvId
+}
+
+// GetEnvIdOk returns a tuple with the EnvId field value
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *Cluster) GetEnvIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.EnvId, true
+}
+
+// SetEnvId sets field value
+// Deprecated
+func (o *Cluster) SetEnvId(v int32) {
+	o.EnvId = v
+}
+
+// GetEnvType returns the EnvType field value
+func (o *Cluster) GetEnvType() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.EnvType
+}
+
+// GetEnvTypeOk returns a tuple with the EnvType field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetEnvTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.EnvType, true
+}
+
+// SetEnvType sets field value
+func (o *Cluster) SetEnvType(v string) {
+	o.EnvType = v
+}
+
+// GetEnvScope returns the EnvScope field value
+func (o *Cluster) GetEnvScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.EnvScope
+}
+
+// GetEnvScopeOk returns a tuple with the EnvScope field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetEnvScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.EnvScope, true
+}
+
+// SetEnvScope sets field value
+func (o *Cluster) SetEnvScope(v string) {
+	o.EnvScope = v
+}
+
+// GetAllowedEnvIds returns the AllowedEnvIds field value
+// Deprecated
+func (o *Cluster) GetAllowedEnvIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+
+	return o.AllowedEnvIds
+}
+
+// GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field value
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *Cluster) GetAllowedEnvIdsOk() ([]int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AllowedEnvIds, true
+}
+
+// SetAllowedEnvIds sets field value
+// Deprecated
+func (o *Cluster) SetAllowedEnvIds(v []int32) {
+	o.AllowedEnvIds = v
+}
+
+// GetAllowedEnvTypes returns the AllowedEnvTypes field value
+func (o *Cluster) GetAllowedEnvTypes() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.AllowedEnvTypes
+}
+
+// GetAllowedEnvTypesOk returns a tuple with the AllowedEnvTypes field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetAllowedEnvTypesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AllowedEnvTypes, true
+}
+
+// SetAllowedEnvTypes sets field value
+func (o *Cluster) SetAllowedEnvTypes(v []string) {
+	o.AllowedEnvTypes = v
+}
+
 // GetOrgId returns the OrgId field value
 func (o *Cluster) GetOrgId() int32 {
 	if o == nil {
@@ -1057,6 +1197,11 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	if o.IntegrationId.IsSet() {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
 	}
+	toSerialize["envId"] = o.EnvId
+	toSerialize["envType"] = o.EnvType
+	toSerialize["envScope"] = o.EnvScope
+	toSerialize["allowedEnvIds"] = o.AllowedEnvIds
+	toSerialize["allowedEnvTypes"] = o.AllowedEnvTypes
 	toSerialize["orgId"] = o.OrgId
 	toSerialize["ownershipScope"] = o.OwnershipScope
 	if o.OwnerProjectId.IsSet() {
@@ -1092,6 +1237,11 @@ func (o *Cluster) UnmarshalJSON(data []byte) (err error) {
 		"k3s",
 		"singleNode",
 		"infraVersion",
+		"envId",
+		"envType",
+		"envScope",
+		"allowedEnvIds",
+		"allowedEnvTypes",
 		"orgId",
 		"ownershipScope",
 		"capabilities",

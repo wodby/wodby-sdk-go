@@ -9,11 +9,14 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **Scope** | Pointer to **NullableString** |  | [optional] 
 **Auth** | Pointer to **NullableString** |  | [optional] 
+**Outdated** | **bool** |  | 
 **ProviderRevId** | **int32** |  | 
 **OrgId** | **int32** |  | 
-**PrimaryEnvId** | Pointer to **NullableInt32** |  | [optional] 
+**PrimaryEnvId** | Pointer to **NullableInt32** | Legacy internal environment entity ID. Use primaryEnvType. | [optional] 
+**PrimaryEnvType** | Pointer to **NullableString** |  | [optional] 
 **EnvScope** | **string** |  | 
-**AllowedEnvIds** | **[]int32** |  | 
+**AllowedEnvIds** | **[]int32** | Legacy internal environment entity IDs. Use allowedEnvTypes. | 
+**AllowedEnvTypes** | **[]string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -21,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewIntegration
 
-`func NewIntegration(id int32, title string, status string, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, createdAt time.Time, updatedAt time.Time, ) *Integration`
+`func NewIntegration(id int32, title string, status string, outdated bool, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, createdAt time.Time, updatedAt time.Time, ) *Integration`
 
 NewIntegration instantiates a new Integration object
 This constructor will assign default values to properties that have it defined,
@@ -166,6 +169,26 @@ HasAuth returns a boolean if a field has been set.
 `func (o *Integration) UnsetAuth()`
 
 UnsetAuth ensures that no value is present for Auth, not even an explicit nil
+### GetOutdated
+
+`func (o *Integration) GetOutdated() bool`
+
+GetOutdated returns the Outdated field if non-nil, zero value otherwise.
+
+### GetOutdatedOk
+
+`func (o *Integration) GetOutdatedOk() (*bool, bool)`
+
+GetOutdatedOk returns a tuple with the Outdated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOutdated
+
+`func (o *Integration) SetOutdated(v bool)`
+
+SetOutdated sets Outdated field to given value.
+
+
 ### GetProviderRevId
 
 `func (o *Integration) GetProviderRevId() int32`
@@ -241,6 +264,41 @@ HasPrimaryEnvId returns a boolean if a field has been set.
 `func (o *Integration) UnsetPrimaryEnvId()`
 
 UnsetPrimaryEnvId ensures that no value is present for PrimaryEnvId, not even an explicit nil
+### GetPrimaryEnvType
+
+`func (o *Integration) GetPrimaryEnvType() string`
+
+GetPrimaryEnvType returns the PrimaryEnvType field if non-nil, zero value otherwise.
+
+### GetPrimaryEnvTypeOk
+
+`func (o *Integration) GetPrimaryEnvTypeOk() (*string, bool)`
+
+GetPrimaryEnvTypeOk returns a tuple with the PrimaryEnvType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrimaryEnvType
+
+`func (o *Integration) SetPrimaryEnvType(v string)`
+
+SetPrimaryEnvType sets PrimaryEnvType field to given value.
+
+### HasPrimaryEnvType
+
+`func (o *Integration) HasPrimaryEnvType() bool`
+
+HasPrimaryEnvType returns a boolean if a field has been set.
+
+### SetPrimaryEnvTypeNil
+
+`func (o *Integration) SetPrimaryEnvTypeNil(b bool)`
+
+ SetPrimaryEnvTypeNil sets the value for PrimaryEnvType to be an explicit nil
+
+### UnsetPrimaryEnvType
+`func (o *Integration) UnsetPrimaryEnvType()`
+
+UnsetPrimaryEnvType ensures that no value is present for PrimaryEnvType, not even an explicit nil
 ### GetEnvScope
 
 `func (o *Integration) GetEnvScope() string`
@@ -279,6 +337,26 @@ and a boolean to check if the value has been set.
 `func (o *Integration) SetAllowedEnvIds(v []int32)`
 
 SetAllowedEnvIds sets AllowedEnvIds field to given value.
+
+
+### GetAllowedEnvTypes
+
+`func (o *Integration) GetAllowedEnvTypes() []string`
+
+GetAllowedEnvTypes returns the AllowedEnvTypes field if non-nil, zero value otherwise.
+
+### GetAllowedEnvTypesOk
+
+`func (o *Integration) GetAllowedEnvTypesOk() (*[]string, bool)`
+
+GetAllowedEnvTypesOk returns a tuple with the AllowedEnvTypes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedEnvTypes
+
+`func (o *Integration) SetAllowedEnvTypes(v []string)`
+
+SetAllowedEnvTypes sets AllowedEnvTypes field to given value.
 
 
 ### GetCreatedAt

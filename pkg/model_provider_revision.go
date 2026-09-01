@@ -24,6 +24,7 @@ var _ MappedNullable = &ProviderRevision{}
 type ProviderRevision struct {
 	Id int32 `json:"id"`
 	Name string `json:"name"`
+	Icon string `json:"icon"`
 	Title string `json:"title"`
 	Number int32 `json:"number"`
 	Version string `json:"version"`
@@ -39,10 +40,11 @@ type _ProviderRevision ProviderRevision
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProviderRevision(id int32, name string, title string, number int32, version string, providerId int32, permissionAudit bool, createdAt time.Time) *ProviderRevision {
+func NewProviderRevision(id int32, name string, icon string, title string, number int32, version string, providerId int32, permissionAudit bool, createdAt time.Time) *ProviderRevision {
 	this := ProviderRevision{}
 	this.Id = id
 	this.Name = name
+	this.Icon = icon
 	this.Title = title
 	this.Number = number
 	this.Version = version
@@ -106,6 +108,30 @@ func (o *ProviderRevision) GetNameOk() (*string, bool) {
 // SetName sets field value
 func (o *ProviderRevision) SetName(v string) {
 	o.Name = v
+}
+
+// GetIcon returns the Icon field value
+func (o *ProviderRevision) GetIcon() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Icon
+}
+
+// GetIconOk returns a tuple with the Icon field value
+// and a boolean to check if the value has been set.
+func (o *ProviderRevision) GetIconOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Icon, true
+}
+
+// SetIcon sets field value
+func (o *ProviderRevision) SetIcon(v string) {
+	o.Icon = v
 }
 
 // GetTitle returns the Title field value
@@ -296,6 +322,7 @@ func (o ProviderRevision) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
+	toSerialize["icon"] = o.Icon
 	toSerialize["title"] = o.Title
 	toSerialize["number"] = o.Number
 	toSerialize["version"] = o.Version
@@ -315,6 +342,7 @@ func (o *ProviderRevision) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"name",
+		"icon",
 		"title",
 		"number",
 		"version",

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GitAutoUpdate** | Pointer to [**GitAutoUpdateSettingsInput**](GitAutoUpdateSettingsInput.md) |  | [optional] 
+**AutoBaseRevisionUpdate** | Pointer to [**ServiceAutoBaseRevisionUpdateSettingsInput**](ServiceAutoBaseRevisionUpdateSettingsInput.md) |  | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetGitAutoUpdate sets GitAutoUpdate field to given value.
 `func (o *ServiceSettingsInput) HasGitAutoUpdate() bool`
 
 HasGitAutoUpdate returns a boolean if a field has been set.
+
+### GetAutoBaseRevisionUpdate
+
+`func (o *ServiceSettingsInput) GetAutoBaseRevisionUpdate() ServiceAutoBaseRevisionUpdateSettingsInput`
+
+GetAutoBaseRevisionUpdate returns the AutoBaseRevisionUpdate field if non-nil, zero value otherwise.
+
+### GetAutoBaseRevisionUpdateOk
+
+`func (o *ServiceSettingsInput) GetAutoBaseRevisionUpdateOk() (*ServiceAutoBaseRevisionUpdateSettingsInput, bool)`
+
+GetAutoBaseRevisionUpdateOk returns a tuple with the AutoBaseRevisionUpdate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoBaseRevisionUpdate
+
+`func (o *ServiceSettingsInput) SetAutoBaseRevisionUpdate(v ServiceAutoBaseRevisionUpdateSettingsInput)`
+
+SetAutoBaseRevisionUpdate sets AutoBaseRevisionUpdate field to given value.
+
+### HasAutoBaseRevisionUpdate
+
+`func (o *ServiceSettingsInput) HasAutoBaseRevisionUpdate() bool`
+
+HasAutoBaseRevisionUpdate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

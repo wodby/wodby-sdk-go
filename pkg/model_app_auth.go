@@ -27,7 +27,7 @@ type AppAuth struct {
 	Scope AppAuthScope `json:"scope"`
 	// App services protected by this entry. Empty unless scope is SERVICE.
 	AppServiceIds []int32 `json:"appServiceIds"`
-	// Single protected app service. Null when the entry protects several services or the whole app instance.
+	// Single protected app service. Null when the entry protects several services or the whole app environment.
 	// Deprecated
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	AppRouteId NullableInt32 `json:"appRouteId,omitempty"`

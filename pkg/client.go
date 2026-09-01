@@ -55,7 +55,7 @@ type APIClient struct {
 
 	AppDeploymentsAPI *AppDeploymentsAPIService
 
-	AppInstancesAPI *AppInstancesAPIService
+	AppEnvironmentsAPI *AppEnvironmentsAPIService
 
 	AppPortsAPI *AppPortsAPIService
 
@@ -74,8 +74,6 @@ type APIClient struct {
 	DatabasesAPI *DatabasesAPIService
 
 	DefaultAPI *DefaultAPIService
-
-	EnvsAPI *EnvsAPIService
 
 	GitReposAPI *GitReposAPIService
 
@@ -127,7 +125,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AppAuthsAPI = (*AppAuthsAPIService)(&c.common)
 	c.AppBuildsAPI = (*AppBuildsAPIService)(&c.common)
 	c.AppDeploymentsAPI = (*AppDeploymentsAPIService)(&c.common)
-	c.AppInstancesAPI = (*AppInstancesAPIService)(&c.common)
+	c.AppEnvironmentsAPI = (*AppEnvironmentsAPIService)(&c.common)
 	c.AppPortsAPI = (*AppPortsAPIService)(&c.common)
 	c.AppRoutesAPI = (*AppRoutesAPIService)(&c.common)
 	c.AppServicesAPI = (*AppServicesAPIService)(&c.common)
@@ -137,7 +135,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ClustersAPI = (*ClustersAPIService)(&c.common)
 	c.DatabasesAPI = (*DatabasesAPIService)(&c.common)
 	c.DefaultAPI = (*DefaultAPIService)(&c.common)
-	c.EnvsAPI = (*EnvsAPIService)(&c.common)
 	c.GitReposAPI = (*GitReposAPIService)(&c.common)
 	c.HelmChartsAPI = (*HelmChartsAPIService)(&c.common)
 	c.ImportsAPI = (*ImportsAPIService)(&c.common)

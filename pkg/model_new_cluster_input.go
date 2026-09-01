@@ -39,6 +39,7 @@ type NewClusterInput struct {
 	BillingOption NullableString `json:"billingOption,omitempty"`
 	DisableMonitoring bool `json:"disableMonitoring"`
 	AutoInfrastructureUpgrade NullableBool `json:"autoInfrastructureUpgrade,omitempty"`
+	EnvironmentPolicy *ClusterEnvironmentPolicyInput `json:"environmentPolicy,omitempty"`
 }
 
 type _NewClusterInput NewClusterInput
@@ -679,6 +680,38 @@ func (o *NewClusterInput) UnsetAutoInfrastructureUpgrade() {
 	o.AutoInfrastructureUpgrade.Unset()
 }
 
+// GetEnvironmentPolicy returns the EnvironmentPolicy field value if set, zero value otherwise.
+func (o *NewClusterInput) GetEnvironmentPolicy() ClusterEnvironmentPolicyInput {
+	if o == nil || IsNil(o.EnvironmentPolicy) {
+		var ret ClusterEnvironmentPolicyInput
+		return ret
+	}
+	return *o.EnvironmentPolicy
+}
+
+// GetEnvironmentPolicyOk returns a tuple with the EnvironmentPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewClusterInput) GetEnvironmentPolicyOk() (*ClusterEnvironmentPolicyInput, bool) {
+	if o == nil || IsNil(o.EnvironmentPolicy) {
+		return nil, false
+	}
+	return o.EnvironmentPolicy, true
+}
+
+// HasEnvironmentPolicy returns a boolean if a field has been set.
+func (o *NewClusterInput) HasEnvironmentPolicy() bool {
+	if o != nil && !IsNil(o.EnvironmentPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentPolicy gets a reference to the given ClusterEnvironmentPolicyInput and assigns it to the EnvironmentPolicy field.
+func (o *NewClusterInput) SetEnvironmentPolicy(v ClusterEnvironmentPolicyInput) {
+	o.EnvironmentPolicy = &v
+}
+
 func (o NewClusterInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -729,6 +762,9 @@ func (o NewClusterInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["disableMonitoring"] = o.DisableMonitoring
 	if o.AutoInfrastructureUpgrade.IsSet() {
 		toSerialize["autoInfrastructureUpgrade"] = o.AutoInfrastructureUpgrade.Get()
+	}
+	if !IsNil(o.EnvironmentPolicy) {
+		toSerialize["environmentPolicy"] = o.EnvironmentPolicy
 	}
 	return toSerialize, nil
 }

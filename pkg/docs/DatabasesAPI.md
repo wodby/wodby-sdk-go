@@ -43,7 +43,7 @@ import (
 )
 
 func main() {
-	newDatabaseInput := *openapiclient.NewNewDatabaseInput(int32(123), "Name_example", "Title_example", int32(123), "Type_example", "Version_example", "MachineType_example") // NewDatabaseInput | 
+	newDatabaseInput := *openapiclient.NewNewDatabaseInput("Name_example", "Title_example", int32(123), "Type_example", "Version_example", "MachineType_example") // NewDatabaseInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

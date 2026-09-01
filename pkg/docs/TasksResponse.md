@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Items** | [**[]Task**](Task.md) |  | 
 **TreeItems** | Pointer to [**[]TaskTreeItem**](TaskTreeItem.md) | Bounded current-page roots and authorized descendants for tree view, linked by parentId. | [optional] 
 **TreeTruncated** | **bool** | True when treeItems omitted visible descendants after reaching the 250-item response limit. Always false for flat view. | 
+**CanIncludeSystem** | **bool** | True when the current user may request operator-only system tasks. | 
 **TotalCount** | **int32** |  | 
 **NextPage** | Pointer to **NullableInt32** |  | [optional] 
 
@@ -14,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewTasksResponse
 
-`func NewTasksResponse(items []Task, treeTruncated bool, totalCount int32, ) *TasksResponse`
+`func NewTasksResponse(items []Task, treeTruncated bool, canIncludeSystem bool, totalCount int32, ) *TasksResponse`
 
 NewTasksResponse instantiates a new TasksResponse object
 This constructor will assign default values to properties that have it defined,
@@ -102,6 +103,26 @@ and a boolean to check if the value has been set.
 `func (o *TasksResponse) SetTreeTruncated(v bool)`
 
 SetTreeTruncated sets TreeTruncated field to given value.
+
+
+### GetCanIncludeSystem
+
+`func (o *TasksResponse) GetCanIncludeSystem() bool`
+
+GetCanIncludeSystem returns the CanIncludeSystem field if non-nil, zero value otherwise.
+
+### GetCanIncludeSystemOk
+
+`func (o *TasksResponse) GetCanIncludeSystemOk() (*bool, bool)`
+
+GetCanIncludeSystemOk returns a tuple with the CanIncludeSystem field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanIncludeSystem
+
+`func (o *TasksResponse) SetCanIncludeSystem(v bool)`
+
+SetCanIncludeSystem sets CanIncludeSystem field to given value.
 
 
 ### GetTotalCount

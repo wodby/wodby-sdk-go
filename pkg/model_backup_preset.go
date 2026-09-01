@@ -29,6 +29,8 @@ type BackupPreset struct {
 	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
 	OrgId NullableInt32 `json:"orgId,omitempty"`
 	EnvId NullableInt32 `json:"envId,omitempty"`
+	EnvTypes []string `json:"envTypes"`
+	BackupCategory string `json:"backupCategory"`
 	BackupName NullableString `json:"backupName,omitempty"`
 	IntegrationId int32 `json:"integrationId"`
 	Bucket string `json:"bucket"`
@@ -51,9 +53,11 @@ type _BackupPreset BackupPreset
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackupPreset(id int32, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time) *BackupPreset {
+func NewBackupPreset(id int32, envTypes []string, backupCategory string, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time) *BackupPreset {
 	this := BackupPreset{}
 	this.Id = id
+	this.EnvTypes = envTypes
+	this.BackupCategory = backupCategory
 	this.IntegrationId = integrationId
 	this.Bucket = bucket
 	this.Options = options
@@ -347,6 +351,54 @@ func (o *BackupPreset) SetEnvIdNil() {
 // UnsetEnvId ensures that no value is present for EnvId, not even an explicit nil
 func (o *BackupPreset) UnsetEnvId() {
 	o.EnvId.Unset()
+}
+
+// GetEnvTypes returns the EnvTypes field value
+func (o *BackupPreset) GetEnvTypes() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.EnvTypes
+}
+
+// GetEnvTypesOk returns a tuple with the EnvTypes field value
+// and a boolean to check if the value has been set.
+func (o *BackupPreset) GetEnvTypesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EnvTypes, true
+}
+
+// SetEnvTypes sets field value
+func (o *BackupPreset) SetEnvTypes(v []string) {
+	o.EnvTypes = v
+}
+
+// GetBackupCategory returns the BackupCategory field value
+func (o *BackupPreset) GetBackupCategory() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.BackupCategory
+}
+
+// GetBackupCategoryOk returns a tuple with the BackupCategory field value
+// and a boolean to check if the value has been set.
+func (o *BackupPreset) GetBackupCategoryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BackupCategory, true
+}
+
+// SetBackupCategory sets field value
+func (o *BackupPreset) SetBackupCategory(v string) {
+	o.BackupCategory = v
 }
 
 // GetBackupName returns the BackupName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -812,6 +864,8 @@ func (o BackupPreset) ToMap() (map[string]interface{}, error) {
 	if o.EnvId.IsSet() {
 		toSerialize["envId"] = o.EnvId.Get()
 	}
+	toSerialize["envTypes"] = o.EnvTypes
+	toSerialize["backupCategory"] = o.BackupCategory
 	if o.BackupName.IsSet() {
 		toSerialize["backupName"] = o.BackupName.Get()
 	}
@@ -847,6 +901,8 @@ func (o *BackupPreset) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"envTypes",
+		"backupCategory",
 		"integrationId",
 		"bucket",
 		"options",

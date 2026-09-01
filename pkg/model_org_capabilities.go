@@ -29,6 +29,8 @@ type OrgCapabilities struct {
 	Autoscale bool `json:"autoscale"`
 	AppInstancePause bool `json:"appInstancePause"`
 	WebShell bool `json:"webShell"`
+	AppAccess bool `json:"appAccess"`
+	OrgSSO bool `json:"orgSSO"`
 	WodbyCloud bool `json:"wodbyCloud"`
 }
 
@@ -38,7 +40,7 @@ type _OrgCapabilities OrgCapabilities
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, wodbyCloud bool) *OrgCapabilities {
+func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, appAccess bool, orgSSO bool, wodbyCloud bool) *OrgCapabilities {
 	this := OrgCapabilities{}
 	this.CustomDomains = customDomains
 	this.AutoBackups = autoBackups
@@ -48,6 +50,8 @@ func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projec
 	this.Autoscale = autoscale
 	this.AppInstancePause = appInstancePause
 	this.WebShell = webShell
+	this.AppAccess = appAccess
+	this.OrgSSO = orgSSO
 	this.WodbyCloud = wodbyCloud
 	return &this
 }
@@ -252,6 +256,54 @@ func (o *OrgCapabilities) SetWebShell(v bool) {
 	o.WebShell = v
 }
 
+// GetAppAccess returns the AppAccess field value
+func (o *OrgCapabilities) GetAppAccess() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AppAccess
+}
+
+// GetAppAccessOk returns a tuple with the AppAccess field value
+// and a boolean to check if the value has been set.
+func (o *OrgCapabilities) GetAppAccessOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AppAccess, true
+}
+
+// SetAppAccess sets field value
+func (o *OrgCapabilities) SetAppAccess(v bool) {
+	o.AppAccess = v
+}
+
+// GetOrgSSO returns the OrgSSO field value
+func (o *OrgCapabilities) GetOrgSSO() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.OrgSSO
+}
+
+// GetOrgSSOOk returns a tuple with the OrgSSO field value
+// and a boolean to check if the value has been set.
+func (o *OrgCapabilities) GetOrgSSOOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OrgSSO, true
+}
+
+// SetOrgSSO sets field value
+func (o *OrgCapabilities) SetOrgSSO(v bool) {
+	o.OrgSSO = v
+}
+
 // GetWodbyCloud returns the WodbyCloud field value
 func (o *OrgCapabilities) GetWodbyCloud() bool {
 	if o == nil {
@@ -294,6 +346,8 @@ func (o OrgCapabilities) ToMap() (map[string]interface{}, error) {
 	toSerialize["autoscale"] = o.Autoscale
 	toSerialize["appInstancePause"] = o.AppInstancePause
 	toSerialize["webShell"] = o.WebShell
+	toSerialize["appAccess"] = o.AppAccess
+	toSerialize["orgSSO"] = o.OrgSSO
 	toSerialize["wodbyCloud"] = o.WodbyCloud
 	return toSerialize, nil
 }
@@ -311,6 +365,8 @@ func (o *OrgCapabilities) UnmarshalJSON(data []byte) (err error) {
 		"autoscale",
 		"appInstancePause",
 		"webShell",
+		"appAccess",
+		"orgSSO",
 		"wodbyCloud",
 	}
 

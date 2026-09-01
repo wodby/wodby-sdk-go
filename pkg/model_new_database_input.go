@@ -19,12 +19,14 @@ import (
 // checks if the NewDatabaseInput type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &NewDatabaseInput{}
 
-// NewDatabaseInput struct for NewDatabaseInput
+// NewDatabaseInput envType is required for the canonical contract. The legacy envId alternative remains accepted, but the two fields cannot be combined.
 type NewDatabaseInput struct {
 	// Optional for API-key requests; defaults to the API key's organization.
 	OrgId *int32 `json:"orgId,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
-	EnvId int32 `json:"envId"`
+	// Deprecated
+	EnvId *int32 `json:"envId,omitempty"`
+	EnvType *string `json:"envType,omitempty"`
 	Name string `json:"name"`
 	Title string `json:"title"`
 	IntegrationKindId int32 `json:"integrationKindId"`
@@ -47,9 +49,8 @@ type _NewDatabaseInput NewDatabaseInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewDatabaseInput(envId int32, name string, title string, integrationKindId int32, type_ string, version string, machineType string) *NewDatabaseInput {
+func NewNewDatabaseInput(name string, title string, integrationKindId int32, type_ string, version string, machineType string) *NewDatabaseInput {
 	this := NewDatabaseInput{}
-	this.EnvId = envId
 	this.Name = name
 	this.Title = title
 	this.IntegrationKindId = integrationKindId
@@ -141,28 +142,71 @@ func (o *NewDatabaseInput) UnsetProjectId() {
 	o.ProjectId.Unset()
 }
 
-// GetEnvId returns the EnvId field value
+// GetEnvId returns the EnvId field value if set, zero value otherwise.
+// Deprecated
 func (o *NewDatabaseInput) GetEnvId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.EnvId) {
 		var ret int32
 		return ret
 	}
-
-	return o.EnvId
+	return *o.EnvId
 }
 
-// GetEnvIdOk returns a tuple with the EnvId field value
+// GetEnvIdOk returns a tuple with the EnvId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *NewDatabaseInput) GetEnvIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnvId) {
 		return nil, false
 	}
-	return &o.EnvId, true
+	return o.EnvId, true
 }
 
-// SetEnvId sets field value
+// HasEnvId returns a boolean if a field has been set.
+func (o *NewDatabaseInput) HasEnvId() bool {
+	if o != nil && !IsNil(o.EnvId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvId gets a reference to the given int32 and assigns it to the EnvId field.
+// Deprecated
 func (o *NewDatabaseInput) SetEnvId(v int32) {
-	o.EnvId = v
+	o.EnvId = &v
+}
+
+// GetEnvType returns the EnvType field value if set, zero value otherwise.
+func (o *NewDatabaseInput) GetEnvType() string {
+	if o == nil || IsNil(o.EnvType) {
+		var ret string
+		return ret
+	}
+	return *o.EnvType
+}
+
+// GetEnvTypeOk returns a tuple with the EnvType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewDatabaseInput) GetEnvTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvType) {
+		return nil, false
+	}
+	return o.EnvType, true
+}
+
+// HasEnvType returns a boolean if a field has been set.
+func (o *NewDatabaseInput) HasEnvType() bool {
+	if o != nil && !IsNil(o.EnvType) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvType gets a reference to the given string and assigns it to the EnvType field.
+func (o *NewDatabaseInput) SetEnvType(v string) {
+	o.EnvType = &v
 }
 
 // GetName returns the Name field value
@@ -661,7 +705,12 @@ func (o NewDatabaseInput) ToMap() (map[string]interface{}, error) {
 	if o.ProjectId.IsSet() {
 		toSerialize["projectId"] = o.ProjectId.Get()
 	}
-	toSerialize["envId"] = o.EnvId
+	if !IsNil(o.EnvId) {
+		toSerialize["envId"] = o.EnvId
+	}
+	if !IsNil(o.EnvType) {
+		toSerialize["envType"] = o.EnvType
+	}
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
 	toSerialize["integrationKindId"] = o.IntegrationKindId
@@ -700,7 +749,6 @@ func (o *NewDatabaseInput) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"envId",
 		"name",
 		"title",
 		"integrationKindId",

@@ -27,11 +27,18 @@ type Integration struct {
 	Status string `json:"status"`
 	Scope NullableString `json:"scope,omitempty"`
 	Auth NullableString `json:"auth,omitempty"`
+	Outdated bool `json:"outdated"`
 	ProviderRevId int32 `json:"providerRevId"`
 	OrgId int32 `json:"orgId"`
+	// Legacy internal environment entity ID. Use primaryEnvType.
+	// Deprecated
 	PrimaryEnvId NullableInt32 `json:"primaryEnvId,omitempty"`
+	PrimaryEnvType NullableString `json:"primaryEnvType,omitempty"`
 	EnvScope string `json:"envScope"`
+	// Legacy internal environment entity IDs. Use allowedEnvTypes.
+	// Deprecated
 	AllowedEnvIds []int32 `json:"allowedEnvIds"`
+	AllowedEnvTypes []string `json:"allowedEnvTypes"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -42,15 +49,17 @@ type _Integration Integration
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIntegration(id int32, title string, status string, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, createdAt time.Time, updatedAt time.Time) *Integration {
+func NewIntegration(id int32, title string, status string, outdated bool, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, createdAt time.Time, updatedAt time.Time) *Integration {
 	this := Integration{}
 	this.Id = id
 	this.Title = title
 	this.Status = status
+	this.Outdated = outdated
 	this.ProviderRevId = providerRevId
 	this.OrgId = orgId
 	this.EnvScope = envScope
 	this.AllowedEnvIds = allowedEnvIds
+	this.AllowedEnvTypes = allowedEnvTypes
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -220,6 +229,30 @@ func (o *Integration) UnsetAuth() {
 	o.Auth.Unset()
 }
 
+// GetOutdated returns the Outdated field value
+func (o *Integration) GetOutdated() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Outdated
+}
+
+// GetOutdatedOk returns a tuple with the Outdated field value
+// and a boolean to check if the value has been set.
+func (o *Integration) GetOutdatedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Outdated, true
+}
+
+// SetOutdated sets field value
+func (o *Integration) SetOutdated(v bool) {
+	o.Outdated = v
+}
+
 // GetProviderRevId returns the ProviderRevId field value
 func (o *Integration) GetProviderRevId() int32 {
 	if o == nil {
@@ -269,6 +302,7 @@ func (o *Integration) SetOrgId(v int32) {
 }
 
 // GetPrimaryEnvId returns the PrimaryEnvId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *Integration) GetPrimaryEnvId() int32 {
 	if o == nil || IsNil(o.PrimaryEnvId.Get()) {
 		var ret int32
@@ -280,6 +314,7 @@ func (o *Integration) GetPrimaryEnvId() int32 {
 // GetPrimaryEnvIdOk returns a tuple with the PrimaryEnvId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *Integration) GetPrimaryEnvIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -297,6 +332,7 @@ func (o *Integration) HasPrimaryEnvId() bool {
 }
 
 // SetPrimaryEnvId gets a reference to the given NullableInt32 and assigns it to the PrimaryEnvId field.
+// Deprecated
 func (o *Integration) SetPrimaryEnvId(v int32) {
 	o.PrimaryEnvId.Set(&v)
 }
@@ -308,6 +344,48 @@ func (o *Integration) SetPrimaryEnvIdNil() {
 // UnsetPrimaryEnvId ensures that no value is present for PrimaryEnvId, not even an explicit nil
 func (o *Integration) UnsetPrimaryEnvId() {
 	o.PrimaryEnvId.Unset()
+}
+
+// GetPrimaryEnvType returns the PrimaryEnvType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Integration) GetPrimaryEnvType() string {
+	if o == nil || IsNil(o.PrimaryEnvType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEnvType.Get()
+}
+
+// GetPrimaryEnvTypeOk returns a tuple with the PrimaryEnvType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Integration) GetPrimaryEnvTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PrimaryEnvType.Get(), o.PrimaryEnvType.IsSet()
+}
+
+// HasPrimaryEnvType returns a boolean if a field has been set.
+func (o *Integration) HasPrimaryEnvType() bool {
+	if o != nil && o.PrimaryEnvType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEnvType gets a reference to the given NullableString and assigns it to the PrimaryEnvType field.
+func (o *Integration) SetPrimaryEnvType(v string) {
+	o.PrimaryEnvType.Set(&v)
+}
+// SetPrimaryEnvTypeNil sets the value for PrimaryEnvType to be an explicit nil
+func (o *Integration) SetPrimaryEnvTypeNil() {
+	o.PrimaryEnvType.Set(nil)
+}
+
+// UnsetPrimaryEnvType ensures that no value is present for PrimaryEnvType, not even an explicit nil
+func (o *Integration) UnsetPrimaryEnvType() {
+	o.PrimaryEnvType.Unset()
 }
 
 // GetEnvScope returns the EnvScope field value
@@ -335,6 +413,7 @@ func (o *Integration) SetEnvScope(v string) {
 }
 
 // GetAllowedEnvIds returns the AllowedEnvIds field value
+// Deprecated
 func (o *Integration) GetAllowedEnvIds() []int32 {
 	if o == nil {
 		var ret []int32
@@ -346,6 +425,7 @@ func (o *Integration) GetAllowedEnvIds() []int32 {
 
 // GetAllowedEnvIdsOk returns a tuple with the AllowedEnvIds field value
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *Integration) GetAllowedEnvIdsOk() ([]int32, bool) {
 	if o == nil {
 		return nil, false
@@ -354,8 +434,33 @@ func (o *Integration) GetAllowedEnvIdsOk() ([]int32, bool) {
 }
 
 // SetAllowedEnvIds sets field value
+// Deprecated
 func (o *Integration) SetAllowedEnvIds(v []int32) {
 	o.AllowedEnvIds = v
+}
+
+// GetAllowedEnvTypes returns the AllowedEnvTypes field value
+func (o *Integration) GetAllowedEnvTypes() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.AllowedEnvTypes
+}
+
+// GetAllowedEnvTypesOk returns a tuple with the AllowedEnvTypes field value
+// and a boolean to check if the value has been set.
+func (o *Integration) GetAllowedEnvTypesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AllowedEnvTypes, true
+}
+
+// SetAllowedEnvTypes sets field value
+func (o *Integration) SetAllowedEnvTypes(v []string) {
+	o.AllowedEnvTypes = v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -425,13 +530,18 @@ func (o Integration) ToMap() (map[string]interface{}, error) {
 	if o.Auth.IsSet() {
 		toSerialize["auth"] = o.Auth.Get()
 	}
+	toSerialize["outdated"] = o.Outdated
 	toSerialize["providerRevId"] = o.ProviderRevId
 	toSerialize["orgId"] = o.OrgId
 	if o.PrimaryEnvId.IsSet() {
 		toSerialize["primaryEnvId"] = o.PrimaryEnvId.Get()
 	}
+	if o.PrimaryEnvType.IsSet() {
+		toSerialize["primaryEnvType"] = o.PrimaryEnvType.Get()
+	}
 	toSerialize["envScope"] = o.EnvScope
 	toSerialize["allowedEnvIds"] = o.AllowedEnvIds
+	toSerialize["allowedEnvTypes"] = o.AllowedEnvTypes
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -445,10 +555,12 @@ func (o *Integration) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"title",
 		"status",
+		"outdated",
 		"providerRevId",
 		"orgId",
 		"envScope",
 		"allowedEnvIds",
+		"allowedEnvTypes",
 		"createdAt",
 		"updatedAt",
 	}

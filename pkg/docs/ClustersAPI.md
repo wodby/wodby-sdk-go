@@ -9,8 +9,10 @@ Method | HTTP request | Description
 [**GetCluster**](ClustersAPI.md#GetCluster) | **Get** /clusters/{id} | Get cluster
 [**GetClusterByName**](ClustersAPI.md#GetClusterByName) | **Get** /clusters/by-name/{name} | Get cluster by name
 [**GetClusterInfraAppUpgradeChangelog**](ClustersAPI.md#GetClusterInfraAppUpgradeChangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
+[**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
+[**UpdateClusterEnvironmentPolicy**](ClustersAPI.md#UpdateClusterEnvironmentPolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
 [**UpdateClusterSettings**](ClustersAPI.md#UpdateClusterSettings) | **Put** /clusters/settings/{id} | Update cluster settings
 [**UpgradeClusterInfra**](ClustersAPI.md#UpgradeClusterInfra) | **Post** /clusters/{id}/actions/upgrade-infra | Upgrade cluster infrastructure
 [**UpgradeClusterInfraApps**](ClustersAPI.md#UpgradeClusterInfraApps) | **Post** /clusters/{id}/actions/upgrade-infra-apps | Upgrade cluster infrastructure app stacks
@@ -369,9 +371,79 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetKubernetesVersionUpgradePlan
+
+> KubernetesVersionUpgradePlan GetKubernetesVersionUpgradePlan(ctx, id).Execute()
+
+Get Kubernetes version upgrade plan
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetKubernetesVersionUpgradePlan(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetKubernetesVersionUpgradePlan``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetKubernetesVersionUpgradePlan`: KubernetesVersionUpgradePlan
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetKubernetesVersionUpgradePlan`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetKubernetesVersionUpgradePlanRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**KubernetesVersionUpgradePlan**](KubernetesVersionUpgradePlan.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListClusters
 
-> []Cluster ListClusters(ctx).OrgId(orgId).ProjectIds(projectIds).IntegrationId(integrationId).Execute()
+> []Cluster ListClusters(ctx).OrgId(orgId).ProjectIds(projectIds).IntegrationId(integrationId).EnvironmentId(environmentId).Execute()
 
 List clusters
 
@@ -393,10 +465,11 @@ func main() {
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	integrationId := int32(56) // int32 |  (optional)
+	environmentId := int32(56) // int32 |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ClustersAPI.ListClusters(context.Background()).OrgId(orgId).ProjectIds(projectIds).IntegrationId(integrationId).Execute()
+	resp, r, err := apiClient.ClustersAPI.ListClusters(context.Background()).OrgId(orgId).ProjectIds(projectIds).IntegrationId(integrationId).EnvironmentId(environmentId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.ListClusters``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -420,6 +493,7 @@ Name | Type | Description  | Notes
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
  **integrationId** | **int32** |  | 
+ **environmentId** | **int32** |  | 
 
 ### Return type
 
@@ -492,6 +566,78 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateTitleRequest** | [**UpdateTitleRequest**](UpdateTitleRequest.md) |  | 
+
+### Return type
+
+[**Cluster**](Cluster.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateClusterEnvironmentPolicy
+
+> Cluster UpdateClusterEnvironmentPolicy(ctx, id).ClusterEnvironmentPolicyInput(clusterEnvironmentPolicyInput).Execute()
+
+Update cluster environment policy
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	clusterEnvironmentPolicyInput := *openapiclient.NewClusterEnvironmentPolicyInput("Scope_example") // ClusterEnvironmentPolicyInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.UpdateClusterEnvironmentPolicy(context.Background(), id).ClusterEnvironmentPolicyInput(clusterEnvironmentPolicyInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.UpdateClusterEnvironmentPolicy``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateClusterEnvironmentPolicy`: Cluster
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.UpdateClusterEnvironmentPolicy`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateClusterEnvironmentPolicyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **clusterEnvironmentPolicyInput** | [**ClusterEnvironmentPolicyInput**](ClusterEnvironmentPolicyInput.md) |  | 
 
 ### Return type
 

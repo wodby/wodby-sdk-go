@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **AppInstanceId** | **int32** |  | 
 **Scope** | [**AppAuthScope**](AppAuthScope.md) |  | 
 **AppServiceIds** | **[]int32** | App services protected by this entry. Empty unless scope is SERVICE. | 
-**AppServiceId** | Pointer to **NullableInt32** | Single protected app service. Null when the entry protects several services or the whole app instance. | [optional] 
+**AppServiceId** | Pointer to **NullableInt32** | Single protected app service. Null when the entry protects several services or the whole app environment. | [optional] 
 **AppRouteId** | Pointer to **NullableInt32** |  | [optional] 
 **Login** | **string** |  | 
 **Realm** | **string** |  | 

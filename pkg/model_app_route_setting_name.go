@@ -26,6 +26,8 @@ const (
 	SESSION_AFFINITY AppRouteSettingName = "SESSION_AFFINITY"
 	PATH_REWRITE AppRouteSettingName = "PATH_REWRITE"
 	HSTS AppRouteSettingName = "HSTS"
+	REQUEST_TIMEOUT AppRouteSettingName = "REQUEST_TIMEOUT"
+	BACKEND_REQUEST_TIMEOUT AppRouteSettingName = "BACKEND_REQUEST_TIMEOUT"
 )
 
 // All allowed values of AppRouteSettingName enum
@@ -36,6 +38,8 @@ var AllowedAppRouteSettingNameEnumValues = []AppRouteSettingName{
 	"SESSION_AFFINITY",
 	"PATH_REWRITE",
 	"HSTS",
+	"REQUEST_TIMEOUT",
+	"BACKEND_REQUEST_TIMEOUT",
 }
 
 func (v *AppRouteSettingName) UnmarshalJSON(src []byte) error {

@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**GetAppAccessProviderOptions**](IntegrationsAPI.md#GetAppAccessProviderOptions) | **Get** /integrations/{id}/options/app-access | Get app-access provider options
 [**GetIntegration**](IntegrationsAPI.md#GetIntegration) | **Get** /integrations/{id} | Get integration
 [**GetIntegrationKubeSettings**](IntegrationsAPI.md#GetIntegrationKubeSettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
+[**GetIntegrationProviderRevisionUpgrade**](IntegrationsAPI.md#GetIntegrationProviderRevisionUpgrade) | **Get** /integration-provider-revision-upgrades/{id} | Preview provider revision upgrade
 [**GetIntegrationRemoteGitRepoFilePresence**](IntegrationsAPI.md#GetIntegrationRemoteGitRepoFilePresence) | **Get** /integrations/{id}/options/remote-git-repo-file | Check a remote Git repository file
 [**ListIntegrationKubeMachineTypes**](IntegrationsAPI.md#ListIntegrationKubeMachineTypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
 [**ListIntegrationKubeRegions**](IntegrationsAPI.md#ListIntegrationKubeRegions) | **Get** /integrations/{id}/options/kube-regions | List Kubernetes regions
@@ -27,6 +28,7 @@ Method | HTTP request | Description
 [**TestIntegrationPermissions**](IntegrationsAPI.md#TestIntegrationPermissions) | **Post** /integrations/{id}/actions/test-permissions | Test integration permissions
 [**UpdateIntegration**](IntegrationsAPI.md#UpdateIntegration) | **Put** /integrations/{id} | Update integration
 [**UpdateIntegrationEnvironmentPolicy**](IntegrationsAPI.md#UpdateIntegrationEnvironmentPolicy) | **Put** /integrations/environment-policy/{id} | Update integration environment policy
+[**UpgradeIntegrationProviderRevision**](IntegrationsAPI.md#UpgradeIntegrationProviderRevision) | **Post** /integrations/{id}/actions/upgrade-provider-revision | Upgrade integration provider revision
 [**ValidateAppAccessHostname**](IntegrationsAPI.md#ValidateAppAccessHostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
 
 
@@ -434,6 +436,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 **map[string]interface{}**
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetIntegrationProviderRevisionUpgrade
+
+> IntegrationProviderRevisionUpgrade GetIntegrationProviderRevisionUpgrade(ctx, id).Execute()
+
+Preview provider revision upgrade
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.GetIntegrationProviderRevisionUpgrade(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.GetIntegrationProviderRevisionUpgrade``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetIntegrationProviderRevisionUpgrade`: IntegrationProviderRevisionUpgrade
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.GetIntegrationProviderRevisionUpgrade`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetIntegrationProviderRevisionUpgradeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**IntegrationProviderRevisionUpgrade**](IntegrationProviderRevisionUpgrade.md)
 
 ### Authorization
 
@@ -1235,7 +1307,7 @@ Name | Type | Description  | Notes
 
 ## ListIntegrations
 
-> []Integration ListIntegrations(ctx).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).Execute()
+> []Integration ListIntegrations(ctx).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).EnvType(envType).Execute()
 
 List integrations
 
@@ -1257,11 +1329,12 @@ func main() {
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	labels := "labels_example" // string | Comma-separated labels (optional)
-	envId := int32(56) // int32 | Return only integrations allowed in this environment (optional)
+	envId := int32(56) // int32 | Legacy environment entity filter. Use envType. (optional)
+	envType := "envType_example" // string | Return only integrations allowed for this fixed environment type. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IntegrationsAPI.ListIntegrations(context.Background()).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).Execute()
+	resp, r, err := apiClient.IntegrationsAPI.ListIntegrations(context.Background()).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).EnvType(envType).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ListIntegrations``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1285,7 +1358,8 @@ Name | Type | Description  | Notes
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
  **labels** | **string** | Comma-separated labels | 
- **envId** | **int32** | Return only integrations allowed in this environment | 
+ **envId** | **int32** | Legacy environment entity filter. Use envType. | 
+ **envType** | **string** | Return only integrations allowed for this fixed environment type. | 
 
 ### Return type
 
@@ -1601,7 +1675,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	integrationEnvironmentPolicyInput := *openapiclient.NewIntegrationEnvironmentPolicyInput("Scope_example", []int32{int32(123)}) // IntegrationEnvironmentPolicyInput | 
+	integrationEnvironmentPolicyInput := *openapiclient.NewIntegrationEnvironmentPolicyInput("Scope_example") // IntegrationEnvironmentPolicyInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1636,6 +1710,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Integration**](Integration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpgradeIntegrationProviderRevision
+
+> OperationResult UpgradeIntegrationProviderRevision(ctx, id).UpgradeIntegrationProviderRevisionInput(upgradeIntegrationProviderRevisionInput).Execute()
+
+Upgrade integration provider revision
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	upgradeIntegrationProviderRevisionInput := *openapiclient.NewUpgradeIntegrationProviderRevisionInput(false) // UpgradeIntegrationProviderRevisionInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.UpgradeIntegrationProviderRevision(context.Background(), id).UpgradeIntegrationProviderRevisionInput(upgradeIntegrationProviderRevisionInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.UpgradeIntegrationProviderRevision``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpgradeIntegrationProviderRevision`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.UpgradeIntegrationProviderRevision`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpgradeIntegrationProviderRevisionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **upgradeIntegrationProviderRevisionInput** | [**UpgradeIntegrationProviderRevisionInput**](UpgradeIntegrationProviderRevisionInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 

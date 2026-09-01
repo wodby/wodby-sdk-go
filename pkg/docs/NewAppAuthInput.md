@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppInstanceId** | **int32** |  | 
-**AppServiceIds** | Pointer to **[]int32** | App services to protect. Omit or pass an empty list to protect the whole app instance. | [optional] 
+**AppServiceIds** | Pointer to **[]int32** | App services to protect. Omit or pass an empty list to protect the whole app environment. | [optional] 
 **AppServiceId** | Pointer to **NullableInt32** | Single-service scope. Ignored when appServiceIds is supplied. | [optional] 
 **AppRouteId** | Pointer to **NullableInt32** | Route scope. The owning app service is derived from the route. | [optional] 
 **Login** | **string** |  | 

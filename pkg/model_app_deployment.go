@@ -28,8 +28,11 @@ type AppDeployment struct {
 	RollbackStatus string `json:"rollbackStatus"`
 	PostDeploymentStatus string `json:"postDeploymentStatus"`
 	SkipRollback bool `json:"skipRollback"`
+	CanCancel bool `json:"canCancel"`
 	AppInstanceId int32 `json:"appInstanceId"`
 	Builds []AppBuild `json:"builds"`
+	PreparationTaskId NullableInt32 `json:"preparationTaskId,omitempty"`
+	PreparationTask NullableTask `json:"preparationTask,omitempty"`
 	TaskId NullableInt32 `json:"taskId,omitempty"`
 	Task NullableTask `json:"task,omitempty"`
 	PostDeploymentTaskId NullableInt32 `json:"postDeploymentTaskId,omitempty"`
@@ -47,7 +50,7 @@ type _AppDeployment AppDeployment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
+func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, canCancel bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
 	this := AppDeployment{}
 	this.Id = id
 	this.Number = number
@@ -55,6 +58,7 @@ func NewAppDeployment(id int32, number int32, status string, rollbackStatus stri
 	this.RollbackStatus = rollbackStatus
 	this.PostDeploymentStatus = postDeploymentStatus
 	this.SkipRollback = skipRollback
+	this.CanCancel = canCancel
 	this.AppInstanceId = appInstanceId
 	this.Builds = builds
 	this.AppServiceDeployments = appServiceDeployments
@@ -215,6 +219,30 @@ func (o *AppDeployment) SetSkipRollback(v bool) {
 	o.SkipRollback = v
 }
 
+// GetCanCancel returns the CanCancel field value
+func (o *AppDeployment) GetCanCancel() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CanCancel
+}
+
+// GetCanCancelOk returns a tuple with the CanCancel field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetCanCancelOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CanCancel, true
+}
+
+// SetCanCancel sets field value
+func (o *AppDeployment) SetCanCancel(v bool) {
+	o.CanCancel = v
+}
+
 // GetAppInstanceId returns the AppInstanceId field value
 func (o *AppDeployment) GetAppInstanceId() int32 {
 	if o == nil {
@@ -261,6 +289,90 @@ func (o *AppDeployment) GetBuildsOk() ([]AppBuild, bool) {
 // SetBuilds sets field value
 func (o *AppDeployment) SetBuilds(v []AppBuild) {
 	o.Builds = v
+}
+
+// GetPreparationTaskId returns the PreparationTaskId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetPreparationTaskId() int32 {
+	if o == nil || IsNil(o.PreparationTaskId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.PreparationTaskId.Get()
+}
+
+// GetPreparationTaskIdOk returns a tuple with the PreparationTaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetPreparationTaskIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PreparationTaskId.Get(), o.PreparationTaskId.IsSet()
+}
+
+// HasPreparationTaskId returns a boolean if a field has been set.
+func (o *AppDeployment) HasPreparationTaskId() bool {
+	if o != nil && o.PreparationTaskId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPreparationTaskId gets a reference to the given NullableInt32 and assigns it to the PreparationTaskId field.
+func (o *AppDeployment) SetPreparationTaskId(v int32) {
+	o.PreparationTaskId.Set(&v)
+}
+// SetPreparationTaskIdNil sets the value for PreparationTaskId to be an explicit nil
+func (o *AppDeployment) SetPreparationTaskIdNil() {
+	o.PreparationTaskId.Set(nil)
+}
+
+// UnsetPreparationTaskId ensures that no value is present for PreparationTaskId, not even an explicit nil
+func (o *AppDeployment) UnsetPreparationTaskId() {
+	o.PreparationTaskId.Unset()
+}
+
+// GetPreparationTask returns the PreparationTask field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetPreparationTask() Task {
+	if o == nil || IsNil(o.PreparationTask.Get()) {
+		var ret Task
+		return ret
+	}
+	return *o.PreparationTask.Get()
+}
+
+// GetPreparationTaskOk returns a tuple with the PreparationTask field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetPreparationTaskOk() (*Task, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PreparationTask.Get(), o.PreparationTask.IsSet()
+}
+
+// HasPreparationTask returns a boolean if a field has been set.
+func (o *AppDeployment) HasPreparationTask() bool {
+	if o != nil && o.PreparationTask.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPreparationTask gets a reference to the given NullableTask and assigns it to the PreparationTask field.
+func (o *AppDeployment) SetPreparationTask(v Task) {
+	o.PreparationTask.Set(&v)
+}
+// SetPreparationTaskNil sets the value for PreparationTask to be an explicit nil
+func (o *AppDeployment) SetPreparationTaskNil() {
+	o.PreparationTask.Set(nil)
+}
+
+// UnsetPreparationTask ensures that no value is present for PreparationTask, not even an explicit nil
+func (o *AppDeployment) UnsetPreparationTask() {
+	o.PreparationTask.Unset()
 }
 
 // GetTaskId returns the TaskId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -603,8 +715,15 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	toSerialize["rollbackStatus"] = o.RollbackStatus
 	toSerialize["postDeploymentStatus"] = o.PostDeploymentStatus
 	toSerialize["skipRollback"] = o.SkipRollback
+	toSerialize["canCancel"] = o.CanCancel
 	toSerialize["appInstanceId"] = o.AppInstanceId
 	toSerialize["builds"] = o.Builds
+	if o.PreparationTaskId.IsSet() {
+		toSerialize["preparationTaskId"] = o.PreparationTaskId.Get()
+	}
+	if o.PreparationTask.IsSet() {
+		toSerialize["preparationTask"] = o.PreparationTask.Get()
+	}
 	if o.TaskId.IsSet() {
 		toSerialize["taskId"] = o.TaskId.Get()
 	}
@@ -640,6 +759,7 @@ func (o *AppDeployment) UnmarshalJSON(data []byte) (err error) {
 		"rollbackStatus",
 		"postDeploymentStatus",
 		"skipRollback",
+		"canCancel",
 		"appInstanceId",
 		"builds",
 		"appServiceDeployments",

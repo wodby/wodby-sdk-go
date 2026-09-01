@@ -25,6 +25,7 @@ type Task struct {
 	Id int32 `json:"id"`
 	Name string `json:"name"`
 	Title string `json:"title"`
+	CompactTitle string `json:"compactTitle"`
 	ExecutionScope string `json:"executionScope"`
 	Status string `json:"status"`
 	Progress int32 `json:"progress"`
@@ -36,7 +37,9 @@ type Task struct {
 	ProjectIds []int32 `json:"projectIds,omitempty"`
 	AppId NullableInt32 `json:"appId,omitempty"`
 	AppInstanceId NullableInt32 `json:"appInstanceId,omitempty"`
+	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	ClusterId NullableInt32 `json:"clusterId,omitempty"`
+	DatabaseId NullableInt32 `json:"databaseId,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	ServiceId NullableInt32 `json:"serviceId,omitempty"`
 	StackId NullableInt32 `json:"stackId,omitempty"`
@@ -57,11 +60,12 @@ type _Task Task
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTask(id int32, name string, title string, executionScope string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time) *Task {
+func NewTask(id int32, name string, title string, compactTitle string, executionScope string, status string, progress int32, silent bool, system bool, userId int32, jobs []TaskJob, createdAt time.Time, updatedAt time.Time) *Task {
 	this := Task{}
 	this.Id = id
 	this.Name = name
 	this.Title = title
+	this.CompactTitle = compactTitle
 	this.ExecutionScope = executionScope
 	this.Status = status
 	this.Progress = progress
@@ -152,6 +156,30 @@ func (o *Task) GetTitleOk() (*string, bool) {
 // SetTitle sets field value
 func (o *Task) SetTitle(v string) {
 	o.Title = v
+}
+
+// GetCompactTitle returns the CompactTitle field value
+func (o *Task) GetCompactTitle() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.CompactTitle
+}
+
+// GetCompactTitleOk returns a tuple with the CompactTitle field value
+// and a boolean to check if the value has been set.
+func (o *Task) GetCompactTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CompactTitle, true
+}
+
+// SetCompactTitle sets field value
+func (o *Task) SetCompactTitle(v string) {
+	o.CompactTitle = v
 }
 
 // GetExecutionScope returns the ExecutionScope field value
@@ -498,6 +526,48 @@ func (o *Task) UnsetAppInstanceId() {
 	o.AppInstanceId.Unset()
 }
 
+// GetAppServiceId returns the AppServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Task) GetAppServiceId() int32 {
+	if o == nil || IsNil(o.AppServiceId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AppServiceId.Get()
+}
+
+// GetAppServiceIdOk returns a tuple with the AppServiceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Task) GetAppServiceIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppServiceId.Get(), o.AppServiceId.IsSet()
+}
+
+// HasAppServiceId returns a boolean if a field has been set.
+func (o *Task) HasAppServiceId() bool {
+	if o != nil && o.AppServiceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAppServiceId gets a reference to the given NullableInt32 and assigns it to the AppServiceId field.
+func (o *Task) SetAppServiceId(v int32) {
+	o.AppServiceId.Set(&v)
+}
+// SetAppServiceIdNil sets the value for AppServiceId to be an explicit nil
+func (o *Task) SetAppServiceIdNil() {
+	o.AppServiceId.Set(nil)
+}
+
+// UnsetAppServiceId ensures that no value is present for AppServiceId, not even an explicit nil
+func (o *Task) UnsetAppServiceId() {
+	o.AppServiceId.Unset()
+}
+
 // GetClusterId returns the ClusterId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Task) GetClusterId() int32 {
 	if o == nil || IsNil(o.ClusterId.Get()) {
@@ -538,6 +608,48 @@ func (o *Task) SetClusterIdNil() {
 // UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
 func (o *Task) UnsetClusterId() {
 	o.ClusterId.Unset()
+}
+
+// GetDatabaseId returns the DatabaseId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Task) GetDatabaseId() int32 {
+	if o == nil || IsNil(o.DatabaseId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.DatabaseId.Get()
+}
+
+// GetDatabaseIdOk returns a tuple with the DatabaseId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Task) GetDatabaseIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DatabaseId.Get(), o.DatabaseId.IsSet()
+}
+
+// HasDatabaseId returns a boolean if a field has been set.
+func (o *Task) HasDatabaseId() bool {
+	if o != nil && o.DatabaseId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseId gets a reference to the given NullableInt32 and assigns it to the DatabaseId field.
+func (o *Task) SetDatabaseId(v int32) {
+	o.DatabaseId.Set(&v)
+}
+// SetDatabaseIdNil sets the value for DatabaseId to be an explicit nil
+func (o *Task) SetDatabaseIdNil() {
+	o.DatabaseId.Set(nil)
+}
+
+// UnsetDatabaseId ensures that no value is present for DatabaseId, not even an explicit nil
+func (o *Task) UnsetDatabaseId() {
+	o.DatabaseId.Unset()
 }
 
 // GetIntegrationId returns the IntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -993,6 +1105,7 @@ func (o Task) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
+	toSerialize["compactTitle"] = o.CompactTitle
 	toSerialize["executionScope"] = o.ExecutionScope
 	toSerialize["status"] = o.Status
 	toSerialize["progress"] = o.Progress
@@ -1014,8 +1127,14 @@ func (o Task) ToMap() (map[string]interface{}, error) {
 	if o.AppInstanceId.IsSet() {
 		toSerialize["appInstanceId"] = o.AppInstanceId.Get()
 	}
+	if o.AppServiceId.IsSet() {
+		toSerialize["appServiceId"] = o.AppServiceId.Get()
+	}
 	if o.ClusterId.IsSet() {
 		toSerialize["clusterId"] = o.ClusterId.Get()
+	}
+	if o.DatabaseId.IsSet() {
+		toSerialize["databaseId"] = o.DatabaseId.Get()
 	}
 	if o.IntegrationId.IsSet() {
 		toSerialize["integrationId"] = o.IntegrationId.Get()
@@ -1058,6 +1177,7 @@ func (o *Task) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"name",
 		"title",
+		"compactTitle",
 		"executionScope",
 		"status",
 		"progress",
