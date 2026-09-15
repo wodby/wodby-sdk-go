@@ -10,7 +10,6 @@
 package client
 
 type Stack struct {
-
 	Id string `json:"id"`
 
 	Title string `json:"title"`

@@ -10,7 +10,6 @@
 package client
 
 type RequestAppCreateGit struct {
-
 	RepoId string `json:"repo_id"`
 
 	// Commit, branch or tag

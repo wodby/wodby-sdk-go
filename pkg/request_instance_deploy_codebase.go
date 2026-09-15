@@ -10,7 +10,6 @@
 package client
 
 type RequestInstanceDeployCodebase struct {
-
 	Git *RequestInstanceCreateGit `json:"git,omitempty"`
 
 	PostDeployment bool `json:"post_deployment,omitempty"`

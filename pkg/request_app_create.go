@@ -10,7 +10,6 @@
 package client
 
 type RequestAppCreate struct {
-
 	OrgId string `json:"org_id"`
 
 	Title string `json:"title,omitempty"`

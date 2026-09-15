@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type BackupApiService service
 
-
-/* BackupApiService Retrieve backup
- Retrieve backup
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Backup ID
- @return Backup*/
-func (a *BackupApiService) GetBackup(ctx context.Context, id string) (Backup,  *http.Response, error) {
+/*
+BackupApiService Retrieve backup
+Retrieve backup
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Backup ID
+@return Backup
+*/
+func (a *BackupApiService) GetBackup(ctx context.Context, id string) (Backup, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Backup
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Backup
 	)
 
 	// create path and map variables
@@ -49,9 +50,8 @@ func (a *BackupApiService) GetBackup(ctx context.Context, id string) (Backup,  *
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -62,7 +62,7 @@ func (a *BackupApiService) GetBackup(ctx context.Context, id string) (Backup,  *
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,28 +100,31 @@ func (a *BackupApiService) GetBackup(ctx context.Context, id string) (Backup,  *
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* BackupApiService Retrieve backups by instance
- Retrieve backups by instance
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
-     @param "instanceId" (string) Instance ID
-     @param "serverId" (string) Server ID
-     @param "type_" (string) Backup type
-     @param "status" (string) Backup status
-     @param "days" (int32) Get backups for N days
- @return []Backup*/
-func (a *BackupApiService) GetBackups(ctx context.Context, localVarOptionals map[string]interface{}) ([]Backup,  *http.Response, error) {
+/*
+BackupApiService Retrieve backups by instance
+Retrieve backups by instance
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+	@param "instanceId" (string) Instance ID
+	@param "serverId" (string) Server ID
+	@param "type_" (string) Backup type
+	@param "status" (string) Backup status
+	@param "days" (int32) Get backups for N days
+
+@return []Backup
+*/
+func (a *BackupApiService) GetBackups(ctx context.Context, localVarOptionals map[string]interface{}) ([]Backup, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Backup
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Backup
 	)
 
 	// create path and map variables
@@ -160,7 +163,7 @@ func (a *BackupApiService) GetBackups(ctx context.Context, localVarOptionals map
 		localVarQueryParams.Add("days", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -171,7 +174,7 @@ func (a *BackupApiService) GetBackups(ctx context.Context, localVarOptionals map
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -209,7 +212,5 @@ func (a *BackupApiService) GetBackups(ctx context.Context, localVarOptionals map
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

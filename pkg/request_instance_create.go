@@ -10,7 +10,6 @@
 package client
 
 type RequestInstanceCreate struct {
-
 	AppId string `json:"app_id"`
 
 	ServerId string `json:"server_id"`

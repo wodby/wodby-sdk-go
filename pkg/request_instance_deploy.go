@@ -10,6 +10,5 @@
 package client
 
 type RequestInstanceDeploy struct {
-
 	PostDeployment bool `json:"post_deployment,omitempty"`
 }

@@ -10,7 +10,6 @@
 package client
 
 type Server struct {
-
 	Id string `json:"id"`
 
 	Title string `json:"title"`

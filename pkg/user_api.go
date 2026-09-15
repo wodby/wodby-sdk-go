@@ -10,12 +10,12 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -25,18 +25,19 @@ var (
 
 type UserApiService service
 
-
-/* UserApiService Retrieve authenticated user
- Retrieve authenticated user
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @return User*/
-func (a *UserApiService) GetAuthenticatedUser(ctx context.Context) (User,  *http.Response, error) {
+/*
+UserApiService Retrieve authenticated user
+Retrieve authenticated user
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@return User
+*/
+func (a *UserApiService) GetAuthenticatedUser(ctx context.Context) (User, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  User
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     User
 	)
 
 	// create path and map variables
@@ -46,9 +47,8 @@ func (a *UserApiService) GetAuthenticatedUser(ctx context.Context) (User,  *http
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -59,7 +59,7 @@ func (a *UserApiService) GetAuthenticatedUser(ctx context.Context) (User,  *http
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -97,7 +97,5 @@ func (a *UserApiService) GetAuthenticatedUser(ctx context.Context) (User,  *http
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

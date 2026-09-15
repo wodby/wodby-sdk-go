@@ -10,7 +10,6 @@
 package client
 
 type Instance struct {
-
 	Id string `json:"id"`
 
 	Name string `json:"name"`

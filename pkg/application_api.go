@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type ApplicationApiService service
 
-
-/* ApplicationApiService Create application
- Create application
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param data 
- @return ResponseTaskApp*/
-func (a *ApplicationApiService) CreateApp(ctx context.Context, data RequestAppCreate) (ResponseTaskApp,  *http.Response, error) {
+/*
+ApplicationApiService Create application
+Create application
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param data
+@return ResponseTaskApp
+*/
+func (a *ApplicationApiService) CreateApp(ctx context.Context, data RequestAppCreate) (ResponseTaskApp, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTaskApp
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTaskApp
 	)
 
 	// create path and map variables
@@ -48,9 +49,8 @@ func (a *ApplicationApiService) CreateApp(ctx context.Context, data RequestAppCr
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -61,7 +61,7 @@ func (a *ApplicationApiService) CreateApp(ctx context.Context, data RequestAppCr
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -101,22 +101,23 @@ func (a *ApplicationApiService) CreateApp(ctx context.Context, data RequestAppCr
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* ApplicationApiService Delete application
- Delete application
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Application ID
- @return ResponseTask*/
-func (a *ApplicationApiService) DeleteApp(ctx context.Context, id string) (ResponseTask,  *http.Response, error) {
+/*
+ApplicationApiService Delete application
+Delete application
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Application ID
+@return ResponseTask
+*/
+func (a *ApplicationApiService) DeleteApp(ctx context.Context, id string) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -127,9 +128,8 @@ func (a *ApplicationApiService) DeleteApp(ctx context.Context, id string) (Respo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -140,7 +140,7 @@ func (a *ApplicationApiService) DeleteApp(ctx context.Context, id string) (Respo
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -178,22 +178,23 @@ func (a *ApplicationApiService) DeleteApp(ctx context.Context, id string) (Respo
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* ApplicationApiService Retrieve application
- Retrieve application
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Application ID
- @return App*/
-func (a *ApplicationApiService) GetApp(ctx context.Context, id string) (App,  *http.Response, error) {
+/*
+ApplicationApiService Retrieve application
+Retrieve application
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Application ID
+@return App
+*/
+func (a *ApplicationApiService) GetApp(ctx context.Context, id string) (App, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  App
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     App
 	)
 
 	// create path and map variables
@@ -204,9 +205,8 @@ func (a *ApplicationApiService) GetApp(ctx context.Context, id string) (App,  *h
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -217,7 +217,7 @@ func (a *ApplicationApiService) GetApp(ctx context.Context, id string) (App,  *h
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -255,22 +255,23 @@ func (a *ApplicationApiService) GetApp(ctx context.Context, id string) (App,  *h
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* ApplicationApiService Retrieve Drupal application&#x60;s instances Drush aliases
- Retrieve Drupal application&#x60;s instances Drush aliases
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Application ID
- @return string*/
-func (a *ApplicationApiService) GetAppDrushAliases(ctx context.Context, id string) (string,  *http.Response, error) {
+/*
+ApplicationApiService Retrieve Drupal application&#x60;s instances Drush aliases
+Retrieve Drupal application&#x60;s instances Drush aliases
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Application ID
+@return string
+*/
+func (a *ApplicationApiService) GetAppDrushAliases(ctx context.Context, id string) (string, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  string
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     string
 	)
 
 	// create path and map variables
@@ -281,9 +282,8 @@ func (a *ApplicationApiService) GetAppDrushAliases(ctx context.Context, id strin
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -294,7 +294,7 @@ func (a *ApplicationApiService) GetAppDrushAliases(ctx context.Context, id strin
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -332,24 +332,27 @@ func (a *ApplicationApiService) GetAppDrushAliases(ctx context.Context, id strin
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* ApplicationApiService Retrieve applications
- Retrieve applications
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
-     @param "name" (string) Application name
- @return []App*/
-func (a *ApplicationApiService) GetApps(ctx context.Context, localVarOptionals map[string]interface{}) ([]App,  *http.Response, error) {
+/*
+ApplicationApiService Retrieve applications
+Retrieve applications
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+	@param "name" (string) Application name
+
+@return []App
+*/
+func (a *ApplicationApiService) GetApps(ctx context.Context, localVarOptionals map[string]interface{}) ([]App, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []App
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []App
 	)
 
 	// create path and map variables
@@ -370,7 +373,7 @@ func (a *ApplicationApiService) GetApps(ctx context.Context, localVarOptionals m
 		localVarQueryParams.Add("name", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -381,7 +384,7 @@ func (a *ApplicationApiService) GetApps(ctx context.Context, localVarOptionals m
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -419,7 +422,5 @@ func (a *ApplicationApiService) GetApps(ctx context.Context, localVarOptionals m
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type StackApiService service
 
-
-/* StackApiService Retrieve stack
- Retrieve stack
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Stack ID
- @return Stack*/
-func (a *StackApiService) GetStack(ctx context.Context, id string) (Stack,  *http.Response, error) {
+/*
+StackApiService Retrieve stack
+Retrieve stack
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Stack ID
+@return Stack
+*/
+func (a *StackApiService) GetStack(ctx context.Context, id string) (Stack, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Stack
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Stack
 	)
 
 	// create path and map variables
@@ -49,9 +50,8 @@ func (a *StackApiService) GetStack(ctx context.Context, id string) (Stack,  *htt
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -62,7 +62,7 @@ func (a *StackApiService) GetStack(ctx context.Context, id string) (Stack,  *htt
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,23 +100,26 @@ func (a *StackApiService) GetStack(ctx context.Context, id string) (Stack,  *htt
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* StackApiService Retrieve stacks
- Retrieve stacks
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
- @return []Stack*/
-func (a *StackApiService) GetStacks(ctx context.Context, localVarOptionals map[string]interface{}) ([]Stack,  *http.Response, error) {
+/*
+StackApiService Retrieve stacks
+Retrieve stacks
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+
+@return []Stack
+*/
+func (a *StackApiService) GetStacks(ctx context.Context, localVarOptionals map[string]interface{}) ([]Stack, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Stack
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Stack
 	)
 
 	// create path and map variables
@@ -126,12 +129,11 @@ func (a *StackApiService) GetStacks(ctx context.Context, localVarOptionals map[s
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	if localVarTempParam, localVarOk := localVarOptionals["orgId"].(string); localVarOk {
 		localVarQueryParams.Add("org_id", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -142,7 +144,7 @@ func (a *StackApiService) GetStacks(ctx context.Context, localVarOptionals map[s
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -180,22 +182,23 @@ func (a *StackApiService) GetStacks(ctx context.Context, localVarOptionals map[s
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* StackApiService Update official stack from upstream
- Update official stack from upstream
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Stack ID
- @return ResponseTask*/
-func (a *StackApiService) UpdateStackFromUpstream(ctx context.Context, id string) (ResponseTask,  *http.Response, error) {
+/*
+StackApiService Update official stack from upstream
+Update official stack from upstream
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Stack ID
+@return ResponseTask
+*/
+func (a *StackApiService) UpdateStackFromUpstream(ctx context.Context, id string) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -206,9 +209,8 @@ func (a *StackApiService) UpdateStackFromUpstream(ctx context.Context, id string
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -219,7 +221,7 @@ func (a *StackApiService) UpdateStackFromUpstream(ctx context.Context, id string
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -257,22 +259,23 @@ func (a *StackApiService) UpdateStackFromUpstream(ctx context.Context, id string
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* StackApiService Update official stacks from upstream
- Update official stacks from upstream
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param data 
- @return ResponseTask*/
-func (a *StackApiService) UpdateStacksFromUpstream(ctx context.Context, data RequestStacksUpdate) (ResponseTask,  *http.Response, error) {
+/*
+StackApiService Update official stacks from upstream
+Update official stacks from upstream
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param data
+@return ResponseTask
+*/
+func (a *StackApiService) UpdateStacksFromUpstream(ctx context.Context, data RequestStacksUpdate) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -282,9 +285,8 @@ func (a *StackApiService) UpdateStacksFromUpstream(ctx context.Context, data Req
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -295,7 +297,7 @@ func (a *StackApiService) UpdateStacksFromUpstream(ctx context.Context, data Req
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -335,7 +337,5 @@ func (a *StackApiService) UpdateStacksFromUpstream(ctx context.Context, data Req
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

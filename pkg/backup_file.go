@@ -10,7 +10,6 @@
 package client
 
 type BackupFile struct {
-
 	Name string `json:"name"`
 
 	Status string `json:"status"`

@@ -10,7 +10,6 @@
 package client
 
 type StackServiceImplementation struct {
-
 	Title string `json:"title,omitempty"`
 
 	Name string `json:"name,omitempty"`

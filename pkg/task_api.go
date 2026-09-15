@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type TaskApiService service
 
-
-/* TaskApiService Retrieve task
- Retrieve task
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Task ID
- @return Task*/
-func (a *TaskApiService) GetTask(ctx context.Context, id string) (Task,  *http.Response, error) {
+/*
+TaskApiService Retrieve task
+Retrieve task
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Task ID
+@return Task
+*/
+func (a *TaskApiService) GetTask(ctx context.Context, id string) (Task, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Task
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Task
 	)
 
 	// create path and map variables
@@ -49,9 +50,8 @@ func (a *TaskApiService) GetTask(ctx context.Context, id string) (Task,  *http.R
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -62,7 +62,7 @@ func (a *TaskApiService) GetTask(ctx context.Context, id string) (Task,  *http.R
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,25 +100,28 @@ func (a *TaskApiService) GetTask(ctx context.Context, id string) (Task,  *http.R
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TaskApiService Retrieve tasks
- Retrieve tasks
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
-     @param "userId" (string) User ID
-     @param "status" (string) Task status
- @return []Task*/
-func (a *TaskApiService) GetTasks(ctx context.Context, localVarOptionals map[string]interface{}) ([]Task,  *http.Response, error) {
+/*
+TaskApiService Retrieve tasks
+Retrieve tasks
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+	@param "userId" (string) User ID
+	@param "status" (string) Task status
+
+@return []Task
+*/
+func (a *TaskApiService) GetTasks(ctx context.Context, localVarOptionals map[string]interface{}) ([]Task, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Task
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Task
 	)
 
 	// create path and map variables
@@ -142,7 +145,7 @@ func (a *TaskApiService) GetTasks(ctx context.Context, localVarOptionals map[str
 		localVarQueryParams.Add("status", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -153,7 +156,7 @@ func (a *TaskApiService) GetTasks(ctx context.Context, localVarOptionals map[str
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -191,7 +194,5 @@ func (a *TaskApiService) GetTasks(ctx context.Context, localVarOptionals map[str
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

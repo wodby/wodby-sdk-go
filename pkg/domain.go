@@ -10,7 +10,6 @@
 package client
 
 type Domain struct {
-
 	Id string `json:"id"`
 
 	Name string `json:"name"`
