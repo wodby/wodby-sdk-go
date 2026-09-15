@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/1.0/docs/dev"
-  version: "3.0.19"
+  version: "3.1.0"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -846,13 +846,13 @@ definitions:
         type: "integer"
     title: "User"
     example:
+      created: 0
+      name: "name"
+      last_name: "last_name"
       id: "id"
       first_name: "first_name"
       updated: 6
-      created: 0
       email: "email"
-      name: "name"
-      last_name: "last_name"
   Org:
     type: "object"
     required:
@@ -884,12 +884,12 @@ definitions:
         type: "integer"
     title: "Org"
     example:
+      created: 0
+      name: "name"
       id: "id"
       title: "title"
       updated: 6
-      created: 0
       status: "ok"
-      name: "name"
   Task:
     type: "object"
     required:
@@ -930,14 +930,14 @@ definitions:
     title: "Task"
     example:
       org_id: "org_id"
-      id: "id"
-      title: "title"
-      updated: 5
       created: 5
       start: 0
-      status: "waiting"
-      ttl: 1
       end: 6
+      id: "id"
+      title: "title"
+      ttl: 1
+      updated: 5
+      status: "waiting"
   Stack:
     type: "object"
     required:
@@ -974,43 +974,43 @@ definitions:
         type: "integer"
     title: "Stack"
     example:
-      org_id: "org_id"
-      new_version: "new_version"
-      id: "id"
-      services:
-      - id: "id"
-        title: "title"
-        default: true
-        name: "name"
-        implementations:
-        - title: "title"
-          default: true
-          name: "name"
-          docker_image: "docker_image"
-        - title: "title"
-          default: true
-          name: "name"
-          docker_image: "docker_image"
-        required: true
-      - id: "id"
-        title: "title"
-        default: true
-        name: "name"
-        implementations:
-        - title: "title"
-          default: true
-          name: "name"
-          docker_image: "docker_image"
-        - title: "title"
-          default: true
-          name: "name"
-          docker_image: "docker_image"
-        required: true
-      title: "title"
       revision_number: 0
-      updated: 1
+      org_id: "org_id"
       created: 6
+      id: "id"
+      new_version: "new_version"
+      services:
+      - default: true
+        name: "name"
+        id: "id"
+        title: "title"
+        required: true
+        implementations:
+        - default: true
+          name: "name"
+          title: "title"
+          docker_image: "docker_image"
+        - default: true
+          name: "name"
+          title: "title"
+          docker_image: "docker_image"
+      - default: true
+        name: "name"
+        id: "id"
+        title: "title"
+        required: true
+        implementations:
+        - default: true
+          name: "name"
+          title: "title"
+          docker_image: "docker_image"
+        - default: true
+          name: "name"
+          title: "title"
+          docker_image: "docker_image"
+      title: "title"
       version: "version"
+      updated: 1
   StackService:
     type: "object"
     properties:
@@ -1031,20 +1031,20 @@ definitions:
           $ref: "#/definitions/StackServiceImplementation"
     title: "StackService"
     example:
-      id: "id"
-      title: "title"
       default: true
       name: "name"
-      implementations:
-      - title: "title"
-        default: true
-        name: "name"
-        docker_image: "docker_image"
-      - title: "title"
-        default: true
-        name: "name"
-        docker_image: "docker_image"
+      id: "id"
+      title: "title"
       required: true
+      implementations:
+      - default: true
+        name: "name"
+        title: "title"
+        docker_image: "docker_image"
+      - default: true
+        name: "name"
+        title: "title"
+        docker_image: "docker_image"
   StackServiceImplementation:
     type: "object"
     properties:
@@ -1058,9 +1058,9 @@ definitions:
         type: "string"
     title: "StackService"
     example:
-      title: "title"
       default: true
       name: "name"
+      title: "title"
       docker_image: "docker_image"
   GitRepo:
     type: "object"
@@ -1094,12 +1094,12 @@ definitions:
         type: "integer"
     example:
       org_id: "org_id"
+      created: 0
       id: "id"
       title: "title"
       updated: 6
-      created: 0
-      status: "ok"
       url: "url"
+      status: "ok"
   App:
     type: "object"
     required:
@@ -1142,14 +1142,14 @@ definitions:
     title: "Application"
     example:
       org_id: "org_id"
+      created: 0
+      stack_id: "stack_id"
+      name: "name"
+      git_repo_id: "git_repo_id"
       id: "id"
       title: "title"
       updated: 6
-      created: 0
       status: "ok"
-      name: "name"
-      git_repo_id: "git_repo_id"
-      stack_id: "stack_id"
   Instance:
     type: "object"
     required:
@@ -1215,23 +1215,23 @@ definitions:
         type: "integer"
     title: "Instance"
     example:
+      created: 6
+      git_repo_id: "git_repo_id"
+      stack_version: "stack_version"
+      title: "title"
+      type: {}
       server_id: "server_id"
+      git_repo_target: "git_repo_target"
+      stack_rev_number: 0
+      has_new_version: true
+      org_id: "org_id"
+      stack_id: "stack_id"
+      name: "name"
+      id: "id"
+      app_id: "app_id"
+      updated: 1
       last_deploy: 5
       status: "ok"
-      stack_rev_number: 0
-      type: {}
-      stack_id: "stack_id"
-      has_new_version: true
-      id: "id"
-      org_id: "org_id"
-      title: "title"
-      git_repo_target: "git_repo_target"
-      stack_version: "stack_version"
-      updated: 1
-      created: 6
-      name: "name"
-      app_id: "app_id"
-      git_repo_id: "git_repo_id"
   InstanceType:
     type: "string"
     title: "Instance Type"
@@ -1304,25 +1304,25 @@ definitions:
         type: "integer"
     title: "Domain"
     example:
-      enabled: true
-      status: "ok"
       indexed: true
-      redirect_to_non_www: true
-      ssl: true
-      hsts: true
-      type: "technical"
-      hsts_subdomains: true
-      id: "id"
-      org_id: "org_id"
-      protected: true
-      updated: 6
-      created: 0
-      redirect_to_www: true
-      name: "name"
-      primary: true
-      ssl_required: true
       ssl_custom: true
+      created: 0
+      ssl_required: true
+      hsts_subdomains: true
+      redirect_to_www: true
+      type: "technical"
+      ssl: true
+      enabled: true
       instance_id: "instance_id"
+      protected: true
+      redirect_to_non_www: true
+      org_id: "org_id"
+      name: "name"
+      id: "id"
+      hsts: true
+      updated: 6
+      primary: true
+      status: "ok"
   Server:
     type: "object"
     required:
@@ -1365,13 +1365,13 @@ definitions:
     title: "Server"
     example:
       org_id: "org_id"
+      created: 0
       id: "id"
       ip_address: "ip_address"
       title: "title"
-      updated: 6
-      created: 0
-      status: "ok"
       version: "version"
+      updated: 6
+      status: "ok"
   Backup:
     type: "object"
     required:
@@ -1417,15 +1417,15 @@ definitions:
         type: "integer"
     title: "Backup"
     example:
-      org_id: "org_id"
-      id: "id"
-      files: ""
-      updated: 1
-      created: 6
-      status: "ok"
-      spent: 0
-      type: "system"
       instance_id: "instance_id"
+      org_id: "org_id"
+      created: 6
+      spent: 0
+      files: ""
+      id: "id"
+      type: "system"
+      updated: 1
+      status: "ok"
   BackupFile:
     type: "object"
     required:
@@ -1567,38 +1567,38 @@ definitions:
           $ref: "#/definitions/RequestAppCreate_services"
       deployment_type:
         type: "string"
+        default: "vanilla"
         enum:
         - "vanilla"
         - "git"
         - "ci"
-        default: "vanilla"
       post_deployment:
         type: "boolean"
       git:
         $ref: "#/definitions/RequestAppCreate_git"
     example:
-      instance_type: {}
-      server_id: "server_id"
-      services:
-      - implementation: "nginx-1-15"
-        name: "http-server"
-        enable: true
-      - implementation: "nginx-1-15"
-        name: "http-server"
-        enable: true
-      docroot: "docroot"
-      sitename: "sitename"
-      git:
-        tree_ish: "tree_ish"
-        repo_id: "repo_id"
       instance_name: "instance_name"
       instance_title: "instance_title"
-      stack_id: "stack_id"
-      org_id: "org_id"
+      services:
+      - enable: true
+        implementation: "nginx-1-15"
+        name: "http-server"
+      - enable: true
+        implementation: "nginx-1-15"
+        name: "http-server"
       title: "title"
-      name: "name"
-      post_deployment: true
+      server_id: "server_id"
       deployment_type: "vanilla"
+      git:
+        repo_id: "repo_id"
+        tree_ish: "tree_ish"
+      org_id: "org_id"
+      stack_id: "stack_id"
+      name: "name"
+      sitename: "sitename"
+      post_deployment: true
+      docroot: "docroot"
+      instance_type: {}
   RequestInstanceCreate:
     type: "object"
     required:
@@ -1625,14 +1625,14 @@ definitions:
       git:
         $ref: "#/definitions/RequestInstanceCreate_git"
     example:
-      server_id: "server_id"
-      title: "title"
-      name: "name"
-      post_deployment: true
       git:
         tree_ish: "tree_ish"
-      app_id: "app_id"
+      name: "name"
+      post_deployment: true
+      server_id: "server_id"
       type: {}
+      title: "title"
+      app_id: "app_id"
   RequestInstanceDeploy:
     type: "object"
     properties:
@@ -1648,9 +1648,9 @@ definitions:
       post_deployment:
         type: "boolean"
     example:
-      post_deployment: true
       git:
         tree_ish: "tree_ish"
+      post_deployment: true
   RequestInstancesUpgrade:
     type: "object"
     required:
@@ -1725,14 +1725,14 @@ definitions:
     example:
       task:
         org_id: "org_id"
-        id: "id"
-        title: "title"
-        updated: 5
         created: 5
         start: 0
-        status: "waiting"
-        ttl: 1
         end: 6
+        id: "id"
+        title: "title"
+        ttl: 1
+        updated: 5
+        status: "waiting"
   ResponseTaskApp:
     type: "object"
     required:
@@ -1746,24 +1746,24 @@ definitions:
     example:
       app:
         org_id: "org_id"
+        created: 0
+        stack_id: "stack_id"
+        name: "name"
+        git_repo_id: "git_repo_id"
         id: "id"
         title: "title"
         updated: 6
-        created: 0
         status: "ok"
-        name: "name"
-        git_repo_id: "git_repo_id"
-        stack_id: "stack_id"
       task:
         org_id: "org_id"
-        id: "id"
-        title: "title"
-        updated: 5
         created: 5
         start: 0
-        status: "waiting"
-        ttl: 1
         end: 6
+        id: "id"
+        title: "title"
+        ttl: 1
+        updated: 5
+        status: "waiting"
   ResponseTaskInstance:
     type: "object"
     required:
@@ -1775,34 +1775,34 @@ definitions:
       task:
         $ref: "#/definitions/Task"
     example:
-      task:
-        org_id: "org_id"
-        id: "id"
-        title: "title"
-        updated: 5
-        created: 5
-        start: 0
-        status: "waiting"
-        ttl: 1
-        end: 6
       instance:
+        created: 6
+        git_repo_id: "git_repo_id"
+        stack_version: "stack_version"
+        title: "title"
+        type: {}
         server_id: "server_id"
+        git_repo_target: "git_repo_target"
+        stack_rev_number: 0
+        has_new_version: true
+        org_id: "org_id"
+        stack_id: "stack_id"
+        name: "name"
+        id: "id"
+        app_id: "app_id"
+        updated: 1
         last_deploy: 5
         status: "ok"
-        stack_rev_number: 0
-        type: {}
-        stack_id: "stack_id"
-        has_new_version: true
-        id: "id"
+      task:
         org_id: "org_id"
+        created: 5
+        start: 0
+        end: 6
+        id: "id"
         title: "title"
-        git_repo_target: "git_repo_target"
-        stack_version: "stack_version"
-        updated: 1
-        created: 6
-        name: "name"
-        app_id: "app_id"
-        git_repo_id: "git_repo_id"
+        ttl: 1
+        updated: 5
+        status: "waiting"
   RequestAppCreate_services:
     required:
     - "name"
@@ -1816,9 +1816,9 @@ definitions:
       enable:
         type: "boolean"
     example:
+      enable: true
       implementation: "nginx-1-15"
       name: "http-server"
-      enable: true
   RequestAppCreate_git:
     required:
     - "repo_id"
@@ -1830,8 +1830,8 @@ definitions:
         type: "string"
         description: "Commit, branch or tag"
     example:
-      tree_ish: "tree_ish"
       repo_id: "repo_id"
+      tree_ish: "tree_ish"
   RequestInstanceCreate_git:
     properties:
       tree_ish:
