@@ -30,7 +30,7 @@ Import the client using its versioned module path:
 import client "github.com/wodby/wodby-sdk-go/v3/pkg"
 ```
 
-When upgrading, replace the previous import path with this `/v3` path and run `go mod tidy`. The next release will also publish an annotated `v3.X.Y` module tag alongside its `3.X.Y` release tag. Existing 3.x tags predate module support.
+When upgrading, replace the previous import path with this `/v3` path and run `go mod tidy`. This module path applies to the next 3.x release; existing 3.x releases predate module support.
 
 ## Development
 
