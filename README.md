@@ -1,22 +1,25 @@
-# Wodby SDK Go
+# Wodby 1.0 SDK for Go
 
+[![Build](https://github.com/wodby/wodby-sdk-go/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/wodby/wodby-sdk-go/actions/workflows/build.yml?query=branch%3Amaster)
 
-The Wodby SDK for Go makes it easy for developers to access Wodby in their Go code. You can get started in minutes by installing the SDK with the language package manager.
+Go client for the Wodby 1.0 public API. This branch maintains SDK 3.x.
 
----
+## Version compatibility
 
-* [Documentation](#documentation)
-* [Basic usage](#basic-usage)
+| Wodby platform | SDK version | Branch | API reference |
+| --- | --- | --- | --- |
+| Wodby 1.0 | 3.x | [master](https://github.com/wodby/wodby-sdk-go/tree/master) | [Wodby 1.0 API](https://wodby.com/docs/1.0/api/) |
+| Wodby 2.0 | 4.x | [2.0](https://github.com/wodby/wodby-sdk-go/tree/2.0) | [Wodby 2.0 API](https://wodby.com/docs/2.0/api/) |
+
+Choose the SDK major version for your Wodby platform. Upgrading from SDK 3.x to 4.x changes the target platform to Wodby 2.0.
 
 ## Requirements
 
 Go 1.26 or newer. Uses standard-library context and golang.org/x/oauth2 v0.37.0. These minimums apply to the next 3.x release; existing releases are unchanged.
 
-SDK 3.x targets Wodby 1. SDK 4.x targets Wodby 2.
-
 ## Documentation
 
-* [API reference](https://wodby.com/docs/1.0/api)
+* [API reference](https://wodby.com/docs/1.0/api/)
 * [Automatically generated documentation](pkg/README.md)
 
 ## Basic usage
