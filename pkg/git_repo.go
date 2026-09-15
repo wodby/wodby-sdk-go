@@ -10,7 +10,6 @@
 package client
 
 type GitRepo struct {
-
 	Id string `json:"id"`
 
 	Title string `json:"title"`

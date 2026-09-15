@@ -10,7 +10,6 @@
 package client
 
 type Backup struct {
-
 	Id string `json:"id"`
 
 	Type_ string `json:"type"`

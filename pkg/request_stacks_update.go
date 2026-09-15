@@ -10,6 +10,5 @@
 package client
 
 type RequestStacksUpdate struct {
-
 	Stacks []string `json:"stacks"`
 }

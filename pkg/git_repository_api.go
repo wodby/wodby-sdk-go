@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type GitRepositoryApiService service
 
-
-/* GitRepositoryApiService Retrieve git repository
- Retrieve git repository
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Git repository ID
- @return GitRepo*/
-func (a *GitRepositoryApiService) GetGitRepo(ctx context.Context, id string) (GitRepo,  *http.Response, error) {
+/*
+GitRepositoryApiService Retrieve git repository
+Retrieve git repository
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Git repository ID
+@return GitRepo
+*/
+func (a *GitRepositoryApiService) GetGitRepo(ctx context.Context, id string) (GitRepo, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  GitRepo
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     GitRepo
 	)
 
 	// create path and map variables
@@ -49,9 +50,8 @@ func (a *GitRepositoryApiService) GetGitRepo(ctx context.Context, id string) (Gi
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -62,7 +62,7 @@ func (a *GitRepositoryApiService) GetGitRepo(ctx context.Context, id string) (Gi
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,24 +100,27 @@ func (a *GitRepositoryApiService) GetGitRepo(ctx context.Context, id string) (Gi
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* GitRepositoryApiService Retrieve git repositories
- Retrieve git repositories
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
-     @param "name" (string) Git repository name
- @return []GitRepo*/
-func (a *GitRepositoryApiService) GetGitRepos(ctx context.Context, localVarOptionals map[string]interface{}) ([]GitRepo,  *http.Response, error) {
+/*
+GitRepositoryApiService Retrieve git repositories
+Retrieve git repositories
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+	@param "name" (string) Git repository name
+
+@return []GitRepo
+*/
+func (a *GitRepositoryApiService) GetGitRepos(ctx context.Context, localVarOptionals map[string]interface{}) ([]GitRepo, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []GitRepo
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []GitRepo
 	)
 
 	// create path and map variables
@@ -138,7 +141,7 @@ func (a *GitRepositoryApiService) GetGitRepos(ctx context.Context, localVarOptio
 		localVarQueryParams.Add("name", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -149,7 +152,7 @@ func (a *GitRepositoryApiService) GetGitRepos(ctx context.Context, localVarOptio
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -187,7 +190,5 @@ func (a *GitRepositoryApiService) GetGitRepos(ctx context.Context, localVarOptio
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

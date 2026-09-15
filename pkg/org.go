@@ -10,7 +10,6 @@
 package client
 
 type Org struct {
-
 	Id string `json:"id"`
 
 	Title string `json:"title"`

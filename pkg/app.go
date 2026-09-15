@@ -10,7 +10,6 @@
 package client
 
 type App struct {
-
 	Id string `json:"id"`
 
 	Title string `json:"title"`

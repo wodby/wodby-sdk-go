@@ -13,7 +13,7 @@ type InstanceType string
 
 // List of InstanceType
 const (
-	DEV InstanceType = "dev"
+	DEV   InstanceType = "dev"
 	STAGE InstanceType = "stage"
-	PROD InstanceType = "prod"
+	PROD  InstanceType = "prod"
 )

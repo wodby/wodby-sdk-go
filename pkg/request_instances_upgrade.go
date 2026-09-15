@@ -10,6 +10,5 @@
 package client
 
 type RequestInstancesUpgrade struct {
-
 	Instances []string `json:"instances"`
 }

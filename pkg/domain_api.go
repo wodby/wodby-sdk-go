@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type DomainApiService service
 
-
-/* DomainApiService Retrieve domain
- Retrieve domain
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Domain ID
- @return Domain*/
-func (a *DomainApiService) GetDomain(ctx context.Context, id string) (Domain,  *http.Response, error) {
+/*
+DomainApiService Retrieve domain
+Retrieve domain
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Domain ID
+@return Domain
+*/
+func (a *DomainApiService) GetDomain(ctx context.Context, id string) (Domain, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Domain
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Domain
 	)
 
 	// create path and map variables
@@ -49,9 +50,8 @@ func (a *DomainApiService) GetDomain(ctx context.Context, id string) (Domain,  *
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -62,7 +62,7 @@ func (a *DomainApiService) GetDomain(ctx context.Context, id string) (Domain,  *
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,28 +100,31 @@ func (a *DomainApiService) GetDomain(ctx context.Context, id string) (Domain,  *
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* DomainApiService Retrieve domains
- Retrieve domains
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
-     @param "instanceId" (string) Instance ID
-     @param "serverId" (string) Server ID
-     @param "status" (string) Domain status
-     @param "type_" (string) Domain type
-     @param "name" (string) Domain name
- @return []Domain*/
-func (a *DomainApiService) GetDomains(ctx context.Context, localVarOptionals map[string]interface{}) ([]Domain,  *http.Response, error) {
+/*
+DomainApiService Retrieve domains
+Retrieve domains
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+	@param "instanceId" (string) Instance ID
+	@param "serverId" (string) Server ID
+	@param "status" (string) Domain status
+	@param "type_" (string) Domain type
+	@param "name" (string) Domain name
+
+@return []Domain
+*/
+func (a *DomainApiService) GetDomains(ctx context.Context, localVarOptionals map[string]interface{}) ([]Domain, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Domain
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Domain
 	)
 
 	// create path and map variables
@@ -160,7 +163,7 @@ func (a *DomainApiService) GetDomains(ctx context.Context, localVarOptionals map
 		localVarQueryParams.Add("name", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -171,7 +174,7 @@ func (a *DomainApiService) GetDomains(ctx context.Context, localVarOptionals map
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -209,7 +212,5 @@ func (a *DomainApiService) GetDomains(ctx context.Context, localVarOptionals map
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type InstanceApiService service
 
-
-/* InstanceApiService Create instance
- Create instance
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param data 
- @return ResponseTaskInstance*/
-func (a *InstanceApiService) CreateInstance(ctx context.Context, data RequestInstanceCreate) (ResponseTaskInstance,  *http.Response, error) {
+/*
+InstanceApiService Create instance
+Create instance
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param data
+@return ResponseTaskInstance
+*/
+func (a *InstanceApiService) CreateInstance(ctx context.Context, data RequestInstanceCreate) (ResponseTaskInstance, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTaskInstance
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTaskInstance
 	)
 
 	// create path and map variables
@@ -48,9 +49,8 @@ func (a *InstanceApiService) CreateInstance(ctx context.Context, data RequestIns
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -61,7 +61,7 @@ func (a *InstanceApiService) CreateInstance(ctx context.Context, data RequestIns
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -101,22 +101,23 @@ func (a *InstanceApiService) CreateInstance(ctx context.Context, data RequestIns
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Delete application instance
- Delete application instance
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Instance ID
- @return ResponseTask*/
-func (a *InstanceApiService) DeleteInstance(ctx context.Context, id string) (ResponseTask,  *http.Response, error) {
+/*
+InstanceApiService Delete application instance
+Delete application instance
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Instance ID
+@return ResponseTask
+*/
+func (a *InstanceApiService) DeleteInstance(ctx context.Context, id string) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -127,9 +128,8 @@ func (a *InstanceApiService) DeleteInstance(ctx context.Context, id string) (Res
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -140,7 +140,7 @@ func (a *InstanceApiService) DeleteInstance(ctx context.Context, id string) (Res
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -178,24 +178,27 @@ func (a *InstanceApiService) DeleteInstance(ctx context.Context, id string) (Res
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Deploy instance
- Deploy instance
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Instance ID
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "data" (RequestInstanceDeploy) 
- @return ResponseTask*/
-func (a *InstanceApiService) DeployInstance(ctx context.Context, id string, localVarOptionals map[string]interface{}) (ResponseTask,  *http.Response, error) {
+/*
+InstanceApiService Deploy instance
+Deploy instance
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Instance ID
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "data" (RequestInstanceDeploy)
+
+@return ResponseTask
+*/
+func (a *InstanceApiService) DeployInstance(ctx context.Context, id string, localVarOptionals map[string]interface{}) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -206,9 +209,8 @@ func (a *InstanceApiService) DeployInstance(ctx context.Context, id string, loca
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -219,7 +221,7 @@ func (a *InstanceApiService) DeployInstance(ctx context.Context, id string, loca
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -261,24 +263,27 @@ func (a *InstanceApiService) DeployInstance(ctx context.Context, id string, loca
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Deploy instance codebase
- Deploy instance codebase
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Instance ID
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "data" (RequestInstanceDeployCodebase) 
- @return ResponseTask*/
-func (a *InstanceApiService) DeployInstanceCodebase(ctx context.Context, id string, localVarOptionals map[string]interface{}) (ResponseTask,  *http.Response, error) {
+/*
+InstanceApiService Deploy instance codebase
+Deploy instance codebase
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Instance ID
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "data" (RequestInstanceDeployCodebase)
+
+@return ResponseTask
+*/
+func (a *InstanceApiService) DeployInstanceCodebase(ctx context.Context, id string, localVarOptionals map[string]interface{}) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -289,9 +294,8 @@ func (a *InstanceApiService) DeployInstanceCodebase(ctx context.Context, id stri
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -302,7 +306,7 @@ func (a *InstanceApiService) DeployInstanceCodebase(ctx context.Context, id stri
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -344,22 +348,23 @@ func (a *InstanceApiService) DeployInstanceCodebase(ctx context.Context, id stri
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Retrieve application instance
- Retrieve application instance
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Instance ID
- @return Instance*/
-func (a *InstanceApiService) GetInstance(ctx context.Context, id string) (Instance,  *http.Response, error) {
+/*
+InstanceApiService Retrieve application instance
+Retrieve application instance
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Instance ID
+@return Instance
+*/
+func (a *InstanceApiService) GetInstance(ctx context.Context, id string) (Instance, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Instance
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Instance
 	)
 
 	// create path and map variables
@@ -370,9 +375,8 @@ func (a *InstanceApiService) GetInstance(ctx context.Context, id string) (Instan
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -383,7 +387,7 @@ func (a *InstanceApiService) GetInstance(ctx context.Context, id string) (Instan
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -421,27 +425,30 @@ func (a *InstanceApiService) GetInstance(ctx context.Context, id string) (Instan
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Retrieve instances
- Retrieve instances
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "orgId" (string) Organization ID
-     @param "serverId" (string) Server ID
-     @param "appId" (string) Application ID
-     @param "type_" (string) Instance type
-     @param "name" (string) Instance name
- @return []Instance*/
-func (a *InstanceApiService) GetInstances(ctx context.Context, localVarOptionals map[string]interface{}) ([]Instance,  *http.Response, error) {
+/*
+InstanceApiService Retrieve instances
+Retrieve instances
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "orgId" (string) Organization ID
+	@param "serverId" (string) Server ID
+	@param "appId" (string) Application ID
+	@param "type_" (string) Instance type
+	@param "name" (string) Instance name
+
+@return []Instance
+*/
+func (a *InstanceApiService) GetInstances(ctx context.Context, localVarOptionals map[string]interface{}) ([]Instance, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Instance
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Instance
 	)
 
 	// create path and map variables
@@ -474,7 +481,7 @@ func (a *InstanceApiService) GetInstances(ctx context.Context, localVarOptionals
 		localVarQueryParams.Add("name", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -485,7 +492,7 @@ func (a *InstanceApiService) GetInstances(ctx context.Context, localVarOptionals
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -523,22 +530,23 @@ func (a *InstanceApiService) GetInstances(ctx context.Context, localVarOptionals
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Upgrade instance
- Upgrade instance
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Instance ID
- @return ResponseTask*/
-func (a *InstanceApiService) UpgradeInstance(ctx context.Context, id string) (ResponseTask,  *http.Response, error) {
+/*
+InstanceApiService Upgrade instance
+Upgrade instance
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Instance ID
+@return ResponseTask
+*/
+func (a *InstanceApiService) UpgradeInstance(ctx context.Context, id string) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -549,9 +557,8 @@ func (a *InstanceApiService) UpgradeInstance(ctx context.Context, id string) (Re
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -562,7 +569,7 @@ func (a *InstanceApiService) UpgradeInstance(ctx context.Context, id string) (Re
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -600,22 +607,23 @@ func (a *InstanceApiService) UpgradeInstance(ctx context.Context, id string) (Re
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* InstanceApiService Upgrade instances
- Upgrade instances
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param data 
- @return ResponseTask*/
-func (a *InstanceApiService) UpgradeInstances(ctx context.Context, data RequestInstancesUpgrade) (ResponseTask,  *http.Response, error) {
+/*
+InstanceApiService Upgrade instances
+Upgrade instances
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param data
+@return ResponseTask
+*/
+func (a *InstanceApiService) UpgradeInstances(ctx context.Context, data RequestInstancesUpgrade) (ResponseTask, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ResponseTask
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ResponseTask
 	)
 
 	// create path and map variables
@@ -625,9 +633,8 @@ func (a *InstanceApiService) UpgradeInstances(ctx context.Context, data RequestI
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -638,7 +645,7 @@ func (a *InstanceApiService) UpgradeInstances(ctx context.Context, data RequestI
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -678,7 +685,5 @@ func (a *InstanceApiService) UpgradeInstances(ctx context.Context, data RequestI
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

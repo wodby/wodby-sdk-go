@@ -10,7 +10,6 @@
 package client
 
 type ResponseTaskInstance struct {
-
 	Instance *Instance `json:"instance"`
 
 	Task *Task `json:"task"`

@@ -10,13 +10,13 @@
 package client
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // Linger please
@@ -26,19 +26,20 @@ var (
 
 type OrganizationApiService service
 
-
-/* OrganizationApiService Retrieve organization
- Retrieve organization
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param id Organization ID
- @return Org*/
-func (a *OrganizationApiService) GetOrg(ctx context.Context, id string) (Org,  *http.Response, error) {
+/*
+OrganizationApiService Retrieve organization
+Retrieve organization
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param id Organization ID
+@return Org
+*/
+func (a *OrganizationApiService) GetOrg(ctx context.Context, id string) (Org, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Org
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Org
 	)
 
 	// create path and map variables
@@ -49,9 +50,8 @@ func (a *OrganizationApiService) GetOrg(ctx context.Context, id string) (Org,  *
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -62,7 +62,7 @@ func (a *OrganizationApiService) GetOrg(ctx context.Context, id string) (Org,  *
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,23 +100,26 @@ func (a *OrganizationApiService) GetOrg(ctx context.Context, id string) (Org,  *
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* OrganizationApiService Retrieve organizations
- Retrieve organizations
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "name" (string) Organization name
- @return []Org*/
-func (a *OrganizationApiService) GetOrgs(ctx context.Context, localVarOptionals map[string]interface{}) ([]Org,  *http.Response, error) {
+/*
+OrganizationApiService Retrieve organizations
+Retrieve organizations
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+
+	@param "name" (string) Organization name
+
+@return []Org
+*/
+func (a *OrganizationApiService) GetOrgs(ctx context.Context, localVarOptionals map[string]interface{}) ([]Org, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Org
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Org
 	)
 
 	// create path and map variables
@@ -134,7 +137,7 @@ func (a *OrganizationApiService) GetOrgs(ctx context.Context, localVarOptionals 
 		localVarQueryParams.Add("name", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -145,7 +148,7 @@ func (a *OrganizationApiService) GetOrgs(ctx context.Context, localVarOptionals 
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -183,7 +186,5 @@ func (a *OrganizationApiService) GetOrgs(ctx context.Context, localVarOptionals 
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

@@ -10,7 +10,6 @@
 package client
 
 type ResponseTaskApp struct {
-
 	App *App `json:"app"`
 
 	Task *Task `json:"task"`

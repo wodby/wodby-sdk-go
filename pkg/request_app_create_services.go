@@ -10,7 +10,6 @@
 package client
 
 type RequestAppCreateServices struct {
-
 	Name string `json:"name"`
 
 	Implementation string `json:"implementation,omitempty"`
