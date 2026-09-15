@@ -4,13 +4,13 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetDomain**](DomainApi.md#GetDomain) | **Get** /domains/{id} | 
-[**GetDomains**](DomainApi.md#GetDomains) | **Get** /domains | 
+[**GetDomain**](DomainApi.md#GetDomain) | **Get** /domains/{id} | Retrieve domain
+[**GetDomains**](DomainApi.md#GetDomains) | **Get** /domains | Retrieve domains
 
 
 # **GetDomain**
 > Domain GetDomain(ctx, id)
-
+Retrieve domain
 
 Retrieve domain
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 # **GetDomains**
 > []Domain GetDomains(ctx, optional)
-
+Retrieve domains
 
 Retrieve domains
 

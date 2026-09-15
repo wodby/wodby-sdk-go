@@ -4,12 +4,12 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetAuthenticatedUser**](UserApi.md#GetAuthenticatedUser) | **Get** /user | 
+[**GetAuthenticatedUser**](UserApi.md#GetAuthenticatedUser) | **Get** /user | Retrieve authenticated user
 
 
 # **GetAuthenticatedUser**
 > User GetAuthenticatedUser(ctx, )
-
+Retrieve authenticated user
 
 Retrieve authenticated user
 

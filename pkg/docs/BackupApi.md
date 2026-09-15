@@ -4,13 +4,13 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetBackup**](BackupApi.md#GetBackup) | **Get** /backups/{id} | 
-[**GetBackups**](BackupApi.md#GetBackups) | **Get** /backups | 
+[**GetBackup**](BackupApi.md#GetBackup) | **Get** /backups/{id} | Retrieve backup
+[**GetBackups**](BackupApi.md#GetBackups) | **Get** /backups | Retrieve backups by instance
 
 
 # **GetBackup**
 > Backup GetBackup(ctx, id)
-
+Retrieve backup
 
 Retrieve backup
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 # **GetBackups**
 > []Backup GetBackups(ctx, optional)
-
+Retrieve backups by instance
 
 Retrieve backups by instance
 

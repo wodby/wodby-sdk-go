@@ -4,16 +4,16 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateApp**](ApplicationApi.md#CreateApp) | **Post** /apps | 
-[**DeleteApp**](ApplicationApi.md#DeleteApp) | **Delete** /apps/{id} | 
-[**GetApp**](ApplicationApi.md#GetApp) | **Get** /apps/{id} | 
-[**GetAppDrushAliases**](ApplicationApi.md#GetAppDrushAliases) | **Get** /apps/{id}/drush-aliases | 
-[**GetApps**](ApplicationApi.md#GetApps) | **Get** /apps | 
+[**CreateApp**](ApplicationApi.md#CreateApp) | **Post** /apps | Create application
+[**DeleteApp**](ApplicationApi.md#DeleteApp) | **Delete** /apps/{id} | Delete application
+[**GetApp**](ApplicationApi.md#GetApp) | **Get** /apps/{id} | Retrieve application
+[**GetAppDrushAliases**](ApplicationApi.md#GetAppDrushAliases) | **Get** /apps/{id}/drush-aliases | Retrieve Drupal application&#x60;s instances Drush aliases
+[**GetApps**](ApplicationApi.md#GetApps) | **Get** /apps | Retrieve applications
 
 
 # **CreateApp**
 > ResponseTaskApp CreateApp(ctx, data)
-
+Create application
 
 Create application
 
@@ -41,7 +41,7 @@ Name | Type | Description  | Notes
 
 # **DeleteApp**
 > ResponseTask DeleteApp(ctx, id)
-
+Delete application
 
 Delete application
 
@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 # **GetApp**
 > App GetApp(ctx, id)
-
+Retrieve application
 
 Retrieve application
 
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 # **GetAppDrushAliases**
 > string GetAppDrushAliases(ctx, id)
-
+Retrieve Drupal application`s instances Drush aliases
 
 Retrieve Drupal application`s instances Drush aliases
 
@@ -125,7 +125,7 @@ Name | Type | Description  | Notes
 
 # **GetApps**
 > []App GetApps(ctx, optional)
-
+Retrieve applications
 
 Retrieve applications
 

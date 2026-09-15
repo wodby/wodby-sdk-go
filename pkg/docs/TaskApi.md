@@ -4,13 +4,13 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetTask**](TaskApi.md#GetTask) | **Get** /tasks/{id} | 
-[**GetTasks**](TaskApi.md#GetTasks) | **Get** /tasks | 
+[**GetTask**](TaskApi.md#GetTask) | **Get** /tasks/{id} | Retrieve task
+[**GetTasks**](TaskApi.md#GetTasks) | **Get** /tasks | Retrieve tasks
 
 
 # **GetTask**
 > Task GetTask(ctx, id)
-
+Retrieve task
 
 Retrieve task
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 # **GetTasks**
 > []Task GetTasks(ctx, optional)
-
+Retrieve tasks
 
 Retrieve tasks
 

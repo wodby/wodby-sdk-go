@@ -4,15 +4,15 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetStack**](StackApi.md#GetStack) | **Get** /stacks/{id} | 
-[**GetStacks**](StackApi.md#GetStacks) | **Get** /stacks | 
-[**UpdateStackFromUpstream**](StackApi.md#UpdateStackFromUpstream) | **Post** /stacks/{id}/update | 
-[**UpdateStacksFromUpstream**](StackApi.md#UpdateStacksFromUpstream) | **Post** /stacks/update | 
+[**GetStack**](StackApi.md#GetStack) | **Get** /stacks/{id} | Retrieve stack
+[**GetStacks**](StackApi.md#GetStacks) | **Get** /stacks | Retrieve stacks
+[**UpdateStackFromUpstream**](StackApi.md#UpdateStackFromUpstream) | **Post** /stacks/{id}/update | Update official stack from upstream
+[**UpdateStacksFromUpstream**](StackApi.md#UpdateStacksFromUpstream) | **Post** /stacks/update | Update official stacks from upstream
 
 
 # **GetStack**
 > Stack GetStack(ctx, id)
-
+Retrieve stack
 
 Retrieve stack
 
@@ -40,7 +40,7 @@ Name | Type | Description  | Notes
 
 # **GetStacks**
 > []Stack GetStacks(ctx, optional)
-
+Retrieve stacks
 
 Retrieve stacks
 
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 # **UpdateStackFromUpstream**
 > ResponseTask UpdateStackFromUpstream(ctx, id)
-
+Update official stack from upstream
 
 Update official stack from upstream
 
@@ -103,7 +103,7 @@ Name | Type | Description  | Notes
 
 # **UpdateStacksFromUpstream**
 > ResponseTask UpdateStacksFromUpstream(ctx, data)
-
+Update official stacks from upstream
 
 Update official stacks from upstream
 

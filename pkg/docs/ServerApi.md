@@ -4,13 +4,13 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetServer**](ServerApi.md#GetServer) | **Get** /servers/{id} | 
-[**GetServers**](ServerApi.md#GetServers) | **Get** /servers | 
+[**GetServer**](ServerApi.md#GetServer) | **Get** /servers/{id} | Retrieve server
+[**GetServers**](ServerApi.md#GetServers) | **Get** /servers | Retrieve servers
 
 
 # **GetServer**
 > Server GetServer(ctx, id)
-
+Retrieve server
 
 Retrieve server
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 # **GetServers**
 > []Server GetServers(ctx, optional)
-
+Retrieve servers
 
 Retrieve servers
 

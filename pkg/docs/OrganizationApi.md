@@ -4,13 +4,13 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetOrg**](OrganizationApi.md#GetOrg) | **Get** /orgs/{id} | 
-[**GetOrgs**](OrganizationApi.md#GetOrgs) | **Get** /orgs | 
+[**GetOrg**](OrganizationApi.md#GetOrg) | **Get** /orgs/{id} | Retrieve organization
+[**GetOrgs**](OrganizationApi.md#GetOrgs) | **Get** /orgs | Retrieve organizations
 
 
 # **GetOrg**
 > Org GetOrg(ctx, id)
-
+Retrieve organization
 
 Retrieve organization
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 # **GetOrgs**
 > []Org GetOrgs(ctx, optional)
-
+Retrieve organizations
 
 Retrieve organizations
 

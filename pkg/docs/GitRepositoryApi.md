@@ -4,13 +4,13 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetGitRepo**](GitRepositoryApi.md#GetGitRepo) | **Get** /git-repo/{id} | 
-[**GetGitRepos**](GitRepositoryApi.md#GetGitRepos) | **Get** /git-repo | 
+[**GetGitRepo**](GitRepositoryApi.md#GetGitRepo) | **Get** /git-repo/{id} | Retrieve git repository
+[**GetGitRepos**](GitRepositoryApi.md#GetGitRepos) | **Get** /git-repo | Retrieve git repositories
 
 
 # **GetGitRepo**
 > GitRepo GetGitRepo(ctx, id)
-
+Retrieve git repository
 
 Retrieve git repository
 
@@ -38,7 +38,7 @@ Name | Type | Description  | Notes
 
 # **GetGitRepos**
 > []GitRepo GetGitRepos(ctx, optional)
-
+Retrieve git repositories
 
 Retrieve git repositories
 

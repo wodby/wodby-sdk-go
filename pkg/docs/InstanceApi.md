@@ -4,19 +4,19 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateInstance**](InstanceApi.md#CreateInstance) | **Post** /instances | 
-[**DeleteInstance**](InstanceApi.md#DeleteInstance) | **Delete** /instances/{id} | 
-[**DeployInstance**](InstanceApi.md#DeployInstance) | **Post** /instances/{id}/deploy | 
-[**DeployInstanceCodebase**](InstanceApi.md#DeployInstanceCodebase) | **Post** /instances/{id}/deploy-codebase | 
-[**GetInstance**](InstanceApi.md#GetInstance) | **Get** /instances/{id} | 
-[**GetInstances**](InstanceApi.md#GetInstances) | **Get** /instances | 
-[**UpgradeInstance**](InstanceApi.md#UpgradeInstance) | **Post** /instances/{id}/upgrade | 
-[**UpgradeInstances**](InstanceApi.md#UpgradeInstances) | **Post** /instances/upgrade | 
+[**CreateInstance**](InstanceApi.md#CreateInstance) | **Post** /instances | Create instance
+[**DeleteInstance**](InstanceApi.md#DeleteInstance) | **Delete** /instances/{id} | Delete application instance
+[**DeployInstance**](InstanceApi.md#DeployInstance) | **Post** /instances/{id}/deploy | Deploy instance
+[**DeployInstanceCodebase**](InstanceApi.md#DeployInstanceCodebase) | **Post** /instances/{id}/deploy-codebase | Deploy instance codebase
+[**GetInstance**](InstanceApi.md#GetInstance) | **Get** /instances/{id} | Retrieve application instance
+[**GetInstances**](InstanceApi.md#GetInstances) | **Get** /instances | Retrieve instances
+[**UpgradeInstance**](InstanceApi.md#UpgradeInstance) | **Post** /instances/{id}/upgrade | Upgrade instance
+[**UpgradeInstances**](InstanceApi.md#UpgradeInstances) | **Post** /instances/upgrade | Upgrade instances
 
 
 # **CreateInstance**
 > ResponseTaskInstance CreateInstance(ctx, data)
-
+Create instance
 
 Create instance
 
@@ -44,7 +44,7 @@ Name | Type | Description  | Notes
 
 # **DeleteInstance**
 > ResponseTask DeleteInstance(ctx, id)
-
+Delete application instance
 
 Delete application instance
 
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 # **DeployInstance**
 > ResponseTask DeployInstance(ctx, id, optional)
-
+Deploy instance
 
 Deploy instance
 
@@ -109,7 +109,7 @@ Name | Type | Description  | Notes
 
 # **DeployInstanceCodebase**
 > ResponseTask DeployInstanceCodebase(ctx, id, optional)
-
+Deploy instance codebase
 
 Deploy instance codebase
 
@@ -146,7 +146,7 @@ Name | Type | Description  | Notes
 
 # **GetInstance**
 > Instance GetInstance(ctx, id)
-
+Retrieve application instance
 
 Retrieve application instance
 
@@ -174,7 +174,7 @@ Name | Type | Description  | Notes
 
 # **GetInstances**
 > []Instance GetInstances(ctx, optional)
-
+Retrieve instances
 
 Retrieve instances
 
@@ -213,7 +213,7 @@ Name | Type | Description  | Notes
 
 # **UpgradeInstance**
 > ResponseTask UpgradeInstance(ctx, id)
-
+Upgrade instance
 
 Upgrade instance
 
@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 # **UpgradeInstances**
 > ResponseTask UpgradeInstances(ctx, data)
-
+Upgrade instances
 
 Upgrade instances
 
