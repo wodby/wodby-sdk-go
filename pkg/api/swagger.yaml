@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/1.0/docs/dev"
-  version: "3.1.0"
+  version: "3.2.0"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -777,6 +777,27 @@ paths:
               $ref: "#/definitions/Backup"
       security:
       - ApiKeyAuth: []
+    post:
+      tags:
+      - "Backup"
+      summary: "Create manual backup"
+      description: "Create a manual instance backup"
+      operationId: "createBackup"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestBackupCreate"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
+      security:
+      - ApiKeyAuth: []
   /backups/{id}:
     get:
       tags:
@@ -797,6 +818,27 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/Backup"
+      security:
+      - ApiKeyAuth: []
+    delete:
+      tags:
+      - "Backup"
+      summary: "Delete backup"
+      description: "Delete backup"
+      operationId: "deleteBackup"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Backup ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
       security:
       - ApiKeyAuth: []
   /user:
@@ -1181,6 +1223,8 @@ definitions:
       app_id:
         type: "string"
         title: "UUID"
+      build:
+        $ref: "#/definitions/Build"
       server_id:
         type: "string"
         title: "UUID"
@@ -1215,22 +1259,38 @@ definitions:
         type: "integer"
     title: "Instance"
     example:
-      created: 6
+      created: 5
       git_repo_id: "git_repo_id"
       stack_version: "stack_version"
       title: "title"
       type: {}
       server_id: "server_id"
       git_repo_target: "git_repo_target"
-      stack_rev_number: 0
+      stack_rev_number: 1
       has_new_version: true
+      build:
+        repo_url: "repo_url"
+        images: "images"
+        commit: "commit"
+        deployed: 6
+        message: "message"
+        uuid: "uuid"
+        branch: "branch"
+        url: "url"
+        stack_ver: "stack_ver"
+        number: 0
+        provider: "provider"
+        tag: "tag"
+        email: "email"
+        slug: "slug"
+        username: "username"
       org_id: "org_id"
       stack_id: "stack_id"
       name: "name"
       id: "id"
       app_id: "app_id"
-      updated: 1
-      last_deploy: 5
+      updated: 5
+      last_deploy: 2
       status: "ok"
   InstanceType:
     type: "string"
@@ -1464,6 +1524,57 @@ definitions:
     type: "array"
     items:
       $ref: "#/definitions/BackupFile"
+  Build:
+    type: "object"
+    properties:
+      uuid:
+        type: "string"
+        title: "UUID"
+      provider:
+        type: "string"
+      number:
+        type: "integer"
+      url:
+        type: "string"
+      repo_url:
+        type: "string"
+      branch:
+        type: "string"
+      tag:
+        type: "string"
+      commit:
+        type: "string"
+      message:
+        type: "string"
+      username:
+        type: "string"
+      email:
+        type: "string"
+      deployed:
+        type: "integer"
+      slug:
+        type: "string"
+      images:
+        type: "string"
+      stack_ver:
+        type: "string"
+    title: "Build"
+    example:
+      repo_url: "repo_url"
+      images: "images"
+      commit: "commit"
+      deployed: 6
+      message: "message"
+      uuid: "uuid"
+      branch: "branch"
+      url: "url"
+      stack_ver: "stack_ver"
+      number: 0
+      provider: "provider"
+      tag: "tag"
+      email: "email"
+      slug: "slug"
+      username: "username"
   RequestStacksUpdate:
     type: "object"
     required:
@@ -1599,6 +1710,41 @@ definitions:
       post_deployment: true
       docroot: "docroot"
       instance_type: {}
+  RequestBackupCreate:
+    type: "object"
+    required:
+    - "components"
+    - "instance_id"
+    properties:
+      instance_id:
+        type: "string"
+        title: "UUID"
+      components:
+        type: "array"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "db"
+          - "files"
+        minItems: 1
+      mirror:
+        type: "boolean"
+        default: false
+      uuid:
+        type: "string"
+        title: "UUID"
+      comment:
+        type: "string"
+        maxLength: 255
+    example:
+      components:
+      - "db"
+      - "db"
+      mirror: false
+      instance_id: "instance_id"
+      comment: "comment"
+      uuid: "uuid"
   RequestInstanceCreate:
     type: "object"
     required:
@@ -1776,22 +1922,38 @@ definitions:
         $ref: "#/definitions/Task"
     example:
       instance:
-        created: 6
+        created: 5
         git_repo_id: "git_repo_id"
         stack_version: "stack_version"
         title: "title"
         type: {}
         server_id: "server_id"
         git_repo_target: "git_repo_target"
-        stack_rev_number: 0
+        stack_rev_number: 1
         has_new_version: true
+        build:
+          repo_url: "repo_url"
+          images: "images"
+          commit: "commit"
+          deployed: 6
+          message: "message"
+          uuid: "uuid"
+          branch: "branch"
+          url: "url"
+          stack_ver: "stack_ver"
+          number: 0
+          provider: "provider"
+          tag: "tag"
+          email: "email"
+          slug: "slug"
+          username: "username"
         org_id: "org_id"
         stack_id: "stack_id"
         name: "name"
         id: "id"
         app_id: "app_id"
-        updated: 1
-        last_deploy: 5
+        updated: 5
+        last_deploy: 2
         status: "ok"
       task:
         org_id: "org_id"

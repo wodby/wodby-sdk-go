@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Type_** | [***InstanceType**](InstanceType.md) |  | [optional] [default to null]
 **OrgId** | **string** |  | [default to null]
 **AppId** | **string** |  | [default to null]
+**Build** | [***Build**](Build.md) |  | [optional] [default to null]
 **ServerId** | **string** |  | [default to null]
 **StackRevNumber** | **int32** |  | [default to null]
 **StackVersion** | **string** |  | [default to null]
