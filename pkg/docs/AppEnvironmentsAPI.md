@@ -13,10 +13,15 @@ Method | HTTP request | Description
 [**GetAppEnvironmentByName**](AppEnvironmentsAPI.md#GetAppEnvironmentByName) | **Get** /app-environments/by-name/{appName}/{environmentName} | Get app environment by name
 [**GetAppEnvironmentCICDSettings**](AppEnvironmentsAPI.md#GetAppEnvironmentCICDSettings) | **Get** /app-environments/cicd-settings/{id} | Get app environment CI/CD settings
 [**GetAppEnvironmentStackUpgradeChangelog**](AppEnvironmentsAPI.md#GetAppEnvironmentStackUpgradeChangelog) | **Get** /app-environment-stack-upgrade-changelogs/{id} | Preview app environment stack upgrade
+[**GetWorkspaceConnection**](AppEnvironmentsAPI.md#GetWorkspaceConnection) | **Get** /workspaces/{id}/connection | Get workspace SSH connection
 [**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List app-access cleanups
 [**ListAppEnvironments**](AppEnvironmentsAPI.md#ListAppEnvironments) | **Get** /app-environments | List app environments
+[**PauseWorkspace**](AppEnvironmentsAPI.md#PauseWorkspace) | **Post** /workspaces/{id}/actions/pause | Pause workspace
 [**PreflightAppAccess**](AppEnvironmentsAPI.md#PreflightAppAccess) | **Post** /app-accesses/actions/preflight | Preflight app environment access
+[**PrepareWorkspace**](AppEnvironmentsAPI.md#PrepareWorkspace) | **Post** /workspaces/{id}/actions/prepare | Prepare workspace
 [**ReconcileAppEnvironmentStack**](AppEnvironmentsAPI.md#ReconcileAppEnvironmentStack) | **Post** /app-environments/{id}/actions/reconcile-stack | Reconcile app environment stack
+[**RestartWorkspace**](AppEnvironmentsAPI.md#RestartWorkspace) | **Post** /workspaces/{id}/actions/restart | Restart workspace
+[**ResumeWorkspace**](AppEnvironmentsAPI.md#ResumeWorkspace) | **Post** /workspaces/{id}/actions/resume | Resume workspace
 [**RetryAppAccessCleanup**](AppEnvironmentsAPI.md#RetryAppAccessCleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
 [**UpdateAppAccess**](AppEnvironmentsAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update app access
 [**UpdateAppEnvironment**](AppEnvironmentsAPI.md#UpdateAppEnvironment) | **Put** /app-environments/{id} | Update app environment
@@ -24,6 +29,7 @@ Method | HTTP request | Description
 [**UpdateAppEnvironmentMaintenanceMode**](AppEnvironmentsAPI.md#UpdateAppEnvironmentMaintenanceMode) | **Put** /app-environments/{id}/actions/maintenance-mode | Update app environment maintenance mode
 [**UpdateAppEnvironmentSettings**](AppEnvironmentsAPI.md#UpdateAppEnvironmentSettings) | **Put** /app-environments/settings/{id} | Update app environment settings
 [**UpgradeAppEnvironmentStack**](AppEnvironmentsAPI.md#UpgradeAppEnvironmentStack) | **Post** /app-environments/{id}/actions/upgrade-stack | Upgrade app environment stack
+[**WorkspaceEligibility**](AppEnvironmentsAPI.md#WorkspaceEligibility) | **Post** /workspace-eligibility | Check workspace service eligibility
 
 
 
@@ -662,6 +668,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetWorkspaceConnection
+
+> WorkspaceConnection GetWorkspaceConnection(ctx, id).Execute()
+
+Get workspace SSH connection
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.GetWorkspaceConnection(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.GetWorkspaceConnection``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetWorkspaceConnection`: WorkspaceConnection
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.GetWorkspaceConnection`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetWorkspaceConnectionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**WorkspaceConnection**](WorkspaceConnection.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAppAccessCleanups
 
 > []AppAccessCleanup ListAppAccessCleanups(ctx).AppInstanceId(appInstanceId).IntegrationId(integrationId).Execute()
@@ -804,6 +880,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## PauseWorkspace
+
+> Task PauseWorkspace(ctx, id).Execute()
+
+Pause workspace
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.PauseWorkspace(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.PauseWorkspace``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PauseWorkspace`: Task
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.PauseWorkspace`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPauseWorkspaceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Task**](Task.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## PreflightAppAccess
 
 > ValidationResult PreflightAppAccess(ctx).NewAppEnvironmentAccessInput(newAppEnvironmentAccessInput).Execute()
@@ -863,6 +1009,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PrepareWorkspace
+
+> Task PrepareWorkspace(ctx, id).Execute()
+
+Prepare workspace
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.PrepareWorkspace(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.PrepareWorkspace``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PrepareWorkspace`: Task
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.PrepareWorkspace`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPrepareWorkspaceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Task**](Task.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -935,6 +1151,146 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RestartWorkspace
+
+> Task RestartWorkspace(ctx, id).Execute()
+
+Restart workspace
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.RestartWorkspace(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.RestartWorkspace``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RestartWorkspace`: Task
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.RestartWorkspace`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRestartWorkspaceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Task**](Task.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ResumeWorkspace
+
+> Task ResumeWorkspace(ctx, id).Execute()
+
+Resume workspace
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.ResumeWorkspace(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.ResumeWorkspace``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResumeWorkspace`: Task
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.ResumeWorkspace`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiResumeWorkspaceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Task**](Task.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1429,6 +1785,72 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## WorkspaceEligibility
+
+> WorkspaceEligibility200Response WorkspaceEligibility(ctx).WorkspaceEligibilityRequest(workspaceEligibilityRequest).Execute()
+
+Check workspace service eligibility
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	workspaceEligibilityRequest := *openapiclient.NewWorkspaceEligibilityRequest(int32(123), []int32{int32(123)}) // WorkspaceEligibilityRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.WorkspaceEligibility(context.Background()).WorkspaceEligibilityRequest(workspaceEligibilityRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.WorkspaceEligibility``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `WorkspaceEligibility`: WorkspaceEligibility200Response
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.WorkspaceEligibility`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiWorkspaceEligibilityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **workspaceEligibilityRequest** | [**WorkspaceEligibilityRequest**](WorkspaceEligibilityRequest.md) |  | 
+
+### Return type
+
+[**WorkspaceEligibility200Response**](WorkspaceEligibility200Response.md)
 
 ### Authorization
 

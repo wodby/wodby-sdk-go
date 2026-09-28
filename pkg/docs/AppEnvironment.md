@@ -4,6 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ExecutionMode** | Pointer to **string** |  | [optional] [default to "standard"]
+**Workspace** | Pointer to [**Workspace**](Workspace.md) |  | [optional] 
 **Id** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
@@ -51,6 +53,56 @@ will change when the set of required properties is changed
 NewAppEnvironmentWithDefaults instantiates a new AppEnvironment object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetExecutionMode
+
+`func (o *AppEnvironment) GetExecutionMode() string`
+
+GetExecutionMode returns the ExecutionMode field if non-nil, zero value otherwise.
+
+### GetExecutionModeOk
+
+`func (o *AppEnvironment) GetExecutionModeOk() (*string, bool)`
+
+GetExecutionModeOk returns a tuple with the ExecutionMode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecutionMode
+
+`func (o *AppEnvironment) SetExecutionMode(v string)`
+
+SetExecutionMode sets ExecutionMode field to given value.
+
+### HasExecutionMode
+
+`func (o *AppEnvironment) HasExecutionMode() bool`
+
+HasExecutionMode returns a boolean if a field has been set.
+
+### GetWorkspace
+
+`func (o *AppEnvironment) GetWorkspace() Workspace`
+
+GetWorkspace returns the Workspace field if non-nil, zero value otherwise.
+
+### GetWorkspaceOk
+
+`func (o *AppEnvironment) GetWorkspaceOk() (*Workspace, bool)`
+
+GetWorkspaceOk returns a tuple with the Workspace field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorkspace
+
+`func (o *AppEnvironment) SetWorkspace(v Workspace)`
+
+SetWorkspace sets Workspace field to given value.
+
+### HasWorkspace
+
+`func (o *AppEnvironment) HasWorkspace() bool`
+
+HasWorkspace returns a boolean if a field has been set.
 
 ### GetId
 

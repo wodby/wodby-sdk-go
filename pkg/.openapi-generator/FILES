@@ -236,6 +236,7 @@ docs/NewStackServiceScopedValueInput.md
 docs/NewStackServiceTokenInput.md
 docs/NewVariableProviderFieldInput.md
 docs/NewVariableProviderInput.md
+docs/NewWorkspaceInput.md
 docs/OperationResult.md
 docs/Org.md
 docs/OrgCapabilities.md
@@ -365,6 +366,10 @@ docs/UserAPI.md
 docs/ValidateAppAccessHostnameInput.md
 docs/ValidationResult.md
 docs/VolumeSizeInput.md
+docs/Workspace.md
+docs/WorkspaceConnection.md
+docs/WorkspaceEligibility200Response.md
+docs/WorkspaceEligibilityRequest.md
 git_push.sh
 model_add_app_service_volume_input.go
 model_app.go
@@ -552,6 +557,7 @@ model_new_stack_service_scoped_value_input.go
 model_new_stack_service_token_input.go
 model_new_variable_provider_field_input.go
 model_new_variable_provider_input.go
+model_new_workspace_input.go
 model_operation_result.go
 model_org.go
 model_org_capabilities.go
@@ -671,6 +677,10 @@ model_user.go
 model_validate_app_access_hostname_input.go
 model_validation_result.go
 model_volume_size_input.go
+model_workspace.go
+model_workspace_connection.go
+model_workspace_eligibility_200_response.go
+model_workspace_eligibility_request.go
 response.go
 test/api_app_auths_test.go
 test/api_app_builds_test.go

@@ -21,6 +21,8 @@ var _ MappedNullable = &NewAppInput{}
 
 // NewAppInput struct for NewAppInput
 type NewAppInput struct {
+	ExecutionMode *string `json:"executionMode,omitempty"`
+	Workspace *NewWorkspaceInput `json:"workspace,omitempty"`
 	// Optional for API-key requests; defaults to the API key's organization.
 	OrgId *int32 `json:"orgId,omitempty"`
 	Name string `json:"name"`
@@ -57,6 +59,8 @@ type _NewAppInput NewAppInput
 // will change when the set of required properties is changed
 func NewNewAppInput(name string, environmentName string, environmentType string, stackRevId int32) *NewAppInput {
 	this := NewAppInput{}
+	var executionMode string = "standard"
+	this.ExecutionMode = &executionMode
 	this.Name = name
 	this.EnvironmentName = environmentName
 	this.EnvironmentType = environmentType
@@ -71,9 +75,75 @@ func NewNewAppInput(name string, environmentName string, environmentType string,
 // but it doesn't guarantee that properties required by API are set
 func NewNewAppInputWithDefaults() *NewAppInput {
 	this := NewAppInput{}
+	var executionMode string = "standard"
+	this.ExecutionMode = &executionMode
 	var deferInitialDeployment bool = false
 	this.DeferInitialDeployment = &deferInitialDeployment
 	return &this
+}
+
+// GetExecutionMode returns the ExecutionMode field value if set, zero value otherwise.
+func (o *NewAppInput) GetExecutionMode() string {
+	if o == nil || IsNil(o.ExecutionMode) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionMode
+}
+
+// GetExecutionModeOk returns a tuple with the ExecutionMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppInput) GetExecutionModeOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecutionMode) {
+		return nil, false
+	}
+	return o.ExecutionMode, true
+}
+
+// HasExecutionMode returns a boolean if a field has been set.
+func (o *NewAppInput) HasExecutionMode() bool {
+	if o != nil && !IsNil(o.ExecutionMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionMode gets a reference to the given string and assigns it to the ExecutionMode field.
+func (o *NewAppInput) SetExecutionMode(v string) {
+	o.ExecutionMode = &v
+}
+
+// GetWorkspace returns the Workspace field value if set, zero value otherwise.
+func (o *NewAppInput) GetWorkspace() NewWorkspaceInput {
+	if o == nil || IsNil(o.Workspace) {
+		var ret NewWorkspaceInput
+		return ret
+	}
+	return *o.Workspace
+}
+
+// GetWorkspaceOk returns a tuple with the Workspace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppInput) GetWorkspaceOk() (*NewWorkspaceInput, bool) {
+	if o == nil || IsNil(o.Workspace) {
+		return nil, false
+	}
+	return o.Workspace, true
+}
+
+// HasWorkspace returns a boolean if a field has been set.
+func (o *NewAppInput) HasWorkspace() bool {
+	if o != nil && !IsNil(o.Workspace) {
+		return true
+	}
+
+	return false
+}
+
+// SetWorkspace gets a reference to the given NewWorkspaceInput and assigns it to the Workspace field.
+func (o *NewAppInput) SetWorkspace(v NewWorkspaceInput) {
+	o.Workspace = &v
 }
 
 // GetOrgId returns the OrgId field value if set, zero value otherwise.
@@ -606,6 +676,12 @@ func (o NewAppInput) MarshalJSON() ([]byte, error) {
 
 func (o NewAppInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ExecutionMode) {
+		toSerialize["executionMode"] = o.ExecutionMode
+	}
+	if !IsNil(o.Workspace) {
+		toSerialize["workspace"] = o.Workspace
+	}
 	if !IsNil(o.OrgId) {
 		toSerialize["orgId"] = o.OrgId
 	}

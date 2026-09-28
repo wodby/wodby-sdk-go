@@ -106,10 +106,15 @@ Class | Method | HTTP request | Description
 *AppEnvironmentsAPI* | [**GetAppEnvironmentByName**](docs/AppEnvironmentsAPI.md#getappenvironmentbyname) | **Get** /app-environments/by-name/{appName}/{environmentName} | Get app environment by name
 *AppEnvironmentsAPI* | [**GetAppEnvironmentCICDSettings**](docs/AppEnvironmentsAPI.md#getappenvironmentcicdsettings) | **Get** /app-environments/cicd-settings/{id} | Get app environment CI/CD settings
 *AppEnvironmentsAPI* | [**GetAppEnvironmentStackUpgradeChangelog**](docs/AppEnvironmentsAPI.md#getappenvironmentstackupgradechangelog) | **Get** /app-environment-stack-upgrade-changelogs/{id} | Preview app environment stack upgrade
+*AppEnvironmentsAPI* | [**GetWorkspaceConnection**](docs/AppEnvironmentsAPI.md#getworkspaceconnection) | **Get** /workspaces/{id}/connection | Get workspace SSH connection
 *AppEnvironmentsAPI* | [**ListAppAccessCleanups**](docs/AppEnvironmentsAPI.md#listappaccesscleanups) | **Get** /app-access-cleanups | List app-access cleanups
 *AppEnvironmentsAPI* | [**ListAppEnvironments**](docs/AppEnvironmentsAPI.md#listappenvironments) | **Get** /app-environments | List app environments
+*AppEnvironmentsAPI* | [**PauseWorkspace**](docs/AppEnvironmentsAPI.md#pauseworkspace) | **Post** /workspaces/{id}/actions/pause | Pause workspace
 *AppEnvironmentsAPI* | [**PreflightAppAccess**](docs/AppEnvironmentsAPI.md#preflightappaccess) | **Post** /app-accesses/actions/preflight | Preflight app environment access
+*AppEnvironmentsAPI* | [**PrepareWorkspace**](docs/AppEnvironmentsAPI.md#prepareworkspace) | **Post** /workspaces/{id}/actions/prepare | Prepare workspace
 *AppEnvironmentsAPI* | [**ReconcileAppEnvironmentStack**](docs/AppEnvironmentsAPI.md#reconcileappenvironmentstack) | **Post** /app-environments/{id}/actions/reconcile-stack | Reconcile app environment stack
+*AppEnvironmentsAPI* | [**RestartWorkspace**](docs/AppEnvironmentsAPI.md#restartworkspace) | **Post** /workspaces/{id}/actions/restart | Restart workspace
+*AppEnvironmentsAPI* | [**ResumeWorkspace**](docs/AppEnvironmentsAPI.md#resumeworkspace) | **Post** /workspaces/{id}/actions/resume | Resume workspace
 *AppEnvironmentsAPI* | [**RetryAppAccessCleanup**](docs/AppEnvironmentsAPI.md#retryappaccesscleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
 *AppEnvironmentsAPI* | [**UpdateAppAccess**](docs/AppEnvironmentsAPI.md#updateappaccess) | **Put** /app-accesses/{id} | Update app access
 *AppEnvironmentsAPI* | [**UpdateAppEnvironment**](docs/AppEnvironmentsAPI.md#updateappenvironment) | **Put** /app-environments/{id} | Update app environment
@@ -117,6 +122,7 @@ Class | Method | HTTP request | Description
 *AppEnvironmentsAPI* | [**UpdateAppEnvironmentMaintenanceMode**](docs/AppEnvironmentsAPI.md#updateappenvironmentmaintenancemode) | **Put** /app-environments/{id}/actions/maintenance-mode | Update app environment maintenance mode
 *AppEnvironmentsAPI* | [**UpdateAppEnvironmentSettings**](docs/AppEnvironmentsAPI.md#updateappenvironmentsettings) | **Put** /app-environments/settings/{id} | Update app environment settings
 *AppEnvironmentsAPI* | [**UpgradeAppEnvironmentStack**](docs/AppEnvironmentsAPI.md#upgradeappenvironmentstack) | **Post** /app-environments/{id}/actions/upgrade-stack | Upgrade app environment stack
+*AppEnvironmentsAPI* | [**WorkspaceEligibility**](docs/AppEnvironmentsAPI.md#workspaceeligibility) | **Post** /workspace-eligibility | Check workspace service eligibility
 *AppPortsAPI* | [**GetAppPort**](docs/AppPortsAPI.md#getappport) | **Get** /app-ports/{id} | Get app port
 *AppPortsAPI* | [**ListAppPorts**](docs/AppPortsAPI.md#listappports) | **Get** /app-ports | List app ports
 *AppRoutesAPI* | [**CreateAppRoute**](docs/AppRoutesAPI.md#createapproute) | **Post** /app-routes | Create app route
@@ -550,6 +556,7 @@ Class | Method | HTTP request | Description
  - [NewStackServiceTokenInput](docs/NewStackServiceTokenInput.md)
  - [NewVariableProviderFieldInput](docs/NewVariableProviderFieldInput.md)
  - [NewVariableProviderInput](docs/NewVariableProviderInput.md)
+ - [NewWorkspaceInput](docs/NewWorkspaceInput.md)
  - [OperationResult](docs/OperationResult.md)
  - [Org](docs/Org.md)
  - [OrgCapabilities](docs/OrgCapabilities.md)
@@ -669,6 +676,10 @@ Class | Method | HTTP request | Description
  - [ValidateAppAccessHostnameInput](docs/ValidateAppAccessHostnameInput.md)
  - [ValidationResult](docs/ValidationResult.md)
  - [VolumeSizeInput](docs/VolumeSizeInput.md)
+ - [Workspace](docs/Workspace.md)
+ - [WorkspaceConnection](docs/WorkspaceConnection.md)
+ - [WorkspaceEligibility200Response](docs/WorkspaceEligibility200Response.md)
+ - [WorkspaceEligibilityRequest](docs/WorkspaceEligibilityRequest.md)
 
 
 ## Documentation For Authorization

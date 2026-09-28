@@ -22,6 +22,8 @@ var _ MappedNullable = &AppEnvironment{}
 
 // AppEnvironment struct for AppEnvironment
 type AppEnvironment struct {
+	ExecutionMode *string `json:"executionMode,omitempty"`
+	Workspace *Workspace `json:"workspace,omitempty"`
 	Id int32 `json:"id"`
 	Name string `json:"name"`
 	Title string `json:"title"`
@@ -60,6 +62,8 @@ type _AppEnvironment AppEnvironment
 // will change when the set of required properties is changed
 func NewAppEnvironment(id int32, name string, title string, environmentType string, status string, outdated bool, mainRouteCert NullableAppEnvironmentMainRouteCert, appId int32, clusterId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppEnvironmentHealth, createdAt time.Time, updatedAt time.Time) *AppEnvironment {
 	this := AppEnvironment{}
+	var executionMode string = "standard"
+	this.ExecutionMode = &executionMode
 	this.Id = id
 	this.Name = name
 	this.Title = title
@@ -93,7 +97,73 @@ func NewAppEnvironment(id int32, name string, title string, environmentType stri
 // but it doesn't guarantee that properties required by API are set
 func NewAppEnvironmentWithDefaults() *AppEnvironment {
 	this := AppEnvironment{}
+	var executionMode string = "standard"
+	this.ExecutionMode = &executionMode
 	return &this
+}
+
+// GetExecutionMode returns the ExecutionMode field value if set, zero value otherwise.
+func (o *AppEnvironment) GetExecutionMode() string {
+	if o == nil || IsNil(o.ExecutionMode) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionMode
+}
+
+// GetExecutionModeOk returns a tuple with the ExecutionMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironment) GetExecutionModeOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecutionMode) {
+		return nil, false
+	}
+	return o.ExecutionMode, true
+}
+
+// HasExecutionMode returns a boolean if a field has been set.
+func (o *AppEnvironment) HasExecutionMode() bool {
+	if o != nil && !IsNil(o.ExecutionMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionMode gets a reference to the given string and assigns it to the ExecutionMode field.
+func (o *AppEnvironment) SetExecutionMode(v string) {
+	o.ExecutionMode = &v
+}
+
+// GetWorkspace returns the Workspace field value if set, zero value otherwise.
+func (o *AppEnvironment) GetWorkspace() Workspace {
+	if o == nil || IsNil(o.Workspace) {
+		var ret Workspace
+		return ret
+	}
+	return *o.Workspace
+}
+
+// GetWorkspaceOk returns a tuple with the Workspace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironment) GetWorkspaceOk() (*Workspace, bool) {
+	if o == nil || IsNil(o.Workspace) {
+		return nil, false
+	}
+	return o.Workspace, true
+}
+
+// HasWorkspace returns a boolean if a field has been set.
+func (o *AppEnvironment) HasWorkspace() bool {
+	if o != nil && !IsNil(o.Workspace) {
+		return true
+	}
+
+	return false
+}
+
+// SetWorkspace gets a reference to the given Workspace and assigns it to the Workspace field.
+func (o *AppEnvironment) SetWorkspace(v Workspace) {
+	o.Workspace = &v
 }
 
 // GetId returns the Id field value
@@ -824,6 +894,12 @@ func (o AppEnvironment) MarshalJSON() ([]byte, error) {
 
 func (o AppEnvironment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ExecutionMode) {
+		toSerialize["executionMode"] = o.ExecutionMode
+	}
+	if !IsNil(o.Workspace) {
+		toSerialize["workspace"] = o.Workspace
+	}
 	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title

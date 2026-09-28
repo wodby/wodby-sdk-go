@@ -4,6 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ExecutionMode** | Pointer to **string** |  | [optional] [default to "standard"]
+**Workspace** | Pointer to [**NewWorkspaceInput**](NewWorkspaceInput.md) |  | [optional] 
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **Name** | **string** |  | 
 **Title** | Pointer to **string** | Defaults to name when omitted. | [optional] 
@@ -39,6 +41,56 @@ will change when the set of required properties is changed
 NewNewAppInputWithDefaults instantiates a new NewAppInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetExecutionMode
+
+`func (o *NewAppInput) GetExecutionMode() string`
+
+GetExecutionMode returns the ExecutionMode field if non-nil, zero value otherwise.
+
+### GetExecutionModeOk
+
+`func (o *NewAppInput) GetExecutionModeOk() (*string, bool)`
+
+GetExecutionModeOk returns a tuple with the ExecutionMode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecutionMode
+
+`func (o *NewAppInput) SetExecutionMode(v string)`
+
+SetExecutionMode sets ExecutionMode field to given value.
+
+### HasExecutionMode
+
+`func (o *NewAppInput) HasExecutionMode() bool`
+
+HasExecutionMode returns a boolean if a field has been set.
+
+### GetWorkspace
+
+`func (o *NewAppInput) GetWorkspace() NewWorkspaceInput`
+
+GetWorkspace returns the Workspace field if non-nil, zero value otherwise.
+
+### GetWorkspaceOk
+
+`func (o *NewAppInput) GetWorkspaceOk() (*NewWorkspaceInput, bool)`
+
+GetWorkspaceOk returns a tuple with the Workspace field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorkspace
+
+`func (o *NewAppInput) SetWorkspace(v NewWorkspaceInput)`
+
+SetWorkspace sets Workspace field to given value.
+
+### HasWorkspace
+
+`func (o *NewAppInput) HasWorkspace() bool`
+
+HasWorkspace returns a boolean if a field has been set.
 
 ### GetOrgId
 

@@ -1380,6 +1380,213 @@ paths:
       summary: Reconcile app environment stack
       tags:
       - app-environments
+  /workspace-eligibility:
+    post:
+      description: "Check the selected stack service graph. Creation separately validates\
+        \ repository, shared storage, access and resource limits."
+      operationId: workspaceEligibility
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/workspaceEligibility_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspaceEligibility_200_response'
+          description: Service capability result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Check workspace service eligibility
+      tags:
+      - app-environments
+  /workspaces/{id}/connection:
+    get:
+      description: "Return the owner-only SSH endpoint, readiness and stable host\
+        \ fingerprint."
+      operationId: getWorkspaceConnection
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceConnection'
+          description: Owner SSH connection details without credentials
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get workspace SSH connection
+      tags:
+      - app-environments
+  /workspaces/{id}/actions/prepare:
+    post:
+      description: Prepare workspace. Workspace operations preserve the persistent
+        checkout.
+      operationId: prepareWorkspace
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Workspace operation queued
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Prepare workspace
+      tags:
+      - app-environments
+  /workspaces/{id}/actions/restart:
+    post:
+      description: "Restart the SSH runner, ending existing sessions while preserving\
+        \ code and home volumes."
+      operationId: restartWorkspace
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Workspace operation queued
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Restart workspace
+      tags:
+      - app-environments
+  /workspaces/{id}/actions/pause:
+    post:
+      description: Pause workspace. Workspace operations preserve the persistent checkout.
+      operationId: pauseWorkspace
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Workspace operation queued
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Pause workspace
+      tags:
+      - app-environments
+  /workspaces/{id}/actions/resume:
+    post:
+      description: Resume workspace. Workspace operations preserve the persistent
+        checkout.
+      operationId: resumeWorkspace
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Workspace operation queued
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Resume workspace
+      tags:
+      - app-environments
   /app-auths:
     get:
       description: Returns HTTP basic authentication entries for an app environment
@@ -14716,20 +14923,32 @@ components:
       type: object
     AppEnvironment:
       example:
+        workspace:
+          accessError: accessError
+          initialCommit: initialCommit
+          sourceAppServiceId: 6
+          runnerState: runnerState
+          ownerUserId: 0
+          preparationState: preparationState
+          initialized: true
+          error: error
+          branch: branch
+          baseRef: baseRef
+          taskId: 1
         access: "{}"
         environmentType: prod
         stackName: stackName
         mainDomain: mainDomain
         mainRouteCert: "{}"
         maintenanceModeActive: true
-        clusterId: 1
+        clusterId: 2
         title: title
         createdAt: 2000-01-23T04:56:07.000+00:00
-        stackRevId: 5
+        stackRevId: 9
         outdated: true
-        appId: 6
+        appId: 5
         stackIcon: stackIcon
-        id: 0
+        id: 5
         configurationReady: true
         updatedAt: 2000-01-23T04:56:07.000+00:00
         settings:
@@ -14755,38 +14974,47 @@ components:
               services: true
               integrations: true
             enabled: true
-        stackId: 5
+        stackId: 7
+        executionMode: standard
         health:
           cron:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
-            failingSchedulesCount: 9
+            failingSchedulesCount: 4
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
-            failingSchedulesCount: 3
+            failingSchedulesCount: 7
         stackTitle: stackTitle
         stackVersion: stackVersion
         configurationIssues:
-        - appServiceId: 7
+        - appServiceId: 2
           code: code
           appServiceName: appServiceName
           name: name
           appServiceTitle: appServiceTitle
           title: title
           message: message
-        - appServiceId: 7
+        - appServiceId: 2
           code: code
           appServiceName: appServiceName
           name: name
           appServiceTitle: appServiceTitle
           title: title
           message: message
-        stackRevNumber: 2
+        stackRevNumber: 3
         name: name
         routingMode: routingMode
         maintenanceMode: true
         status: status
         routingPending: true
       properties:
+        executionMode:
+          default: standard
+          enum:
+          - standard
+          - workspace
+          type: string
+        workspace:
+          $ref: '#/components/schemas/Workspace'
         id:
           type: integer
         name:
@@ -14901,10 +15129,10 @@ components:
       example:
         cron:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
-          failingSchedulesCount: 9
+          failingSchedulesCount: 4
         backups:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
-          failingSchedulesCount: 3
+          failingSchedulesCount: 7
       properties:
         cron:
           $ref: '#/components/schemas/AppEnvironmentCronHealth'
@@ -14917,7 +15145,7 @@ components:
     AppEnvironmentCronHealth:
       example:
         latestFailureAt: 2000-01-23T04:56:07.000+00:00
-        failingSchedulesCount: 9
+        failingSchedulesCount: 4
       properties:
         failingSchedulesCount:
           type: integer
@@ -14931,7 +15159,7 @@ components:
     AppEnvironmentBackupHealth:
       example:
         latestFailureAt: 2000-01-23T04:56:07.000+00:00
-        failingSchedulesCount: 3
+        failingSchedulesCount: 7
       properties:
         failingSchedulesCount:
           type: integer
@@ -17251,7 +17479,7 @@ components:
       type: object
     AppServiceConfigurationIssue:
       example:
-        appServiceId: 7
+        appServiceId: 2
         code: code
         appServiceName: appServiceName
         name: name
@@ -19787,14 +20015,14 @@ components:
         ciPolicy: INHERIT
         external: true
         configurationIssues:
-        - appServiceId: 7
+        - appServiceId: 2
           code: code
           appServiceName: appServiceName
           name: name
           appServiceTitle: appServiceTitle
           title: title
           message: message
-        - appServiceId: 7
+        - appServiceId: 2
           code: code
           appServiceName: appServiceName
           name: name
@@ -22244,7 +22472,7 @@ components:
           gitRef: gitRef
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
-          integrationId: 5
+          integrationId: 7
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version
@@ -22651,7 +22879,7 @@ components:
           gitRef: gitRef
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
-          integrationId: 5
+          integrationId: 7
           newRepoName: newRepoName
           gitRefType: gitRefType
         title: title
@@ -23074,7 +23302,13 @@ components:
               services: true
               integrations: true
             enabled: true
-        registryIntegrationId: 9
+        workspace:
+          homeSize: 1
+          storageClassName: storageClassName
+          storageServiceName: storageServiceName
+          branch: branch
+          codeSize: 1
+        registryIntegrationId: 8
         access:
           mode: PROTECTED
           settings:
@@ -23091,9 +23325,10 @@ components:
             primary: true
           scope: ENTIRE_APP
           host: host
-          integrationId: 6
+          integrationId: 9
         environmentType: prod
         deferInitialDeployment: false
+        executionMode: standard
         services:
         - settings:
           - name: name
@@ -23101,137 +23336,145 @@ components:
           - name: name
             value: value
           database:
-            databaseDbId: 7
-            databaseId: 4
+            databaseDbId: 1
+            databaseId: 1
           imports:
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
           volumes:
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
           resources:
             container: container
-            limitMem: 6
-            requestMem: 1
-            limitCPU: 1
+            limitMem: 1
+            requestMem: 6
+            limitCPU: 7
             workload: workload
             requestCPU: 1
           disabled: true
-          id: 5
+          id: 2
           buildSource:
             buildSourceType: buildSourceType
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
-            integrationId: 5
+            integrationId: 7
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           scalability:
-            maxReplicas: 4
-            minReplicas: 1
-            averageCPU: 7
+            maxReplicas: 9
+            minReplicas: 5
+            averageCPU: 4
         - settings:
           - name: name
             value: value
           - name: name
             value: value
           database:
-            databaseDbId: 7
-            databaseId: 4
+            databaseDbId: 1
+            databaseId: 1
           imports:
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
           volumes:
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
           resources:
             container: container
-            limitMem: 6
-            requestMem: 1
-            limitCPU: 1
+            limitMem: 1
+            requestMem: 6
+            limitCPU: 7
             workload: workload
             requestCPU: 1
           disabled: true
-          id: 5
+          id: 2
           buildSource:
             buildSourceType: buildSourceType
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
-            integrationId: 5
+            integrationId: 7
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           scalability:
-            maxReplicas: 4
-            minReplicas: 1
-            averageCPU: 7
-        clusterId: 5
+            maxReplicas: 9
+            minReplicas: 5
+            averageCPU: 4
+        clusterId: 9
         title: title
-        orgId: 0
+        orgId: 1
         environmentTitle: environmentTitle
-        stackRevId: 1
+        stackRevId: 5
         environmentName: environmentName
         domain: domain
         name: name
-        projectId: 6
-        ciIntegrationId: 9
+        projectId: 5
+        ciIntegrationId: 6
       properties:
+        executionMode:
+          default: standard
+          enum:
+          - standard
+          - workspace
+          type: string
+        workspace:
+          $ref: '#/components/schemas/NewWorkspaceInput'
         orgId:
           description: Optional for API-key requests; defaults to the API key's organization.
           type: integer
@@ -23325,6 +23568,12 @@ components:
               services: true
               integrations: true
             enabled: true
+        workspace:
+          homeSize: 1
+          storageClassName: storageClassName
+          storageServiceName: storageServiceName
+          branch: branch
+          codeSize: 1
         registryIntegrationId: 5
         access:
           mode: PROTECTED
@@ -23342,9 +23591,10 @@ components:
             primary: true
           scope: ENTIRE_APP
           host: host
-          integrationId: 6
+          integrationId: 9
         environmentType: prod
         deferInitialDeployment: false
+        executionMode: standard
         services:
         - settings:
           - name: name
@@ -23352,126 +23602,126 @@ components:
           - name: name
             value: value
           database:
-            databaseDbId: 7
-            databaseId: 4
+            databaseDbId: 1
+            databaseId: 1
           imports:
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
           volumes:
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
           resources:
             container: container
-            limitMem: 6
-            requestMem: 1
-            limitCPU: 1
+            limitMem: 1
+            requestMem: 6
+            limitCPU: 7
             workload: workload
             requestCPU: 1
           disabled: true
-          id: 5
+          id: 2
           buildSource:
             buildSourceType: buildSourceType
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
-            integrationId: 5
+            integrationId: 7
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           scalability:
-            maxReplicas: 4
-            minReplicas: 1
-            averageCPU: 7
+            maxReplicas: 9
+            minReplicas: 5
+            averageCPU: 4
         - settings:
           - name: name
             value: value
           - name: name
             value: value
           database:
-            databaseDbId: 7
-            databaseId: 4
+            databaseDbId: 1
+            databaseId: 1
           imports:
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
-          - backupId: 2
+          - backupId: 9
             importName: importName
             from:
-              appServiceId: 9
-              databaseDbId: 7
+              appServiceId: 2
+              databaseDbId: 3
               backupName: backupName
             source: source
             url: url
           volumes:
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
-          - size: 3
+          - size: 4
             storageClassName: storageClassName
             name: name
           resources:
             container: container
-            limitMem: 6
-            requestMem: 1
-            limitCPU: 1
+            limitMem: 1
+            requestMem: 6
+            limitCPU: 7
             workload: workload
             requestCPU: 1
           disabled: true
-          id: 5
+          id: 2
           buildSource:
             buildSourceType: buildSourceType
             gitRef: gitRef
             remoteGitRepoId: remoteGitRepoId
             boilerplate: boilerplate
-            integrationId: 5
+            integrationId: 7
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
           integrations:
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           - integrationIds:
-            - 2
-            - 2
+            - 7
+            - 7
             name: name
           scalability:
-            maxReplicas: 4
-            minReplicas: 1
-            averageCPU: 7
+            maxReplicas: 9
+            minReplicas: 5
+            averageCPU: 4
         clusterId: 1
         environmentTitle: environmentTitle
         stackRevId: 6
@@ -23480,6 +23730,14 @@ components:
         domain: domain
         ciIntegrationId: 5
       properties:
+        executionMode:
+          default: standard
+          enum:
+          - standard
+          - workspace
+          type: string
+        workspace:
+          $ref: '#/components/schemas/NewWorkspaceInput'
         appId:
           type: integer
         environmentName:
@@ -23544,7 +23802,7 @@ components:
           primary: true
         scope: ENTIRE_APP
         host: host
-        integrationId: 6
+        integrationId: 9
       properties:
         integrationId:
           type: integer
@@ -23617,7 +23875,7 @@ components:
         gitRef: gitRef
         remoteGitRepoId: remoteGitRepoId
         boilerplate: boilerplate
-        integrationId: 5
+        integrationId: 7
         newRepoName: newRepoName
         gitRefType: gitRefType
       properties:
@@ -23646,11 +23904,11 @@ components:
       type: object
     ImportInput:
       example:
-        backupId: 2
+        backupId: 9
         importName: importName
         from:
-          appServiceId: 9
-          databaseDbId: 7
+          appServiceId: 2
+          databaseDbId: 3
           backupName: backupName
         source: source
         url: url
@@ -23673,8 +23931,8 @@ components:
       type: object
     ImportFromInput:
       example:
-        appServiceId: 9
-        databaseDbId: 7
+        appServiceId: 2
+        databaseDbId: 3
         backupName: backupName
       properties:
         databaseDbId:
@@ -23689,7 +23947,7 @@ components:
       type: object
     VolumeSizeInput:
       example:
-        size: 3
+        size: 4
         storageClassName: storageClassName
         name: name
       properties:
@@ -23707,8 +23965,8 @@ components:
     AppServiceIntegrationInput:
       example:
         integrationIds:
-        - 2
-        - 2
+        - 7
+        - 7
         name: name
       properties:
         name:
@@ -23736,8 +23994,8 @@ components:
       type: object
     AppServiceDatabaseInput:
       example:
-        databaseDbId: 7
-        databaseId: 4
+        databaseDbId: 1
+        databaseId: 1
       properties:
         databaseId:
           type: integer
@@ -23750,9 +24008,9 @@ components:
     ResourcesInput:
       example:
         container: container
-        limitMem: 6
-        requestMem: 1
-        limitCPU: 1
+        limitMem: 1
+        requestMem: 6
+        limitCPU: 7
         workload: workload
         requestCPU: 1
       properties:
@@ -23777,9 +24035,9 @@ components:
       type: object
     ScalabilityInput:
       example:
-        maxReplicas: 4
-        minReplicas: 1
-        averageCPU: 7
+        maxReplicas: 9
+        minReplicas: 5
+        averageCPU: 4
       properties:
         averageCPU:
           type: integer
@@ -25041,6 +25299,113 @@ components:
       required:
       - mode
       type: object
+    NewWorkspaceInput:
+      example:
+        homeSize: 1
+        storageClassName: storageClassName
+        storageServiceName: storageServiceName
+        branch: branch
+        codeSize: 1
+      properties:
+        branch:
+          type: string
+        storageClassName:
+          type: string
+        storageServiceName:
+          type: string
+        codeSize:
+          default: 10
+          minimum: 1
+          type: integer
+        homeSize:
+          default: 5
+          minimum: 1
+          type: integer
+      required:
+      - branch
+      type: object
+    Workspace:
+      example:
+        accessError: accessError
+        initialCommit: initialCommit
+        sourceAppServiceId: 6
+        runnerState: runnerState
+        ownerUserId: 0
+        preparationState: preparationState
+        initialized: true
+        error: error
+        branch: branch
+        baseRef: baseRef
+        taskId: 1
+      properties:
+        ownerUserId:
+          type: integer
+        sourceAppServiceId:
+          type: integer
+        runnerState:
+          type: string
+        preparationState:
+          type: string
+        accessError:
+          type: string
+        baseRef:
+          type: string
+        branch:
+          type: string
+        initialCommit:
+          type: string
+        initialized:
+          type: boolean
+        error:
+          type: string
+        taskId:
+          type: integer
+      required:
+      - accessError
+      - baseRef
+      - branch
+      - error
+      - initialCommit
+      - initialized
+      - ownerUserId
+      - preparationState
+      - runnerState
+      - sourceAppServiceId
+      - taskId
+      type: object
+    WorkspaceConnection:
+      example:
+        reason: reason
+        port: 0
+        workingDirectory: workingDirectory
+        ready: true
+        host: host
+        hostKeyFingerprint: hostKeyFingerprint
+        username: username
+      properties:
+        ready:
+          type: boolean
+        reason:
+          type: string
+        host:
+          type: string
+        port:
+          type: integer
+        username:
+          type: string
+        workingDirectory:
+          type: string
+        hostKeyFingerprint:
+          type: string
+      required:
+      - host
+      - hostKeyFingerprint
+      - port
+      - ready
+      - reason
+      - username
+      - workingDirectory
+      type: object
     CreateAppServiceInput:
       example:
         settings:
@@ -25049,63 +25414,63 @@ components:
         - name: name
           value: value
         database:
-          databaseDbId: 7
-          databaseId: 4
+          databaseDbId: 1
+          databaseId: 1
         imports:
-        - backupId: 2
+        - backupId: 9
           importName: importName
           from:
-            appServiceId: 9
-            databaseDbId: 7
+            appServiceId: 2
+            databaseDbId: 3
             backupName: backupName
           source: source
           url: url
-        - backupId: 2
+        - backupId: 9
           importName: importName
           from:
-            appServiceId: 9
-            databaseDbId: 7
+            appServiceId: 2
+            databaseDbId: 3
             backupName: backupName
           source: source
           url: url
         volumes:
-        - size: 3
+        - size: 4
           storageClassName: storageClassName
           name: name
-        - size: 3
+        - size: 4
           storageClassName: storageClassName
           name: name
         resources:
           container: container
-          limitMem: 6
-          requestMem: 1
-          limitCPU: 1
+          limitMem: 1
+          requestMem: 6
+          limitCPU: 7
           workload: workload
           requestCPU: 1
         disabled: true
-        id: 5
+        id: 2
         buildSource:
           buildSourceType: buildSourceType
           gitRef: gitRef
           remoteGitRepoId: remoteGitRepoId
           boilerplate: boilerplate
-          integrationId: 5
+          integrationId: 7
           newRepoName: newRepoName
           gitRefType: gitRefType
         version: version
         integrations:
         - integrationIds:
-          - 2
-          - 2
+          - 7
+          - 7
           name: name
         - integrationIds:
-          - 2
-          - 2
+          - 7
+          - 7
           name: name
         scalability:
-          maxReplicas: 4
-          minReplicas: 1
-          averageCPU: 7
+          maxReplicas: 9
+          minReplicas: 5
+          averageCPU: 4
       properties:
         id:
           type: integer
@@ -25179,11 +25544,11 @@ components:
       example:
         appServiceId: 0
         import:
-          backupId: 2
+          backupId: 9
           importName: importName
           from:
-            appServiceId: 9
-            databaseDbId: 7
+            appServiceId: 2
+            databaseDbId: 3
             backupName: backupName
           source: source
           url: url
@@ -25199,6 +25564,46 @@ components:
           $ref: '#/components/schemas/ImportInput'
       required:
       - import
+      type: object
+    workspaceEligibility_request:
+      properties:
+        stackRevId:
+          type: integer
+        clusterId:
+          nullable: true
+          type: integer
+        disabledServiceIds:
+          items:
+            type: integer
+          type: array
+      required:
+      - disabledServiceIds
+      - stackRevId
+      type: object
+    workspaceEligibility_200_response:
+      example:
+        reasons:
+        - reasons
+        - reasons
+        consumerStackServiceIds:
+        - 6
+        - 6
+        eligible: true
+        sourceStackServiceId: 0
+      properties:
+        eligible:
+          type: boolean
+        reasons:
+          items:
+            type: string
+          type: array
+        sourceStackServiceId:
+          nullable: true
+          type: integer
+        consumerStackServiceIds:
+          items:
+            type: integer
+          type: array
       type: object
     HelmChartServicePort_targetPort:
       oneOf:
