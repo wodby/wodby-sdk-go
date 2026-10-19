@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **StackRevId** | **int32** |  | 
 **Services** | Pointer to [**[]CreateAppServiceInput**](CreateAppServiceInput.md) | Defaults to the stack revision&#39;s service defaults when omitted. | [optional] 
+**ServiceOverrides** | Pointer to [**[]NewAppServiceOverrideInput**](NewAppServiceOverrideInput.md) | Changes to the stack revision&#39;s service defaults. Use it instead of services to set only what differs, such as the repository of a workspace. Not allowed with services. | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **CiIntegrationId** | Pointer to **NullableInt32** | Omit or use null to inherit the organization default, use 0 for the built-in CI service, or use an accessible CI integration ID. A project-owned integration must be shared with the app&#39;s project. | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** | Omit or use null to inherit the organization default, use 0 for the built-in registry, or use an accessible registry integration ID. A project-owned integration must be shared with the app&#39;s project. | [optional] 
@@ -331,6 +332,31 @@ SetServices sets Services field to given value.
 `func (o *NewAppInput) HasServices() bool`
 
 HasServices returns a boolean if a field has been set.
+
+### GetServiceOverrides
+
+`func (o *NewAppInput) GetServiceOverrides() []NewAppServiceOverrideInput`
+
+GetServiceOverrides returns the ServiceOverrides field if non-nil, zero value otherwise.
+
+### GetServiceOverridesOk
+
+`func (o *NewAppInput) GetServiceOverridesOk() (*[]NewAppServiceOverrideInput, bool)`
+
+GetServiceOverridesOk returns a tuple with the ServiceOverrides field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceOverrides
+
+`func (o *NewAppInput) SetServiceOverrides(v []NewAppServiceOverrideInput)`
+
+SetServiceOverrides sets ServiceOverrides field to given value.
+
+### HasServiceOverrides
+
+`func (o *NewAppInput) HasServiceOverrides() bool`
+
+HasServiceOverrides returns a boolean if a field has been set.
 
 ### GetClusterId
 

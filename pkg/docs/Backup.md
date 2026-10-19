@@ -14,8 +14,11 @@ Name | Type | Description | Notes
 **BackupPresetId** | Pointer to **NullableInt32** |  | [optional] 
 **Manual** | **bool** |  | 
 **IntegrationId** | **NullableInt32** | Storage integration that owns the backup. Null identifies Wodby&#39;s built-in blob storage. | 
+**BlobStorageRegion** | Pointer to **NullableString** | Region used by Wodby Blob Storage. Null for third-party storage and legacy backups. | [optional] 
 **TaskId** | Pointer to **NullableInt32** |  | [optional] 
 **Size** | Pointer to **NullableInt64** | Final stored archive size in bytes. Null when the size has not been recorded. | [optional] 
+**FileDeleted** | **bool** | Whether the stored backup file has been permanently removed. | 
+**CanVoidFile** | **bool** | Whether the backup file can be permanently removed now. | 
 **Options** | [**[]BackupOption**](BackupOption.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -26,7 +29,7 @@ Name | Type | Description | Notes
 
 ### NewBackup
 
-`func NewBackup(id int32, name string, status string, manual bool, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time, ) *Backup`
+`func NewBackup(id int32, name string, status string, manual bool, integrationId NullableInt32, fileDeleted bool, canVoidFile bool, options []BackupOption, createdAt time.Time, updatedAt time.Time, ) *Backup`
 
 NewBackup instantiates a new Backup object
 This constructor will assign default values to properties that have it defined,
@@ -326,6 +329,41 @@ SetIntegrationId sets IntegrationId field to given value.
 `func (o *Backup) UnsetIntegrationId()`
 
 UnsetIntegrationId ensures that no value is present for IntegrationId, not even an explicit nil
+### GetBlobStorageRegion
+
+`func (o *Backup) GetBlobStorageRegion() string`
+
+GetBlobStorageRegion returns the BlobStorageRegion field if non-nil, zero value otherwise.
+
+### GetBlobStorageRegionOk
+
+`func (o *Backup) GetBlobStorageRegionOk() (*string, bool)`
+
+GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlobStorageRegion
+
+`func (o *Backup) SetBlobStorageRegion(v string)`
+
+SetBlobStorageRegion sets BlobStorageRegion field to given value.
+
+### HasBlobStorageRegion
+
+`func (o *Backup) HasBlobStorageRegion() bool`
+
+HasBlobStorageRegion returns a boolean if a field has been set.
+
+### SetBlobStorageRegionNil
+
+`func (o *Backup) SetBlobStorageRegionNil(b bool)`
+
+ SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+
+### UnsetBlobStorageRegion
+`func (o *Backup) UnsetBlobStorageRegion()`
+
+UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
 ### GetTaskId
 
 `func (o *Backup) GetTaskId() int32`
@@ -396,6 +434,46 @@ HasSize returns a boolean if a field has been set.
 `func (o *Backup) UnsetSize()`
 
 UnsetSize ensures that no value is present for Size, not even an explicit nil
+### GetFileDeleted
+
+`func (o *Backup) GetFileDeleted() bool`
+
+GetFileDeleted returns the FileDeleted field if non-nil, zero value otherwise.
+
+### GetFileDeletedOk
+
+`func (o *Backup) GetFileDeletedOk() (*bool, bool)`
+
+GetFileDeletedOk returns a tuple with the FileDeleted field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFileDeleted
+
+`func (o *Backup) SetFileDeleted(v bool)`
+
+SetFileDeleted sets FileDeleted field to given value.
+
+
+### GetCanVoidFile
+
+`func (o *Backup) GetCanVoidFile() bool`
+
+GetCanVoidFile returns the CanVoidFile field if non-nil, zero value otherwise.
+
+### GetCanVoidFileOk
+
+`func (o *Backup) GetCanVoidFileOk() (*bool, bool)`
+
+GetCanVoidFileOk returns a tuple with the CanVoidFile field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanVoidFile
+
+`func (o *Backup) SetCanVoidFile(v bool)`
+
+SetCanVoidFile sets CanVoidFile field to given value.
+
+
 ### GetOptions
 
 `func (o *Backup) GetOptions() []BackupOption`

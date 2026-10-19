@@ -20,6 +20,7 @@ var _ MappedNullable = &AppEnvironmentSettings{}
 // AppEnvironmentSettings struct for AppEnvironmentSettings
 type AppEnvironmentSettings struct {
 	AutoStackUpgrade *AppEnvironmentAutoStackUpgradeSettings `json:"autoStackUpgrade,omitempty"`
+	BuildImageCleanup *BuildImageCleanupSettings `json:"buildImageCleanup,omitempty"`
 }
 
 // NewAppEnvironmentSettings instantiates a new AppEnvironmentSettings object
@@ -71,6 +72,38 @@ func (o *AppEnvironmentSettings) SetAutoStackUpgrade(v AppEnvironmentAutoStackUp
 	o.AutoStackUpgrade = &v
 }
 
+// GetBuildImageCleanup returns the BuildImageCleanup field value if set, zero value otherwise.
+func (o *AppEnvironmentSettings) GetBuildImageCleanup() BuildImageCleanupSettings {
+	if o == nil || IsNil(o.BuildImageCleanup) {
+		var ret BuildImageCleanupSettings
+		return ret
+	}
+	return *o.BuildImageCleanup
+}
+
+// GetBuildImageCleanupOk returns a tuple with the BuildImageCleanup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentSettings) GetBuildImageCleanupOk() (*BuildImageCleanupSettings, bool) {
+	if o == nil || IsNil(o.BuildImageCleanup) {
+		return nil, false
+	}
+	return o.BuildImageCleanup, true
+}
+
+// HasBuildImageCleanup returns a boolean if a field has been set.
+func (o *AppEnvironmentSettings) HasBuildImageCleanup() bool {
+	if o != nil && !IsNil(o.BuildImageCleanup) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildImageCleanup gets a reference to the given BuildImageCleanupSettings and assigns it to the BuildImageCleanup field.
+func (o *AppEnvironmentSettings) SetBuildImageCleanup(v BuildImageCleanupSettings) {
+	o.BuildImageCleanup = &v
+}
+
 func (o AppEnvironmentSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -83,6 +116,9 @@ func (o AppEnvironmentSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AutoStackUpgrade) {
 		toSerialize["autoStackUpgrade"] = o.AutoStackUpgrade
+	}
+	if !IsNil(o.BuildImageCleanup) {
+		toSerialize["buildImageCleanup"] = o.BuildImageCleanup
 	}
 	return toSerialize, nil
 }

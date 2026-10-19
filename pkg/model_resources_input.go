@@ -19,6 +19,8 @@ var _ MappedNullable = &ResourcesInput{}
 
 // ResourcesInput struct for ResourcesInput
 type ResourcesInput struct {
+	// Omitted or null preserves an existing GPU override. Count zero disables GPUs.
+	Gpu NullableGPUResources `json:"gpu,omitempty"`
 	Workload NullableString `json:"workload,omitempty"`
 	Container NullableString `json:"container,omitempty"`
 	RequestCPU NullableInt32 `json:"requestCPU,omitempty"`
@@ -42,6 +44,48 @@ func NewResourcesInput() *ResourcesInput {
 func NewResourcesInputWithDefaults() *ResourcesInput {
 	this := ResourcesInput{}
 	return &this
+}
+
+// GetGpu returns the Gpu field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ResourcesInput) GetGpu() GPUResources {
+	if o == nil || IsNil(o.Gpu.Get()) {
+		var ret GPUResources
+		return ret
+	}
+	return *o.Gpu.Get()
+}
+
+// GetGpuOk returns a tuple with the Gpu field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ResourcesInput) GetGpuOk() (*GPUResources, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Gpu.Get(), o.Gpu.IsSet()
+}
+
+// HasGpu returns a boolean if a field has been set.
+func (o *ResourcesInput) HasGpu() bool {
+	if o != nil && o.Gpu.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGpu gets a reference to the given NullableGPUResources and assigns it to the Gpu field.
+func (o *ResourcesInput) SetGpu(v GPUResources) {
+	o.Gpu.Set(&v)
+}
+// SetGpuNil sets the value for Gpu to be an explicit nil
+func (o *ResourcesInput) SetGpuNil() {
+	o.Gpu.Set(nil)
+}
+
+// UnsetGpu ensures that no value is present for Gpu, not even an explicit nil
+func (o *ResourcesInput) UnsetGpu() {
+	o.Gpu.Unset()
 }
 
 // GetWorkload returns the Workload field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -306,6 +350,9 @@ func (o ResourcesInput) MarshalJSON() ([]byte, error) {
 
 func (o ResourcesInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Gpu.IsSet() {
+		toSerialize["gpu"] = o.Gpu.Get()
+	}
 	if o.Workload.IsSet() {
 		toSerialize["workload"] = o.Workload.Get()
 	}

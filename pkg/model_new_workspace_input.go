@@ -22,7 +22,9 @@ var _ MappedNullable = &NewWorkspaceInput{}
 // NewWorkspaceInput struct for NewWorkspaceInput
 type NewWorkspaceInput struct {
 	Branch string `json:"branch"`
+	// Storage class for the workspace code and home volumes. Every Pod that mounts the code then runs on one node. Omit both storage fields to use the cluster's default storage class. Not allowed with storageServiceName.
 	StorageClassName *string `json:"storageClassName,omitempty"`
+	// Enabled storage service in the selected stack that shares the workspace files across nodes. Not allowed with storageClassName.
 	StorageServiceName *string `json:"storageServiceName,omitempty"`
 	CodeSize *int32 `json:"codeSize,omitempty"`
 	HomeSize *int32 `json:"homeSize,omitempty"`

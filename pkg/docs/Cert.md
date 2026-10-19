@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
 **Custom** | **bool** |  | 
-**Issuer** | **string** | Human-readable certificate authority name parsed from uploaded certificates, or the managed issuer identifier. | 
+**Issuer** | **string** | Issuer label: a certificate authority name for uploaded or temporary AWS certificates, otherwise the managed issuer identifier. | 
 **Domain** | **string** |  | 
 **DnsNames** | **[]string** |  | 
 **RouteIds** | **[]int32** |  | 

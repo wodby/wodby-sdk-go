@@ -29,6 +29,9 @@ type Provider struct {
 	Public bool `json:"public"`
 	RevId int32 `json:"revId"`
 	OrgId int32 `json:"orgId"`
+	// org when the organization owns the resource, project when one project owns it.
+	OwnershipScope string `json:"ownershipScope"`
+	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -39,7 +42,7 @@ type _Provider Provider
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProvider(id int32, name string, title string, status string, public bool, revId int32, orgId int32, createdAt time.Time, updatedAt time.Time) *Provider {
+func NewProvider(id int32, name string, title string, status string, public bool, revId int32, orgId int32, ownershipScope string, createdAt time.Time, updatedAt time.Time) *Provider {
 	this := Provider{}
 	this.Id = id
 	this.Name = name
@@ -48,6 +51,7 @@ func NewProvider(id int32, name string, title string, status string, public bool
 	this.Public = public
 	this.RevId = revId
 	this.OrgId = orgId
+	this.OwnershipScope = ownershipScope
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -229,6 +233,72 @@ func (o *Provider) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetOwnershipScope returns the OwnershipScope field value
+func (o *Provider) GetOwnershipScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.OwnershipScope
+}
+
+// GetOwnershipScopeOk returns a tuple with the OwnershipScope field value
+// and a boolean to check if the value has been set.
+func (o *Provider) GetOwnershipScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OwnershipScope, true
+}
+
+// SetOwnershipScope sets field value
+func (o *Provider) SetOwnershipScope(v string) {
+	o.OwnershipScope = v
+}
+
+// GetOwnerProjectId returns the OwnerProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Provider) GetOwnerProjectId() int32 {
+	if o == nil || IsNil(o.OwnerProjectId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OwnerProjectId.Get()
+}
+
+// GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Provider) GetOwnerProjectIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnerProjectId.Get(), o.OwnerProjectId.IsSet()
+}
+
+// HasOwnerProjectId returns a boolean if a field has been set.
+func (o *Provider) HasOwnerProjectId() bool {
+	if o != nil && o.OwnerProjectId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerProjectId gets a reference to the given NullableInt32 and assigns it to the OwnerProjectId field.
+func (o *Provider) SetOwnerProjectId(v int32) {
+	o.OwnerProjectId.Set(&v)
+}
+// SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+func (o *Provider) SetOwnerProjectIdNil() {
+	o.OwnerProjectId.Set(nil)
+}
+
+// UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+func (o *Provider) UnsetOwnerProjectId() {
+	o.OwnerProjectId.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Provider) GetCreatedAt() time.Time {
 	if o == nil {
@@ -294,6 +364,10 @@ func (o Provider) ToMap() (map[string]interface{}, error) {
 	toSerialize["public"] = o.Public
 	toSerialize["revId"] = o.RevId
 	toSerialize["orgId"] = o.OrgId
+	toSerialize["ownershipScope"] = o.OwnershipScope
+	if o.OwnerProjectId.IsSet() {
+		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -311,6 +385,7 @@ func (o *Provider) UnmarshalJSON(data []byte) (err error) {
 		"public",
 		"revId",
 		"orgId",
+		"ownershipScope",
 		"createdAt",
 		"updatedAt",
 	}

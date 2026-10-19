@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **DefaultTimeZone** | **string** |  | 
 **CiIntegrationId** | **int32** | Effective default CI integration ID. Zero selects the built-in Wodby CI service. | 
 **RegistryIntegrationId** | **int32** | Effective default registry integration ID. Zero selects the built-in Wodby registry service. | 
+**Settings** | Pointer to [**OrgSettings**](OrgSettings.md) |  | [optional] 
 **Capabilities** | Pointer to [**OrgCapabilities**](OrgCapabilities.md) |  | [optional] 
 **Subscription** | Pointer to [**OrgSubscription**](OrgSubscription.md) | Billing summary. Omitted when the caller does not have billing-view access. | [optional] 
 **CreatedAt** | **time.Time** |  | 
@@ -174,6 +175,31 @@ and a boolean to check if the value has been set.
 
 SetRegistryIntegrationId sets RegistryIntegrationId field to given value.
 
+
+### GetSettings
+
+`func (o *Org) GetSettings() OrgSettings`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *Org) GetSettingsOk() (*OrgSettings, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *Org) SetSettings(v OrgSettings)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *Org) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
 
 ### GetCapabilities
 

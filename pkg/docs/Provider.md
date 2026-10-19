@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **Public** | **bool** |  | 
 **RevId** | **int32** |  | 
 **OrgId** | **int32** |  | 
+**OwnershipScope** | **string** | org when the organization owns the resource, project when one project owns it. | 
+**OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -18,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewProvider
 
-`func NewProvider(id int32, name string, title string, status string, public bool, revId int32, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Provider`
+`func NewProvider(id int32, name string, title string, status string, public bool, revId int32, orgId int32, ownershipScope string, createdAt time.Time, updatedAt time.Time, ) *Provider`
 
 NewProvider instantiates a new Provider object
 This constructor will assign default values to properties that have it defined,
@@ -173,6 +175,61 @@ and a boolean to check if the value has been set.
 SetOrgId sets OrgId field to given value.
 
 
+### GetOwnershipScope
+
+`func (o *Provider) GetOwnershipScope() string`
+
+GetOwnershipScope returns the OwnershipScope field if non-nil, zero value otherwise.
+
+### GetOwnershipScopeOk
+
+`func (o *Provider) GetOwnershipScopeOk() (*string, bool)`
+
+GetOwnershipScopeOk returns a tuple with the OwnershipScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipScope
+
+`func (o *Provider) SetOwnershipScope(v string)`
+
+SetOwnershipScope sets OwnershipScope field to given value.
+
+
+### GetOwnerProjectId
+
+`func (o *Provider) GetOwnerProjectId() int32`
+
+GetOwnerProjectId returns the OwnerProjectId field if non-nil, zero value otherwise.
+
+### GetOwnerProjectIdOk
+
+`func (o *Provider) GetOwnerProjectIdOk() (*int32, bool)`
+
+GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnerProjectId
+
+`func (o *Provider) SetOwnerProjectId(v int32)`
+
+SetOwnerProjectId sets OwnerProjectId field to given value.
+
+### HasOwnerProjectId
+
+`func (o *Provider) HasOwnerProjectId() bool`
+
+HasOwnerProjectId returns a boolean if a field has been set.
+
+### SetOwnerProjectIdNil
+
+`func (o *Provider) SetOwnerProjectIdNil(b bool)`
+
+ SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+
+### UnsetOwnerProjectId
+`func (o *Provider) UnsetOwnerProjectId()`
+
+UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *Provider) GetCreatedAt() time.Time`

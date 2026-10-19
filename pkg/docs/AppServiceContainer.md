@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Gpu** | Pointer to [**NullableGPUResources**](GPUResources.md) |  | [optional] 
 **Id** | Pointer to **NullableInt32** |  | [optional] 
 **AppServiceId** | **int32** |  | 
 **Workload** | **string** |  | 
@@ -32,6 +33,41 @@ NewAppServiceContainerWithDefaults instantiates a new AppServiceContainer object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetGpu
+
+`func (o *AppServiceContainer) GetGpu() GPUResources`
+
+GetGpu returns the Gpu field if non-nil, zero value otherwise.
+
+### GetGpuOk
+
+`func (o *AppServiceContainer) GetGpuOk() (*GPUResources, bool)`
+
+GetGpuOk returns a tuple with the Gpu field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpu
+
+`func (o *AppServiceContainer) SetGpu(v GPUResources)`
+
+SetGpu sets Gpu field to given value.
+
+### HasGpu
+
+`func (o *AppServiceContainer) HasGpu() bool`
+
+HasGpu returns a boolean if a field has been set.
+
+### SetGpuNil
+
+`func (o *AppServiceContainer) SetGpuNil(b bool)`
+
+ SetGpuNil sets the value for Gpu to be an explicit nil
+
+### UnsetGpu
+`func (o *AppServiceContainer) UnsetGpu()`
+
+UnsetGpu ensures that no value is present for Gpu, not even an explicit nil
 ### GetId
 
 `func (o *AppServiceContainer) GetId() int32`

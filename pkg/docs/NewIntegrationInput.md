@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Kinds** | **[]string** |  | 
 **Auth** | Pointer to **NullableString** |  | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | Pointer to **NullableBool** | Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects. | [optional] 
 **FieldsInput** | Pointer to [**[]FieldInput**](FieldInput.md) |  | [optional] 
 **Scope** | Pointer to **NullableString** |  | [optional] 
 **EnvironmentPolicy** | Pointer to [**IntegrationEnvironmentPolicyInput**](IntegrationEnvironmentPolicyInput.md) |  | [optional] 
@@ -188,6 +189,41 @@ HasProjectId returns a boolean if a field has been set.
 `func (o *NewIntegrationInput) UnsetProjectId()`
 
 UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *NewIntegrationInput) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *NewIntegrationInput) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *NewIntegrationInput) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
+
+### HasAvailableToAllProjects
+
+`func (o *NewIntegrationInput) HasAvailableToAllProjects() bool`
+
+HasAvailableToAllProjects returns a boolean if a field has been set.
+
+### SetAvailableToAllProjectsNil
+
+`func (o *NewIntegrationInput) SetAvailableToAllProjectsNil(b bool)`
+
+ SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+
+### UnsetAvailableToAllProjects
+`func (o *NewIntegrationInput) UnsetAvailableToAllProjects()`
+
+UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
 ### GetFieldsInput
 
 `func (o *NewIntegrationInput) GetFieldsInput() []FieldInput`

@@ -6,10 +6,12 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **DatabaseDbId** | Pointer to **NullableInt32** |  | [optional] 
+**BackupPresetId** | Pointer to **NullableInt32** | Associates a one-off backup with the preset used to populate its destination and options. | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
+**BlobStorageRegion** | Pointer to **NullableString** | Wodby Blob Storage region. Omit to use Europe; must be omitted for third-party storage. | [optional] 
 **Options** | Pointer to [**[]BackupOption**](BackupOption.md) |  | [optional] 
 
 ## Methods
@@ -101,6 +103,41 @@ HasDatabaseDbId returns a boolean if a field has been set.
 `func (o *NewBackupInput) UnsetDatabaseDbId()`
 
 UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+### GetBackupPresetId
+
+`func (o *NewBackupInput) GetBackupPresetId() int32`
+
+GetBackupPresetId returns the BackupPresetId field if non-nil, zero value otherwise.
+
+### GetBackupPresetIdOk
+
+`func (o *NewBackupInput) GetBackupPresetIdOk() (*int32, bool)`
+
+GetBackupPresetIdOk returns a tuple with the BackupPresetId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBackupPresetId
+
+`func (o *NewBackupInput) SetBackupPresetId(v int32)`
+
+SetBackupPresetId sets BackupPresetId field to given value.
+
+### HasBackupPresetId
+
+`func (o *NewBackupInput) HasBackupPresetId() bool`
+
+HasBackupPresetId returns a boolean if a field has been set.
+
+### SetBackupPresetIdNil
+
+`func (o *NewBackupInput) SetBackupPresetIdNil(b bool)`
+
+ SetBackupPresetIdNil sets the value for BackupPresetId to be an explicit nil
+
+### UnsetBackupPresetId
+`func (o *NewBackupInput) UnsetBackupPresetId()`
+
+UnsetBackupPresetId ensures that no value is present for BackupPresetId, not even an explicit nil
 ### GetBackupName
 
 `func (o *NewBackupInput) GetBackupName() string`
@@ -211,6 +248,41 @@ HasStorageClass returns a boolean if a field has been set.
 `func (o *NewBackupInput) UnsetStorageClass()`
 
 UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
+### GetBlobStorageRegion
+
+`func (o *NewBackupInput) GetBlobStorageRegion() string`
+
+GetBlobStorageRegion returns the BlobStorageRegion field if non-nil, zero value otherwise.
+
+### GetBlobStorageRegionOk
+
+`func (o *NewBackupInput) GetBlobStorageRegionOk() (*string, bool)`
+
+GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlobStorageRegion
+
+`func (o *NewBackupInput) SetBlobStorageRegion(v string)`
+
+SetBlobStorageRegion sets BlobStorageRegion field to given value.
+
+### HasBlobStorageRegion
+
+`func (o *NewBackupInput) HasBlobStorageRegion() bool`
+
+HasBlobStorageRegion returns a boolean if a field has been set.
+
+### SetBlobStorageRegionNil
+
+`func (o *NewBackupInput) SetBlobStorageRegionNil(b bool)`
+
+ SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+
+### UnsetBlobStorageRegion
+`func (o *NewBackupInput) UnsetBlobStorageRegion()`
+
+UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
 ### GetOptions
 
 `func (o *NewBackupInput) GetOptions() []BackupOption`

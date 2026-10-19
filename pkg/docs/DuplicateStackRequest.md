@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | Pointer to **NullableBool** | Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects. | [optional] 
 **SourceRevId** | Pointer to **NullableInt32** | Optional immutable source stack revision to duplicate. It must belong to the stack in the request path. | [optional] 
 **Settings** | Pointer to [**CopyStackSettingsInput**](CopyStackSettingsInput.md) |  | [optional] 
 
@@ -88,6 +89,41 @@ HasProjectId returns a boolean if a field has been set.
 `func (o *DuplicateStackRequest) UnsetProjectId()`
 
 UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *DuplicateStackRequest) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *DuplicateStackRequest) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *DuplicateStackRequest) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
+
+### HasAvailableToAllProjects
+
+`func (o *DuplicateStackRequest) HasAvailableToAllProjects() bool`
+
+HasAvailableToAllProjects returns a boolean if a field has been set.
+
+### SetAvailableToAllProjectsNil
+
+`func (o *DuplicateStackRequest) SetAvailableToAllProjectsNil(b bool)`
+
+ SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+
+### UnsetAvailableToAllProjects
+`func (o *DuplicateStackRequest) UnsetAvailableToAllProjects()`
+
+UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
 ### GetSourceRevId
 
 `func (o *DuplicateStackRequest) GetSourceRevId() int32`

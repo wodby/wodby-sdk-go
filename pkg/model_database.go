@@ -33,6 +33,9 @@ type Database struct {
 	Zone NullableString `json:"zone,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
+	// org when the organization owns the resource, project when one project owns it.
+	OwnershipScope string `json:"ownershipScope"`
+	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
 	// Legacy internal environment entity ID. Use envType.
 	// Deprecated
 	EnvId int32 `json:"envId"`
@@ -48,7 +51,7 @@ type _Database Database
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDatabase(id int32, name string, title string, type_ string, kind string, status string, version string, envId int32, envType string, orgId int32, createdAt time.Time, updatedAt time.Time) *Database {
+func NewDatabase(id int32, name string, title string, type_ string, kind string, status string, version string, ownershipScope string, envId int32, envType string, orgId int32, createdAt time.Time, updatedAt time.Time) *Database {
 	this := Database{}
 	this.Id = id
 	this.Name = name
@@ -57,6 +60,7 @@ func NewDatabase(id int32, name string, title string, type_ string, kind string,
 	this.Kind = kind
 	this.Status = status
 	this.Version = version
+	this.OwnershipScope = ownershipScope
 	this.EnvId = envId
 	this.EnvType = envType
 	this.OrgId = orgId
@@ -409,6 +413,72 @@ func (o *Database) UnsetAppServiceId() {
 	o.AppServiceId.Unset()
 }
 
+// GetOwnershipScope returns the OwnershipScope field value
+func (o *Database) GetOwnershipScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.OwnershipScope
+}
+
+// GetOwnershipScopeOk returns a tuple with the OwnershipScope field value
+// and a boolean to check if the value has been set.
+func (o *Database) GetOwnershipScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OwnershipScope, true
+}
+
+// SetOwnershipScope sets field value
+func (o *Database) SetOwnershipScope(v string) {
+	o.OwnershipScope = v
+}
+
+// GetOwnerProjectId returns the OwnerProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetOwnerProjectId() int32 {
+	if o == nil || IsNil(o.OwnerProjectId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OwnerProjectId.Get()
+}
+
+// GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetOwnerProjectIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnerProjectId.Get(), o.OwnerProjectId.IsSet()
+}
+
+// HasOwnerProjectId returns a boolean if a field has been set.
+func (o *Database) HasOwnerProjectId() bool {
+	if o != nil && o.OwnerProjectId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerProjectId gets a reference to the given NullableInt32 and assigns it to the OwnerProjectId field.
+func (o *Database) SetOwnerProjectId(v int32) {
+	o.OwnerProjectId.Set(&v)
+}
+// SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+func (o *Database) SetOwnerProjectIdNil() {
+	o.OwnerProjectId.Set(nil)
+}
+
+// UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+func (o *Database) UnsetOwnerProjectId() {
+	o.OwnerProjectId.Unset()
+}
+
 // GetEnvId returns the EnvId field value
 // Deprecated
 func (o *Database) GetEnvId() int32 {
@@ -561,6 +631,10 @@ func (o Database) ToMap() (map[string]interface{}, error) {
 	if o.AppServiceId.IsSet() {
 		toSerialize["appServiceId"] = o.AppServiceId.Get()
 	}
+	toSerialize["ownershipScope"] = o.OwnershipScope
+	if o.OwnerProjectId.IsSet() {
+		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
+	}
 	toSerialize["envId"] = o.EnvId
 	toSerialize["envType"] = o.EnvType
 	toSerialize["orgId"] = o.OrgId
@@ -581,6 +655,7 @@ func (o *Database) UnmarshalJSON(data []byte) (err error) {
 		"kind",
 		"status",
 		"version",
+		"ownershipScope",
 		"envId",
 		"envType",
 		"orgId",

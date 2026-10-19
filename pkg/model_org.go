@@ -31,6 +31,7 @@ type Org struct {
 	CiIntegrationId int32 `json:"ciIntegrationId"`
 	// Effective default registry integration ID. Zero selects the built-in Wodby registry service.
 	RegistryIntegrationId int32 `json:"registryIntegrationId"`
+	Settings *OrgSettings `json:"settings,omitempty"`
 	Capabilities *OrgCapabilities `json:"capabilities,omitempty"`
 	// Billing summary. Omitted when the caller does not have billing-view access.
 	Subscription *OrgSubscription `json:"subscription,omitempty"`
@@ -234,6 +235,38 @@ func (o *Org) SetRegistryIntegrationId(v int32) {
 	o.RegistryIntegrationId = v
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *Org) GetSettings() OrgSettings {
+	if o == nil || IsNil(o.Settings) {
+		var ret OrgSettings
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Org) GetSettingsOk() (*OrgSettings, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *Org) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given OrgSettings and assigns it to the Settings field.
+func (o *Org) SetSettings(v OrgSettings) {
+	o.Settings = &v
+}
+
 // GetCapabilities returns the Capabilities field value if set, zero value otherwise.
 func (o *Org) GetCapabilities() OrgCapabilities {
 	if o == nil || IsNil(o.Capabilities) {
@@ -363,6 +396,9 @@ func (o Org) ToMap() (map[string]interface{}, error) {
 	toSerialize["defaultTimeZone"] = o.DefaultTimeZone
 	toSerialize["ciIntegrationId"] = o.CiIntegrationId
 	toSerialize["registryIntegrationId"] = o.RegistryIntegrationId
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
 	if !IsNil(o.Capabilities) {
 		toSerialize["capabilities"] = o.Capabilities
 	}

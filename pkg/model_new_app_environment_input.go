@@ -33,6 +33,8 @@ type NewAppEnvironmentInput struct {
 	StackRevId int32 `json:"stackRevId"`
 	// Defaults to the stack revision's service defaults when omitted.
 	Services []CreateAppServiceInput `json:"services,omitempty"`
+	// Changes to the stack revision's service defaults. Use it instead of services to set only what differs, such as the repository of a workspace. Not allowed with services.
+	ServiceOverrides []NewAppServiceOverrideInput `json:"serviceOverrides,omitempty"`
 	ClusterId NullableInt32 `json:"clusterId,omitempty"`
 	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
@@ -328,6 +330,38 @@ func (o *NewAppEnvironmentInput) SetServices(v []CreateAppServiceInput) {
 	o.Services = v
 }
 
+// GetServiceOverrides returns the ServiceOverrides field value if set, zero value otherwise.
+func (o *NewAppEnvironmentInput) GetServiceOverrides() []NewAppServiceOverrideInput {
+	if o == nil || IsNil(o.ServiceOverrides) {
+		var ret []NewAppServiceOverrideInput
+		return ret
+	}
+	return o.ServiceOverrides
+}
+
+// GetServiceOverridesOk returns a tuple with the ServiceOverrides field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppEnvironmentInput) GetServiceOverridesOk() ([]NewAppServiceOverrideInput, bool) {
+	if o == nil || IsNil(o.ServiceOverrides) {
+		return nil, false
+	}
+	return o.ServiceOverrides, true
+}
+
+// HasServiceOverrides returns a boolean if a field has been set.
+func (o *NewAppEnvironmentInput) HasServiceOverrides() bool {
+	if o != nil && !IsNil(o.ServiceOverrides) {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceOverrides gets a reference to the given []NewAppServiceOverrideInput and assigns it to the ServiceOverrides field.
+func (o *NewAppEnvironmentInput) SetServiceOverrides(v []NewAppServiceOverrideInput) {
+	o.ServiceOverrides = v
+}
+
 // GetClusterId returns the ClusterId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NewAppEnvironmentInput) GetClusterId() int32 {
 	if o == nil || IsNil(o.ClusterId.Get()) {
@@ -578,6 +612,9 @@ func (o NewAppEnvironmentInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["stackRevId"] = o.StackRevId
 	if !IsNil(o.Services) {
 		toSerialize["services"] = o.Services
+	}
+	if !IsNil(o.ServiceOverrides) {
+		toSerialize["serviceOverrides"] = o.ServiceOverrides
 	}
 	if o.ClusterId.IsSet() {
 		toSerialize["clusterId"] = o.ClusterId.Get()

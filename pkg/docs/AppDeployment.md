@@ -6,7 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
 **Number** | **int32** |  | 
-**Status** | **string** |  | 
+**Status** | **string** | Overall result, including the routing updates that follow the service rollout. | 
+**RolloutStatus** | **string** | Progress of rolling out the selected services. It does not show whether routing has finished. | 
+**RolloutEndedAt** | Pointer to **NullableTime** |  | [optional] 
 **RollbackStatus** | **string** |  | 
 **PostDeploymentStatus** | **string** |  | 
 **SkipRollback** | **bool** |  | 
@@ -20,6 +22,8 @@ Name | Type | Description | Notes
 **PostDeploymentTaskId** | Pointer to **NullableInt32** |  | [optional] 
 **PostDeploymentTask** | Pointer to [**NullableTask**](Task.md) |  | [optional] 
 **AppServiceDeployments** | [**[]AppServiceDeployment**](AppServiceDeployment.md) |  | 
+**PostDeploymentScripts** | **[]string** | Post-deployment scripts that the deployment&#39;s builds provide. | 
+**SkipPostDeploymentScripts** | **bool** | True when the deployment does not run the post-deployment scripts its builds provide. | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **StartedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -29,7 +33,7 @@ Name | Type | Description | Notes
 
 ### NewAppDeployment
 
-`func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, canCancel bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
+`func NewAppDeployment(id int32, number int32, status string, rolloutStatus string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, canCancel bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, postDeploymentScripts []string, skipPostDeploymentScripts bool, createdAt time.Time, updatedAt time.Time, ) *AppDeployment`
 
 NewAppDeployment instantiates a new AppDeployment object
 This constructor will assign default values to properties that have it defined,
@@ -104,6 +108,61 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### GetRolloutStatus
+
+`func (o *AppDeployment) GetRolloutStatus() string`
+
+GetRolloutStatus returns the RolloutStatus field if non-nil, zero value otherwise.
+
+### GetRolloutStatusOk
+
+`func (o *AppDeployment) GetRolloutStatusOk() (*string, bool)`
+
+GetRolloutStatusOk returns a tuple with the RolloutStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRolloutStatus
+
+`func (o *AppDeployment) SetRolloutStatus(v string)`
+
+SetRolloutStatus sets RolloutStatus field to given value.
+
+
+### GetRolloutEndedAt
+
+`func (o *AppDeployment) GetRolloutEndedAt() time.Time`
+
+GetRolloutEndedAt returns the RolloutEndedAt field if non-nil, zero value otherwise.
+
+### GetRolloutEndedAtOk
+
+`func (o *AppDeployment) GetRolloutEndedAtOk() (*time.Time, bool)`
+
+GetRolloutEndedAtOk returns a tuple with the RolloutEndedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRolloutEndedAt
+
+`func (o *AppDeployment) SetRolloutEndedAt(v time.Time)`
+
+SetRolloutEndedAt sets RolloutEndedAt field to given value.
+
+### HasRolloutEndedAt
+
+`func (o *AppDeployment) HasRolloutEndedAt() bool`
+
+HasRolloutEndedAt returns a boolean if a field has been set.
+
+### SetRolloutEndedAtNil
+
+`func (o *AppDeployment) SetRolloutEndedAtNil(b bool)`
+
+ SetRolloutEndedAtNil sets the value for RolloutEndedAt to be an explicit nil
+
+### UnsetRolloutEndedAt
+`func (o *AppDeployment) UnsetRolloutEndedAt()`
+
+UnsetRolloutEndedAt ensures that no value is present for RolloutEndedAt, not even an explicit nil
 ### GetRollbackStatus
 
 `func (o *AppDeployment) GetRollbackStatus() string`
@@ -452,6 +511,46 @@ and a boolean to check if the value has been set.
 `func (o *AppDeployment) SetAppServiceDeployments(v []AppServiceDeployment)`
 
 SetAppServiceDeployments sets AppServiceDeployments field to given value.
+
+
+### GetPostDeploymentScripts
+
+`func (o *AppDeployment) GetPostDeploymentScripts() []string`
+
+GetPostDeploymentScripts returns the PostDeploymentScripts field if non-nil, zero value otherwise.
+
+### GetPostDeploymentScriptsOk
+
+`func (o *AppDeployment) GetPostDeploymentScriptsOk() (*[]string, bool)`
+
+GetPostDeploymentScriptsOk returns a tuple with the PostDeploymentScripts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostDeploymentScripts
+
+`func (o *AppDeployment) SetPostDeploymentScripts(v []string)`
+
+SetPostDeploymentScripts sets PostDeploymentScripts field to given value.
+
+
+### GetSkipPostDeploymentScripts
+
+`func (o *AppDeployment) GetSkipPostDeploymentScripts() bool`
+
+GetSkipPostDeploymentScripts returns the SkipPostDeploymentScripts field if non-nil, zero value otherwise.
+
+### GetSkipPostDeploymentScriptsOk
+
+`func (o *AppDeployment) GetSkipPostDeploymentScriptsOk() (*bool, bool)`
+
+GetSkipPostDeploymentScriptsOk returns a tuple with the SkipPostDeploymentScripts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSkipPostDeploymentScripts
+
+`func (o *AppDeployment) SetSkipPostDeploymentScripts(v bool)`
+
+SetSkipPostDeploymentScripts sets SkipPostDeploymentScripts field to given value.
 
 
 ### GetCreatedAt

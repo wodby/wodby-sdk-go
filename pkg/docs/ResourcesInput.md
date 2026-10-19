@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Gpu** | Pointer to [**NullableGPUResources**](GPUResources.md) | Omitted or null preserves an existing GPU override. Count zero disables GPUs. | [optional] 
 **Workload** | Pointer to **NullableString** |  | [optional] 
 **Container** | Pointer to **NullableString** |  | [optional] 
 **RequestCPU** | Pointer to **NullableInt32** |  | [optional] 
@@ -30,6 +31,41 @@ NewResourcesInputWithDefaults instantiates a new ResourcesInput object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetGpu
+
+`func (o *ResourcesInput) GetGpu() GPUResources`
+
+GetGpu returns the Gpu field if non-nil, zero value otherwise.
+
+### GetGpuOk
+
+`func (o *ResourcesInput) GetGpuOk() (*GPUResources, bool)`
+
+GetGpuOk returns a tuple with the Gpu field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpu
+
+`func (o *ResourcesInput) SetGpu(v GPUResources)`
+
+SetGpu sets Gpu field to given value.
+
+### HasGpu
+
+`func (o *ResourcesInput) HasGpu() bool`
+
+HasGpu returns a boolean if a field has been set.
+
+### SetGpuNil
+
+`func (o *ResourcesInput) SetGpuNil(b bool)`
+
+ SetGpuNil sets the value for Gpu to be an explicit nil
+
+### UnsetGpu
+`func (o *ResourcesInput) UnsetGpu()`
+
+UnsetGpu ensures that no value is present for Gpu, not even an explicit nil
 ### GetWorkload
 
 `func (o *ResourcesInput) GetWorkload() string`

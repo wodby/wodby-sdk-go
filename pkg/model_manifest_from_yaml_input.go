@@ -24,6 +24,8 @@ type ManifestFromYAMLInput struct {
 	// Optional for API-key requests; defaults to the API key's organization.
 	OrgId *int32 `json:"orgId,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
+	// Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects.
+	AvailableToAllProjects NullableBool `json:"availableToAllProjects,omitempty"`
 	// Optional revision version label for the generated non-Git resource.
 	Version *string `json:"version,omitempty"`
 	// Complete Wodby service.yml or stack.yml manifest content.
@@ -124,6 +126,48 @@ func (o *ManifestFromYAMLInput) SetProjectIdNil() {
 // UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
 func (o *ManifestFromYAMLInput) UnsetProjectId() {
 	o.ProjectId.Unset()
+}
+
+// GetAvailableToAllProjects returns the AvailableToAllProjects field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ManifestFromYAMLInput) GetAvailableToAllProjects() bool {
+	if o == nil || IsNil(o.AvailableToAllProjects.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.AvailableToAllProjects.Get()
+}
+
+// GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ManifestFromYAMLInput) GetAvailableToAllProjectsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AvailableToAllProjects.Get(), o.AvailableToAllProjects.IsSet()
+}
+
+// HasAvailableToAllProjects returns a boolean if a field has been set.
+func (o *ManifestFromYAMLInput) HasAvailableToAllProjects() bool {
+	if o != nil && o.AvailableToAllProjects.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailableToAllProjects gets a reference to the given NullableBool and assigns it to the AvailableToAllProjects field.
+func (o *ManifestFromYAMLInput) SetAvailableToAllProjects(v bool) {
+	o.AvailableToAllProjects.Set(&v)
+}
+// SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+func (o *ManifestFromYAMLInput) SetAvailableToAllProjectsNil() {
+	o.AvailableToAllProjects.Set(nil)
+}
+
+// UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
+func (o *ManifestFromYAMLInput) UnsetAvailableToAllProjects() {
+	o.AvailableToAllProjects.Unset()
 }
 
 // GetVersion returns the Version field value if set, zero value otherwise.
@@ -229,6 +273,9 @@ func (o ManifestFromYAMLInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ProjectId.IsSet() {
 		toSerialize["projectId"] = o.ProjectId.Get()
+	}
+	if o.AvailableToAllProjects.IsSet() {
+		toSerialize["availableToAllProjects"] = o.AvailableToAllProjects.Get()
 	}
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version

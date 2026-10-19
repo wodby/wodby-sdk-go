@@ -17,6 +17,9 @@ Name | Type | Description | Notes
 **EnvScope** | **string** |  | 
 **AllowedEnvIds** | **[]int32** | Legacy internal environment entity IDs. Use allowedEnvTypes. | 
 **AllowedEnvTypes** | **[]string** |  | 
+**OwnershipScope** | **string** | org when the organization owns the resource, project when one project owns it. | 
+**OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | **bool** | True when every project in the organization can use the resource without a project share. | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -24,7 +27,7 @@ Name | Type | Description | Notes
 
 ### NewIntegration
 
-`func NewIntegration(id int32, title string, status string, outdated bool, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, createdAt time.Time, updatedAt time.Time, ) *Integration`
+`func NewIntegration(id int32, title string, status string, outdated bool, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time, ) *Integration`
 
 NewIntegration instantiates a new Integration object
 This constructor will assign default values to properties that have it defined,
@@ -357,6 +360,81 @@ and a boolean to check if the value has been set.
 `func (o *Integration) SetAllowedEnvTypes(v []string)`
 
 SetAllowedEnvTypes sets AllowedEnvTypes field to given value.
+
+
+### GetOwnershipScope
+
+`func (o *Integration) GetOwnershipScope() string`
+
+GetOwnershipScope returns the OwnershipScope field if non-nil, zero value otherwise.
+
+### GetOwnershipScopeOk
+
+`func (o *Integration) GetOwnershipScopeOk() (*string, bool)`
+
+GetOwnershipScopeOk returns a tuple with the OwnershipScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipScope
+
+`func (o *Integration) SetOwnershipScope(v string)`
+
+SetOwnershipScope sets OwnershipScope field to given value.
+
+
+### GetOwnerProjectId
+
+`func (o *Integration) GetOwnerProjectId() int32`
+
+GetOwnerProjectId returns the OwnerProjectId field if non-nil, zero value otherwise.
+
+### GetOwnerProjectIdOk
+
+`func (o *Integration) GetOwnerProjectIdOk() (*int32, bool)`
+
+GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnerProjectId
+
+`func (o *Integration) SetOwnerProjectId(v int32)`
+
+SetOwnerProjectId sets OwnerProjectId field to given value.
+
+### HasOwnerProjectId
+
+`func (o *Integration) HasOwnerProjectId() bool`
+
+HasOwnerProjectId returns a boolean if a field has been set.
+
+### SetOwnerProjectIdNil
+
+`func (o *Integration) SetOwnerProjectIdNil(b bool)`
+
+ SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+
+### UnsetOwnerProjectId
+`func (o *Integration) UnsetOwnerProjectId()`
+
+UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *Integration) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *Integration) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *Integration) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
 
 
 ### GetCreatedAt

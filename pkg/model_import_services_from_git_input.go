@@ -31,6 +31,8 @@ type ImportServicesFromGitInput struct {
 	AutoUpdate *GitAutoUpdateSettingsInput `json:"autoUpdate,omitempty"`
 	// Optional registry integration used when an imported service image requires authentication.
 	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
+	// Lets every project in the organization use the imported services without a project share. Only organization-owned services, imported without projectId, can be available to all projects.
+	AvailableToAllProjects NullableBool `json:"availableToAllProjects,omitempty"`
 }
 
 type _ImportServicesFromGitInput ImportServicesFromGitInput
@@ -300,6 +302,48 @@ func (o *ImportServicesFromGitInput) UnsetRegistryIntegrationId() {
 	o.RegistryIntegrationId.Unset()
 }
 
+// GetAvailableToAllProjects returns the AvailableToAllProjects field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ImportServicesFromGitInput) GetAvailableToAllProjects() bool {
+	if o == nil || IsNil(o.AvailableToAllProjects.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.AvailableToAllProjects.Get()
+}
+
+// GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ImportServicesFromGitInput) GetAvailableToAllProjectsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AvailableToAllProjects.Get(), o.AvailableToAllProjects.IsSet()
+}
+
+// HasAvailableToAllProjects returns a boolean if a field has been set.
+func (o *ImportServicesFromGitInput) HasAvailableToAllProjects() bool {
+	if o != nil && o.AvailableToAllProjects.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailableToAllProjects gets a reference to the given NullableBool and assigns it to the AvailableToAllProjects field.
+func (o *ImportServicesFromGitInput) SetAvailableToAllProjects(v bool) {
+	o.AvailableToAllProjects.Set(&v)
+}
+// SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+func (o *ImportServicesFromGitInput) SetAvailableToAllProjectsNil() {
+	o.AvailableToAllProjects.Set(nil)
+}
+
+// UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
+func (o *ImportServicesFromGitInput) UnsetAvailableToAllProjects() {
+	o.AvailableToAllProjects.Unset()
+}
+
 func (o ImportServicesFromGitInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -325,6 +369,9 @@ func (o ImportServicesFromGitInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.RegistryIntegrationId.IsSet() {
 		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
+	}
+	if o.AvailableToAllProjects.IsSet() {
+		toSerialize["availableToAllProjects"] = o.AvailableToAllProjects.Get()
 	}
 	return toSerialize, nil
 }

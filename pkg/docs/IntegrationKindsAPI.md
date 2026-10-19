@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 ## ListIntegrationKindDatabaseMachineTypes
 
-> []map[string]interface{} ListIntegrationKindDatabaseMachineTypes(ctx, id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
+> []CloudMachineType ListIntegrationKindDatabaseMachineTypes(ctx, id).DbType(dbType).Version(version).Ha(ha).Region(region).Zone(zone).Execute()
 
 List database machine types
 
@@ -119,7 +119,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationKindsAPI.ListIntegrationKindDatabaseMachineTypes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListIntegrationKindDatabaseMachineTypes`: []map[string]interface{}
+	// response from `ListIntegrationKindDatabaseMachineTypes`: []CloudMachineType
 	fmt.Fprintf(os.Stdout, "Response from `IntegrationKindsAPI.ListIntegrationKindDatabaseMachineTypes`: %v\n", resp)
 }
 ```
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]map[string]interface{}**](map.md)
+[**[]CloudMachineType**](CloudMachineType.md)
 
 ### Authorization
 

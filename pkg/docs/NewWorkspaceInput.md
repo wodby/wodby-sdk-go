@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Branch** | **string** |  | 
-**StorageClassName** | Pointer to **string** |  | [optional] 
-**StorageServiceName** | Pointer to **string** |  | [optional] 
+**StorageClassName** | Pointer to **string** | Storage class for the workspace code and home volumes. Every Pod that mounts the code then runs on one node. Omit both storage fields to use the cluster&#39;s default storage class. Not allowed with storageServiceName. | [optional] 
+**StorageServiceName** | Pointer to **string** | Enabled storage service in the selected stack that shares the workspace files across nodes. Not allowed with storageClassName. | [optional] 
 **CodeSize** | Pointer to **int32** |  | [optional] [default to 10]
 **HomeSize** | Pointer to **int32** |  | [optional] [default to 5]
 

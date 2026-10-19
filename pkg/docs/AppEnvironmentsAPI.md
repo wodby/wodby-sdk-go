@@ -4,6 +4,7 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CleanupAppEnvironmentMigration**](AppEnvironmentsAPI.md#CleanupAppEnvironmentMigration) | **Post** /app-environment-migrations/{id}/actions/cleanup | Clean up app environment migration
 [**CreateAppAccess**](AppEnvironmentsAPI.md#CreateAppAccess) | **Post** /app-environment-accesses/{id} | Create app environment access
 [**CreateAppEnvironment**](AppEnvironmentsAPI.md#CreateAppEnvironment) | **Post** /app-environments | Create app environment
 [**DeleteAppAccess**](AppEnvironmentsAPI.md#DeleteAppAccess) | **Delete** /app-accesses/{id} | Delete app access
@@ -12,17 +13,24 @@ Method | HTTP request | Description
 [**GetAppEnvironmentAccess**](AppEnvironmentsAPI.md#GetAppEnvironmentAccess) | **Get** /app-environment-accesses/{id} | Get app environment access
 [**GetAppEnvironmentByName**](AppEnvironmentsAPI.md#GetAppEnvironmentByName) | **Get** /app-environments/by-name/{appName}/{environmentName} | Get app environment by name
 [**GetAppEnvironmentCICDSettings**](AppEnvironmentsAPI.md#GetAppEnvironmentCICDSettings) | **Get** /app-environments/cicd-settings/{id} | Get app environment CI/CD settings
+[**GetAppEnvironmentMigration**](AppEnvironmentsAPI.md#GetAppEnvironmentMigration) | **Get** /app-environment-migrations/{id} | Get app environment migration
 [**GetAppEnvironmentStackUpgradeChangelog**](AppEnvironmentsAPI.md#GetAppEnvironmentStackUpgradeChangelog) | **Get** /app-environment-stack-upgrade-changelogs/{id} | Preview app environment stack upgrade
 [**GetWorkspaceConnection**](AppEnvironmentsAPI.md#GetWorkspaceConnection) | **Get** /workspaces/{id}/connection | Get workspace SSH connection
+[**GetWorkspaceGitDiff**](AppEnvironmentsAPI.md#GetWorkspaceGitDiff) | **Get** /workspaces/{id}/git-diff | Get workspace file diff
+[**GetWorkspaceGitStatus**](AppEnvironmentsAPI.md#GetWorkspaceGitStatus) | **Get** /workspaces/{id}/git-status | Get workspace Git status
 [**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List app-access cleanups
+[**ListAppEnvironmentMigrations**](AppEnvironmentsAPI.md#ListAppEnvironmentMigrations) | **Get** /app-environment-migrations | List app environment migrations
 [**ListAppEnvironments**](AppEnvironmentsAPI.md#ListAppEnvironments) | **Get** /app-environments | List app environments
+[**MigrateAppEnvironment**](AppEnvironmentsAPI.md#MigrateAppEnvironment) | **Post** /app-environments/{id}/actions/migrate | Migrate app environment to another cluster
 [**PauseWorkspace**](AppEnvironmentsAPI.md#PauseWorkspace) | **Post** /workspaces/{id}/actions/pause | Pause workspace
 [**PreflightAppAccess**](AppEnvironmentsAPI.md#PreflightAppAccess) | **Post** /app-accesses/actions/preflight | Preflight app environment access
 [**PrepareWorkspace**](AppEnvironmentsAPI.md#PrepareWorkspace) | **Post** /workspaces/{id}/actions/prepare | Prepare workspace
+[**PullWorkspace**](AppEnvironmentsAPI.md#PullWorkspace) | **Post** /workspaces/{id}/actions/pull | Pull workspace
 [**ReconcileAppEnvironmentStack**](AppEnvironmentsAPI.md#ReconcileAppEnvironmentStack) | **Post** /app-environments/{id}/actions/reconcile-stack | Reconcile app environment stack
 [**RestartWorkspace**](AppEnvironmentsAPI.md#RestartWorkspace) | **Post** /workspaces/{id}/actions/restart | Restart workspace
 [**ResumeWorkspace**](AppEnvironmentsAPI.md#ResumeWorkspace) | **Post** /workspaces/{id}/actions/resume | Resume workspace
 [**RetryAppAccessCleanup**](AppEnvironmentsAPI.md#RetryAppAccessCleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
+[**RollbackAppEnvironmentMigration**](AppEnvironmentsAPI.md#RollbackAppEnvironmentMigration) | **Post** /app-environment-migrations/{id}/actions/rollback | Roll back app environment migration
 [**UpdateAppAccess**](AppEnvironmentsAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update app access
 [**UpdateAppEnvironment**](AppEnvironmentsAPI.md#UpdateAppEnvironment) | **Put** /app-environments/{id} | Update app environment
 [**UpdateAppEnvironmentCICDSettings**](AppEnvironmentsAPI.md#UpdateAppEnvironmentCICDSettings) | **Put** /app-environments/cicd-settings/{id} | Update app environment CI/CD settings
@@ -31,6 +39,76 @@ Method | HTTP request | Description
 [**UpgradeAppEnvironmentStack**](AppEnvironmentsAPI.md#UpgradeAppEnvironmentStack) | **Post** /app-environments/{id}/actions/upgrade-stack | Upgrade app environment stack
 [**WorkspaceEligibility**](AppEnvironmentsAPI.md#WorkspaceEligibility) | **Post** /workspace-eligibility | Check workspace service eligibility
 
+
+
+## CleanupAppEnvironmentMigration
+
+> AppEnvironmentMigrationOperationResult CleanupAppEnvironmentMigration(ctx, id).Execute()
+
+Clean up app environment migration
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.CleanupAppEnvironmentMigration(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.CleanupAppEnvironmentMigration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CleanupAppEnvironmentMigration`: AppEnvironmentMigrationOperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.CleanupAppEnvironmentMigration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCleanupAppEnvironmentMigrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppEnvironmentMigrationOperationResult**](AppEnvironmentMigrationOperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateAppAccess
@@ -598,6 +676,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAppEnvironmentMigration
+
+> AppEnvironmentMigration GetAppEnvironmentMigration(ctx, id).Execute()
+
+Get app environment migration
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.GetAppEnvironmentMigration(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.GetAppEnvironmentMigration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppEnvironmentMigration`: AppEnvironmentMigration
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.GetAppEnvironmentMigration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppEnvironmentMigrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppEnvironmentMigration**](AppEnvironmentMigration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetAppEnvironmentStackUpgradeChangelog
 
 > AppEnvironmentStackUpgradeChangelog GetAppEnvironmentStackUpgradeChangelog(ctx, id).Execute()
@@ -738,6 +886,150 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetWorkspaceGitDiff
+
+> WorkspaceGitDiff GetWorkspaceGitDiff(ctx, id).Path(path).OriginalPath(originalPath).Execute()
+
+Get workspace file diff
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	path := "path_example" // string | File path relative to the checkout, as listed by the workspace Git status.
+	originalPath := "originalPath_example" // string | Previous path of a renamed or copied file. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.GetWorkspaceGitDiff(context.Background(), id).Path(path).OriginalPath(originalPath).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.GetWorkspaceGitDiff``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetWorkspaceGitDiff`: WorkspaceGitDiff
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.GetWorkspaceGitDiff`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetWorkspaceGitDiffRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **path** | **string** | File path relative to the checkout, as listed by the workspace Git status. | 
+ **originalPath** | **string** | Previous path of a renamed or copied file. | 
+
+### Return type
+
+[**WorkspaceGitDiff**](WorkspaceGitDiff.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetWorkspaceGitStatus
+
+> WorkspaceGitStatus GetWorkspaceGitStatus(ctx, id).Execute()
+
+Get workspace Git status
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.GetWorkspaceGitStatus(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.GetWorkspaceGitStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetWorkspaceGitStatus`: WorkspaceGitStatus
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.GetWorkspaceGitStatus`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetWorkspaceGitStatusRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**WorkspaceGitStatus**](WorkspaceGitStatus.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAppAccessCleanups
 
 > []AppAccessCleanup ListAppAccessCleanups(ctx).AppInstanceId(appInstanceId).IntegrationId(integrationId).Execute()
@@ -791,6 +1083,72 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppAccessCleanup**](AppAccessCleanup.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppEnvironmentMigrations
+
+> []AppEnvironmentMigration ListAppEnvironmentMigrations(ctx).AppEnvironmentId(appEnvironmentId).Execute()
+
+List app environment migrations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	appEnvironmentId := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.ListAppEnvironmentMigrations(context.Background()).AppEnvironmentId(appEnvironmentId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.ListAppEnvironmentMigrations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppEnvironmentMigrations`: []AppEnvironmentMigration
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.ListAppEnvironmentMigrations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppEnvironmentMigrationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appEnvironmentId** | **int32** |  | 
+
+### Return type
+
+[**[]AppEnvironmentMigration**](AppEnvironmentMigration.md)
 
 ### Authorization
 
@@ -873,6 +1231,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## MigrateAppEnvironment
+
+> AppEnvironmentMigrationOperationResult MigrateAppEnvironment(ctx, id).AppEnvironmentMigrationInput(appEnvironmentMigrationInput).Execute()
+
+Migrate app environment to another cluster
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appEnvironmentMigrationInput := *openapiclient.NewAppEnvironmentMigrationInput(int32(123)) // AppEnvironmentMigrationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.MigrateAppEnvironment(context.Background(), id).AppEnvironmentMigrationInput(appEnvironmentMigrationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.MigrateAppEnvironment``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `MigrateAppEnvironment`: AppEnvironmentMigrationOperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.MigrateAppEnvironment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiMigrateAppEnvironmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appEnvironmentMigrationInput** | [**AppEnvironmentMigrationInput**](AppEnvironmentMigrationInput.md) |  | 
+
+### Return type
+
+[**AppEnvironmentMigrationOperationResult**](AppEnvironmentMigrationOperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1079,6 +1509,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PullWorkspace
+
+> Task PullWorkspace(ctx, id).WorkspacePullInput(workspacePullInput).Execute()
+
+Pull workspace
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	workspacePullInput := *openapiclient.NewWorkspacePullInput() // WorkspacePullInput |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.PullWorkspace(context.Background(), id).WorkspacePullInput(workspacePullInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.PullWorkspace``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PullWorkspace`: Task
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.PullWorkspace`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPullWorkspaceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **workspacePullInput** | [**WorkspacePullInput**](WorkspacePullInput.md) |  | 
+
+### Return type
+
+[**Task**](Task.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1353,6 +1855,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RollbackAppEnvironmentMigration
+
+> AppEnvironmentMigrationOperationResult RollbackAppEnvironmentMigration(ctx, id).Execute()
+
+Roll back app environment migration
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.RollbackAppEnvironmentMigration(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.RollbackAppEnvironmentMigration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RollbackAppEnvironmentMigration`: AppEnvironmentMigrationOperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.RollbackAppEnvironmentMigration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRollbackAppEnvironmentMigrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppEnvironmentMigrationOperationResult**](AppEnvironmentMigrationOperationResult.md)
 
 ### Authorization
 

@@ -54,6 +54,8 @@ type Cluster struct {
 	OrgId int32 `json:"orgId"`
 	OwnershipScope string `json:"ownershipScope"`
 	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
+	// True when every project in the organization can use the resource without a project share.
+	AvailableToAllProjects bool `json:"availableToAllProjects"`
 	Capabilities ClusterCapabilities `json:"capabilities"`
 	Settings *ClusterSettings `json:"settings,omitempty"`
 	StorageClasses []StorageClass `json:"storageClasses,omitempty"`
@@ -68,7 +70,7 @@ type _Cluster Cluster
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
+func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, availableToAllProjects bool, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
 	this := Cluster{}
 	this.Id = id
 	this.Name = name
@@ -87,6 +89,7 @@ func NewCluster(id int32, name string, title string, status string, serverless b
 	this.AllowedEnvTypes = allowedEnvTypes
 	this.OrgId = orgId
 	this.OwnershipScope = ownershipScope
+	this.AvailableToAllProjects = availableToAllProjects
 	this.Capabilities = capabilities
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -968,6 +971,30 @@ func (o *Cluster) UnsetOwnerProjectId() {
 	o.OwnerProjectId.Unset()
 }
 
+// GetAvailableToAllProjects returns the AvailableToAllProjects field value
+func (o *Cluster) GetAvailableToAllProjects() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AvailableToAllProjects
+}
+
+// GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetAvailableToAllProjectsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AvailableToAllProjects, true
+}
+
+// SetAvailableToAllProjects sets field value
+func (o *Cluster) SetAvailableToAllProjects(v bool) {
+	o.AvailableToAllProjects = v
+}
+
 // GetCapabilities returns the Capabilities field value
 func (o *Cluster) GetCapabilities() ClusterCapabilities {
 	if o == nil {
@@ -1207,6 +1234,7 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	if o.OwnerProjectId.IsSet() {
 		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
 	}
+	toSerialize["availableToAllProjects"] = o.AvailableToAllProjects
 	toSerialize["capabilities"] = o.Capabilities
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
@@ -1244,6 +1272,7 @@ func (o *Cluster) UnmarshalJSON(data []byte) (err error) {
 		"allowedEnvTypes",
 		"orgId",
 		"ownershipScope",
+		"availableToAllProjects",
 		"capabilities",
 		"createdAt",
 		"updatedAt",

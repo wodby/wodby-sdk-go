@@ -39,6 +39,11 @@ type Integration struct {
 	// Deprecated
 	AllowedEnvIds []int32 `json:"allowedEnvIds"`
 	AllowedEnvTypes []string `json:"allowedEnvTypes"`
+	// org when the organization owns the resource, project when one project owns it.
+	OwnershipScope string `json:"ownershipScope"`
+	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
+	// True when every project in the organization can use the resource without a project share.
+	AvailableToAllProjects bool `json:"availableToAllProjects"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -49,7 +54,7 @@ type _Integration Integration
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIntegration(id int32, title string, status string, outdated bool, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, createdAt time.Time, updatedAt time.Time) *Integration {
+func NewIntegration(id int32, title string, status string, outdated bool, providerRevId int32, orgId int32, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time) *Integration {
 	this := Integration{}
 	this.Id = id
 	this.Title = title
@@ -60,6 +65,8 @@ func NewIntegration(id int32, title string, status string, outdated bool, provid
 	this.EnvScope = envScope
 	this.AllowedEnvIds = allowedEnvIds
 	this.AllowedEnvTypes = allowedEnvTypes
+	this.OwnershipScope = ownershipScope
+	this.AvailableToAllProjects = availableToAllProjects
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -463,6 +470,96 @@ func (o *Integration) SetAllowedEnvTypes(v []string) {
 	o.AllowedEnvTypes = v
 }
 
+// GetOwnershipScope returns the OwnershipScope field value
+func (o *Integration) GetOwnershipScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.OwnershipScope
+}
+
+// GetOwnershipScopeOk returns a tuple with the OwnershipScope field value
+// and a boolean to check if the value has been set.
+func (o *Integration) GetOwnershipScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OwnershipScope, true
+}
+
+// SetOwnershipScope sets field value
+func (o *Integration) SetOwnershipScope(v string) {
+	o.OwnershipScope = v
+}
+
+// GetOwnerProjectId returns the OwnerProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Integration) GetOwnerProjectId() int32 {
+	if o == nil || IsNil(o.OwnerProjectId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OwnerProjectId.Get()
+}
+
+// GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Integration) GetOwnerProjectIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnerProjectId.Get(), o.OwnerProjectId.IsSet()
+}
+
+// HasOwnerProjectId returns a boolean if a field has been set.
+func (o *Integration) HasOwnerProjectId() bool {
+	if o != nil && o.OwnerProjectId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerProjectId gets a reference to the given NullableInt32 and assigns it to the OwnerProjectId field.
+func (o *Integration) SetOwnerProjectId(v int32) {
+	o.OwnerProjectId.Set(&v)
+}
+// SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+func (o *Integration) SetOwnerProjectIdNil() {
+	o.OwnerProjectId.Set(nil)
+}
+
+// UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+func (o *Integration) UnsetOwnerProjectId() {
+	o.OwnerProjectId.Unset()
+}
+
+// GetAvailableToAllProjects returns the AvailableToAllProjects field value
+func (o *Integration) GetAvailableToAllProjects() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AvailableToAllProjects
+}
+
+// GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field value
+// and a boolean to check if the value has been set.
+func (o *Integration) GetAvailableToAllProjectsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AvailableToAllProjects, true
+}
+
+// SetAvailableToAllProjects sets field value
+func (o *Integration) SetAvailableToAllProjects(v bool) {
+	o.AvailableToAllProjects = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Integration) GetCreatedAt() time.Time {
 	if o == nil {
@@ -542,6 +639,11 @@ func (o Integration) ToMap() (map[string]interface{}, error) {
 	toSerialize["envScope"] = o.EnvScope
 	toSerialize["allowedEnvIds"] = o.AllowedEnvIds
 	toSerialize["allowedEnvTypes"] = o.AllowedEnvTypes
+	toSerialize["ownershipScope"] = o.OwnershipScope
+	if o.OwnerProjectId.IsSet() {
+		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
+	}
+	toSerialize["availableToAllProjects"] = o.AvailableToAllProjects
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -561,6 +663,8 @@ func (o *Integration) UnmarshalJSON(data []byte) (err error) {
 		"envScope",
 		"allowedEnvIds",
 		"allowedEnvTypes",
+		"ownershipScope",
+		"availableToAllProjects",
 		"createdAt",
 		"updatedAt",
 	}

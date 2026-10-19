@@ -24,7 +24,7 @@ var _ MappedNullable = &Cert{}
 type Cert struct {
 	Id int32 `json:"id"`
 	Custom bool `json:"custom"`
-	// Human-readable certificate authority name parsed from uploaded certificates, or the managed issuer identifier.
+	// Issuer label: a certificate authority name for uploaded or temporary AWS certificates, otherwise the managed issuer identifier.
 	Issuer string `json:"issuer"`
 	Domain string `json:"domain"`
 	DnsNames []string `json:"dnsNames"`

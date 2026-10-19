@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Enabling the preset requires a paid subscription. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
+**BlobStorageRegion** | Pointer to **NullableString** | Wodby Blob Storage region. Omit to preserve the current region; must be omitted for third-party storage. | [optional] 
 **Options** | Pointer to [**[]BackupOption**](BackupOption.md) |  | [optional] 
 **Disabled** | **bool** |  | 
 **Override** | **bool** |  | 
@@ -181,6 +182,41 @@ HasStorageClass returns a boolean if a field has been set.
 `func (o *UpdateBackupPresetInput) UnsetStorageClass()`
 
 UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
+### GetBlobStorageRegion
+
+`func (o *UpdateBackupPresetInput) GetBlobStorageRegion() string`
+
+GetBlobStorageRegion returns the BlobStorageRegion field if non-nil, zero value otherwise.
+
+### GetBlobStorageRegionOk
+
+`func (o *UpdateBackupPresetInput) GetBlobStorageRegionOk() (*string, bool)`
+
+GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlobStorageRegion
+
+`func (o *UpdateBackupPresetInput) SetBlobStorageRegion(v string)`
+
+SetBlobStorageRegion sets BlobStorageRegion field to given value.
+
+### HasBlobStorageRegion
+
+`func (o *UpdateBackupPresetInput) HasBlobStorageRegion() bool`
+
+HasBlobStorageRegion returns a boolean if a field has been set.
+
+### SetBlobStorageRegionNil
+
+`func (o *UpdateBackupPresetInput) SetBlobStorageRegionNil(b bool)`
+
+ SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+
+### UnsetBlobStorageRegion
+`func (o *UpdateBackupPresetInput) UnsetBlobStorageRegion()`
+
+UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
 ### GetOptions
 
 `func (o *UpdateBackupPresetInput) GetOptions() []BackupOption`

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | Pointer to **NullableBool** | Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects. | [optional] 
 **IntegrationId** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
@@ -102,6 +103,41 @@ HasProjectId returns a boolean if a field has been set.
 `func (o *NewClusterInput) UnsetProjectId()`
 
 UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *NewClusterInput) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *NewClusterInput) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *NewClusterInput) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
+
+### HasAvailableToAllProjects
+
+`func (o *NewClusterInput) HasAvailableToAllProjects() bool`
+
+HasAvailableToAllProjects returns a boolean if a field has been set.
+
+### SetAvailableToAllProjectsNil
+
+`func (o *NewClusterInput) SetAvailableToAllProjectsNil(b bool)`
+
+ SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+
+### UnsetAvailableToAllProjects
+`func (o *NewClusterInput) UnsetAvailableToAllProjects()`
+
+UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
 ### GetIntegrationId
 
 `func (o *NewClusterInput) GetIntegrationId() int32`

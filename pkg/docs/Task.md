@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Initiator** | Pointer to [**NullableTaskInitiator**](TaskInitiator.md) | Absent when provenance is unknown; absence does not imply human initiation. | [optional] 
 **Id** | **int32** |  | 
 **Name** | **string** |  | 
 **Title** | **string** |  | 
@@ -54,6 +55,41 @@ NewTaskWithDefaults instantiates a new Task object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetInitiator
+
+`func (o *Task) GetInitiator() TaskInitiator`
+
+GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+
+### GetInitiatorOk
+
+`func (o *Task) GetInitiatorOk() (*TaskInitiator, bool)`
+
+GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiator
+
+`func (o *Task) SetInitiator(v TaskInitiator)`
+
+SetInitiator sets Initiator field to given value.
+
+### HasInitiator
+
+`func (o *Task) HasInitiator() bool`
+
+HasInitiator returns a boolean if a field has been set.
+
+### SetInitiatorNil
+
+`func (o *Task) SetInitiatorNil(b bool)`
+
+ SetInitiatorNil sets the value for Initiator to be an explicit nil
+
+### UnsetInitiator
+`func (o *Task) UnsetInitiator()`
+
+UnsetInitiator ensures that no value is present for Initiator, not even an explicit nil
 ### GetId
 
 `func (o *Task) GetId() int32`

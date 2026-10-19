@@ -32,6 +32,7 @@ Name | Type | Description | Notes
 **OrgId** | **int32** |  | 
 **OwnershipScope** | **string** |  | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | **bool** | True when every project in the organization can use the resource without a project share. | 
 **Capabilities** | [**ClusterCapabilities**](ClusterCapabilities.md) |  | 
 **Settings** | Pointer to [**ClusterSettings**](ClusterSettings.md) |  | [optional] 
 **StorageClasses** | Pointer to [**[]StorageClass**](StorageClass.md) |  | [optional] 
@@ -43,7 +44,7 @@ Name | Type | Description | Notes
 
 ### NewCluster
 
-`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
+`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, availableToAllProjects bool, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
 
 NewCluster instantiates a new Cluster object
 This constructor will assign default values to properties that have it defined,
@@ -783,6 +784,26 @@ HasOwnerProjectId returns a boolean if a field has been set.
 `func (o *Cluster) UnsetOwnerProjectId()`
 
 UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *Cluster) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *Cluster) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *Cluster) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
+
+
 ### GetCapabilities
 
 `func (o *Cluster) GetCapabilities() ClusterCapabilities`

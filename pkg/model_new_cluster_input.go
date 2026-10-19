@@ -24,6 +24,8 @@ type NewClusterInput struct {
 	// Optional for API-key requests; defaults to the API key's organization.
 	OrgId *int32 `json:"orgId,omitempty"`
 	ProjectId NullableInt32 `json:"projectId,omitempty"`
+	// Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects.
+	AvailableToAllProjects NullableBool `json:"availableToAllProjects,omitempty"`
 	IntegrationId int32 `json:"integrationId"`
 	Name string `json:"name"`
 	Title string `json:"title"`
@@ -138,6 +140,48 @@ func (o *NewClusterInput) SetProjectIdNil() {
 // UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
 func (o *NewClusterInput) UnsetProjectId() {
 	o.ProjectId.Unset()
+}
+
+// GetAvailableToAllProjects returns the AvailableToAllProjects field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewClusterInput) GetAvailableToAllProjects() bool {
+	if o == nil || IsNil(o.AvailableToAllProjects.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.AvailableToAllProjects.Get()
+}
+
+// GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewClusterInput) GetAvailableToAllProjectsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AvailableToAllProjects.Get(), o.AvailableToAllProjects.IsSet()
+}
+
+// HasAvailableToAllProjects returns a boolean if a field has been set.
+func (o *NewClusterInput) HasAvailableToAllProjects() bool {
+	if o != nil && o.AvailableToAllProjects.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailableToAllProjects gets a reference to the given NullableBool and assigns it to the AvailableToAllProjects field.
+func (o *NewClusterInput) SetAvailableToAllProjects(v bool) {
+	o.AvailableToAllProjects.Set(&v)
+}
+// SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+func (o *NewClusterInput) SetAvailableToAllProjectsNil() {
+	o.AvailableToAllProjects.Set(nil)
+}
+
+// UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
+func (o *NewClusterInput) UnsetAvailableToAllProjects() {
+	o.AvailableToAllProjects.Unset()
 }
 
 // GetIntegrationId returns the IntegrationId field value
@@ -727,6 +771,9 @@ func (o NewClusterInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ProjectId.IsSet() {
 		toSerialize["projectId"] = o.ProjectId.Get()
+	}
+	if o.AvailableToAllProjects.IsSet() {
+		toSerialize["availableToAllProjects"] = o.AvailableToAllProjects.Get()
 	}
 	toSerialize["integrationId"] = o.IntegrationId
 	toSerialize["name"] = o.Name

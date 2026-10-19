@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**ListBackupPresets**](BackupsAPI.md#ListBackupPresets) | **Get** /backup-presets | List backup presets
 [**ListBackups**](BackupsAPI.md#ListBackups) | **Get** /backups | List backups
 [**UpdateBackupPreset**](BackupsAPI.md#UpdateBackupPreset) | **Put** /backup-presets/{id} | Update backup preset
+[**VoidBackupFile**](BackupsAPI.md#VoidBackupFile) | **Post** /backups/{id}/actions/void-file | Void backup file
 
 
 
@@ -651,6 +652,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## VoidBackupFile
+
+> Backup VoidBackupFile(ctx, id).Execute()
+
+Void backup file
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BackupsAPI.VoidBackupFile(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.VoidBackupFile``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `VoidBackupFile`: Backup
+	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.VoidBackupFile`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiVoidBackupFileRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Backup**](Backup.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

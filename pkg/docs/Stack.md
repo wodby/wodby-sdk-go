@@ -25,6 +25,9 @@ Name | Type | Description | Notes
 **OriginStackRevVersion** | Pointer to **NullableString** |  | [optional] 
 **OriginStackRevCreatedAt** | Pointer to **NullableTime** |  | [optional] 
 **OrgId** | **int32** |  | 
+**OwnershipScope** | **string** | org when the organization owns the resource, project when one project owns it. | 
+**OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | **bool** | True when every project in the organization can use the resource without a project share. | 
 **Settings** | Pointer to [**StackSettings**](StackSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -33,7 +36,7 @@ Name | Type | Description | Notes
 
 ### NewStack
 
-`func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, createdAt time.Time, updatedAt time.Time, ) *Stack`
+`func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time, ) *Stack`
 
 NewStack instantiates a new Stack object
 This constructor will assign default values to properties that have it defined,
@@ -631,6 +634,81 @@ and a boolean to check if the value has been set.
 `func (o *Stack) SetOrgId(v int32)`
 
 SetOrgId sets OrgId field to given value.
+
+
+### GetOwnershipScope
+
+`func (o *Stack) GetOwnershipScope() string`
+
+GetOwnershipScope returns the OwnershipScope field if non-nil, zero value otherwise.
+
+### GetOwnershipScopeOk
+
+`func (o *Stack) GetOwnershipScopeOk() (*string, bool)`
+
+GetOwnershipScopeOk returns a tuple with the OwnershipScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipScope
+
+`func (o *Stack) SetOwnershipScope(v string)`
+
+SetOwnershipScope sets OwnershipScope field to given value.
+
+
+### GetOwnerProjectId
+
+`func (o *Stack) GetOwnerProjectId() int32`
+
+GetOwnerProjectId returns the OwnerProjectId field if non-nil, zero value otherwise.
+
+### GetOwnerProjectIdOk
+
+`func (o *Stack) GetOwnerProjectIdOk() (*int32, bool)`
+
+GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnerProjectId
+
+`func (o *Stack) SetOwnerProjectId(v int32)`
+
+SetOwnerProjectId sets OwnerProjectId field to given value.
+
+### HasOwnerProjectId
+
+`func (o *Stack) HasOwnerProjectId() bool`
+
+HasOwnerProjectId returns a boolean if a field has been set.
+
+### SetOwnerProjectIdNil
+
+`func (o *Stack) SetOwnerProjectIdNil(b bool)`
+
+ SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+
+### UnsetOwnerProjectId
+`func (o *Stack) UnsetOwnerProjectId()`
+
+UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *Stack) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *Stack) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *Stack) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
 
 
 ### GetSettings

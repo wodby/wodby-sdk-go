@@ -205,7 +205,7 @@ func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Zone(zone string) Api
 	return r
 }
 
-func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Execute() ([]map[string]interface{}, *http.Response, error) {
+func (r ApiListIntegrationKindDatabaseMachineTypesRequest) Execute() ([]CloudMachineType, *http.Response, error) {
 	return r.ApiService.ListIntegrationKindDatabaseMachineTypesExecute(r)
 }
 
@@ -227,13 +227,13 @@ func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseMachineTypes(ctx
 }
 
 // Execute executes the request
-//  @return []map[string]interface{}
-func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseMachineTypesExecute(r ApiListIntegrationKindDatabaseMachineTypesRequest) ([]map[string]interface{}, *http.Response, error) {
+//  @return []CloudMachineType
+func (a *IntegrationKindsAPIService) ListIntegrationKindDatabaseMachineTypesExecute(r ApiListIntegrationKindDatabaseMachineTypesRequest) ([]CloudMachineType, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []map[string]interface{}
+		localVarReturnValue  []CloudMachineType
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationKindsAPIService.ListIntegrationKindDatabaseMachineTypes")

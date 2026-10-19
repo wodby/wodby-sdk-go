@@ -4,17 +4,87 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**BulkOperateAppRoutes**](AppRoutesAPI.md#BulkOperateAppRoutes) | **Post** /app-routes/actions/bulk | Enable, disable or delete app routes
 [**CreateAppRoute**](AppRoutesAPI.md#CreateAppRoute) | **Post** /app-routes | Create app route
 [**DeleteAppRoute**](AppRoutesAPI.md#DeleteAppRoute) | **Delete** /app-routes/{id} | Delete app route
 [**DeleteAppRouteSetting**](AppRoutesAPI.md#DeleteAppRouteSetting) | **Delete** /app-routes/{id}/settings/{name} | Delete app route setting
 [**GetAppRoute**](AppRoutesAPI.md#GetAppRoute) | **Get** /app-routes/{id} | Get app route
+[**ListAppEnvironmentRouteSettings**](AppRoutesAPI.md#ListAppEnvironmentRouteSettings) | **Get** /app-environments/route-settings/{id} | List app environment default route settings
 [**ListAppRouteSettings**](AppRoutesAPI.md#ListAppRouteSettings) | **Get** /app-routes/{id}/settings | List app route settings
 [**ListAppRoutes**](AppRoutesAPI.md#ListAppRoutes) | **Get** /app-routes | List app routes
 [**ListEffectiveAppRouteSettings**](AppRoutesAPI.md#ListEffectiveAppRouteSettings) | **Get** /app-routes/{id}/effective-settings | List effective app route settings
+[**ReplaceAppEnvironmentRouteSettings**](AppRoutesAPI.md#ReplaceAppEnvironmentRouteSettings) | **Put** /app-environments/route-settings/{id} | Replace app environment default route settings
+[**ReplaceAppRouteSettings**](AppRoutesAPI.md#ReplaceAppRouteSettings) | **Put** /app-routes/{id}/settings | Replace app route settings
 [**RetryAppRouteCertificate**](AppRoutesAPI.md#RetryAppRouteCertificate) | **Post** /app-routes/{id}/actions/retry-certificate | Retry app route certificate
 [**SetAppRouteSetting**](AppRoutesAPI.md#SetAppRouteSetting) | **Put** /app-routes/{id}/settings/{name} | Set app route setting
 [**UpdateAppRoute**](AppRoutesAPI.md#UpdateAppRoute) | **Put** /app-routes/{id} | Update app route
 
+
+
+## BulkOperateAppRoutes
+
+> OperationResult BulkOperateAppRoutes(ctx).BulkAppRouteOperationInput(bulkAppRouteOperationInput).Execute()
+
+Enable, disable or delete app routes
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	bulkAppRouteOperationInput := *openapiclient.NewBulkAppRouteOperationInput(int32(123), []int32{int32(123)}, "Operation_example") // BulkAppRouteOperationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.BulkOperateAppRoutes(context.Background()).BulkAppRouteOperationInput(bulkAppRouteOperationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.BulkOperateAppRoutes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BulkOperateAppRoutes`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.BulkOperateAppRoutes`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBulkOperateAppRoutesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bulkAppRouteOperationInput** | [**BulkAppRouteOperationInput**](BulkAppRouteOperationInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateAppRoute
@@ -296,6 +366,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListAppEnvironmentRouteSettings
+
+> []AppRouteSetting ListAppEnvironmentRouteSettings(ctx, id).Execute()
+
+List app environment default route settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.ListAppEnvironmentRouteSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.ListAppEnvironmentRouteSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppEnvironmentRouteSettings`: []AppRouteSetting
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.ListAppEnvironmentRouteSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppEnvironmentRouteSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppRouteSetting**](AppRouteSetting.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAppRouteSettings
 
 > []AppRouteSetting ListAppRouteSettings(ctx, id).Execute()
@@ -495,6 +635,150 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReplaceAppEnvironmentRouteSettings
+
+> []AppRouteSetting ReplaceAppEnvironmentRouteSettings(ctx, id).AppRouteSettingsInput(appRouteSettingsInput).Execute()
+
+Replace app environment default route settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appRouteSettingsInput := *openapiclient.NewAppRouteSettingsInput([]openapiclient.AppRouteSettingInput{*openapiclient.NewAppRouteSettingInput(openapiclient.AppRouteSettingName("HTTPS_REDIRECT"), "Value_example")}) // AppRouteSettingsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.ReplaceAppEnvironmentRouteSettings(context.Background(), id).AppRouteSettingsInput(appRouteSettingsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.ReplaceAppEnvironmentRouteSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ReplaceAppEnvironmentRouteSettings`: []AppRouteSetting
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.ReplaceAppEnvironmentRouteSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReplaceAppEnvironmentRouteSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appRouteSettingsInput** | [**AppRouteSettingsInput**](AppRouteSettingsInput.md) |  | 
+
+### Return type
+
+[**[]AppRouteSetting**](AppRouteSetting.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReplaceAppRouteSettings
+
+> []AppRouteSetting ReplaceAppRouteSettings(ctx, id).AppRouteSettingsInput(appRouteSettingsInput).Execute()
+
+Replace app route settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appRouteSettingsInput := *openapiclient.NewAppRouteSettingsInput([]openapiclient.AppRouteSettingInput{*openapiclient.NewAppRouteSettingInput(openapiclient.AppRouteSettingName("HTTPS_REDIRECT"), "Value_example")}) // AppRouteSettingsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppRoutesAPI.ReplaceAppRouteSettings(context.Background(), id).AppRouteSettingsInput(appRouteSettingsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppRoutesAPI.ReplaceAppRouteSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ReplaceAppRouteSettings`: []AppRouteSetting
+	fmt.Fprintf(os.Stdout, "Response from `AppRoutesAPI.ReplaceAppRouteSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReplaceAppRouteSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appRouteSettingsInput** | [**AppRouteSettingsInput**](AppRouteSettingsInput.md) |  | 
+
+### Return type
+
+[**[]AppRouteSetting**](AppRouteSetting.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

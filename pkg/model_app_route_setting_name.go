@@ -28,6 +28,8 @@ const (
 	HSTS AppRouteSettingName = "HSTS"
 	REQUEST_TIMEOUT AppRouteSettingName = "REQUEST_TIMEOUT"
 	BACKEND_REQUEST_TIMEOUT AppRouteSettingName = "BACKEND_REQUEST_TIMEOUT"
+	RATE_LIMIT_PER_IP AppRouteSettingName = "RATE_LIMIT_PER_IP"
+	RATE_LIMIT_TOTAL AppRouteSettingName = "RATE_LIMIT_TOTAL"
 )
 
 // All allowed values of AppRouteSettingName enum
@@ -40,6 +42,8 @@ var AllowedAppRouteSettingNameEnumValues = []AppRouteSettingName{
 	"HSTS",
 	"REQUEST_TIMEOUT",
 	"BACKEND_REQUEST_TIMEOUT",
+	"RATE_LIMIT_PER_IP",
+	"RATE_LIMIT_TOTAL",
 }
 
 func (v *AppRouteSettingName) UnmarshalJSON(src []byte) error {

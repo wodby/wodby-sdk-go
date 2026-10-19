@@ -20,6 +20,8 @@ var _ MappedNullable = &AppEnvironmentSettingsInput{}
 // AppEnvironmentSettingsInput struct for AppEnvironmentSettingsInput
 type AppEnvironmentSettingsInput struct {
 	AutoStackUpgrade *AppEnvironmentAutoStackUpgradeSettingsInput `json:"autoStackUpgrade,omitempty"`
+	// Omit it to keep the current build image retention.
+	BuildImageCleanup *BuildImageCleanupSettingsInput `json:"buildImageCleanup,omitempty"`
 }
 
 // NewAppEnvironmentSettingsInput instantiates a new AppEnvironmentSettingsInput object
@@ -71,6 +73,38 @@ func (o *AppEnvironmentSettingsInput) SetAutoStackUpgrade(v AppEnvironmentAutoSt
 	o.AutoStackUpgrade = &v
 }
 
+// GetBuildImageCleanup returns the BuildImageCleanup field value if set, zero value otherwise.
+func (o *AppEnvironmentSettingsInput) GetBuildImageCleanup() BuildImageCleanupSettingsInput {
+	if o == nil || IsNil(o.BuildImageCleanup) {
+		var ret BuildImageCleanupSettingsInput
+		return ret
+	}
+	return *o.BuildImageCleanup
+}
+
+// GetBuildImageCleanupOk returns a tuple with the BuildImageCleanup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentSettingsInput) GetBuildImageCleanupOk() (*BuildImageCleanupSettingsInput, bool) {
+	if o == nil || IsNil(o.BuildImageCleanup) {
+		return nil, false
+	}
+	return o.BuildImageCleanup, true
+}
+
+// HasBuildImageCleanup returns a boolean if a field has been set.
+func (o *AppEnvironmentSettingsInput) HasBuildImageCleanup() bool {
+	if o != nil && !IsNil(o.BuildImageCleanup) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildImageCleanup gets a reference to the given BuildImageCleanupSettingsInput and assigns it to the BuildImageCleanup field.
+func (o *AppEnvironmentSettingsInput) SetBuildImageCleanup(v BuildImageCleanupSettingsInput) {
+	o.BuildImageCleanup = &v
+}
+
 func (o AppEnvironmentSettingsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -83,6 +117,9 @@ func (o AppEnvironmentSettingsInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AutoStackUpgrade) {
 		toSerialize["autoStackUpgrade"] = o.AutoStackUpgrade
+	}
+	if !IsNil(o.BuildImageCleanup) {
+		toSerialize["buildImageCleanup"] = o.BuildImageCleanup
 	}
 	return toSerialize, nil
 }

@@ -323,6 +323,49 @@ paths:
       summary: Preflight app-service capacity
       tags:
       - orgs
+  /orgs/{id}/settings:
+    put:
+      description: "Updates organization defaults and returns the organization. A\
+        \ new build image retention also applies to every app environment that still\
+        \ uses the previous organization value; environments with their own value\
+        \ keep it, and new environments inherit the new value."
+      operationId: updateOrgSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org'
+          description: Updated organization
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update organization settings
+      tags:
+      - orgs
   /orgs/{id}/subscription:
     get:
       description: Returns usage and pricing details for callers with billing-view
@@ -881,6 +924,80 @@ paths:
       summary: Update app
       tags:
       - apps
+  /apps/sharing/{id}:
+    get:
+      description: Returns who owns the app and which projects can use it.
+      operationId: getAppSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: App sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app sharing
+      tags:
+      - apps
+    put:
+      description: Changes the app owner and replaces the projects it is shared with.
+        Returns the resulting sharing.
+      operationId: updateAppSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated app sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app sharing
+      tags:
+      - apps
   /app-environments:
     get:
       description: Returns app environments matching the request filters.
@@ -1299,6 +1416,86 @@ paths:
       summary: Update app environment CI/CD settings
       tags:
       - app-environments
+  /app-environments/route-settings/{id}:
+    get:
+      description: Returns the app environment's default route settings. Every route
+        inherits them unless it overrides them.
+      operationId: listAppEnvironmentRouteSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppRouteSetting'
+                type: array
+          description: Default route settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app environment default route settings
+      tags:
+      - app-routes
+    put:
+      description: "Replaces all default route settings of the app environment. A\
+        \ setting left out is removed, so routes fall back to the service default.\
+        \ Returns the stored settings."
+      operationId: replaceAppEnvironmentRouteSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppRouteSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppRouteSetting'
+                type: array
+          description: Stored default route settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Replace app environment default route settings
+      tags:
+      - app-routes
   /app-environments/{id}/actions/upgrade-stack:
     post:
       description: Upgrades an app environment stack using the selected upgrade sections.
@@ -1380,6 +1577,190 @@ paths:
       summary: Reconcile app environment stack
       tags:
       - app-environments
+  /app-environments/{id}/actions/migrate:
+    post:
+      description: Starts moving the app environment and its data to another cluster
+        of the same organization. The source stays available for rollback until the
+        migration is cleaned up or its retention ends.
+      operationId: migrateAppEnvironment
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppEnvironmentMigrationInput'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEnvironmentMigrationOperationResult'
+          description: Migration started
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Migrate app environment to another cluster
+      tags:
+      - app-environments
+  /app-environment-migrations:
+    get:
+      description: Returns the cluster migrations of one app environment.
+      operationId: listAppEnvironmentMigrations
+      parameters:
+      - explode: true
+        in: query
+        name: appEnvironmentId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppEnvironmentMigration'
+                type: array
+          description: App environment migrations
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app environment migrations
+      tags:
+      - app-environments
+  /app-environment-migrations/{id}:
+    get:
+      description: Returns one cluster migration with the progress of each copied
+        service.
+      operationId: getAppEnvironmentMigration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEnvironmentMigration'
+          description: App environment migration
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app environment migration
+      tags:
+      - app-environments
+  /app-environment-migrations/{id}/actions/rollback:
+    post:
+      description: Moves the app environment back to its source cluster while the
+        source is still retained.
+      operationId: rollbackAppEnvironmentMigration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEnvironmentMigrationOperationResult'
+          description: Rollback started
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Roll back app environment migration
+      tags:
+      - app-environments
+  /app-environment-migrations/{id}/actions/cleanup:
+    post:
+      description: Removes the app environment's retained resources from the source
+        cluster after a completed migration. The migration can no longer be rolled
+        back afterwards.
+      operationId: cleanupAppEnvironmentMigration
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEnvironmentMigrationOperationResult'
+          description: Cleanup started
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Clean up app environment migration
+      tags:
+      - app-environments
   /workspace-eligibility:
     post:
       description: "Check the selected stack service graph. Creation separately validates\
@@ -1446,6 +1827,138 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get workspace SSH connection
+      tags:
+      - app-environments
+  /workspaces/{id}/git-status:
+    get:
+      description: "Owner-only. Run a read-only Git command in the workspace runner\
+        \ and return the current branch, HEAD commit and uncommitted changes. When\
+        \ the state cannot be read, available is false and reason explains why."
+      operationId: getWorkspaceGitStatus
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceGitStatus'
+          description: Live Git state of the workspace checkout
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get workspace Git status
+      tags:
+      - app-environments
+  /workspaces/{id}/git-diff:
+    get:
+      description: "Owner-only. Returns how one file in the workspace checkout differs\
+        \ from the last commit, with staged and unstaged changes together. An untracked\
+        \ file is shown as added. When the diff cannot be read, available is false\
+        \ and reason explains why."
+      operationId: getWorkspaceGitDiff
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "File path relative to the checkout, as listed by the workspace\
+          \ Git status."
+        explode: true
+        in: query
+        name: path
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Previous path of a renamed or copied file.
+        explode: true
+        in: query
+        name: originalPath
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceGitDiff'
+          description: Diff of the file
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get workspace file diff
+      tags:
+      - app-environments
+  /workspaces/{id}/actions/pull:
+    post:
+      description: "Owner-only. Fast-forwards the workspace checkout to its upstream\
+        \ branch, keeping uncommitted changes, then runs the environment's post-deployment\
+        \ scripts unless scripts is false."
+      operationId: pullWorkspace
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspacePullInput'
+        required: false
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Workspace pull queued
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Pull workspace
       tags:
       - app-environments
   /workspaces/{id}/actions/prepare:
@@ -3967,6 +4480,43 @@ paths:
       summary: Deploy build
       tags:
       - app-builds
+  /app-builds/{id}/actions/void-images:
+    post:
+      description: "Removes the build's images from a Wodby-managed registry when\
+        \ possible and marks them unavailable, so the build can no longer be deployed.\
+        \ Refused while the build is pending or used by the environment. Returns the\
+        \ build."
+      operationId: voidAppBuildImages
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBuild'
+          description: Build with voided images
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Void build images
+      tags:
+      - app-builds
   /clusters:
     get:
       description: Returns clusters matching the request filters.
@@ -4332,6 +4882,81 @@ paths:
       summary: Update cluster environment policy
       tags:
       - clusters
+  /clusters/sharing/{id}:
+    get:
+      description: Returns who owns the cluster and which projects can use it.
+      operationId: getClusterSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Cluster sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get cluster sharing
+      tags:
+      - clusters
+    put:
+      description: Changes the cluster owner and replaces the projects it is shared
+        with. It can also make an organization-owned cluster available to every project.
+        Returns the resulting sharing.
+      operationId: updateClusterSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated cluster sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update cluster sharing
+      tags:
+      - clusters
   /clusters/{id}/actions/upgrade-infra:
     post:
       description: Starts a cluster infrastructure upgrade task and returns the task
@@ -4633,6 +5258,80 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update database
+      tags:
+      - databases
+  /databases/sharing/{id}:
+    get:
+      description: Returns who owns the database and which projects can use it.
+      operationId: getDatabaseSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Database sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get database sharing
+      tags:
+      - databases
+    put:
+      description: Changes the database owner and replaces the projects it is shared
+        with. Returns the resulting sharing.
+      operationId: updateDatabaseSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated database sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update database sharing
       tags:
       - databases
   /databases/{id}/options/charsets:
@@ -5435,7 +6134,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/GenericObject'
+                  $ref: '#/components/schemas/CloudMachineType'
                 type: array
           description: Kubernetes machine types
         default:
@@ -5784,6 +6483,135 @@ paths:
       summary: Update integration environment policy
       tags:
       - integrations
+  /integrations/usages/{id}:
+    get:
+      description: "Lists what uses the integration, such as services, environments,\
+        \ builds, backups and organization defaults, so you can check it before you\
+        \ change or delete the integration. Only usages you can see are listed."
+      operationId: listIntegrationUsages
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationUsagesResponse'
+          description: Integration usages
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List integration usages
+      tags:
+      - integrations
+  /integrations/sharing/{id}:
+    get:
+      description: Returns who owns the integration and which projects can use it.
+      operationId: getIntegrationSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Integration sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get integration sharing
+      tags:
+      - integrations
+    put:
+      description: Changes the integration owner and replaces the projects it is shared
+        with. It can also make an organization-owned integration available to every
+        project. Returns the resulting sharing.
+      operationId: updateIntegrationSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated integration sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update integration sharing
+      tags:
+      - integrations
   /integrations/configuration/{id}:
     put:
       description: "Atomically updates integration metadata, adds selected kinds,\
@@ -6017,7 +6845,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/GenericObject'
+                  $ref: '#/components/schemas/CloudMachineType'
                 type: array
           description: Database machine types
         default:
@@ -6371,6 +7199,80 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update provider settings
+      tags:
+      - providers
+  /providers/sharing/{id}:
+    get:
+      description: Returns who owns the provider and which projects can use it.
+      operationId: getProviderSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Provider sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get provider sharing
+      tags:
+      - providers
+    put:
+      description: Changes the provider owner and replaces the projects it is shared
+        with. Returns the resulting sharing.
+      operationId: updateProviderSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated provider sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update provider sharing
       tags:
       - providers
   /providers/by-name/{name}:
@@ -6938,6 +7840,81 @@ paths:
       summary: Update service settings
       tags:
       - services
+  /services/sharing/{id}:
+    get:
+      description: Returns who owns the service and which projects can use it.
+      operationId: getServiceSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Service sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get service sharing
+      tags:
+      - services
+    put:
+      description: Changes the service owner and replaces the projects it is shared
+        with. It can also make an organization-owned service available to every project.
+        Returns the resulting sharing.
+      operationId: updateServiceSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated service sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update service sharing
+      tags:
+      - services
   /services/{name}/options/link-candidates:
     get:
       description: Returns service link candidates matching the request filters.
@@ -7114,7 +8091,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ImportCatalogFromGitInput'
+              $ref: '#/components/schemas/ImportStacksFromGitInput'
         required: true
       responses:
         "201":
@@ -7421,6 +8398,81 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update stack settings
+      tags:
+      - stacks
+  /stacks/sharing/{id}:
+    get:
+      description: Returns who owns the stack and which projects can use it.
+      operationId: getStackSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Stack sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get stack sharing
+      tags:
+      - stacks
+    put:
+      description: Changes the stack owner and replaces the projects it is shared
+        with. It can also make an organization-owned stack available to every project.
+        Returns the resulting sharing.
+      operationId: updateStackSharing
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSharingInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceSharing'
+          description: Updated stack sharing
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update stack sharing
       tags:
       - stacks
   /stacks/{id}/actions/update-from-git:
@@ -9252,6 +10304,42 @@ paths:
       summary: Get backup
       tags:
       - backups
+  /backups/{id}/actions/void-file:
+    post:
+      description: Permanently removes a completed backup file from Wodby Blob Storage
+        while retaining its backup record. The operation is unavailable while an import
+        is using the backup.
+      operationId: voidBackupFile
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Backup'
+          description: Backup with its file marked as voided
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Void backup file
+      tags:
+      - backups
   /backup-presets:
     get:
       description: Returns backup presets matching the request filters. At least one
@@ -9712,6 +10800,24 @@ paths:
         explode: true
         in: query
         name: withoutOrigin
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Restrict tasks to an authorized agent connection in the requested
+          organization.
+        explode: true
+        in: query
+        name: agentConnectionId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "Only tasks known to originate through MCP, including spawned\
+          \ work. Unknown historical tasks are excluded."
+        explode: true
+        in: query
+        name: mcpOnly
         required: false
         schema:
           type: boolean
@@ -10246,6 +11352,82 @@ paths:
       summary: List app route settings
       tags:
       - app-routes
+    put:
+      description: "Replaces all setting overrides of the route. A setting left out\
+        \ is removed, so the route inherits the app environment or service default.\
+        \ Returns the stored overrides."
+      operationId: replaceAppRouteSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppRouteSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppRouteSetting'
+                type: array
+          description: Stored route setting overrides
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Replace app route settings
+      tags:
+      - app-routes
+  /app-routes/actions/bulk:
+    post:
+      description: Applies one operation to several routes of an app environment in
+        one task.
+      operationId: bulkOperateAppRoutes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkAppRouteOperationInput'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Route operation started
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: "Enable, disable or delete app routes"
+      tags:
+      - app-routes
   /app-routes/{id}/effective-settings:
     get:
       description: "Returns the resolved route settings together with whether each\
@@ -10749,7 +11931,7 @@ paths:
       - app-environments
   /app-access-cleanups:
     get:
-      description: Returns cleanup records for exactly one app instance or integration.
+      description: Returns cleanup records for exactly one app environment or integration.
       operationId: listAppAccessCleanups
       parameters:
       - explode: true
@@ -11149,6 +12331,48 @@ paths:
       summary: Update stack service revisions
       tags:
       - stacks
+  /stacks/{id}/actions/ignore-service-revision:
+    post:
+      description: Stops offering one service revision as an update for a stack service
+        and its derivatives. A newer service revision is offered again. Returns the
+        stack.
+      operationId: ignoreStackServiceRevision
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IgnoreStackServiceRevisionInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Updated stack
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Ignore stack service revision
+      tags:
+      - stacks
   /stack-service-update-changelogs/{id}:
     get:
       description: "Returns eligible service revision changes for a stack, optionally\
@@ -11538,6 +12762,229 @@ components:
           type: string
       required:
       - detail
+      type: object
+    AppRouteSettingsInput:
+      example:
+        settings:
+        - name: HTTPS_REDIRECT
+          value: value
+        - name: HTTPS_REDIRECT
+          value: value
+      properties:
+        settings:
+          description: The complete list of settings. A setting left out is removed.
+          items:
+            $ref: '#/components/schemas/AppRouteSettingInput'
+          type: array
+      required:
+      - settings
+      type: object
+    AppRouteSettingInput:
+      example:
+        name: HTTPS_REDIRECT
+        value: value
+      properties:
+        name:
+          $ref: '#/components/schemas/AppRouteSettingName'
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    BulkAppRouteOperationInput:
+      example:
+        appEnvironmentId: 0
+        routeIds:
+        - 6
+        - 6
+        operation: enable
+      properties:
+        appEnvironmentId:
+          type: integer
+        routeIds:
+          description: Routes of the app environment to change.
+          items:
+            type: integer
+          minItems: 1
+          type: array
+        operation:
+          enum:
+          - enable
+          - disable
+          - delete
+          type: string
+      required:
+      - appEnvironmentId
+      - operation
+      - routeIds
+      type: object
+    IgnoreStackServiceRevisionInput:
+      example:
+        serviceRevId: 6
+        stackServiceId: 0
+      properties:
+        stackServiceId:
+          description: Root stack service whose update to skip. Its derivatives skip
+            it too.
+          type: integer
+        serviceRevId:
+          description: Service revision to stop offering.
+          type: integer
+      required:
+      - serviceRevId
+      - stackServiceId
+      type: object
+    IntegrationUsagesResponse:
+      example:
+        nextPage: 1
+        totalCount: 6
+        items:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          kind: application_access
+          id: id
+          detail: detail
+          category: current
+          target:
+            parent: ""
+            name: name
+            icon: icon
+            id: 0
+            type: organization
+            title: title
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          kind: application_access
+          id: id
+          detail: detail
+          category: current
+          target:
+            parent: ""
+            name: name
+            icon: icon
+            id: 0
+            type: organization
+            title: title
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/IntegrationUsage'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          nullable: true
+          type: integer
+      required:
+      - items
+      - totalCount
+      type: object
+    IntegrationUsage:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        kind: application_access
+        id: id
+        detail: detail
+        category: current
+        target:
+          parent: ""
+          name: name
+          icon: icon
+          id: 0
+          type: organization
+          title: title
+      properties:
+        id:
+          type: string
+        category:
+          description: "current for what uses the integration now, historical for\
+            \ records such as builds and backups, cleanup for pending removal of resources\
+            \ it created."
+          enum:
+          - current
+          - historical
+          - cleanup
+          type: string
+        kind:
+          enum:
+          - application_access
+          - application_access_cleanup
+          - app_service_integration
+          - app_service_ci
+          - stack_service_integration
+          - stack_service_build_source
+          - service_registry
+          - organization_ci
+          - organization_registry
+          - app_environment_ci
+          - app_environment_registry
+          - backup_storage
+          - app_build_ci
+          - app_build_registry
+          - git_repository
+          - cluster_provider
+          - database_provider
+          - backup_preset_storage
+          type: string
+        detail:
+          nullable: true
+          type: string
+        target:
+          $ref: '#/components/schemas/IntegrationUsageTarget'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - category
+      - createdAt
+      - id
+      - kind
+      - target
+      type: object
+    IntegrationUsageTarget:
+      example:
+        parent: ""
+        name: name
+        icon: icon
+        id: 0
+        type: organization
+        title: title
+      properties:
+        id:
+          type: integer
+        type:
+          enum:
+          - organization
+          - app
+          - app_environment
+          - app_service
+          - stack
+          - stack_service
+          - service
+          - backup
+          - app_build
+          - git_repository
+          - cluster
+          - database
+          - backup_preset
+          - access_cleanup
+          type: string
+        name:
+          nullable: true
+          type: string
+        title:
+          type: string
+        icon:
+          nullable: true
+          type: string
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/IntegrationUsageTarget'
+          description: "Resource that contains the target, such as the app environment\
+            \ of an app service."
+      required:
+      - id
+      - title
+      - type
       type: object
     OperationResult:
       example:
@@ -12016,6 +13463,8 @@ components:
       type: object
     AppEnvironmentSettings:
       example:
+        buildImageCleanup:
+          retention: never
         autoStackUpgrade:
           timeWindow:
             start: 02:00
@@ -12041,9 +13490,12 @@ components:
       properties:
         autoStackUpgrade:
           $ref: '#/components/schemas/AppEnvironmentAutoStackUpgradeSettings'
+        buildImageCleanup:
+          $ref: '#/components/schemas/BuildImageCleanupSettings'
       type: object
     AppEnvironmentSettingsInput:
       example:
+        buildImageCleanup: ""
         autoStackUpgrade:
           timeWindow:
             start: 02:00
@@ -12070,6 +13522,63 @@ components:
       properties:
         autoStackUpgrade:
           $ref: '#/components/schemas/AppEnvironmentAutoStackUpgradeSettingsInput'
+        buildImageCleanup:
+          allOf:
+          - $ref: '#/components/schemas/BuildImageCleanupSettingsInput'
+          description: Omit it to keep the current build image retention.
+      type: object
+    BuildImageCleanupSettings:
+      description: How long images of unused builds are kept in the Wodby container
+        registry before they are voided.
+      example:
+        retention: never
+      properties:
+        retention:
+          description: Age after which images of unused builds are voided automatically.
+            never disables the cleanup.
+          enum:
+          - never
+          - one_month
+          - three_months
+          - six_months
+          - one_year
+          type: string
+      required:
+      - retention
+      type: object
+    BuildImageCleanupSettingsInput:
+      example:
+        retention: never
+      properties:
+        retention:
+          enum:
+          - never
+          - one_month
+          - three_months
+          - six_months
+          - one_year
+          type: string
+      required:
+      - retention
+      type: object
+    OrgSettings:
+      example:
+        buildImageCleanup: ""
+      properties:
+        buildImageCleanup:
+          allOf:
+          - $ref: '#/components/schemas/BuildImageCleanupSettings'
+          description: Default build image retention for the organization's app environments.
+      type: object
+    OrgSettingsInput:
+      example:
+        buildImageCleanup:
+          retention: never
+      properties:
+        buildImageCleanup:
+          $ref: '#/components/schemas/BuildImageCleanupSettingsInput'
+      required:
+      - buildImageCleanup
       type: object
     AppEnvironmentMaintenanceModeInput:
       example:
@@ -12509,6 +14018,7 @@ components:
       type: object
     DuplicateStackRequest:
       example:
+        availableToAllProjects: true
         settings:
           autoOriginStackUpdate:
             enabled: true
@@ -12543,6 +14053,12 @@ components:
         projectId:
           nullable: true
           type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
         sourceRevId:
           description: Optional immutable source stack revision to duplicate. It must
             belong to the stack in the request path.
@@ -12764,9 +14280,19 @@ components:
               allowPatch: true
               allowSameVersion: true
               allowMinor: true
+        clusterCapabilities:
+          stackRevisionIds:
+          - 1
+          - 1
+          - 1
+          - 1
+          - 1
+          autoInstall: true
       properties:
         autoInfrastructureUpgrade:
           $ref: '#/components/schemas/ClusterAutoInfrastructureUpgradeSettings'
+        clusterCapabilities:
+          $ref: '#/components/schemas/ClusterCapabilityPolicy'
       type: object
     ClusterSettingsInput:
       example:
@@ -12802,9 +14328,44 @@ components:
               allowPatch: true
               allowSameVersion: true
               allowMinor: true
+        clusterCapabilities:
+          stackRevisionIds:
+          - 1
+          - 1
+          - 1
+          - 1
+          - 1
+          autoInstall: true
       properties:
         autoInfrastructureUpgrade:
           $ref: '#/components/schemas/ClusterAutoInfrastructureUpgradeSettingsInput'
+        clusterCapabilities:
+          $ref: '#/components/schemas/ClusterCapabilityPolicy'
+      type: object
+    ClusterCapabilityPolicy:
+      example:
+        stackRevisionIds:
+        - 1
+        - 1
+        - 1
+        - 1
+        - 1
+        autoInstall: true
+      properties:
+        autoInstall:
+          type: boolean
+        stackRevisionIds:
+          description: Approved immutable stack revision IDs for discovery and optional
+            installation.
+          items:
+            minimum: 1
+            type: integer
+          maxItems: 128
+          type: array
+          uniqueItems: true
+      required:
+      - autoInstall
+      - stackRevisionIds
       type: object
     ImportCatalogFromGitInput:
       example:
@@ -12853,9 +14414,16 @@ components:
               image requires authentication.
             nullable: true
             type: integer
+          availableToAllProjects:
+            description: "Lets every project in the organization use the imported\
+              \ services without a project share. Only organization-owned services,\
+              \ imported without projectId, can be available to all projects."
+            nullable: true
+            type: boolean
         type: object
       example:
         gitRef: gitRef
+        availableToAllProjects: true
         remoteGitRepoId: remoteGitRepoId
         registryIntegrationId: 5
         autoUpdate:
@@ -12869,8 +14437,35 @@ components:
         projectId: 6
         orgId: 0
         gitRefType: gitRefType
+    ImportStacksFromGitInput:
+      allOf:
+      - $ref: '#/components/schemas/ImportCatalogFromGitInput'
+      - properties:
+          availableToAllProjects:
+            description: "Lets every project in the organization use the imported\
+              \ stacks without a project share. Only organization-owned stacks, imported\
+              \ without projectId, can be available to all projects."
+            nullable: true
+            type: boolean
+        type: object
+      example:
+        gitRef: gitRef
+        availableToAllProjects: true
+        remoteGitRepoId: remoteGitRepoId
+        autoUpdate:
+          allowMajor: true
+          allowPatch: true
+          semverTags: true
+          allowMinor: true
+          branches: true
+          enabled: true
+        integrationId: 1
+        projectId: 6
+        orgId: 0
+        gitRefType: gitRefType
     ManifestFromYAMLInput:
       example:
+        availableToAllProjects: true
         manifestYaml: manifestYaml
         files:
           key: files
@@ -12884,6 +14479,12 @@ components:
         projectId:
           nullable: true
           type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
         version:
           description: Optional revision version label for the generated non-Git resource.
           type: string
@@ -14433,6 +16034,8 @@ components:
       type: object
     Org:
       example:
+        settings:
+          buildImageCleanup: ""
         createdAt: 2000-01-23T04:56:07.000+00:00
         registryIntegrationId: 5
         defaultTimeZone: America/New_York
@@ -14475,6 +16078,8 @@ components:
           description: Effective default registry integration ID. Zero selects the
             built-in Wodby registry service.
           type: integer
+        settings:
+          $ref: '#/components/schemas/OrgSettings'
         capabilities:
           $ref: '#/components/schemas/OrgCapabilities'
         subscription:
@@ -14707,7 +16312,9 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         orgs:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - settings:
+            buildImageCleanup: ""
+          createdAt: 2000-01-23T04:56:07.000+00:00
           registryIntegrationId: 5
           defaultTimeZone: America/New_York
           capabilities:
@@ -14729,7 +16336,9 @@ components:
           title: title
           ciIntegrationId: 1
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - settings:
+            buildImageCleanup: ""
+          createdAt: 2000-01-23T04:56:07.000+00:00
           registryIntegrationId: 5
           defaultTimeZone: America/New_York
           capabilities:
@@ -14871,6 +16480,120 @@ components:
       - title
       - updatedAt
       type: object
+    ResourceSharing:
+      description: Who owns a resource and which projects can use it.
+      example:
+        availableToAllProjects: true
+        ownerProjectId: 0
+        sharedProjects:
+        - role: owner
+          projectId: 6
+        - role: owner
+          projectId: 6
+        ownershipScope: org
+      properties:
+        ownershipScope:
+          description: "org when the organization owns the resource, project when\
+            \ one project owns it."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          description: Project that owns the resource when ownershipScope is project.
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: "True when every project in the organization can use the resource\
+            \ without a project share. Only organization-owned clusters, integrations,\
+            \ services and stacks can be available to all projects; it is always false\
+            \ for other resources."
+          type: boolean
+        sharedProjects:
+          description: Projects the resource is shared with that you can see. The
+            owning project has the owner role.
+          items:
+            $ref: '#/components/schemas/ResourceProjectShare'
+          type: array
+      required:
+      - availableToAllProjects
+      - ownershipScope
+      - sharedProjects
+      type: object
+    ResourceProjectShare:
+      example:
+        role: owner
+        projectId: 6
+      properties:
+        projectId:
+          type: integer
+        role:
+          enum:
+          - owner
+          - write
+          - read
+          type: string
+      required:
+      - projectId
+      - role
+      type: object
+    ResourceSharingInput:
+      example:
+        availableToAllProjects: true
+        ownerProjectId: 0
+        sharedProjects:
+        - access: read
+          projectId: 6
+        - access: read
+          projectId: 6
+        ownershipScope: org
+      properties:
+        ownershipScope:
+          description: "org to make the organization the owner, project to make one\
+            \ project the owner."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          description: Project that becomes the owner. Required when ownershipScope
+            is project.
+          nullable: true
+          type: integer
+        sharedProjects:
+          description: The complete list of project shares. A project left out loses
+            its share. The owning project always keeps write access. You need write
+            access to every project whose share you add or remove.
+          items:
+            $ref: '#/components/schemas/ProjectShareInput'
+          type: array
+        availableToAllProjects:
+          description: "Lets every project in the organization use the resource without\
+            \ a project share. Only organization-owned clusters, integrations, services\
+            \ and stacks can be available to all projects. Omit it to keep the current\
+            \ setting."
+          nullable: true
+          type: boolean
+      required:
+      - ownershipScope
+      - sharedProjects
+      type: object
+    ProjectShareInput:
+      example:
+        access: read
+        projectId: 6
+      properties:
+        projectId:
+          type: integer
+        access:
+          enum:
+          - read
+          - write
+          type: string
+      required:
+      - access
+      - projectId
+      type: object
     App:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -14952,6 +16675,8 @@ components:
         configurationReady: true
         updatedAt: 2000-01-23T04:56:07.000+00:00
         settings:
+          buildImageCleanup:
+            retention: never
           autoStackUpgrade:
             timeWindow:
               start: 02:00
@@ -15172,36 +16897,38 @@ components:
       type: object
     AppDeployment:
       example:
-        preparationTaskId: 1
+        preparationTaskId: 7
+        rolloutEndedAt: 2000-01-23T04:56:07.000+00:00
         startedAt: 2000-01-23T04:56:07.000+00:00
         postDeploymentTask: "{}"
+        skipPostDeploymentScripts: true
         postDeploymentStatus: unknown
-        postDeploymentTaskId: 1
+        postDeploymentTaskId: 4
         appServiceDeployments:
         - jobName: jobName
           buildSelectionKind: buildSelectionKind
-          appServiceBuildId: 1
+          appServiceBuildId: 9
           startedAt: 2000-01-23T04:56:07.000+00:00
-          previousAppServiceBuildId: 4
+          previousAppServiceBuildId: 6
           skipPostDeployment: true
-          appServiceId: 7
+          appServiceId: 9
           createdAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           force: true
-          id: 6
+          id: 5
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - jobName: jobName
           buildSelectionKind: buildSelectionKind
-          appServiceBuildId: 1
+          appServiceBuildId: 9
           startedAt: 2000-01-23T04:56:07.000+00:00
-          previousAppServiceBuildId: 4
+          previousAppServiceBuildId: 6
           skipPostDeployment: true
-          appServiceId: 7
+          appServiceId: 9
           createdAt: 2000-01-23T04:56:07.000+00:00
           endedAt: 2000-01-23T04:56:07.000+00:00
           force: true
-          id: 6
+          id: 5
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         skipRollback: true
@@ -15209,10 +16936,15 @@ components:
         preparationTask: "{}"
         number: 6
         createdAt: 2000-01-23T04:56:07.000+00:00
+        rolloutStatus: unknown
         task: "{}"
         endedAt: 2000-01-23T04:56:07.000+00:00
+        postDeploymentScripts:
+        - postDeploymentScripts
+        - postDeploymentScripts
         builds:
-        - gitRef: gitRef
+        - authorEmail: authorEmail
+          registryIntegrationId: 6
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
@@ -15220,6 +16952,12 @@ components:
           number: 5
           appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          stackRevId: 1
+          id: 5
+          ciIntegrationId: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          gitRef: gitRef
+          workflow: workflow
           task: "{}"
           appServiceBuilds:
           - image: image
@@ -15250,13 +16988,16 @@ components:
             id: 3
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
+          authorName: authorName
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          gitRepoId: 1
+          imageVoidStatus: none
           taskId: 9
+          canVoidImages: true
           status: status
           gitRefType: gitRefType
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - gitRef: gitRef
+        - authorEmail: authorEmail
+          registryIntegrationId: 6
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
@@ -15264,6 +17005,12 @@ components:
           number: 5
           appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          stackRevId: 1
+          id: 5
+          ciIntegrationId: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          gitRef: gitRef
+          workflow: workflow
           task: "{}"
           appServiceBuilds:
           - image: image
@@ -15294,12 +17041,14 @@ components:
             id: 3
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
+          authorName: authorName
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          gitRepoId: 1
+          imageVoidStatus: none
           taskId: 9
+          canVoidImages: true
           status: status
           gitRefType: gitRefType
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         rollbackStatus: not_attempted
         taskId: 1
@@ -15312,6 +17061,23 @@ components:
         number:
           type: integer
         status:
+          description: "Overall result, including the routing updates that follow\
+            \ the service rollout."
+          type: string
+        rolloutStatus:
+          description: Progress of rolling out the selected services. It does not
+            show whether routing has finished.
+          enum:
+          - unknown
+          - pending
+          - in_progress
+          - completed
+          - canceled
+          - errored
+          type: string
+        rolloutEndedAt:
+          format: date-time
+          nullable: true
           type: string
         rollbackStatus:
           enum:
@@ -15369,6 +17135,15 @@ components:
           items:
             $ref: '#/components/schemas/AppServiceDeployment'
           type: array
+        postDeploymentScripts:
+          description: Post-deployment scripts that the deployment's builds provide.
+          items:
+            type: string
+          type: array
+        skipPostDeploymentScripts:
+          description: True when the deployment does not run the post-deployment scripts
+            its builds provide.
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -15391,8 +17166,11 @@ components:
       - createdAt
       - id
       - number
+      - postDeploymentScripts
       - postDeploymentStatus
       - rollbackStatus
+      - rolloutStatus
+      - skipPostDeploymentScripts
       - skipRollback
       - status
       - updatedAt
@@ -15401,15 +17179,15 @@ components:
       example:
         jobName: jobName
         buildSelectionKind: buildSelectionKind
-        appServiceBuildId: 1
+        appServiceBuildId: 9
         startedAt: 2000-01-23T04:56:07.000+00:00
-        previousAppServiceBuildId: 4
+        previousAppServiceBuildId: 6
         skipPostDeployment: true
-        appServiceId: 7
+        appServiceId: 9
         createdAt: 2000-01-23T04:56:07.000+00:00
         endedAt: 2000-01-23T04:56:07.000+00:00
         force: true
-        id: 6
+        id: 5
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -15461,38 +17239,40 @@ components:
     AppDeploymentsResponse:
       example:
         nextPage: 9
-        totalCount: 5
+        totalCount: 8
         items:
-        - preparationTaskId: 1
+        - preparationTaskId: 7
+          rolloutEndedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           postDeploymentTask: "{}"
+          skipPostDeploymentScripts: true
           postDeploymentStatus: unknown
-          postDeploymentTaskId: 1
+          postDeploymentTaskId: 4
           appServiceDeployments:
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 1
+            appServiceBuildId: 9
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 4
+            previousAppServiceBuildId: 6
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 9
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 6
+            id: 5
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 1
+            appServiceBuildId: 9
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 4
+            previousAppServiceBuildId: 6
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 9
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 6
+            id: 5
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           skipRollback: true
@@ -15500,10 +17280,15 @@ components:
           preparationTask: "{}"
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
+          rolloutStatus: unknown
           task: "{}"
           endedAt: 2000-01-23T04:56:07.000+00:00
+          postDeploymentScripts:
+          - postDeploymentScripts
+          - postDeploymentScripts
           builds:
-          - gitRef: gitRef
+          - authorEmail: authorEmail
+            registryIntegrationId: 6
             commitMessage: commitMessage
             startedAt: 2000-01-23T04:56:07.000+00:00
             commitHash: commitHash
@@ -15511,6 +17296,12 @@ components:
             number: 5
             appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
+            stackRevId: 1
+            id: 5
+            ciIntegrationId: 1
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            gitRef: gitRef
+            workflow: workflow
             task: "{}"
             appServiceBuilds:
             - image: image
@@ -15541,13 +17332,16 @@ components:
               id: 3
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
+            authorName: authorName
             endedAt: 2000-01-23T04:56:07.000+00:00
-            id: 5
+            gitRepoId: 1
+            imageVoidStatus: none
             taskId: 9
+            canVoidImages: true
             status: status
             gitRefType: gitRefType
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          - gitRef: gitRef
+          - authorEmail: authorEmail
+            registryIntegrationId: 6
             commitMessage: commitMessage
             startedAt: 2000-01-23T04:56:07.000+00:00
             commitHash: commitHash
@@ -15555,6 +17349,12 @@ components:
             number: 5
             appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
+            stackRevId: 1
+            id: 5
+            ciIntegrationId: 1
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            gitRef: gitRef
+            workflow: workflow
             task: "{}"
             appServiceBuilds:
             - image: image
@@ -15585,48 +17385,52 @@ components:
               id: 3
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
+            authorName: authorName
             endedAt: 2000-01-23T04:56:07.000+00:00
-            id: 5
+            gitRepoId: 1
+            imageVoidStatus: none
             taskId: 9
+            canVoidImages: true
             status: status
             gitRefType: gitRefType
-            updatedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           rollbackStatus: not_attempted
           taskId: 1
           status: status
           canCancel: true
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - preparationTaskId: 1
+        - preparationTaskId: 7
+          rolloutEndedAt: 2000-01-23T04:56:07.000+00:00
           startedAt: 2000-01-23T04:56:07.000+00:00
           postDeploymentTask: "{}"
+          skipPostDeploymentScripts: true
           postDeploymentStatus: unknown
-          postDeploymentTaskId: 1
+          postDeploymentTaskId: 4
           appServiceDeployments:
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 1
+            appServiceBuildId: 9
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 4
+            previousAppServiceBuildId: 6
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 9
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 6
+            id: 5
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - jobName: jobName
             buildSelectionKind: buildSelectionKind
-            appServiceBuildId: 1
+            appServiceBuildId: 9
             startedAt: 2000-01-23T04:56:07.000+00:00
-            previousAppServiceBuildId: 4
+            previousAppServiceBuildId: 6
             skipPostDeployment: true
-            appServiceId: 7
+            appServiceId: 9
             createdAt: 2000-01-23T04:56:07.000+00:00
             endedAt: 2000-01-23T04:56:07.000+00:00
             force: true
-            id: 6
+            id: 5
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           skipRollback: true
@@ -15634,10 +17438,15 @@ components:
           preparationTask: "{}"
           number: 6
           createdAt: 2000-01-23T04:56:07.000+00:00
+          rolloutStatus: unknown
           task: "{}"
           endedAt: 2000-01-23T04:56:07.000+00:00
+          postDeploymentScripts:
+          - postDeploymentScripts
+          - postDeploymentScripts
           builds:
-          - gitRef: gitRef
+          - authorEmail: authorEmail
+            registryIntegrationId: 6
             commitMessage: commitMessage
             startedAt: 2000-01-23T04:56:07.000+00:00
             commitHash: commitHash
@@ -15645,6 +17454,12 @@ components:
             number: 5
             appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
+            stackRevId: 1
+            id: 5
+            ciIntegrationId: 1
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            gitRef: gitRef
+            workflow: workflow
             task: "{}"
             appServiceBuilds:
             - image: image
@@ -15675,13 +17490,16 @@ components:
               id: 3
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
+            authorName: authorName
             endedAt: 2000-01-23T04:56:07.000+00:00
-            id: 5
+            gitRepoId: 1
+            imageVoidStatus: none
             taskId: 9
+            canVoidImages: true
             status: status
             gitRefType: gitRefType
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          - gitRef: gitRef
+          - authorEmail: authorEmail
+            registryIntegrationId: 6
             commitMessage: commitMessage
             startedAt: 2000-01-23T04:56:07.000+00:00
             commitHash: commitHash
@@ -15689,6 +17507,12 @@ components:
             number: 5
             appServiceId: 7
             createdAt: 2000-01-23T04:56:07.000+00:00
+            stackRevId: 1
+            id: 5
+            ciIntegrationId: 1
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            gitRef: gitRef
+            workflow: workflow
             task: "{}"
             appServiceBuilds:
             - image: image
@@ -15719,12 +17543,14 @@ components:
               id: 3
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
+            authorName: authorName
             endedAt: 2000-01-23T04:56:07.000+00:00
-            id: 5
+            gitRepoId: 1
+            imageVoidStatus: none
             taskId: 9
+            canVoidImages: true
             status: status
             gitRefType: gitRefType
-            updatedAt: 2000-01-23T04:56:07.000+00:00
           id: 0
           rollbackStatus: not_attempted
           taskId: 1
@@ -15747,7 +17573,8 @@ components:
       type: object
     AppBuild:
       example:
-        gitRef: gitRef
+        authorEmail: authorEmail
+        registryIntegrationId: 6
         commitMessage: commitMessage
         startedAt: 2000-01-23T04:56:07.000+00:00
         commitHash: commitHash
@@ -15755,6 +17582,12 @@ components:
         number: 5
         appServiceId: 7
         createdAt: 2000-01-23T04:56:07.000+00:00
+        stackRevId: 1
+        id: 5
+        ciIntegrationId: 1
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        gitRef: gitRef
+        workflow: workflow
         task: "{}"
         appServiceBuilds:
         - image: image
@@ -15785,18 +17618,20 @@ components:
           id: 3
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
+        authorName: authorName
         endedAt: 2000-01-23T04:56:07.000+00:00
-        id: 5
+        gitRepoId: 1
+        imageVoidStatus: none
         taskId: 9
+        canVoidImages: true
         status: status
         gitRefType: gitRefType
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
         number:
-          description: App-instance build-launch number. Build records created by
-            the same Wodby CI launch share this number.
+          description: App environment build-launch number. Build records created
+            by the same Wodby CI launch share this number.
           type: integer
         status:
           type: string
@@ -15824,6 +17659,40 @@ components:
           type: string
         commitMessage:
           type: string
+        authorName:
+          nullable: true
+          type: string
+        authorEmail:
+          nullable: true
+          type: string
+        workflow:
+          description: CI workflow that produced an externally built image. Empty
+            for Wodby CI builds.
+          type: string
+        stackRevId:
+          description: Stack revision the build was made for.
+          nullable: true
+          type: integer
+        gitRepoId:
+          nullable: true
+          type: integer
+        ciIntegrationId:
+          nullable: true
+          type: integer
+        registryIntegrationId:
+          nullable: true
+          type: integer
+        imageVoidStatus:
+          description: Whether the build's images were voided and can no longer be
+            deployed.
+          enum:
+          - none
+          - partially_voided
+          - voided
+          type: string
+        canVoidImages:
+          description: True when the build's images can be voided now.
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -15842,15 +17711,18 @@ components:
       - appInstanceId
       - appServiceBuilds
       - appServiceId
+      - canVoidImages
       - commitHash
       - commitMessage
       - createdAt
       - gitRef
       - gitRefType
       - id
+      - imageVoidStatus
       - number
       - status
       - updatedAt
+      - workflow
       type: object
     AppServiceBuild:
       example:
@@ -15927,7 +17799,8 @@ components:
         nextPage: 6
         totalCount: 0
         items:
-        - gitRef: gitRef
+        - authorEmail: authorEmail
+          registryIntegrationId: 6
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
@@ -15935,6 +17808,12 @@ components:
           number: 5
           appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          stackRevId: 1
+          id: 5
+          ciIntegrationId: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          gitRef: gitRef
+          workflow: workflow
           task: "{}"
           appServiceBuilds:
           - image: image
@@ -15965,13 +17844,16 @@ components:
             id: 3
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
+          authorName: authorName
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          gitRepoId: 1
+          imageVoidStatus: none
           taskId: 9
+          canVoidImages: true
           status: status
           gitRefType: gitRefType
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - gitRef: gitRef
+        - authorEmail: authorEmail
+          registryIntegrationId: 6
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
@@ -15979,6 +17861,12 @@ components:
           number: 5
           appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          stackRevId: 1
+          id: 5
+          ciIntegrationId: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          gitRef: gitRef
+          workflow: workflow
           task: "{}"
           appServiceBuilds:
           - image: image
@@ -16009,12 +17897,14 @@ components:
             id: 3
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
+          authorName: authorName
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          gitRepoId: 1
+          imageVoidStatus: none
           taskId: 9
+          canVoidImages: true
           status: status
           gitRefType: gitRefType
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         items:
           items:
@@ -16032,7 +17922,8 @@ components:
     AppBuildsCreateResponse:
       example:
         items:
-        - gitRef: gitRef
+        - authorEmail: authorEmail
+          registryIntegrationId: 6
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
@@ -16040,6 +17931,12 @@ components:
           number: 5
           appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          stackRevId: 1
+          id: 5
+          ciIntegrationId: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          gitRef: gitRef
+          workflow: workflow
           task: "{}"
           appServiceBuilds:
           - image: image
@@ -16070,13 +17967,16 @@ components:
             id: 3
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
+          authorName: authorName
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          gitRepoId: 1
+          imageVoidStatus: none
           taskId: 9
+          canVoidImages: true
           status: status
           gitRefType: gitRefType
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - gitRef: gitRef
+        - authorEmail: authorEmail
+          registryIntegrationId: 6
           commitMessage: commitMessage
           startedAt: 2000-01-23T04:56:07.000+00:00
           commitHash: commitHash
@@ -16084,6 +17984,12 @@ components:
           number: 5
           appServiceId: 7
           createdAt: 2000-01-23T04:56:07.000+00:00
+          stackRevId: 1
+          id: 5
+          ciIntegrationId: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          gitRef: gitRef
+          workflow: workflow
           task: "{}"
           appServiceBuilds:
           - image: image
@@ -16114,12 +18020,14 @@ components:
             id: 3
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
+          authorName: authorName
           endedAt: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          gitRepoId: 1
+          imageVoidStatus: none
           taskId: 9
+          canVoidImages: true
           status: status
           gitRefType: gitRefType
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         taskId: 0
       properties:
         items:
@@ -16272,6 +18180,7 @@ components:
           mountOptions:
           - mountOptions
           - mountOptions
+        availableToAllProjects: true
         lastNodesReady: 5
         lastNodesTotal: 5
         envScope: all
@@ -16326,6 +18235,14 @@ components:
                 allowPatch: true
                 allowSameVersion: true
                 allowMinor: true
+          clusterCapabilities:
+            stackRevisionIds:
+            - 1
+            - 1
+            - 1
+            - 1
+            - 1
+            autoInstall: true
         wodby: true
         capabilities:
           redirectRoutes: true
@@ -16439,6 +18356,10 @@ components:
         ownerProjectId:
           nullable: true
           type: integer
+        availableToAllProjects:
+          description: True when every project in the organization can use the resource
+            without a project share.
+          type: boolean
         capabilities:
           $ref: '#/components/schemas/ClusterCapabilities'
         settings:
@@ -16461,6 +18382,7 @@ components:
       required:
       - allowedEnvIds
       - allowedEnvTypes
+      - availableToAllProjects
       - capabilities
       - createdAt
       - demo
@@ -16544,14 +18466,16 @@ components:
         title: title
         type: type
         version: version
-        orgId: 5
+        orgId: 2
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
+        ownerProjectId: 5
         zone: zone
         envType: prod
         name: name
         id: 0
         region: region
+        ownershipScope: org
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -16579,6 +18503,16 @@ components:
           nullable: true
           type: integer
         appServiceId:
+          nullable: true
+          type: integer
+        ownershipScope:
+          description: "org when the organization owns the resource, project when\
+            \ one project owns it."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
           nullable: true
           type: integer
         envId:
@@ -16609,6 +18543,7 @@ components:
       - kind
       - name
       - orgId
+      - ownershipScope
       - status
       - title
       - type
@@ -16617,6 +18552,7 @@ components:
       type: object
     Integration:
       example:
+        availableToAllProjects: true
         primaryEnvId: 5
         auth: auth
         primaryEnvType: prod
@@ -16631,9 +18567,11 @@ components:
         - 5
         - 5
         createdAt: 2000-01-23T04:56:07.000+00:00
+        ownerProjectId: 2
         outdated: true
         scope: scope
         id: 0
+        ownershipScope: org
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -16690,6 +18628,20 @@ components:
             - feature
             type: string
           type: array
+        ownershipScope:
+          description: "org when the organization owns the resource, project when\
+            \ one project owns it."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: True when every project in the organization can use the resource
+            without a project share.
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -16699,11 +18651,13 @@ components:
       required:
       - allowedEnvIds
       - allowedEnvTypes
+      - availableToAllProjects
       - createdAt
       - envScope
       - id
       - orgId
       - outdated
+      - ownershipScope
       - providerRevId
       - status
       - title
@@ -16715,11 +18669,14 @@ components:
         integrationId: 7
         startedAt: 2000-01-23T04:56:07.000+00:00
         databaseDbId: 5
+        fileDeleted: true
         manual: true
+        blobStorageRegion: eu
         appInstanceId: 6
         appServiceId: 1
         createdAt: 2000-01-23T04:56:07.000+00:00
         size: 0
+        canVoidFile: true
         endedAt: 2000-01-23T04:56:07.000+00:00
         name: name
         options:
@@ -16765,6 +18722,14 @@ components:
             built-in blob storage.
           nullable: true
           type: integer
+        blobStorageRegion:
+          description: Region used by Wodby Blob Storage. Null for third-party storage
+            and legacy backups.
+          enum:
+          - eu
+          - us
+          nullable: true
+          type: string
         taskId:
           nullable: true
           type: integer
@@ -16775,6 +18740,12 @@ components:
           minimum: 0
           nullable: true
           type: integer
+        fileDeleted:
+          description: Whether the stored backup file has been permanently removed.
+          type: boolean
+        canVoidFile:
+          description: Whether the backup file can be permanently removed now.
+          type: boolean
         options:
           items:
             $ref: '#/components/schemas/BackupOption'
@@ -16794,7 +18765,9 @@ components:
           nullable: true
           type: string
       required:
+      - canVoidFile
       - createdAt
+      - fileDeleted
       - id
       - integrationId
       - manual
@@ -16812,11 +18785,14 @@ components:
           integrationId: 7
           startedAt: 2000-01-23T04:56:07.000+00:00
           databaseDbId: 5
+          fileDeleted: true
           manual: true
+          blobStorageRegion: eu
           appInstanceId: 6
           appServiceId: 1
           createdAt: 2000-01-23T04:56:07.000+00:00
           size: 0
+          canVoidFile: true
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           options:
@@ -16837,11 +18813,14 @@ components:
           integrationId: 7
           startedAt: 2000-01-23T04:56:07.000+00:00
           databaseDbId: 5
+          fileDeleted: true
           manual: true
+          blobStorageRegion: eu
           appInstanceId: 6
           appServiceId: 1
           createdAt: 2000-01-23T04:56:07.000+00:00
           size: 0
+          canVoidFile: true
           endedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           options:
@@ -16887,6 +18866,7 @@ components:
         databaseDbId: 5
         envId: 7
         orgId: 2
+        blobStorageRegion: eu
         appInstanceId: 6
         bucket: bucket
         duration: 84
@@ -16960,6 +18940,14 @@ components:
         storageClass:
           nullable: true
           type: string
+        blobStorageRegion:
+          description: Region used by Wodby Blob Storage. Null for third-party storage
+            and legacy presets.
+          enum:
+          - eu
+          - us
+          nullable: true
+          type: string
         options:
           items:
             $ref: '#/components/schemas/BackupOption'
@@ -17003,9 +18991,48 @@ components:
       - override
       - updatedAt
       type: object
+    TaskInitiator:
+      description: "Immutable provenance. Client names and versions are self-reported,\
+        \ not verified identities. Contains no credentials."
+      properties:
+        source:
+          enum:
+          - mcp
+          type: string
+        userId:
+          type: integer
+        apiKeyId:
+          nullable: true
+          type: integer
+        agentConnectionId:
+          nullable: true
+          type: integer
+        oauthClientId:
+          type: string
+        oauthClientName:
+          type: string
+        clientName:
+          type: string
+        clientVersion:
+          type: string
+        toolName:
+          type: string
+        requestId:
+          type: string
+      required:
+      - clientName
+      - clientVersion
+      - oauthClientId
+      - oauthClientName
+      - requestId
+      - source
+      - toolName
+      - userId
+      type: object
     Task:
       example:
         compactTitle: compactTitle
+        initiator: "{}"
         startedAt: 2000-01-23T04:56:07.000+00:00
         projectIds:
         - 5
@@ -17102,6 +19129,13 @@ components:
         user: "{}"
         status: status
       properties:
+        initiator:
+          allOf:
+          - $ref: '#/components/schemas/TaskInitiator'
+          description: Absent when provenance is unknown; absence does not imply human
+            initiation.
+          nullable: true
+          type: object
         id:
           type: integer
         name:
@@ -18653,6 +20687,8 @@ components:
       - HSTS
       - REQUEST_TIMEOUT
       - BACKEND_REQUEST_TIMEOUT
+      - RATE_LIMIT_PER_IP
+      - RATE_LIMIT_TOTAL
       type: string
     AppRouteSettingSource:
       enum:
@@ -18707,8 +20743,8 @@ components:
         custom:
           type: boolean
         issuer:
-          description: "Human-readable certificate authority name parsed from uploaded\
-            \ certificates, or the managed issuer identifier."
+          description: "Issuer label: a certificate authority name for uploaded or\
+            \ temporary AWS certificates, otherwise the managed issuer identifier."
           type: string
         domain:
           type: string
@@ -18772,12 +20808,14 @@ components:
     Provider:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        ownerProjectId: 5
         public: true
         name: name
         revId: 6
         id: 0
         title: title
         orgId: 1
+        ownershipScope: org
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -18795,6 +20833,16 @@ components:
           type: integer
         orgId:
           type: integer
+        ownershipScope:
+          description: "org when the organization owns the resource, project when\
+            \ one project owns it."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          nullable: true
+          type: integer
         createdAt:
           format: date-time
           type: string
@@ -18806,6 +20854,7 @@ components:
       - id
       - name
       - orgId
+      - ownershipScope
       - public
       - revId
       - status
@@ -18984,25 +21033,29 @@ components:
       type: object
     ProvidersResponse:
       example:
-        nextPage: 5
+        nextPage: 2
         totalCount: 5
         items:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          ownerProjectId: 5
           public: true
           name: name
           revId: 6
           id: 0
           title: title
           orgId: 1
+          ownershipScope: org
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          ownerProjectId: 5
           public: true
           name: name
           revId: 6
           id: 0
           title: title
           orgId: 1
+          ownershipScope: org
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -19021,6 +21074,7 @@ components:
       type: object
     Service:
       example:
+        availableToAllProjects: true
         settings:
           gitAutoUpdate:
             allowMajor: true
@@ -19037,10 +21091,12 @@ components:
         orgId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
         external: true
+        ownerProjectId: 5
         public: true
         latestRevNumber: 1
         name: name
         id: 0
+        ownershipScope: org
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -19064,6 +21120,20 @@ components:
           type: integer
         orgId:
           type: integer
+        ownershipScope:
+          description: "org when the organization owns the resource, project when\
+            \ one project owns it."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: True when every project in the organization can use the resource
+            without a project share.
+          type: boolean
         settings:
           $ref: '#/components/schemas/ServiceSettings'
         createdAt:
@@ -19073,12 +21143,14 @@ components:
           format: date-time
           type: string
       required:
+      - availableToAllProjects
       - createdAt
       - external
       - id
       - latestRevNumber
       - name
       - orgId
+      - ownershipScope
       - public
       - revId
       - status
@@ -19369,10 +21441,11 @@ components:
       type: object
     ServicesResponse:
       example:
-        nextPage: 2
-        totalCount: 5
+        nextPage: 7
+        totalCount: 2
         items:
-        - settings:
+        - availableToAllProjects: true
+          settings:
             gitAutoUpdate:
               allowMajor: true
               allowPatch: true
@@ -19388,13 +21461,16 @@ components:
           orgId: 5
           createdAt: 2000-01-23T04:56:07.000+00:00
           external: true
+          ownerProjectId: 5
           public: true
           latestRevNumber: 1
           name: name
           id: 0
+          ownershipScope: org
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - settings:
+        - availableToAllProjects: true
+          settings:
             gitAutoUpdate:
               allowMajor: true
               allowPatch: true
@@ -19410,10 +21486,12 @@ components:
           orgId: 5
           createdAt: 2000-01-23T04:56:07.000+00:00
           external: true
+          ownerProjectId: 5
           public: true
           latestRevNumber: 1
           name: name
           id: 0
+          ownershipScope: org
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -19433,6 +21511,23 @@ components:
     Stack:
       example:
         originStackRevId: 2
+        availableToAllProjects: true
+        originStackRevNumber: 9
+        icon: icon
+        originStackRevName: originStackRevName
+        title: title
+        gitRepoRefType: gitRepoRefType
+        orgId: 3
+        gitRepoRemoteId: gitRepoRemoteId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        originStackRevStackId: 7
+        gitRepoRef: gitRepoRef
+        originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+        ownerProjectId: 2
+        outdated: true
+        public: true
+        id: 0
+        updatedAt: 2000-01-23T04:56:07.000+00:00
         draftRevId: 1
         settings:
           autoOriginStackUpdate:
@@ -19465,27 +21560,13 @@ components:
             allowMinor: true
             branches: true
             enabled: true
-        originStackRevNumber: 9
-        icon: icon
         revId: 6
-        originStackRevName: originStackRevName
-        title: title
-        gitRepoRefType: gitRepoRefType
-        orgId: 3
-        gitRepoRemoteId: gitRepoRemoteId
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        originStackRevStackId: 7
-        gitRepoRef: gitRepoRef
-        originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
-        outdated: true
-        public: true
         originStackRevVersion: originStackRevVersion
         latestRevNumber: 5
         gitRepoId: 5
         name: name
-        id: 0
+        ownershipScope: org
         status: status
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -19541,6 +21622,20 @@ components:
           type: string
         orgId:
           type: integer
+        ownershipScope:
+          description: "org when the organization owns the resource, project when\
+            \ one project owns it."
+          enum:
+          - org
+          - project
+          type: string
+        ownerProjectId:
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: True when every project in the organization can use the resource
+            without a project share.
+          type: boolean
         settings:
           $ref: '#/components/schemas/StackSettings'
         createdAt:
@@ -19550,6 +21645,7 @@ components:
           format: date-time
           type: string
       required:
+      - availableToAllProjects
       - createdAt
       - icon
       - id
@@ -19557,6 +21653,7 @@ components:
       - name
       - orgId
       - outdated
+      - ownershipScope
       - public
       - revId
       - status
@@ -19730,6 +21827,9 @@ components:
           stackServiceId: 2
           id: 3
           requestCPU: 4
+          gpu:
+            count: 171976544
+            resourceName: resourceName
         - limitMem: 1
           requestMem: 7
           limitCPU: 1
@@ -19738,6 +21838,9 @@ components:
           stackServiceId: 2
           id: 3
           requestCPU: 4
+          gpu:
+            count: 171976544
+            resourceName: resourceName
         id: 0
         serviceRevName: serviceRevName
         serviceRevVersion: serviceRevVersion
@@ -19818,10 +21921,27 @@ components:
       type: object
     StacksResponse:
       example:
-        nextPage: 4
-        totalCount: 2
+        nextPage: 7
+        totalCount: 4
         items:
         - originStackRevId: 2
+          availableToAllProjects: true
+          originStackRevNumber: 9
+          icon: icon
+          originStackRevName: originStackRevName
+          title: title
+          gitRepoRefType: gitRepoRefType
+          orgId: 3
+          gitRepoRemoteId: gitRepoRemoteId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          originStackRevStackId: 7
+          gitRepoRef: gitRepoRef
+          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+          ownerProjectId: 2
+          outdated: true
+          public: true
+          id: 0
+          updatedAt: 2000-01-23T04:56:07.000+00:00
           draftRevId: 1
           settings:
             autoOriginStackUpdate:
@@ -19854,28 +21974,31 @@ components:
               allowMinor: true
               branches: true
               enabled: true
-          originStackRevNumber: 9
-          icon: icon
           revId: 6
-          originStackRevName: originStackRevName
-          title: title
-          gitRepoRefType: gitRepoRefType
-          orgId: 3
-          gitRepoRemoteId: gitRepoRemoteId
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          originStackRevStackId: 7
-          gitRepoRef: gitRepoRef
-          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
-          outdated: true
-          public: true
           originStackRevVersion: originStackRevVersion
           latestRevNumber: 5
           gitRepoId: 5
           name: name
-          id: 0
+          ownershipScope: org
           status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         - originStackRevId: 2
+          availableToAllProjects: true
+          originStackRevNumber: 9
+          icon: icon
+          originStackRevName: originStackRevName
+          title: title
+          gitRepoRefType: gitRepoRefType
+          orgId: 3
+          gitRepoRemoteId: gitRepoRemoteId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          originStackRevStackId: 7
+          gitRepoRef: gitRepoRef
+          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
+          ownerProjectId: 2
+          outdated: true
+          public: true
+          id: 0
+          updatedAt: 2000-01-23T04:56:07.000+00:00
           draftRevId: 1
           settings:
             autoOriginStackUpdate:
@@ -19908,27 +22031,13 @@ components:
               allowMinor: true
               branches: true
               enabled: true
-          originStackRevNumber: 9
-          icon: icon
           revId: 6
-          originStackRevName: originStackRevName
-          title: title
-          gitRepoRefType: gitRepoRefType
-          orgId: 3
-          gitRepoRemoteId: gitRepoRemoteId
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          originStackRevStackId: 7
-          gitRepoRef: gitRepoRef
-          originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
-          outdated: true
-          public: true
           originStackRevVersion: originStackRevVersion
           latestRevNumber: 5
           gitRepoId: 5
           name: name
-          id: 0
+          ownershipScope: org
           status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         items:
           items:
@@ -20462,15 +22571,20 @@ components:
       type: object
     AppServiceContainer:
       example:
-        appServiceId: 6
-        limitMem: 2
+        appServiceId: 1
+        limitMem: 7
         requestMem: 5
-        limitCPU: 5
+        limitCPU: 2
         name: name
         workload: workload
-        id: 0
-        requestCPU: 1
+        id: 6
+        requestCPU: 5
+        gpu:
+          count: 171976544
+          resourceName: resourceName
       properties:
+        gpu:
+          $ref: '#/components/schemas/GPUResources'
         id:
           nullable: true
           type: integer
@@ -20507,7 +22621,12 @@ components:
         stackServiceId: 2
         id: 3
         requestCPU: 4
+        gpu:
+          count: 171976544
+          resourceName: resourceName
       properties:
+        gpu:
+          $ref: '#/components/schemas/GPUResources'
         id:
           nullable: true
           type: integer
@@ -21360,6 +23479,7 @@ components:
         treeItems:
         - task:
             compactTitle: compactTitle
+            initiator: "{}"
             startedAt: 2000-01-23T04:56:07.000+00:00
             projectIds:
             - 5
@@ -21458,6 +23578,7 @@ components:
           parentId: 0
         - task:
             compactTitle: compactTitle
+            initiator: "{}"
             startedAt: 2000-01-23T04:56:07.000+00:00
             projectIds:
             - 5
@@ -21559,6 +23680,7 @@ components:
         totalCount: 6
         items:
         - compactTitle: compactTitle
+          initiator: "{}"
           startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
           - 5
@@ -21655,6 +23777,7 @@ components:
           user: "{}"
           status: status
         - compactTitle: compactTitle
+          initiator: "{}"
           startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
           - 5
@@ -21786,6 +23909,7 @@ components:
       example:
         task:
           compactTitle: compactTitle
+          initiator: "{}"
           startedAt: 2000-01-23T04:56:07.000+00:00
           projectIds:
           - 5
@@ -21992,7 +24116,97 @@ components:
     CloudZone:
       $ref: '#/components/schemas/GenericObject'
     CloudMachineType:
-      $ref: '#/components/schemas/GenericObject'
+      example:
+        defaultIOPS: 9
+        maxIOPS: 7
+        available: true
+        cpu: 0
+        disk: 1
+        storageOptions:
+        - null
+        - null
+        mem: 6
+        maxStorageSize: 5
+        gpus:
+        - count: 1
+          model: model
+          memoryMiB: 2
+          manufacturer: manufacturer
+        - count: 1
+          model: model
+          memoryMiB: 2
+          manufacturer: manufacturer
+        name: name
+        sharedCPU: true
+        family: family
+        minStorageSize: 5
+        minIOPS: 2
+      properties:
+        name:
+          type: string
+        cpu:
+          type: integer
+        mem:
+          type: integer
+        disk:
+          type: integer
+        sharedCPU:
+          type: boolean
+        available:
+          type: boolean
+        family:
+          type: string
+        minStorageSize:
+          nullable: true
+          type: integer
+        maxStorageSize:
+          nullable: true
+          type: integer
+        minIOPS:
+          nullable: true
+          type: integer
+        maxIOPS:
+          nullable: true
+          type: integer
+        defaultIOPS:
+          nullable: true
+          type: integer
+        storageOptions:
+          items:
+            $ref: '#/components/schemas/GenericObject'
+          type: array
+        gpus:
+          description: Provider-reported devices. This does not guarantee driver setup
+            or spare capacity.
+          items:
+            $ref: '#/components/schemas/CloudGPU'
+          nullable: true
+          type: array
+      type: object
+    CloudGPU:
+      example:
+        count: 1
+        model: model
+        memoryMiB: 2
+        manufacturer: manufacturer
+      properties:
+        manufacturer:
+          type: string
+        model:
+          type: string
+        count:
+          minimum: 1
+          type: integer
+        memoryMiB:
+          description: Memory per device in MiB; absent when the provider does not
+            report it.
+          nullable: true
+          type: integer
+      required:
+      - count
+      - manufacturer
+      - model
+      type: object
     KubeVersion:
       example:
         name: name
@@ -23279,6 +25493,7 @@ components:
     NewAppInput:
       example:
         settings:
+          buildImageCleanup: ""
           autoStackUpgrade:
             timeWindow:
               start: 02:00
@@ -23308,7 +25523,7 @@ components:
           storageServiceName: storageServiceName
           branch: branch
           codeSize: 1
-        registryIntegrationId: 8
+        registryIntegrationId: 9
         access:
           mode: PROTECTED
           settings:
@@ -23325,7 +25540,7 @@ components:
             primary: true
           scope: ENTIRE_APP
           host: host
-          integrationId: 9
+          integrationId: 6
         environmentType: prod
         deferInitialDeployment: false
         executionMode: standard
@@ -23369,6 +25584,7 @@ components:
             limitCPU: 7
             workload: workload
             requestCPU: 1
+            gpu: ""
           disabled: true
           id: 2
           buildSource:
@@ -23432,6 +25648,7 @@ components:
             limitCPU: 7
             workload: workload
             requestCPU: 1
+            gpu: ""
           disabled: true
           id: 2
           buildSource:
@@ -23456,16 +25673,51 @@ components:
             maxReplicas: 9
             minReplicas: 5
             averageCPU: 4
-        clusterId: 9
+        clusterId: 6
         title: title
         orgId: 1
         environmentTitle: environmentTitle
         stackRevId: 5
+        serviceOverrides:
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database: ""
+          disabled: true
+          id: 9
+          buildSource:
+            buildSourceType: buildSourceType
+            gitRef: gitRef
+            remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
+            integrationId: 7
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database: ""
+          disabled: true
+          id: 9
+          buildSource:
+            buildSourceType: buildSourceType
+            gitRef: gitRef
+            remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
+            integrationId: 7
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
         environmentName: environmentName
         domain: domain
         name: name
         projectId: 5
-        ciIntegrationId: 6
+        ciIntegrationId: 8
       properties:
         executionMode:
           default: standard
@@ -23511,6 +25763,13 @@ components:
           items:
             $ref: '#/components/schemas/CreateAppServiceInput'
           type: array
+        serviceOverrides:
+          description: "Changes to the stack revision's service defaults. Use it instead\
+            \ of services to set only what differs, such as the repository of a workspace.\
+            \ Not allowed with services."
+          items:
+            $ref: '#/components/schemas/NewAppServiceOverrideInput'
+          type: array
         clusterId:
           nullable: true
           type: integer
@@ -23545,6 +25804,7 @@ components:
     NewAppEnvironmentInput:
       example:
         settings:
+          buildImageCleanup: ""
           autoStackUpgrade:
             timeWindow:
               start: 02:00
@@ -23591,7 +25851,7 @@ components:
             primary: true
           scope: ENTIRE_APP
           host: host
-          integrationId: 9
+          integrationId: 6
         environmentType: prod
         deferInitialDeployment: false
         executionMode: standard
@@ -23635,6 +25895,7 @@ components:
             limitCPU: 7
             workload: workload
             requestCPU: 1
+            gpu: ""
           disabled: true
           id: 2
           buildSource:
@@ -23698,6 +25959,7 @@ components:
             limitCPU: 7
             workload: workload
             requestCPU: 1
+            gpu: ""
           disabled: true
           id: 2
           buildSource:
@@ -23725,6 +25987,41 @@ components:
         clusterId: 1
         environmentTitle: environmentTitle
         stackRevId: 6
+        serviceOverrides:
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database: ""
+          disabled: true
+          id: 9
+          buildSource:
+            buildSourceType: buildSourceType
+            gitRef: gitRef
+            remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
+            integrationId: 7
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
+        - settings:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          database: ""
+          disabled: true
+          id: 9
+          buildSource:
+            buildSourceType: buildSourceType
+            gitRef: gitRef
+            remoteGitRepoId: remoteGitRepoId
+            boilerplate: boilerplate
+            integrationId: 7
+            newRepoName: newRepoName
+            gitRefType: gitRefType
+          version: version
         environmentName: environmentName
         appId: 0
         domain: domain
@@ -23762,6 +26059,13 @@ components:
           description: Defaults to the stack revision's service defaults when omitted.
           items:
             $ref: '#/components/schemas/CreateAppServiceInput'
+          type: array
+        serviceOverrides:
+          description: "Changes to the stack revision's service defaults. Use it instead\
+            \ of services to set only what differs, such as the repository of a workspace.\
+            \ Not allowed with services."
+          items:
+            $ref: '#/components/schemas/NewAppServiceOverrideInput'
           type: array
         clusterId:
           nullable: true
@@ -23802,7 +26106,7 @@ components:
           primary: true
         scope: ENTIRE_APP
         host: host
-        integrationId: 9
+        integrationId: 6
       properties:
         integrationId:
           type: integer
@@ -23868,6 +26172,50 @@ components:
       required:
       - name
       - value
+      type: object
+    NewAppServiceOverrideInput:
+      example:
+        settings:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        database: ""
+        disabled: true
+        id: 9
+        buildSource:
+          buildSourceType: buildSourceType
+          gitRef: gitRef
+          remoteGitRepoId: remoteGitRepoId
+          boilerplate: boilerplate
+          integrationId: 7
+          newRepoName: newRepoName
+          gitRefType: gitRefType
+        version: version
+      properties:
+        id:
+          description: Stack service ID in the selected stack revision.
+          type: integer
+        disabled:
+          type: boolean
+        version:
+          type: string
+        buildSource:
+          $ref: '#/components/schemas/BuildSourceInput'
+        settings:
+          description: Service settings to set. A setting that is not named keeps
+            its default. Use it to supply a required setting that has no default.
+          items:
+            $ref: '#/components/schemas/AppServiceSettingInput'
+          type: array
+        database:
+          allOf:
+          - $ref: '#/components/schemas/AppServiceDatabaseInput'
+          description: "The database server, and optionally the database, of a database\
+            \ service. Required to enable an external database service, such as a\
+            \ managed PostgreSQL server."
+      required:
+      - id
       type: object
     BuildSourceInput:
       example:
@@ -24013,7 +26361,13 @@ components:
         limitCPU: 7
         workload: workload
         requestCPU: 1
+        gpu: ""
       properties:
+        gpu:
+          allOf:
+          - $ref: '#/components/schemas/GPUResources'
+          description: Omitted or null preserves an existing GPU override. Count zero
+            disables GPUs.
         workload:
           nullable: true
           type: string
@@ -24032,6 +26386,26 @@ components:
         limitMem:
           nullable: true
           type: integer
+      type: object
+    GPUResources:
+      example:
+        count: 171976544
+        resourceName: resourceName
+      nullable: true
+      properties:
+        resourceName:
+          description: "Qualified device-plugin resource name, such as nvidia.com/gpu\
+            \ or amd.com/gpu. Native and reserved Kubernetes resource names are rejected."
+          type: string
+        count:
+          description: Device count per container replica. Kubernetes requests and
+            limits are equal; zero explicitly disables GPUs.
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+      required:
+      - count
+      - resourceName
       type: object
     ScalabilityInput:
       example:
@@ -24086,6 +26460,7 @@ components:
       type: object
     NewClusterInput:
       example:
+        availableToAllProjects: true
         disableMonitoring: true
         maxNodeCount: 5
         integrationId: 1
@@ -24120,6 +26495,12 @@ components:
         projectId:
           nullable: true
           type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
         integrationId:
           type: integer
         name:
@@ -24489,6 +26870,7 @@ components:
       type: object
     NewIntegrationInput:
       example:
+        availableToAllProjects: true
         fieldsInput:
         - envType: dev
           name: name
@@ -24533,6 +26915,12 @@ components:
         projectId:
           nullable: true
           type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
         fieldsInput:
           items:
             $ref: '#/components/schemas/FieldInput'
@@ -24601,6 +26989,7 @@ components:
       example:
         created: true
         integration:
+          availableToAllProjects: true
           primaryEnvId: 5
           auth: auth
           primaryEnvType: prod
@@ -24615,9 +27004,11 @@ components:
           - 5
           - 5
           createdAt: 2000-01-23T04:56:07.000+00:00
+          ownerProjectId: 2
           outdated: true
           scope: scope
           id: 0
+          ownershipScope: org
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -24730,6 +27121,7 @@ components:
         - warnings
         - warnings
         integration:
+          availableToAllProjects: true
           primaryEnvId: 5
           auth: auth
           primaryEnvType: prod
@@ -24744,9 +27136,11 @@ components:
           - 5
           - 5
           createdAt: 2000-01-23T04:56:07.000+00:00
+          ownerProjectId: 2
           outdated: true
           scope: scope
           id: 0
+          ownershipScope: org
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         taskId: 0
@@ -24792,6 +27186,7 @@ components:
         bucket: bucket
         appServiceId: 0
         storageClass: storageClass
+        backupPresetId: 1
         options:
         - values:
           - values
@@ -24801,14 +27196,20 @@ components:
           - values
           - values
           name: name
-        integrationId: 1
+        integrationId: 5
         databaseDbId: 6
         backupName: backupName
+        blobStorageRegion: eu
       properties:
         appServiceId:
           nullable: true
           type: integer
         databaseDbId:
+          nullable: true
+          type: integer
+        backupPresetId:
+          description: Associates a one-off backup with the preset used to populate
+            its destination and options.
           nullable: true
           type: integer
         backupName:
@@ -24821,6 +27222,14 @@ components:
           description: Must be empty for Wodby Blob Storage.
           type: string
         storageClass:
+          nullable: true
+          type: string
+        blobStorageRegion:
+          description: Wodby Blob Storage region. Omit to use Europe; must be omitted
+            for third-party storage.
+          enum:
+          - eu
+          - us
           nullable: true
           type: string
         options:
@@ -24848,6 +27257,7 @@ components:
         databaseDbId: 5
         envId: 2
         orgId: 5
+        blobStorageRegion: eu
         appInstanceId: 0
         bucket: bucket
         duration: 169
@@ -24922,6 +27332,14 @@ components:
         storageClass:
           nullable: true
           type: string
+        blobStorageRegion:
+          description: Wodby Blob Storage region. Omit to use Europe; must be omitted
+            for third-party storage.
+          enum:
+          - eu
+          - us
+          nullable: true
+          type: string
         options:
           items:
             $ref: '#/components/schemas/BackupOption'
@@ -24952,9 +27370,6 @@ components:
       type: object
     UpdateBackupPresetInput:
       example:
-        bucket: bucket
-        duration: 120
-        storageClass: storageClass
         auto: true
         timeWindow:
           start: 02:00
@@ -24964,11 +27379,16 @@ components:
           - MONDAY
           end: 04:00
           enabled: true
+        crontab: crontab
+        integrationId: 0
+        blobStorageRegion: eu
+        bucket: bucket
+        duration: 120
+        storageClass: storageClass
         envTypes:
         - dev
         - dev
         backupCategory: any
-        crontab: crontab
         options:
         - values:
           - values
@@ -24978,7 +27398,6 @@ components:
           - values
           - values
           name: name
-        integrationId: 0
         disabled: true
         override: true
       properties:
@@ -25011,6 +27430,14 @@ components:
           description: Must be empty for Wodby Blob Storage.
           type: string
         storageClass:
+          nullable: true
+          type: string
+        blobStorageRegion:
+          description: Wodby Blob Storage region. Omit to preserve the current region;
+            must be omitted for third-party storage.
+          enum:
+          - eu
+          - us
           nullable: true
           type: string
         options:
@@ -25310,8 +27737,13 @@ components:
         branch:
           type: string
         storageClassName:
+          description: Storage class for the workspace code and home volumes. Every
+            Pod that mounts the code then runs on one node. Omit both storage fields
+            to use the cluster's default storage class. Not allowed with storageServiceName.
           type: string
         storageServiceName:
+          description: Enabled storage service in the selected stack that shares the
+            workspace files across nodes. Not allowed with storageClassName.
           type: string
         codeSize:
           default: 10
@@ -25373,15 +27805,410 @@ components:
       - sourceAppServiceId
       - taskId
       type: object
+    WorkspaceGitStatus:
+      example:
+        committedAt: 2000-01-23T04:56:07.000+00:00
+        reason: reason
+        behind: 6
+        commitSubject: commitSubject
+        upstream: upstream
+        checkedAt: 2000-01-23T04:56:07.000+00:00
+        ahead: 0
+        available: true
+        commit: commit
+        changes:
+        - path: path
+          kind: modified
+          originalPath: originalPath
+          staged: true
+          unstaged: true
+        - path: path
+          kind: modified
+          originalPath: originalPath
+          staged: true
+          unstaged: true
+        - path: path
+          kind: modified
+          originalPath: originalPath
+          staged: true
+          unstaged: true
+        - path: path
+          kind: modified
+          originalPath: originalPath
+          staged: true
+          unstaged: true
+        - path: path
+          kind: modified
+          originalPath: originalPath
+          staged: true
+          unstaged: true
+        truncated: true
+        branch: branch
+      properties:
+        available:
+          description: False when the state cannot be read; reason explains why and
+            the other fields are omitted.
+          type: boolean
+        reason:
+          type: string
+        branch:
+          description: Current branch; omitted for a detached HEAD.
+          type: string
+        upstream:
+          description: Upstream branch that the current branch tracks.
+          type: string
+        ahead:
+          description: Commits on the current branch that its upstream does not have.
+          type: integer
+        behind:
+          description: Commits on the upstream that the current branch does not have.
+          type: integer
+        commit:
+          description: HEAD commit; omitted before the first commit.
+          type: string
+        commitSubject:
+          type: string
+        committedAt:
+          format: date-time
+          type: string
+        changes:
+          description: "Uncommitted changes, including untracked files."
+          items:
+            $ref: '#/components/schemas/WorkspaceGitChange'
+          maxItems: 500
+          type: array
+        truncated:
+          description: True when more changes exist than listed.
+          type: boolean
+        checkedAt:
+          format: date-time
+          type: string
+      required:
+      - available
+      - changes
+      - checkedAt
+      - truncated
+      type: object
+    WorkspaceGitDiff:
+      example:
+        reason: reason
+        path: path
+        binary: true
+        available: true
+        truncated: true
+        diff: diff
+      properties:
+        available:
+          description: False when the diff cannot be read; reason explains why and
+            diff is empty.
+          type: boolean
+        reason:
+          type: string
+        path:
+          type: string
+        diff:
+          description: Unified diff of staged and unstaged changes. Empty when the
+            file does not differ.
+          type: string
+        binary:
+          description: True for a file Git does not show line by line.
+          type: boolean
+        truncated:
+          description: True when the diff is longer than what is returned.
+          type: boolean
+      required:
+      - available
+      - binary
+      - diff
+      - path
+      - truncated
+      type: object
+    WorkspacePullInput:
+      example:
+        scripts: true
+      properties:
+        scripts:
+          default: true
+          description: Run the environment's post-deployment scripts after the pull.
+          type: boolean
+      type: object
+    AppEnvironmentMigrationInput:
+      example:
+        volumes:
+        - storageClassName: storageClassName
+          appServiceVolumeId: 6
+        - storageClassName: storageClassName
+          appServiceVolumeId: 6
+        targetClusterId: 0
+      properties:
+        targetClusterId:
+          description: Cluster of the same organization that the environment moves
+            to.
+          type: integer
+        volumes:
+          description: "Target cluster storage classes for the environment's volumes.\
+            \ A volume left out uses its current storage class, which must exist on\
+            \ the target cluster."
+          items:
+            $ref: '#/components/schemas/AppEnvironmentMigrationVolumeInput'
+          type: array
+      required:
+      - targetClusterId
+      type: object
+    AppEnvironmentMigrationVolumeInput:
+      example:
+        storageClassName: storageClassName
+        appServiceVolumeId: 6
+      properties:
+        appServiceVolumeId:
+          type: integer
+        storageClassName:
+          description: Target cluster storage class for the volume.
+          nullable: true
+          type: string
+      required:
+      - appServiceVolumeId
+      type: object
+    AppEnvironmentMigrationOperationResult:
+      example:
+        success: true
+        migration:
+          phase: preparing
+          components:
+          - appServiceId: 3
+            importStatus: importStatus
+            importId: 4
+            backupStatus: backupStatus
+            backupId: 2
+            name: name
+            id: 9
+          - appServiceId: 3
+            importStatus: importStatus
+            importId: 4
+            backupStatus: backupStatus
+            backupId: 2
+            name: name
+            id: 9
+          cutoverAt: 2000-01-23T04:56:07.000+00:00
+          appEnvironmentId: 1
+          sourceClusterId: 5
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          retainUntil: 2000-01-23T04:56:07.000+00:00
+          endedAt: 2000-01-23T04:56:07.000+00:00
+          deploymentId: 7
+          id: 6
+          failureMessage: failureMessage
+          targetClusterId: 5
+          taskId: 2
+          status: pending
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        taskId: 0
+      properties:
+        success:
+          type: boolean
+        taskId:
+          description: Task that runs the requested step.
+          nullable: true
+          type: integer
+        migration:
+          $ref: '#/components/schemas/AppEnvironmentMigration'
+      required:
+      - migration
+      - success
+      type: object
+    AppEnvironmentMigration:
+      example:
+        phase: preparing
+        components:
+        - appServiceId: 3
+          importStatus: importStatus
+          importId: 4
+          backupStatus: backupStatus
+          backupId: 2
+          name: name
+          id: 9
+        - appServiceId: 3
+          importStatus: importStatus
+          importId: 4
+          backupStatus: backupStatus
+          backupId: 2
+          name: name
+          id: 9
+        cutoverAt: 2000-01-23T04:56:07.000+00:00
+        appEnvironmentId: 1
+        sourceClusterId: 5
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        retainUntil: 2000-01-23T04:56:07.000+00:00
+        endedAt: 2000-01-23T04:56:07.000+00:00
+        deploymentId: 7
+        id: 6
+        failureMessage: failureMessage
+        targetClusterId: 5
+        taskId: 2
+        status: pending
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appEnvironmentId:
+          type: integer
+        sourceClusterId:
+          type: integer
+        targetClusterId:
+          type: integer
+        taskId:
+          description: Task that runs the migration.
+          type: integer
+        deploymentId:
+          description: Deployment that brings the environment up on the target cluster.
+          nullable: true
+          type: integer
+        status:
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - rolling_back
+          - rolled_back
+          - rollback_failed
+          - cleaned
+          type: string
+        phase:
+          enum:
+          - preparing
+          - freezing_source
+          - backing_up
+          - restoring_target
+          - cutting_over
+          - retaining_source
+          - rolling_back
+          - cleaning_source
+          - done
+          type: string
+        components:
+          description: Services whose data the migration copies with a backup on the
+            source and an import on the target.
+          items:
+            $ref: '#/components/schemas/AppEnvironmentMigrationComponent'
+          type: array
+        failureMessage:
+          type: string
+        retainUntil:
+          description: When the retained source is removed automatically.
+          format: date-time
+          nullable: true
+          type: string
+        cutoverAt:
+          format: date-time
+          nullable: true
+          type: string
+        endedAt:
+          format: date-time
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appEnvironmentId
+      - components
+      - createdAt
+      - failureMessage
+      - id
+      - phase
+      - sourceClusterId
+      - status
+      - targetClusterId
+      - taskId
+      - updatedAt
+      type: object
+    AppEnvironmentMigrationComponent:
+      example:
+        appServiceId: 3
+        importStatus: importStatus
+        importId: 4
+        backupStatus: backupStatus
+        backupId: 2
+        name: name
+        id: 9
+      properties:
+        id:
+          type: integer
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        backupId:
+          type: integer
+        backupStatus:
+          nullable: true
+          type: string
+        importId:
+          type: integer
+        importStatus:
+          nullable: true
+          type: string
+      required:
+      - appServiceId
+      - backupId
+      - id
+      - importId
+      - name
+      type: object
+    WorkspaceGitChange:
+      example:
+        path: path
+        kind: modified
+        originalPath: originalPath
+        staged: true
+        unstaged: true
+      properties:
+        path:
+          type: string
+        originalPath:
+          description: Previous path of a renamed or copied file.
+          type: string
+        kind:
+          enum:
+          - modified
+          - added
+          - deleted
+          - renamed
+          - copied
+          - type_changed
+          - untracked
+          - conflicted
+          type: string
+        staged:
+          description: The index differs from HEAD for this path.
+          type: boolean
+        unstaged:
+          description: The working tree differs from the index for this path.
+          type: boolean
+      required:
+      - kind
+      - path
+      - staged
+      - unstaged
+      type: object
     WorkspaceConnection:
       example:
         reason: reason
+        gitCredentials: true
+        aiCredits: true
         port: 0
         workingDirectory: workingDirectory
         ready: true
         host: host
         hostKeyFingerprint: hostKeyFingerprint
         username: username
+        agents:
+        - agents
+        - agents
       properties:
         ready:
           type: boolean
@@ -25397,7 +28224,24 @@ components:
           type: string
         hostKeyFingerprint:
           type: string
+        agents:
+          description: "Coding agent commands pre-installed in the SSH runner, such\
+            \ as claude, codex and opencode. Empty when the runner has none."
+          items:
+            type: string
+          type: array
+        gitCredentials:
+          description: True when git push and fetch in the SSH runner authenticate
+            to the app's repository with the app's Git integration.
+          type: boolean
+        aiCredits:
+          description: True when opencode in the SSH runner uses the organization's
+            AI credits by default.
+          type: boolean
       required:
+      - agents
+      - aiCredits
+      - gitCredentials
       - host
       - hostKeyFingerprint
       - port
@@ -25447,6 +28291,7 @@ components:
           limitCPU: 7
           workload: workload
           requestCPU: 1
+          gpu: ""
         disabled: true
         id: 2
         buildSource:

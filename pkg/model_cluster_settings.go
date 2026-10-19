@@ -20,6 +20,7 @@ var _ MappedNullable = &ClusterSettings{}
 // ClusterSettings struct for ClusterSettings
 type ClusterSettings struct {
 	AutoInfrastructureUpgrade *ClusterAutoInfrastructureUpgradeSettings `json:"autoInfrastructureUpgrade,omitempty"`
+	ClusterCapabilities *ClusterCapabilityPolicy `json:"clusterCapabilities,omitempty"`
 }
 
 // NewClusterSettings instantiates a new ClusterSettings object
@@ -71,6 +72,38 @@ func (o *ClusterSettings) SetAutoInfrastructureUpgrade(v ClusterAutoInfrastructu
 	o.AutoInfrastructureUpgrade = &v
 }
 
+// GetClusterCapabilities returns the ClusterCapabilities field value if set, zero value otherwise.
+func (o *ClusterSettings) GetClusterCapabilities() ClusterCapabilityPolicy {
+	if o == nil || IsNil(o.ClusterCapabilities) {
+		var ret ClusterCapabilityPolicy
+		return ret
+	}
+	return *o.ClusterCapabilities
+}
+
+// GetClusterCapabilitiesOk returns a tuple with the ClusterCapabilities field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClusterSettings) GetClusterCapabilitiesOk() (*ClusterCapabilityPolicy, bool) {
+	if o == nil || IsNil(o.ClusterCapabilities) {
+		return nil, false
+	}
+	return o.ClusterCapabilities, true
+}
+
+// HasClusterCapabilities returns a boolean if a field has been set.
+func (o *ClusterSettings) HasClusterCapabilities() bool {
+	if o != nil && !IsNil(o.ClusterCapabilities) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterCapabilities gets a reference to the given ClusterCapabilityPolicy and assigns it to the ClusterCapabilities field.
+func (o *ClusterSettings) SetClusterCapabilities(v ClusterCapabilityPolicy) {
+	o.ClusterCapabilities = &v
+}
+
 func (o ClusterSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -83,6 +116,9 @@ func (o ClusterSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AutoInfrastructureUpgrade) {
 		toSerialize["autoInfrastructureUpgrade"] = o.AutoInfrastructureUpgrade
+	}
+	if !IsNil(o.ClusterCapabilities) {
+		toSerialize["clusterCapabilities"] = o.ClusterCapabilities
 	}
 	return toSerialize, nil
 }

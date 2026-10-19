@@ -22,6 +22,8 @@ var _ MappedNullable = &Task{}
 
 // Task struct for Task
 type Task struct {
+	// Absent when provenance is unknown; absence does not imply human initiation.
+	Initiator NullableTaskInitiator `json:"initiator,omitempty"`
 	Id int32 `json:"id"`
 	Name string `json:"name"`
 	Title string `json:"title"`
@@ -84,6 +86,48 @@ func NewTask(id int32, name string, title string, compactTitle string, execution
 func NewTaskWithDefaults() *Task {
 	this := Task{}
 	return &this
+}
+
+// GetInitiator returns the Initiator field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Task) GetInitiator() TaskInitiator {
+	if o == nil || IsNil(o.Initiator.Get()) {
+		var ret TaskInitiator
+		return ret
+	}
+	return *o.Initiator.Get()
+}
+
+// GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Task) GetInitiatorOk() (*TaskInitiator, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Initiator.Get(), o.Initiator.IsSet()
+}
+
+// HasInitiator returns a boolean if a field has been set.
+func (o *Task) HasInitiator() bool {
+	if o != nil && o.Initiator.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetInitiator gets a reference to the given NullableTaskInitiator and assigns it to the Initiator field.
+func (o *Task) SetInitiator(v TaskInitiator) {
+	o.Initiator.Set(&v)
+}
+// SetInitiatorNil sets the value for Initiator to be an explicit nil
+func (o *Task) SetInitiatorNil() {
+	o.Initiator.Set(nil)
+}
+
+// UnsetInitiator ensures that no value is present for Initiator, not even an explicit nil
+func (o *Task) UnsetInitiator() {
+	o.Initiator.Unset()
 }
 
 // GetId returns the Id field value
@@ -1102,6 +1146,9 @@ func (o Task) MarshalJSON() ([]byte, error) {
 
 func (o Task) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Initiator.IsSet() {
+		toSerialize["initiator"] = o.Initiator.Get()
+	}
 	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title

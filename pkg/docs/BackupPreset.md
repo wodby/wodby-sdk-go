@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **IntegrationId** | **int32** |  | 
 **Bucket** | **string** |  | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
+**BlobStorageRegion** | Pointer to **NullableString** | Region used by Wodby Blob Storage. Null for third-party storage and legacy presets. | [optional] 
 **Options** | [**[]BackupOption**](BackupOption.md) |  | 
 **Override** | **bool** |  | 
 **Auto** | **bool** |  | 
@@ -427,6 +428,41 @@ HasStorageClass returns a boolean if a field has been set.
 `func (o *BackupPreset) UnsetStorageClass()`
 
 UnsetStorageClass ensures that no value is present for StorageClass, not even an explicit nil
+### GetBlobStorageRegion
+
+`func (o *BackupPreset) GetBlobStorageRegion() string`
+
+GetBlobStorageRegion returns the BlobStorageRegion field if non-nil, zero value otherwise.
+
+### GetBlobStorageRegionOk
+
+`func (o *BackupPreset) GetBlobStorageRegionOk() (*string, bool)`
+
+GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlobStorageRegion
+
+`func (o *BackupPreset) SetBlobStorageRegion(v string)`
+
+SetBlobStorageRegion sets BlobStorageRegion field to given value.
+
+### HasBlobStorageRegion
+
+`func (o *BackupPreset) HasBlobStorageRegion() bool`
+
+HasBlobStorageRegion returns a boolean if a field has been set.
+
+### SetBlobStorageRegionNil
+
+`func (o *BackupPreset) SetBlobStorageRegionNil(b bool)`
+
+ SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+
+### UnsetBlobStorageRegion
+`func (o *BackupPreset) UnsetBlobStorageRegion()`
+
+UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
 ### GetOptions
 
 `func (o *BackupPreset) GetOptions() []BackupOption`

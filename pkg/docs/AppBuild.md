@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** |  | 
-**Number** | **int32** | App-instance build-launch number. Build records created by the same Wodby CI launch share this number. | 
+**Number** | **int32** | App environment build-launch number. Build records created by the same Wodby CI launch share this number. | 
 **Status** | **string** |  | 
 **AppInstanceId** | **int32** |  | 
 **AppServiceId** | **int32** |  | 
@@ -16,6 +16,15 @@ Name | Type | Description | Notes
 **GitRef** | **string** |  | 
 **CommitHash** | **string** |  | 
 **CommitMessage** | **string** |  | 
+**AuthorName** | Pointer to **NullableString** |  | [optional] 
+**AuthorEmail** | Pointer to **NullableString** |  | [optional] 
+**Workflow** | **string** | CI workflow that produced an externally built image. Empty for Wodby CI builds. | 
+**StackRevId** | Pointer to **NullableInt32** | Stack revision the build was made for. | [optional] 
+**GitRepoId** | Pointer to **NullableInt32** |  | [optional] 
+**CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
+**ImageVoidStatus** | **string** | Whether the build&#39;s images were voided and can no longer be deployed. | 
+**CanVoidImages** | **bool** | True when the build&#39;s images can be voided now. | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **StartedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -25,7 +34,7 @@ Name | Type | Description | Notes
 
 ### NewAppBuild
 
-`func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, appServiceBuilds []AppServiceBuild, gitRefType string, gitRef string, commitHash string, commitMessage string, createdAt time.Time, updatedAt time.Time, ) *AppBuild`
+`func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, appServiceBuilds []AppServiceBuild, gitRefType string, gitRef string, commitHash string, commitMessage string, workflow string, imageVoidStatus string, canVoidImages bool, createdAt time.Time, updatedAt time.Time, ) *AppBuild`
 
 NewAppBuild instantiates a new AppBuild object
 This constructor will assign default values to properties that have it defined,
@@ -308,6 +317,276 @@ and a boolean to check if the value has been set.
 `func (o *AppBuild) SetCommitMessage(v string)`
 
 SetCommitMessage sets CommitMessage field to given value.
+
+
+### GetAuthorName
+
+`func (o *AppBuild) GetAuthorName() string`
+
+GetAuthorName returns the AuthorName field if non-nil, zero value otherwise.
+
+### GetAuthorNameOk
+
+`func (o *AppBuild) GetAuthorNameOk() (*string, bool)`
+
+GetAuthorNameOk returns a tuple with the AuthorName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAuthorName
+
+`func (o *AppBuild) SetAuthorName(v string)`
+
+SetAuthorName sets AuthorName field to given value.
+
+### HasAuthorName
+
+`func (o *AppBuild) HasAuthorName() bool`
+
+HasAuthorName returns a boolean if a field has been set.
+
+### SetAuthorNameNil
+
+`func (o *AppBuild) SetAuthorNameNil(b bool)`
+
+ SetAuthorNameNil sets the value for AuthorName to be an explicit nil
+
+### UnsetAuthorName
+`func (o *AppBuild) UnsetAuthorName()`
+
+UnsetAuthorName ensures that no value is present for AuthorName, not even an explicit nil
+### GetAuthorEmail
+
+`func (o *AppBuild) GetAuthorEmail() string`
+
+GetAuthorEmail returns the AuthorEmail field if non-nil, zero value otherwise.
+
+### GetAuthorEmailOk
+
+`func (o *AppBuild) GetAuthorEmailOk() (*string, bool)`
+
+GetAuthorEmailOk returns a tuple with the AuthorEmail field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAuthorEmail
+
+`func (o *AppBuild) SetAuthorEmail(v string)`
+
+SetAuthorEmail sets AuthorEmail field to given value.
+
+### HasAuthorEmail
+
+`func (o *AppBuild) HasAuthorEmail() bool`
+
+HasAuthorEmail returns a boolean if a field has been set.
+
+### SetAuthorEmailNil
+
+`func (o *AppBuild) SetAuthorEmailNil(b bool)`
+
+ SetAuthorEmailNil sets the value for AuthorEmail to be an explicit nil
+
+### UnsetAuthorEmail
+`func (o *AppBuild) UnsetAuthorEmail()`
+
+UnsetAuthorEmail ensures that no value is present for AuthorEmail, not even an explicit nil
+### GetWorkflow
+
+`func (o *AppBuild) GetWorkflow() string`
+
+GetWorkflow returns the Workflow field if non-nil, zero value otherwise.
+
+### GetWorkflowOk
+
+`func (o *AppBuild) GetWorkflowOk() (*string, bool)`
+
+GetWorkflowOk returns a tuple with the Workflow field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorkflow
+
+`func (o *AppBuild) SetWorkflow(v string)`
+
+SetWorkflow sets Workflow field to given value.
+
+
+### GetStackRevId
+
+`func (o *AppBuild) GetStackRevId() int32`
+
+GetStackRevId returns the StackRevId field if non-nil, zero value otherwise.
+
+### GetStackRevIdOk
+
+`func (o *AppBuild) GetStackRevIdOk() (*int32, bool)`
+
+GetStackRevIdOk returns a tuple with the StackRevId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackRevId
+
+`func (o *AppBuild) SetStackRevId(v int32)`
+
+SetStackRevId sets StackRevId field to given value.
+
+### HasStackRevId
+
+`func (o *AppBuild) HasStackRevId() bool`
+
+HasStackRevId returns a boolean if a field has been set.
+
+### SetStackRevIdNil
+
+`func (o *AppBuild) SetStackRevIdNil(b bool)`
+
+ SetStackRevIdNil sets the value for StackRevId to be an explicit nil
+
+### UnsetStackRevId
+`func (o *AppBuild) UnsetStackRevId()`
+
+UnsetStackRevId ensures that no value is present for StackRevId, not even an explicit nil
+### GetGitRepoId
+
+`func (o *AppBuild) GetGitRepoId() int32`
+
+GetGitRepoId returns the GitRepoId field if non-nil, zero value otherwise.
+
+### GetGitRepoIdOk
+
+`func (o *AppBuild) GetGitRepoIdOk() (*int32, bool)`
+
+GetGitRepoIdOk returns a tuple with the GitRepoId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitRepoId
+
+`func (o *AppBuild) SetGitRepoId(v int32)`
+
+SetGitRepoId sets GitRepoId field to given value.
+
+### HasGitRepoId
+
+`func (o *AppBuild) HasGitRepoId() bool`
+
+HasGitRepoId returns a boolean if a field has been set.
+
+### SetGitRepoIdNil
+
+`func (o *AppBuild) SetGitRepoIdNil(b bool)`
+
+ SetGitRepoIdNil sets the value for GitRepoId to be an explicit nil
+
+### UnsetGitRepoId
+`func (o *AppBuild) UnsetGitRepoId()`
+
+UnsetGitRepoId ensures that no value is present for GitRepoId, not even an explicit nil
+### GetCiIntegrationId
+
+`func (o *AppBuild) GetCiIntegrationId() int32`
+
+GetCiIntegrationId returns the CiIntegrationId field if non-nil, zero value otherwise.
+
+### GetCiIntegrationIdOk
+
+`func (o *AppBuild) GetCiIntegrationIdOk() (*int32, bool)`
+
+GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCiIntegrationId
+
+`func (o *AppBuild) SetCiIntegrationId(v int32)`
+
+SetCiIntegrationId sets CiIntegrationId field to given value.
+
+### HasCiIntegrationId
+
+`func (o *AppBuild) HasCiIntegrationId() bool`
+
+HasCiIntegrationId returns a boolean if a field has been set.
+
+### SetCiIntegrationIdNil
+
+`func (o *AppBuild) SetCiIntegrationIdNil(b bool)`
+
+ SetCiIntegrationIdNil sets the value for CiIntegrationId to be an explicit nil
+
+### UnsetCiIntegrationId
+`func (o *AppBuild) UnsetCiIntegrationId()`
+
+UnsetCiIntegrationId ensures that no value is present for CiIntegrationId, not even an explicit nil
+### GetRegistryIntegrationId
+
+`func (o *AppBuild) GetRegistryIntegrationId() int32`
+
+GetRegistryIntegrationId returns the RegistryIntegrationId field if non-nil, zero value otherwise.
+
+### GetRegistryIntegrationIdOk
+
+`func (o *AppBuild) GetRegistryIntegrationIdOk() (*int32, bool)`
+
+GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegistryIntegrationId
+
+`func (o *AppBuild) SetRegistryIntegrationId(v int32)`
+
+SetRegistryIntegrationId sets RegistryIntegrationId field to given value.
+
+### HasRegistryIntegrationId
+
+`func (o *AppBuild) HasRegistryIntegrationId() bool`
+
+HasRegistryIntegrationId returns a boolean if a field has been set.
+
+### SetRegistryIntegrationIdNil
+
+`func (o *AppBuild) SetRegistryIntegrationIdNil(b bool)`
+
+ SetRegistryIntegrationIdNil sets the value for RegistryIntegrationId to be an explicit nil
+
+### UnsetRegistryIntegrationId
+`func (o *AppBuild) UnsetRegistryIntegrationId()`
+
+UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+### GetImageVoidStatus
+
+`func (o *AppBuild) GetImageVoidStatus() string`
+
+GetImageVoidStatus returns the ImageVoidStatus field if non-nil, zero value otherwise.
+
+### GetImageVoidStatusOk
+
+`func (o *AppBuild) GetImageVoidStatusOk() (*string, bool)`
+
+GetImageVoidStatusOk returns a tuple with the ImageVoidStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetImageVoidStatus
+
+`func (o *AppBuild) SetImageVoidStatus(v string)`
+
+SetImageVoidStatus sets ImageVoidStatus field to given value.
+
+
+### GetCanVoidImages
+
+`func (o *AppBuild) GetCanVoidImages() bool`
+
+GetCanVoidImages returns the CanVoidImages field if non-nil, zero value otherwise.
+
+### GetCanVoidImagesOk
+
+`func (o *AppBuild) GetCanVoidImagesOk() (*bool, bool)`
+
+GetCanVoidImagesOk returns a tuple with the CanVoidImages field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanVoidImages
+
+`func (o *AppBuild) SetCanVoidImages(v bool)`
+
+SetCanVoidImages sets CanVoidImages field to given value.
 
 
 ### GetCreatedAt

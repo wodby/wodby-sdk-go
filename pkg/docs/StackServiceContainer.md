@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Gpu** | Pointer to [**NullableGPUResources**](GPUResources.md) |  | [optional] 
 **Id** | Pointer to **NullableInt32** |  | [optional] 
 **StackServiceId** | **int32** |  | 
 **Workload** | **string** |  | 
@@ -32,6 +33,41 @@ NewStackServiceContainerWithDefaults instantiates a new StackServiceContainer ob
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetGpu
+
+`func (o *StackServiceContainer) GetGpu() GPUResources`
+
+GetGpu returns the Gpu field if non-nil, zero value otherwise.
+
+### GetGpuOk
+
+`func (o *StackServiceContainer) GetGpuOk() (*GPUResources, bool)`
+
+GetGpuOk returns a tuple with the Gpu field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpu
+
+`func (o *StackServiceContainer) SetGpu(v GPUResources)`
+
+SetGpu sets Gpu field to given value.
+
+### HasGpu
+
+`func (o *StackServiceContainer) HasGpu() bool`
+
+HasGpu returns a boolean if a field has been set.
+
+### SetGpuNil
+
+`func (o *StackServiceContainer) SetGpuNil(b bool)`
+
+ SetGpuNil sets the value for Gpu to be an explicit nil
+
+### UnsetGpu
+`func (o *StackServiceContainer) UnsetGpu()`
+
+UnsetGpu ensures that no value is present for Gpu, not even an explicit nil
 ### GetId
 
 `func (o *StackServiceContainer) GetId() int32`

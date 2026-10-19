@@ -23,12 +23,16 @@ var _ MappedNullable = &NewBackupInput{}
 type NewBackupInput struct {
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
+	// Associates a one-off backup with the preset used to populate its destination and options.
+	BackupPresetId NullableInt32 `json:"backupPresetId,omitempty"`
 	BackupName NullableString `json:"backupName,omitempty"`
 	// Use 0 for Wodby Blob Storage.
 	IntegrationId int32 `json:"integrationId"`
 	// Must be empty for Wodby Blob Storage.
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
+	// Wodby Blob Storage region. Omit to use Europe; must be omitted for third-party storage.
+	BlobStorageRegion NullableString `json:"blobStorageRegion,omitempty"`
 	Options []BackupOption `json:"options,omitempty"`
 }
 
@@ -135,6 +139,48 @@ func (o *NewBackupInput) SetDatabaseDbIdNil() {
 // UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
 func (o *NewBackupInput) UnsetDatabaseDbId() {
 	o.DatabaseDbId.Unset()
+}
+
+// GetBackupPresetId returns the BackupPresetId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewBackupInput) GetBackupPresetId() int32 {
+	if o == nil || IsNil(o.BackupPresetId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.BackupPresetId.Get()
+}
+
+// GetBackupPresetIdOk returns a tuple with the BackupPresetId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewBackupInput) GetBackupPresetIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BackupPresetId.Get(), o.BackupPresetId.IsSet()
+}
+
+// HasBackupPresetId returns a boolean if a field has been set.
+func (o *NewBackupInput) HasBackupPresetId() bool {
+	if o != nil && o.BackupPresetId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupPresetId gets a reference to the given NullableInt32 and assigns it to the BackupPresetId field.
+func (o *NewBackupInput) SetBackupPresetId(v int32) {
+	o.BackupPresetId.Set(&v)
+}
+// SetBackupPresetIdNil sets the value for BackupPresetId to be an explicit nil
+func (o *NewBackupInput) SetBackupPresetIdNil() {
+	o.BackupPresetId.Set(nil)
+}
+
+// UnsetBackupPresetId ensures that no value is present for BackupPresetId, not even an explicit nil
+func (o *NewBackupInput) UnsetBackupPresetId() {
+	o.BackupPresetId.Unset()
 }
 
 // GetBackupName returns the BackupName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -269,6 +315,48 @@ func (o *NewBackupInput) UnsetStorageClass() {
 	o.StorageClass.Unset()
 }
 
+// GetBlobStorageRegion returns the BlobStorageRegion field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewBackupInput) GetBlobStorageRegion() string {
+	if o == nil || IsNil(o.BlobStorageRegion.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BlobStorageRegion.Get()
+}
+
+// GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewBackupInput) GetBlobStorageRegionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BlobStorageRegion.Get(), o.BlobStorageRegion.IsSet()
+}
+
+// HasBlobStorageRegion returns a boolean if a field has been set.
+func (o *NewBackupInput) HasBlobStorageRegion() bool {
+	if o != nil && o.BlobStorageRegion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobStorageRegion gets a reference to the given NullableString and assigns it to the BlobStorageRegion field.
+func (o *NewBackupInput) SetBlobStorageRegion(v string) {
+	o.BlobStorageRegion.Set(&v)
+}
+// SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+func (o *NewBackupInput) SetBlobStorageRegionNil() {
+	o.BlobStorageRegion.Set(nil)
+}
+
+// UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
+func (o *NewBackupInput) UnsetBlobStorageRegion() {
+	o.BlobStorageRegion.Unset()
+}
+
 // GetOptions returns the Options field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NewBackupInput) GetOptions() []BackupOption {
 	if o == nil {
@@ -318,6 +406,9 @@ func (o NewBackupInput) ToMap() (map[string]interface{}, error) {
 	if o.DatabaseDbId.IsSet() {
 		toSerialize["databaseDbId"] = o.DatabaseDbId.Get()
 	}
+	if o.BackupPresetId.IsSet() {
+		toSerialize["backupPresetId"] = o.BackupPresetId.Get()
+	}
 	if o.BackupName.IsSet() {
 		toSerialize["backupName"] = o.BackupName.Get()
 	}
@@ -325,6 +416,9 @@ func (o NewBackupInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["bucket"] = o.Bucket
 	if o.StorageClass.IsSet() {
 		toSerialize["storageClass"] = o.StorageClass.Get()
+	}
+	if o.BlobStorageRegion.IsSet() {
+		toSerialize["blobStorageRegion"] = o.BlobStorageRegion.Get()
 	}
 	if o.Options != nil {
 		toSerialize["options"] = o.Options

@@ -43,6 +43,11 @@ type Stack struct {
 	OriginStackRevVersion NullableString `json:"originStackRevVersion,omitempty"`
 	OriginStackRevCreatedAt NullableTime `json:"originStackRevCreatedAt,omitempty"`
 	OrgId int32 `json:"orgId"`
+	// org when the organization owns the resource, project when one project owns it.
+	OwnershipScope string `json:"ownershipScope"`
+	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
+	// True when every project in the organization can use the resource without a project share.
+	AvailableToAllProjects bool `json:"availableToAllProjects"`
 	Settings *StackSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -54,7 +59,7 @@ type _Stack Stack
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, createdAt time.Time, updatedAt time.Time) *Stack {
+func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time) *Stack {
 	this := Stack{}
 	this.Id = id
 	this.Name = name
@@ -66,6 +71,8 @@ func NewStack(id int32, name string, title string, icon string, status string, o
 	this.RevId = revId
 	this.LatestRevNumber = latestRevNumber
 	this.OrgId = orgId
+	this.OwnershipScope = ownershipScope
+	this.AvailableToAllProjects = availableToAllProjects
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -781,6 +788,96 @@ func (o *Stack) SetOrgId(v int32) {
 	o.OrgId = v
 }
 
+// GetOwnershipScope returns the OwnershipScope field value
+func (o *Stack) GetOwnershipScope() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.OwnershipScope
+}
+
+// GetOwnershipScopeOk returns a tuple with the OwnershipScope field value
+// and a boolean to check if the value has been set.
+func (o *Stack) GetOwnershipScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OwnershipScope, true
+}
+
+// SetOwnershipScope sets field value
+func (o *Stack) SetOwnershipScope(v string) {
+	o.OwnershipScope = v
+}
+
+// GetOwnerProjectId returns the OwnerProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetOwnerProjectId() int32 {
+	if o == nil || IsNil(o.OwnerProjectId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.OwnerProjectId.Get()
+}
+
+// GetOwnerProjectIdOk returns a tuple with the OwnerProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetOwnerProjectIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnerProjectId.Get(), o.OwnerProjectId.IsSet()
+}
+
+// HasOwnerProjectId returns a boolean if a field has been set.
+func (o *Stack) HasOwnerProjectId() bool {
+	if o != nil && o.OwnerProjectId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerProjectId gets a reference to the given NullableInt32 and assigns it to the OwnerProjectId field.
+func (o *Stack) SetOwnerProjectId(v int32) {
+	o.OwnerProjectId.Set(&v)
+}
+// SetOwnerProjectIdNil sets the value for OwnerProjectId to be an explicit nil
+func (o *Stack) SetOwnerProjectIdNil() {
+	o.OwnerProjectId.Set(nil)
+}
+
+// UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+func (o *Stack) UnsetOwnerProjectId() {
+	o.OwnerProjectId.Unset()
+}
+
+// GetAvailableToAllProjects returns the AvailableToAllProjects field value
+func (o *Stack) GetAvailableToAllProjects() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AvailableToAllProjects
+}
+
+// GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field value
+// and a boolean to check if the value has been set.
+func (o *Stack) GetAvailableToAllProjectsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AvailableToAllProjects, true
+}
+
+// SetAvailableToAllProjects sets field value
+func (o *Stack) SetAvailableToAllProjects(v bool) {
+	o.AvailableToAllProjects = v
+}
+
 // GetSettings returns the Settings field value if set, zero value otherwise.
 func (o *Stack) GetSettings() StackSettings {
 	if o == nil || IsNil(o.Settings) {
@@ -914,6 +1011,11 @@ func (o Stack) ToMap() (map[string]interface{}, error) {
 		toSerialize["originStackRevCreatedAt"] = o.OriginStackRevCreatedAt.Get()
 	}
 	toSerialize["orgId"] = o.OrgId
+	toSerialize["ownershipScope"] = o.OwnershipScope
+	if o.OwnerProjectId.IsSet() {
+		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
+	}
+	toSerialize["availableToAllProjects"] = o.AvailableToAllProjects
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
 	}
@@ -937,6 +1039,8 @@ func (o *Stack) UnmarshalJSON(data []byte) (err error) {
 		"revId",
 		"latestRevNumber",
 		"orgId",
+		"ownershipScope",
+		"availableToAllProjects",
 		"createdAt",
 		"updatedAt",
 	}

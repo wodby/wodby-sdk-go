@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AutoStackUpgrade** | Pointer to [**AppEnvironmentAutoStackUpgradeSettingsInput**](AppEnvironmentAutoStackUpgradeSettingsInput.md) |  | [optional] 
+**BuildImageCleanup** | Pointer to [**BuildImageCleanupSettingsInput**](BuildImageCleanupSettingsInput.md) | Omit it to keep the current build image retention. | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetAutoStackUpgrade sets AutoStackUpgrade field to given value.
 `func (o *AppEnvironmentSettingsInput) HasAutoStackUpgrade() bool`
 
 HasAutoStackUpgrade returns a boolean if a field has been set.
+
+### GetBuildImageCleanup
+
+`func (o *AppEnvironmentSettingsInput) GetBuildImageCleanup() BuildImageCleanupSettingsInput`
+
+GetBuildImageCleanup returns the BuildImageCleanup field if non-nil, zero value otherwise.
+
+### GetBuildImageCleanupOk
+
+`func (o *AppEnvironmentSettingsInput) GetBuildImageCleanupOk() (*BuildImageCleanupSettingsInput, bool)`
+
+GetBuildImageCleanupOk returns a tuple with the BuildImageCleanup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuildImageCleanup
+
+`func (o *AppEnvironmentSettingsInput) SetBuildImageCleanup(v BuildImageCleanupSettingsInput)`
+
+SetBuildImageCleanup sets BuildImageCleanup field to given value.
+
+### HasBuildImageCleanup
+
+`func (o *AppEnvironmentSettingsInput) HasBuildImageCleanup() bool`
+
+HasBuildImageCleanup returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

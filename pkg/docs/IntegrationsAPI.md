@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**GetIntegrationKubeSettings**](IntegrationsAPI.md#GetIntegrationKubeSettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
 [**GetIntegrationProviderRevisionUpgrade**](IntegrationsAPI.md#GetIntegrationProviderRevisionUpgrade) | **Get** /integration-provider-revision-upgrades/{id} | Preview provider revision upgrade
 [**GetIntegrationRemoteGitRepoFilePresence**](IntegrationsAPI.md#GetIntegrationRemoteGitRepoFilePresence) | **Get** /integrations/{id}/options/remote-git-repo-file | Check a remote Git repository file
+[**GetIntegrationSharing**](IntegrationsAPI.md#GetIntegrationSharing) | **Get** /integrations/sharing/{id} | Get integration sharing
 [**ListIntegrationKubeMachineTypes**](IntegrationsAPI.md#ListIntegrationKubeMachineTypes) | **Get** /integrations/{id}/options/kube-machine-types | List Kubernetes machine types
 [**ListIntegrationKubeRegions**](IntegrationsAPI.md#ListIntegrationKubeRegions) | **Get** /integrations/{id}/options/kube-regions | List Kubernetes regions
 [**ListIntegrationKubeVersions**](IntegrationsAPI.md#ListIntegrationKubeVersions) | **Get** /integrations/{id}/options/kube-versions | List Kubernetes versions
@@ -22,12 +23,14 @@ Method | HTTP request | Description
 [**ListIntegrationScopes**](IntegrationsAPI.md#ListIntegrationScopes) | **Get** /integrations/{id}/options/scopes | List integration scopes
 [**ListIntegrationStorageBuckets**](IntegrationsAPI.md#ListIntegrationStorageBuckets) | **Get** /integrations/{id}/options/storage-buckets | List storage buckets
 [**ListIntegrationStorageClasses**](IntegrationsAPI.md#ListIntegrationStorageClasses) | **Get** /integrations/{id}/options/storage-classes | List storage classes
+[**ListIntegrationUsages**](IntegrationsAPI.md#ListIntegrationUsages) | **Get** /integrations/usages/{id} | List integration usages
 [**ListIntegrations**](IntegrationsAPI.md#ListIntegrations) | **Get** /integrations | List integrations
 [**ResolveIntegration**](IntegrationsAPI.md#ResolveIntegration) | **Post** /integrations/actions/resolve | Resolve or create integration
 [**SearchIntegrations**](IntegrationsAPI.md#SearchIntegrations) | **Post** /integrations/actions/search | Search integrations
 [**TestIntegrationPermissions**](IntegrationsAPI.md#TestIntegrationPermissions) | **Post** /integrations/{id}/actions/test-permissions | Test integration permissions
 [**UpdateIntegration**](IntegrationsAPI.md#UpdateIntegration) | **Put** /integrations/{id} | Update integration
 [**UpdateIntegrationEnvironmentPolicy**](IntegrationsAPI.md#UpdateIntegrationEnvironmentPolicy) | **Put** /integrations/environment-policy/{id} | Update integration environment policy
+[**UpdateIntegrationSharing**](IntegrationsAPI.md#UpdateIntegrationSharing) | **Put** /integrations/sharing/{id} | Update integration sharing
 [**UpgradeIntegrationProviderRevision**](IntegrationsAPI.md#UpgradeIntegrationProviderRevision) | **Post** /integrations/{id}/actions/upgrade-provider-revision | Upgrade integration provider revision
 [**ValidateAppAccessHostname**](IntegrationsAPI.md#ValidateAppAccessHostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
 
@@ -597,9 +600,79 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetIntegrationSharing
+
+> ResourceSharing GetIntegrationSharing(ctx, id).Execute()
+
+Get integration sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.GetIntegrationSharing(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.GetIntegrationSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetIntegrationSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.GetIntegrationSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetIntegrationSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListIntegrationKubeMachineTypes
 
-> []map[string]interface{} ListIntegrationKubeMachineTypes(ctx, id).Location(location).Execute()
+> []CloudMachineType ListIntegrationKubeMachineTypes(ctx, id).Location(location).Execute()
 
 List Kubernetes machine types
 
@@ -628,7 +701,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ListIntegrationKubeMachineTypes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListIntegrationKubeMachineTypes`: []map[string]interface{}
+	// response from `ListIntegrationKubeMachineTypes`: []CloudMachineType
 	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.ListIntegrationKubeMachineTypes`: %v\n", resp)
 }
 ```
@@ -653,7 +726,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]map[string]interface{}**](map.md)
+[**[]CloudMachineType**](CloudMachineType.md)
 
 ### Authorization
 
@@ -1305,6 +1378,80 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListIntegrationUsages
+
+> IntegrationUsagesResponse ListIntegrationUsages(ctx, id).Page(page).PageSize(pageSize).Execute()
+
+List integration usages
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	page := int32(56) // int32 | Page number, defaults to 1 (optional)
+	pageSize := int32(56) // int32 | Page size, defaults to 30 (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.ListIntegrationUsages(context.Background(), id).Page(page).PageSize(pageSize).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.ListIntegrationUsages``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListIntegrationUsages`: IntegrationUsagesResponse
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.ListIntegrationUsages`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListIntegrationUsagesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **page** | **int32** | Page number, defaults to 1 | 
+ **pageSize** | **int32** | Page size, defaults to 30 | 
+
+### Return type
+
+[**IntegrationUsagesResponse**](IntegrationUsagesResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListIntegrations
 
 > []Integration ListIntegrations(ctx).OrgId(orgId).ProjectIds(projectIds).Labels(labels).EnvId(envId).EnvType(envType).Execute()
@@ -1710,6 +1857,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Integration**](Integration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateIntegrationSharing
+
+> ResourceSharing UpdateIntegrationSharing(ctx, id).ResourceSharingInput(resourceSharingInput).Execute()
+
+Update integration sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	resourceSharingInput := *openapiclient.NewResourceSharingInput("OwnershipScope_example", []openapiclient.ProjectShareInput{*openapiclient.NewProjectShareInput(int32(123), "Access_example")}) // ResourceSharingInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IntegrationsAPI.UpdateIntegrationSharing(context.Background(), id).ResourceSharingInput(resourceSharingInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IntegrationsAPI.UpdateIntegrationSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateIntegrationSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `IntegrationsAPI.UpdateIntegrationSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateIntegrationSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **resourceSharingInput** | [**ResourceSharingInput**](ResourceSharingInput.md) |  | 
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 

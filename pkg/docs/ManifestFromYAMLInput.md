@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**AvailableToAllProjects** | Pointer to **NullableBool** | Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects. | [optional] 
 **Version** | Pointer to **string** | Optional revision version label for the generated non-Git resource. | [optional] 
 **ManifestYaml** | **string** | Complete Wodby service.yml or stack.yml manifest content. | 
 **Files** | Pointer to **map[string]string** | Optional referenced file contents keyed by manifest-relative path, for example Dockerfile or configs/app.conf. | [optional] 
@@ -89,6 +90,41 @@ HasProjectId returns a boolean if a field has been set.
 `func (o *ManifestFromYAMLInput) UnsetProjectId()`
 
 UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *ManifestFromYAMLInput) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *ManifestFromYAMLInput) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *ManifestFromYAMLInput) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
+
+### HasAvailableToAllProjects
+
+`func (o *ManifestFromYAMLInput) HasAvailableToAllProjects() bool`
+
+HasAvailableToAllProjects returns a boolean if a field has been set.
+
+### SetAvailableToAllProjectsNil
+
+`func (o *ManifestFromYAMLInput) SetAvailableToAllProjectsNil(b bool)`
+
+ SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+
+### UnsetAvailableToAllProjects
+`func (o *ManifestFromYAMLInput) UnsetAvailableToAllProjects()`
+
+UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
 ### GetVersion
 
 `func (o *ManifestFromYAMLInput) GetVersion() string`

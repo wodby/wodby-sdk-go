@@ -9,11 +9,13 @@ Method | HTTP request | Description
 [**GetProvider**](ProvidersAPI.md#GetProvider) | **Get** /providers/{id} | Get provider
 [**GetProviderByName**](ProvidersAPI.md#GetProviderByName) | **Get** /providers/by-name/{name} | Get provider by name
 [**GetProviderRevision**](ProvidersAPI.md#GetProviderRevision) | **Get** /provider-revisions/{id} | Get provider revision
+[**GetProviderSharing**](ProvidersAPI.md#GetProviderSharing) | **Get** /providers/sharing/{id} | Get provider sharing
 [**ImportProviders**](ProvidersAPI.md#ImportProviders) | **Post** /providers/actions/import | Import providers from Git
 [**ListProviders**](ProvidersAPI.md#ListProviders) | **Get** /providers | List providers
 [**UpdateProviderFromGit**](ProvidersAPI.md#UpdateProviderFromGit) | **Post** /providers/{id}/actions/update-from-git | Update provider from Git
 [**UpdateProviderFromManifest**](ProvidersAPI.md#UpdateProviderFromManifest) | **Post** /providers/{id}/actions/update-from-manifest | Update provider from manifest
 [**UpdateProviderSettings**](ProvidersAPI.md#UpdateProviderSettings) | **Put** /providers/settings/{id} | Update provider settings
+[**UpdateProviderSharing**](ProvidersAPI.md#UpdateProviderSharing) | **Put** /providers/sharing/{id} | Update provider sharing
 
 
 
@@ -344,6 +346,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ProviderRevision**](ProviderRevision.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProviderSharing
+
+> ResourceSharing GetProviderSharing(ctx, id).Execute()
+
+Get provider sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProvidersAPI.GetProviderSharing(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.GetProviderSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProviderSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `ProvidersAPI.GetProviderSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProviderSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 
@@ -702,6 +774,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Provider**](Provider.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateProviderSharing
+
+> ResourceSharing UpdateProviderSharing(ctx, id).ResourceSharingInput(resourceSharingInput).Execute()
+
+Update provider sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	resourceSharingInput := *openapiclient.NewResourceSharingInput("OwnershipScope_example", []openapiclient.ProjectShareInput{*openapiclient.NewProjectShareInput(int32(123), "Access_example")}) // ResourceSharingInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProvidersAPI.UpdateProviderSharing(context.Background(), id).ResourceSharingInput(resourceSharingInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.UpdateProviderSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateProviderSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `ProvidersAPI.UpdateProviderSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateProviderSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **resourceSharingInput** | [**ResourceSharingInput**](ResourceSharingInput.md) |  | 
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 

@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **GitRefType** | **string** |  | 
 **AutoUpdate** | Pointer to [**GitAutoUpdateSettingsInput**](GitAutoUpdateSettingsInput.md) |  | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** | Optional registry integration used when an imported service image requires authentication. | [optional] 
+**AvailableToAllProjects** | Pointer to **NullableBool** | Lets every project in the organization use the imported services without a project share. Only organization-owned services, imported without projectId, can be available to all projects. | [optional] 
 
 ## Methods
 
@@ -232,6 +233,41 @@ HasRegistryIntegrationId returns a boolean if a field has been set.
 `func (o *ImportServicesFromGitInput) UnsetRegistryIntegrationId()`
 
 UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+### GetAvailableToAllProjects
+
+`func (o *ImportServicesFromGitInput) GetAvailableToAllProjects() bool`
+
+GetAvailableToAllProjects returns the AvailableToAllProjects field if non-nil, zero value otherwise.
+
+### GetAvailableToAllProjectsOk
+
+`func (o *ImportServicesFromGitInput) GetAvailableToAllProjectsOk() (*bool, bool)`
+
+GetAvailableToAllProjectsOk returns a tuple with the AvailableToAllProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableToAllProjects
+
+`func (o *ImportServicesFromGitInput) SetAvailableToAllProjects(v bool)`
+
+SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
+
+### HasAvailableToAllProjects
+
+`func (o *ImportServicesFromGitInput) HasAvailableToAllProjects() bool`
+
+HasAvailableToAllProjects returns a boolean if a field has been set.
+
+### SetAvailableToAllProjectsNil
+
+`func (o *ImportServicesFromGitInput) SetAvailableToAllProjectsNil(b bool)`
+
+ SetAvailableToAllProjectsNil sets the value for AvailableToAllProjects to be an explicit nil
+
+### UnsetAvailableToAllProjects
+`func (o *ImportServicesFromGitInput) UnsetAvailableToAllProjects()`
+
+UnsetAvailableToAllProjects ensures that no value is present for AvailableToAllProjects, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

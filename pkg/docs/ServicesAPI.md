@@ -8,12 +8,14 @@ Method | HTTP request | Description
 [**GetService**](ServicesAPI.md#GetService) | **Get** /services/{id} | Get service
 [**GetServiceByName**](ServicesAPI.md#GetServiceByName) | **Get** /services/by-name/{name} | Get service by name
 [**GetServiceRevision**](ServicesAPI.md#GetServiceRevision) | **Get** /service-revisions/{id} | Get service revision
+[**GetServiceSharing**](ServicesAPI.md#GetServiceSharing) | **Get** /services/sharing/{id} | Get service sharing
 [**ImportServices**](ServicesAPI.md#ImportServices) | **Post** /services/actions/import | Import services from Git
 [**ListServiceLinkCandidates**](ServicesAPI.md#ListServiceLinkCandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
 [**ListServices**](ServicesAPI.md#ListServices) | **Get** /services | List services
 [**ScaffoldServiceFromHelmChart**](ServicesAPI.md#ScaffoldServiceFromHelmChart) | **Post** /services/actions/scaffold-from-helm-chart | Scaffold service from Helm chart
 [**UpdateServiceFromManifest**](ServicesAPI.md#UpdateServiceFromManifest) | **Post** /services/{id}/actions/update-from-manifest | Update service from manifest
 [**UpdateServiceSettings**](ServicesAPI.md#UpdateServiceSettings) | **Put** /services/settings/{id} | Update service settings
+[**UpdateServiceSharing**](ServicesAPI.md#UpdateServiceSharing) | **Put** /services/sharing/{id} | Update service sharing
 [**ValidateServiceManifest**](ServicesAPI.md#ValidateServiceManifest) | **Post** /services/actions/validate-manifest | Validate service manifest
 
 
@@ -281,6 +283,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ServiceRevision**](ServiceRevision.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetServiceSharing
+
+> ResourceSharing GetServiceSharing(ctx, id).Execute()
+
+Get service sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.GetServiceSharing(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.GetServiceSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetServiceSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.GetServiceSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetServiceSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 
@@ -701,6 +773,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateServiceSharing
+
+> ResourceSharing UpdateServiceSharing(ctx, id).ResourceSharingInput(resourceSharingInput).Execute()
+
+Update service sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	resourceSharingInput := *openapiclient.NewResourceSharingInput("OwnershipScope_example", []openapiclient.ProjectShareInput{*openapiclient.NewProjectShareInput(int32(123), "Access_example")}) // ResourceSharingInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.UpdateServiceSharing(context.Background(), id).ResourceSharingInput(resourceSharingInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.UpdateServiceSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateServiceSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.UpdateServiceSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateServiceSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **resourceSharingInput** | [**ResourceSharingInput**](ResourceSharingInput.md) |  | 
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 

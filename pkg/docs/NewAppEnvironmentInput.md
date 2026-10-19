@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **Domain** | Pointer to **string** | Defaults to environmentName.appName.orgDomain when omitted. | [optional] 
 **StackRevId** | **int32** |  | 
 **Services** | Pointer to [**[]CreateAppServiceInput**](CreateAppServiceInput.md) | Defaults to the stack revision&#39;s service defaults when omitted. | [optional] 
+**ServiceOverrides** | Pointer to [**[]NewAppServiceOverrideInput**](NewAppServiceOverrideInput.md) | Changes to the stack revision&#39;s service defaults. Use it instead of services to set only what differs, such as the repository of a workspace. Not allowed with services. | [optional] 
 **ClusterId** | Pointer to **NullableInt32** |  | [optional] 
 **CiIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
 **RegistryIntegrationId** | Pointer to **NullableInt32** |  | [optional] 
@@ -243,6 +244,31 @@ SetServices sets Services field to given value.
 `func (o *NewAppEnvironmentInput) HasServices() bool`
 
 HasServices returns a boolean if a field has been set.
+
+### GetServiceOverrides
+
+`func (o *NewAppEnvironmentInput) GetServiceOverrides() []NewAppServiceOverrideInput`
+
+GetServiceOverrides returns the ServiceOverrides field if non-nil, zero value otherwise.
+
+### GetServiceOverridesOk
+
+`func (o *NewAppEnvironmentInput) GetServiceOverridesOk() (*[]NewAppServiceOverrideInput, bool)`
+
+GetServiceOverridesOk returns a tuple with the ServiceOverrides field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceOverrides
+
+`func (o *NewAppEnvironmentInput) SetServiceOverrides(v []NewAppServiceOverrideInput)`
+
+SetServiceOverrides sets ServiceOverrides field to given value.
+
+### HasServiceOverrides
+
+`func (o *NewAppEnvironmentInput) HasServiceOverrides() bool`
+
+HasServiceOverrides returns a boolean if a field has been set.
 
 ### GetClusterId
 

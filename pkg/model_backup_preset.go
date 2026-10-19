@@ -35,6 +35,8 @@ type BackupPreset struct {
 	IntegrationId int32 `json:"integrationId"`
 	Bucket string `json:"bucket"`
 	StorageClass NullableString `json:"storageClass,omitempty"`
+	// Region used by Wodby Blob Storage. Null for third-party storage and legacy presets.
+	BlobStorageRegion NullableString `json:"blobStorageRegion,omitempty"`
 	Options []BackupOption `json:"options"`
 	Override bool `json:"override"`
 	Auto bool `json:"auto"`
@@ -533,6 +535,48 @@ func (o *BackupPreset) UnsetStorageClass() {
 	o.StorageClass.Unset()
 }
 
+// GetBlobStorageRegion returns the BlobStorageRegion field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BackupPreset) GetBlobStorageRegion() string {
+	if o == nil || IsNil(o.BlobStorageRegion.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BlobStorageRegion.Get()
+}
+
+// GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BackupPreset) GetBlobStorageRegionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BlobStorageRegion.Get(), o.BlobStorageRegion.IsSet()
+}
+
+// HasBlobStorageRegion returns a boolean if a field has been set.
+func (o *BackupPreset) HasBlobStorageRegion() bool {
+	if o != nil && o.BlobStorageRegion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobStorageRegion gets a reference to the given NullableString and assigns it to the BlobStorageRegion field.
+func (o *BackupPreset) SetBlobStorageRegion(v string) {
+	o.BlobStorageRegion.Set(&v)
+}
+// SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+func (o *BackupPreset) SetBlobStorageRegionNil() {
+	o.BlobStorageRegion.Set(nil)
+}
+
+// UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
+func (o *BackupPreset) UnsetBlobStorageRegion() {
+	o.BlobStorageRegion.Unset()
+}
+
 // GetOptions returns the Options field value
 func (o *BackupPreset) GetOptions() []BackupOption {
 	if o == nil {
@@ -873,6 +917,9 @@ func (o BackupPreset) ToMap() (map[string]interface{}, error) {
 	toSerialize["bucket"] = o.Bucket
 	if o.StorageClass.IsSet() {
 		toSerialize["storageClass"] = o.StorageClass.Get()
+	}
+	if o.BlobStorageRegion.IsSet() {
+		toSerialize["blobStorageRegion"] = o.BlobStorageRegion.Get()
 	}
 	toSerialize["options"] = o.Options
 	toSerialize["override"] = o.Override

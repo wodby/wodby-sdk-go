@@ -14,6 +14,8 @@ Method | HTTP request | Description
 [**GetStackOriginSyncChangelog**](StacksAPI.md#GetStackOriginSyncChangelog) | **Get** /stack-origin-sync-changelogs/{id} | Preview stack origin synchronization
 [**GetStackRevision**](StacksAPI.md#GetStackRevision) | **Get** /stack-revisions/{id} | Get stack revision
 [**GetStackServiceUpdateChangelog**](StacksAPI.md#GetStackServiceUpdateChangelog) | **Get** /stack-service-update-changelogs/{id} | Preview stack service revision updates
+[**GetStackSharing**](StacksAPI.md#GetStackSharing) | **Get** /stacks/sharing/{id} | Get stack sharing
+[**IgnoreStackServiceRevision**](StacksAPI.md#IgnoreStackServiceRevision) | **Post** /stacks/{id}/actions/ignore-service-revision | Ignore stack service revision
 [**ImportStacks**](StacksAPI.md#ImportStacks) | **Post** /stacks/actions/import | Import stacks from Git
 [**ListPublicStacks**](StacksAPI.md#ListPublicStacks) | **Get** /catalog/stacks | List public catalog stacks
 [**ListStackEnvVars**](StacksAPI.md#ListStackEnvVars) | **Get** /stack-revisions/{id}/env-vars | List stack env vars
@@ -27,6 +29,7 @@ Method | HTTP request | Description
 [**UpdateStackFromGit**](StacksAPI.md#UpdateStackFromGit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
 [**UpdateStackServiceRevisions**](StacksAPI.md#UpdateStackServiceRevisions) | **Post** /stacks/{id}/actions/update-service-revisions | Update stack service revisions
 [**UpdateStackSettings**](StacksAPI.md#UpdateStackSettings) | **Put** /stacks/settings/{id} | Update stack settings
+[**UpdateStackSharing**](StacksAPI.md#UpdateStackSharing) | **Put** /stacks/sharing/{id} | Update stack sharing
 [**ValidateStackManifest**](StacksAPI.md#ValidateStackManifest) | **Post** /stacks/actions/validate-manifest | Validate stack manifest
 
 
@@ -735,9 +738,151 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetStackSharing
+
+> ResourceSharing GetStackSharing(ctx, id).Execute()
+
+Get stack sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.GetStackSharing(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.GetStackSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetStackSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.GetStackSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetStackSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## IgnoreStackServiceRevision
+
+> Stack IgnoreStackServiceRevision(ctx, id).IgnoreStackServiceRevisionInput(ignoreStackServiceRevisionInput).Execute()
+
+Ignore stack service revision
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	ignoreStackServiceRevisionInput := *openapiclient.NewIgnoreStackServiceRevisionInput(int32(123), int32(123)) // IgnoreStackServiceRevisionInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.IgnoreStackServiceRevision(context.Background(), id).IgnoreStackServiceRevisionInput(ignoreStackServiceRevisionInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.IgnoreStackServiceRevision``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `IgnoreStackServiceRevision`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.IgnoreStackServiceRevision`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiIgnoreStackServiceRevisionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **ignoreStackServiceRevisionInput** | [**IgnoreStackServiceRevisionInput**](IgnoreStackServiceRevisionInput.md) |  | 
+
+### Return type
+
+[**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ImportStacks
 
-> OperationResult ImportStacks(ctx).ImportCatalogFromGitInput(importCatalogFromGitInput).Execute()
+> OperationResult ImportStacks(ctx).ImportStacksFromGitInput(importStacksFromGitInput).Execute()
 
 Import stacks from Git
 
@@ -756,11 +901,11 @@ import (
 )
 
 func main() {
-	importCatalogFromGitInput := *openapiclient.NewImportCatalogFromGitInput(int32(123), "RemoteGitRepoId_example", "GitRef_example", "GitRefType_example") // ImportCatalogFromGitInput | 
+	importStacksFromGitInput := *openapiclient.NewImportStacksFromGitInput(int32(123), "RemoteGitRepoId_example", "GitRef_example", "GitRefType_example") // ImportStacksFromGitInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.ImportStacks(context.Background()).ImportCatalogFromGitInput(importCatalogFromGitInput).Execute()
+	resp, r, err := apiClient.StacksAPI.ImportStacks(context.Background()).ImportStacksFromGitInput(importStacksFromGitInput).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ImportStacks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -781,7 +926,7 @@ Other parameters are passed through a pointer to a apiImportStacksRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **importCatalogFromGitInput** | [**ImportCatalogFromGitInput**](ImportCatalogFromGitInput.md) |  | 
+ **importStacksFromGitInput** | [**ImportStacksFromGitInput**](ImportStacksFromGitInput.md) |  | 
 
 ### Return type
 
@@ -1629,6 +1774,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateStackSharing
+
+> ResourceSharing UpdateStackSharing(ctx, id).ResourceSharingInput(resourceSharingInput).Execute()
+
+Update stack sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	resourceSharingInput := *openapiclient.NewResourceSharingInput("OwnershipScope_example", []openapiclient.ProjectShareInput{*openapiclient.NewProjectShareInput(int32(123), "Access_example")}) // ResourceSharingInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.UpdateStackSharing(context.Background(), id).ResourceSharingInput(resourceSharingInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateStackSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.UpdateStackSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateStackSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **resourceSharingInput** | [**ResourceSharingInput**](ResourceSharingInput.md) |  | 
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 

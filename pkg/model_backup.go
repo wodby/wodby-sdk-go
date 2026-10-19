@@ -33,9 +33,15 @@ type Backup struct {
 	Manual bool `json:"manual"`
 	// Storage integration that owns the backup. Null identifies Wodby's built-in blob storage.
 	IntegrationId NullableInt32 `json:"integrationId"`
+	// Region used by Wodby Blob Storage. Null for third-party storage and legacy backups.
+	BlobStorageRegion NullableString `json:"blobStorageRegion,omitempty"`
 	TaskId NullableInt32 `json:"taskId,omitempty"`
 	// Final stored archive size in bytes. Null when the size has not been recorded.
 	Size NullableInt64 `json:"size,omitempty"`
+	// Whether the stored backup file has been permanently removed.
+	FileDeleted bool `json:"fileDeleted"`
+	// Whether the backup file can be permanently removed now.
+	CanVoidFile bool `json:"canVoidFile"`
 	Options []BackupOption `json:"options"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -49,13 +55,15 @@ type _Backup Backup
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackup(id int32, name string, status string, manual bool, integrationId NullableInt32, options []BackupOption, createdAt time.Time, updatedAt time.Time) *Backup {
+func NewBackup(id int32, name string, status string, manual bool, integrationId NullableInt32, fileDeleted bool, canVoidFile bool, options []BackupOption, createdAt time.Time, updatedAt time.Time) *Backup {
 	this := Backup{}
 	this.Id = id
 	this.Name = name
 	this.Status = status
 	this.Manual = manual
 	this.IntegrationId = integrationId
+	this.FileDeleted = fileDeleted
+	this.CanVoidFile = canVoidFile
 	this.Options = options
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -402,6 +410,48 @@ func (o *Backup) SetIntegrationId(v int32) {
 	o.IntegrationId.Set(&v)
 }
 
+// GetBlobStorageRegion returns the BlobStorageRegion field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Backup) GetBlobStorageRegion() string {
+	if o == nil || IsNil(o.BlobStorageRegion.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BlobStorageRegion.Get()
+}
+
+// GetBlobStorageRegionOk returns a tuple with the BlobStorageRegion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Backup) GetBlobStorageRegionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BlobStorageRegion.Get(), o.BlobStorageRegion.IsSet()
+}
+
+// HasBlobStorageRegion returns a boolean if a field has been set.
+func (o *Backup) HasBlobStorageRegion() bool {
+	if o != nil && o.BlobStorageRegion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobStorageRegion gets a reference to the given NullableString and assigns it to the BlobStorageRegion field.
+func (o *Backup) SetBlobStorageRegion(v string) {
+	o.BlobStorageRegion.Set(&v)
+}
+// SetBlobStorageRegionNil sets the value for BlobStorageRegion to be an explicit nil
+func (o *Backup) SetBlobStorageRegionNil() {
+	o.BlobStorageRegion.Set(nil)
+}
+
+// UnsetBlobStorageRegion ensures that no value is present for BlobStorageRegion, not even an explicit nil
+func (o *Backup) UnsetBlobStorageRegion() {
+	o.BlobStorageRegion.Unset()
+}
+
 // GetTaskId returns the TaskId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Backup) GetTaskId() int32 {
 	if o == nil || IsNil(o.TaskId.Get()) {
@@ -484,6 +534,54 @@ func (o *Backup) SetSizeNil() {
 // UnsetSize ensures that no value is present for Size, not even an explicit nil
 func (o *Backup) UnsetSize() {
 	o.Size.Unset()
+}
+
+// GetFileDeleted returns the FileDeleted field value
+func (o *Backup) GetFileDeleted() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.FileDeleted
+}
+
+// GetFileDeletedOk returns a tuple with the FileDeleted field value
+// and a boolean to check if the value has been set.
+func (o *Backup) GetFileDeletedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FileDeleted, true
+}
+
+// SetFileDeleted sets field value
+func (o *Backup) SetFileDeleted(v bool) {
+	o.FileDeleted = v
+}
+
+// GetCanVoidFile returns the CanVoidFile field value
+func (o *Backup) GetCanVoidFile() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CanVoidFile
+}
+
+// GetCanVoidFileOk returns a tuple with the CanVoidFile field value
+// and a boolean to check if the value has been set.
+func (o *Backup) GetCanVoidFileOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CanVoidFile, true
+}
+
+// SetCanVoidFile sets field value
+func (o *Backup) SetCanVoidFile(v bool) {
+	o.CanVoidFile = v
 }
 
 // GetOptions returns the Options field value
@@ -672,12 +770,17 @@ func (o Backup) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["manual"] = o.Manual
 	toSerialize["integrationId"] = o.IntegrationId.Get()
+	if o.BlobStorageRegion.IsSet() {
+		toSerialize["blobStorageRegion"] = o.BlobStorageRegion.Get()
+	}
 	if o.TaskId.IsSet() {
 		toSerialize["taskId"] = o.TaskId.Get()
 	}
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
 	}
+	toSerialize["fileDeleted"] = o.FileDeleted
+	toSerialize["canVoidFile"] = o.CanVoidFile
 	toSerialize["options"] = o.Options
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -700,6 +803,8 @@ func (o *Backup) UnmarshalJSON(data []byte) (err error) {
 		"status",
 		"manual",
 		"integrationId",
+		"fileDeleted",
+		"canVoidFile",
 		"options",
 		"createdAt",
 		"updatedAt",

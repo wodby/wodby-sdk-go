@@ -28,6 +28,12 @@ type WorkspaceConnection struct {
 	Username string `json:"username"`
 	WorkingDirectory string `json:"workingDirectory"`
 	HostKeyFingerprint string `json:"hostKeyFingerprint"`
+	// Coding agent commands pre-installed in the SSH runner, such as claude, codex and opencode. Empty when the runner has none.
+	Agents []string `json:"agents"`
+	// True when git push and fetch in the SSH runner authenticate to the app's repository with the app's Git integration.
+	GitCredentials bool `json:"gitCredentials"`
+	// True when opencode in the SSH runner uses the organization's AI credits by default.
+	AiCredits bool `json:"aiCredits"`
 }
 
 type _WorkspaceConnection WorkspaceConnection
@@ -36,7 +42,7 @@ type _WorkspaceConnection WorkspaceConnection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkspaceConnection(ready bool, reason string, host string, port int32, username string, workingDirectory string, hostKeyFingerprint string) *WorkspaceConnection {
+func NewWorkspaceConnection(ready bool, reason string, host string, port int32, username string, workingDirectory string, hostKeyFingerprint string, agents []string, gitCredentials bool, aiCredits bool) *WorkspaceConnection {
 	this := WorkspaceConnection{}
 	this.Ready = ready
 	this.Reason = reason
@@ -45,6 +51,9 @@ func NewWorkspaceConnection(ready bool, reason string, host string, port int32, 
 	this.Username = username
 	this.WorkingDirectory = workingDirectory
 	this.HostKeyFingerprint = hostKeyFingerprint
+	this.Agents = agents
+	this.GitCredentials = gitCredentials
+	this.AiCredits = aiCredits
 	return &this
 }
 
@@ -224,6 +233,78 @@ func (o *WorkspaceConnection) SetHostKeyFingerprint(v string) {
 	o.HostKeyFingerprint = v
 }
 
+// GetAgents returns the Agents field value
+func (o *WorkspaceConnection) GetAgents() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.Agents
+}
+
+// GetAgentsOk returns a tuple with the Agents field value
+// and a boolean to check if the value has been set.
+func (o *WorkspaceConnection) GetAgentsOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Agents, true
+}
+
+// SetAgents sets field value
+func (o *WorkspaceConnection) SetAgents(v []string) {
+	o.Agents = v
+}
+
+// GetGitCredentials returns the GitCredentials field value
+func (o *WorkspaceConnection) GetGitCredentials() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.GitCredentials
+}
+
+// GetGitCredentialsOk returns a tuple with the GitCredentials field value
+// and a boolean to check if the value has been set.
+func (o *WorkspaceConnection) GetGitCredentialsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.GitCredentials, true
+}
+
+// SetGitCredentials sets field value
+func (o *WorkspaceConnection) SetGitCredentials(v bool) {
+	o.GitCredentials = v
+}
+
+// GetAiCredits returns the AiCredits field value
+func (o *WorkspaceConnection) GetAiCredits() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AiCredits
+}
+
+// GetAiCreditsOk returns a tuple with the AiCredits field value
+// and a boolean to check if the value has been set.
+func (o *WorkspaceConnection) GetAiCreditsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AiCredits, true
+}
+
+// SetAiCredits sets field value
+func (o *WorkspaceConnection) SetAiCredits(v bool) {
+	o.AiCredits = v
+}
+
 func (o WorkspaceConnection) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -241,6 +322,9 @@ func (o WorkspaceConnection) ToMap() (map[string]interface{}, error) {
 	toSerialize["username"] = o.Username
 	toSerialize["workingDirectory"] = o.WorkingDirectory
 	toSerialize["hostKeyFingerprint"] = o.HostKeyFingerprint
+	toSerialize["agents"] = o.Agents
+	toSerialize["gitCredentials"] = o.GitCredentials
+	toSerialize["aiCredits"] = o.AiCredits
 	return toSerialize, nil
 }
 
@@ -256,6 +340,9 @@ func (o *WorkspaceConnection) UnmarshalJSON(data []byte) (err error) {
 		"username",
 		"workingDirectory",
 		"hostKeyFingerprint",
+		"agents",
+		"gitCredentials",
+		"aiCredits",
 	}
 
 	allProperties := make(map[string]interface{})

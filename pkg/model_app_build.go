@@ -23,7 +23,7 @@ var _ MappedNullable = &AppBuild{}
 // AppBuild struct for AppBuild
 type AppBuild struct {
 	Id int32 `json:"id"`
-	// App-instance build-launch number. Build records created by the same Wodby CI launch share this number.
+	// App environment build-launch number. Build records created by the same Wodby CI launch share this number.
 	Number int32 `json:"number"`
 	Status string `json:"status"`
 	AppInstanceId int32 `json:"appInstanceId"`
@@ -35,6 +35,19 @@ type AppBuild struct {
 	GitRef string `json:"gitRef"`
 	CommitHash string `json:"commitHash"`
 	CommitMessage string `json:"commitMessage"`
+	AuthorName NullableString `json:"authorName,omitempty"`
+	AuthorEmail NullableString `json:"authorEmail,omitempty"`
+	// CI workflow that produced an externally built image. Empty for Wodby CI builds.
+	Workflow string `json:"workflow"`
+	// Stack revision the build was made for.
+	StackRevId NullableInt32 `json:"stackRevId,omitempty"`
+	GitRepoId NullableInt32 `json:"gitRepoId,omitempty"`
+	CiIntegrationId NullableInt32 `json:"ciIntegrationId,omitempty"`
+	RegistryIntegrationId NullableInt32 `json:"registryIntegrationId,omitempty"`
+	// Whether the build's images were voided and can no longer be deployed.
+	ImageVoidStatus string `json:"imageVoidStatus"`
+	// True when the build's images can be voided now.
+	CanVoidImages bool `json:"canVoidImages"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	StartedAt NullableTime `json:"startedAt,omitempty"`
@@ -47,7 +60,7 @@ type _AppBuild AppBuild
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, appServiceBuilds []AppServiceBuild, gitRefType string, gitRef string, commitHash string, commitMessage string, createdAt time.Time, updatedAt time.Time) *AppBuild {
+func NewAppBuild(id int32, number int32, status string, appInstanceId int32, appServiceId int32, appServiceBuilds []AppServiceBuild, gitRefType string, gitRef string, commitHash string, commitMessage string, workflow string, imageVoidStatus string, canVoidImages bool, createdAt time.Time, updatedAt time.Time) *AppBuild {
 	this := AppBuild{}
 	this.Id = id
 	this.Number = number
@@ -59,6 +72,9 @@ func NewAppBuild(id int32, number int32, status string, appInstanceId int32, app
 	this.GitRef = gitRef
 	this.CommitHash = commitHash
 	this.CommitMessage = commitMessage
+	this.Workflow = workflow
+	this.ImageVoidStatus = imageVoidStatus
+	this.CanVoidImages = canVoidImages
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -396,6 +412,330 @@ func (o *AppBuild) SetCommitMessage(v string) {
 	o.CommitMessage = v
 }
 
+// GetAuthorName returns the AuthorName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetAuthorName() string {
+	if o == nil || IsNil(o.AuthorName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AuthorName.Get()
+}
+
+// GetAuthorNameOk returns a tuple with the AuthorName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetAuthorNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AuthorName.Get(), o.AuthorName.IsSet()
+}
+
+// HasAuthorName returns a boolean if a field has been set.
+func (o *AppBuild) HasAuthorName() bool {
+	if o != nil && o.AuthorName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthorName gets a reference to the given NullableString and assigns it to the AuthorName field.
+func (o *AppBuild) SetAuthorName(v string) {
+	o.AuthorName.Set(&v)
+}
+// SetAuthorNameNil sets the value for AuthorName to be an explicit nil
+func (o *AppBuild) SetAuthorNameNil() {
+	o.AuthorName.Set(nil)
+}
+
+// UnsetAuthorName ensures that no value is present for AuthorName, not even an explicit nil
+func (o *AppBuild) UnsetAuthorName() {
+	o.AuthorName.Unset()
+}
+
+// GetAuthorEmail returns the AuthorEmail field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetAuthorEmail() string {
+	if o == nil || IsNil(o.AuthorEmail.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AuthorEmail.Get()
+}
+
+// GetAuthorEmailOk returns a tuple with the AuthorEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetAuthorEmailOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AuthorEmail.Get(), o.AuthorEmail.IsSet()
+}
+
+// HasAuthorEmail returns a boolean if a field has been set.
+func (o *AppBuild) HasAuthorEmail() bool {
+	if o != nil && o.AuthorEmail.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthorEmail gets a reference to the given NullableString and assigns it to the AuthorEmail field.
+func (o *AppBuild) SetAuthorEmail(v string) {
+	o.AuthorEmail.Set(&v)
+}
+// SetAuthorEmailNil sets the value for AuthorEmail to be an explicit nil
+func (o *AppBuild) SetAuthorEmailNil() {
+	o.AuthorEmail.Set(nil)
+}
+
+// UnsetAuthorEmail ensures that no value is present for AuthorEmail, not even an explicit nil
+func (o *AppBuild) UnsetAuthorEmail() {
+	o.AuthorEmail.Unset()
+}
+
+// GetWorkflow returns the Workflow field value
+func (o *AppBuild) GetWorkflow() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Workflow
+}
+
+// GetWorkflowOk returns a tuple with the Workflow field value
+// and a boolean to check if the value has been set.
+func (o *AppBuild) GetWorkflowOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Workflow, true
+}
+
+// SetWorkflow sets field value
+func (o *AppBuild) SetWorkflow(v string) {
+	o.Workflow = v
+}
+
+// GetStackRevId returns the StackRevId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetStackRevId() int32 {
+	if o == nil || IsNil(o.StackRevId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.StackRevId.Get()
+}
+
+// GetStackRevIdOk returns a tuple with the StackRevId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetStackRevIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StackRevId.Get(), o.StackRevId.IsSet()
+}
+
+// HasStackRevId returns a boolean if a field has been set.
+func (o *AppBuild) HasStackRevId() bool {
+	if o != nil && o.StackRevId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStackRevId gets a reference to the given NullableInt32 and assigns it to the StackRevId field.
+func (o *AppBuild) SetStackRevId(v int32) {
+	o.StackRevId.Set(&v)
+}
+// SetStackRevIdNil sets the value for StackRevId to be an explicit nil
+func (o *AppBuild) SetStackRevIdNil() {
+	o.StackRevId.Set(nil)
+}
+
+// UnsetStackRevId ensures that no value is present for StackRevId, not even an explicit nil
+func (o *AppBuild) UnsetStackRevId() {
+	o.StackRevId.Unset()
+}
+
+// GetGitRepoId returns the GitRepoId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetGitRepoId() int32 {
+	if o == nil || IsNil(o.GitRepoId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.GitRepoId.Get()
+}
+
+// GetGitRepoIdOk returns a tuple with the GitRepoId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetGitRepoIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitRepoId.Get(), o.GitRepoId.IsSet()
+}
+
+// HasGitRepoId returns a boolean if a field has been set.
+func (o *AppBuild) HasGitRepoId() bool {
+	if o != nil && o.GitRepoId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitRepoId gets a reference to the given NullableInt32 and assigns it to the GitRepoId field.
+func (o *AppBuild) SetGitRepoId(v int32) {
+	o.GitRepoId.Set(&v)
+}
+// SetGitRepoIdNil sets the value for GitRepoId to be an explicit nil
+func (o *AppBuild) SetGitRepoIdNil() {
+	o.GitRepoId.Set(nil)
+}
+
+// UnsetGitRepoId ensures that no value is present for GitRepoId, not even an explicit nil
+func (o *AppBuild) UnsetGitRepoId() {
+	o.GitRepoId.Unset()
+}
+
+// GetCiIntegrationId returns the CiIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetCiIntegrationId() int32 {
+	if o == nil || IsNil(o.CiIntegrationId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.CiIntegrationId.Get()
+}
+
+// GetCiIntegrationIdOk returns a tuple with the CiIntegrationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetCiIntegrationIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CiIntegrationId.Get(), o.CiIntegrationId.IsSet()
+}
+
+// HasCiIntegrationId returns a boolean if a field has been set.
+func (o *AppBuild) HasCiIntegrationId() bool {
+	if o != nil && o.CiIntegrationId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCiIntegrationId gets a reference to the given NullableInt32 and assigns it to the CiIntegrationId field.
+func (o *AppBuild) SetCiIntegrationId(v int32) {
+	o.CiIntegrationId.Set(&v)
+}
+// SetCiIntegrationIdNil sets the value for CiIntegrationId to be an explicit nil
+func (o *AppBuild) SetCiIntegrationIdNil() {
+	o.CiIntegrationId.Set(nil)
+}
+
+// UnsetCiIntegrationId ensures that no value is present for CiIntegrationId, not even an explicit nil
+func (o *AppBuild) UnsetCiIntegrationId() {
+	o.CiIntegrationId.Unset()
+}
+
+// GetRegistryIntegrationId returns the RegistryIntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetRegistryIntegrationId() int32 {
+	if o == nil || IsNil(o.RegistryIntegrationId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.RegistryIntegrationId.Get()
+}
+
+// GetRegistryIntegrationIdOk returns a tuple with the RegistryIntegrationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetRegistryIntegrationIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RegistryIntegrationId.Get(), o.RegistryIntegrationId.IsSet()
+}
+
+// HasRegistryIntegrationId returns a boolean if a field has been set.
+func (o *AppBuild) HasRegistryIntegrationId() bool {
+	if o != nil && o.RegistryIntegrationId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRegistryIntegrationId gets a reference to the given NullableInt32 and assigns it to the RegistryIntegrationId field.
+func (o *AppBuild) SetRegistryIntegrationId(v int32) {
+	o.RegistryIntegrationId.Set(&v)
+}
+// SetRegistryIntegrationIdNil sets the value for RegistryIntegrationId to be an explicit nil
+func (o *AppBuild) SetRegistryIntegrationIdNil() {
+	o.RegistryIntegrationId.Set(nil)
+}
+
+// UnsetRegistryIntegrationId ensures that no value is present for RegistryIntegrationId, not even an explicit nil
+func (o *AppBuild) UnsetRegistryIntegrationId() {
+	o.RegistryIntegrationId.Unset()
+}
+
+// GetImageVoidStatus returns the ImageVoidStatus field value
+func (o *AppBuild) GetImageVoidStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ImageVoidStatus
+}
+
+// GetImageVoidStatusOk returns a tuple with the ImageVoidStatus field value
+// and a boolean to check if the value has been set.
+func (o *AppBuild) GetImageVoidStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ImageVoidStatus, true
+}
+
+// SetImageVoidStatus sets field value
+func (o *AppBuild) SetImageVoidStatus(v string) {
+	o.ImageVoidStatus = v
+}
+
+// GetCanVoidImages returns the CanVoidImages field value
+func (o *AppBuild) GetCanVoidImages() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CanVoidImages
+}
+
+// GetCanVoidImagesOk returns a tuple with the CanVoidImages field value
+// and a boolean to check if the value has been set.
+func (o *AppBuild) GetCanVoidImagesOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CanVoidImages, true
+}
+
+// SetCanVoidImages sets field value
+func (o *AppBuild) SetCanVoidImages(v bool) {
+	o.CanVoidImages = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppBuild) GetCreatedAt() time.Time {
 	if o == nil {
@@ -554,6 +894,27 @@ func (o AppBuild) ToMap() (map[string]interface{}, error) {
 	toSerialize["gitRef"] = o.GitRef
 	toSerialize["commitHash"] = o.CommitHash
 	toSerialize["commitMessage"] = o.CommitMessage
+	if o.AuthorName.IsSet() {
+		toSerialize["authorName"] = o.AuthorName.Get()
+	}
+	if o.AuthorEmail.IsSet() {
+		toSerialize["authorEmail"] = o.AuthorEmail.Get()
+	}
+	toSerialize["workflow"] = o.Workflow
+	if o.StackRevId.IsSet() {
+		toSerialize["stackRevId"] = o.StackRevId.Get()
+	}
+	if o.GitRepoId.IsSet() {
+		toSerialize["gitRepoId"] = o.GitRepoId.Get()
+	}
+	if o.CiIntegrationId.IsSet() {
+		toSerialize["ciIntegrationId"] = o.CiIntegrationId.Get()
+	}
+	if o.RegistryIntegrationId.IsSet() {
+		toSerialize["registryIntegrationId"] = o.RegistryIntegrationId.Get()
+	}
+	toSerialize["imageVoidStatus"] = o.ImageVoidStatus
+	toSerialize["canVoidImages"] = o.CanVoidImages
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	if o.StartedAt.IsSet() {
@@ -580,6 +941,9 @@ func (o *AppBuild) UnmarshalJSON(data []byte) (err error) {
 		"gitRef",
 		"commitHash",
 		"commitMessage",
+		"workflow",
+		"imageVoidStatus",
+		"canVoidImages",
 		"createdAt",
 		"updatedAt",
 	}

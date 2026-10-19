@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**ListOrgs**](OrgsAPI.md#ListOrgs) | **Get** /orgs | List orgs
 [**PreflightAppServiceCapacity**](OrgsAPI.md#PreflightAppServiceCapacity) | **Post** /orgs/{id}/actions/preflight-app-service-capacity | Preflight app-service capacity
 [**UpdateOrg**](OrgsAPI.md#UpdateOrg) | **Put** /orgs/{id} | Update org
+[**UpdateOrgSettings**](OrgsAPI.md#UpdateOrgSettings) | **Put** /orgs/{id}/settings | Update organization settings
 
 
 
@@ -338,6 +339,78 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **updateOrgRequest** | [**UpdateOrgRequest**](UpdateOrgRequest.md) |  | 
+
+### Return type
+
+[**Org**](Org.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOrgSettings
+
+> Org UpdateOrgSettings(ctx, id).OrgSettingsInput(orgSettingsInput).Execute()
+
+Update organization settings
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	orgSettingsInput := *openapiclient.NewOrgSettingsInput(*openapiclient.NewBuildImageCleanupSettingsInput("Retention_example")) // OrgSettingsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrgsAPI.UpdateOrgSettings(context.Background(), id).OrgSettingsInput(orgSettingsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrgsAPI.UpdateOrgSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateOrgSettings`: Org
+	fmt.Fprintf(os.Stdout, "Response from `OrgsAPI.UpdateOrgSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOrgSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **orgSettingsInput** | [**OrgSettingsInput**](OrgSettingsInput.md) |  | 
 
 ### Return type
 

@@ -24,7 +24,11 @@ var _ MappedNullable = &AppDeployment{}
 type AppDeployment struct {
 	Id int32 `json:"id"`
 	Number int32 `json:"number"`
+	// Overall result, including the routing updates that follow the service rollout.
 	Status string `json:"status"`
+	// Progress of rolling out the selected services. It does not show whether routing has finished.
+	RolloutStatus string `json:"rolloutStatus"`
+	RolloutEndedAt NullableTime `json:"rolloutEndedAt,omitempty"`
 	RollbackStatus string `json:"rollbackStatus"`
 	PostDeploymentStatus string `json:"postDeploymentStatus"`
 	SkipRollback bool `json:"skipRollback"`
@@ -38,6 +42,10 @@ type AppDeployment struct {
 	PostDeploymentTaskId NullableInt32 `json:"postDeploymentTaskId,omitempty"`
 	PostDeploymentTask NullableTask `json:"postDeploymentTask,omitempty"`
 	AppServiceDeployments []AppServiceDeployment `json:"appServiceDeployments"`
+	// Post-deployment scripts that the deployment's builds provide.
+	PostDeploymentScripts []string `json:"postDeploymentScripts"`
+	// True when the deployment does not run the post-deployment scripts its builds provide.
+	SkipPostDeploymentScripts bool `json:"skipPostDeploymentScripts"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	StartedAt NullableTime `json:"startedAt,omitempty"`
@@ -50,11 +58,12 @@ type _AppDeployment AppDeployment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppDeployment(id int32, number int32, status string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, canCancel bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, createdAt time.Time, updatedAt time.Time) *AppDeployment {
+func NewAppDeployment(id int32, number int32, status string, rolloutStatus string, rollbackStatus string, postDeploymentStatus string, skipRollback bool, canCancel bool, appInstanceId int32, builds []AppBuild, appServiceDeployments []AppServiceDeployment, postDeploymentScripts []string, skipPostDeploymentScripts bool, createdAt time.Time, updatedAt time.Time) *AppDeployment {
 	this := AppDeployment{}
 	this.Id = id
 	this.Number = number
 	this.Status = status
+	this.RolloutStatus = rolloutStatus
 	this.RollbackStatus = rollbackStatus
 	this.PostDeploymentStatus = postDeploymentStatus
 	this.SkipRollback = skipRollback
@@ -62,6 +71,8 @@ func NewAppDeployment(id int32, number int32, status string, rollbackStatus stri
 	this.AppInstanceId = appInstanceId
 	this.Builds = builds
 	this.AppServiceDeployments = appServiceDeployments
+	this.PostDeploymentScripts = postDeploymentScripts
+	this.SkipPostDeploymentScripts = skipPostDeploymentScripts
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -145,6 +156,72 @@ func (o *AppDeployment) GetStatusOk() (*string, bool) {
 // SetStatus sets field value
 func (o *AppDeployment) SetStatus(v string) {
 	o.Status = v
+}
+
+// GetRolloutStatus returns the RolloutStatus field value
+func (o *AppDeployment) GetRolloutStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.RolloutStatus
+}
+
+// GetRolloutStatusOk returns a tuple with the RolloutStatus field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetRolloutStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RolloutStatus, true
+}
+
+// SetRolloutStatus sets field value
+func (o *AppDeployment) SetRolloutStatus(v string) {
+	o.RolloutStatus = v
+}
+
+// GetRolloutEndedAt returns the RolloutEndedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppDeployment) GetRolloutEndedAt() time.Time {
+	if o == nil || IsNil(o.RolloutEndedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.RolloutEndedAt.Get()
+}
+
+// GetRolloutEndedAtOk returns a tuple with the RolloutEndedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppDeployment) GetRolloutEndedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RolloutEndedAt.Get(), o.RolloutEndedAt.IsSet()
+}
+
+// HasRolloutEndedAt returns a boolean if a field has been set.
+func (o *AppDeployment) HasRolloutEndedAt() bool {
+	if o != nil && o.RolloutEndedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRolloutEndedAt gets a reference to the given NullableTime and assigns it to the RolloutEndedAt field.
+func (o *AppDeployment) SetRolloutEndedAt(v time.Time) {
+	o.RolloutEndedAt.Set(&v)
+}
+// SetRolloutEndedAtNil sets the value for RolloutEndedAt to be an explicit nil
+func (o *AppDeployment) SetRolloutEndedAtNil() {
+	o.RolloutEndedAt.Set(nil)
+}
+
+// UnsetRolloutEndedAt ensures that no value is present for RolloutEndedAt, not even an explicit nil
+func (o *AppDeployment) UnsetRolloutEndedAt() {
+	o.RolloutEndedAt.Unset()
 }
 
 // GetRollbackStatus returns the RollbackStatus field value
@@ -567,6 +644,54 @@ func (o *AppDeployment) SetAppServiceDeployments(v []AppServiceDeployment) {
 	o.AppServiceDeployments = v
 }
 
+// GetPostDeploymentScripts returns the PostDeploymentScripts field value
+func (o *AppDeployment) GetPostDeploymentScripts() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.PostDeploymentScripts
+}
+
+// GetPostDeploymentScriptsOk returns a tuple with the PostDeploymentScripts field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetPostDeploymentScriptsOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PostDeploymentScripts, true
+}
+
+// SetPostDeploymentScripts sets field value
+func (o *AppDeployment) SetPostDeploymentScripts(v []string) {
+	o.PostDeploymentScripts = v
+}
+
+// GetSkipPostDeploymentScripts returns the SkipPostDeploymentScripts field value
+func (o *AppDeployment) GetSkipPostDeploymentScripts() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.SkipPostDeploymentScripts
+}
+
+// GetSkipPostDeploymentScriptsOk returns a tuple with the SkipPostDeploymentScripts field value
+// and a boolean to check if the value has been set.
+func (o *AppDeployment) GetSkipPostDeploymentScriptsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.SkipPostDeploymentScripts, true
+}
+
+// SetSkipPostDeploymentScripts sets field value
+func (o *AppDeployment) SetSkipPostDeploymentScripts(v bool) {
+	o.SkipPostDeploymentScripts = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppDeployment) GetCreatedAt() time.Time {
 	if o == nil {
@@ -712,6 +837,10 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["number"] = o.Number
 	toSerialize["status"] = o.Status
+	toSerialize["rolloutStatus"] = o.RolloutStatus
+	if o.RolloutEndedAt.IsSet() {
+		toSerialize["rolloutEndedAt"] = o.RolloutEndedAt.Get()
+	}
 	toSerialize["rollbackStatus"] = o.RollbackStatus
 	toSerialize["postDeploymentStatus"] = o.PostDeploymentStatus
 	toSerialize["skipRollback"] = o.SkipRollback
@@ -737,6 +866,8 @@ func (o AppDeployment) ToMap() (map[string]interface{}, error) {
 		toSerialize["postDeploymentTask"] = o.PostDeploymentTask.Get()
 	}
 	toSerialize["appServiceDeployments"] = o.AppServiceDeployments
+	toSerialize["postDeploymentScripts"] = o.PostDeploymentScripts
+	toSerialize["skipPostDeploymentScripts"] = o.SkipPostDeploymentScripts
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	if o.StartedAt.IsSet() {
@@ -756,6 +887,7 @@ func (o *AppDeployment) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"number",
 		"status",
+		"rolloutStatus",
 		"rollbackStatus",
 		"postDeploymentStatus",
 		"skipRollback",
@@ -763,6 +895,8 @@ func (o *AppDeployment) UnmarshalJSON(data []byte) (err error) {
 		"appInstanceId",
 		"builds",
 		"appServiceDeployments",
+		"postDeploymentScripts",
+		"skipPostDeploymentScripts",
 		"createdAt",
 		"updatedAt",
 	}

@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**GetAppBuildConfig**](AppBuildsAPI.md#GetAppBuildConfig) | **Get** /app-builds/{id}/config | Get build config
 [**GetAppBuildDockerRegistryCredentials**](AppBuildsAPI.md#GetAppBuildDockerRegistryCredentials) | **Get** /app-builds/{id}/docker-registry-credentials | Get Docker registry credentials for build
 [**ListAppBuilds**](AppBuildsAPI.md#ListAppBuilds) | **Get** /app-builds | List app builds
+[**VoidAppBuildImages**](AppBuildsAPI.md#VoidAppBuildImages) | **Post** /app-builds/{id}/actions/void-images | Void build images
 
 
 
@@ -481,6 +482,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppBuildsResponse**](AppBuildsResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## VoidAppBuildImages
+
+> AppBuild VoidAppBuildImages(ctx, id).Execute()
+
+Void build images
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppBuildsAPI.VoidAppBuildImages(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppBuildsAPI.VoidAppBuildImages``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `VoidAppBuildImages`: AppBuild
+	fmt.Fprintf(os.Stdout, "Response from `AppBuildsAPI.VoidAppBuildImages`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiVoidAppBuildImagesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppBuild**](AppBuild.md)
 
 ### Authorization
 

@@ -303,6 +303,8 @@ type ApiListTasksRequest struct {
 	projectIds *string
 	view *string
 	withoutOrigin *bool
+	agentConnectionId *int32
+	mcpOnly *bool
 	includeSystem *bool
 	statuses *string
 	names *string
@@ -346,6 +348,18 @@ func (r ApiListTasksRequest) View(view string) ApiListTasksRequest {
 // Deprecated
 func (r ApiListTasksRequest) WithoutOrigin(withoutOrigin bool) ApiListTasksRequest {
 	r.withoutOrigin = &withoutOrigin
+	return r
+}
+
+// Restrict tasks to an authorized agent connection in the requested organization.
+func (r ApiListTasksRequest) AgentConnectionId(agentConnectionId int32) ApiListTasksRequest {
+	r.agentConnectionId = &agentConnectionId
+	return r
+}
+
+// Only tasks known to originate through MCP, including spawned work. Unknown historical tasks are excluded.
+func (r ApiListTasksRequest) McpOnly(mcpOnly bool) ApiListTasksRequest {
+	r.mcpOnly = &mcpOnly
 	return r
 }
 
@@ -478,6 +492,12 @@ func (a *TasksAPIService) ListTasksExecute(r ApiListTasksRequest) (*TasksRespons
 	}
 	if r.withoutOrigin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "withoutOrigin", r.withoutOrigin, "form", "")
+	}
+	if r.agentConnectionId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "agentConnectionId", r.agentConnectionId, "form", "")
+	}
+	if r.mcpOnly != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mcpOnly", r.mcpOnly, "form", "")
 	}
 	if r.includeSystem != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includeSystem", r.includeSystem, "form", "")

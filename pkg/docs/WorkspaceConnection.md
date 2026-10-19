@@ -11,12 +11,15 @@ Name | Type | Description | Notes
 **Username** | **string** |  | 
 **WorkingDirectory** | **string** |  | 
 **HostKeyFingerprint** | **string** |  | 
+**Agents** | **[]string** | Coding agent commands pre-installed in the SSH runner, such as claude, codex and opencode. Empty when the runner has none. | 
+**GitCredentials** | **bool** | True when git push and fetch in the SSH runner authenticate to the app&#39;s repository with the app&#39;s Git integration. | 
+**AiCredits** | **bool** | True when opencode in the SSH runner uses the organization&#39;s AI credits by default. | 
 
 ## Methods
 
 ### NewWorkspaceConnection
 
-`func NewWorkspaceConnection(ready bool, reason string, host string, port int32, username string, workingDirectory string, hostKeyFingerprint string, ) *WorkspaceConnection`
+`func NewWorkspaceConnection(ready bool, reason string, host string, port int32, username string, workingDirectory string, hostKeyFingerprint string, agents []string, gitCredentials bool, aiCredits bool, ) *WorkspaceConnection`
 
 NewWorkspaceConnection instantiates a new WorkspaceConnection object
 This constructor will assign default values to properties that have it defined,
@@ -169,6 +172,66 @@ and a boolean to check if the value has been set.
 `func (o *WorkspaceConnection) SetHostKeyFingerprint(v string)`
 
 SetHostKeyFingerprint sets HostKeyFingerprint field to given value.
+
+
+### GetAgents
+
+`func (o *WorkspaceConnection) GetAgents() []string`
+
+GetAgents returns the Agents field if non-nil, zero value otherwise.
+
+### GetAgentsOk
+
+`func (o *WorkspaceConnection) GetAgentsOk() (*[]string, bool)`
+
+GetAgentsOk returns a tuple with the Agents field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAgents
+
+`func (o *WorkspaceConnection) SetAgents(v []string)`
+
+SetAgents sets Agents field to given value.
+
+
+### GetGitCredentials
+
+`func (o *WorkspaceConnection) GetGitCredentials() bool`
+
+GetGitCredentials returns the GitCredentials field if non-nil, zero value otherwise.
+
+### GetGitCredentialsOk
+
+`func (o *WorkspaceConnection) GetGitCredentialsOk() (*bool, bool)`
+
+GetGitCredentialsOk returns a tuple with the GitCredentials field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitCredentials
+
+`func (o *WorkspaceConnection) SetGitCredentials(v bool)`
+
+SetGitCredentials sets GitCredentials field to given value.
+
+
+### GetAiCredits
+
+`func (o *WorkspaceConnection) GetAiCredits() bool`
+
+GetAiCredits returns the AiCredits field if non-nil, zero value otherwise.
+
+### GetAiCreditsOk
+
+`func (o *WorkspaceConnection) GetAiCreditsOk() (*bool, bool)`
+
+GetAiCreditsOk returns a tuple with the AiCredits field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAiCredits
+
+`func (o *WorkspaceConnection) SetAiCredits(v bool)`
+
+SetAiCredits sets AiCredits field to given value.
 
 
 

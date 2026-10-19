@@ -21,6 +21,7 @@ var _ MappedNullable = &StackServiceContainer{}
 
 // StackServiceContainer struct for StackServiceContainer
 type StackServiceContainer struct {
+	Gpu NullableGPUResources `json:"gpu,omitempty"`
 	Id NullableInt32 `json:"id,omitempty"`
 	StackServiceId int32 `json:"stackServiceId"`
 	Workload string `json:"workload"`
@@ -51,6 +52,48 @@ func NewStackServiceContainer(stackServiceId int32, workload string, name string
 func NewStackServiceContainerWithDefaults() *StackServiceContainer {
 	this := StackServiceContainer{}
 	return &this
+}
+
+// GetGpu returns the Gpu field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackServiceContainer) GetGpu() GPUResources {
+	if o == nil || IsNil(o.Gpu.Get()) {
+		var ret GPUResources
+		return ret
+	}
+	return *o.Gpu.Get()
+}
+
+// GetGpuOk returns a tuple with the Gpu field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackServiceContainer) GetGpuOk() (*GPUResources, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Gpu.Get(), o.Gpu.IsSet()
+}
+
+// HasGpu returns a boolean if a field has been set.
+func (o *StackServiceContainer) HasGpu() bool {
+	if o != nil && o.Gpu.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGpu gets a reference to the given NullableGPUResources and assigns it to the Gpu field.
+func (o *StackServiceContainer) SetGpu(v GPUResources) {
+	o.Gpu.Set(&v)
+}
+// SetGpuNil sets the value for Gpu to be an explicit nil
+func (o *StackServiceContainer) SetGpuNil() {
+	o.Gpu.Set(nil)
+}
+
+// UnsetGpu ensures that no value is present for Gpu, not even an explicit nil
+func (o *StackServiceContainer) UnsetGpu() {
+	o.Gpu.Unset()
 }
 
 // GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -345,6 +388,9 @@ func (o StackServiceContainer) MarshalJSON() ([]byte, error) {
 
 func (o StackServiceContainer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Gpu.IsSet() {
+		toSerialize["gpu"] = o.Gpu.Get()
+	}
 	if o.Id.IsSet() {
 		toSerialize["id"] = o.Id.Get()
 	}

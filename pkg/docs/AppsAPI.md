@@ -8,8 +8,10 @@ Method | HTTP request | Description
 [**DeleteApp**](AppsAPI.md#DeleteApp) | **Delete** /apps/{id} | Delete app
 [**GetApp**](AppsAPI.md#GetApp) | **Get** /apps/{id} | Get app
 [**GetAppByName**](AppsAPI.md#GetAppByName) | **Get** /apps/by-name/{name} | Get app by name
+[**GetAppSharing**](AppsAPI.md#GetAppSharing) | **Get** /apps/sharing/{id} | Get app sharing
 [**ListApps**](AppsAPI.md#ListApps) | **Get** /apps | List apps
 [**UpdateApp**](AppsAPI.md#UpdateApp) | **Put** /apps/{id} | Update app
+[**UpdateAppSharing**](AppsAPI.md#UpdateAppSharing) | **Put** /apps/sharing/{id} | Update app sharing
 
 
 
@@ -291,6 +293,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAppSharing
+
+> ResourceSharing GetAppSharing(ctx, id).Execute()
+
+Get app sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.GetAppSharing(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.GetAppSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.GetAppSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListApps
 
 > []App ListApps(ctx).OrgId(orgId).ProjectIds(projectIds).ClusterApp(clusterApp).Execute()
@@ -418,6 +490,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**App**](App.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAppSharing
+
+> ResourceSharing UpdateAppSharing(ctx, id).ResourceSharingInput(resourceSharingInput).Execute()
+
+Update app sharing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	resourceSharingInput := *openapiclient.NewResourceSharingInput("OwnershipScope_example", []openapiclient.ProjectShareInput{*openapiclient.NewProjectShareInput(int32(123), "Access_example")}) // ResourceSharingInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.UpdateAppSharing(context.Background(), id).ResourceSharingInput(resourceSharingInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.UpdateAppSharing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAppSharing`: ResourceSharing
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.UpdateAppSharing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAppSharingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **resourceSharingInput** | [**ResourceSharingInput**](ResourceSharingInput.md) |  | 
+
+### Return type
+
+[**ResourceSharing**](ResourceSharing.md)
 
 ### Authorization
 
