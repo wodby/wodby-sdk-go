@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**CreateBackupPreset**](BackupsAPI.md#CreateBackupPreset) | **Post** /backup-presets | Create backup preset
 [**DeleteBackupPreset**](BackupsAPI.md#DeleteBackupPreset) | **Delete** /backup-presets/{id} | Delete backup preset
 [**GetBackup**](BackupsAPI.md#GetBackup) | **Get** /backups/{id} | Get backup
+[**GetBackupDownload**](BackupsAPI.md#GetBackupDownload) | **Get** /backups/{id}/download | Get backup download URL
 [**GetBackupPreset**](BackupsAPI.md#GetBackupPreset) | **Get** /backup-presets/{id} | Get backup preset
 [**ListBackupPresetBackups**](BackupsAPI.md#ListBackupPresetBackups) | **Get** /backup-presets/{id}/backups | List backup preset backups
 [**ListBackupPresets**](BackupsAPI.md#ListBackupPresets) | **Get** /backup-presets | List backup presets
@@ -274,6 +275,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Backup**](Backup.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetBackupDownload
+
+> BackupDownload GetBackupDownload(ctx, id).Execute()
+
+Get backup download URL
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BackupsAPI.GetBackupDownload(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.GetBackupDownload``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBackupDownload`: BackupDownload
+	fmt.Fprintf(os.Stdout, "Response from `BackupsAPI.GetBackupDownload`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetBackupDownloadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**BackupDownload**](BackupDownload.md)
 
 ### Authorization
 

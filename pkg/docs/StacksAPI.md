@@ -4,10 +4,18 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateStack**](StacksAPI.md#CreateStack) | **Post** /stacks | Create stack
+[**CreateStackAnnotation**](StacksAPI.md#CreateStackAnnotation) | **Post** /stacks/{id}/configuration/annotations | Create stack annotation
 [**CreateStackEnvVar**](StacksAPI.md#CreateStackEnvVar) | **Post** /stacks/{id}/configuration/env-vars | Create stack env var
 [**CreateStackFromManifest**](StacksAPI.md#CreateStackFromManifest) | **Post** /stacks/actions/create-from-manifest | Create stack from manifest
+[**CreateStackHelmValue**](StacksAPI.md#CreateStackHelmValue) | **Post** /stacks/{id}/configuration/helm-values | Create stack Helm value
+[**CreateStackToken**](StacksAPI.md#CreateStackToken) | **Post** /stacks/{id}/configuration/tokens | Create stack token
 [**DeleteStack**](StacksAPI.md#DeleteStack) | **Delete** /stacks/{id} | Delete stack
+[**DeleteStackAnnotation**](StacksAPI.md#DeleteStackAnnotation) | **Delete** /stack-annotations/{id} | Delete stack annotation
 [**DeleteStackEnvVar**](StacksAPI.md#DeleteStackEnvVar) | **Delete** /stack-env-vars/{id} | Delete stack env var
+[**DeleteStackHelmValue**](StacksAPI.md#DeleteStackHelmValue) | **Delete** /stack-helm-values/{id} | Delete stack Helm value
+[**DeleteStackToken**](StacksAPI.md#DeleteStackToken) | **Delete** /stack-tokens/{id} | Delete stack token
+[**DiscardStackDraft**](StacksAPI.md#DiscardStackDraft) | **Post** /stacks/{id}/actions/discard-draft | Discard stack draft
 [**DuplicateStack**](StacksAPI.md#DuplicateStack) | **Post** /stacks/{id}/actions/duplicate | Duplicate stack
 [**GetStack**](StacksAPI.md#GetStack) | **Get** /stacks/{id} | Get stack
 [**GetStackByName**](StacksAPI.md#GetStackByName) | **Get** /stacks/by-name/{name} | Get stack by name
@@ -17,9 +25,13 @@ Method | HTTP request | Description
 [**GetStackSharing**](StacksAPI.md#GetStackSharing) | **Get** /stacks/sharing/{id} | Get stack sharing
 [**IgnoreStackServiceRevision**](StacksAPI.md#IgnoreStackServiceRevision) | **Post** /stacks/{id}/actions/ignore-service-revision | Ignore stack service revision
 [**ImportStacks**](StacksAPI.md#ImportStacks) | **Post** /stacks/actions/import | Import stacks from Git
+[**ListInfraStacks**](StacksAPI.md#ListInfraStacks) | **Get** /catalog/infra-stacks | List infrastructure stacks
 [**ListPublicStacks**](StacksAPI.md#ListPublicStacks) | **Get** /catalog/stacks | List public catalog stacks
+[**ListStackAnnotations**](StacksAPI.md#ListStackAnnotations) | **Get** /stack-revisions/{id}/annotations | List stack annotations
 [**ListStackEnvVars**](StacksAPI.md#ListStackEnvVars) | **Get** /stack-revisions/{id}/env-vars | List stack env vars
+[**ListStackHelmValues**](StacksAPI.md#ListStackHelmValues) | **Get** /stack-revisions/{id}/helm-values | List stack Helm values
 [**ListStackRevisionServices**](StacksAPI.md#ListStackRevisionServices) | **Get** /stack-revisions/{id}/services | List stack services
+[**ListStackTokens**](StacksAPI.md#ListStackTokens) | **Get** /stack-revisions/{id}/tokens | List stack tokens
 [**ListStacks**](StacksAPI.md#ListStacks) | **Get** /stacks | List stacks
 [**PublishStackDraft**](StacksAPI.md#PublishStackDraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
 [**ScaffoldStackFromHelmChart**](StacksAPI.md#ScaffoldStackFromHelmChart) | **Post** /stacks/actions/scaffold-from-helm-chart | Scaffold stack from Helm chart
@@ -27,11 +39,151 @@ Method | HTTP request | Description
 [**UpdateStack**](StacksAPI.md#UpdateStack) | **Put** /stacks/{id} | Rename stack
 [**UpdateStackEnvVar**](StacksAPI.md#UpdateStackEnvVar) | **Put** /stack-env-vars/{id} | Update stack env var
 [**UpdateStackFromGit**](StacksAPI.md#UpdateStackFromGit) | **Post** /stacks/{id}/actions/update-from-git | Update stack from git
+[**UpdateStackHelmValue**](StacksAPI.md#UpdateStackHelmValue) | **Put** /stack-helm-values/{id} | Update stack Helm value
 [**UpdateStackServiceRevisions**](StacksAPI.md#UpdateStackServiceRevisions) | **Post** /stacks/{id}/actions/update-service-revisions | Update stack service revisions
 [**UpdateStackSettings**](StacksAPI.md#UpdateStackSettings) | **Put** /stacks/settings/{id} | Update stack settings
 [**UpdateStackSharing**](StacksAPI.md#UpdateStackSharing) | **Put** /stacks/sharing/{id} | Update stack sharing
+[**UpdateStackToken**](StacksAPI.md#UpdateStackToken) | **Put** /stack-tokens/{id} | Update stack token
 [**ValidateStackManifest**](StacksAPI.md#ValidateStackManifest) | **Post** /stacks/actions/validate-manifest | Validate stack manifest
 
+
+
+## CreateStack
+
+> Stack CreateStack(ctx).NewStackInput(newStackInput).Execute()
+
+Create stack
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	newStackInput := *openapiclient.NewNewStackInput("Name_example", "Title_example", []openapiclient.NewStackServiceDefinitionInput{*openapiclient.NewNewStackServiceDefinitionInput(int32(123), "Name_example", "Title_example", int32(123))}) // NewStackInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.CreateStack(context.Background()).NewStackInput(newStackInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.CreateStack``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStack`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.CreateStack`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStackRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **newStackInput** | [**NewStackInput**](NewStackInput.md) |  | 
+
+### Return type
+
+[**Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateStackAnnotation
+
+> StackAnnotation CreateStackAnnotation(ctx, id).NewStackAnnotationInput(newStackAnnotationInput).Execute()
+
+Create stack annotation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	newStackAnnotationInput := *openapiclient.NewNewStackAnnotationInput("Name_example", "Value_example") // NewStackAnnotationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.CreateStackAnnotation(context.Background(), id).NewStackAnnotationInput(newStackAnnotationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.CreateStackAnnotation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStackAnnotation`: StackAnnotation
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.CreateStackAnnotation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStackAnnotationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **newStackAnnotationInput** | [**NewStackAnnotationInput**](NewStackAnnotationInput.md) |  | 
+
+### Return type
+
+[**StackAnnotation**](StackAnnotation.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateStackEnvVar
@@ -172,6 +324,150 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateStackHelmValue
+
+> StackHelmValue CreateStackHelmValue(ctx, id).NewStackHelmValueInput(newStackHelmValueInput).Execute()
+
+Create stack Helm value
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	newStackHelmValueInput := *openapiclient.NewNewStackHelmValueInput("Name_example", "Value_example", false) // NewStackHelmValueInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.CreateStackHelmValue(context.Background(), id).NewStackHelmValueInput(newStackHelmValueInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.CreateStackHelmValue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStackHelmValue`: StackHelmValue
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.CreateStackHelmValue`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStackHelmValueRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **newStackHelmValueInput** | [**NewStackHelmValueInput**](NewStackHelmValueInput.md) |  | 
+
+### Return type
+
+[**StackHelmValue**](StackHelmValue.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateStackToken
+
+> StackToken CreateStackToken(ctx, id).NewStackTokenInput(newStackTokenInput).Execute()
+
+Create stack token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	newStackTokenInput := *openapiclient.NewNewStackTokenInput("Name_example", false) // NewStackTokenInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.CreateStackToken(context.Background(), id).NewStackTokenInput(newStackTokenInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.CreateStackToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStackToken`: StackToken
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.CreateStackToken`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStackTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **newStackTokenInput** | [**NewStackTokenInput**](NewStackTokenInput.md) |  | 
+
+### Return type
+
+[**StackToken**](StackToken.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteStack
 
 > OperationResult DeleteStack(ctx, id).Execute()
@@ -218,6 +514,76 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteStackRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteStackAnnotation
+
+> OperationResult DeleteStackAnnotation(ctx, id).Execute()
+
+Delete stack annotation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DeleteStackAnnotation(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DeleteStackAnnotation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteStackAnnotation`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DeleteStackAnnotation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteStackAnnotationRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -297,6 +663,216 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteStackHelmValue
+
+> OperationResult DeleteStackHelmValue(ctx, id).Execute()
+
+Delete stack Helm value
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DeleteStackHelmValue(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DeleteStackHelmValue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteStackHelmValue`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DeleteStackHelmValue`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteStackHelmValueRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteStackToken
+
+> OperationResult DeleteStackToken(ctx, id).Execute()
+
+Delete stack token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DeleteStackToken(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DeleteStackToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteStackToken`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DeleteStackToken`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteStackTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DiscardStackDraft
+
+> Stack DiscardStackDraft(ctx, id).Execute()
+
+Discard stack draft
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.DiscardStackDraft(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.DiscardStackDraft``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DiscardStackDraft`: Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.DiscardStackDraft`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDiscardStackDraftRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Stack**](Stack.md)
 
 ### Authorization
 
@@ -946,6 +1522,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListInfraStacks
+
+> []Stack ListInfraStacks(ctx).Provider(provider).Execute()
+
+List infrastructure stacks
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	provider := "provider_example" // string | Provider name, such as aws or digitalocean.
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ListInfraStacks(context.Background()).Provider(provider).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListInfraStacks``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListInfraStacks`: []Stack
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListInfraStacks`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListInfraStacksRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **string** | Provider name, such as aws or digitalocean. | 
+
+### Return type
+
+[**[]Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListPublicStacks
 
 > []Stack ListPublicStacks(ctx).Execute()
@@ -992,6 +1634,76 @@ Other parameters are passed through a pointer to a apiListPublicStacksRequest st
 ### Return type
 
 [**[]Stack**](Stack.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListStackAnnotations
+
+> []StackAnnotation ListStackAnnotations(ctx, id).Execute()
+
+List stack annotations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ListStackAnnotations(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListStackAnnotations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListStackAnnotations`: []StackAnnotation
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListStackAnnotations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListStackAnnotationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]StackAnnotation**](StackAnnotation.md)
 
 ### Authorization
 
@@ -1077,6 +1789,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListStackHelmValues
+
+> []StackHelmValue ListStackHelmValues(ctx, id).Execute()
+
+List stack Helm values
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ListStackHelmValues(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListStackHelmValues``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListStackHelmValues`: []StackHelmValue
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListStackHelmValues`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListStackHelmValuesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]StackHelmValue**](StackHelmValue.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListStackRevisionServices
 
 > []StackService ListStackRevisionServices(ctx, id).Execute()
@@ -1132,6 +1914,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]StackService**](StackService.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListStackTokens
+
+> []StackToken ListStackTokens(ctx, id).Execute()
+
+List stack tokens
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.ListStackTokens(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.ListStackTokens``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListStackTokens`: []StackToken
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.ListStackTokens`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListStackTokensRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]StackToken**](StackToken.md)
 
 ### Authorization
 
@@ -1645,6 +2497,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## UpdateStackHelmValue
+
+> StackHelmValue UpdateStackHelmValue(ctx, id).UpdateStackHelmValueInput(updateStackHelmValueInput).Execute()
+
+Update stack Helm value
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateStackHelmValueInput := *openapiclient.NewUpdateStackHelmValueInput("Value_example", false) // UpdateStackHelmValueInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.UpdateStackHelmValue(context.Background(), id).UpdateStackHelmValueInput(updateStackHelmValueInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackHelmValue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateStackHelmValue`: StackHelmValue
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.UpdateStackHelmValue`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateStackHelmValueRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateStackHelmValueInput** | [**UpdateStackHelmValueInput**](UpdateStackHelmValueInput.md) |  | 
+
+### Return type
+
+[**StackHelmValue**](StackHelmValue.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateStackServiceRevisions
 
 > OperationResult UpdateStackServiceRevisions(ctx, id).Scope(scope).Execute()
@@ -1846,6 +2770,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ResourceSharing**](ResourceSharing.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateStackToken
+
+> StackToken UpdateStackToken(ctx, id).UpdateStackTokenInput(updateStackTokenInput).Execute()
+
+Update stack token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateStackTokenInput := *openapiclient.NewUpdateStackTokenInput(false) // UpdateStackTokenInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.UpdateStackToken(context.Background(), id).UpdateStackTokenInput(updateStackTokenInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateStackToken`: StackToken
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.UpdateStackToken`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateStackTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateStackTokenInput** | [**UpdateStackTokenInput**](UpdateStackTokenInput.md) |  | 
+
+### Return type
+
+[**StackToken**](StackToken.md)
 
 ### Authorization
 

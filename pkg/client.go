@@ -87,7 +87,11 @@ type APIClient struct {
 
 	OrgMembershipsAPI *OrgMembershipsAPIService
 
+	OrgSsoAPI *OrgSsoAPIService
+
 	OrgsAPI *OrgsAPIService
+
+	ProjectMembershipsAPI *ProjectMembershipsAPIService
 
 	ProjectsAPI *ProjectsAPIService
 
@@ -102,6 +106,8 @@ type APIClient struct {
 	TaskStepsAPI *TaskStepsAPIService
 
 	TasksAPI *TasksAPIService
+
+	TeamsAPI *TeamsAPIService
 
 	UserAPI *UserAPIService
 }
@@ -141,7 +147,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IntegrationKindsAPI = (*IntegrationKindsAPIService)(&c.common)
 	c.IntegrationsAPI = (*IntegrationsAPIService)(&c.common)
 	c.OrgMembershipsAPI = (*OrgMembershipsAPIService)(&c.common)
+	c.OrgSsoAPI = (*OrgSsoAPIService)(&c.common)
 	c.OrgsAPI = (*OrgsAPIService)(&c.common)
+	c.ProjectMembershipsAPI = (*ProjectMembershipsAPIService)(&c.common)
 	c.ProjectsAPI = (*ProjectsAPIService)(&c.common)
 	c.ProvidersAPI = (*ProvidersAPIService)(&c.common)
 	c.ServicesAPI = (*ServicesAPIService)(&c.common)
@@ -149,6 +157,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.StacksAPI = (*StacksAPIService)(&c.common)
 	c.TaskStepsAPI = (*TaskStepsAPIService)(&c.common)
 	c.TasksAPI = (*TasksAPIService)(&c.common)
+	c.TeamsAPI = (*TeamsAPIService)(&c.common)
 	c.UserAPI = (*UserAPIService)(&c.common)
 
 	return c

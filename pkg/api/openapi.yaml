@@ -20,6 +20,12 @@ tags:
   name: orgs
 - description: "Organization users, invitations, roles, and membership status."
   name: org-memberships
+- description: Teams of organization members that share project roles.
+  name: teams
+- description: Roles of organization members and teams in projects.
+  name: project-memberships
+- description: Single sign-on providers and verified email domains of organizations.
+  name: org-sso
 - description: Project containers within organizations.
   name: projects
 - description: Applications and app-level configuration.
@@ -439,7 +445,73 @@ paths:
       summary: List org memberships
       tags:
       - org-memberships
+    post:
+      description: "Invites a person by email with an organization role, optionally\
+        \ adding them to teams and projects. The membership has the invited status\
+        \ until they accept."
+      operationId: inviteOrgMember
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteOrgMemberInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMembership'
+          description: Invited membership
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Invite organization member
+      tags:
+      - org-memberships
   /org-memberships/{id}:
+    delete:
+      description: Removes a member or a pending invitation from the organization.
+      operationId: deleteOrgMembership
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Removal result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Remove organization member
+      tags:
+      - org-memberships
     get:
       description: Returns the org membership identified by the request path.
       operationId: getOrgMembership
@@ -473,6 +545,592 @@ paths:
       summary: Get org membership
       tags:
       - org-memberships
+    put:
+      description: Changes the organization role of a member and returns the membership.
+      operationId: updateOrgMembership
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgMembershipRoleInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMembership'
+          description: Updated membership
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update organization member role
+      tags:
+      - org-memberships
+  /project-memberships:
+    get:
+      description: Returns the members and teams with a role in a project.
+      operationId: listProjectMemberships
+      parameters:
+      - explode: true
+        in: query
+        name: projectId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectMembership'
+                type: array
+          description: Project memberships
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List project memberships
+      tags:
+      - project-memberships
+    post:
+      description: Gives organization members or teams the same role in a project.
+        Returns the created memberships.
+      operationId: createProjectMemberships
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProjectMembershipsInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectMembership'
+                type: array
+          description: Created project memberships
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Add project members
+      tags:
+      - project-memberships
+  /project-memberships/{id}:
+    delete:
+      description: Removes a member or team from a project.
+      operationId: deleteProjectMembership
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Removal result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Remove project membership
+      tags:
+      - project-memberships
+    put:
+      description: Changes the project role of a member or team.
+      operationId: updateProjectMembership
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMembershipRoleInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectMembership'
+          description: Updated project membership
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update project membership
+      tags:
+      - project-memberships
+  /teams:
+    get:
+      description: Returns the teams of the organization with their members.
+      operationId: listTeams
+      parameters:
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Team'
+                type: array
+          description: Teams
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List teams
+      tags:
+      - teams
+    post:
+      description: Creates a team of organization members.
+      operationId: createTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Created team
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create team
+      tags:
+      - teams
+  /teams/by-name/{name}:
+    get:
+      description: Returns one team of the organization by its name.
+      operationId: getTeamByName
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Team
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get team by name
+      tags:
+      - teams
+  /teams/{id}:
+    delete:
+      description: Deletes a team and its project memberships.
+      operationId: deleteTeam
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete team
+      tags:
+      - teams
+    put:
+      description: Renames a team and replaces its member list.
+      operationId: updateTeam
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Updated team
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update team
+      tags:
+      - teams
+  /org-sso-providers:
+    get:
+      description: Returns the single sign-on providers of the organization with their
+        domains.
+      operationId: listOrgSSOProviders
+      parameters:
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrgSSOProvider'
+                type: array
+          description: SSO providers
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List organization SSO providers
+      tags:
+      - org-sso
+    post:
+      description: "Adds an OIDC, GitHub or SAML single sign-on provider. The client\
+        \ secret is write-only."
+      operationId: createOrgSSOProvider
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgSSOProviderInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgSSOProvider'
+          description: Created SSO provider
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create organization SSO provider
+      tags:
+      - org-sso
+  /org-sso-providers/{id}:
+    delete:
+      description: Deletes a single sign-on provider.
+      operationId: deleteOrgSSOProvider
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete organization SSO provider
+      tags:
+      - org-sso
+    get:
+      description: Returns one single sign-on provider with its domains.
+      operationId: getOrgSSOProvider
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgSSOProvider'
+          description: SSO provider
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get organization SSO provider
+      tags:
+      - org-sso
+    put:
+      description: Replaces the provider settings. Leave clientSecret out to keep
+        the stored secret.
+      operationId: updateOrgSSOProvider
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgSSOProviderInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgSSOProvider'
+          description: Updated SSO provider
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update organization SSO provider
+      tags:
+      - org-sso
+  /org-sso-providers/{id}/actions/verify-domain:
+    post:
+      description: Checks the DNS TXT record that proves the organization owns one
+        of the provider's email domains and returns the domain.
+      operationId: verifyOrgSSODomain
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOrgSSODomainInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgSSODomain'
+          description: Domain with its verification state
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Verify SSO domain
+      tags:
+      - org-sso
   /projects:
     get:
       description: Returns projects matching the request filters.
@@ -2204,6 +2862,39 @@ paths:
       summary: Delete app auth
       tags:
       - app-auths
+    get:
+      description: Returns one HTTP basic authentication credential without its password.
+      operationId: getAppAuth
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAuth'
+          description: HTTP basic authentication
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get HTTP basic authentication
+      tags:
+      - app-auths
     put:
       description: Updates an HTTP basic authentication entry. Omit both scope identifiers
         to preserve the current scope. Supplying appServiceId moves the entry to service
@@ -3350,6 +4041,67 @@ paths:
       summary: Set app service link
       tags:
       - app-services
+  /app-services/{id}/pods:
+    get:
+      description: "Returns the Kubernetes pods of an app service with their containers,\
+        \ state and resource use."
+      operationId: listAppServicePods
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: primary for the main workload (default) or all for every workload.
+        explode: true
+        in: query
+        name: mode
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Only pods of this workload.
+        explode: true
+        in: query
+        name: workload
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Only pods with this container.
+        explode: true
+        in: query
+        name: container
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServicePod'
+                type: array
+          description: App service pods
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app service pods
+      tags:
+      - app-services
   /app-services/{id}/containers:
     get:
       description: Returns container resource settings for an app service.
@@ -3650,6 +4402,39 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app service cron schedule
+      tags:
+      - app-services
+    get:
+      description: Returns one cron schedule of an app service.
+      operationId: getAppServiceCronSchedule
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppServiceCronSchedule'
+          description: Cron schedule
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app service cron schedule
       tags:
       - app-services
     put:
@@ -3964,6 +4749,501 @@ paths:
       summary: List app ports
       tags:
       - app-ports
+  /app-ports/{id}/actions/publish:
+    post:
+      description: Exposes the app port on the cluster's public address. Leave publicPort
+        out to pick a free port. Returns the port.
+      operationId: publishAppPort
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppPortInput'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppPort'
+          description: Published app port
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Publish app port
+      tags:
+      - app-ports
+  /app-ports/{id}/actions/unpublish:
+    post:
+      description: Stops exposing the app port on the cluster's public address and
+        returns the port.
+      operationId: unpublishAppPort
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppPort'
+          description: Unpublished app port
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Unpublish app port
+      tags:
+      - app-ports
+  /app-ports/{id}/settings:
+    get:
+      description: Returns the settings of an app port.
+      operationId: listAppPortSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppPortSetting'
+                type: array
+          description: App port settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app port settings
+      tags:
+      - app-ports
+    put:
+      description: Replaces all settings of an app port. A setting left out is removed.
+        Returns the stored settings.
+      operationId: replaceAppPortSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppPortSettingsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppPortSetting'
+                type: array
+          description: Stored app port settings
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Replace app port settings
+      tags:
+      - app-ports
+  /app-ports/{id}/settings/{name}:
+    delete:
+      description: Removes a named app port setting.
+      operationId: deleteAppPortSetting
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppPortSettingName'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete app port setting
+      tags:
+      - app-ports
+    put:
+      description: Creates or updates a named app port setting.
+      operationId: setAppPortSetting
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppPortSettingName'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetStringValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppPortSetting'
+          description: App port setting
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Set app port setting
+      tags:
+      - app-ports
+  /app-endpoints:
+    get:
+      description: Returns the endpoints of an app environment. An endpoint groups
+        the routes and ports of one app service endpoint.
+      operationId: listAppEndpoints
+      parameters:
+      - explode: true
+        in: query
+        name: appEnvironmentId
+        required: true
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppEndpoint'
+                type: array
+          description: App endpoints
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app endpoints
+      tags:
+      - app-ports
+  /app-endpoints/{id}:
+    get:
+      description: Returns one app endpoint with its route and port IDs.
+      operationId: getAppEndpoint
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEndpoint'
+          description: App endpoint
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app endpoint
+      tags:
+      - app-ports
+  /app-annotations:
+    get:
+      description: "Returns the ingress annotations of an app environment, its services\
+        \ and routes."
+      operationId: listAppAnnotations
+      parameters:
+      - explode: true
+        in: query
+        name: appEnvironmentId
+        required: true
+        schema:
+          type: integer
+        style: form
+      - description: "Comma-separated annotation types, such as ingress."
+        explode: true
+        in: query
+        name: types
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppAnnotation'
+                type: array
+          description: App annotations
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app annotations
+      tags:
+      - app-environments
+    post:
+      description: "Adds an ingress annotation to the app environment, or to one of\
+        \ its services or routes."
+      operationId: createAppAnnotation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAppAnnotationInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAnnotation'
+          description: Created app annotation
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create app annotation
+      tags:
+      - app-environments
+  /app-annotations/{id}:
+    delete:
+      description: Deletes an app annotation.
+      operationId: deleteAppAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete app annotation
+      tags:
+      - app-environments
+    get:
+      description: Returns one app annotation.
+      operationId: getAppAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAnnotation'
+          description: App annotation
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app annotation
+      tags:
+      - app-environments
+    put:
+      description: Changes an app annotation and returns it.
+      operationId: updateAppAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppAnnotationInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAnnotation'
+          description: Updated app annotation
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app annotation
+      tags:
+      - app-environments
   /app-ports/{id}:
     get:
       description: Returns the app port identified by the request path.
@@ -3996,6 +5276,45 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get app port
+      tags:
+      - app-ports
+    put:
+      description: Changes the public port of an app port and returns it.
+      operationId: updateAppPort
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppPortInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppPort'
+          description: Updated app port
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update app port
       tags:
       - app-ports
   /app-deployments:
@@ -7310,6 +8629,39 @@ paths:
       tags:
       - providers
   /providers/{id}:
+    delete:
+      description: Deletes a custom provider that no integration uses.
+      operationId: deleteProvider
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete provider
+      tags:
+      - providers
     get:
       description: Returns the provider identified by the request path.
       operationId: getProvider
@@ -7341,6 +8693,45 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get provider
+      tags:
+      - providers
+    put:
+      description: Changes the provider title and returns the provider.
+      operationId: updateProvider
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProviderInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+          description: Updated provider
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update provider
       tags:
       - providers
   /provider-revisions/{id}:
@@ -7684,6 +9075,83 @@ paths:
       summary: Scaffold service from Helm chart
       tags:
       - services
+  /services/{id}/actions/update-from-git:
+    post:
+      description: Starts a task that moves a Git-sourced service to another ref.
+      operationId: updateServiceFromGit
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackFromGitRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Service update task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update service from Git
+      tags:
+      - services
+  /services/by-name/{name}/inheriting-services:
+    get:
+      description: Returns the services whose manifests inherit from the named service
+        with from.
+      operationId: listInheritingServices
+      parameters:
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Service'
+                type: array
+          description: Inheriting services
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List inheriting services
+      tags:
+      - services
   /services/by-name/{name}:
     get:
       description: Returns the service identified by name.
@@ -7726,6 +9194,39 @@ paths:
       tags:
       - services
   /services/{id}:
+    delete:
+      description: Deletes a service that no stack uses.
+      operationId: deleteService
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete service
+      tags:
+      - services
     get:
       description: Returns the service identified by the request path.
       operationId: getService
@@ -7951,6 +9452,59 @@ paths:
       summary: List service link candidates
       tags:
       - services
+  /service-revisions/{id}/configs:
+    get:
+      description: Returns the configuration files of a service revision with the
+        default content Wodby resolved for one option version and platform.
+      operationId: listResolvedServiceConfigs
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: Service option version.
+        explode: true
+        in: query
+        name: optionVersion
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Image platform. Defaults to linux/amd64.
+        explode: true
+        in: query
+        name: platform
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResolvedServiceConfig'
+                type: array
+          description: Resolved configuration files
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List resolved service configs
+      tags:
+      - services
   /service-revisions/{id}:
     get:
       description: Returns the service revision identified by the request path.
@@ -8052,6 +9606,366 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List stacks
+      tags:
+      - stacks
+    post:
+      description: Creates a stack from catalog services without a manifest. Use POST
+        /stacks/actions/create-from-manifest for a stack.yml.
+      operationId: createStack
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Created stack
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create stack
+      tags:
+      - stacks
+  /clusters/{id}/actions/update-kubernetes-version:
+    post:
+      description: "Starts upgrading the cluster to a Kubernetes version from its\
+        \ upgrade plan. Check GET /cluster-kubernetes- version-upgrade-plans/{id}\
+        \ for the allowed targets first."
+      operationId: updateClusterKubernetesVersion
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateKubernetesVersionInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Upgrade task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update cluster Kubernetes version
+      tags:
+      - clusters
+  /clusters/{id}/actions/scale:
+    post:
+      description: Changes the minimum and maximum node count of a managed cluster
+        and starts the node pool update.
+      operationId: scaleCluster
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScaleClusterInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Scaling task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Scale cluster nodes
+      tags:
+      - clusters
+  /clusters/{id}/actions/recycle-nodes:
+    post:
+      description: Replaces the cluster nodes one at a time so they come back with
+        a fresh machine image.
+      operationId: recycleClusterNodes
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Node recycling task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Recycle cluster nodes
+      tags:
+      - clusters
+  /clusters/{id}/actions/update-k3s-public-ip:
+    post:
+      description: Changes the public IP address that routes to a self-hosted k3s
+        cluster. Returns the cluster.
+      operationId: updateK3SClusterPublicIp
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateK3SClusterPublicIPInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Updated cluster
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update k3s cluster public IP
+      tags:
+      - clusters
+  /clusters/actions/create-k3s:
+    post:
+      description: "Registers a self-hosted k3s cluster. Run the command from GET\
+        \ /clusters/k3s-install-command/{id} on the server to connect it."
+      operationId: createK3SCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewK3SClusterInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Created cluster
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create k3s cluster
+      tags:
+      - clusters
+  /clusters/actions/create-wodby-cloud:
+    post:
+      description: Creates a cluster hosted by Wodby and billed to the organization.
+        List machine types with GET /wodby- cloud/machine-types.
+      operationId: createWodbyCloudCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewWodbyCloudClusterInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCreationResult'
+          description: Created cluster and its provisioning task
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create Wodby Cloud cluster
+      tags:
+      - clusters
+  /clusters/k3s-install-command/{id}:
+    get:
+      description: Returns the shell command that installs Wodby on the k3s server
+        and connects the cluster. The command contains short-lived credentials; treat
+        it as a secret.
+      operationId: getK3SClusterInstallCommand
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/K3SInstallCommand'
+          description: Install command
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get k3s install command
+      tags:
+      - clusters
+  /wodby-cloud/machine-types:
+    get:
+      description: Returns the machine types available for Wodby Cloud clusters with
+        their prices.
+      operationId: listWodbyCloudMachineTypes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WodbyCloudMachineType'
+                type: array
+          description: Machine types
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List Wodby Cloud machine types
+      tags:
+      - clusters
+  /catalog/infra-stacks:
+    get:
+      description: Returns the infrastructure stacks Wodby installs on clusters of
+        a public Kubernetes provider.
+      operationId: listInfraStacks
+      parameters:
+      - description: "Provider name, such as aws or digitalocean."
+        explode: true
+        in: query
+        name: provider
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Stack'
+                type: array
+          description: Infrastructure stacks
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List infrastructure stacks
       tags:
       - stacks
   /catalog/stacks:
@@ -8839,6 +10753,454 @@ paths:
       summary: Update stack service
       tags:
       - stack-services
+  /stack-revisions/{id}/helm-values:
+    get:
+      description: Returns the stack-level Helm values of a stack revision. They apply
+        to every service of the stack.
+      operationId: listStackHelmValues
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackHelmValue'
+                type: array
+          description: Stack Helm values
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List stack Helm values
+      tags:
+      - stacks
+  /stacks/{id}/configuration/helm-values:
+    post:
+      description: Adds a stack-level Helm value to the stack and creates a new draft
+        revision when needed.
+      operationId: createStackHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackHelmValueInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackHelmValue'
+          description: Created stack Helm value
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create stack Helm value
+      tags:
+      - stacks
+  /stack-helm-values/{id}:
+    delete:
+      description: Deletes a stack-level Helm value.
+      operationId: deleteStackHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete stack Helm value
+      tags:
+      - stacks
+    put:
+      description: Changes a stack-level Helm value.
+      operationId: updateStackHelmValue
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackHelmValueInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackHelmValue'
+          description: Updated stack Helm value
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update stack Helm value
+      tags:
+      - stacks
+  /stack-revisions/{id}/tokens:
+    get:
+      description: Returns the stack-level tokens of a stack revision. They apply
+        to every service of the stack.
+      operationId: listStackTokens
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackToken'
+                type: array
+          description: Stack tokens
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List stack tokens
+      tags:
+      - stacks
+  /stacks/{id}/configuration/tokens:
+    post:
+      description: Adds a stack-level token to the stack and creates a new draft revision
+        when needed.
+      operationId: createStackToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackTokenInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackToken'
+          description: Created stack token
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create stack token
+      tags:
+      - stacks
+  /stack-tokens/{id}:
+    delete:
+      description: Deletes a stack-level token.
+      operationId: deleteStackToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete stack token
+      tags:
+      - stacks
+    put:
+      description: Changes a stack-level token.
+      operationId: updateStackToken
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackTokenInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackToken'
+          description: Updated stack token
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update stack token
+      tags:
+      - stacks
+  /stack-revisions/{id}/annotations:
+    get:
+      description: Returns the stack-level annotations of a stack revision. They apply
+        to every service of the stack.
+      operationId: listStackAnnotations
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StackAnnotation'
+                type: array
+          description: Stack annotations
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List stack annotations
+      tags:
+      - stacks
+  /stacks/{id}/configuration/annotations:
+    post:
+      description: Adds a stack-level annotation to the stack and creates a new draft
+        revision when needed.
+      operationId: createStackAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStackAnnotationInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackAnnotation'
+          description: Created stack annotation
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create stack annotation
+      tags:
+      - stacks
+  /stack-annotations/{id}:
+    delete:
+      description: Deletes a stack-level annotation.
+      operationId: deleteStackAnnotation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete stack annotation
+      tags:
+      - stacks
+  /stacks/{id}/actions/discard-draft:
+    post:
+      description: Drops the stack's unpublished draft revision and returns the stack.
+      operationId: discardStackDraft
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: Stack without its draft
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Discard stack draft
+      tags:
+      - stacks
   /stack-revisions/{id}/env-vars:
     get:
       description: Returns stack-wide environment variables for a stack revision.
@@ -10302,6 +12664,41 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get backup
+      tags:
+      - backups
+  /backups/{id}/download:
+    get:
+      description: Returns a short-lived URL for downloading the backup file. It needs
+        write access to the backup.
+      operationId: getBackupDownload
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupDownload'
+          description: Backup download URL
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get backup download URL
       tags:
       - backups
   /backups/{id}/actions/void-file:
@@ -11887,6 +14284,39 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Delete app access
+      tags:
+      - app-environments
+    get:
+      description: Returns one app access configuration.
+      operationId: getAppAccess
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAccess'
+          description: App access
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get app access
       tags:
       - app-environments
     put:
@@ -16448,6 +18878,461 @@ components:
       - role
       - status
       - updatedAt
+      type: object
+    InviteOrgMemberInput:
+      example:
+        role: member
+        projectIds:
+        - 1
+        - 1
+        orgId: 0
+        email: email
+        teamIds:
+        - 6
+        - 6
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        email:
+          format: email
+          type: string
+        role:
+          enum:
+          - member
+          - admin
+          - owner
+          type: string
+        teamIds:
+          items:
+            type: integer
+          type: array
+        projectIds:
+          items:
+            type: integer
+          type: array
+      required:
+      - email
+      - role
+      type: object
+    OrgMembershipRoleInput:
+      example:
+        role: member
+      properties:
+        role:
+          enum:
+          - member
+          - admin
+          - owner
+          type: string
+      required:
+      - role
+      type: object
+    ProjectMembership:
+      example:
+        orgMembershipId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        role: read
+        teamId: 5
+        id: 0
+        projectId: 6
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        projectId:
+          type: integer
+        orgMembershipId:
+          nullable: true
+          type: integer
+        teamId:
+          nullable: true
+          type: integer
+        role:
+          enum:
+          - read
+          - write
+          - admin
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - projectId
+      - role
+      - updatedAt
+      type: object
+    NewProjectMembershipsInput:
+      example:
+        role: read
+        projectId: 0
+        orgMembershipIds:
+        - 6
+        - 6
+        teamIds:
+        - 1
+        - 1
+      properties:
+        projectId:
+          type: integer
+        orgMembershipIds:
+          items:
+            type: integer
+          type: array
+        teamIds:
+          items:
+            type: integer
+          type: array
+        role:
+          enum:
+          - read
+          - write
+          - admin
+          type: string
+      required:
+      - projectId
+      - role
+      type: object
+    ProjectMembershipRoleInput:
+      example:
+        role: read
+      properties:
+        role:
+          enum:
+          - read
+          - write
+          - admin
+          type: string
+      required:
+      - role
+      type: object
+    Team:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        members:
+        - orgMembershipId: 5
+          role: member
+          id: 1
+        - orgMembershipId: 5
+          role: member
+          id: 1
+        name: name
+        id: 0
+        title: title
+        orgId: 6
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        orgId:
+          type: integer
+        members:
+          items:
+            $ref: '#/components/schemas/TeamMember'
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - members
+      - name
+      - orgId
+      - title
+      - updatedAt
+      type: object
+    TeamMember:
+      example:
+        orgMembershipId: 5
+        role: member
+        id: 1
+      properties:
+        id:
+          type: integer
+        orgMembershipId:
+          type: integer
+        role:
+          enum:
+          - member
+          - leader
+          type: string
+      required:
+      - id
+      - orgMembershipId
+      - role
+      type: object
+    TeamInput:
+      example:
+        members:
+        - orgMembershipId: 6
+          role: member
+        - orgMembershipId: 6
+          role: member
+        name: name
+        title: title
+        orgId: 0
+      properties:
+        orgId:
+          description: Used when creating a team. Optional for API-key requests; defaults
+            to the API key's organization.
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        members:
+          description: The complete member list.
+          items:
+            $ref: '#/components/schemas/TeamMemberInput'
+          type: array
+      required:
+      - members
+      - name
+      - title
+      type: object
+    TeamMemberInput:
+      example:
+        orgMembershipId: 6
+        role: member
+      properties:
+        orgMembershipId:
+          type: integer
+        role:
+          enum:
+          - member
+          - leader
+          type: string
+      required:
+      - orgMembershipId
+      - role
+      type: object
+    OrgSSOProvider:
+      example:
+        clientId: clientId
+        kind: kind
+        issuerUrl: issuerUrl
+        jitEnabled: true
+        domains:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          verificationRecordType: verificationRecordType
+          domain: domain
+          verified: true
+          verificationRecordValue: verificationRecordValue
+          verifiedAt: 2000-01-23T04:56:07.000+00:00
+          verificationRecordName: verificationRecordName
+          id: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          verificationRecordType: verificationRecordType
+          domain: domain
+          verified: true
+          verificationRecordValue: verificationRecordValue
+          verifiedAt: 2000-01-23T04:56:07.000+00:00
+          verificationRecordName: verificationRecordName
+          id: 1
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        samlAcsUrl: samlAcsUrl
+        githubOrg: githubOrg
+        samlIdpMetadataUrl: samlIdpMetadataUrl
+        orgId: 6
+        enabled: true
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        samlSpMetadataUrl: samlSpMetadataUrl
+        name: name
+        id: 0
+        samlSpEntityId: samlSpEntityId
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        orgId:
+          type: integer
+        name:
+          type: string
+        kind:
+          description: "Provider kind, such as oidc, github or saml."
+          type: string
+        issuerUrl:
+          type: string
+        clientId:
+          type: string
+        githubOrg:
+          nullable: true
+          type: string
+        samlIdpMetadataUrl:
+          nullable: true
+          type: string
+        samlSpEntityId:
+          description: Entity ID to configure in the SAML identity provider.
+          nullable: true
+          type: string
+        samlSpMetadataUrl:
+          nullable: true
+          type: string
+        samlAcsUrl:
+          description: Assertion consumer service URL to configure in the SAML identity
+            provider.
+          nullable: true
+          type: string
+        enabled:
+          type: boolean
+        jitEnabled:
+          description: Create a membership on first sign-in for people from a verified
+            domain.
+          type: boolean
+        domains:
+          items:
+            $ref: '#/components/schemas/OrgSSODomain'
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - clientId
+      - createdAt
+      - domains
+      - enabled
+      - id
+      - issuerUrl
+      - jitEnabled
+      - kind
+      - name
+      - orgId
+      - updatedAt
+      type: object
+    OrgSSODomain:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        verificationRecordType: verificationRecordType
+        domain: domain
+        verified: true
+        verificationRecordValue: verificationRecordValue
+        verifiedAt: 2000-01-23T04:56:07.000+00:00
+        verificationRecordName: verificationRecordName
+        id: 1
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        domain:
+          type: string
+        verified:
+          type: boolean
+        verificationRecordName:
+          description: DNS record name to create for verification.
+          type: string
+        verificationRecordType:
+          type: string
+        verificationRecordValue:
+          type: string
+        verifiedAt:
+          format: date-time
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - domain
+      - id
+      - updatedAt
+      - verificationRecordName
+      - verificationRecordType
+      - verificationRecordValue
+      - verified
+      type: object
+    OrgSSOProviderInput:
+      example:
+        clientId: clientId
+        samlIdpMetadataXml: samlIdpMetadataXml
+        kind: kind
+        issuerUrl: issuerUrl
+        jitEnabled: true
+        name: name
+        domains:
+        - domains
+        - domains
+        clientSecret: clientSecret
+        githubOrg: githubOrg
+        samlIdpMetadataUrl: samlIdpMetadataUrl
+        orgId: 0
+        enabled: true
+      properties:
+        orgId:
+          description: Used when creating a provider. Optional for API-key requests;
+            defaults to the API key's organization.
+          type: integer
+        kind:
+          description: "Provider kind when creating, such as oidc, github or saml.\
+            \ It cannot be changed."
+          nullable: true
+          type: string
+        name:
+          type: string
+        issuerUrl:
+          nullable: true
+          type: string
+        clientId:
+          nullable: true
+          type: string
+        clientSecret:
+          description: OIDC or GitHub client secret. Leave it out on update to keep
+            the stored secret.
+          nullable: true
+          type: string
+          writeOnly: true
+        githubOrg:
+          nullable: true
+          type: string
+        samlIdpMetadataUrl:
+          nullable: true
+          type: string
+        samlIdpMetadataXml:
+          nullable: true
+          type: string
+        enabled:
+          type: boolean
+        jitEnabled:
+          type: boolean
+        domains:
+          items:
+            type: string
+          type: array
+      required:
+      - domains
+      - enabled
+      - jitEnabled
+      - name
+      type: object
+    VerifyOrgSSODomainInput:
+      example:
+        domain: domain
+      properties:
+        domain:
+          minLength: 1
+          type: string
+      required:
+      - domain
       type: object
     Project:
       example:
@@ -22956,6 +25841,405 @@ components:
       - stackServiceId
       - workload
       type: object
+    NewStackInput:
+      example:
+        availableToAllProjects: true
+        name: name
+        icon: icon
+        services:
+        - replicas: 0
+          name: name
+          main: true
+          serviceId: 1
+          title: title
+          required: true
+          serviceRevPinned: true
+        - replicas: 0
+          name: name
+          main: true
+          serviceId: 1
+          title: title
+          required: true
+          serviceRevPinned: true
+        title: title
+        projectId: 6
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
+        name:
+          type: string
+        title:
+          type: string
+        icon:
+          nullable: true
+          type: string
+        services:
+          items:
+            $ref: '#/components/schemas/NewStackServiceDefinitionInput'
+          minItems: 1
+          type: array
+      required:
+      - name
+      - services
+      - title
+      type: object
+    NewStackServiceDefinitionInput:
+      example:
+        replicas: 0
+        name: name
+        main: true
+        serviceId: 1
+        title: title
+        required: true
+        serviceRevPinned: true
+      properties:
+        serviceId:
+          type: integer
+        name:
+          description: Stack-local service name.
+          type: string
+        title:
+          type: string
+        required:
+          nullable: true
+          type: boolean
+        replicas:
+          minimum: 0
+          type: integer
+        main:
+          nullable: true
+          type: boolean
+        serviceRevPinned:
+          nullable: true
+          type: boolean
+      required:
+      - name
+      - replicas
+      - serviceId
+      - title
+      type: object
+    StackHelmValue:
+      example:
+        valueSecretId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: prod
+        name: name
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        value:
+          description: Omitted for secret values.
+          nullable: true
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        envType:
+          description: Limit the value to app environments of this type.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      type: object
+    NewStackHelmValueInput:
+      example:
+        envType: prod
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        secret:
+          type: boolean
+        envType:
+          description: Limit the value to app environments of this type.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
+      required:
+      - name
+      - secret
+      - value
+      type: object
+    UpdateStackHelmValueInput:
+      example:
+        secret: true
+        value: value
+      properties:
+        value:
+          type: string
+        secret:
+          type: boolean
+      required:
+      - secret
+      - value
+      type: object
+    StackToken:
+      example:
+        valueSecretId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        regex: regex
+        envType: prod
+        name: name
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        value:
+          description: Omitted for secret values.
+          nullable: true
+          type: string
+        valueSecretId:
+          nullable: true
+          type: integer
+        regex:
+          nullable: true
+          type: string
+        envType:
+          description: Limit the value to app environments of this type.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      type: object
+    NewStackTokenInput:
+      example:
+        regex: regex
+        envType: prod
+        name: name
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          description: Leave it out to generate a value from regex.
+          nullable: true
+          type: string
+        secret:
+          type: boolean
+        regex:
+          description: Pattern used to generate the value for each app environment.
+          nullable: true
+          type: string
+        envType:
+          description: Limit the value to app environments of this type.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
+      required:
+      - name
+      - secret
+      type: object
+    UpdateStackTokenInput:
+      example:
+        regex: regex
+        secret: true
+        value: value
+      properties:
+        value:
+          nullable: true
+          type: string
+        secret:
+          type: boolean
+        regex:
+          nullable: true
+          type: string
+      required:
+      - secret
+      type: object
+    StackAnnotation:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        envType: prod
+        name: name
+        id: 0
+        value: value
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        value:
+          nullable: true
+          type: string
+        envType:
+          description: Limit the value to app environments of this type.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      type: object
+    NewStackAnnotationInput:
+      example:
+        envType: prod
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        envType:
+          description: Limit the value to app environments of this type.
+          enum:
+          - prod
+          - test
+          - staging
+          - dev
+          - feature
+          nullable: true
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    UpdateProviderInput:
+      example:
+        title: title
+      properties:
+        title:
+          minLength: 1
+          type: string
+      required:
+      - title
+      type: object
+    ResolvedServiceConfig:
+      example:
+        image: image
+        manifestVersion: manifestVersion
+        fetchedAt: 2000-01-23T04:56:07.000+00:00
+        title: title
+        error: error
+        platform: platform
+        imageDigest: imageDigest
+        filepath: filepath
+        legacyFallback: true
+        defaultConfig: defaultConfig
+        name: name
+        defaultSource: image
+        sourcePath: sourcePath
+        status: pending
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        filepath:
+          type: string
+        manifestVersion:
+          nullable: true
+          type: string
+        defaultSource:
+          description: Whether the default content comes from the service image or
+            its repository.
+          enum:
+          - image
+          - repository
+          type: string
+        defaultConfig:
+          nullable: true
+          type: string
+        status:
+          enum:
+          - pending
+          - ready
+          - failed
+          - digest_drift
+          type: string
+        legacyFallback:
+          type: boolean
+        image:
+          nullable: true
+          type: string
+        imageDigest:
+          nullable: true
+          type: string
+        sourcePath:
+          nullable: true
+          type: string
+        platform:
+          type: string
+        error:
+          nullable: true
+          type: string
+        fetchedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - defaultSource
+      - filepath
+      - legacyFallback
+      - name
+      - platform
+      - status
+      - title
+      type: object
     StackEnvVar:
       example:
         valueSecretId: 6
@@ -23344,6 +26628,434 @@ components:
       - defaultCollation
       - name
       - title
+      type: object
+    BackupDownload:
+      example:
+        url: url
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        url:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - expiresAt
+      - url
+      type: object
+    AppServicePod:
+      example:
+        phase: phase
+        kubeWorkloadName: kubeWorkloadName
+        reason: reason
+        cpuUsage: 0.8008281904610115
+        memoryUsage: 6
+        cpuLimit: 5.637376656633329
+        workload: workload
+        memoryRequest: 5
+        message: message
+        cpuRequest: 1.4658129805029452
+        node: node
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        ready: true
+        name: name
+        terminating: true
+        memoryLimit: 2
+        containers:
+        - reason: reason
+          cpuUsage: 3.616076749251911
+          memoryUsage: 2
+          cpuLimit: 1.2315135367772556
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          memoryRequest: 7
+          message: message
+          restarts: 7
+          finishedAt: 2000-01-23T04:56:07.000+00:00
+          cpuRequest: 4.145608029883936
+          ready: true
+          name: name
+          exitCode: 9
+          memoryLimit: 1
+          id: id
+          state: state
+          primary: true
+        - reason: reason
+          cpuUsage: 3.616076749251911
+          memoryUsage: 2
+          cpuLimit: 1.2315135367772556
+          startedAt: 2000-01-23T04:56:07.000+00:00
+          memoryRequest: 7
+          message: message
+          restarts: 7
+          finishedAt: 2000-01-23T04:56:07.000+00:00
+          cpuRequest: 4.145608029883936
+          ready: true
+          name: name
+          exitCode: 9
+          memoryLimit: 1
+          id: id
+          state: state
+          primary: true
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        workload:
+          type: string
+        kubeWorkloadName:
+          type: string
+        node:
+          nullable: true
+          type: string
+        phase:
+          type: string
+        ready:
+          type: boolean
+        terminating:
+          type: boolean
+        reason:
+          nullable: true
+          type: string
+        message:
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        cpuUsage:
+          description: CPU cores in use.
+          nullable: true
+          type: number
+        memoryUsage:
+          description: Memory in use in bytes.
+          nullable: true
+          type: integer
+        cpuRequest:
+          nullable: true
+          type: number
+        memoryRequest:
+          nullable: true
+          type: integer
+        cpuLimit:
+          nullable: true
+          type: number
+        memoryLimit:
+          nullable: true
+          type: integer
+        containers:
+          items:
+            $ref: '#/components/schemas/AppServicePodContainer'
+          type: array
+      required:
+      - containers
+      - createdAt
+      - id
+      - kubeWorkloadName
+      - name
+      - phase
+      - ready
+      - terminating
+      - workload
+      type: object
+    AppServicePodContainer:
+      example:
+        reason: reason
+        cpuUsage: 3.616076749251911
+        memoryUsage: 2
+        cpuLimit: 1.2315135367772556
+        startedAt: 2000-01-23T04:56:07.000+00:00
+        memoryRequest: 7
+        message: message
+        restarts: 7
+        finishedAt: 2000-01-23T04:56:07.000+00:00
+        cpuRequest: 4.145608029883936
+        ready: true
+        name: name
+        exitCode: 9
+        memoryLimit: 1
+        id: id
+        state: state
+        primary: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        primary:
+          type: boolean
+        ready:
+          type: boolean
+        restarts:
+          type: integer
+        state:
+          type: string
+        reason:
+          nullable: true
+          type: string
+        message:
+          nullable: true
+          type: string
+        exitCode:
+          nullable: true
+          type: integer
+        startedAt:
+          format: date-time
+          nullable: true
+          type: string
+        finishedAt:
+          format: date-time
+          nullable: true
+          type: string
+        cpuUsage:
+          nullable: true
+          type: number
+        memoryUsage:
+          nullable: true
+          type: integer
+        cpuRequest:
+          nullable: true
+          type: number
+        memoryRequest:
+          nullable: true
+          type: integer
+        cpuLimit:
+          nullable: true
+          type: number
+        memoryLimit:
+          nullable: true
+          type: integer
+      required:
+      - id
+      - name
+      - primary
+      - ready
+      - restarts
+      - state
+      type: object
+    AppEndpoint:
+      example:
+        appServiceId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        portIds:
+        - 5
+        - 5
+        name: name
+        appEnvironmentId: 1
+        id: 0
+        routeIds:
+        - 5
+        - 5
+        primary: true
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        appServiceId:
+          type: integer
+        appEnvironmentId:
+          type: integer
+        primary:
+          type: boolean
+        routeIds:
+          items:
+            type: integer
+          type: array
+        portIds:
+          items:
+            type: integer
+          type: array
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appEnvironmentId
+      - appServiceId
+      - createdAt
+      - id
+      - name
+      - portIds
+      - primary
+      - routeIds
+      - updatedAt
+      type: object
+    UpdateAppPortInput:
+      example:
+        publicPort: 5249
+      properties:
+        publicPort:
+          description: Public port on the cluster's address.
+          maximum: 65535
+          minimum: 1
+          nullable: true
+          type: integer
+      type: object
+    AppPortSettingName:
+      enum:
+      - IDLE_TIMEOUT
+      - CONNECTION_LIMIT
+      - TCP_KEEPALIVE
+      type: string
+    AppPortSetting:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: IDLE_TIMEOUT
+        id: 0
+        value: value
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        name:
+          $ref: '#/components/schemas/AppPortSettingName'
+        value:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - updatedAt
+      - value
+      type: object
+    AppPortSettingsInput:
+      example:
+        settings:
+        - name: IDLE_TIMEOUT
+          value: value
+        - name: IDLE_TIMEOUT
+          value: value
+      properties:
+        settings:
+          description: The complete list of settings. A setting left out is removed.
+          items:
+            $ref: '#/components/schemas/AppPortSettingInput'
+          type: array
+      required:
+      - settings
+      type: object
+    AppPortSettingInput:
+      example:
+        name: IDLE_TIMEOUT
+        value: value
+      properties:
+        name:
+          $ref: '#/components/schemas/AppPortSettingName'
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    AppAnnotation:
+      example:
+        appServiceId: 1
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        appRouteId: 5
+        name: name
+        appEnvironmentId: 6
+        id: 0
+        type: ingress
+        value: value
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        appEnvironmentId:
+          type: integer
+        appServiceId:
+          nullable: true
+          type: integer
+        appRouteId:
+          nullable: true
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          enum:
+          - ingress
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - appEnvironmentId
+      - createdAt
+      - id
+      - name
+      - type
+      - updatedAt
+      - value
+      type: object
+    NewAppAnnotationInput:
+      example:
+        appServiceId: 6
+        appRouteId: 1
+        name: name
+        appEnvironmentId: 0
+        type: ingress
+        value: value
+      properties:
+        appEnvironmentId:
+          type: integer
+        appServiceId:
+          description: Limit the annotation to one service's ingress.
+          nullable: true
+          type: integer
+        appRouteId:
+          description: Limit the annotation to one route's ingress.
+          nullable: true
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          enum:
+          - ingress
+          type: string
+      required:
+      - appEnvironmentId
+      - name
+      - type
+      - value
+      type: object
+    UpdateAppAnnotationInput:
+      example:
+        appServiceId: 0
+        appRouteId: 6
+        name: name
+        value: value
+      properties:
+        appServiceId:
+          nullable: true
+          type: integer
+        appRouteId:
+          nullable: true
+          type: integer
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
       type: object
     AppPort:
       example:
@@ -26548,6 +30260,302 @@ components:
       - integrationId
       - name
       - serverless
+      - title
+      type: object
+    UpdateKubernetesVersionInput:
+      example:
+        version: version
+      properties:
+        version:
+          description: Target Kubernetes version from the cluster's upgrade plan.
+          minLength: 1
+          type: string
+      required:
+      - version
+      type: object
+    ScaleClusterInput:
+      example:
+        minNodeCount: 0
+        maxNodeCount: 1
+      properties:
+        minNodeCount:
+          minimum: 0
+          type: integer
+        maxNodeCount:
+          minimum: 1
+          type: integer
+      required:
+      - maxNodeCount
+      - minNodeCount
+      type: object
+    UpdateK3SClusterPublicIPInput:
+      example:
+        publicIp: publicIp
+      properties:
+        publicIp:
+          minLength: 1
+          type: string
+      required:
+      - publicIp
+      type: object
+    NewK3SClusterInput:
+      example:
+        availableToAllProjects: true
+        disableMonitoring: true
+        name: name
+        environmentPolicy:
+          allowedEnvIds:
+          - 9
+          - 9
+          envType: prod
+          scope: all
+          envId: 7
+          allowedEnvTypes:
+          - prod
+          - prod
+        title: title
+        autoInfrastructureUpgrade: true
+        projectId: 6
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
+        name:
+          type: string
+        title:
+          type: string
+        disableMonitoring:
+          type: boolean
+        autoInfrastructureUpgrade:
+          nullable: true
+          type: boolean
+        environmentPolicy:
+          $ref: '#/components/schemas/ClusterEnvironmentPolicyInput'
+      required:
+      - disableMonitoring
+      - name
+      - title
+      type: object
+    NewWodbyCloudClusterInput:
+      example:
+        availableToAllProjects: true
+        minNodeCount: 1
+        singleNode: true
+        maxNodeCount: 5
+        environmentPolicy:
+          allowedEnvIds:
+          - 9
+          - 9
+          envType: prod
+          scope: all
+          envId: 7
+          allowedEnvTypes:
+          - prod
+          - prod
+        region: region
+        projectId: 6
+        demo: true
+        orgId: 0
+        machineType: machineType
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        projectId:
+          nullable: true
+          type: integer
+        availableToAllProjects:
+          description: "Lets every project in the organization use the new resource\
+            \ without a project share. Only an organization-owned resource, created\
+            \ without projectId, can be available to all projects."
+          nullable: true
+          type: boolean
+        demo:
+          description: Create a free demo cluster with limited resources.
+          type: boolean
+        singleNode:
+          nullable: true
+          type: boolean
+        region:
+          nullable: true
+          type: string
+        machineType:
+          description: Machine type name from GET /wodby-cloud/machine-types.
+          nullable: true
+          type: string
+        minNodeCount:
+          nullable: true
+          type: integer
+        maxNodeCount:
+          nullable: true
+          type: integer
+        environmentPolicy:
+          $ref: '#/components/schemas/ClusterEnvironmentPolicyInput'
+      required:
+      - demo
+      type: object
+    ClusterCreationResult:
+      example:
+        cluster:
+          storageClasses:
+          - volumeBindingMode: volumeBindingMode
+            provisioner: provisioner
+            isDefault: true
+            reclaimPolicy: reclaimPolicy
+            allowVolumeExpansion: true
+            selectable: true
+            name: name
+            mountOptions:
+            - mountOptions
+            - mountOptions
+          - volumeBindingMode: volumeBindingMode
+            provisioner: provisioner
+            isDefault: true
+            reclaimPolicy: reclaimPolicy
+            allowVolumeExpansion: true
+            selectable: true
+            name: name
+            mountOptions:
+            - mountOptions
+            - mountOptions
+          availableToAllProjects: true
+          lastNodesReady: 5
+          lastNodesTotal: 5
+          envScope: all
+          maxNodeCount: 1
+          k3s: true
+          title: title
+          allowedEnvTypes:
+          - prod
+          - prod
+          demo: true
+          orgId: 3
+          allowedEnvIds:
+          - 9
+          - 9
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          hostname: hostname
+          minNodeCount: 6
+          ownerProjectId: 2
+          storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
+          zone: zone
+          singleNode: true
+          id: 0
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          settings:
+            autoInfrastructureUpgrade:
+              infra:
+                timeWindow:
+                  start: 02:00
+                  timeZone: UTC
+                  days:
+                  - MONDAY
+                  - MONDAY
+                  end: 04:00
+                enabled: true
+                versionPolicy:
+                  allowMajor: true
+                  allowPatch: true
+                  allowSameVersion: true
+                  allowMinor: true
+              enabled: true
+              apps:
+                timeWindow:
+                  start: 02:00
+                  timeZone: UTC
+                  days:
+                  - MONDAY
+                  - MONDAY
+                  end: 04:00
+                enabled: true
+                versionPolicy:
+                  allowMajor: true
+                  allowPatch: true
+                  allowSameVersion: true
+                  allowMinor: true
+            clusterCapabilities:
+              stackRevisionIds:
+              - 1
+              - 1
+              - 1
+              - 1
+              - 1
+              autoInstall: true
+          wodby: true
+          capabilities:
+            redirectRoutes: true
+            envoyGateway: true
+          serverless: true
+          integrationId: 2
+          envId: 7
+          version: version
+          ips:
+          - ips
+          - ips
+          infraVersion: infraVersion
+          envType: prod
+          name: name
+          region: region
+          ownershipScope: org
+          status: status
+        taskId: 0
+      properties:
+        cluster:
+          $ref: '#/components/schemas/Cluster'
+        taskId:
+          description: Task that provisions the cluster.
+          nullable: true
+          type: integer
+      required:
+      - cluster
+      type: object
+    K3SInstallCommand:
+      example:
+        command: command
+      properties:
+        command:
+          type: string
+      required:
+      - command
+      type: object
+    WodbyCloudMachineType:
+      example:
+        disk: 1
+        priceHourly: 0.8008281904610115
+        name: name
+        sharedCpu: true
+        title: title
+        priceMonthly: 6.027456183070403
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        sharedCpu:
+          type: boolean
+        priceHourly:
+          type: number
+        priceMonthly:
+          type: number
+        disk:
+          description: Node disk size in GB.
+          type: integer
+      required:
+      - disk
+      - name
+      - priceHourly
+      - priceMonthly
+      - sharedCpu
       - title
       type: object
     ClusterEnvironmentPolicyInput:

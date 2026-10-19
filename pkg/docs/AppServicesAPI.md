@@ -20,6 +20,7 @@ Method | HTTP request | Description
 [**DeleteAppServiceToken**](AppServicesAPI.md#DeleteAppServiceToken) | **Delete** /app-service-tokens/{id} | Delete app service token
 [**GetAppService**](AppServicesAPI.md#GetAppService) | **Get** /app-services/{id} | Get app service
 [**GetAppServiceCronJob**](AppServicesAPI.md#GetAppServiceCronJob) | **Get** /app-service-cron-jobs/{id} | Get app service cron job
+[**GetAppServiceCronSchedule**](AppServicesAPI.md#GetAppServiceCronSchedule) | **Get** /app-service-cron-schedules/{id} | Get app service cron schedule
 [**KeepLogStreamAlive**](AppServicesAPI.md#KeepLogStreamAlive) | **Post** /log-streams/{id}/keep-alive | Keep log stream alive
 [**ListAppServiceAnnotations**](AppServicesAPI.md#ListAppServiceAnnotations) | **Get** /app-services/{id}/annotations | List app service annotations
 [**ListAppServiceBackupOptionDefaults**](AppServicesAPI.md#ListAppServiceBackupOptionDefaults) | **Get** /app-services/{id}/options/backup-option-defaults | List effective backup option defaults
@@ -31,6 +32,7 @@ Method | HTTP request | Description
 [**ListAppServiceHelmValues**](AppServicesAPI.md#ListAppServiceHelmValues) | **Get** /app-services/{id}/helm-values | List app service Helm values
 [**ListAppServiceIntegrations**](AppServicesAPI.md#ListAppServiceIntegrations) | **Get** /app-services/{id}/integrations | List app service integrations
 [**ListAppServiceLinks**](AppServicesAPI.md#ListAppServiceLinks) | **Get** /app-services/{id}/links | List app service links
+[**ListAppServicePods**](AppServicesAPI.md#ListAppServicePods) | **Get** /app-services/{id}/pods | List app service pods
 [**ListAppServiceSettings**](AppServicesAPI.md#ListAppServiceSettings) | **Get** /app-services/{id}/settings | List app service settings
 [**ListAppServiceTokens**](AppServicesAPI.md#ListAppServiceTokens) | **Get** /app-services/{id}/tokens | List app service tokens
 [**ListAppServiceVolumeStorageClasses**](AppServicesAPI.md#ListAppServiceVolumeStorageClasses) | **Get** /app-services/{id}/options/volume-storage-classes | List app service volume storage-class state
@@ -1189,6 +1191,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAppServiceCronSchedule
+
+> AppServiceCronSchedule GetAppServiceCronSchedule(ctx, id).Execute()
+
+Get app service cron schedule
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.GetAppServiceCronSchedule(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.GetAppServiceCronSchedule``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppServiceCronSchedule`: AppServiceCronSchedule
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.GetAppServiceCronSchedule`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppServiceCronScheduleRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppServiceCronSchedule**](AppServiceCronSchedule.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## KeepLogStreamAlive
 
 > OperationResult KeepLogStreamAlive(ctx, id).Execute()
@@ -1950,6 +2022,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppServiceLink**](AppServiceLink.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppServicePods
+
+> []AppServicePod ListAppServicePods(ctx, id).Mode(mode).Workload(workload).Container(container).Execute()
+
+List app service pods
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	mode := "mode_example" // string | primary for the main workload (default) or all for every workload. (optional)
+	workload := "workload_example" // string | Only pods of this workload. (optional)
+	container := "container_example" // string | Only pods with this container. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListAppServicePods(context.Background(), id).Mode(mode).Workload(workload).Container(container).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListAppServicePods``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppServicePods`: []AppServicePod
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListAppServicePods`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppServicePodsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **mode** | **string** | primary for the main workload (default) or all for every workload. | 
+ **workload** | **string** | Only pods of this workload. | 
+ **container** | **string** | Only pods with this container. | 
+
+### Return type
+
+[**[]AppServicePod**](AppServicePod.md)
 
 ### Authorization
 

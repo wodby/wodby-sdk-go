@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateAppAuth**](AppAuthsAPI.md#CreateAppAuth) | **Post** /app-auths | Create app auth
 [**DeleteAppAuth**](AppAuthsAPI.md#DeleteAppAuth) | **Delete** /app-auths/{id} | Delete app auth
+[**GetAppAuth**](AppAuthsAPI.md#GetAppAuth) | **Get** /app-auths/{id} | Get HTTP basic authentication
 [**ListAppAuths**](AppAuthsAPI.md#ListAppAuths) | **Get** /app-auths | List app auths
 [**UpdateAppAuth**](AppAuthsAPI.md#UpdateAppAuth) | **Put** /app-auths/{id} | Update app auth
 
@@ -132,6 +133,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAppAuth
+
+> AppAuth GetAppAuth(ctx, id).Execute()
+
+Get HTTP basic authentication
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppAuthsAPI.GetAppAuth(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppAuthsAPI.GetAppAuth``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppAuth`: AppAuth
+	fmt.Fprintf(os.Stdout, "Response from `AppAuthsAPI.GetAppAuth`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppAuthRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppAuth**](AppAuth.md)
 
 ### Authorization
 

@@ -6,12 +6,14 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateProviderFromManifest**](ProvidersAPI.md#CreateProviderFromManifest) | **Post** /providers/actions/create-from-manifest | Create provider from manifest
 [**CreateVariableProvider**](ProvidersAPI.md#CreateVariableProvider) | **Post** /providers/actions/create-variable | Create variable provider
+[**DeleteProvider**](ProvidersAPI.md#DeleteProvider) | **Delete** /providers/{id} | Delete provider
 [**GetProvider**](ProvidersAPI.md#GetProvider) | **Get** /providers/{id} | Get provider
 [**GetProviderByName**](ProvidersAPI.md#GetProviderByName) | **Get** /providers/by-name/{name} | Get provider by name
 [**GetProviderRevision**](ProvidersAPI.md#GetProviderRevision) | **Get** /provider-revisions/{id} | Get provider revision
 [**GetProviderSharing**](ProvidersAPI.md#GetProviderSharing) | **Get** /providers/sharing/{id} | Get provider sharing
 [**ImportProviders**](ProvidersAPI.md#ImportProviders) | **Post** /providers/actions/import | Import providers from Git
 [**ListProviders**](ProvidersAPI.md#ListProviders) | **Get** /providers | List providers
+[**UpdateProvider**](ProvidersAPI.md#UpdateProvider) | **Put** /providers/{id} | Update provider
 [**UpdateProviderFromGit**](ProvidersAPI.md#UpdateProviderFromGit) | **Post** /providers/{id}/actions/update-from-git | Update provider from Git
 [**UpdateProviderFromManifest**](ProvidersAPI.md#UpdateProviderFromManifest) | **Post** /providers/{id}/actions/update-from-manifest | Update provider from manifest
 [**UpdateProviderSettings**](ProvidersAPI.md#UpdateProviderSettings) | **Put** /providers/settings/{id} | Update provider settings
@@ -144,6 +146,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteProvider
+
+> OperationResult DeleteProvider(ctx, id).Execute()
+
+Delete provider
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProvidersAPI.DeleteProvider(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.DeleteProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteProvider`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ProvidersAPI.DeleteProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -566,6 +638,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateProvider
+
+> Provider UpdateProvider(ctx, id).UpdateProviderInput(updateProviderInput).Execute()
+
+Update provider
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateProviderInput := *openapiclient.NewUpdateProviderInput("Title_example") // UpdateProviderInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProvidersAPI.UpdateProvider(context.Background(), id).UpdateProviderInput(updateProviderInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.UpdateProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateProvider`: Provider
+	fmt.Fprintf(os.Stdout, "Response from `ProvidersAPI.UpdateProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateProviderInput** | [**UpdateProviderInput**](UpdateProviderInput.md) |  | 
+
+### Return type
+
+[**Provider**](Provider.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

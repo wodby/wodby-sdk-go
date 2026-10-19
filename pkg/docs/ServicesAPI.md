@@ -5,14 +5,18 @@ All URIs are relative to */v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateServiceFromManifest**](ServicesAPI.md#CreateServiceFromManifest) | **Post** /services/actions/create-from-manifest | Create service from manifest
+[**DeleteService**](ServicesAPI.md#DeleteService) | **Delete** /services/{id} | Delete service
 [**GetService**](ServicesAPI.md#GetService) | **Get** /services/{id} | Get service
 [**GetServiceByName**](ServicesAPI.md#GetServiceByName) | **Get** /services/by-name/{name} | Get service by name
 [**GetServiceRevision**](ServicesAPI.md#GetServiceRevision) | **Get** /service-revisions/{id} | Get service revision
 [**GetServiceSharing**](ServicesAPI.md#GetServiceSharing) | **Get** /services/sharing/{id} | Get service sharing
 [**ImportServices**](ServicesAPI.md#ImportServices) | **Post** /services/actions/import | Import services from Git
+[**ListInheritingServices**](ServicesAPI.md#ListInheritingServices) | **Get** /services/by-name/{name}/inheriting-services | List inheriting services
+[**ListResolvedServiceConfigs**](ServicesAPI.md#ListResolvedServiceConfigs) | **Get** /service-revisions/{id}/configs | List resolved service configs
 [**ListServiceLinkCandidates**](ServicesAPI.md#ListServiceLinkCandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
 [**ListServices**](ServicesAPI.md#ListServices) | **Get** /services | List services
 [**ScaffoldServiceFromHelmChart**](ServicesAPI.md#ScaffoldServiceFromHelmChart) | **Post** /services/actions/scaffold-from-helm-chart | Scaffold service from Helm chart
+[**UpdateServiceFromGit**](ServicesAPI.md#UpdateServiceFromGit) | **Post** /services/{id}/actions/update-from-git | Update service from Git
 [**UpdateServiceFromManifest**](ServicesAPI.md#UpdateServiceFromManifest) | **Post** /services/{id}/actions/update-from-manifest | Update service from manifest
 [**UpdateServiceSettings**](ServicesAPI.md#UpdateServiceSettings) | **Put** /services/settings/{id} | Update service settings
 [**UpdateServiceSharing**](ServicesAPI.md#UpdateServiceSharing) | **Put** /services/sharing/{id} | Update service sharing
@@ -79,6 +83,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteService
+
+> OperationResult DeleteService(ctx, id).Execute()
+
+Delete service
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.DeleteService(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.DeleteService``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteService`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.DeleteService`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteServiceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -434,6 +508,150 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListInheritingServices
+
+> []Service ListInheritingServices(ctx, name).Execute()
+
+List inheriting services
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	name := "name_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ListInheritingServices(context.Background(), name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ListInheritingServices``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListInheritingServices`: []Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ListInheritingServices`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListInheritingServicesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListResolvedServiceConfigs
+
+> []ResolvedServiceConfig ListResolvedServiceConfigs(ctx, id).OptionVersion(optionVersion).Platform(platform).Execute()
+
+List resolved service configs
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	optionVersion := "optionVersion_example" // string | Service option version.
+	platform := "platform_example" // string | Image platform. Defaults to linux/amd64. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ListResolvedServiceConfigs(context.Background(), id).OptionVersion(optionVersion).Platform(platform).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ListResolvedServiceConfigs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListResolvedServiceConfigs`: []ResolvedServiceConfig
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ListResolvedServiceConfigs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListResolvedServiceConfigsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **optionVersion** | **string** | Service option version. | 
+ **platform** | **string** | Image platform. Defaults to linux/amd64. | 
+
+### Return type
+
+[**[]ResolvedServiceConfig**](ResolvedServiceConfig.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListServiceLinkCandidates
 
 > []map[string]interface{} ListServiceLinkCandidates(ctx, name).Execute()
@@ -629,6 +847,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**HelmChartServiceScaffoldResponse**](HelmChartServiceScaffoldResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateServiceFromGit
+
+> OperationResult UpdateServiceFromGit(ctx, id).UpdateStackFromGitRequest(updateStackFromGitRequest).Execute()
+
+Update service from Git
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateStackFromGitRequest := *openapiclient.NewUpdateStackFromGitRequest("GitRef_example", "GitRefType_example") // UpdateStackFromGitRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.UpdateServiceFromGit(context.Background(), id).UpdateStackFromGitRequest(updateStackFromGitRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.UpdateServiceFromGit``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateServiceFromGit`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.UpdateServiceFromGit`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateServiceFromGitRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateStackFromGitRequest** | [**UpdateStackFromGitRequest**](UpdateStackFromGitRequest.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 

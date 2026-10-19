@@ -6,9 +6,13 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CleanupAppEnvironmentMigration**](AppEnvironmentsAPI.md#CleanupAppEnvironmentMigration) | **Post** /app-environment-migrations/{id}/actions/cleanup | Clean up app environment migration
 [**CreateAppAccess**](AppEnvironmentsAPI.md#CreateAppAccess) | **Post** /app-environment-accesses/{id} | Create app environment access
+[**CreateAppAnnotation**](AppEnvironmentsAPI.md#CreateAppAnnotation) | **Post** /app-annotations | Create app annotation
 [**CreateAppEnvironment**](AppEnvironmentsAPI.md#CreateAppEnvironment) | **Post** /app-environments | Create app environment
 [**DeleteAppAccess**](AppEnvironmentsAPI.md#DeleteAppAccess) | **Delete** /app-accesses/{id} | Delete app access
+[**DeleteAppAnnotation**](AppEnvironmentsAPI.md#DeleteAppAnnotation) | **Delete** /app-annotations/{id} | Delete app annotation
 [**DeleteAppEnvironment**](AppEnvironmentsAPI.md#DeleteAppEnvironment) | **Delete** /app-environments/{id} | Delete app environment
+[**GetAppAccess**](AppEnvironmentsAPI.md#GetAppAccess) | **Get** /app-accesses/{id} | Get app access
+[**GetAppAnnotation**](AppEnvironmentsAPI.md#GetAppAnnotation) | **Get** /app-annotations/{id} | Get app annotation
 [**GetAppEnvironment**](AppEnvironmentsAPI.md#GetAppEnvironment) | **Get** /app-environments/{id} | Get app environment
 [**GetAppEnvironmentAccess**](AppEnvironmentsAPI.md#GetAppEnvironmentAccess) | **Get** /app-environment-accesses/{id} | Get app environment access
 [**GetAppEnvironmentByName**](AppEnvironmentsAPI.md#GetAppEnvironmentByName) | **Get** /app-environments/by-name/{appName}/{environmentName} | Get app environment by name
@@ -19,6 +23,7 @@ Method | HTTP request | Description
 [**GetWorkspaceGitDiff**](AppEnvironmentsAPI.md#GetWorkspaceGitDiff) | **Get** /workspaces/{id}/git-diff | Get workspace file diff
 [**GetWorkspaceGitStatus**](AppEnvironmentsAPI.md#GetWorkspaceGitStatus) | **Get** /workspaces/{id}/git-status | Get workspace Git status
 [**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List app-access cleanups
+[**ListAppAnnotations**](AppEnvironmentsAPI.md#ListAppAnnotations) | **Get** /app-annotations | List app annotations
 [**ListAppEnvironmentMigrations**](AppEnvironmentsAPI.md#ListAppEnvironmentMigrations) | **Get** /app-environment-migrations | List app environment migrations
 [**ListAppEnvironments**](AppEnvironmentsAPI.md#ListAppEnvironments) | **Get** /app-environments | List app environments
 [**MigrateAppEnvironment**](AppEnvironmentsAPI.md#MigrateAppEnvironment) | **Post** /app-environments/{id}/actions/migrate | Migrate app environment to another cluster
@@ -32,6 +37,7 @@ Method | HTTP request | Description
 [**RetryAppAccessCleanup**](AppEnvironmentsAPI.md#RetryAppAccessCleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
 [**RollbackAppEnvironmentMigration**](AppEnvironmentsAPI.md#RollbackAppEnvironmentMigration) | **Post** /app-environment-migrations/{id}/actions/rollback | Roll back app environment migration
 [**UpdateAppAccess**](AppEnvironmentsAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update app access
+[**UpdateAppAnnotation**](AppEnvironmentsAPI.md#UpdateAppAnnotation) | **Put** /app-annotations/{id} | Update app annotation
 [**UpdateAppEnvironment**](AppEnvironmentsAPI.md#UpdateAppEnvironment) | **Put** /app-environments/{id} | Update app environment
 [**UpdateAppEnvironmentCICDSettings**](AppEnvironmentsAPI.md#UpdateAppEnvironmentCICDSettings) | **Put** /app-environments/cicd-settings/{id} | Update app environment CI/CD settings
 [**UpdateAppEnvironmentMaintenanceMode**](AppEnvironmentsAPI.md#UpdateAppEnvironmentMaintenanceMode) | **Put** /app-environments/{id}/actions/maintenance-mode | Update app environment maintenance mode
@@ -183,6 +189,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateAppAnnotation
+
+> AppAnnotation CreateAppAnnotation(ctx).NewAppAnnotationInput(newAppAnnotationInput).Execute()
+
+Create app annotation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	newAppAnnotationInput := *openapiclient.NewNewAppAnnotationInput(int32(123), "Name_example", "Value_example", "Type_example") // NewAppAnnotationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.CreateAppAnnotation(context.Background()).NewAppAnnotationInput(newAppAnnotationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.CreateAppAnnotation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateAppAnnotation`: AppAnnotation
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.CreateAppAnnotation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateAppAnnotationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **newAppAnnotationInput** | [**NewAppAnnotationInput**](NewAppAnnotationInput.md) |  | 
+
+### Return type
+
+[**AppAnnotation**](AppAnnotation.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CreateAppEnvironment
 
 > AppEnvironment CreateAppEnvironment(ctx).NewAppEnvironmentInput(newAppEnvironmentInput).Execute()
@@ -319,6 +391,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteAppAnnotation
+
+> OperationResult DeleteAppAnnotation(ctx, id).Execute()
+
+Delete app annotation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.DeleteAppAnnotation(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.DeleteAppAnnotation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteAppAnnotation`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.DeleteAppAnnotation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteAppAnnotationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteAppEnvironment
 
 > OperationResult DeleteAppEnvironment(ctx, id).Force(force).Execute()
@@ -376,6 +518,146 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAppAccess
+
+> AppAccess GetAppAccess(ctx, id).Execute()
+
+Get app access
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.GetAppAccess(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.GetAppAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppAccess`: AppAccess
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.GetAppAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppAccess**](AppAccess.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAppAnnotation
+
+> AppAnnotation GetAppAnnotation(ctx, id).Execute()
+
+Get app annotation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.GetAppAnnotation(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.GetAppAnnotation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAppAnnotation`: AppAnnotation
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.GetAppAnnotation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppAnnotationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AppAnnotation**](AppAnnotation.md)
 
 ### Authorization
 
@@ -1083,6 +1365,74 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppAccessCleanup**](AppAccessCleanup.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppAnnotations
+
+> []AppAnnotation ListAppAnnotations(ctx).AppEnvironmentId(appEnvironmentId).Types(types).Execute()
+
+List app annotations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	appEnvironmentId := int32(56) // int32 | 
+	types := "types_example" // string | Comma-separated annotation types, such as ingress. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.ListAppAnnotations(context.Background()).AppEnvironmentId(appEnvironmentId).Types(types).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.ListAppAnnotations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppAnnotations`: []AppAnnotation
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.ListAppAnnotations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppAnnotationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appEnvironmentId** | **int32** |  | 
+ **types** | **string** | Comma-separated annotation types, such as ingress. | 
+
+### Return type
+
+[**[]AppAnnotation**](AppAnnotation.md)
 
 ### Authorization
 
@@ -1997,6 +2347,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppAccessOperationResult**](AppAccessOperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateAppAnnotation
+
+> AppAnnotation UpdateAppAnnotation(ctx, id).UpdateAppAnnotationInput(updateAppAnnotationInput).Execute()
+
+Update app annotation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateAppAnnotationInput := *openapiclient.NewUpdateAppAnnotationInput("Name_example", "Value_example") // UpdateAppAnnotationInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.UpdateAppAnnotation(context.Background(), id).UpdateAppAnnotationInput(updateAppAnnotationInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.UpdateAppAnnotation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateAppAnnotation`: AppAnnotation
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.UpdateAppAnnotation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateAppAnnotationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateAppAnnotationInput** | [**UpdateAppAnnotationInput**](UpdateAppAnnotationInput.md) |  | 
+
+### Return type
+
+[**AppAnnotation**](AppAnnotation.md)
 
 ### Authorization
 
