@@ -2,6 +2,7 @@
 .travis.yml
 README.md
 api/openapi.yaml
+api_agent_chats.go
 api_app_auths.go
 api_app_builds.go
 api_app_deployments.go
@@ -36,6 +37,16 @@ api_user.go
 client.go
 configuration.go
 docs/AddAppServiceVolumeInput.md
+docs/AgentChat.md
+docs/AgentChatAnswerRequest.md
+docs/AgentChatApprovalMode.md
+docs/AgentChatApprovalModeRequest.md
+docs/AgentChatApprovalRequest.md
+docs/AgentChatDetail.md
+docs/AgentChatMessage.md
+docs/AgentChatMessageRequest.md
+docs/AgentChatToolTarget.md
+docs/AgentChatsAPI.md
 docs/App.md
 docs/AppAccess.md
 docs/AppAccessCleanup.md
@@ -165,6 +176,8 @@ docs/ClusterCapabilityPolicy.md
 docs/ClusterCreationResult.md
 docs/ClusterEnvironmentPolicyInput.md
 docs/ClusterInfraAppUpgradeChangelog.md
+docs/ClusterNodePool.md
+docs/ClusterNodePoolInput.md
 docs/ClusterSettings.md
 docs/ClusterSettingsInput.md
 docs/ClustersAPI.md
@@ -393,6 +406,7 @@ docs/StackSyncOptionsInput.md
 docs/StackToken.md
 docs/StacksAPI.md
 docs/StacksResponse.md
+docs/StartAgentChatRequest.md
 docs/StorageClass.md
 docs/Task.md
 docs/TaskInitiator.md
@@ -418,6 +432,7 @@ docs/UpdateAppServiceCronScheduleInput.md
 docs/UpdateAppServiceDatabaseInput.md
 docs/UpdateAppServiceEnvVarInput.md
 docs/UpdateBackupPresetInput.md
+docs/UpdateClusterGPUNodePoolInput.md
 docs/UpdateCurrentUserRequest.md
 docs/UpdateDatabaseUserDBsInput.md
 docs/UpdateIntegrationInput.md
@@ -433,6 +448,7 @@ docs/UpdateStackHelmValueInput.md
 docs/UpdateStackRequest.md
 docs/UpdateStackServiceCronScheduleInput.md
 docs/UpdateStackServiceEnvVarInput.md
+docs/UpdateStackServiceRevisionsInput.md
 docs/UpdateStackServiceTokenInput.md
 docs/UpdateStackTokenInput.md
 docs/UpdateTitleRequest.md
@@ -454,6 +470,15 @@ docs/WorkspaceGitStatus.md
 docs/WorkspacePullInput.md
 git_push.sh
 model_add_app_service_volume_input.go
+model_agent_chat.go
+model_agent_chat_answer_request.go
+model_agent_chat_approval_mode.go
+model_agent_chat_approval_mode_request.go
+model_agent_chat_approval_request.go
+model_agent_chat_detail.go
+model_agent_chat_message.go
+model_agent_chat_message_request.go
+model_agent_chat_tool_target.go
 model_app.go
 model_app_access.go
 model_app_access_cleanup.go
@@ -573,6 +598,8 @@ model_cluster_capability_policy.go
 model_cluster_creation_result.go
 model_cluster_environment_policy_input.go
 model_cluster_infra_app_upgrade_changelog.go
+model_cluster_node_pool.go
+model_cluster_node_pool_input.go
 model_cluster_settings.go
 model_cluster_settings_input.go
 model_config_override_input.go
@@ -784,6 +811,7 @@ model_stack_sync_options.go
 model_stack_sync_options_input.go
 model_stack_token.go
 model_stacks_response.go
+model_start_agent_chat_request.go
 model_storage_class.go
 model_task.go
 model_task_initiator.go
@@ -805,6 +833,7 @@ model_update_app_service_cron_schedule_input.go
 model_update_app_service_database_input.go
 model_update_app_service_env_var_input.go
 model_update_backup_preset_input.go
+model_update_cluster_gpu_node_pool_input.go
 model_update_current_user_request.go
 model_update_database_user_dbs_input.go
 model_update_integration_input.go
@@ -820,6 +849,7 @@ model_update_stack_helm_value_input.go
 model_update_stack_request.go
 model_update_stack_service_cron_schedule_input.go
 model_update_stack_service_env_var_input.go
+model_update_stack_service_revisions_input.go
 model_update_stack_service_token_input.go
 model_update_stack_token_input.go
 model_update_title_request.go
@@ -840,6 +870,7 @@ model_workspace_git_diff.go
 model_workspace_git_status.go
 model_workspace_pull_input.go
 response.go
+test/api_agent_chats_test.go
 test/api_app_auths_test.go
 test/api_app_builds_test.go
 test/api_app_deployments_test.go

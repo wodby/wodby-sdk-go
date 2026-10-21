@@ -36,6 +36,7 @@ type NewClusterInput struct {
 	MinNodeCount NullableInt32 `json:"minNodeCount,omitempty"`
 	MaxNodeCount NullableInt32 `json:"maxNodeCount,omitempty"`
 	NodeDiskSize NullableInt32 `json:"nodeDiskSize,omitempty"`
+	GpuNodePool NullableClusterNodePoolInput `json:"gpuNodePool,omitempty"`
 	Zone NullableString `json:"zone,omitempty"`
 	Region NullableString `json:"region,omitempty"`
 	BillingOption NullableString `json:"billingOption,omitempty"`
@@ -532,6 +533,48 @@ func (o *NewClusterInput) UnsetNodeDiskSize() {
 	o.NodeDiskSize.Unset()
 }
 
+// GetGpuNodePool returns the GpuNodePool field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewClusterInput) GetGpuNodePool() ClusterNodePoolInput {
+	if o == nil || IsNil(o.GpuNodePool.Get()) {
+		var ret ClusterNodePoolInput
+		return ret
+	}
+	return *o.GpuNodePool.Get()
+}
+
+// GetGpuNodePoolOk returns a tuple with the GpuNodePool field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewClusterInput) GetGpuNodePoolOk() (*ClusterNodePoolInput, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GpuNodePool.Get(), o.GpuNodePool.IsSet()
+}
+
+// HasGpuNodePool returns a boolean if a field has been set.
+func (o *NewClusterInput) HasGpuNodePool() bool {
+	if o != nil && o.GpuNodePool.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuNodePool gets a reference to the given NullableClusterNodePoolInput and assigns it to the GpuNodePool field.
+func (o *NewClusterInput) SetGpuNodePool(v ClusterNodePoolInput) {
+	o.GpuNodePool.Set(&v)
+}
+// SetGpuNodePoolNil sets the value for GpuNodePool to be an explicit nil
+func (o *NewClusterInput) SetGpuNodePoolNil() {
+	o.GpuNodePool.Set(nil)
+}
+
+// UnsetGpuNodePool ensures that no value is present for GpuNodePool, not even an explicit nil
+func (o *NewClusterInput) UnsetGpuNodePool() {
+	o.GpuNodePool.Unset()
+}
+
 // GetZone returns the Zone field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NewClusterInput) GetZone() string {
 	if o == nil || IsNil(o.Zone.Get()) {
@@ -796,6 +839,9 @@ func (o NewClusterInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.NodeDiskSize.IsSet() {
 		toSerialize["nodeDiskSize"] = o.NodeDiskSize.Get()
+	}
+	if o.GpuNodePool.IsSet() {
+		toSerialize["gpuNodePool"] = o.GpuNodePool.Get()
 	}
 	if o.Zone.IsSet() {
 		toSerialize["zone"] = o.Zone.Get()

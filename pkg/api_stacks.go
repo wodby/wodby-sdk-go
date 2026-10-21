@@ -5136,11 +5136,17 @@ type ApiUpdateStackServiceRevisionsRequest struct {
 	ApiService *StacksAPIService
 	id int32
 	scope *string
+	updateStackServiceRevisionsInput *UpdateStackServiceRevisionsInput
 }
 
 // Limits the update to all services or stateless services. Defaults to all.
 func (r ApiUpdateStackServiceRevisionsRequest) Scope(scope string) ApiUpdateStackServiceRevisionsRequest {
 	r.scope = &scope
+	return r
+}
+
+func (r ApiUpdateStackServiceRevisionsRequest) UpdateStackServiceRevisionsInput(updateStackServiceRevisionsInput UpdateStackServiceRevisionsInput) ApiUpdateStackServiceRevisionsRequest {
+	r.updateStackServiceRevisionsInput = &updateStackServiceRevisionsInput
 	return r
 }
 
@@ -5151,7 +5157,7 @@ func (r ApiUpdateStackServiceRevisionsRequest) Execute() (*OperationResult, *htt
 /*
 UpdateStackServiceRevisions Update stack service revisions
 
-Starts a task that advances unpinned stack services to their eligible revisions.
+Starts a task that advances unpinned stack services to their eligible revisions. Send stackServiceIds to advance only those stack services.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -5194,7 +5200,7 @@ func (a *StacksAPIService) UpdateStackServiceRevisionsExecute(r ApiUpdateStackSe
 		r.scope = &defaultValue
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -5210,6 +5216,8 @@ func (a *StacksAPIService) UpdateStackServiceRevisionsExecute(r ApiUpdateStackSe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.updateStackServiceRevisionsInput
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

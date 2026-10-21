@@ -35,6 +35,7 @@ type Cluster struct {
 	InfraVersion string `json:"infraVersion"`
 	MinNodeCount NullableInt32 `json:"minNodeCount,omitempty"`
 	MaxNodeCount NullableInt32 `json:"maxNodeCount,omitempty"`
+	GpuNodePool NullableClusterNodePool `json:"gpuNodePool,omitempty"`
 	LastNodesReady NullableInt32 `json:"lastNodesReady,omitempty"`
 	LastNodesTotal NullableInt32 `json:"lastNodesTotal,omitempty"`
 	Region NullableString `json:"region,omitempty"`
@@ -468,6 +469,48 @@ func (o *Cluster) SetMaxNodeCountNil() {
 // UnsetMaxNodeCount ensures that no value is present for MaxNodeCount, not even an explicit nil
 func (o *Cluster) UnsetMaxNodeCount() {
 	o.MaxNodeCount.Unset()
+}
+
+// GetGpuNodePool returns the GpuNodePool field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetGpuNodePool() ClusterNodePool {
+	if o == nil || IsNil(o.GpuNodePool.Get()) {
+		var ret ClusterNodePool
+		return ret
+	}
+	return *o.GpuNodePool.Get()
+}
+
+// GetGpuNodePoolOk returns a tuple with the GpuNodePool field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetGpuNodePoolOk() (*ClusterNodePool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GpuNodePool.Get(), o.GpuNodePool.IsSet()
+}
+
+// HasGpuNodePool returns a boolean if a field has been set.
+func (o *Cluster) HasGpuNodePool() bool {
+	if o != nil && o.GpuNodePool.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuNodePool gets a reference to the given NullableClusterNodePool and assigns it to the GpuNodePool field.
+func (o *Cluster) SetGpuNodePool(v ClusterNodePool) {
+	o.GpuNodePool.Set(&v)
+}
+// SetGpuNodePoolNil sets the value for GpuNodePool to be an explicit nil
+func (o *Cluster) SetGpuNodePoolNil() {
+	o.GpuNodePool.Set(nil)
+}
+
+// UnsetGpuNodePool ensures that no value is present for GpuNodePool, not even an explicit nil
+func (o *Cluster) UnsetGpuNodePool() {
+	o.GpuNodePool.Unset()
 }
 
 // GetLastNodesReady returns the LastNodesReady field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1202,6 +1245,9 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	}
 	if o.MaxNodeCount.IsSet() {
 		toSerialize["maxNodeCount"] = o.MaxNodeCount.Get()
+	}
+	if o.GpuNodePool.IsSet() {
+		toSerialize["gpuNodePool"] = o.GpuNodePool.Get()
 	}
 	if o.LastNodesReady.IsSet() {
 		toSerialize["lastNodesReady"] = o.LastNodesReady.Get()

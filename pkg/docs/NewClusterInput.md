@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **MinNodeCount** | Pointer to **NullableInt32** |  | [optional] 
 **MaxNodeCount** | Pointer to **NullableInt32** |  | [optional] 
 **NodeDiskSize** | Pointer to **NullableInt32** |  | [optional] 
+**GpuNodePool** | Pointer to [**NullableClusterNodePoolInput**](ClusterNodePoolInput.md) |  | [optional] 
 **Zone** | Pointer to **NullableString** |  | [optional] 
 **Region** | Pointer to **NullableString** |  | [optional] 
 **BillingOption** | Pointer to **NullableString** |  | [optional] 
@@ -428,6 +429,41 @@ HasNodeDiskSize returns a boolean if a field has been set.
 `func (o *NewClusterInput) UnsetNodeDiskSize()`
 
 UnsetNodeDiskSize ensures that no value is present for NodeDiskSize, not even an explicit nil
+### GetGpuNodePool
+
+`func (o *NewClusterInput) GetGpuNodePool() ClusterNodePoolInput`
+
+GetGpuNodePool returns the GpuNodePool field if non-nil, zero value otherwise.
+
+### GetGpuNodePoolOk
+
+`func (o *NewClusterInput) GetGpuNodePoolOk() (*ClusterNodePoolInput, bool)`
+
+GetGpuNodePoolOk returns a tuple with the GpuNodePool field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuNodePool
+
+`func (o *NewClusterInput) SetGpuNodePool(v ClusterNodePoolInput)`
+
+SetGpuNodePool sets GpuNodePool field to given value.
+
+### HasGpuNodePool
+
+`func (o *NewClusterInput) HasGpuNodePool() bool`
+
+HasGpuNodePool returns a boolean if a field has been set.
+
+### SetGpuNodePoolNil
+
+`func (o *NewClusterInput) SetGpuNodePoolNil(b bool)`
+
+ SetGpuNodePoolNil sets the value for GpuNodePool to be an explicit nil
+
+### UnsetGpuNodePool
+`func (o *NewClusterInput) UnsetGpuNodePool()`
+
+UnsetGpuNodePool ensures that no value is present for GpuNodePool, not even an explicit nil
 ### GetZone
 
 `func (o *NewClusterInput) GetZone() string`

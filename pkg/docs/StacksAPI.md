@@ -2571,7 +2571,7 @@ Name | Type | Description  | Notes
 
 ## UpdateStackServiceRevisions
 
-> OperationResult UpdateStackServiceRevisions(ctx, id).Scope(scope).Execute()
+> OperationResult UpdateStackServiceRevisions(ctx, id).Scope(scope).UpdateStackServiceRevisionsInput(updateStackServiceRevisionsInput).Execute()
 
 Update stack service revisions
 
@@ -2592,10 +2592,11 @@ import (
 func main() {
 	id := int32(56) // int32 | 
 	scope := "scope_example" // string | Limits the update to all services or stateless services. Defaults to all. (optional) (default to "all")
+	updateStackServiceRevisionsInput := *openapiclient.NewUpdateStackServiceRevisionsInput() // UpdateStackServiceRevisionsInput |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.UpdateStackServiceRevisions(context.Background(), id).Scope(scope).Execute()
+	resp, r, err := apiClient.StacksAPI.UpdateStackServiceRevisions(context.Background(), id).Scope(scope).UpdateStackServiceRevisionsInput(updateStackServiceRevisionsInput).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackServiceRevisions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2622,6 +2623,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **scope** | **string** | Limits the update to all services or stateless services. Defaults to all. | [default to &quot;all&quot;]
+ **updateStackServiceRevisionsInput** | [**UpdateStackServiceRevisionsInput**](UpdateStackServiceRevisionsInput.md) |  | 
 
 ### Return type
 
@@ -2633,7 +2635,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

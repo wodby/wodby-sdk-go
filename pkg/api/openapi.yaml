@@ -76,6 +76,10 @@ tags:
   name: tasks
 - description: Task step logs and log URLs.
   name: task-steps
+- description: "The API key user's chats with Wodby Agent in the organization. The\
+    \ agent acts with that user's access, asks before every change, and is billed\
+    \ to the organization's AI credits."
+  name: agent-chats
 - description: Organization-level environment definitions.
   name: envs
 paths:
@@ -9723,6 +9727,50 @@ paths:
       summary: Scale cluster nodes
       tags:
       - clusters
+  /clusters/{id}/actions/gpu-node-pool:
+    post:
+      description: "Adds, resizes, replaces or removes the cluster's optional GPU\
+        \ node pool. Pods that request GPUs are scheduled onto this pool. Set gpuNodePool\
+        \ to null to remove the pool; removal is refused while pods on the cluster\
+        \ request GPUs. Changing the machine type creates the new pool before the\
+        \ old one is deleted."
+      operationId: updateClusterGPUNodePool
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClusterGPUNodePoolInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: GPU node pool task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update the GPU node pool
+      tags:
+      - clusters
   /clusters/{id}/actions/recycle-nodes:
     post:
       description: Replaces the cluster nodes one at a time so they come back with
@@ -13538,6 +13586,415 @@ paths:
       summary: Get task step log URL
       tags:
       - task-steps
+  /agent-chats:
+    get:
+      description: "Returns the API key user's chats with Wodby Agent in the organization,\
+        \ the most recently active first."
+      operationId: listAgentChats
+      parameters:
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AgentChat'
+                type: array
+          description: Agent chats
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List agent chats
+      tags:
+      - agent-chats
+    post:
+      description: "Starts a chat with Wodby Agent with its first message. The agent's\
+        \ run continues after the response: read the chat until its status is idle,\
+        \ or waiting for an approval or an answer. Each run uses the organization's\
+        \ AI credits."
+      operationId: startAgentChat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartAgentChatRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChat'
+          description: Started agent chat
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Start agent chat
+      tags:
+      - agent-chats
+  /agent-chats/{id}:
+    delete:
+      description: Deletes a chat and its messages. It does not undo what the agent
+        did.
+      operationId: deleteAgentChat
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete agent chat
+      tags:
+      - agent-chats
+    get:
+      description: "Returns a chat with its messages. A tool message with approval\
+        \ pending is a change that waits for approval, or, for the tool ask_user,\
+        \ a question that waits for an answer."
+      operationId: getAgentChat
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChatDetail'
+          description: Agent chat with its messages
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get agent chat
+      tags:
+      - agent-chats
+  /agent-chats/{id}/messages:
+    post:
+      description: "Adds a message to an idle chat and starts the agent's run, which\
+        \ continues after the response."
+      operationId: sendAgentChatMessage
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentChatMessageRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChat'
+          description: Agent chat
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Send agent chat message
+      tags:
+      - agent-chats
+  /agent-chats/{id}/approvals:
+    post:
+      description: "Approves or declines a tool call that waits for approval. The\
+        \ run continues once nothing waits any more. Approving a destructive call,\
+        \ marked toolDestructive, lets it delete, overwrite, upgrade or interrupt\
+        \ what its arguments name."
+      operationId: answerAgentChatApproval
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentChatApprovalRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChat'
+          description: Agent chat
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Approve or decline agent change
+      tags:
+      - agent-chats
+  /agent-chats/{id}/answers:
+    post:
+      description: "Answers a question the agent asked with the tool ask_user, with\
+        \ option labels from its arguments or other text. The run continues once nothing\
+        \ waits any more."
+      operationId: answerAgentChatQuestion
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentChatAnswerRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChat'
+          description: Agent chat
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Answer agent question
+      tags:
+      - agent-chats
+  /agent-chats/{id}/approval-mode:
+    put:
+      description: Sets whether the chat asks before a change. A run that is going
+        on follows the new mode from its next step; calls that already wait for approval
+        keep waiting for an answer.
+      operationId: updateAgentChatApprovalMode
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentChatApprovalModeRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChat'
+          description: Agent chat
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Set agent chat approval mode
+      tags:
+      - agent-chats
+  /agent-chats/{id}/stop:
+    post:
+      description: Stops the chat's run and declines the calls that wait for approval.
+        A chat without a run is returned as it is.
+      operationId: stopAgentChat
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChat'
+          description: Agent chat
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Stop agent chat
+      tags:
+      - agent-chats
   /app-routes:
     get:
       description: Returns app routes matching the request filters.
@@ -14716,7 +15173,7 @@ paths:
   /stacks/{id}/actions/update-service-revisions:
     post:
       description: Starts a task that advances unpinned stack services to their eligible
-        revisions.
+        revisions. Send stackServiceIds to advance only those stack services.
       operationId: updateStackServiceRevisions
       parameters:
       - explode: false
@@ -14739,6 +15196,12 @@ paths:
           - stateless_only
           type: string
         style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStackServiceRevisionsInput'
+        required: false
       responses:
         "200":
           content:
@@ -15249,6 +15712,20 @@ components:
       - operation
       - routeIds
       type: object
+    UpdateStackServiceRevisionsInput:
+      example:
+        stackServiceIds:
+        - 0
+        - 0
+      properties:
+        stackServiceIds:
+          description: "Root stack services to advance, by their IDs in the published\
+            \ revision or the draft. Their derivatives advance with them. Omit or\
+            \ leave empty to advance every outdated service."
+          items:
+            type: integer
+          type: array
+      type: object
     IgnoreStackServiceRevisionInput:
       example:
         serviceRevId: 6
@@ -15415,6 +15892,310 @@ components:
       - id
       - title
       - type
+      type: object
+    AgentChat:
+      example:
+        approvalMode: ask
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        contextTokens: 1
+        id: 0
+        title: title
+        error: error
+        orgId: 6
+        contextLimit: 5
+        status: idle
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: integer
+        orgId:
+          type: integer
+        title:
+          type: string
+        status:
+          description: idle takes a message; running is the agent working; waiting
+            is a call that waits for approval or an answer.
+          enum:
+          - idle
+          - running
+          - waiting
+          type: string
+        error:
+          description: "Why the last run stopped without an answer, or empty."
+          type: string
+        approvalMode:
+          $ref: '#/components/schemas/AgentChatApprovalMode'
+        contextTokens:
+          description: Tokens in the chat's context after the newest reply.
+          format: int64
+          type: integer
+        contextLimit:
+          description: Context size at which the agent summarizes the chat to continue
+            it.
+          format: int64
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - approvalMode
+      - contextLimit
+      - contextTokens
+      - createdAt
+      - error
+      - id
+      - orgId
+      - status
+      - title
+      - updatedAt
+      type: object
+    AgentChatMessage:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        role: user
+        isError: true
+        toolDestructive: true
+        approval: pending
+        toolTargets:
+        - argument: argument
+          kind: kind
+          name: name
+        - argument: argument
+          kind: kind
+          name: name
+        toolArguments:
+          key: ""
+        id: 0
+        content: content
+        tool: tool
+      properties:
+        id:
+          type: integer
+        role:
+          description: "A tool message is a call's result, or a call that waits; a\
+            \ summary replaced earlier messages for the model."
+          enum:
+          - user
+          - assistant
+          - tool
+          - summary
+          type: string
+        content:
+          type: string
+        tool:
+          description: "For a tool message, the Wodby tool the call is for. ask_user\
+            \ is a question from the agent."
+          type: string
+        toolArguments:
+          additionalProperties: true
+          description: "For a tool message, the call's arguments. For ask_user, the\
+            \ question, its options (label, description, recommended) and whether\
+            \ several may be chosen. The recommended options come first and their\
+            \ labels end with (Recommended)."
+          type: object
+        approval:
+          description: Set on a call that changes something or asks a question.
+          enum:
+          - pending
+          - approved
+          - rejected
+          nullable: true
+          type: string
+        toolDestructive:
+          description: "True for a call that deletes, overwrites, upgrades or interrupts\
+            \ something, or runs a command in a container."
+          type: boolean
+        toolTargets:
+          description: "For a call that waits for approval, what its ID arguments\
+            \ refer to, as far as the user may see them, each with the argument it\
+            \ names."
+          items:
+            $ref: '#/components/schemas/AgentChatToolTarget'
+          type: array
+        isError:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - approval
+      - content
+      - createdAt
+      - id
+      - isError
+      - role
+      - toolDestructive
+      - toolTargets
+      type: object
+    AgentChatToolTarget:
+      example:
+        argument: argument
+        kind: kind
+        name: name
+      properties:
+        kind:
+          description: "What the argument refers to, such as Environment, Project\
+            \ or CI integration."
+          type: string
+        name:
+          type: string
+        argument:
+          description: "The call's argument this names, such as project_id."
+          type: string
+      required:
+      - argument
+      - kind
+      - name
+      type: object
+    AgentChatDetail:
+      example:
+        chat:
+          approvalMode: ask
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          contextTokens: 1
+          id: 0
+          title: title
+          error: error
+          orgId: 6
+          contextLimit: 5
+          status: idle
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        messages:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          role: user
+          isError: true
+          toolDestructive: true
+          approval: pending
+          toolTargets:
+          - argument: argument
+            kind: kind
+            name: name
+          - argument: argument
+            kind: kind
+            name: name
+          toolArguments:
+            key: ""
+          id: 0
+          content: content
+          tool: tool
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          role: user
+          isError: true
+          toolDestructive: true
+          approval: pending
+          toolTargets:
+          - argument: argument
+            kind: kind
+            name: name
+          - argument: argument
+            kind: kind
+            name: name
+          toolArguments:
+            key: ""
+          id: 0
+          content: content
+          tool: tool
+      properties:
+        chat:
+          $ref: '#/components/schemas/AgentChat'
+        messages:
+          items:
+            $ref: '#/components/schemas/AgentChatMessage'
+          type: array
+      required:
+      - chat
+      - messages
+      type: object
+    AgentChatApprovalMode:
+      description: "Whether the chat's tool calls that change something wait for approval.\
+        \ ask, the default, waits for every change. never_ask runs every change at\
+        \ once, including destructive ones and container commands. A question the\
+        \ agent asks always waits for an answer."
+      enum:
+      - ask
+      - never_ask
+      type: string
+    StartAgentChatRequest:
+      example:
+        approvalMode: ""
+        message: message
+        orgId: 0
+      properties:
+        orgId:
+          description: Optional for API-key requests; defaults to the API key's organization.
+          type: integer
+        message:
+          maxLength: 32000
+          minLength: 1
+          type: string
+        approvalMode:
+          allOf:
+          - $ref: '#/components/schemas/AgentChatApprovalMode'
+          description: "Optional; without it, the chat asks before every change."
+      required:
+      - message
+      type: object
+    AgentChatApprovalModeRequest:
+      example:
+        approvalMode: ask
+      properties:
+        approvalMode:
+          $ref: '#/components/schemas/AgentChatApprovalMode'
+      required:
+      - approvalMode
+      type: object
+    AgentChatMessageRequest:
+      example:
+        message: message
+      properties:
+        message:
+          maxLength: 32000
+          minLength: 1
+          type: string
+      required:
+      - message
+      type: object
+    AgentChatApprovalRequest:
+      example:
+        approve: true
+        messageId: 0
+      properties:
+        messageId:
+          description: The tool message that waits for approval.
+          type: integer
+        approve:
+          type: boolean
+      required:
+      - approve
+      - messageId
+      type: object
+    AgentChatAnswerRequest:
+      example:
+        answers:
+        - answers
+        - answers
+        - answers
+        - answers
+        - answers
+        messageId: 0
+      properties:
+        messageId:
+          description: The ask_user message that waits for an answer.
+          type: integer
+        answers:
+          items:
+            maxLength: 500
+            minLength: 1
+            type: string
+          maxItems: 20
+          minItems: 1
+          type: array
+      required:
+      - answers
+      - messageId
       type: object
     OperationResult:
       example:
@@ -21066,8 +21847,8 @@ components:
           - mountOptions
           - mountOptions
         availableToAllProjects: true
-        lastNodesReady: 5
-        lastNodesTotal: 5
+        lastNodesReady: 7
+        lastNodesTotal: 9
         envScope: all
         maxNodeCount: 1
         k3s: true
@@ -21076,14 +21857,14 @@ components:
         - prod
         - prod
         demo: true
-        orgId: 3
+        orgId: 7
         allowedEnvIds:
-        - 9
-        - 9
+        - 4
+        - 4
         createdAt: 2000-01-23T04:56:07.000+00:00
         hostname: hostname
         minNodeCount: 6
-        ownerProjectId: 2
+        ownerProjectId: 1
         storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
         zone: zone
         singleNode: true
@@ -21133,8 +21914,8 @@ components:
           redirectRoutes: true
           envoyGateway: true
         serverless: true
-        integrationId: 2
-        envId: 7
+        integrationId: 3
+        envId: 2
         version: version
         ips:
         - ips
@@ -21145,6 +21926,11 @@ components:
         region: region
         ownershipScope: org
         status: status
+        gpuNodePool:
+          minNodeCount: 5
+          nodeDiskSize: 2
+          maxNodeCount: 5
+          machineType: machineType
       properties:
         id:
           type: integer
@@ -21175,6 +21961,8 @@ components:
         maxNodeCount:
           nullable: true
           type: integer
+        gpuNodePool:
+          $ref: '#/components/schemas/ClusterNodePool'
         lastNodesReady:
           nullable: true
           type: integer
@@ -30188,11 +30976,11 @@ components:
         singleNode: true
         environmentPolicy:
           allowedEnvIds:
-          - 9
-          - 9
+          - 4
+          - 4
           envType: prod
           scope: all
-          envId: 7
+          envId: 2
           allowedEnvTypes:
           - prod
           - prod
@@ -30200,6 +30988,11 @@ components:
         autoInfrastructureUpgrade: true
         projectId: 6
         machineType: machineType
+        gpuNodePool:
+          minNodeCount: 0
+          nodeDiskSize: 20
+          maxNodeCount: 1
+          machineType: machineType
       properties:
         orgId:
           description: Optional for API-key requests; defaults to the API key's organization.
@@ -30239,6 +31032,8 @@ components:
         nodeDiskSize:
           nullable: true
           type: integer
+        gpuNodePool:
+          $ref: '#/components/schemas/ClusterNodePoolInput'
         zone:
           nullable: true
           type: string
@@ -30273,6 +31068,74 @@ components:
       required:
       - version
       type: object
+    ClusterNodePool:
+      description: "An optional node pool of the cluster, such as the GPU node pool."
+      example:
+        minNodeCount: 5
+        nodeDiskSize: 2
+        maxNodeCount: 5
+        machineType: machineType
+      nullable: true
+      properties:
+        machineType:
+          type: string
+        minNodeCount:
+          type: integer
+        maxNodeCount:
+          type: integer
+        nodeDiskSize:
+          nullable: true
+          type: integer
+      required:
+      - machineType
+      - maxNodeCount
+      - minNodeCount
+      type: object
+    ClusterNodePoolInput:
+      description: "An optional GPU node pool. Only machine types that report GPUs\
+        \ are accepted, and the provider must support GPU node pools."
+      example:
+        minNodeCount: 0
+        nodeDiskSize: 20
+        maxNodeCount: 1
+        machineType: machineType
+      nullable: true
+      properties:
+        machineType:
+          minLength: 1
+          type: string
+        minNodeCount:
+          description: Zero lets the pool scale down to no nodes where the provider
+            supports it.
+          minimum: 0
+          type: integer
+        maxNodeCount:
+          minimum: 1
+          type: integer
+        nodeDiskSize:
+          description: Node disk size in GB. Required when the provider's node disk
+            size is configurable.
+          minimum: 20
+          nullable: true
+          type: integer
+      required:
+      - machineType
+      - maxNodeCount
+      - minNodeCount
+      type: object
+    UpdateClusterGPUNodePoolInput:
+      example:
+        gpuNodePool:
+          minNodeCount: 0
+          nodeDiskSize: 20
+          maxNodeCount: 1
+          machineType: machineType
+      properties:
+        gpuNodePool:
+          $ref: '#/components/schemas/ClusterNodePoolInput'
+      required:
+      - gpuNodePool
+      type: object
     ScaleClusterInput:
       example:
         minNodeCount: 0
@@ -30305,11 +31168,11 @@ components:
         name: name
         environmentPolicy:
           allowedEnvIds:
-          - 9
-          - 9
+          - 4
+          - 4
           envType: prod
           scope: all
-          envId: 7
+          envId: 2
           allowedEnvTypes:
           - prod
           - prod
@@ -30354,11 +31217,11 @@ components:
         maxNodeCount: 5
         environmentPolicy:
           allowedEnvIds:
-          - 9
-          - 9
+          - 4
+          - 4
           envType: prod
           scope: all
-          envId: 7
+          envId: 2
           allowedEnvTypes:
           - prod
           - prod
@@ -30429,8 +31292,8 @@ components:
             - mountOptions
             - mountOptions
           availableToAllProjects: true
-          lastNodesReady: 5
-          lastNodesTotal: 5
+          lastNodesReady: 7
+          lastNodesTotal: 9
           envScope: all
           maxNodeCount: 1
           k3s: true
@@ -30439,14 +31302,14 @@ components:
           - prod
           - prod
           demo: true
-          orgId: 3
+          orgId: 7
           allowedEnvIds:
-          - 9
-          - 9
+          - 4
+          - 4
           createdAt: 2000-01-23T04:56:07.000+00:00
           hostname: hostname
           minNodeCount: 6
-          ownerProjectId: 2
+          ownerProjectId: 1
           storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
           zone: zone
           singleNode: true
@@ -30496,8 +31359,8 @@ components:
             redirectRoutes: true
             envoyGateway: true
           serverless: true
-          integrationId: 2
-          envId: 7
+          integrationId: 3
+          envId: 2
           version: version
           ips:
           - ips
@@ -30508,6 +31371,11 @@ components:
           region: region
           ownershipScope: org
           status: status
+          gpuNodePool:
+            minNodeCount: 5
+            nodeDiskSize: 2
+            maxNodeCount: 5
+            machineType: machineType
         taskId: 0
       properties:
         cluster:
@@ -30563,11 +31431,11 @@ components:
         but cannot be mixed with their type equivalents.
       example:
         allowedEnvIds:
-        - 9
-        - 9
+        - 4
+        - 4
         envType: prod
         scope: all
-        envId: 7
+        envId: 2
         allowedEnvTypes:
         - prod
         - prod

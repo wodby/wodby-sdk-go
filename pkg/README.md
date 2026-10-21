@@ -80,6 +80,15 @@ All URIs are relative to */v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AgentChatsAPI* | [**AnswerAgentChatApproval**](docs/AgentChatsAPI.md#answeragentchatapproval) | **Post** /agent-chats/{id}/approvals | Approve or decline agent change
+*AgentChatsAPI* | [**AnswerAgentChatQuestion**](docs/AgentChatsAPI.md#answeragentchatquestion) | **Post** /agent-chats/{id}/answers | Answer agent question
+*AgentChatsAPI* | [**DeleteAgentChat**](docs/AgentChatsAPI.md#deleteagentchat) | **Delete** /agent-chats/{id} | Delete agent chat
+*AgentChatsAPI* | [**GetAgentChat**](docs/AgentChatsAPI.md#getagentchat) | **Get** /agent-chats/{id} | Get agent chat
+*AgentChatsAPI* | [**ListAgentChats**](docs/AgentChatsAPI.md#listagentchats) | **Get** /agent-chats | List agent chats
+*AgentChatsAPI* | [**SendAgentChatMessage**](docs/AgentChatsAPI.md#sendagentchatmessage) | **Post** /agent-chats/{id}/messages | Send agent chat message
+*AgentChatsAPI* | [**StartAgentChat**](docs/AgentChatsAPI.md#startagentchat) | **Post** /agent-chats | Start agent chat
+*AgentChatsAPI* | [**StopAgentChat**](docs/AgentChatsAPI.md#stopagentchat) | **Post** /agent-chats/{id}/stop | Stop agent chat
+*AgentChatsAPI* | [**UpdateAgentChatApprovalMode**](docs/AgentChatsAPI.md#updateagentchatapprovalmode) | **Put** /agent-chats/{id}/approval-mode | Set agent chat approval mode
 *AppAuthsAPI* | [**CreateAppAuth**](docs/AppAuthsAPI.md#createappauth) | **Post** /app-auths | Create app auth
 *AppAuthsAPI* | [**DeleteAppAuth**](docs/AppAuthsAPI.md#deleteappauth) | **Delete** /app-auths/{id} | Delete app auth
 *AppAuthsAPI* | [**GetAppAuth**](docs/AppAuthsAPI.md#getappauth) | **Get** /app-auths/{id} | Get HTTP basic authentication
@@ -250,6 +259,7 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**ScaleCluster**](docs/ClustersAPI.md#scalecluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 *ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
 *ClustersAPI* | [**UpdateClusterEnvironmentPolicy**](docs/ClustersAPI.md#updateclusterenvironmentpolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
+*ClustersAPI* | [**UpdateClusterGPUNodePool**](docs/ClustersAPI.md#updateclustergpunodepool) | **Post** /clusters/{id}/actions/gpu-node-pool | Update the GPU node pool
 *ClustersAPI* | [**UpdateClusterKubernetesVersion**](docs/ClustersAPI.md#updateclusterkubernetesversion) | **Post** /clusters/{id}/actions/update-kubernetes-version | Update cluster Kubernetes version
 *ClustersAPI* | [**UpdateClusterSettings**](docs/ClustersAPI.md#updateclustersettings) | **Put** /clusters/settings/{id} | Update cluster settings
 *ClustersAPI* | [**UpdateClusterSharing**](docs/ClustersAPI.md#updateclustersharing) | **Put** /clusters/sharing/{id} | Update cluster sharing
@@ -467,6 +477,15 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [AddAppServiceVolumeInput](docs/AddAppServiceVolumeInput.md)
+ - [AgentChat](docs/AgentChat.md)
+ - [AgentChatAnswerRequest](docs/AgentChatAnswerRequest.md)
+ - [AgentChatApprovalMode](docs/AgentChatApprovalMode.md)
+ - [AgentChatApprovalModeRequest](docs/AgentChatApprovalModeRequest.md)
+ - [AgentChatApprovalRequest](docs/AgentChatApprovalRequest.md)
+ - [AgentChatDetail](docs/AgentChatDetail.md)
+ - [AgentChatMessage](docs/AgentChatMessage.md)
+ - [AgentChatMessageRequest](docs/AgentChatMessageRequest.md)
+ - [AgentChatToolTarget](docs/AgentChatToolTarget.md)
  - [App](docs/App.md)
  - [AppAccess](docs/AppAccess.md)
  - [AppAccessCleanup](docs/AppAccessCleanup.md)
@@ -586,6 +605,8 @@ Class | Method | HTTP request | Description
  - [ClusterCreationResult](docs/ClusterCreationResult.md)
  - [ClusterEnvironmentPolicyInput](docs/ClusterEnvironmentPolicyInput.md)
  - [ClusterInfraAppUpgradeChangelog](docs/ClusterInfraAppUpgradeChangelog.md)
+ - [ClusterNodePool](docs/ClusterNodePool.md)
+ - [ClusterNodePoolInput](docs/ClusterNodePoolInput.md)
  - [ClusterSettings](docs/ClusterSettings.md)
  - [ClusterSettingsInput](docs/ClusterSettingsInput.md)
  - [ConfigOverrideInput](docs/ConfigOverrideInput.md)
@@ -797,6 +818,7 @@ Class | Method | HTTP request | Description
  - [StackSyncOptionsInput](docs/StackSyncOptionsInput.md)
  - [StackToken](docs/StackToken.md)
  - [StacksResponse](docs/StacksResponse.md)
+ - [StartAgentChatRequest](docs/StartAgentChatRequest.md)
  - [StorageClass](docs/StorageClass.md)
  - [Task](docs/Task.md)
  - [TaskInitiator](docs/TaskInitiator.md)
@@ -819,6 +841,7 @@ Class | Method | HTTP request | Description
  - [UpdateAppServiceDatabaseInput](docs/UpdateAppServiceDatabaseInput.md)
  - [UpdateAppServiceEnvVarInput](docs/UpdateAppServiceEnvVarInput.md)
  - [UpdateBackupPresetInput](docs/UpdateBackupPresetInput.md)
+ - [UpdateClusterGPUNodePoolInput](docs/UpdateClusterGPUNodePoolInput.md)
  - [UpdateCurrentUserRequest](docs/UpdateCurrentUserRequest.md)
  - [UpdateDatabaseUserDBsInput](docs/UpdateDatabaseUserDBsInput.md)
  - [UpdateIntegrationInput](docs/UpdateIntegrationInput.md)
@@ -834,6 +857,7 @@ Class | Method | HTTP request | Description
  - [UpdateStackRequest](docs/UpdateStackRequest.md)
  - [UpdateStackServiceCronScheduleInput](docs/UpdateStackServiceCronScheduleInput.md)
  - [UpdateStackServiceEnvVarInput](docs/UpdateStackServiceEnvVarInput.md)
+ - [UpdateStackServiceRevisionsInput](docs/UpdateStackServiceRevisionsInput.md)
  - [UpdateStackServiceTokenInput](docs/UpdateStackServiceTokenInput.md)
  - [UpdateStackTokenInput](docs/UpdateStackTokenInput.md)
  - [UpdateTitleRequest](docs/UpdateTitleRequest.md)
