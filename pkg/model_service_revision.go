@@ -32,6 +32,7 @@ type ServiceRevision struct {
 	ServiceId int32 `json:"serviceId"`
 	Manifest *ServiceManifest `json:"manifest,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
+	ExcludedBaseVersion *ServiceExcludedBaseVersion `json:"excludedBaseVersion,omitempty"`
 }
 
 type _ServiceRevision ServiceRevision
@@ -310,6 +311,38 @@ func (o *ServiceRevision) SetCreatedAt(v time.Time) {
 	o.CreatedAt = v
 }
 
+// GetExcludedBaseVersion returns the ExcludedBaseVersion field value if set, zero value otherwise.
+func (o *ServiceRevision) GetExcludedBaseVersion() ServiceExcludedBaseVersion {
+	if o == nil || IsNil(o.ExcludedBaseVersion) {
+		var ret ServiceExcludedBaseVersion
+		return ret
+	}
+	return *o.ExcludedBaseVersion
+}
+
+// GetExcludedBaseVersionOk returns a tuple with the ExcludedBaseVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceRevision) GetExcludedBaseVersionOk() (*ServiceExcludedBaseVersion, bool) {
+	if o == nil || IsNil(o.ExcludedBaseVersion) {
+		return nil, false
+	}
+	return o.ExcludedBaseVersion, true
+}
+
+// HasExcludedBaseVersion returns a boolean if a field has been set.
+func (o *ServiceRevision) HasExcludedBaseVersion() bool {
+	if o != nil && !IsNil(o.ExcludedBaseVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetExcludedBaseVersion gets a reference to the given ServiceExcludedBaseVersion and assigns it to the ExcludedBaseVersion field.
+func (o *ServiceRevision) SetExcludedBaseVersion(v ServiceExcludedBaseVersion) {
+	o.ExcludedBaseVersion = &v
+}
+
 func (o ServiceRevision) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -332,6 +365,9 @@ func (o ServiceRevision) ToMap() (map[string]interface{}, error) {
 		toSerialize["manifest"] = o.Manifest
 	}
 	toSerialize["createdAt"] = o.CreatedAt
+	if !IsNil(o.ExcludedBaseVersion) {
+		toSerialize["excludedBaseVersion"] = o.ExcludedBaseVersion
+	}
 	return toSerialize, nil
 }
 

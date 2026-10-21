@@ -734,7 +734,7 @@ func (r ApiGetIntegrationKubeSettingsRequest) Execute() (map[string]interface{},
 /*
 GetIntegrationKubeSettings Get Kubernetes settings
 
-Returns the Kubernetes settings identified by the request path.
+Returns what clusters of the integration's Kubernetes provider support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode, serverless, billingOptions, gpuNodePool (whether a cluster can have an optional GPU node pool) and gpuNodePoolScalesToZero (whether that pool's minimum may be 0).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

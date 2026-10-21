@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **ServiceId** | **int32** |  | 
 **Manifest** | Pointer to [**ServiceManifest**](ServiceManifest.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
+**ExcludedBaseVersion** | Pointer to [**ServiceExcludedBaseVersion**](ServiceExcludedBaseVersion.md) |  | [optional] 
 
 ## Methods
 
@@ -238,6 +239,31 @@ and a boolean to check if the value has been set.
 
 SetCreatedAt sets CreatedAt field to given value.
 
+
+### GetExcludedBaseVersion
+
+`func (o *ServiceRevision) GetExcludedBaseVersion() ServiceExcludedBaseVersion`
+
+GetExcludedBaseVersion returns the ExcludedBaseVersion field if non-nil, zero value otherwise.
+
+### GetExcludedBaseVersionOk
+
+`func (o *ServiceRevision) GetExcludedBaseVersionOk() (*ServiceExcludedBaseVersion, bool)`
+
+GetExcludedBaseVersionOk returns a tuple with the ExcludedBaseVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExcludedBaseVersion
+
+`func (o *ServiceRevision) SetExcludedBaseVersion(v ServiceExcludedBaseVersion)`
+
+SetExcludedBaseVersion sets ExcludedBaseVersion field to given value.
+
+### HasExcludedBaseVersion
+
+`func (o *ServiceRevision) HasExcludedBaseVersion() bool`
+
+HasExcludedBaseVersion returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -346,6 +346,7 @@ docs/ServiceDeploymentConfigurationInput.md
 docs/ServiceDeploymentInput.md
 docs/ServiceDeploymentPolicy.md
 docs/ServiceDeploymentStrategy.md
+docs/ServiceExcludedBaseVersion.md
 docs/ServiceIntegrationRequirement.md
 docs/ServiceManifest.md
 docs/ServiceManifestEnvVar.md
@@ -754,6 +755,7 @@ model_service_deployment_configuration_input.go
 model_service_deployment_input.go
 model_service_deployment_policy.go
 model_service_deployment_strategy.go
+model_service_excluded_base_version.go
 model_service_integration_requirement.go
 model_service_manifest.go
 model_service_manifest_env_var.go

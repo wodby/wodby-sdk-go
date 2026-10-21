@@ -7520,7 +7520,11 @@ paths:
       - integrations
   /integrations/{id}/options/kube-settings:
     get:
-      description: Returns the Kubernetes settings identified by the request path.
+      description: "Returns what clusters of the integration's Kubernetes provider\
+        \ support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode,\
+        \ serverless, billingOptions, gpuNodePool (whether a cluster can have an optional\
+        \ GPU node pool) and gpuNodePoolScalesToZero (whether that pool's minimum\
+        \ may be 0)."
       operationId: getIntegrationKubeSettings
       parameters:
       - explode: false
@@ -24901,6 +24905,13 @@ components:
         title: title
         type: type
         serviceId: 1
+        excludedBaseVersion:
+          baseServiceRevisionId: 5
+          baseServiceVersion: baseServiceVersion
+          baseServiceRevNumber: 5
+          fromVersionConstraint: fromVersionConstraint
+          currentVersion: currentVersion
+          baseServiceName: baseServiceName
         version: version
       properties:
         id:
@@ -24924,6 +24935,8 @@ components:
         createdAt:
           format: date-time
           type: string
+        excludedBaseVersion:
+          $ref: '#/components/schemas/ServiceExcludedBaseVersion'
       required:
       - createdAt
       - external
@@ -24934,6 +24947,44 @@ components:
       - title
       - type
       - version
+      type: object
+    ServiceExcludedBaseVersion:
+      description: "Set for an inherited service revision whose base service has a\
+        \ newer version than its fromVersionConstraint, or its exact fromVersion,\
+        \ allows. Raising the constraint in the inherited service's manifest lets\
+        \ it use that version."
+      example:
+        baseServiceRevisionId: 5
+        baseServiceVersion: baseServiceVersion
+        baseServiceRevNumber: 5
+        fromVersionConstraint: fromVersionConstraint
+        currentVersion: currentVersion
+        baseServiceName: baseServiceName
+      properties:
+        baseServiceRevisionId:
+          type: integer
+        baseServiceName:
+          type: string
+        baseServiceVersion:
+          description: "The base service's newest version, which the inherited revision\
+            \ does not allow."
+          type: string
+        baseServiceRevNumber:
+          type: integer
+        currentVersion:
+          description: The base service version this revision was built from.
+          type: string
+        fromVersionConstraint:
+          description: The inherited manifest's fromVersionConstraint. Absent when
+            the manifest pins an exact fromVersion.
+          nullable: true
+          type: string
+      required:
+      - baseServiceName
+      - baseServiceRevNumber
+      - baseServiceRevisionId
+      - baseServiceVersion
+      - currentVersion
       type: object
     ServiceManifest:
       additionalProperties: true
