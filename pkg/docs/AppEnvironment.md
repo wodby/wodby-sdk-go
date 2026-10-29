@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **ConfigurationReady** | **bool** |  | 
 **ConfigurationIssues** | [**[]AppServiceConfigurationIssue**](AppServiceConfigurationIssue.md) |  | 
 **Settings** | Pointer to [**AppEnvironmentSettings**](AppEnvironmentSettings.md) |  | [optional] 
+**Preview** | Pointer to [**NullableAppEnvironmentPreview**](AppEnvironmentPreview.md) |  | [optional] 
 **Health** | [**AppEnvironmentHealth**](AppEnvironmentHealth.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -649,6 +650,41 @@ SetSettings sets Settings field to given value.
 
 HasSettings returns a boolean if a field has been set.
 
+### GetPreview
+
+`func (o *AppEnvironment) GetPreview() AppEnvironmentPreview`
+
+GetPreview returns the Preview field if non-nil, zero value otherwise.
+
+### GetPreviewOk
+
+`func (o *AppEnvironment) GetPreviewOk() (*AppEnvironmentPreview, bool)`
+
+GetPreviewOk returns a tuple with the Preview field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreview
+
+`func (o *AppEnvironment) SetPreview(v AppEnvironmentPreview)`
+
+SetPreview sets Preview field to given value.
+
+### HasPreview
+
+`func (o *AppEnvironment) HasPreview() bool`
+
+HasPreview returns a boolean if a field has been set.
+
+### SetPreviewNil
+
+`func (o *AppEnvironment) SetPreviewNil(b bool)`
+
+ SetPreviewNil sets the value for Preview to be an explicit nil
+
+### UnsetPreview
+`func (o *AppEnvironment) UnsetPreview()`
+
+UnsetPreview ensures that no value is present for Preview, not even an explicit nil
 ### GetHealth
 
 `func (o *AppEnvironment) GetHealth() AppEnvironmentHealth`

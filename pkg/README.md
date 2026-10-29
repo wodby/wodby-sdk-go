@@ -222,12 +222,15 @@ Class | Method | HTTP request | Description
 *AppServicesAPI* | [**UpdateAppServiceHelmValue**](docs/AppServicesAPI.md#updateappservicehelmvalue) | **Put** /app-service-helm-values/{id} | Update app service Helm value
 *AppServicesAPI* | [**UpdateAppServiceToken**](docs/AppServicesAPI.md#updateappservicetoken) | **Put** /app-service-tokens/{id} | Update app service token
 *AppsAPI* | [**CreateApp**](docs/AppsAPI.md#createapp) | **Post** /apps | Create app
+*AppsAPI* | [**CreateAppPreviewEnvironment**](docs/AppsAPI.md#createapppreviewenvironment) | **Post** /apps/preview-environments/{id} | Create a pull request preview environment
 *AppsAPI* | [**DeleteApp**](docs/AppsAPI.md#deleteapp) | **Delete** /apps/{id} | Delete app
 *AppsAPI* | [**GetApp**](docs/AppsAPI.md#getapp) | **Get** /apps/{id} | Get app
 *AppsAPI* | [**GetAppByName**](docs/AppsAPI.md#getappbyname) | **Get** /apps/by-name/{name} | Get app by name
 *AppsAPI* | [**GetAppSharing**](docs/AppsAPI.md#getappsharing) | **Get** /apps/sharing/{id} | Get app sharing
+*AppsAPI* | [**ListAppPreviewPullRequests**](docs/AppsAPI.md#listapppreviewpullrequests) | **Get** /apps/preview-pull-requests/{id} | List pull requests for preview environments
 *AppsAPI* | [**ListApps**](docs/AppsAPI.md#listapps) | **Get** /apps | List apps
 *AppsAPI* | [**UpdateApp**](docs/AppsAPI.md#updateapp) | **Put** /apps/{id} | Update app
+*AppsAPI* | [**UpdateAppSettings**](docs/AppsAPI.md#updateappsettings) | **Put** /apps/settings/{id} | Update app settings
 *AppsAPI* | [**UpdateAppSharing**](docs/AppsAPI.md#updateappsharing) | **Put** /apps/sharing/{id} | Update app sharing
 *BackupsAPI* | [**CreateBackup**](docs/BackupsAPI.md#createbackup) | **Post** /backups | Create backup
 *BackupsAPI* | [**CreateBackupPreset**](docs/BackupsAPI.md#createbackuppreset) | **Post** /backup-presets | Create backup preset
@@ -524,6 +527,7 @@ Class | Method | HTTP request | Description
  - [AppEnvironmentMigrationInput](docs/AppEnvironmentMigrationInput.md)
  - [AppEnvironmentMigrationOperationResult](docs/AppEnvironmentMigrationOperationResult.md)
  - [AppEnvironmentMigrationVolumeInput](docs/AppEnvironmentMigrationVolumeInput.md)
+ - [AppEnvironmentPreview](docs/AppEnvironmentPreview.md)
  - [AppEnvironmentSettings](docs/AppEnvironmentSettings.md)
  - [AppEnvironmentSettingsInput](docs/AppEnvironmentSettingsInput.md)
  - [AppEnvironmentStackReconciliationInput](docs/AppEnvironmentStackReconciliationInput.md)
@@ -536,6 +540,11 @@ Class | Method | HTTP request | Description
  - [AppPortSettingInput](docs/AppPortSettingInput.md)
  - [AppPortSettingName](docs/AppPortSettingName.md)
  - [AppPortSettingsInput](docs/AppPortSettingsInput.md)
+ - [AppPreviewEnvironmentsSettings](docs/AppPreviewEnvironmentsSettings.md)
+ - [AppPreviewEnvironmentsSettingsInput](docs/AppPreviewEnvironmentsSettingsInput.md)
+ - [AppPreviewImport](docs/AppPreviewImport.md)
+ - [AppPreviewPullRequest](docs/AppPreviewPullRequest.md)
+ - [AppPreviewPullRequestList](docs/AppPreviewPullRequestList.md)
  - [AppRoute](docs/AppRoute.md)
  - [AppRouteSetting](docs/AppRouteSetting.md)
  - [AppRouteSettingInput](docs/AppRouteSettingInput.md)
@@ -578,6 +587,8 @@ Class | Method | HTTP request | Description
  - [AppServiceToken](docs/AppServiceToken.md)
  - [AppServiceVolume](docs/AppServiceVolume.md)
  - [AppServiceVolumeStorageClassState](docs/AppServiceVolumeStorageClassState.md)
+ - [AppSettings](docs/AppSettings.md)
+ - [AppSettingsInput](docs/AppSettingsInput.md)
  - [AutomationTimeWindow](docs/AutomationTimeWindow.md)
  - [AutomationTimeWindowInput](docs/AutomationTimeWindowInput.md)
  - [Backup](docs/Backup.md)
@@ -684,6 +695,7 @@ Class | Method | HTTP request | Description
  - [NewAppEnvironmentAccessInput](docs/NewAppEnvironmentAccessInput.md)
  - [NewAppEnvironmentInput](docs/NewAppEnvironmentInput.md)
  - [NewAppInput](docs/NewAppInput.md)
+ - [NewAppPreviewEnvironmentRequest](docs/NewAppPreviewEnvironmentRequest.md)
  - [NewAppRouteInput](docs/NewAppRouteInput.md)
  - [NewAppServiceCronScheduleInput](docs/NewAppServiceCronScheduleInput.md)
  - [NewAppServiceEnvVarInput](docs/NewAppServiceEnvVarInput.md)

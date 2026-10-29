@@ -88,6 +88,7 @@ docs/AppEnvironmentMigrationComponent.md
 docs/AppEnvironmentMigrationInput.md
 docs/AppEnvironmentMigrationOperationResult.md
 docs/AppEnvironmentMigrationVolumeInput.md
+docs/AppEnvironmentPreview.md
 docs/AppEnvironmentSettings.md
 docs/AppEnvironmentSettingsInput.md
 docs/AppEnvironmentStackReconciliationInput.md
@@ -102,6 +103,11 @@ docs/AppPortSettingInput.md
 docs/AppPortSettingName.md
 docs/AppPortSettingsInput.md
 docs/AppPortsAPI.md
+docs/AppPreviewEnvironmentsSettings.md
+docs/AppPreviewEnvironmentsSettingsInput.md
+docs/AppPreviewImport.md
+docs/AppPreviewPullRequest.md
+docs/AppPreviewPullRequestList.md
 docs/AppRoute.md
 docs/AppRouteSetting.md
 docs/AppRouteSettingInput.md
@@ -146,6 +152,8 @@ docs/AppServiceToken.md
 docs/AppServiceVolume.md
 docs/AppServiceVolumeStorageClassState.md
 docs/AppServicesAPI.md
+docs/AppSettings.md
+docs/AppSettingsInput.md
 docs/AppsAPI.md
 docs/AutomationTimeWindow.md
 docs/AutomationTimeWindowInput.md
@@ -263,6 +271,7 @@ docs/NewAppEnvironmentAccessEndpointInput.md
 docs/NewAppEnvironmentAccessInput.md
 docs/NewAppEnvironmentInput.md
 docs/NewAppInput.md
+docs/NewAppPreviewEnvironmentRequest.md
 docs/NewAppRouteInput.md
 docs/NewAppServiceCronScheduleInput.md
 docs/NewAppServiceEnvVarInput.md
@@ -518,6 +527,7 @@ model_app_environment_migration_component.go
 model_app_environment_migration_input.go
 model_app_environment_migration_operation_result.go
 model_app_environment_migration_volume_input.go
+model_app_environment_preview.go
 model_app_environment_settings.go
 model_app_environment_settings_input.go
 model_app_environment_stack_reconciliation_input.go
@@ -530,6 +540,11 @@ model_app_port_setting.go
 model_app_port_setting_input.go
 model_app_port_setting_name.go
 model_app_port_settings_input.go
+model_app_preview_environments_settings.go
+model_app_preview_environments_settings_input.go
+model_app_preview_import.go
+model_app_preview_pull_request.go
+model_app_preview_pull_request_list.go
 model_app_route.go
 model_app_route_setting.go
 model_app_route_setting_input.go
@@ -572,6 +587,8 @@ model_app_service_setting_input.go
 model_app_service_token.go
 model_app_service_volume.go
 model_app_service_volume_storage_class_state.go
+model_app_settings.go
+model_app_settings_input.go
 model_automation_time_window.go
 model_automation_time_window_input.go
 model_backup.go
@@ -678,6 +695,7 @@ model_new_app_environment_access_endpoint_input.go
 model_new_app_environment_access_input.go
 model_new_app_environment_input.go
 model_new_app_input.go
+model_new_app_preview_environment_request.go
 model_new_app_route_input.go
 model_new_app_service_cron_schedule_input.go
 model_new_app_service_env_var_input.go

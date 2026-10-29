@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **OrgId** | **int32** |  | 
 **OwnershipScope** | **string** |  | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
+**Settings** | Pointer to [**AppSettings**](AppSettings.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -209,6 +210,31 @@ HasOwnerProjectId returns a boolean if a field has been set.
 `func (o *App) UnsetOwnerProjectId()`
 
 UnsetOwnerProjectId ensures that no value is present for OwnerProjectId, not even an explicit nil
+### GetSettings
+
+`func (o *App) GetSettings() AppSettings`
+
+GetSettings returns the Settings field if non-nil, zero value otherwise.
+
+### GetSettingsOk
+
+`func (o *App) GetSettingsOk() (*AppSettings, bool)`
+
+GetSettingsOk returns a tuple with the Settings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettings
+
+`func (o *App) SetSettings(v AppSettings)`
+
+SetSettings sets Settings field to given value.
+
+### HasSettings
+
+`func (o *App) HasSettings() bool`
+
+HasSettings returns a boolean if a field has been set.
+
 ### GetCreatedAt
 
 `func (o *App) GetCreatedAt() time.Time`

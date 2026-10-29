@@ -30,6 +30,7 @@ type App struct {
 	OrgId int32 `json:"orgId"`
 	OwnershipScope string `json:"ownershipScope"`
 	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
+	Settings *AppSettings `json:"settings,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -272,6 +273,38 @@ func (o *App) UnsetOwnerProjectId() {
 	o.OwnerProjectId.Unset()
 }
 
+// GetSettings returns the Settings field value if set, zero value otherwise.
+func (o *App) GetSettings() AppSettings {
+	if o == nil || IsNil(o.Settings) {
+		var ret AppSettings
+		return ret
+	}
+	return *o.Settings
+}
+
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *App) GetSettingsOk() (*AppSettings, bool) {
+	if o == nil || IsNil(o.Settings) {
+		return nil, false
+	}
+	return o.Settings, true
+}
+
+// HasSettings returns a boolean if a field has been set.
+func (o *App) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given AppSettings and assigns it to the Settings field.
+func (o *App) SetSettings(v AppSettings) {
+	o.Settings = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *App) GetCreatedAt() time.Time {
 	if o == nil {
@@ -339,6 +372,9 @@ func (o App) ToMap() (map[string]interface{}, error) {
 	toSerialize["ownershipScope"] = o.OwnershipScope
 	if o.OwnerProjectId.IsSet() {
 		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
+	}
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt

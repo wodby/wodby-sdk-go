@@ -49,6 +49,7 @@ type AppEnvironment struct {
 	ConfigurationReady bool `json:"configurationReady"`
 	ConfigurationIssues []AppServiceConfigurationIssue `json:"configurationIssues"`
 	Settings *AppEnvironmentSettings `json:"settings,omitempty"`
+	Preview NullableAppEnvironmentPreview `json:"preview,omitempty"`
 	Health AppEnvironmentHealth `json:"health"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -812,6 +813,48 @@ func (o *AppEnvironment) SetSettings(v AppEnvironmentSettings) {
 	o.Settings = &v
 }
 
+// GetPreview returns the Preview field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppEnvironment) GetPreview() AppEnvironmentPreview {
+	if o == nil || IsNil(o.Preview.Get()) {
+		var ret AppEnvironmentPreview
+		return ret
+	}
+	return *o.Preview.Get()
+}
+
+// GetPreviewOk returns a tuple with the Preview field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppEnvironment) GetPreviewOk() (*AppEnvironmentPreview, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Preview.Get(), o.Preview.IsSet()
+}
+
+// HasPreview returns a boolean if a field has been set.
+func (o *AppEnvironment) HasPreview() bool {
+	if o != nil && o.Preview.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPreview gets a reference to the given NullableAppEnvironmentPreview and assigns it to the Preview field.
+func (o *AppEnvironment) SetPreview(v AppEnvironmentPreview) {
+	o.Preview.Set(&v)
+}
+// SetPreviewNil sets the value for Preview to be an explicit nil
+func (o *AppEnvironment) SetPreviewNil() {
+	o.Preview.Set(nil)
+}
+
+// UnsetPreview ensures that no value is present for Preview, not even an explicit nil
+func (o *AppEnvironment) UnsetPreview() {
+	o.Preview.Unset()
+}
+
 // GetHealth returns the Health field value
 func (o *AppEnvironment) GetHealth() AppEnvironmentHealth {
 	if o == nil {
@@ -930,6 +973,9 @@ func (o AppEnvironment) ToMap() (map[string]interface{}, error) {
 	toSerialize["configurationIssues"] = o.ConfigurationIssues
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
+	}
+	if o.Preview.IsSet() {
+		toSerialize["preview"] = o.Preview.Get()
 	}
 	toSerialize["health"] = o.Health
 	toSerialize["createdAt"] = o.CreatedAt
