@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **DeferInitialDeployment** | Pointer to **bool** |  | [optional] [default to false]
 **Settings** | Pointer to [**AppEnvironmentSettingsInput**](AppEnvironmentSettingsInput.md) |  | [optional] 
 **Access** | Pointer to [**NewAppEnvironmentAccessInput**](NewAppEnvironmentAccessInput.md) |  | [optional] 
+**BasicAuth** | Pointer to **bool** | Protect the whole new environment with basic auth, by default with the username wodby and a generated password revealed in Wodby. Cannot be combined with access (Private App Access). | [optional] 
+**BasicAuthUsername** | Pointer to **string** | Username of the environment&#39;s basic auth. Requires basicAuth. Defaults to wodby. | [optional] 
+**BasicAuthPassword** | Pointer to **string** | Password of the environment&#39;s basic auth. Requires basicAuth. Omit to let Wodby generate one. | [optional] 
 
 ## Methods
 
@@ -449,6 +452,81 @@ SetAccess sets Access field to given value.
 `func (o *NewAppEnvironmentInput) HasAccess() bool`
 
 HasAccess returns a boolean if a field has been set.
+
+### GetBasicAuth
+
+`func (o *NewAppEnvironmentInput) GetBasicAuth() bool`
+
+GetBasicAuth returns the BasicAuth field if non-nil, zero value otherwise.
+
+### GetBasicAuthOk
+
+`func (o *NewAppEnvironmentInput) GetBasicAuthOk() (*bool, bool)`
+
+GetBasicAuthOk returns a tuple with the BasicAuth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuth
+
+`func (o *NewAppEnvironmentInput) SetBasicAuth(v bool)`
+
+SetBasicAuth sets BasicAuth field to given value.
+
+### HasBasicAuth
+
+`func (o *NewAppEnvironmentInput) HasBasicAuth() bool`
+
+HasBasicAuth returns a boolean if a field has been set.
+
+### GetBasicAuthUsername
+
+`func (o *NewAppEnvironmentInput) GetBasicAuthUsername() string`
+
+GetBasicAuthUsername returns the BasicAuthUsername field if non-nil, zero value otherwise.
+
+### GetBasicAuthUsernameOk
+
+`func (o *NewAppEnvironmentInput) GetBasicAuthUsernameOk() (*string, bool)`
+
+GetBasicAuthUsernameOk returns a tuple with the BasicAuthUsername field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuthUsername
+
+`func (o *NewAppEnvironmentInput) SetBasicAuthUsername(v string)`
+
+SetBasicAuthUsername sets BasicAuthUsername field to given value.
+
+### HasBasicAuthUsername
+
+`func (o *NewAppEnvironmentInput) HasBasicAuthUsername() bool`
+
+HasBasicAuthUsername returns a boolean if a field has been set.
+
+### GetBasicAuthPassword
+
+`func (o *NewAppEnvironmentInput) GetBasicAuthPassword() string`
+
+GetBasicAuthPassword returns the BasicAuthPassword field if non-nil, zero value otherwise.
+
+### GetBasicAuthPasswordOk
+
+`func (o *NewAppEnvironmentInput) GetBasicAuthPasswordOk() (*string, bool)`
+
+GetBasicAuthPasswordOk returns a tuple with the BasicAuthPassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuthPassword
+
+`func (o *NewAppEnvironmentInput) SetBasicAuthPassword(v string)`
+
+SetBasicAuthPassword sets BasicAuthPassword field to given value.
+
+### HasBasicAuthPassword
+
+`func (o *NewAppEnvironmentInput) HasBasicAuthPassword() bool`
+
+HasBasicAuthPassword returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

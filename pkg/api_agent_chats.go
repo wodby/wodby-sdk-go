@@ -503,7 +503,7 @@ func (r ApiGetAgentChatRequest) Execute() (*AgentChatDetail, *http.Response, err
 /*
 GetAgentChat Get agent chat
 
-Returns a chat with its messages. A tool message with approval pending is a change that waits for approval, or, for the tool ask_user, a question that waits for an answer.
+Returns a chat with its messages. A tool message with approval pending is a change that waits for approval, or, for the tool ask_user, a question that waits for an answer. Support members can read any chat in the organization; other members can read only their own.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -648,7 +648,7 @@ func (r ApiListAgentChatsRequest) Execute() ([]AgentChat, *http.Response, error)
 /*
 ListAgentChats List agent chats
 
-Returns the API key user's chats with Wodby Agent in the organization, the most recently active first.
+Returns the API key user's chats with Wodby Agent in the organization, the most recently active first. Support members receive all members' chats in the organization.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListAgentChatsRequest

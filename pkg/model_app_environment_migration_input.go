@@ -25,6 +25,8 @@ type AppEnvironmentMigrationInput struct {
 	TargetClusterId int32 `json:"targetClusterId"`
 	// Target cluster storage classes for the environment's volumes. A volume left out uses its current storage class, which must exist on the target cluster.
 	Volumes []AppEnvironmentMigrationVolumeInput `json:"volumes,omitempty"`
+	// Completed backups of this environment to restore instead of creating final backups. Data written after a backup was taken does not reach the target. Components without a backup listed here get a final backup.
+	ExistingBackupIds []int32 `json:"existingBackupIds,omitempty"`
 }
 
 type _AppEnvironmentMigrationInput AppEnvironmentMigrationInput
@@ -103,6 +105,38 @@ func (o *AppEnvironmentMigrationInput) SetVolumes(v []AppEnvironmentMigrationVol
 	o.Volumes = v
 }
 
+// GetExistingBackupIds returns the ExistingBackupIds field value if set, zero value otherwise.
+func (o *AppEnvironmentMigrationInput) GetExistingBackupIds() []int32 {
+	if o == nil || IsNil(o.ExistingBackupIds) {
+		var ret []int32
+		return ret
+	}
+	return o.ExistingBackupIds
+}
+
+// GetExistingBackupIdsOk returns a tuple with the ExistingBackupIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentMigrationInput) GetExistingBackupIdsOk() ([]int32, bool) {
+	if o == nil || IsNil(o.ExistingBackupIds) {
+		return nil, false
+	}
+	return o.ExistingBackupIds, true
+}
+
+// HasExistingBackupIds returns a boolean if a field has been set.
+func (o *AppEnvironmentMigrationInput) HasExistingBackupIds() bool {
+	if o != nil && !IsNil(o.ExistingBackupIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetExistingBackupIds gets a reference to the given []int32 and assigns it to the ExistingBackupIds field.
+func (o *AppEnvironmentMigrationInput) SetExistingBackupIds(v []int32) {
+	o.ExistingBackupIds = v
+}
+
 func (o AppEnvironmentMigrationInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -116,6 +150,9 @@ func (o AppEnvironmentMigrationInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["targetClusterId"] = o.TargetClusterId
 	if !IsNil(o.Volumes) {
 		toSerialize["volumes"] = o.Volumes
+	}
+	if !IsNil(o.ExistingBackupIds) {
+		toSerialize["existingBackupIds"] = o.ExistingBackupIds
 	}
 	return toSerialize, nil
 }

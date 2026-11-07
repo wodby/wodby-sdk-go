@@ -10,8 +10,11 @@ Name | Type | Description | Notes
 **AppServiceIds** | **[]int32** | App services protected by this entry. Empty unless scope is SERVICE. | 
 **AppServiceId** | Pointer to **NullableInt32** | Single protected app service. Null when the entry protects several services or the whole app environment. | [optional] 
 **AppRouteId** | Pointer to **NullableInt32** |  | [optional] 
-**Login** | **string** |  | 
+**Login** | **string** | Empty for exemptions. | 
 **Realm** | **string** |  | 
+**Source** | [**AppAuthSource**](AppAuthSource.md) |  | 
+**Generated** | **bool** | True while the password is one Wodby generated. Setting a password by hand clears it. | 
+**Exempt** | **bool** | Exemptions switch basic auth off for their services or route even when a wider entry covers them. They have no login or password. | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -19,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewAppAuth
 
-`func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds []int32, login string, realm string, createdAt time.Time, updatedAt time.Time, ) *AppAuth`
+`func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds []int32, login string, realm string, source AppAuthSource, generated bool, exempt bool, createdAt time.Time, updatedAt time.Time, ) *AppAuth`
 
 NewAppAuth instantiates a new AppAuth object
 This constructor will assign default values to properties that have it defined,
@@ -222,6 +225,66 @@ and a boolean to check if the value has been set.
 `func (o *AppAuth) SetRealm(v string)`
 
 SetRealm sets Realm field to given value.
+
+
+### GetSource
+
+`func (o *AppAuth) GetSource() AppAuthSource`
+
+GetSource returns the Source field if non-nil, zero value otherwise.
+
+### GetSourceOk
+
+`func (o *AppAuth) GetSourceOk() (*AppAuthSource, bool)`
+
+GetSourceOk returns a tuple with the Source field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSource
+
+`func (o *AppAuth) SetSource(v AppAuthSource)`
+
+SetSource sets Source field to given value.
+
+
+### GetGenerated
+
+`func (o *AppAuth) GetGenerated() bool`
+
+GetGenerated returns the Generated field if non-nil, zero value otherwise.
+
+### GetGeneratedOk
+
+`func (o *AppAuth) GetGeneratedOk() (*bool, bool)`
+
+GetGeneratedOk returns a tuple with the Generated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGenerated
+
+`func (o *AppAuth) SetGenerated(v bool)`
+
+SetGenerated sets Generated field to given value.
+
+
+### GetExempt
+
+`func (o *AppAuth) GetExempt() bool`
+
+GetExempt returns the Exempt field if non-nil, zero value otherwise.
+
+### GetExemptOk
+
+`func (o *AppAuth) GetExemptOk() (*bool, bool)`
+
+GetExemptOk returns a tuple with the Exempt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExempt
+
+`func (o *AppAuth) SetExempt(v bool)`
+
+SetExempt sets Exempt field to given value.
 
 
 ### GetCreatedAt

@@ -26,6 +26,8 @@ type AppEnvironmentMigrationComponent struct {
 	Name string `json:"name"`
 	BackupId int32 `json:"backupId"`
 	BackupStatus NullableString `json:"backupStatus,omitempty"`
+	// True when the component restores a backup chosen at the start instead of a final backup.
+	ExistingBackup bool `json:"existingBackup"`
 	ImportId int32 `json:"importId"`
 	ImportStatus NullableString `json:"importStatus,omitempty"`
 }
@@ -36,12 +38,13 @@ type _AppEnvironmentMigrationComponent AppEnvironmentMigrationComponent
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppEnvironmentMigrationComponent(id int32, appServiceId int32, name string, backupId int32, importId int32) *AppEnvironmentMigrationComponent {
+func NewAppEnvironmentMigrationComponent(id int32, appServiceId int32, name string, backupId int32, existingBackup bool, importId int32) *AppEnvironmentMigrationComponent {
 	this := AppEnvironmentMigrationComponent{}
 	this.Id = id
 	this.AppServiceId = appServiceId
 	this.Name = name
 	this.BackupId = backupId
+	this.ExistingBackup = existingBackup
 	this.ImportId = importId
 	return &this
 }
@@ -192,6 +195,30 @@ func (o *AppEnvironmentMigrationComponent) UnsetBackupStatus() {
 	o.BackupStatus.Unset()
 }
 
+// GetExistingBackup returns the ExistingBackup field value
+func (o *AppEnvironmentMigrationComponent) GetExistingBackup() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.ExistingBackup
+}
+
+// GetExistingBackupOk returns a tuple with the ExistingBackup field value
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentMigrationComponent) GetExistingBackupOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ExistingBackup, true
+}
+
+// SetExistingBackup sets field value
+func (o *AppEnvironmentMigrationComponent) SetExistingBackup(v bool) {
+	o.ExistingBackup = v
+}
+
 // GetImportId returns the ImportId field value
 func (o *AppEnvironmentMigrationComponent) GetImportId() int32 {
 	if o == nil {
@@ -275,6 +302,7 @@ func (o AppEnvironmentMigrationComponent) ToMap() (map[string]interface{}, error
 	if o.BackupStatus.IsSet() {
 		toSerialize["backupStatus"] = o.BackupStatus.Get()
 	}
+	toSerialize["existingBackup"] = o.ExistingBackup
 	toSerialize["importId"] = o.ImportId
 	if o.ImportStatus.IsSet() {
 		toSerialize["importStatus"] = o.ImportStatus.Get()
@@ -291,6 +319,7 @@ func (o *AppEnvironmentMigrationComponent) UnmarshalJSON(data []byte) (err error
 		"appServiceId",
 		"name",
 		"backupId",
+		"existingBackup",
 		"importId",
 	}
 

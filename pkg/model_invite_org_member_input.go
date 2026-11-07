@@ -25,8 +25,6 @@ type InviteOrgMemberInput struct {
 	OrgId *int32 `json:"orgId,omitempty"`
 	Email string `json:"email"`
 	Role string `json:"role"`
-	TeamIds []int32 `json:"teamIds,omitempty"`
-	ProjectIds []int32 `json:"projectIds,omitempty"`
 }
 
 type _InviteOrgMemberInput InviteOrgMemberInput
@@ -130,70 +128,6 @@ func (o *InviteOrgMemberInput) SetRole(v string) {
 	o.Role = v
 }
 
-// GetTeamIds returns the TeamIds field value if set, zero value otherwise.
-func (o *InviteOrgMemberInput) GetTeamIds() []int32 {
-	if o == nil || IsNil(o.TeamIds) {
-		var ret []int32
-		return ret
-	}
-	return o.TeamIds
-}
-
-// GetTeamIdsOk returns a tuple with the TeamIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InviteOrgMemberInput) GetTeamIdsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.TeamIds) {
-		return nil, false
-	}
-	return o.TeamIds, true
-}
-
-// HasTeamIds returns a boolean if a field has been set.
-func (o *InviteOrgMemberInput) HasTeamIds() bool {
-	if o != nil && !IsNil(o.TeamIds) {
-		return true
-	}
-
-	return false
-}
-
-// SetTeamIds gets a reference to the given []int32 and assigns it to the TeamIds field.
-func (o *InviteOrgMemberInput) SetTeamIds(v []int32) {
-	o.TeamIds = v
-}
-
-// GetProjectIds returns the ProjectIds field value if set, zero value otherwise.
-func (o *InviteOrgMemberInput) GetProjectIds() []int32 {
-	if o == nil || IsNil(o.ProjectIds) {
-		var ret []int32
-		return ret
-	}
-	return o.ProjectIds
-}
-
-// GetProjectIdsOk returns a tuple with the ProjectIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InviteOrgMemberInput) GetProjectIdsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.ProjectIds) {
-		return nil, false
-	}
-	return o.ProjectIds, true
-}
-
-// HasProjectIds returns a boolean if a field has been set.
-func (o *InviteOrgMemberInput) HasProjectIds() bool {
-	if o != nil && !IsNil(o.ProjectIds) {
-		return true
-	}
-
-	return false
-}
-
-// SetProjectIds gets a reference to the given []int32 and assigns it to the ProjectIds field.
-func (o *InviteOrgMemberInput) SetProjectIds(v []int32) {
-	o.ProjectIds = v
-}
-
 func (o InviteOrgMemberInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -209,12 +143,6 @@ func (o InviteOrgMemberInput) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["email"] = o.Email
 	toSerialize["role"] = o.Role
-	if !IsNil(o.TeamIds) {
-		toSerialize["teamIds"] = o.TeamIds
-	}
-	if !IsNil(o.ProjectIds) {
-		toSerialize["projectIds"] = o.ProjectIds
-	}
 	return toSerialize, nil
 }
 

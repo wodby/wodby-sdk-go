@@ -33,7 +33,7 @@ import (
 )
 
 func main() {
-	newAppAuthInput := *openapiclient.NewNewAppAuthInput(int32(123), "Login_example", "Password_example", "Realm_example") // NewAppAuthInput | 
+	newAppAuthInput := *openapiclient.NewNewAppAuthInput(int32(123)) // NewAppAuthInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -306,7 +306,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	updateAppAuthInput := *openapiclient.NewUpdateAppAuthInput("Login_example", "Realm_example") // UpdateAppAuthInput | 
+	updateAppAuthInput := *openapiclient.NewUpdateAppAuthInput() // UpdateAppAuthInput | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

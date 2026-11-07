@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **Database** | Pointer to [**AppServiceDatabaseInput**](AppServiceDatabaseInput.md) |  | [optional] 
 **Resources** | Pointer to [**ResourcesInput**](ResourcesInput.md) |  | [optional] 
 **Scalability** | Pointer to [**ScalabilityInput**](ScalabilityInput.md) |  | [optional] 
+**BasicAuth** | Pointer to **bool** | Protect the service&#39;s public HTTP endpoints with their own basic auth and a generated password, or not. Omit to follow the stack service&#39;s basicAuthDefault. | [optional] 
 
 ## Methods
 
@@ -309,6 +310,31 @@ SetScalability sets Scalability field to given value.
 `func (o *CreateAppServiceInput) HasScalability() bool`
 
 HasScalability returns a boolean if a field has been set.
+
+### GetBasicAuth
+
+`func (o *CreateAppServiceInput) GetBasicAuth() bool`
+
+GetBasicAuth returns the BasicAuth field if non-nil, zero value otherwise.
+
+### GetBasicAuthOk
+
+`func (o *CreateAppServiceInput) GetBasicAuthOk() (*bool, bool)`
+
+GetBasicAuthOk returns a tuple with the BasicAuth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuth
+
+`func (o *CreateAppServiceInput) SetBasicAuth(v bool)`
+
+SetBasicAuth sets BasicAuth field to given value.
+
+### HasBasicAuth
+
+`func (o *CreateAppServiceInput) HasBasicAuth() bool`
+
+HasBasicAuth returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

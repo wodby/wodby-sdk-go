@@ -460,9 +460,9 @@ func (r ApiGetAppAccessProviderOptionsRequest) Execute() (*AppAccessProviderOpti
 }
 
 /*
-GetAppAccessProviderOptions Get app-access provider options
+GetAppAccessProviderOptions Get Private App Access provider options
 
-Returns supported app-access modes, scopes, fields, and hostname behavior for the integration.
+Returns supported Private App Access modes, scopes, fields, and hostname behavior for the integration.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -734,7 +734,7 @@ func (r ApiGetIntegrationKubeSettingsRequest) Execute() (map[string]interface{},
 /*
 GetIntegrationKubeSettings Get Kubernetes settings
 
-Returns what clusters of the integration's Kubernetes provider support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode, serverless, billingOptions, gpuNodePool (whether a cluster can have an optional GPU node pool) and gpuNodePoolScalesToZero (whether that pool's minimum may be 0).
+Returns what clusters of the integration's Kubernetes provider support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode, serverless, billingOptions, gpuNodePool (whether a cluster can have an optional GPU node pool), gpuNodePoolScalesToZero (whether that pool's minimum may be 0) and nodeRecycling (whether a running cluster's worker nodes can be recycled).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -4061,9 +4061,9 @@ func (r ApiValidateAppAccessHostnameRequest) Execute() (*ValidationResult, *http
 }
 
 /*
-ValidateAppAccessHostname Validate an app-access hostname
+ValidateAppAccessHostname Validate a Private App Access hostname
 
-Validates an app-access hostname against the provider settings of the integration.
+Validates a Private App Access hostname against the provider settings of the integration.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

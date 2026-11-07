@@ -4,13 +4,89 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ExportOrgUsageCSV**](OrgsAPI.md#ExportOrgUsageCSV) | **Get** /orgs/{id}/usage/csv | Export org usage by project as CSV
 [**GetOrg**](OrgsAPI.md#GetOrg) | **Get** /orgs/{id} | Get org
 [**GetOrgSubscription**](OrgsAPI.md#GetOrgSubscription) | **Get** /orgs/{id}/subscription | Get org subscription
+[**GetOrgUsage**](OrgsAPI.md#GetOrgUsage) | **Get** /orgs/{id}/usage | Get org usage by project
+[**ListOrgUsagePeriods**](OrgsAPI.md#ListOrgUsagePeriods) | **Get** /orgs/{id}/usage/periods | List org usage periods
 [**ListOrgs**](OrgsAPI.md#ListOrgs) | **Get** /orgs | List orgs
 [**PreflightAppServiceCapacity**](OrgsAPI.md#PreflightAppServiceCapacity) | **Post** /orgs/{id}/actions/preflight-app-service-capacity | Preflight app-service capacity
 [**UpdateOrg**](OrgsAPI.md#UpdateOrg) | **Put** /orgs/{id} | Update org
 [**UpdateOrgSettings**](OrgsAPI.md#UpdateOrgSettings) | **Put** /orgs/{id}/settings | Update organization settings
 
+
+
+## ExportOrgUsageCSV
+
+> string ExportOrgUsageCSV(ctx, id).PeriodStart(periodStart).Execute()
+
+Export org usage by project as CSV
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+    "time"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	periodStart := time.Now() // time.Time | Start of the billing period as listed by listOrgUsagePeriods. Defaults to the current period. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrgsAPI.ExportOrgUsageCSV(context.Background(), id).PeriodStart(periodStart).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrgsAPI.ExportOrgUsageCSV``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExportOrgUsageCSV`: string
+	fmt.Fprintf(os.Stdout, "Response from `OrgsAPI.ExportOrgUsageCSV`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExportOrgUsageCSVRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **periodStart** | **time.Time** | Start of the billing period as listed by listOrgUsagePeriods. Defaults to the current period. | 
+
+### Return type
+
+**string**
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/csv, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetOrg
@@ -138,6 +214,149 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OrgSubscriptionDetails**](OrgSubscriptionDetails.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetOrgUsage
+
+> OrgUsageReport GetOrgUsage(ctx, id).PeriodStart(periodStart).Execute()
+
+Get org usage by project
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+    "time"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	periodStart := time.Now() // time.Time | Start of the billing period as listed by listOrgUsagePeriods. Defaults to the current period. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrgsAPI.GetOrgUsage(context.Background(), id).PeriodStart(periodStart).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrgsAPI.GetOrgUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetOrgUsage`: OrgUsageReport
+	fmt.Fprintf(os.Stdout, "Response from `OrgsAPI.GetOrgUsage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOrgUsageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **periodStart** | **time.Time** | Start of the billing period as listed by listOrgUsagePeriods. Defaults to the current period. | 
+
+### Return type
+
+[**OrgUsageReport**](OrgUsageReport.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListOrgUsagePeriods
+
+> []OrgUsagePeriod ListOrgUsagePeriods(ctx, id).Execute()
+
+List org usage periods
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrgsAPI.ListOrgUsagePeriods(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrgsAPI.ListOrgUsagePeriods``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListOrgUsagePeriods`: []OrgUsagePeriod
+	fmt.Fprintf(os.Stdout, "Response from `OrgsAPI.ListOrgUsagePeriods`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListOrgUsagePeriodsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]OrgUsagePeriod**](OrgUsagePeriod.md)
 
 ### Authorization
 

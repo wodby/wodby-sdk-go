@@ -52,6 +52,8 @@ type AppBuild struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 	StartedAt NullableTime `json:"startedAt,omitempty"`
 	EndedAt NullableTime `json:"endedAt,omitempty"`
+	// Vulnerability scan summary of the build's currently deployed images. Omitted when none of its images is currently deployed or scanning is unavailable for the organization.
+	VulnerabilityScan NullableAppBuildVulnerabilityScan `json:"vulnerabilityScan,omitempty"`
 }
 
 type _AppBuild AppBuild
@@ -868,6 +870,48 @@ func (o *AppBuild) UnsetEndedAt() {
 	o.EndedAt.Unset()
 }
 
+// GetVulnerabilityScan returns the VulnerabilityScan field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppBuild) GetVulnerabilityScan() AppBuildVulnerabilityScan {
+	if o == nil || IsNil(o.VulnerabilityScan.Get()) {
+		var ret AppBuildVulnerabilityScan
+		return ret
+	}
+	return *o.VulnerabilityScan.Get()
+}
+
+// GetVulnerabilityScanOk returns a tuple with the VulnerabilityScan field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppBuild) GetVulnerabilityScanOk() (*AppBuildVulnerabilityScan, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VulnerabilityScan.Get(), o.VulnerabilityScan.IsSet()
+}
+
+// HasVulnerabilityScan returns a boolean if a field has been set.
+func (o *AppBuild) HasVulnerabilityScan() bool {
+	if o != nil && o.VulnerabilityScan.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVulnerabilityScan gets a reference to the given NullableAppBuildVulnerabilityScan and assigns it to the VulnerabilityScan field.
+func (o *AppBuild) SetVulnerabilityScan(v AppBuildVulnerabilityScan) {
+	o.VulnerabilityScan.Set(&v)
+}
+// SetVulnerabilityScanNil sets the value for VulnerabilityScan to be an explicit nil
+func (o *AppBuild) SetVulnerabilityScanNil() {
+	o.VulnerabilityScan.Set(nil)
+}
+
+// UnsetVulnerabilityScan ensures that no value is present for VulnerabilityScan, not even an explicit nil
+func (o *AppBuild) UnsetVulnerabilityScan() {
+	o.VulnerabilityScan.Unset()
+}
+
 func (o AppBuild) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -922,6 +966,9 @@ func (o AppBuild) ToMap() (map[string]interface{}, error) {
 	}
 	if o.EndedAt.IsSet() {
 		toSerialize["endedAt"] = o.EndedAt.Get()
+	}
+	if o.VulnerabilityScan.IsSet() {
+		toSerialize["vulnerabilityScan"] = o.VulnerabilityScan.Get()
 	}
 	return toSerialize, nil
 }

@@ -37,6 +37,8 @@ type AppServiceBuild struct {
 	PreviouslyDeployed bool `json:"previouslyDeployed"`
 	CurrentlyDeployed bool `json:"currentlyDeployed"`
 	CurrentBuildNumber NullableInt32 `json:"currentBuildNumber,omitempty"`
+	// Latest vulnerability scan of this image. Images are scanned only while they are currently deployed. Omitted when the image was never scanned and is not deployed, when scanning is unavailable for the organization, and for builds nested in deployments.
+	VulnerabilityScan NullableAppServiceBuildVulnerabilityScan `json:"vulnerabilityScan,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -379,6 +381,48 @@ func (o *AppServiceBuild) UnsetCurrentBuildNumber() {
 	o.CurrentBuildNumber.Unset()
 }
 
+// GetVulnerabilityScan returns the VulnerabilityScan field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceBuild) GetVulnerabilityScan() AppServiceBuildVulnerabilityScan {
+	if o == nil || IsNil(o.VulnerabilityScan.Get()) {
+		var ret AppServiceBuildVulnerabilityScan
+		return ret
+	}
+	return *o.VulnerabilityScan.Get()
+}
+
+// GetVulnerabilityScanOk returns a tuple with the VulnerabilityScan field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceBuild) GetVulnerabilityScanOk() (*AppServiceBuildVulnerabilityScan, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VulnerabilityScan.Get(), o.VulnerabilityScan.IsSet()
+}
+
+// HasVulnerabilityScan returns a boolean if a field has been set.
+func (o *AppServiceBuild) HasVulnerabilityScan() bool {
+	if o != nil && o.VulnerabilityScan.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVulnerabilityScan gets a reference to the given NullableAppServiceBuildVulnerabilityScan and assigns it to the VulnerabilityScan field.
+func (o *AppServiceBuild) SetVulnerabilityScan(v AppServiceBuildVulnerabilityScan) {
+	o.VulnerabilityScan.Set(&v)
+}
+// SetVulnerabilityScanNil sets the value for VulnerabilityScan to be an explicit nil
+func (o *AppServiceBuild) SetVulnerabilityScanNil() {
+	o.VulnerabilityScan.Set(nil)
+}
+
+// UnsetVulnerabilityScan ensures that no value is present for VulnerabilityScan, not even an explicit nil
+func (o *AppServiceBuild) UnsetVulnerabilityScan() {
+	o.VulnerabilityScan.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppServiceBuild) GetCreatedAt() time.Time {
 	if o == nil {
@@ -450,6 +494,9 @@ func (o AppServiceBuild) ToMap() (map[string]interface{}, error) {
 	toSerialize["currentlyDeployed"] = o.CurrentlyDeployed
 	if o.CurrentBuildNumber.IsSet() {
 		toSerialize["currentBuildNumber"] = o.CurrentBuildNumber.Get()
+	}
+	if o.VulnerabilityScan.IsSet() {
+		toSerialize["vulnerabilityScan"] = o.VulnerabilityScan.Get()
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt

@@ -7,8 +7,6 @@ Name | Type | Description | Notes
 **OrgId** | Pointer to **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. | [optional] 
 **Email** | **string** |  | 
 **Role** | **string** |  | 
-**TeamIds** | Pointer to **[]int32** |  | [optional] 
-**ProjectIds** | Pointer to **[]int32** |  | [optional] 
 
 ## Methods
 
@@ -93,56 +91,6 @@ and a boolean to check if the value has been set.
 
 SetRole sets Role field to given value.
 
-
-### GetTeamIds
-
-`func (o *InviteOrgMemberInput) GetTeamIds() []int32`
-
-GetTeamIds returns the TeamIds field if non-nil, zero value otherwise.
-
-### GetTeamIdsOk
-
-`func (o *InviteOrgMemberInput) GetTeamIdsOk() (*[]int32, bool)`
-
-GetTeamIdsOk returns a tuple with the TeamIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTeamIds
-
-`func (o *InviteOrgMemberInput) SetTeamIds(v []int32)`
-
-SetTeamIds sets TeamIds field to given value.
-
-### HasTeamIds
-
-`func (o *InviteOrgMemberInput) HasTeamIds() bool`
-
-HasTeamIds returns a boolean if a field has been set.
-
-### GetProjectIds
-
-`func (o *InviteOrgMemberInput) GetProjectIds() []int32`
-
-GetProjectIds returns the ProjectIds field if non-nil, zero value otherwise.
-
-### GetProjectIdsOk
-
-`func (o *InviteOrgMemberInput) GetProjectIdsOk() (*[]int32, bool)`
-
-GetProjectIdsOk returns a tuple with the ProjectIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectIds
-
-`func (o *InviteOrgMemberInput) SetProjectIds(v []int32)`
-
-SetProjectIds sets ProjectIds field to given value.
-
-### HasProjectIds
-
-`func (o *InviteOrgMemberInput) HasProjectIds() bool`
-
-HasProjectIds returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

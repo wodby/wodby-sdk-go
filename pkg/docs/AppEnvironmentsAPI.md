@@ -5,16 +5,16 @@ All URIs are relative to */v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CleanupAppEnvironmentMigration**](AppEnvironmentsAPI.md#CleanupAppEnvironmentMigration) | **Post** /app-environment-migrations/{id}/actions/cleanup | Clean up app environment migration
-[**CreateAppAccess**](AppEnvironmentsAPI.md#CreateAppAccess) | **Post** /app-environment-accesses/{id} | Create app environment access
+[**CreateAppAccess**](AppEnvironmentsAPI.md#CreateAppAccess) | **Post** /app-environment-accesses/{id} | Create Private App Access
 [**CreateAppAnnotation**](AppEnvironmentsAPI.md#CreateAppAnnotation) | **Post** /app-annotations | Create app annotation
 [**CreateAppEnvironment**](AppEnvironmentsAPI.md#CreateAppEnvironment) | **Post** /app-environments | Create app environment
-[**DeleteAppAccess**](AppEnvironmentsAPI.md#DeleteAppAccess) | **Delete** /app-accesses/{id} | Delete app access
+[**DeleteAppAccess**](AppEnvironmentsAPI.md#DeleteAppAccess) | **Delete** /app-accesses/{id} | Delete Private App Access
 [**DeleteAppAnnotation**](AppEnvironmentsAPI.md#DeleteAppAnnotation) | **Delete** /app-annotations/{id} | Delete app annotation
 [**DeleteAppEnvironment**](AppEnvironmentsAPI.md#DeleteAppEnvironment) | **Delete** /app-environments/{id} | Delete app environment
-[**GetAppAccess**](AppEnvironmentsAPI.md#GetAppAccess) | **Get** /app-accesses/{id} | Get app access
+[**GetAppAccess**](AppEnvironmentsAPI.md#GetAppAccess) | **Get** /app-accesses/{id} | Get Private App Access
 [**GetAppAnnotation**](AppEnvironmentsAPI.md#GetAppAnnotation) | **Get** /app-annotations/{id} | Get app annotation
 [**GetAppEnvironment**](AppEnvironmentsAPI.md#GetAppEnvironment) | **Get** /app-environments/{id} | Get app environment
-[**GetAppEnvironmentAccess**](AppEnvironmentsAPI.md#GetAppEnvironmentAccess) | **Get** /app-environment-accesses/{id} | Get app environment access
+[**GetAppEnvironmentAccess**](AppEnvironmentsAPI.md#GetAppEnvironmentAccess) | **Get** /app-environment-accesses/{id} | Get app environment Private App Access
 [**GetAppEnvironmentByName**](AppEnvironmentsAPI.md#GetAppEnvironmentByName) | **Get** /app-environments/by-name/{appName}/{environmentName} | Get app environment by name
 [**GetAppEnvironmentCICDSettings**](AppEnvironmentsAPI.md#GetAppEnvironmentCICDSettings) | **Get** /app-environments/cicd-settings/{id} | Get app environment CI/CD settings
 [**GetAppEnvironmentMigration**](AppEnvironmentsAPI.md#GetAppEnvironmentMigration) | **Get** /app-environment-migrations/{id} | Get app environment migration
@@ -22,21 +22,21 @@ Method | HTTP request | Description
 [**GetWorkspaceConnection**](AppEnvironmentsAPI.md#GetWorkspaceConnection) | **Get** /workspaces/{id}/connection | Get workspace SSH connection
 [**GetWorkspaceGitDiff**](AppEnvironmentsAPI.md#GetWorkspaceGitDiff) | **Get** /workspaces/{id}/git-diff | Get workspace file diff
 [**GetWorkspaceGitStatus**](AppEnvironmentsAPI.md#GetWorkspaceGitStatus) | **Get** /workspaces/{id}/git-status | Get workspace Git status
-[**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List app-access cleanups
+[**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List Private App Access cleanups
 [**ListAppAnnotations**](AppEnvironmentsAPI.md#ListAppAnnotations) | **Get** /app-annotations | List app annotations
 [**ListAppEnvironmentMigrations**](AppEnvironmentsAPI.md#ListAppEnvironmentMigrations) | **Get** /app-environment-migrations | List app environment migrations
 [**ListAppEnvironments**](AppEnvironmentsAPI.md#ListAppEnvironments) | **Get** /app-environments | List app environments
 [**MigrateAppEnvironment**](AppEnvironmentsAPI.md#MigrateAppEnvironment) | **Post** /app-environments/{id}/actions/migrate | Migrate app environment to another cluster
 [**PauseWorkspace**](AppEnvironmentsAPI.md#PauseWorkspace) | **Post** /workspaces/{id}/actions/pause | Pause workspace
-[**PreflightAppAccess**](AppEnvironmentsAPI.md#PreflightAppAccess) | **Post** /app-accesses/actions/preflight | Preflight app environment access
+[**PreflightAppAccess**](AppEnvironmentsAPI.md#PreflightAppAccess) | **Post** /app-accesses/actions/preflight | Preflight Private App Access
 [**PrepareWorkspace**](AppEnvironmentsAPI.md#PrepareWorkspace) | **Post** /workspaces/{id}/actions/prepare | Prepare workspace
 [**PullWorkspace**](AppEnvironmentsAPI.md#PullWorkspace) | **Post** /workspaces/{id}/actions/pull | Pull workspace
 [**ReconcileAppEnvironmentStack**](AppEnvironmentsAPI.md#ReconcileAppEnvironmentStack) | **Post** /app-environments/{id}/actions/reconcile-stack | Reconcile app environment stack
 [**RestartWorkspace**](AppEnvironmentsAPI.md#RestartWorkspace) | **Post** /workspaces/{id}/actions/restart | Restart workspace
 [**ResumeWorkspace**](AppEnvironmentsAPI.md#ResumeWorkspace) | **Post** /workspaces/{id}/actions/resume | Resume workspace
-[**RetryAppAccessCleanup**](AppEnvironmentsAPI.md#RetryAppAccessCleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry app-access cleanup
+[**RetryAppAccessCleanup**](AppEnvironmentsAPI.md#RetryAppAccessCleanup) | **Post** /app-access-cleanups/{id}/actions/retry | Retry Private App Access cleanup
 [**RollbackAppEnvironmentMigration**](AppEnvironmentsAPI.md#RollbackAppEnvironmentMigration) | **Post** /app-environment-migrations/{id}/actions/rollback | Roll back app environment migration
-[**UpdateAppAccess**](AppEnvironmentsAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update app access
+[**UpdateAppAccess**](AppEnvironmentsAPI.md#UpdateAppAccess) | **Put** /app-accesses/{id} | Update Private App Access
 [**UpdateAppAnnotation**](AppEnvironmentsAPI.md#UpdateAppAnnotation) | **Put** /app-annotations/{id} | Update app annotation
 [**UpdateAppEnvironment**](AppEnvironmentsAPI.md#UpdateAppEnvironment) | **Put** /app-environments/{id} | Update app environment
 [**UpdateAppEnvironmentCICDSettings**](AppEnvironmentsAPI.md#UpdateAppEnvironmentCICDSettings) | **Put** /app-environments/cicd-settings/{id} | Update app environment CI/CD settings
@@ -121,7 +121,7 @@ Name | Type | Description  | Notes
 
 > AppAccessOperationResult CreateAppAccess(ctx, id).NewAppAccessInput(newAppAccessInput).Execute()
 
-Create app environment access
+Create Private App Access
 
 
 
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 
 > OperationResult DeleteAppAccess(ctx, id).Execute()
 
-Delete app access
+Delete Private App Access
 
 
 
@@ -537,7 +537,7 @@ Name | Type | Description  | Notes
 
 > AppAccess GetAppAccess(ctx, id).Execute()
 
-Get app access
+Get Private App Access
 
 
 
@@ -747,7 +747,7 @@ Name | Type | Description  | Notes
 
 > AppAccess GetAppEnvironmentAccess(ctx, id).Execute()
 
-Get app environment access
+Get app environment Private App Access
 
 
 
@@ -1316,7 +1316,7 @@ Name | Type | Description  | Notes
 
 > []AppAccessCleanup ListAppAccessCleanups(ctx).AppInstanceId(appInstanceId).IntegrationId(integrationId).Execute()
 
-List app-access cleanups
+List Private App Access cleanups
 
 
 
@@ -1734,7 +1734,7 @@ Name | Type | Description  | Notes
 
 > ValidationResult PreflightAppAccess(ctx).NewAppEnvironmentAccessInput(newAppEnvironmentAccessInput).Execute()
 
-Preflight app environment access
+Preflight Private App Access
 
 
 
@@ -2154,7 +2154,7 @@ Name | Type | Description  | Notes
 
 > OperationResult RetryAppAccessCleanup(ctx, id).Execute()
 
-Retry app-access cleanup
+Retry Private App Access cleanup
 
 
 
@@ -2294,7 +2294,7 @@ Name | Type | Description  | Notes
 
 > AppAccessOperationResult UpdateAppAccess(ctx, id).UpdateAppAccessInput(updateAppAccessInput).Execute()
 
-Update app access
+Update Private App Access
 
 
 

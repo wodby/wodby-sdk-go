@@ -10,6 +10,8 @@ Method | HTTP request | Description
 [**DeleteCluster**](ClustersAPI.md#DeleteCluster) | **Delete** /clusters/{id} | Delete cluster
 [**GetCluster**](ClustersAPI.md#GetCluster) | **Get** /clusters/{id} | Get cluster
 [**GetClusterByName**](ClustersAPI.md#GetClusterByName) | **Get** /clusters/by-name/{name} | Get cluster by name
+[**GetClusterComponentUpdates**](ClustersAPI.md#GetClusterComponentUpdates) | **Get** /cluster-component-updates/{id} | List cluster component updates
+[**GetClusterComponents**](ClustersAPI.md#GetClusterComponents) | **Get** /cluster-components/{id} | List cluster components
 [**GetClusterInfraAppUpgradeChangelog**](ClustersAPI.md#GetClusterInfraAppUpgradeChangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
 [**GetClusterSharing**](ClustersAPI.md#GetClusterSharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
 [**GetK3SClusterInstallCommand**](ClustersAPI.md#GetK3SClusterInstallCommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
@@ -19,6 +21,7 @@ Method | HTTP request | Description
 [**RecycleClusterNodes**](ClustersAPI.md#RecycleClusterNodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
 [**ScaleCluster**](ClustersAPI.md#ScaleCluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
+[**UpdateClusterComponent**](ClustersAPI.md#UpdateClusterComponent) | **Post** /clusters/{id}/actions/update-component | Update a cluster component
 [**UpdateClusterEnvironmentPolicy**](ClustersAPI.md#UpdateClusterEnvironmentPolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
 [**UpdateClusterGPUNodePool**](ClustersAPI.md#UpdateClusterGPUNodePool) | **Post** /clusters/{id}/actions/gpu-node-pool | Update the GPU node pool
 [**UpdateClusterKubernetesVersion**](ClustersAPI.md#UpdateClusterKubernetesVersion) | **Post** /clusters/{id}/actions/update-kubernetes-version | Update cluster Kubernetes version
@@ -427,6 +430,146 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Cluster**](Cluster.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetClusterComponentUpdates
+
+> []ClusterComponentUpdate GetClusterComponentUpdates(ctx, id).Execute()
+
+List cluster component updates
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetClusterComponentUpdates(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetClusterComponentUpdates``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetClusterComponentUpdates`: []ClusterComponentUpdate
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetClusterComponentUpdates`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetClusterComponentUpdatesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ClusterComponentUpdate**](ClusterComponentUpdate.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetClusterComponents
+
+> []ClusterComponent GetClusterComponents(ctx, id).Execute()
+
+List cluster components
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetClusterComponents(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetClusterComponents``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetClusterComponents`: []ClusterComponent
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetClusterComponents`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetClusterComponentsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ClusterComponent**](ClusterComponent.md)
 
 ### Authorization
 
@@ -1056,6 +1199,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Cluster**](Cluster.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateClusterComponent
+
+> OperationResult UpdateClusterComponent(ctx, id).UpdateClusterComponentRequest(updateClusterComponentRequest).Execute()
+
+Update a cluster component
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateClusterComponentRequest := *openapiclient.NewUpdateClusterComponentRequest("Name_example") // UpdateClusterComponentRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.UpdateClusterComponent(context.Background(), id).UpdateClusterComponentRequest(updateClusterComponentRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.UpdateClusterComponent``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateClusterComponent`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.UpdateClusterComponent`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateClusterComponentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateClusterComponentRequest** | [**UpdateClusterComponentRequest**](UpdateClusterComponentRequest.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 

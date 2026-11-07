@@ -12,12 +12,15 @@ Method | HTTP request | Description
 [**CreateAppServiceIntegration**](AppServicesAPI.md#CreateAppServiceIntegration) | **Post** /app-services/{id}/integrations | Create app service integration
 [**CreateAppServiceLogStream**](AppServicesAPI.md#CreateAppServiceLogStream) | **Post** /app-services/{id}/log-streams | Create app service log stream
 [**CreateAppServiceToken**](AppServicesAPI.md#CreateAppServiceToken) | **Post** /app-services/{id}/tokens | Create app service token
+[**CreateResourcePreset**](AppServicesAPI.md#CreateResourcePreset) | **Post** /resource-presets | Create custom resource preset
 [**DeleteAppServiceAnnotation**](AppServicesAPI.md#DeleteAppServiceAnnotation) | **Delete** /app-service-annotations/{id} | Delete app service annotation
 [**DeleteAppServiceCronSchedule**](AppServicesAPI.md#DeleteAppServiceCronSchedule) | **Delete** /app-service-cron-schedules/{id} | Delete app service cron schedule
+[**DeleteAppServiceCustomLink**](AppServicesAPI.md#DeleteAppServiceCustomLink) | **Delete** /app-services/{id}/custom-links/{name} | Delete app service custom link
 [**DeleteAppServiceEnvVar**](AppServicesAPI.md#DeleteAppServiceEnvVar) | **Delete** /app-service-env-vars/{id} | Delete app service env var
 [**DeleteAppServiceHelmValue**](AppServicesAPI.md#DeleteAppServiceHelmValue) | **Delete** /app-service-helm-values/{id} | Delete app service Helm value
 [**DeleteAppServiceIntegration**](AppServicesAPI.md#DeleteAppServiceIntegration) | **Delete** /app-service-integrations/{id} | Delete app service integration
 [**DeleteAppServiceToken**](AppServicesAPI.md#DeleteAppServiceToken) | **Delete** /app-service-tokens/{id} | Delete app service token
+[**DeleteResourcePreset**](AppServicesAPI.md#DeleteResourcePreset) | **Delete** /resource-presets/{id} | Delete custom resource preset
 [**GetAppService**](AppServicesAPI.md#GetAppService) | **Get** /app-services/{id} | Get app service
 [**GetAppServiceCronJob**](AppServicesAPI.md#GetAppServiceCronJob) | **Get** /app-service-cron-jobs/{id} | Get app service cron job
 [**GetAppServiceCronSchedule**](AppServicesAPI.md#GetAppServiceCronSchedule) | **Get** /app-service-cron-schedules/{id} | Get app service cron schedule
@@ -28,9 +31,11 @@ Method | HTTP request | Description
 [**ListAppServiceContainers**](AppServicesAPI.md#ListAppServiceContainers) | **Get** /app-services/{id}/containers | List app service containers
 [**ListAppServiceCronJobs**](AppServicesAPI.md#ListAppServiceCronJobs) | **Get** /app-service-cron-jobs | List app service cron jobs
 [**ListAppServiceCronSchedules**](AppServicesAPI.md#ListAppServiceCronSchedules) | **Get** /app-services/{id}/cron-schedules | List app service cron schedules
+[**ListAppServiceCustomLinks**](AppServicesAPI.md#ListAppServiceCustomLinks) | **Get** /app-services/{id}/custom-links | List app service custom links
 [**ListAppServiceEnvVars**](AppServicesAPI.md#ListAppServiceEnvVars) | **Get** /app-services/{id}/env-vars | List app service env vars
 [**ListAppServiceHelmValues**](AppServicesAPI.md#ListAppServiceHelmValues) | **Get** /app-services/{id}/helm-values | List app service Helm values
 [**ListAppServiceIntegrations**](AppServicesAPI.md#ListAppServiceIntegrations) | **Get** /app-services/{id}/integrations | List app service integrations
+[**ListAppServiceLinkCandidates**](AppServicesAPI.md#ListAppServiceLinkCandidates) | **Get** /app-services/{id}/links/{name}/candidates | List app service link candidates
 [**ListAppServiceLinks**](AppServicesAPI.md#ListAppServiceLinks) | **Get** /app-services/{id}/links | List app service links
 [**ListAppServicePods**](AppServicesAPI.md#ListAppServicePods) | **Get** /app-services/{id}/pods | List app service pods
 [**ListAppServiceSettings**](AppServicesAPI.md#ListAppServiceSettings) | **Get** /app-services/{id}/settings | List app service settings
@@ -38,9 +43,11 @@ Method | HTTP request | Description
 [**ListAppServiceVolumeStorageClasses**](AppServicesAPI.md#ListAppServiceVolumeStorageClasses) | **Get** /app-services/{id}/options/volume-storage-classes | List app service volume storage-class state
 [**ListAppServiceVolumes**](AppServicesAPI.md#ListAppServiceVolumes) | **Get** /app-services/{id}/volumes | List app service volumes
 [**ListAppServices**](AppServicesAPI.md#ListAppServices) | **Get** /app-services | List app services
+[**ListResourcePresets**](AppServicesAPI.md#ListResourcePresets) | **Get** /resource-presets | List resource presets
 [**RunAppServiceAction**](AppServicesAPI.md#RunAppServiceAction) | **Post** /app-services/{id}/actions/{name} | Run app service action
 [**RunAppServiceCronSchedule**](AppServicesAPI.md#RunAppServiceCronSchedule) | **Post** /app-service-cron-schedules/{id}/run | Run app service cron schedule
 [**SetAppServiceConfig**](AppServicesAPI.md#SetAppServiceConfig) | **Put** /app-services/{id}/configs/{name} | Set app service config
+[**SetAppServiceCustomLink**](AppServicesAPI.md#SetAppServiceCustomLink) | **Put** /app-services/{id}/custom-links/{name} | Set app service custom link
 [**SetAppServiceLink**](AppServicesAPI.md#SetAppServiceLink) | **Put** /app-services/{id}/links/{name} | Set app service link
 [**SetAppServiceResources**](AppServicesAPI.md#SetAppServiceResources) | **Put** /app-services/{id}/resources | Set app service resources
 [**SetAppServiceSetting**](AppServicesAPI.md#SetAppServiceSetting) | **Put** /app-services/{id}/settings/{name} | Set app service setting
@@ -52,6 +59,7 @@ Method | HTTP request | Description
 [**UpdateAppServiceEnvVar**](AppServicesAPI.md#UpdateAppServiceEnvVar) | **Put** /app-service-env-vars/{id} | Update app service env var
 [**UpdateAppServiceHelmValue**](AppServicesAPI.md#UpdateAppServiceHelmValue) | **Put** /app-service-helm-values/{id} | Update app service Helm value
 [**UpdateAppServiceToken**](AppServicesAPI.md#UpdateAppServiceToken) | **Put** /app-service-tokens/{id} | Update app service token
+[**UpdateResourcePreset**](AppServicesAPI.md#UpdateResourcePreset) | **Put** /resource-presets/{id} | Update custom resource preset
 
 
 
@@ -631,6 +639,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateResourcePreset
+
+> ResourcePreset CreateResourcePreset(ctx).ResourcePresetInput(resourcePresetInput).Execute()
+
+Create custom resource preset
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	resourcePresetInput := *openapiclient.NewResourcePresetInput("Name_example", "Title_example") // ResourcePresetInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.CreateResourcePreset(context.Background()).ResourcePresetInput(resourcePresetInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.CreateResourcePreset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateResourcePreset`: ResourcePreset
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.CreateResourcePreset`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateResourcePresetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **resourcePresetInput** | [**ResourcePresetInput**](ResourcePresetInput.md) |  | 
+
+### Return type
+
+[**ResourcePreset**](ResourcePreset.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteAppServiceAnnotation
 
 > OperationResult DeleteAppServiceAnnotation(ctx, id).Execute()
@@ -751,6 +825,79 @@ Other parameters are passed through a pointer to a apiDeleteAppServiceCronSchedu
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteAppServiceCustomLink
+
+> OperationResult DeleteAppServiceCustomLink(ctx, id, name).Execute()
+
+Delete app service custom link
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	name := "name_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.DeleteAppServiceCustomLink(context.Background(), id, name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.DeleteAppServiceCustomLink``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteAppServiceCustomLink`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.DeleteAppServiceCustomLink`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteAppServiceCustomLinkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
 
 
 ### Return type
@@ -1027,6 +1174,76 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteAppServiceTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteResourcePreset
+
+> OperationResult DeleteResourcePreset(ctx, id).Execute()
+
+Delete custom resource preset
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.DeleteResourcePreset(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.DeleteResourcePreset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteResourcePreset`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.DeleteResourcePreset`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteResourcePresetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -1757,6 +1974,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListAppServiceCustomLinks
+
+> []AppServiceCustomLink ListAppServiceCustomLinks(ctx, id).Execute()
+
+List app service custom links
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListAppServiceCustomLinks(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListAppServiceCustomLinks``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppServiceCustomLinks`: []AppServiceCustomLink
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListAppServiceCustomLinks`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppServiceCustomLinksRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppServiceCustomLink**](AppServiceCustomLink.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAppServiceEnvVars
 
 > []AppServiceEnvVar ListAppServiceEnvVars(ctx, id).Execute()
@@ -1952,6 +2239,79 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppServiceIntegration**](AppServiceIntegration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppServiceLinkCandidates
+
+> []AppServiceLinkCandidate ListAppServiceLinkCandidates(ctx, id, name).Execute()
+
+List app service link candidates
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	name := "name_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListAppServiceLinkCandidates(context.Background(), id, name).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListAppServiceLinkCandidates``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppServiceLinkCandidates`: []AppServiceLinkCandidate
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListAppServiceLinkCandidates`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppServiceLinkCandidatesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**[]AppServiceLinkCandidate**](AppServiceLinkCandidate.md)
 
 ### Authorization
 
@@ -2459,6 +2819,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListResourcePresets
+
+> []ResourcePreset ListResourcePresets(ctx).OrgId(orgId).Execute()
+
+List resource presets
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.ListResourcePresets(context.Background()).OrgId(orgId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.ListResourcePresets``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListResourcePresets`: []ResourcePreset
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.ListResourcePresets`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListResourcePresetsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
+
+### Return type
+
+[**[]ResourcePreset**](ResourcePreset.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RunAppServiceAction
 
 > OperationResult RunAppServiceAction(ctx, id, name).Execute()
@@ -2658,6 +3084,81 @@ Name | Type | Description  | Notes
 
 
  **configOverrideInput** | [**ConfigOverrideInput**](ConfigOverrideInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetAppServiceCustomLink
+
+> OperationResult SetAppServiceCustomLink(ctx, id, name).AppServiceCustomLinkInput(appServiceCustomLinkInput).Execute()
+
+Set app service custom link
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	name := "name_example" // string | 
+	appServiceCustomLinkInput := *openapiclient.NewAppServiceCustomLinkInput([]openapiclient.AppServiceCustomLinkInputValuesInner{*openapiclient.NewAppServiceCustomLinkInputValuesInner("Name_example", "Value_example")}) // AppServiceCustomLinkInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.SetAppServiceCustomLink(context.Background(), id, name).AppServiceCustomLinkInput(appServiceCustomLinkInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.SetAppServiceCustomLink``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetAppServiceCustomLink`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.SetAppServiceCustomLink`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+**name** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetAppServiceCustomLinkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **appServiceCustomLinkInput** | [**AppServiceCustomLinkInput**](AppServiceCustomLinkInput.md) |  | 
 
 ### Return type
 
@@ -3456,6 +3957,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppServiceToken**](AppServiceToken.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateResourcePreset
+
+> ResourcePreset UpdateResourcePreset(ctx, id).ResourcePresetInput(resourcePresetInput).Execute()
+
+Update custom resource preset
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	resourcePresetInput := *openapiclient.NewResourcePresetInput("Name_example", "Title_example") // ResourcePresetInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppServicesAPI.UpdateResourcePreset(context.Background(), id).ResourcePresetInput(resourcePresetInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppServicesAPI.UpdateResourcePreset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateResourcePreset`: ResourcePreset
+	fmt.Fprintf(os.Stdout, "Response from `AppServicesAPI.UpdateResourcePreset`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateResourcePresetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **resourcePresetInput** | [**ResourcePresetInput**](ResourcePresetInput.md) |  | 
+
+### Return type
+
+[**ResourcePreset**](ResourcePreset.md)
 
 ### Authorization
 

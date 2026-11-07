@@ -21,6 +21,8 @@ var _ MappedNullable = &StackServiceInput{}
 type StackServiceInput struct {
 	Replicas NullableInt32 `json:"replicas,omitempty"`
 	Required NullableBool `json:"required,omitempty"`
+	// Follow the service's basic auth default, or protect new app services with basic auth or not.
+	BasicAuthOverride NullableString `json:"basicAuthOverride,omitempty"`
 	Disabled NullableBool `json:"disabled,omitempty"`
 	Main NullableBool `json:"main,omitempty"`
 	ServiceRevPinned NullableBool `json:"serviceRevPinned,omitempty"`
@@ -128,6 +130,48 @@ func (o *StackServiceInput) SetRequiredNil() {
 // UnsetRequired ensures that no value is present for Required, not even an explicit nil
 func (o *StackServiceInput) UnsetRequired() {
 	o.Required.Unset()
+}
+
+// GetBasicAuthOverride returns the BasicAuthOverride field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackServiceInput) GetBasicAuthOverride() string {
+	if o == nil || IsNil(o.BasicAuthOverride.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BasicAuthOverride.Get()
+}
+
+// GetBasicAuthOverrideOk returns a tuple with the BasicAuthOverride field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackServiceInput) GetBasicAuthOverrideOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BasicAuthOverride.Get(), o.BasicAuthOverride.IsSet()
+}
+
+// HasBasicAuthOverride returns a boolean if a field has been set.
+func (o *StackServiceInput) HasBasicAuthOverride() bool {
+	if o != nil && o.BasicAuthOverride.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuthOverride gets a reference to the given NullableString and assigns it to the BasicAuthOverride field.
+func (o *StackServiceInput) SetBasicAuthOverride(v string) {
+	o.BasicAuthOverride.Set(&v)
+}
+// SetBasicAuthOverrideNil sets the value for BasicAuthOverride to be an explicit nil
+func (o *StackServiceInput) SetBasicAuthOverrideNil() {
+	o.BasicAuthOverride.Set(nil)
+}
+
+// UnsetBasicAuthOverride ensures that no value is present for BasicAuthOverride, not even an explicit nil
+func (o *StackServiceInput) UnsetBasicAuthOverride() {
+	o.BasicAuthOverride.Unset()
 }
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -377,6 +421,9 @@ func (o StackServiceInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Required.IsSet() {
 		toSerialize["required"] = o.Required.Get()
+	}
+	if o.BasicAuthOverride.IsSet() {
+		toSerialize["basicAuthOverride"] = o.BasicAuthOverride.Get()
 	}
 	if o.Disabled.IsSet() {
 		toSerialize["disabled"] = o.Disabled.Get()

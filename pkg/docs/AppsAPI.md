@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**GetAppSharing**](AppsAPI.md#GetAppSharing) | **Get** /apps/sharing/{id} | Get app sharing
 [**ListAppPreviewPullRequests**](AppsAPI.md#ListAppPreviewPullRequests) | **Get** /apps/preview-pull-requests/{id} | List pull requests for preview environments
 [**ListApps**](AppsAPI.md#ListApps) | **Get** /apps | List apps
+[**RegenerateAppPreviewPassword**](AppsAPI.md#RegenerateAppPreviewPassword) | **Post** /apps/preview-password/regenerate/{id} | Regenerate the preview password
 [**UpdateApp**](AppsAPI.md#UpdateApp) | **Put** /apps/{id} | Update app
 [**UpdateAppSettings**](AppsAPI.md#UpdateAppSettings) | **Put** /apps/settings/{id} | Update app settings
 [**UpdateAppSharing**](AppsAPI.md#UpdateAppSharing) | **Put** /apps/sharing/{id} | Update app sharing
@@ -563,6 +564,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]App**](App.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RegenerateAppPreviewPassword
+
+> App RegenerateAppPreviewPassword(ctx, id).Execute()
+
+Regenerate the preview password
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.RegenerateAppPreviewPassword(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.RegenerateAppPreviewPassword``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RegenerateAppPreviewPassword`: App
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.RegenerateAppPreviewPassword`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRegenerateAppPreviewPasswordRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**App**](App.md)
 
 ### Authorization
 

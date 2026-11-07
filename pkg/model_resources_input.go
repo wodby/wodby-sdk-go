@@ -23,6 +23,8 @@ type ResourcesInput struct {
 	Gpu NullableGPUResources `json:"gpu,omitempty"`
 	Workload NullableString `json:"workload,omitempty"`
 	Container NullableString `json:"container,omitempty"`
+	// Name of a Wodby preset or of a custom preset of the organization, from listResourcePresets. Its values fill the CPU and memory fields this input leaves out; the values are stored, not the preset.
+	Preset NullableString `json:"preset,omitempty"`
 	RequestCPU NullableInt32 `json:"requestCPU,omitempty"`
 	RequestMem NullableInt32 `json:"requestMem,omitempty"`
 	LimitCPU NullableInt32 `json:"limitCPU,omitempty"`
@@ -170,6 +172,48 @@ func (o *ResourcesInput) SetContainerNil() {
 // UnsetContainer ensures that no value is present for Container, not even an explicit nil
 func (o *ResourcesInput) UnsetContainer() {
 	o.Container.Unset()
+}
+
+// GetPreset returns the Preset field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ResourcesInput) GetPreset() string {
+	if o == nil || IsNil(o.Preset.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Preset.Get()
+}
+
+// GetPresetOk returns a tuple with the Preset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ResourcesInput) GetPresetOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Preset.Get(), o.Preset.IsSet()
+}
+
+// HasPreset returns a boolean if a field has been set.
+func (o *ResourcesInput) HasPreset() bool {
+	if o != nil && o.Preset.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPreset gets a reference to the given NullableString and assigns it to the Preset field.
+func (o *ResourcesInput) SetPreset(v string) {
+	o.Preset.Set(&v)
+}
+// SetPresetNil sets the value for Preset to be an explicit nil
+func (o *ResourcesInput) SetPresetNil() {
+	o.Preset.Set(nil)
+}
+
+// UnsetPreset ensures that no value is present for Preset, not even an explicit nil
+func (o *ResourcesInput) UnsetPreset() {
+	o.Preset.Unset()
 }
 
 // GetRequestCPU returns the RequestCPU field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -358,6 +402,9 @@ func (o ResourcesInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Container.IsSet() {
 		toSerialize["container"] = o.Container.Get()
+	}
+	if o.Preset.IsSet() {
+		toSerialize["preset"] = o.Preset.Get()
 	}
 	if o.RequestCPU.IsSet() {
 		toSerialize["requestCPU"] = o.RequestCPU.Get()

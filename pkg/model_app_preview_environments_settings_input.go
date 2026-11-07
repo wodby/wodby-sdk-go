@@ -30,6 +30,8 @@ type AppPreviewEnvironmentsSettingsInput struct {
 	RunCronJobs *bool `json:"runCronJobs,omitempty"`
 	MaxConcurrent *int32 `json:"maxConcurrent,omitempty"`
 	IdleTtlDays *int32 `json:"idleTtlDays,omitempty"`
+	// Protect every preview with basic auth and one shared generated password. Defaults to true.
+	BasicAuth *bool `json:"basicAuth,omitempty"`
 }
 
 type _AppPreviewEnvironmentsSettingsInput AppPreviewEnvironmentsSettingsInput
@@ -300,6 +302,38 @@ func (o *AppPreviewEnvironmentsSettingsInput) SetIdleTtlDays(v int32) {
 	o.IdleTtlDays = &v
 }
 
+// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+func (o *AppPreviewEnvironmentsSettingsInput) GetBasicAuth() bool {
+	if o == nil || IsNil(o.BasicAuth) {
+		var ret bool
+		return ret
+	}
+	return *o.BasicAuth
+}
+
+// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppPreviewEnvironmentsSettingsInput) GetBasicAuthOk() (*bool, bool) {
+	if o == nil || IsNil(o.BasicAuth) {
+		return nil, false
+	}
+	return o.BasicAuth, true
+}
+
+// HasBasicAuth returns a boolean if a field has been set.
+func (o *AppPreviewEnvironmentsSettingsInput) HasBasicAuth() bool {
+	if o != nil && !IsNil(o.BasicAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
+func (o *AppPreviewEnvironmentsSettingsInput) SetBasicAuth(v bool) {
+	o.BasicAuth = &v
+}
+
 func (o AppPreviewEnvironmentsSettingsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -331,6 +365,9 @@ func (o AppPreviewEnvironmentsSettingsInput) ToMap() (map[string]interface{}, er
 	}
 	if !IsNil(o.IdleTtlDays) {
 		toSerialize["idleTtlDays"] = o.IdleTtlDays
+	}
+	if !IsNil(o.BasicAuth) {
+		toSerialize["basicAuth"] = o.BasicAuth
 	}
 	return toSerialize, nil
 }

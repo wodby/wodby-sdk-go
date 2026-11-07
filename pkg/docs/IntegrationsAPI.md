@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**ConfigureIntegration**](IntegrationsAPI.md#ConfigureIntegration) | **Put** /integrations/configuration/{id} | Configure integration
 [**CreateIntegration**](IntegrationsAPI.md#CreateIntegration) | **Post** /integrations | Create integration
 [**DeleteIntegration**](IntegrationsAPI.md#DeleteIntegration) | **Delete** /integrations/{id} | Delete integration
-[**GetAppAccessProviderOptions**](IntegrationsAPI.md#GetAppAccessProviderOptions) | **Get** /integrations/{id}/options/app-access | Get app-access provider options
+[**GetAppAccessProviderOptions**](IntegrationsAPI.md#GetAppAccessProviderOptions) | **Get** /integrations/{id}/options/app-access | Get Private App Access provider options
 [**GetIntegration**](IntegrationsAPI.md#GetIntegration) | **Get** /integrations/{id} | Get integration
 [**GetIntegrationKubeSettings**](IntegrationsAPI.md#GetIntegrationKubeSettings) | **Get** /integrations/{id}/options/kube-settings | Get Kubernetes settings
 [**GetIntegrationProviderRevisionUpgrade**](IntegrationsAPI.md#GetIntegrationProviderRevisionUpgrade) | **Get** /integration-provider-revision-upgrades/{id} | Preview provider revision upgrade
@@ -32,7 +32,7 @@ Method | HTTP request | Description
 [**UpdateIntegrationEnvironmentPolicy**](IntegrationsAPI.md#UpdateIntegrationEnvironmentPolicy) | **Put** /integrations/environment-policy/{id} | Update integration environment policy
 [**UpdateIntegrationSharing**](IntegrationsAPI.md#UpdateIntegrationSharing) | **Put** /integrations/sharing/{id} | Update integration sharing
 [**UpgradeIntegrationProviderRevision**](IntegrationsAPI.md#UpgradeIntegrationProviderRevision) | **Post** /integrations/{id}/actions/upgrade-provider-revision | Upgrade integration provider revision
-[**ValidateAppAccessHostname**](IntegrationsAPI.md#ValidateAppAccessHostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate an app-access hostname
+[**ValidateAppAccessHostname**](IntegrationsAPI.md#ValidateAppAccessHostname) | **Post** /integrations/{id}/actions/validate-app-access-hostname | Validate a Private App Access hostname
 
 
 
@@ -248,7 +248,7 @@ Name | Type | Description  | Notes
 
 > AppAccessProviderOptions GetAppAccessProviderOptions(ctx, id).Execute()
 
-Get app-access provider options
+Get Private App Access provider options
 
 
 
@@ -2020,7 +2020,7 @@ Name | Type | Description  | Notes
 
 > ValidationResult ValidateAppAccessHostname(ctx, id).ValidateAppAccessHostnameInput(validateAppAccessHostnameInput).Execute()
 
-Validate an app-access hostname
+Validate a Private App Access hostname
 
 
 

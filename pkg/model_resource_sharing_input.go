@@ -25,7 +25,7 @@ type ResourceSharingInput struct {
 	OwnershipScope string `json:"ownershipScope"`
 	// Project that becomes the owner. Required when ownershipScope is project.
 	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
-	// The complete list of project shares. A project left out loses its share. The owning project always keeps write access. You need write access to every project whose share you add or remove.
+	// The complete list of project shares. A project left out loses its share. The owning project always keeps write access. You need Admin access to every project whose share you add or remove.
 	SharedProjects []ProjectShareInput `json:"sharedProjects"`
 	// Lets every project in the organization use the resource without a project share. Only organization-owned clusters, integrations, services and stacks can be available to all projects. Omit it to keep the current setting.
 	AvailableToAllProjects NullableBool `json:"availableToAllProjects,omitempty"`

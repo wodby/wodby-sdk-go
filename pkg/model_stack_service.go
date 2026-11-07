@@ -29,6 +29,10 @@ type StackService struct {
 	Main bool `json:"main"`
 	Disabled bool `json:"disabled"`
 	Required bool `json:"required"`
+	// Whether the stack overrides the service's basic auth default.
+	BasicAuthOverride string `json:"basicAuthOverride"`
+	// Whether new app services of this stack service get their own basic auth entry by default. Always false without a public HTTP endpoint.
+	BasicAuthDefault bool `json:"basicAuthDefault"`
 	Replicas int32 `json:"replicas"`
 	ServiceRevPinned bool `json:"serviceRevPinned"`
 	Outdated bool `json:"outdated"`
@@ -52,7 +56,7 @@ type _StackService StackService
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time) *StackService {
+func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, basicAuthOverride string, basicAuthDefault bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time) *StackService {
 	this := StackService{}
 	this.Id = id
 	this.Name = name
@@ -61,6 +65,8 @@ func NewStackService(id int32, name string, title string, type_ string, main boo
 	this.Main = main
 	this.Disabled = disabled
 	this.Required = required
+	this.BasicAuthOverride = basicAuthOverride
+	this.BasicAuthDefault = basicAuthDefault
 	this.Replicas = replicas
 	this.ServiceRevPinned = serviceRevPinned
 	this.Outdated = outdated
@@ -248,6 +254,54 @@ func (o *StackService) GetRequiredOk() (*bool, bool) {
 // SetRequired sets field value
 func (o *StackService) SetRequired(v bool) {
 	o.Required = v
+}
+
+// GetBasicAuthOverride returns the BasicAuthOverride field value
+func (o *StackService) GetBasicAuthOverride() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.BasicAuthOverride
+}
+
+// GetBasicAuthOverrideOk returns a tuple with the BasicAuthOverride field value
+// and a boolean to check if the value has been set.
+func (o *StackService) GetBasicAuthOverrideOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BasicAuthOverride, true
+}
+
+// SetBasicAuthOverride sets field value
+func (o *StackService) SetBasicAuthOverride(v string) {
+	o.BasicAuthOverride = v
+}
+
+// GetBasicAuthDefault returns the BasicAuthDefault field value
+func (o *StackService) GetBasicAuthDefault() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.BasicAuthDefault
+}
+
+// GetBasicAuthDefaultOk returns a tuple with the BasicAuthDefault field value
+// and a boolean to check if the value has been set.
+func (o *StackService) GetBasicAuthDefaultOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BasicAuthDefault, true
+}
+
+// SetBasicAuthDefault sets field value
+func (o *StackService) SetBasicAuthDefault(v bool) {
+	o.BasicAuthDefault = v
 }
 
 // GetReplicas returns the Replicas field value
@@ -687,6 +741,8 @@ func (o StackService) ToMap() (map[string]interface{}, error) {
 	toSerialize["main"] = o.Main
 	toSerialize["disabled"] = o.Disabled
 	toSerialize["required"] = o.Required
+	toSerialize["basicAuthOverride"] = o.BasicAuthOverride
+	toSerialize["basicAuthDefault"] = o.BasicAuthDefault
 	toSerialize["replicas"] = o.Replicas
 	toSerialize["serviceRevPinned"] = o.ServiceRevPinned
 	toSerialize["outdated"] = o.Outdated
@@ -727,6 +783,8 @@ func (o *StackService) UnmarshalJSON(data []byte) (err error) {
 		"main",
 		"disabled",
 		"required",
+		"basicAuthOverride",
+		"basicAuthDefault",
 		"replicas",
 		"serviceRevPinned",
 		"outdated",

@@ -25,6 +25,8 @@ type NewProjectMembershipsInput struct {
 	OrgMembershipIds []int32 `json:"orgMembershipIds,omitempty"`
 	TeamIds []int32 `json:"teamIds,omitempty"`
 	Role string `json:"role"`
+	// Required when role is custom; a custom role of the project's organization.
+	CustomRoleId *int32 `json:"customRoleId,omitempty"`
 }
 
 type _NewProjectMembershipsInput NewProjectMembershipsInput
@@ -160,6 +162,38 @@ func (o *NewProjectMembershipsInput) SetRole(v string) {
 	o.Role = v
 }
 
+// GetCustomRoleId returns the CustomRoleId field value if set, zero value otherwise.
+func (o *NewProjectMembershipsInput) GetCustomRoleId() int32 {
+	if o == nil || IsNil(o.CustomRoleId) {
+		var ret int32
+		return ret
+	}
+	return *o.CustomRoleId
+}
+
+// GetCustomRoleIdOk returns a tuple with the CustomRoleId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewProjectMembershipsInput) GetCustomRoleIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.CustomRoleId) {
+		return nil, false
+	}
+	return o.CustomRoleId, true
+}
+
+// HasCustomRoleId returns a boolean if a field has been set.
+func (o *NewProjectMembershipsInput) HasCustomRoleId() bool {
+	if o != nil && !IsNil(o.CustomRoleId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomRoleId gets a reference to the given int32 and assigns it to the CustomRoleId field.
+func (o *NewProjectMembershipsInput) SetCustomRoleId(v int32) {
+	o.CustomRoleId = &v
+}
+
 func (o NewProjectMembershipsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -178,6 +212,9 @@ func (o NewProjectMembershipsInput) ToMap() (map[string]interface{}, error) {
 		toSerialize["teamIds"] = o.TeamIds
 	}
 	toSerialize["role"] = o.Role
+	if !IsNil(o.CustomRoleId) {
+		toSerialize["customRoleId"] = o.CustomRoleId
+	}
 	return toSerialize, nil
 }
 

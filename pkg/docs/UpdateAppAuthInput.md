@@ -7,15 +7,16 @@ Name | Type | Description | Notes
 **AppServiceIds** | Pointer to **[]int32** | App services to protect. Omit every scope field to preserve the current scope, or pass an empty list to protect the whole app environment. | [optional] 
 **AppServiceId** | Pointer to **NullableInt32** | Single-service scope. Ignored when appServiceIds is supplied. | [optional] 
 **AppRouteId** | Pointer to **NullableInt32** | Moves the entry to route scope. The owning app service is derived from the route. | [optional] 
-**Login** | **string** |  | 
+**Login** | Pointer to **string** | Omit to keep the current login. | [optional] 
 **Password** | Pointer to **NullableString** | Replaces the existing secret when supplied; omit to keep the current password. | [optional] 
-**Realm** | **string** |  | 
+**GeneratePassword** | Pointer to **bool** | Replace the password with a newly generated one. Ignored when password is given. | [optional] 
+**Realm** | Pointer to **string** | Omit to keep the current realm. | [optional] 
 
 ## Methods
 
 ### NewUpdateAppAuthInput
 
-`func NewUpdateAppAuthInput(login string, realm string, ) *UpdateAppAuthInput`
+`func NewUpdateAppAuthInput() *UpdateAppAuthInput`
 
 NewUpdateAppAuthInput instantiates a new UpdateAppAuthInput object
 This constructor will assign default values to properties that have it defined,
@@ -154,6 +155,11 @@ and a boolean to check if the value has been set.
 
 SetLogin sets Login field to given value.
 
+### HasLogin
+
+`func (o *UpdateAppAuthInput) HasLogin() bool`
+
+HasLogin returns a boolean if a field has been set.
 
 ### GetPassword
 
@@ -190,6 +196,31 @@ HasPassword returns a boolean if a field has been set.
 `func (o *UpdateAppAuthInput) UnsetPassword()`
 
 UnsetPassword ensures that no value is present for Password, not even an explicit nil
+### GetGeneratePassword
+
+`func (o *UpdateAppAuthInput) GetGeneratePassword() bool`
+
+GetGeneratePassword returns the GeneratePassword field if non-nil, zero value otherwise.
+
+### GetGeneratePasswordOk
+
+`func (o *UpdateAppAuthInput) GetGeneratePasswordOk() (*bool, bool)`
+
+GetGeneratePasswordOk returns a tuple with the GeneratePassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGeneratePassword
+
+`func (o *UpdateAppAuthInput) SetGeneratePassword(v bool)`
+
+SetGeneratePassword sets GeneratePassword field to given value.
+
+### HasGeneratePassword
+
+`func (o *UpdateAppAuthInput) HasGeneratePassword() bool`
+
+HasGeneratePassword returns a boolean if a field has been set.
+
 ### GetRealm
 
 `func (o *UpdateAppAuthInput) GetRealm() string`
@@ -209,6 +240,11 @@ and a boolean to check if the value has been set.
 
 SetRealm sets Realm field to given value.
 
+### HasRealm
+
+`func (o *UpdateAppAuthInput) HasRealm() bool`
+
+HasRealm returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

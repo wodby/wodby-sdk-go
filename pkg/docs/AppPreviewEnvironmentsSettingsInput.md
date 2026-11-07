@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **RunCronJobs** | Pointer to **bool** | Omitted keeps the stored value; apps that never set it do not run cron jobs in previews. | [optional] 
 **MaxConcurrent** | Pointer to **int32** |  | [optional] 
 **IdleTtlDays** | Pointer to **int32** |  | [optional] 
+**BasicAuth** | Pointer to **bool** | Protect every preview with basic auth and one shared generated password. Defaults to true. | [optional] 
 
 ## Methods
 
@@ -226,6 +227,31 @@ SetIdleTtlDays sets IdleTtlDays field to given value.
 `func (o *AppPreviewEnvironmentsSettingsInput) HasIdleTtlDays() bool`
 
 HasIdleTtlDays returns a boolean if a field has been set.
+
+### GetBasicAuth
+
+`func (o *AppPreviewEnvironmentsSettingsInput) GetBasicAuth() bool`
+
+GetBasicAuth returns the BasicAuth field if non-nil, zero value otherwise.
+
+### GetBasicAuthOk
+
+`func (o *AppPreviewEnvironmentsSettingsInput) GetBasicAuthOk() (*bool, bool)`
+
+GetBasicAuthOk returns a tuple with the BasicAuth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuth
+
+`func (o *AppPreviewEnvironmentsSettingsInput) SetBasicAuth(v bool)`
+
+SetBasicAuth sets BasicAuth field to given value.
+
+### HasBasicAuth
+
+`func (o *AppPreviewEnvironmentsSettingsInput) HasBasicAuth() bool`
+
+HasBasicAuth returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -12,12 +12,14 @@ Name | Type | Description | Notes
 **RunCronJobs** | **bool** | Run the base environment&#39;s cron jobs in every preview. When false, the default, cron jobs are copied disabled. Previews never copy backup presets and run every service with one replica. | 
 **MaxConcurrent** | **int32** |  | 
 **IdleTtlDays** | **int32** |  | 
+**BasicAuth** | **bool** | Every preview is protected with basic auth using one generated password shared by all previews of the app. | 
+**BasicAuthUsername** | **string** | Username of the shared preview basic auth. Members reveal the password in the dashboard. | 
 
 ## Methods
 
 ### NewAppPreviewEnvironmentsSettings
 
-`func NewAppPreviewEnvironmentsSettings(enabled bool, environmentType string, imports []AppPreviewImport, buildDrafts bool, runCronJobs bool, maxConcurrent int32, idleTtlDays int32, ) *AppPreviewEnvironmentsSettings`
+`func NewAppPreviewEnvironmentsSettings(enabled bool, environmentType string, imports []AppPreviewImport, buildDrafts bool, runCronJobs bool, maxConcurrent int32, idleTtlDays int32, basicAuth bool, basicAuthUsername string, ) *AppPreviewEnvironmentsSettings`
 
 NewAppPreviewEnvironmentsSettings instantiates a new AppPreviewEnvironmentsSettings object
 This constructor will assign default values to properties that have it defined,
@@ -205,6 +207,46 @@ and a boolean to check if the value has been set.
 `func (o *AppPreviewEnvironmentsSettings) SetIdleTtlDays(v int32)`
 
 SetIdleTtlDays sets IdleTtlDays field to given value.
+
+
+### GetBasicAuth
+
+`func (o *AppPreviewEnvironmentsSettings) GetBasicAuth() bool`
+
+GetBasicAuth returns the BasicAuth field if non-nil, zero value otherwise.
+
+### GetBasicAuthOk
+
+`func (o *AppPreviewEnvironmentsSettings) GetBasicAuthOk() (*bool, bool)`
+
+GetBasicAuthOk returns a tuple with the BasicAuth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuth
+
+`func (o *AppPreviewEnvironmentsSettings) SetBasicAuth(v bool)`
+
+SetBasicAuth sets BasicAuth field to given value.
+
+
+### GetBasicAuthUsername
+
+`func (o *AppPreviewEnvironmentsSettings) GetBasicAuthUsername() string`
+
+GetBasicAuthUsername returns the BasicAuthUsername field if non-nil, zero value otherwise.
+
+### GetBasicAuthUsernameOk
+
+`func (o *AppPreviewEnvironmentsSettings) GetBasicAuthUsernameOk() (*string, bool)`
+
+GetBasicAuthUsernameOk returns a tuple with the BasicAuthUsername field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuthUsername
+
+`func (o *AppPreviewEnvironmentsSettings) SetBasicAuthUsername(v string)`
+
+SetBasicAuthUsername sets BasicAuthUsername field to given value.
 
 
 

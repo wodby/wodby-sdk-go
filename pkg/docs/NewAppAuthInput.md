@@ -8,15 +8,16 @@ Name | Type | Description | Notes
 **AppServiceIds** | Pointer to **[]int32** | App services to protect. Omit or pass an empty list to protect the whole app environment. | [optional] 
 **AppServiceId** | Pointer to **NullableInt32** | Single-service scope. Ignored when appServiceIds is supplied. | [optional] 
 **AppRouteId** | Pointer to **NullableInt32** | Route scope. The owning app service is derived from the route. | [optional] 
-**Login** | **string** |  | 
-**Password** | **string** |  | 
-**Realm** | **string** |  | 
+**Login** | Pointer to **string** | Defaults to wodby. Ignored for exemptions. | [optional] 
+**Password** | Pointer to **string** | Omit to let Wodby generate a password, which you reveal in the dashboard. Ignored for exemptions. | [optional] 
+**Realm** | Pointer to **string** |  | [optional] 
+**Exempt** | Pointer to **bool** | Switch basic auth off for the given app services or route even when a wider entry covers them. Requires appServiceIds or appRouteId. | [optional] 
 
 ## Methods
 
 ### NewNewAppAuthInput
 
-`func NewNewAppAuthInput(appInstanceId int32, login string, password string, realm string, ) *NewAppAuthInput`
+`func NewNewAppAuthInput(appInstanceId int32, ) *NewAppAuthInput`
 
 NewNewAppAuthInput instantiates a new NewAppAuthInput object
 This constructor will assign default values to properties that have it defined,
@@ -175,6 +176,11 @@ and a boolean to check if the value has been set.
 
 SetLogin sets Login field to given value.
 
+### HasLogin
+
+`func (o *NewAppAuthInput) HasLogin() bool`
+
+HasLogin returns a boolean if a field has been set.
 
 ### GetPassword
 
@@ -195,6 +201,11 @@ and a boolean to check if the value has been set.
 
 SetPassword sets Password field to given value.
 
+### HasPassword
+
+`func (o *NewAppAuthInput) HasPassword() bool`
+
+HasPassword returns a boolean if a field has been set.
 
 ### GetRealm
 
@@ -215,6 +226,36 @@ and a boolean to check if the value has been set.
 
 SetRealm sets Realm field to given value.
 
+### HasRealm
+
+`func (o *NewAppAuthInput) HasRealm() bool`
+
+HasRealm returns a boolean if a field has been set.
+
+### GetExempt
+
+`func (o *NewAppAuthInput) GetExempt() bool`
+
+GetExempt returns the Exempt field if non-nil, zero value otherwise.
+
+### GetExemptOk
+
+`func (o *NewAppAuthInput) GetExemptOk() (*bool, bool)`
+
+GetExemptOk returns a tuple with the Exempt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExempt
+
+`func (o *NewAppAuthInput) SetExempt(v bool)`
+
+SetExempt sets Exempt field to given value.
+
+### HasExempt
+
+`func (o *NewAppAuthInput) HasExempt() bool`
+
+HasExempt returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

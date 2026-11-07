@@ -25,6 +25,16 @@ type AppServiceLink struct {
 	AppServiceId int32 `json:"appServiceId"`
 	LinkedAppServiceId int32 `json:"linkedAppServiceId"`
 	Name string `json:"name"`
+	// The linked app service is in another app environment, of the same app or another one.
+	CrossApp bool `json:"crossApp"`
+	// The app environment of a linked app service in another environment; null otherwise.
+	TargetAppInstanceId NullableInt32 `json:"targetAppInstanceId,omitempty"`
+	TargetAppInstanceName NullableString `json:"targetAppInstanceName,omitempty"`
+	TargetAppInstanceTitle NullableString `json:"targetAppInstanceTitle,omitempty"`
+	// The app of a linked app service in another environment; null otherwise.
+	TargetAppId NullableInt32 `json:"targetAppId,omitempty"`
+	TargetAppName NullableString `json:"targetAppName,omitempty"`
+	TargetAppTitle NullableString `json:"targetAppTitle,omitempty"`
 }
 
 type _AppServiceLink AppServiceLink
@@ -33,12 +43,13 @@ type _AppServiceLink AppServiceLink
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServiceLink(id int32, appServiceId int32, linkedAppServiceId int32, name string) *AppServiceLink {
+func NewAppServiceLink(id int32, appServiceId int32, linkedAppServiceId int32, name string, crossApp bool) *AppServiceLink {
 	this := AppServiceLink{}
 	this.Id = id
 	this.AppServiceId = appServiceId
 	this.LinkedAppServiceId = linkedAppServiceId
 	this.Name = name
+	this.CrossApp = crossApp
 	return &this
 }
 
@@ -146,6 +157,282 @@ func (o *AppServiceLink) SetName(v string) {
 	o.Name = v
 }
 
+// GetCrossApp returns the CrossApp field value
+func (o *AppServiceLink) GetCrossApp() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CrossApp
+}
+
+// GetCrossAppOk returns a tuple with the CrossApp field value
+// and a boolean to check if the value has been set.
+func (o *AppServiceLink) GetCrossAppOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CrossApp, true
+}
+
+// SetCrossApp sets field value
+func (o *AppServiceLink) SetCrossApp(v bool) {
+	o.CrossApp = v
+}
+
+// GetTargetAppInstanceId returns the TargetAppInstanceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceLink) GetTargetAppInstanceId() int32 {
+	if o == nil || IsNil(o.TargetAppInstanceId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.TargetAppInstanceId.Get()
+}
+
+// GetTargetAppInstanceIdOk returns a tuple with the TargetAppInstanceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceLink) GetTargetAppInstanceIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetAppInstanceId.Get(), o.TargetAppInstanceId.IsSet()
+}
+
+// HasTargetAppInstanceId returns a boolean if a field has been set.
+func (o *AppServiceLink) HasTargetAppInstanceId() bool {
+	if o != nil && o.TargetAppInstanceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetAppInstanceId gets a reference to the given NullableInt32 and assigns it to the TargetAppInstanceId field.
+func (o *AppServiceLink) SetTargetAppInstanceId(v int32) {
+	o.TargetAppInstanceId.Set(&v)
+}
+// SetTargetAppInstanceIdNil sets the value for TargetAppInstanceId to be an explicit nil
+func (o *AppServiceLink) SetTargetAppInstanceIdNil() {
+	o.TargetAppInstanceId.Set(nil)
+}
+
+// UnsetTargetAppInstanceId ensures that no value is present for TargetAppInstanceId, not even an explicit nil
+func (o *AppServiceLink) UnsetTargetAppInstanceId() {
+	o.TargetAppInstanceId.Unset()
+}
+
+// GetTargetAppInstanceName returns the TargetAppInstanceName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceLink) GetTargetAppInstanceName() string {
+	if o == nil || IsNil(o.TargetAppInstanceName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TargetAppInstanceName.Get()
+}
+
+// GetTargetAppInstanceNameOk returns a tuple with the TargetAppInstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceLink) GetTargetAppInstanceNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetAppInstanceName.Get(), o.TargetAppInstanceName.IsSet()
+}
+
+// HasTargetAppInstanceName returns a boolean if a field has been set.
+func (o *AppServiceLink) HasTargetAppInstanceName() bool {
+	if o != nil && o.TargetAppInstanceName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetAppInstanceName gets a reference to the given NullableString and assigns it to the TargetAppInstanceName field.
+func (o *AppServiceLink) SetTargetAppInstanceName(v string) {
+	o.TargetAppInstanceName.Set(&v)
+}
+// SetTargetAppInstanceNameNil sets the value for TargetAppInstanceName to be an explicit nil
+func (o *AppServiceLink) SetTargetAppInstanceNameNil() {
+	o.TargetAppInstanceName.Set(nil)
+}
+
+// UnsetTargetAppInstanceName ensures that no value is present for TargetAppInstanceName, not even an explicit nil
+func (o *AppServiceLink) UnsetTargetAppInstanceName() {
+	o.TargetAppInstanceName.Unset()
+}
+
+// GetTargetAppInstanceTitle returns the TargetAppInstanceTitle field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceLink) GetTargetAppInstanceTitle() string {
+	if o == nil || IsNil(o.TargetAppInstanceTitle.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TargetAppInstanceTitle.Get()
+}
+
+// GetTargetAppInstanceTitleOk returns a tuple with the TargetAppInstanceTitle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceLink) GetTargetAppInstanceTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetAppInstanceTitle.Get(), o.TargetAppInstanceTitle.IsSet()
+}
+
+// HasTargetAppInstanceTitle returns a boolean if a field has been set.
+func (o *AppServiceLink) HasTargetAppInstanceTitle() bool {
+	if o != nil && o.TargetAppInstanceTitle.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetAppInstanceTitle gets a reference to the given NullableString and assigns it to the TargetAppInstanceTitle field.
+func (o *AppServiceLink) SetTargetAppInstanceTitle(v string) {
+	o.TargetAppInstanceTitle.Set(&v)
+}
+// SetTargetAppInstanceTitleNil sets the value for TargetAppInstanceTitle to be an explicit nil
+func (o *AppServiceLink) SetTargetAppInstanceTitleNil() {
+	o.TargetAppInstanceTitle.Set(nil)
+}
+
+// UnsetTargetAppInstanceTitle ensures that no value is present for TargetAppInstanceTitle, not even an explicit nil
+func (o *AppServiceLink) UnsetTargetAppInstanceTitle() {
+	o.TargetAppInstanceTitle.Unset()
+}
+
+// GetTargetAppId returns the TargetAppId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceLink) GetTargetAppId() int32 {
+	if o == nil || IsNil(o.TargetAppId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.TargetAppId.Get()
+}
+
+// GetTargetAppIdOk returns a tuple with the TargetAppId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceLink) GetTargetAppIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetAppId.Get(), o.TargetAppId.IsSet()
+}
+
+// HasTargetAppId returns a boolean if a field has been set.
+func (o *AppServiceLink) HasTargetAppId() bool {
+	if o != nil && o.TargetAppId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetAppId gets a reference to the given NullableInt32 and assigns it to the TargetAppId field.
+func (o *AppServiceLink) SetTargetAppId(v int32) {
+	o.TargetAppId.Set(&v)
+}
+// SetTargetAppIdNil sets the value for TargetAppId to be an explicit nil
+func (o *AppServiceLink) SetTargetAppIdNil() {
+	o.TargetAppId.Set(nil)
+}
+
+// UnsetTargetAppId ensures that no value is present for TargetAppId, not even an explicit nil
+func (o *AppServiceLink) UnsetTargetAppId() {
+	o.TargetAppId.Unset()
+}
+
+// GetTargetAppName returns the TargetAppName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceLink) GetTargetAppName() string {
+	if o == nil || IsNil(o.TargetAppName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TargetAppName.Get()
+}
+
+// GetTargetAppNameOk returns a tuple with the TargetAppName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceLink) GetTargetAppNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetAppName.Get(), o.TargetAppName.IsSet()
+}
+
+// HasTargetAppName returns a boolean if a field has been set.
+func (o *AppServiceLink) HasTargetAppName() bool {
+	if o != nil && o.TargetAppName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetAppName gets a reference to the given NullableString and assigns it to the TargetAppName field.
+func (o *AppServiceLink) SetTargetAppName(v string) {
+	o.TargetAppName.Set(&v)
+}
+// SetTargetAppNameNil sets the value for TargetAppName to be an explicit nil
+func (o *AppServiceLink) SetTargetAppNameNil() {
+	o.TargetAppName.Set(nil)
+}
+
+// UnsetTargetAppName ensures that no value is present for TargetAppName, not even an explicit nil
+func (o *AppServiceLink) UnsetTargetAppName() {
+	o.TargetAppName.Unset()
+}
+
+// GetTargetAppTitle returns the TargetAppTitle field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServiceLink) GetTargetAppTitle() string {
+	if o == nil || IsNil(o.TargetAppTitle.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TargetAppTitle.Get()
+}
+
+// GetTargetAppTitleOk returns a tuple with the TargetAppTitle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServiceLink) GetTargetAppTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetAppTitle.Get(), o.TargetAppTitle.IsSet()
+}
+
+// HasTargetAppTitle returns a boolean if a field has been set.
+func (o *AppServiceLink) HasTargetAppTitle() bool {
+	if o != nil && o.TargetAppTitle.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetAppTitle gets a reference to the given NullableString and assigns it to the TargetAppTitle field.
+func (o *AppServiceLink) SetTargetAppTitle(v string) {
+	o.TargetAppTitle.Set(&v)
+}
+// SetTargetAppTitleNil sets the value for TargetAppTitle to be an explicit nil
+func (o *AppServiceLink) SetTargetAppTitleNil() {
+	o.TargetAppTitle.Set(nil)
+}
+
+// UnsetTargetAppTitle ensures that no value is present for TargetAppTitle, not even an explicit nil
+func (o *AppServiceLink) UnsetTargetAppTitle() {
+	o.TargetAppTitle.Unset()
+}
+
 func (o AppServiceLink) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -160,6 +447,25 @@ func (o AppServiceLink) ToMap() (map[string]interface{}, error) {
 	toSerialize["appServiceId"] = o.AppServiceId
 	toSerialize["linkedAppServiceId"] = o.LinkedAppServiceId
 	toSerialize["name"] = o.Name
+	toSerialize["crossApp"] = o.CrossApp
+	if o.TargetAppInstanceId.IsSet() {
+		toSerialize["targetAppInstanceId"] = o.TargetAppInstanceId.Get()
+	}
+	if o.TargetAppInstanceName.IsSet() {
+		toSerialize["targetAppInstanceName"] = o.TargetAppInstanceName.Get()
+	}
+	if o.TargetAppInstanceTitle.IsSet() {
+		toSerialize["targetAppInstanceTitle"] = o.TargetAppInstanceTitle.Get()
+	}
+	if o.TargetAppId.IsSet() {
+		toSerialize["targetAppId"] = o.TargetAppId.Get()
+	}
+	if o.TargetAppName.IsSet() {
+		toSerialize["targetAppName"] = o.TargetAppName.Get()
+	}
+	if o.TargetAppTitle.IsSet() {
+		toSerialize["targetAppTitle"] = o.TargetAppTitle.Get()
+	}
 	return toSerialize, nil
 }
 
@@ -172,6 +478,7 @@ func (o *AppServiceLink) UnmarshalJSON(data []byte) (err error) {
 		"appServiceId",
 		"linkedAppServiceId",
 		"name",
+		"crossApp",
 	}
 
 	allProperties := make(map[string]interface{})

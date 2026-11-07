@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Raw** | **string** |  | 
 **Scalable** | **bool** |  | 
+**BasicAuth** | Pointer to **bool** | Whether the service asks for its public HTTP endpoints to be protected with basic auth by default. | [optional] 
 **Integrations** | Pointer to [**[]ServiceIntegrationRequirement**](ServiceIntegrationRequirement.md) |  | [optional] 
 
 ## Methods
@@ -66,6 +67,31 @@ and a boolean to check if the value has been set.
 
 SetScalable sets Scalable field to given value.
 
+
+### GetBasicAuth
+
+`func (o *ServiceManifest) GetBasicAuth() bool`
+
+GetBasicAuth returns the BasicAuth field if non-nil, zero value otherwise.
+
+### GetBasicAuthOk
+
+`func (o *ServiceManifest) GetBasicAuthOk() (*bool, bool)`
+
+GetBasicAuthOk returns a tuple with the BasicAuth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuth
+
+`func (o *ServiceManifest) SetBasicAuth(v bool)`
+
+SetBasicAuth sets BasicAuth field to given value.
+
+### HasBasicAuth
+
+`func (o *ServiceManifest) HasBasicAuth() bool`
+
+HasBasicAuth returns a boolean if a field has been set.
 
 ### GetIntegrations
 

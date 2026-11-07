@@ -30,6 +30,8 @@ type NewAppServiceOverrideInput struct {
 	Settings []AppServiceSettingInput `json:"settings,omitempty"`
 	// The database server, and optionally the database, of a database service. Required to enable an external database service, such as a managed PostgreSQL server.
 	Database *AppServiceDatabaseInput `json:"database,omitempty"`
+	// Protect the service's public HTTP endpoints with their own basic auth and a generated password, or not. Omit to follow the stack service's basicAuthDefault.
+	BasicAuth *bool `json:"basicAuth,omitempty"`
 }
 
 type _NewAppServiceOverrideInput NewAppServiceOverrideInput
@@ -236,6 +238,38 @@ func (o *NewAppServiceOverrideInput) SetDatabase(v AppServiceDatabaseInput) {
 	o.Database = &v
 }
 
+// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+func (o *NewAppServiceOverrideInput) GetBasicAuth() bool {
+	if o == nil || IsNil(o.BasicAuth) {
+		var ret bool
+		return ret
+	}
+	return *o.BasicAuth
+}
+
+// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppServiceOverrideInput) GetBasicAuthOk() (*bool, bool) {
+	if o == nil || IsNil(o.BasicAuth) {
+		return nil, false
+	}
+	return o.BasicAuth, true
+}
+
+// HasBasicAuth returns a boolean if a field has been set.
+func (o *NewAppServiceOverrideInput) HasBasicAuth() bool {
+	if o != nil && !IsNil(o.BasicAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
+func (o *NewAppServiceOverrideInput) SetBasicAuth(v bool) {
+	o.BasicAuth = &v
+}
+
 func (o NewAppServiceOverrideInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -261,6 +295,9 @@ func (o NewAppServiceOverrideInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Database) {
 		toSerialize["database"] = o.Database
+	}
+	if !IsNil(o.BasicAuth) {
+		toSerialize["basicAuth"] = o.BasicAuth
 	}
 	return toSerialize, nil
 }

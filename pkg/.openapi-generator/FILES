@@ -25,6 +25,7 @@ api_org_memberships.go
 api_org_sso.go
 api_orgs.go
 api_project_memberships.go
+api_project_roles.go
 api_projects.go
 api_providers.go
 api_services.go
@@ -63,9 +64,11 @@ docs/AppAccessSettingInput.md
 docs/AppAnnotation.md
 docs/AppAuth.md
 docs/AppAuthScope.md
+docs/AppAuthSource.md
 docs/AppAuthsAPI.md
 docs/AppBuild.md
 docs/AppBuildConfig.md
+docs/AppBuildVulnerabilityScan.md
 docs/AppBuildsAPI.md
 docs/AppBuildsCreateResponse.md
 docs/AppBuildsResponse.md
@@ -122,6 +125,7 @@ docs/AppServiceAnnotationSource.md
 docs/AppServiceBuild.md
 docs/AppServiceBuildArg.md
 docs/AppServiceBuildConfig.md
+docs/AppServiceBuildVulnerabilityScan.md
 docs/AppServiceCapacityPreflight.md
 docs/AppServiceCapacityPreflightRequest.md
 docs/AppServiceConfig.md
@@ -130,6 +134,10 @@ docs/AppServiceContainer.md
 docs/AppServiceCronJob.md
 docs/AppServiceCronJobsResponse.md
 docs/AppServiceCronSchedule.md
+docs/AppServiceCustomLink.md
+docs/AppServiceCustomLinkInput.md
+docs/AppServiceCustomLinkInputValuesInner.md
+docs/AppServiceCustomLinkValue.md
 docs/AppServiceDatabaseInput.md
 docs/AppServiceDeployment.md
 docs/AppServiceDeploymentRequest.md
@@ -141,6 +149,7 @@ docs/AppServiceInput.md
 docs/AppServiceIntegration.md
 docs/AppServiceIntegrationInput.md
 docs/AppServiceLink.md
+docs/AppServiceLinkCandidate.md
 docs/AppServiceLinkInput.md
 docs/AppServicePod.md
 docs/AppServicePodContainer.md
@@ -181,6 +190,8 @@ docs/ClusterAutoUpgradeVersionPolicy.md
 docs/ClusterAutoUpgradeVersionPolicyInput.md
 docs/ClusterCapabilities.md
 docs/ClusterCapabilityPolicy.md
+docs/ClusterComponent.md
+docs/ClusterComponentUpdate.md
 docs/ClusterCreationResult.md
 docs/ClusterEnvironmentPolicyInput.md
 docs/ClusterInfraAppUpgradeChangelog.md
@@ -308,6 +319,8 @@ docs/Org.md
 docs/OrgCapabilities.md
 docs/OrgMembership.md
 docs/OrgMembershipRoleInput.md
+docs/OrgMembershipTeamsInput.md
+docs/OrgMembershipTeamsInputTeamsInner.md
 docs/OrgMembershipsAPI.md
 docs/OrgSSODomain.md
 docs/OrgSSOProvider.md
@@ -319,6 +332,10 @@ docs/OrgSubscription.md
 docs/OrgSubscriptionDetails.md
 docs/OrgSubscriptionPlan.md
 docs/OrgSubscriptionPlanDetails.md
+docs/OrgUsageItem.md
+docs/OrgUsagePeriod.md
+docs/OrgUsageProject.md
+docs/OrgUsageReport.md
 docs/OrgsAPI.md
 docs/ProblemDetails.md
 docs/ProblemFieldError.md
@@ -326,6 +343,10 @@ docs/Project.md
 docs/ProjectMembership.md
 docs/ProjectMembershipRoleInput.md
 docs/ProjectMembershipsAPI.md
+docs/ProjectPermission.md
+docs/ProjectRole.md
+docs/ProjectRoleInput.md
+docs/ProjectRolesAPI.md
 docs/ProjectShareInput.md
 docs/ProjectsAPI.md
 docs/Provider.md
@@ -340,6 +361,8 @@ docs/RemoteGitRepoFilePresence.md
 docs/RepeatTaskRequest.md
 docs/ResolveIntegrationResult.md
 docs/ResolvedServiceConfig.md
+docs/ResourcePreset.md
+docs/ResourcePresetInput.md
 docs/ResourceProjectShare.md
 docs/ResourceSharing.md
 docs/ResourceSharingInput.md
@@ -442,6 +465,7 @@ docs/UpdateAppServiceCronScheduleInput.md
 docs/UpdateAppServiceDatabaseInput.md
 docs/UpdateAppServiceEnvVarInput.md
 docs/UpdateBackupPresetInput.md
+docs/UpdateClusterComponentRequest.md
 docs/UpdateClusterGPUNodePoolInput.md
 docs/UpdateCurrentUserRequest.md
 docs/UpdateDatabaseUserDBsInput.md
@@ -469,6 +493,8 @@ docs/ValidateAppAccessHostnameInput.md
 docs/ValidationResult.md
 docs/VerifyOrgSSODomainInput.md
 docs/VolumeSizeInput.md
+docs/VulnerabilityCounts.md
+docs/VulnerabilityScanStatus.md
 docs/WodbyCloudMachineType.md
 docs/Workspace.md
 docs/WorkspaceConnection.md
@@ -505,8 +531,10 @@ model_app_access_setting_input.go
 model_app_annotation.go
 model_app_auth.go
 model_app_auth_scope.go
+model_app_auth_source.go
 model_app_build.go
 model_app_build_config.go
+model_app_build_vulnerability_scan.go
 model_app_builds_create_response.go
 model_app_builds_response.go
 model_app_deployment.go
@@ -558,6 +586,7 @@ model_app_service_annotation_source.go
 model_app_service_build.go
 model_app_service_build_arg.go
 model_app_service_build_config.go
+model_app_service_build_vulnerability_scan.go
 model_app_service_capacity_preflight.go
 model_app_service_capacity_preflight_request.go
 model_app_service_config.go
@@ -566,6 +595,10 @@ model_app_service_container.go
 model_app_service_cron_job.go
 model_app_service_cron_jobs_response.go
 model_app_service_cron_schedule.go
+model_app_service_custom_link.go
+model_app_service_custom_link_input.go
+model_app_service_custom_link_input_values_inner.go
+model_app_service_custom_link_value.go
 model_app_service_database_input.go
 model_app_service_deployment.go
 model_app_service_deployment_request.go
@@ -577,6 +610,7 @@ model_app_service_input.go
 model_app_service_integration.go
 model_app_service_integration_input.go
 model_app_service_link.go
+model_app_service_link_candidate.go
 model_app_service_link_input.go
 model_app_service_pod.go
 model_app_service_pod_container.go
@@ -613,6 +647,8 @@ model_cluster_auto_upgrade_version_policy.go
 model_cluster_auto_upgrade_version_policy_input.go
 model_cluster_capabilities.go
 model_cluster_capability_policy.go
+model_cluster_component.go
+model_cluster_component_update.go
 model_cluster_creation_result.go
 model_cluster_environment_policy_input.go
 model_cluster_infra_app_upgrade_changelog.go
@@ -732,6 +768,8 @@ model_org.go
 model_org_capabilities.go
 model_org_membership.go
 model_org_membership_role_input.go
+model_org_membership_teams_input.go
+model_org_membership_teams_input_teams_inner.go
 model_org_settings.go
 model_org_settings_input.go
 model_org_sso_domain.go
@@ -741,11 +779,18 @@ model_org_subscription.go
 model_org_subscription_details.go
 model_org_subscription_plan.go
 model_org_subscription_plan_details.go
+model_org_usage_item.go
+model_org_usage_period.go
+model_org_usage_project.go
+model_org_usage_report.go
 model_problem_details.go
 model_problem_field_error.go
 model_project.go
 model_project_membership.go
 model_project_membership_role_input.go
+model_project_permission.go
+model_project_role.go
+model_project_role_input.go
 model_project_share_input.go
 model_provider.go
 model_provider_manifest_input.go
@@ -758,6 +803,8 @@ model_remote_git_repo_file_presence.go
 model_repeat_task_request.go
 model_resolve_integration_result.go
 model_resolved_service_config.go
+model_resource_preset.go
+model_resource_preset_input.go
 model_resource_project_share.go
 model_resource_sharing.go
 model_resource_sharing_input.go
@@ -853,6 +900,7 @@ model_update_app_service_cron_schedule_input.go
 model_update_app_service_database_input.go
 model_update_app_service_env_var_input.go
 model_update_backup_preset_input.go
+model_update_cluster_component_request.go
 model_update_cluster_gpu_node_pool_input.go
 model_update_current_user_request.go
 model_update_database_user_dbs_input.go
@@ -880,6 +928,8 @@ model_validate_app_access_hostname_input.go
 model_validation_result.go
 model_verify_org_sso_domain_input.go
 model_volume_size_input.go
+model_vulnerability_counts.go
+model_vulnerability_scan_status.go
 model_wodby_cloud_machine_type.go
 model_workspace.go
 model_workspace_connection.go
@@ -913,6 +963,7 @@ test/api_org_memberships_test.go
 test/api_org_sso_test.go
 test/api_orgs_test.go
 test/api_project_memberships_test.go
+test/api_project_roles_test.go
 test/api_projects_test.go
 test/api_providers_test.go
 test/api_services_test.go

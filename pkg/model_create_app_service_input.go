@@ -32,6 +32,8 @@ type CreateAppServiceInput struct {
 	Database *AppServiceDatabaseInput `json:"database,omitempty"`
 	Resources *ResourcesInput `json:"resources,omitempty"`
 	Scalability *ScalabilityInput `json:"scalability,omitempty"`
+	// Protect the service's public HTTP endpoints with their own basic auth and a generated password, or not. Omit to follow the stack service's basicAuthDefault.
+	BasicAuth *bool `json:"basicAuth,omitempty"`
 }
 
 type _CreateAppServiceInput CreateAppServiceInput
@@ -401,6 +403,38 @@ func (o *CreateAppServiceInput) SetScalability(v ScalabilityInput) {
 	o.Scalability = &v
 }
 
+// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+func (o *CreateAppServiceInput) GetBasicAuth() bool {
+	if o == nil || IsNil(o.BasicAuth) {
+		var ret bool
+		return ret
+	}
+	return *o.BasicAuth
+}
+
+// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateAppServiceInput) GetBasicAuthOk() (*bool, bool) {
+	if o == nil || IsNil(o.BasicAuth) {
+		return nil, false
+	}
+	return o.BasicAuth, true
+}
+
+// HasBasicAuth returns a boolean if a field has been set.
+func (o *CreateAppServiceInput) HasBasicAuth() bool {
+	if o != nil && !IsNil(o.BasicAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
+func (o *CreateAppServiceInput) SetBasicAuth(v bool) {
+	o.BasicAuth = &v
+}
+
 func (o CreateAppServiceInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -439,6 +473,9 @@ func (o CreateAppServiceInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Scalability) {
 		toSerialize["scalability"] = o.Scalability
+	}
+	if !IsNil(o.BasicAuth) {
+		toSerialize["basicAuth"] = o.BasicAuth
 	}
 	return toSerialize, nil
 }

@@ -30,6 +30,10 @@ type AppPreviewEnvironmentsSettings struct {
 	RunCronJobs bool `json:"runCronJobs"`
 	MaxConcurrent int32 `json:"maxConcurrent"`
 	IdleTtlDays int32 `json:"idleTtlDays"`
+	// Every preview is protected with basic auth using one generated password shared by all previews of the app.
+	BasicAuth bool `json:"basicAuth"`
+	// Username of the shared preview basic auth. Members reveal the password in the dashboard.
+	BasicAuthUsername string `json:"basicAuthUsername"`
 }
 
 type _AppPreviewEnvironmentsSettings AppPreviewEnvironmentsSettings
@@ -38,7 +42,7 @@ type _AppPreviewEnvironmentsSettings AppPreviewEnvironmentsSettings
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppPreviewEnvironmentsSettings(enabled bool, environmentType string, imports []AppPreviewImport, buildDrafts bool, runCronJobs bool, maxConcurrent int32, idleTtlDays int32) *AppPreviewEnvironmentsSettings {
+func NewAppPreviewEnvironmentsSettings(enabled bool, environmentType string, imports []AppPreviewImport, buildDrafts bool, runCronJobs bool, maxConcurrent int32, idleTtlDays int32, basicAuth bool, basicAuthUsername string) *AppPreviewEnvironmentsSettings {
 	this := AppPreviewEnvironmentsSettings{}
 	this.Enabled = enabled
 	this.EnvironmentType = environmentType
@@ -47,6 +51,8 @@ func NewAppPreviewEnvironmentsSettings(enabled bool, environmentType string, imp
 	this.RunCronJobs = runCronJobs
 	this.MaxConcurrent = maxConcurrent
 	this.IdleTtlDays = idleTtlDays
+	this.BasicAuth = basicAuth
+	this.BasicAuthUsername = basicAuthUsername
 	return &this
 }
 
@@ -268,6 +274,54 @@ func (o *AppPreviewEnvironmentsSettings) SetIdleTtlDays(v int32) {
 	o.IdleTtlDays = v
 }
 
+// GetBasicAuth returns the BasicAuth field value
+func (o *AppPreviewEnvironmentsSettings) GetBasicAuth() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.BasicAuth
+}
+
+// GetBasicAuthOk returns a tuple with the BasicAuth field value
+// and a boolean to check if the value has been set.
+func (o *AppPreviewEnvironmentsSettings) GetBasicAuthOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BasicAuth, true
+}
+
+// SetBasicAuth sets field value
+func (o *AppPreviewEnvironmentsSettings) SetBasicAuth(v bool) {
+	o.BasicAuth = v
+}
+
+// GetBasicAuthUsername returns the BasicAuthUsername field value
+func (o *AppPreviewEnvironmentsSettings) GetBasicAuthUsername() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.BasicAuthUsername
+}
+
+// GetBasicAuthUsernameOk returns a tuple with the BasicAuthUsername field value
+// and a boolean to check if the value has been set.
+func (o *AppPreviewEnvironmentsSettings) GetBasicAuthUsernameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.BasicAuthUsername, true
+}
+
+// SetBasicAuthUsername sets field value
+func (o *AppPreviewEnvironmentsSettings) SetBasicAuthUsername(v string) {
+	o.BasicAuthUsername = v
+}
+
 func (o AppPreviewEnvironmentsSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -288,6 +342,8 @@ func (o AppPreviewEnvironmentsSettings) ToMap() (map[string]interface{}, error) 
 	toSerialize["runCronJobs"] = o.RunCronJobs
 	toSerialize["maxConcurrent"] = o.MaxConcurrent
 	toSerialize["idleTtlDays"] = o.IdleTtlDays
+	toSerialize["basicAuth"] = o.BasicAuth
+	toSerialize["basicAuthUsername"] = o.BasicAuthUsername
 	return toSerialize, nil
 }
 
@@ -303,6 +359,8 @@ func (o *AppPreviewEnvironmentsSettings) UnmarshalJSON(data []byte) (err error) 
 		"runCronJobs",
 		"maxConcurrent",
 		"idleTtlDays",
+		"basicAuth",
+		"basicAuthUsername",
 	}
 
 	allProperties := make(map[string]interface{})

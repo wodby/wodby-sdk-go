@@ -15,12 +15,14 @@ Name | Type | Description | Notes
 **AppAccess** | **bool** |  | 
 **OrgSSO** | **bool** |  | 
 **WodbyCloud** | **bool** |  | 
+**VulnerabilityScanning** | **bool** | Whether the organization&#39;s plan includes vulnerability scanning of deployed builds. | 
+**PreviewEnvironments** | **bool** | Whether the organization&#39;s plan includes pull request preview environments. | 
 
 ## Methods
 
 ### NewOrgCapabilities
 
-`func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, appAccess bool, orgSSO bool, wodbyCloud bool, ) *OrgCapabilities`
+`func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, appAccess bool, orgSSO bool, wodbyCloud bool, vulnerabilityScanning bool, previewEnvironments bool, ) *OrgCapabilities`
 
 NewOrgCapabilities instantiates a new OrgCapabilities object
 This constructor will assign default values to properties that have it defined,
@@ -253,6 +255,46 @@ and a boolean to check if the value has been set.
 `func (o *OrgCapabilities) SetWodbyCloud(v bool)`
 
 SetWodbyCloud sets WodbyCloud field to given value.
+
+
+### GetVulnerabilityScanning
+
+`func (o *OrgCapabilities) GetVulnerabilityScanning() bool`
+
+GetVulnerabilityScanning returns the VulnerabilityScanning field if non-nil, zero value otherwise.
+
+### GetVulnerabilityScanningOk
+
+`func (o *OrgCapabilities) GetVulnerabilityScanningOk() (*bool, bool)`
+
+GetVulnerabilityScanningOk returns a tuple with the VulnerabilityScanning field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVulnerabilityScanning
+
+`func (o *OrgCapabilities) SetVulnerabilityScanning(v bool)`
+
+SetVulnerabilityScanning sets VulnerabilityScanning field to given value.
+
+
+### GetPreviewEnvironments
+
+`func (o *OrgCapabilities) GetPreviewEnvironments() bool`
+
+GetPreviewEnvironments returns the PreviewEnvironments field if non-nil, zero value otherwise.
+
+### GetPreviewEnvironmentsOk
+
+`func (o *OrgCapabilities) GetPreviewEnvironmentsOk() (*bool, bool)`
+
+GetPreviewEnvironmentsOk returns a tuple with the PreviewEnvironments field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviewEnvironments
+
+`func (o *OrgCapabilities) SetPreviewEnvironments(v bool)`
+
+SetPreviewEnvironments sets PreviewEnvironments field to given value.
 
 
 

@@ -31,8 +31,14 @@ type AppAuth struct {
 	// Deprecated
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	AppRouteId NullableInt32 `json:"appRouteId,omitempty"`
+	// Empty for exemptions.
 	Login string `json:"login"`
 	Realm string `json:"realm"`
+	Source AppAuthSource `json:"source"`
+	// True while the password is one Wodby generated. Setting a password by hand clears it.
+	Generated bool `json:"generated"`
+	// Exemptions switch basic auth off for their services or route even when a wider entry covers them. They have no login or password.
+	Exempt bool `json:"exempt"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -43,7 +49,7 @@ type _AppAuth AppAuth
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds []int32, login string, realm string, createdAt time.Time, updatedAt time.Time) *AppAuth {
+func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds []int32, login string, realm string, source AppAuthSource, generated bool, exempt bool, createdAt time.Time, updatedAt time.Time) *AppAuth {
 	this := AppAuth{}
 	this.Id = id
 	this.AppInstanceId = appInstanceId
@@ -51,6 +57,9 @@ func NewAppAuth(id int32, appInstanceId int32, scope AppAuthScope, appServiceIds
 	this.AppServiceIds = appServiceIds
 	this.Login = login
 	this.Realm = realm
+	this.Source = source
+	this.Generated = generated
+	this.Exempt = exempt
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -295,6 +304,78 @@ func (o *AppAuth) SetRealm(v string) {
 	o.Realm = v
 }
 
+// GetSource returns the Source field value
+func (o *AppAuth) GetSource() AppAuthSource {
+	if o == nil {
+		var ret AppAuthSource
+		return ret
+	}
+
+	return o.Source
+}
+
+// GetSourceOk returns a tuple with the Source field value
+// and a boolean to check if the value has been set.
+func (o *AppAuth) GetSourceOk() (*AppAuthSource, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Source, true
+}
+
+// SetSource sets field value
+func (o *AppAuth) SetSource(v AppAuthSource) {
+	o.Source = v
+}
+
+// GetGenerated returns the Generated field value
+func (o *AppAuth) GetGenerated() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Generated
+}
+
+// GetGeneratedOk returns a tuple with the Generated field value
+// and a boolean to check if the value has been set.
+func (o *AppAuth) GetGeneratedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Generated, true
+}
+
+// SetGenerated sets field value
+func (o *AppAuth) SetGenerated(v bool) {
+	o.Generated = v
+}
+
+// GetExempt returns the Exempt field value
+func (o *AppAuth) GetExempt() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Exempt
+}
+
+// GetExemptOk returns a tuple with the Exempt field value
+// and a boolean to check if the value has been set.
+func (o *AppAuth) GetExemptOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Exempt, true
+}
+
+// SetExempt sets field value
+func (o *AppAuth) SetExempt(v bool) {
+	o.Exempt = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppAuth) GetCreatedAt() time.Time {
 	if o == nil {
@@ -365,6 +446,9 @@ func (o AppAuth) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["login"] = o.Login
 	toSerialize["realm"] = o.Realm
+	toSerialize["source"] = o.Source
+	toSerialize["generated"] = o.Generated
+	toSerialize["exempt"] = o.Exempt
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil
@@ -381,6 +465,9 @@ func (o *AppAuth) UnmarshalJSON(data []byte) (err error) {
 		"appServiceIds",
 		"login",
 		"realm",
+		"source",
+		"generated",
+		"exempt",
 		"createdAt",
 		"updatedAt",
 	}

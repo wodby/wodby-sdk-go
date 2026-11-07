@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **PreviouslyDeployed** | **bool** |  | 
 **CurrentlyDeployed** | **bool** |  | 
 **CurrentBuildNumber** | Pointer to **NullableInt32** |  | [optional] 
+**VulnerabilityScan** | Pointer to [**NullableAppServiceBuildVulnerabilityScan**](AppServiceBuildVulnerabilityScan.md) | Latest vulnerability scan of this image. Images are scanned only while they are currently deployed. Omitted when the image was never scanned and is not deployed, when scanning is unavailable for the organization, and for builds nested in deployments. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -293,6 +294,41 @@ HasCurrentBuildNumber returns a boolean if a field has been set.
 `func (o *AppServiceBuild) UnsetCurrentBuildNumber()`
 
 UnsetCurrentBuildNumber ensures that no value is present for CurrentBuildNumber, not even an explicit nil
+### GetVulnerabilityScan
+
+`func (o *AppServiceBuild) GetVulnerabilityScan() AppServiceBuildVulnerabilityScan`
+
+GetVulnerabilityScan returns the VulnerabilityScan field if non-nil, zero value otherwise.
+
+### GetVulnerabilityScanOk
+
+`func (o *AppServiceBuild) GetVulnerabilityScanOk() (*AppServiceBuildVulnerabilityScan, bool)`
+
+GetVulnerabilityScanOk returns a tuple with the VulnerabilityScan field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVulnerabilityScan
+
+`func (o *AppServiceBuild) SetVulnerabilityScan(v AppServiceBuildVulnerabilityScan)`
+
+SetVulnerabilityScan sets VulnerabilityScan field to given value.
+
+### HasVulnerabilityScan
+
+`func (o *AppServiceBuild) HasVulnerabilityScan() bool`
+
+HasVulnerabilityScan returns a boolean if a field has been set.
+
+### SetVulnerabilityScanNil
+
+`func (o *AppServiceBuild) SetVulnerabilityScanNil(b bool)`
+
+ SetVulnerabilityScanNil sets the value for VulnerabilityScan to be an explicit nil
+
+### UnsetVulnerabilityScan
+`func (o *AppServiceBuild) UnsetVulnerabilityScan()`
+
+UnsetVulnerabilityScan ensures that no value is present for VulnerabilityScan, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *AppServiceBuild) GetCreatedAt() time.Time`

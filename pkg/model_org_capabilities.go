@@ -32,6 +32,10 @@ type OrgCapabilities struct {
 	AppAccess bool `json:"appAccess"`
 	OrgSSO bool `json:"orgSSO"`
 	WodbyCloud bool `json:"wodbyCloud"`
+	// Whether the organization's plan includes vulnerability scanning of deployed builds.
+	VulnerabilityScanning bool `json:"vulnerabilityScanning"`
+	// Whether the organization's plan includes pull request preview environments.
+	PreviewEnvironments bool `json:"previewEnvironments"`
 }
 
 type _OrgCapabilities OrgCapabilities
@@ -40,7 +44,7 @@ type _OrgCapabilities OrgCapabilities
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, appAccess bool, orgSSO bool, wodbyCloud bool) *OrgCapabilities {
+func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projects bool, cronSchedules bool, autoscale bool, appInstancePause bool, webShell bool, appAccess bool, orgSSO bool, wodbyCloud bool, vulnerabilityScanning bool, previewEnvironments bool) *OrgCapabilities {
 	this := OrgCapabilities{}
 	this.CustomDomains = customDomains
 	this.AutoBackups = autoBackups
@@ -53,6 +57,8 @@ func NewOrgCapabilities(customDomains bool, autoBackups bool, users bool, projec
 	this.AppAccess = appAccess
 	this.OrgSSO = orgSSO
 	this.WodbyCloud = wodbyCloud
+	this.VulnerabilityScanning = vulnerabilityScanning
+	this.PreviewEnvironments = previewEnvironments
 	return &this
 }
 
@@ -328,6 +334,54 @@ func (o *OrgCapabilities) SetWodbyCloud(v bool) {
 	o.WodbyCloud = v
 }
 
+// GetVulnerabilityScanning returns the VulnerabilityScanning field value
+func (o *OrgCapabilities) GetVulnerabilityScanning() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.VulnerabilityScanning
+}
+
+// GetVulnerabilityScanningOk returns a tuple with the VulnerabilityScanning field value
+// and a boolean to check if the value has been set.
+func (o *OrgCapabilities) GetVulnerabilityScanningOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.VulnerabilityScanning, true
+}
+
+// SetVulnerabilityScanning sets field value
+func (o *OrgCapabilities) SetVulnerabilityScanning(v bool) {
+	o.VulnerabilityScanning = v
+}
+
+// GetPreviewEnvironments returns the PreviewEnvironments field value
+func (o *OrgCapabilities) GetPreviewEnvironments() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.PreviewEnvironments
+}
+
+// GetPreviewEnvironmentsOk returns a tuple with the PreviewEnvironments field value
+// and a boolean to check if the value has been set.
+func (o *OrgCapabilities) GetPreviewEnvironmentsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PreviewEnvironments, true
+}
+
+// SetPreviewEnvironments sets field value
+func (o *OrgCapabilities) SetPreviewEnvironments(v bool) {
+	o.PreviewEnvironments = v
+}
+
 func (o OrgCapabilities) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -349,6 +403,8 @@ func (o OrgCapabilities) ToMap() (map[string]interface{}, error) {
 	toSerialize["appAccess"] = o.AppAccess
 	toSerialize["orgSSO"] = o.OrgSSO
 	toSerialize["wodbyCloud"] = o.WodbyCloud
+	toSerialize["vulnerabilityScanning"] = o.VulnerabilityScanning
+	toSerialize["previewEnvironments"] = o.PreviewEnvironments
 	return toSerialize, nil
 }
 
@@ -368,6 +424,8 @@ func (o *OrgCapabilities) UnmarshalJSON(data []byte) (err error) {
 		"appAccess",
 		"orgSSO",
 		"wodbyCloud",
+		"vulnerabilityScanning",
+		"previewEnvironments",
 	}
 
 	allProperties := make(map[string]interface{})

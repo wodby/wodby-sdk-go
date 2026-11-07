@@ -29,9 +29,13 @@ type NewAppAuthInput struct {
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	// Route scope. The owning app service is derived from the route.
 	AppRouteId NullableInt32 `json:"appRouteId,omitempty"`
-	Login string `json:"login"`
-	Password string `json:"password"`
-	Realm string `json:"realm"`
+	// Defaults to wodby. Ignored for exemptions.
+	Login *string `json:"login,omitempty"`
+	// Omit to let Wodby generate a password, which you reveal in the dashboard. Ignored for exemptions.
+	Password *string `json:"password,omitempty"`
+	Realm *string `json:"realm,omitempty"`
+	// Switch basic auth off for the given app services or route even when a wider entry covers them. Requires appServiceIds or appRouteId.
+	Exempt *bool `json:"exempt,omitempty"`
 }
 
 type _NewAppAuthInput NewAppAuthInput
@@ -40,12 +44,9 @@ type _NewAppAuthInput NewAppAuthInput
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAppAuthInput(appInstanceId int32, login string, password string, realm string) *NewAppAuthInput {
+func NewNewAppAuthInput(appInstanceId int32) *NewAppAuthInput {
 	this := NewAppAuthInput{}
 	this.AppInstanceId = appInstanceId
-	this.Login = login
-	this.Password = password
-	this.Realm = realm
 	return &this
 }
 
@@ -201,76 +202,132 @@ func (o *NewAppAuthInput) UnsetAppRouteId() {
 	o.AppRouteId.Unset()
 }
 
-// GetLogin returns the Login field value
+// GetLogin returns the Login field value if set, zero value otherwise.
 func (o *NewAppAuthInput) GetLogin() string {
-	if o == nil {
+	if o == nil || IsNil(o.Login) {
 		var ret string
 		return ret
 	}
-
-	return o.Login
+	return *o.Login
 }
 
-// GetLoginOk returns a tuple with the Login field value
+// GetLoginOk returns a tuple with the Login field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppAuthInput) GetLoginOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Login) {
 		return nil, false
 	}
-	return &o.Login, true
+	return o.Login, true
 }
 
-// SetLogin sets field value
+// HasLogin returns a boolean if a field has been set.
+func (o *NewAppAuthInput) HasLogin() bool {
+	if o != nil && !IsNil(o.Login) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogin gets a reference to the given string and assigns it to the Login field.
 func (o *NewAppAuthInput) SetLogin(v string) {
-	o.Login = v
+	o.Login = &v
 }
 
-// GetPassword returns the Password field value
+// GetPassword returns the Password field value if set, zero value otherwise.
 func (o *NewAppAuthInput) GetPassword() string {
-	if o == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
-
-	return o.Password
+	return *o.Password
 }
 
-// GetPasswordOk returns a tuple with the Password field value
+// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppAuthInput) GetPasswordOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
-	return &o.Password, true
+	return o.Password, true
 }
 
-// SetPassword sets field value
+// HasPassword returns a boolean if a field has been set.
+func (o *NewAppAuthInput) HasPassword() bool {
+	if o != nil && !IsNil(o.Password) {
+		return true
+	}
+
+	return false
+}
+
+// SetPassword gets a reference to the given string and assigns it to the Password field.
 func (o *NewAppAuthInput) SetPassword(v string) {
-	o.Password = v
+	o.Password = &v
 }
 
-// GetRealm returns the Realm field value
+// GetRealm returns the Realm field value if set, zero value otherwise.
 func (o *NewAppAuthInput) GetRealm() string {
-	if o == nil {
+	if o == nil || IsNil(o.Realm) {
 		var ret string
 		return ret
 	}
-
-	return o.Realm
+	return *o.Realm
 }
 
-// GetRealmOk returns a tuple with the Realm field value
+// GetRealmOk returns a tuple with the Realm field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppAuthInput) GetRealmOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Realm) {
 		return nil, false
 	}
-	return &o.Realm, true
+	return o.Realm, true
 }
 
-// SetRealm sets field value
+// HasRealm returns a boolean if a field has been set.
+func (o *NewAppAuthInput) HasRealm() bool {
+	if o != nil && !IsNil(o.Realm) {
+		return true
+	}
+
+	return false
+}
+
+// SetRealm gets a reference to the given string and assigns it to the Realm field.
 func (o *NewAppAuthInput) SetRealm(v string) {
-	o.Realm = v
+	o.Realm = &v
+}
+
+// GetExempt returns the Exempt field value if set, zero value otherwise.
+func (o *NewAppAuthInput) GetExempt() bool {
+	if o == nil || IsNil(o.Exempt) {
+		var ret bool
+		return ret
+	}
+	return *o.Exempt
+}
+
+// GetExemptOk returns a tuple with the Exempt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppAuthInput) GetExemptOk() (*bool, bool) {
+	if o == nil || IsNil(o.Exempt) {
+		return nil, false
+	}
+	return o.Exempt, true
+}
+
+// HasExempt returns a boolean if a field has been set.
+func (o *NewAppAuthInput) HasExempt() bool {
+	if o != nil && !IsNil(o.Exempt) {
+		return true
+	}
+
+	return false
+}
+
+// SetExempt gets a reference to the given bool and assigns it to the Exempt field.
+func (o *NewAppAuthInput) SetExempt(v bool) {
+	o.Exempt = &v
 }
 
 func (o NewAppAuthInput) MarshalJSON() ([]byte, error) {
@@ -293,9 +350,18 @@ func (o NewAppAuthInput) ToMap() (map[string]interface{}, error) {
 	if o.AppRouteId.IsSet() {
 		toSerialize["appRouteId"] = o.AppRouteId.Get()
 	}
-	toSerialize["login"] = o.Login
-	toSerialize["password"] = o.Password
-	toSerialize["realm"] = o.Realm
+	if !IsNil(o.Login) {
+		toSerialize["login"] = o.Login
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.Realm) {
+		toSerialize["realm"] = o.Realm
+	}
+	if !IsNil(o.Exempt) {
+		toSerialize["exempt"] = o.Exempt
+	}
 	return toSerialize, nil
 }
 
@@ -305,9 +371,6 @@ func (o *NewAppAuthInput) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"appInstanceId",
-		"login",
-		"password",
-		"realm",
 	}
 
 	allProperties := make(map[string]interface{})

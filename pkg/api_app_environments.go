@@ -176,9 +176,9 @@ func (r ApiCreateAppAccessRequest) Execute() (*AppAccessOperationResult, *http.R
 }
 
 /*
-CreateAppAccess Create app environment access
+CreateAppAccess Create Private App Access
 
-Creates external access for the app environment identified by the path. An active paid subscription is required.
+Creates Private App Access for the app environment identified by the path. An active paid subscription is required.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -603,9 +603,9 @@ func (r ApiDeleteAppAccessRequest) Execute() (*OperationResult, *http.Response, 
 }
 
 /*
-DeleteAppAccess Delete app access
+DeleteAppAccess Delete Private App Access
 
-Removes app access and returns the cleanup task identifier.
+Removes Private App Access and returns the cleanup task identifier.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1023,9 +1023,9 @@ func (r ApiGetAppAccessRequest) Execute() (*AppAccess, *http.Response, error) {
 }
 
 /*
-GetAppAccess Get app access
+GetAppAccess Get Private App Access
 
-Returns one app access configuration.
+Returns one Private App Access configuration.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1431,9 +1431,9 @@ func (r ApiGetAppEnvironmentAccessRequest) Execute() (*AppAccess, *http.Response
 }
 
 /*
-GetAppEnvironmentAccess Get app environment access
+GetAppEnvironmentAccess Get app environment Private App Access
 
-Returns the external access configuration for the app environment identified by the path.
+Returns the Private App Access configuration of the app environment identified by the path.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -2565,7 +2565,7 @@ func (r ApiListAppAccessCleanupsRequest) Execute() ([]AppAccessCleanup, *http.Re
 }
 
 /*
-ListAppAccessCleanups List app-access cleanups
+ListAppAccessCleanups List Private App Access cleanups
 
 Returns cleanup records for exactly one app environment or integration.
 
@@ -3465,9 +3465,9 @@ func (r ApiPreflightAppAccessRequest) Execute() (*ValidationResult, *http.Respon
 }
 
 /*
-PreflightAppAccess Preflight app environment access
+PreflightAppAccess Preflight Private App Access
 
-Validates a proposed app-access configuration before an app environment or access resource is created. An active paid subscription is required.
+Validates a proposed Private App Access configuration before an app environment or access resource is created. An active paid subscription is required.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiPreflightAppAccessRequest
@@ -4302,9 +4302,9 @@ func (r ApiRetryAppAccessCleanupRequest) Execute() (*OperationResult, *http.Resp
 }
 
 /*
-RetryAppAccessCleanup Retry app-access cleanup
+RetryAppAccessCleanup Retry Private App Access cleanup
 
-Retries a failed app-access cleanup and returns its task identifier.
+Retries a failed Private App Access cleanup and returns its task identifier.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -4580,9 +4580,9 @@ func (r ApiUpdateAppAccessRequest) Execute() (*AppAccessOperationResult, *http.R
 }
 
 /*
-UpdateAppAccess Update app access
+UpdateAppAccess Update Private App Access
 
-Updates an existing app-access configuration and starts its reconciliation task. An active paid subscription is required.
+Updates an existing Private App Access configuration and starts its reconciliation task. An active paid subscription is required.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Gpu** | Pointer to [**NullableGPUResources**](GPUResources.md) | Omitted or null preserves an existing GPU override. Count zero disables GPUs. | [optional] 
 **Workload** | Pointer to **NullableString** |  | [optional] 
 **Container** | Pointer to **NullableString** |  | [optional] 
+**Preset** | Pointer to **NullableString** | Name of a Wodby preset or of a custom preset of the organization, from listResourcePresets. Its values fill the CPU and memory fields this input leaves out; the values are stored, not the preset. | [optional] 
 **RequestCPU** | Pointer to **NullableInt32** |  | [optional] 
 **RequestMem** | Pointer to **NullableInt32** |  | [optional] 
 **LimitCPU** | Pointer to **NullableInt32** |  | [optional] 
@@ -136,6 +137,41 @@ HasContainer returns a boolean if a field has been set.
 `func (o *ResourcesInput) UnsetContainer()`
 
 UnsetContainer ensures that no value is present for Container, not even an explicit nil
+### GetPreset
+
+`func (o *ResourcesInput) GetPreset() string`
+
+GetPreset returns the Preset field if non-nil, zero value otherwise.
+
+### GetPresetOk
+
+`func (o *ResourcesInput) GetPresetOk() (*string, bool)`
+
+GetPresetOk returns a tuple with the Preset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreset
+
+`func (o *ResourcesInput) SetPreset(v string)`
+
+SetPreset sets Preset field to given value.
+
+### HasPreset
+
+`func (o *ResourcesInput) HasPreset() bool`
+
+HasPreset returns a boolean if a field has been set.
+
+### SetPresetNil
+
+`func (o *ResourcesInput) SetPresetNil(b bool)`
+
+ SetPresetNil sets the value for Preset to be an explicit nil
+
+### UnsetPreset
+`func (o *ResourcesInput) UnsetPreset()`
+
+UnsetPreset ensures that no value is present for Preset, not even an explicit nil
 ### GetRequestCPU
 
 `func (o *ResourcesInput) GetRequestCPU() int32`

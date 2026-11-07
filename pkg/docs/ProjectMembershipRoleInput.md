@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Role** | **string** |  | 
+**CustomRoleId** | Pointer to **int32** | Required when role is custom; a custom role of the project&#39;s organization. | [optional] 
 
 ## Methods
 
@@ -44,6 +45,31 @@ and a boolean to check if the value has been set.
 
 SetRole sets Role field to given value.
 
+
+### GetCustomRoleId
+
+`func (o *ProjectMembershipRoleInput) GetCustomRoleId() int32`
+
+GetCustomRoleId returns the CustomRoleId field if non-nil, zero value otherwise.
+
+### GetCustomRoleIdOk
+
+`func (o *ProjectMembershipRoleInput) GetCustomRoleIdOk() (*int32, bool)`
+
+GetCustomRoleIdOk returns a tuple with the CustomRoleId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomRoleId
+
+`func (o *ProjectMembershipRoleInput) SetCustomRoleId(v int32)`
+
+SetCustomRoleId sets CustomRoleId field to given value.
+
+### HasCustomRoleId
+
+`func (o *ProjectMembershipRoleInput) HasCustomRoleId() bool`
+
+HasCustomRoleId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

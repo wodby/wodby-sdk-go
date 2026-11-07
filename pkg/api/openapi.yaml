@@ -24,6 +24,8 @@ tags:
   name: teams
 - description: Roles of organization members and teams in projects.
   name: project-memberships
+- description: "System and custom project roles, and the permissions they grant."
+  name: project-roles
 - description: Single sign-on providers and verified email domains of organizations.
   name: org-sso
 - description: Project containers within organizations.
@@ -78,7 +80,9 @@ tags:
   name: task-steps
 - description: "The API key user's chats with Wodby Agent in the organization. The\
     \ agent acts with that user's access, asks before every change, and is billed\
-    \ to the organization's AI credits."
+    \ to the organization's AI credits. Support members can also list and read all\
+    \ members' chats in that organization; changes to a chat remain restricted to\
+    \ its owner."
   name: agent-chats
 - description: Organization-level environment definitions.
   name: envs
@@ -411,6 +415,143 @@ paths:
       summary: Get org subscription
       tags:
       - orgs
+  /orgs/{id}/usage:
+    get:
+      description: "Returns the organization's usage per project and billing item\
+        \ in one billing period, for internal chargeback. Amounts are public list\
+        \ prices in USD before included usage and discounts, so they show each project's\
+        \ share of usage. For a past period whose invoices are final, invoiceShare\
+        \ splits what the invoices charged per item between projects in proportion\
+        \ to their amounts. Usage of organization-owned resources and usage without\
+        \ a project is reported in one row without a project ID. Requires billing-view\
+        \ access to the organization."
+      operationId: getOrgUsage
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: Start of the billing period as listed by listOrgUsagePeriods.
+          Defaults to the current period.
+        explode: true
+        in: query
+        name: periodStart
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgUsageReport'
+          description: Usage per project
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get org usage by project
+      tags:
+      - orgs
+  /orgs/{id}/usage/periods:
+    get:
+      description: "Returns the billing periods available in the usage report, newest\
+        \ first, including the current period. Requires billing-view access to the\
+        \ organization."
+      operationId: listOrgUsagePeriods
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrgUsagePeriod'
+                type: array
+          description: Billing periods
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List org usage periods
+      tags:
+      - orgs
+  /orgs/{id}/usage/csv:
+    get:
+      description: "Returns the usage report as CSV with one row per project and billing\
+        \ item and the columns period_start, period_end, project_id, project_name,\
+        \ project_title, item, quantity, unit, amount_usd, and invoice_share_usd,\
+        \ which is empty while the invoiced amount is unknown. Requires billing-view\
+        \ access to the organization."
+      operationId: exportOrgUsageCSV
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: Start of the billing period as listed by listOrgUsagePeriods.
+          Defaults to the current period.
+        explode: true
+        in: query
+        name: periodStart
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            text/csv:
+              schema:
+                type: string
+          description: Usage per project as CSV
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Export org usage by project as CSV
+      tags:
+      - orgs
   /org-memberships:
     get:
       description: Returns org memberships matching the request filters.
@@ -450,9 +591,9 @@ paths:
       tags:
       - org-memberships
     post:
-      description: "Invites a person by email with an organization role, optionally\
-        \ adding them to teams and projects. The membership has the invited status\
-        \ until they accept."
+      description: Invites a person by email with an organization role. The membership
+        has the invited status until they accept. Add the member to teams and projects
+        separately.
       operationId: inviteOrgMember
       requestBody:
         content:
@@ -586,6 +727,48 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Update organization member role
+      tags:
+      - org-memberships
+  /org-memberships/{id}/teams:
+    put:
+      description: "Replaces the teams an organization member belongs to, with a role\
+        \ in each team. Teams that are not listed lose the member. Organization owners\
+        \ and admins only."
+      operationId: updateOrgMembershipTeams
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgMembershipTeamsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMembership'
+          description: Updated membership
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Set organization member teams
       tags:
       - org-memberships
   /project-memberships:
@@ -731,6 +914,217 @@ paths:
       summary: Update project membership
       tags:
       - project-memberships
+  /project-roles:
+    get:
+      description: "Returns the system project roles from least to most access, then\
+        \ the organization's custom roles by title, with the permissions each grants."
+      operationId: listProjectRoles
+      parameters:
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectRole'
+                type: array
+          description: Project roles
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List project roles
+      tags:
+      - project-roles
+    post:
+      description: "Adds a custom project role to the organization. Organization owners\
+        \ and admins only. project.view is always granted, and env.view and env.logs\
+        \ are granted in every environment type, because every project member can\
+        \ see the project's environments and read their logs."
+      operationId: createProjectRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRoleInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRole'
+          description: Created role
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create custom project role
+      tags:
+      - project-roles
+  /project-roles/{id}:
+    delete:
+      description: Deletes a custom project role that no project membership holds.
+        Organization owners and admins only.
+      operationId: deleteProjectRole
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete custom project role
+      tags:
+      - project-roles
+    get:
+      description: Returns a custom project role.
+      operationId: getProjectRole
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRole'
+          description: Custom role
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Get custom project role
+      tags:
+      - project-roles
+    put:
+      description: "Replaces a custom role's name, title, description and permissions.\
+        \ Every membership holding the role changes at once. A role that teams hold\
+        \ cannot get project.manage. Organization owners and admins only."
+      operationId: updateProjectRole
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRoleInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRole'
+          description: Updated role
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update custom project role
+      tags:
+      - project-roles
+  /project-permissions:
+    get:
+      description: "Returns every permission a project role can grant, in display\
+        \ order."
+      operationId: listProjectPermissions
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectPermission'
+                type: array
+          description: Project permissions
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List project permissions
+      tags:
+      - project-roles
   /teams:
     get:
       description: Returns the teams of the organization with their members.
@@ -1589,7 +1983,8 @@ paths:
   /apps/settings/{id}:
     put:
       description: Updates application-wide settings such as pull request preview
-        environments and returns the updated app.
+        environments and returns the updated app. Enabling preview environments requires
+        an active paid subscription.
       operationId: updateAppSettings
       parameters:
       - explode: false
@@ -1668,10 +2063,11 @@ paths:
   /apps/preview-environments/{id}:
     post:
       description: "Creates a preview environment for one open pull request of the\
-        \ app and returns the task that creates it in the background. Draft pull requests\
-        \ are accepted even when draft previews are off. Pull requests from forks,\
-        \ pull requests that already have a preview environment, a base environment\
-        \ that is not in OK status, and a full concurrency limit are refused."
+        \ app and returns the task that creates it in the background. An active paid\
+        \ subscription is required. Draft pull requests are accepted even when draft\
+        \ previews are off. Pull requests from forks, pull requests that already have\
+        \ a preview environment, a base environment that is not in OK status, and\
+        \ a full concurrency limit are refused."
       operationId: createAppPreviewEnvironment
       parameters:
       - explode: false
@@ -1707,6 +2103,43 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Create a pull request preview environment
+      tags:
+      - apps
+  /apps/preview-password/regenerate/{id}:
+    post:
+      description: "Replaces the basic auth password shared by the app's pull request\
+        \ preview environments. Every preview switches to the new password, which\
+        \ members reveal in the dashboard. Requires basic auth to be on in the app's\
+        \ preview settings."
+      operationId: regenerateAppPreviewPassword
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: Updated app
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Regenerate the preview password
       tags:
       - apps
   /apps/sharing/{id}:
@@ -4123,7 +4556,13 @@ paths:
       - app-services
   /app-services/{id}/links/{name}:
     put:
-      description: Links or unlinks another app service for a named link slot.
+      description: "Links or unlinks another app service for a named link slot. The\
+        \ app service may be in another app environment, of the same app or another\
+        \ one, when the link accepts that (crossApp) and the target's service accepts\
+        \ links from other environments. Linking across environments needs permission\
+        \ to reveal the runtime secrets of the target environment, and the target's\
+        \ app must belong to the same organization and be usable by this app's owner.\
+        \ Unlinking also removes a target in another environment or a custom target."
       operationId: setAppServiceLink
       parameters:
       - explode: false
@@ -4166,6 +4605,184 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set app service link
+      tags:
+      - app-services
+  /app-services/{id}/links/{name}/candidates:
+    get:
+      description: "Returns the app services a named link of an app service may point\
+        \ at: services of its own environment that satisfy the link's selectors and,\
+        \ for a link that accepts targets in other app environments, services of the\
+        \ organization's other environments that accept such links, satisfy the selectors,\
+        \ and that the caller may use (revealing their environment's runtime secrets)\
+        \ and this app's owner may use."
+      operationId: listAppServiceLinkCandidates
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceLinkCandidate'
+                type: array
+          description: List of link candidates
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app service link candidates
+      tags:
+      - app-services
+  /app-services/{id}/custom-links:
+    get:
+      description: "Returns the links of an app service that have a custom target:\
+        \ values entered by hand instead of another app service. A link name is either\
+        \ here or in the app service's links, never both. Secret values are never\
+        \ returned."
+      operationId: listAppServiceCustomLinks
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceCustomLink'
+                type: array
+          description: List of app service custom links
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app service custom links
+      tags:
+      - app-services
+  /app-services/{id}/custom-links/{name}:
+    delete:
+      description: Removes the custom target of a link. A required link cannot be
+        removed.
+      operationId: deleteAppServiceCustomLink
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Delete result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete app service custom link
+      tags:
+      - app-services
+    put:
+      description: "Gives a link that accepts a custom target the values it hands\
+        \ to the service, replacing another app service it pointed at. The values\
+        \ are the complete set: give every value that is not optional each time, secret\
+        \ ones included. An optional value left out is cleared."
+      operationId: setAppServiceCustomLink
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppServiceCustomLinkInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Set app service custom link
       tags:
       - app-services
   /app-services/{id}/pods:
@@ -6246,6 +6863,86 @@ paths:
       summary: Get Kubernetes version upgrade plan
       tags:
       - clusters
+  /cluster-component-updates/{id}:
+    get:
+      description: "Returns the updates Wodby can apply to single components of a\
+        \ healthy cluster, without a Kubernetes or infrastructure upgrade. The ID\
+        \ is the cluster's. Most components cannot be updated this way, because their\
+        \ provider or K3S release owns them, so the list is often empty."
+      operationId: getClusterComponentUpdates
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClusterComponentUpdate'
+                type: array
+          description: Cluster component updates
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List cluster component updates
+      tags:
+      - clusters
+  /cluster-components/{id}:
+    get:
+      description: "Returns the infrastructure software last observed running on a\
+        \ cluster: system pods, infrastructure apps and node software such as the\
+        \ kubelet, container runtime, operating system and kernel. Customer application\
+        \ namespaces are not included. The ID is the cluster's. The list is empty\
+        \ until the first observation, and each item's observedAt shows how recent\
+        \ it is."
+      operationId: getClusterComponents
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClusterComponent'
+                type: array
+          description: Cluster components
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List cluster components
+      tags:
+      - clusters
   /clusters/settings/{id}:
     put:
       description: Updates cluster settings and returns the updated cluster.
@@ -6436,6 +7133,47 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Upgrade cluster infrastructure
+      tags:
+      - clusters
+  /clusters/{id}/actions/update-component:
+    post:
+      description: "Starts a task that applies one of the updates listed for the cluster,\
+        \ and returns the task result."
+      operationId: updateClusterComponent
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateClusterComponent_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Update task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update a cluster component
       tags:
       - clusters
   /clusters/{id}/actions/upgrade-infra-apps:
@@ -7646,8 +8384,9 @@ paths:
       description: "Returns what clusters of the integration's Kubernetes provider\
         \ support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode,\
         \ serverless, billingOptions, gpuNodePool (whether a cluster can have an optional\
-        \ GPU node pool) and gpuNodePoolScalesToZero (whether that pool's minimum\
-        \ may be 0)."
+        \ GPU node pool), gpuNodePoolScalesToZero (whether that pool's minimum may\
+        \ be 0) and nodeRecycling (whether a running cluster's worker nodes can be\
+        \ recycled)."
       operationId: getIntegrationKubeSettings
       parameters:
       - explode: false
@@ -9900,8 +10639,13 @@ paths:
       - clusters
   /clusters/{id}/actions/recycle-nodes:
     post:
-      description: Replaces the cluster nodes one at a time so they come back with
-        a fresh machine image.
+      description: "Starts refreshing the cluster's worker nodes, so applications\
+        \ restart as their pods move. EKS moves each node group to its latest node\
+        \ image and leaves a group that already runs it in place. AKS and DigitalOcean\
+        \ replace every node. Refused for providers whose kube settings report nodeRecycling\
+        \ as false, currently GKE and OVHcloud, for Wodby Cloud, serverless and single-node\
+        \ clusters, and while application operations are active. New deployments wait\
+        \ until it ends."
       operationId: recycleClusterNodes
       parameters:
       - explode: false
@@ -10105,6 +10849,154 @@ paths:
       summary: List Wodby Cloud machine types
       tags:
       - clusters
+  /resource-presets:
+    get:
+      description: "Returns Wodby's CPU and memory presets, smallest first, then the\
+        \ organization's custom presets when orgId is given. Resources inputs can\
+        \ name any of them; service and stack manifests can name only Wodby's presets.\
+        \ Choosing a preset copies its values."
+      operationId: listResourcePresets
+      parameters:
+      - description: "Optional for API-key requests; defaults to the API key's organization.\
+          \ If provided, it must match the key's organization."
+        explode: true
+        in: query
+        name: orgId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResourcePreset'
+                type: array
+          description: Resource presets
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List resource presets
+      tags:
+      - app-services
+    post:
+      description: Adds a custom resource preset to an organization. Organization
+        owners and admins only.
+      operationId: createResourcePreset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourcePresetInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourcePreset'
+          description: Created preset
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Create custom resource preset
+      tags:
+      - app-services
+  /resource-presets/{id}:
+    delete:
+      description: Deletes a custom resource preset. Resources already set from it
+        keep their values. Organization owners and admins only.
+      operationId: deleteResourcePreset
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Delete custom resource preset
+      tags:
+      - app-services
+    put:
+      description: "Replaces a custom preset's name, title and values. Resources already\
+        \ set from the preset keep their values. Organization owners and admins only."
+      operationId: updateResourcePreset
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourcePresetInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourcePreset'
+          description: Updated preset
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update custom resource preset
+      tags:
+      - app-services
   /catalog/infra-stacks:
     get:
       description: Returns the infrastructure stacks Wodby installs on clusters of
@@ -13716,7 +14608,8 @@ paths:
   /agent-chats:
     get:
       description: "Returns the API key user's chats with Wodby Agent in the organization,\
-        \ the most recently active first."
+        \ the most recently active first. Support members receive all members' chats\
+        \ in the organization."
       operationId: listAgentChats
       parameters:
       - description: "Optional for API-key requests; defaults to the API key's organization.\
@@ -13833,7 +14726,8 @@ paths:
     get:
       description: "Returns a chat with its messages. A tool message with approval\
         \ pending is a change that waits for approval, or, for the tool ask_user,\
-        \ a question that waits for an answer."
+        \ a question that waits for an answer. Support members can read any chat in\
+        \ the organization; other members can read only their own."
       operationId: getAgentChat
       parameters:
       - explode: false
@@ -14730,7 +15624,7 @@ paths:
       - app-environments
   /app-environment-accesses/{id}:
     get:
-      description: Returns the external access configuration for the app environment
+      description: Returns the Private App Access configuration of the app environment
         identified by the path.
       operationId: getAppEnvironmentAccess
       parameters:
@@ -14747,7 +15641,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppAccess'
-          description: App access configuration
+          description: Private App Access configuration
         default:
           content:
             application/problem+json:
@@ -14760,12 +15654,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app environment access
+      summary: Get app environment Private App Access
       tags:
       - app-environments
     post:
-      description: Creates external access for the app environment identified by the
-        path. An active paid subscription is required.
+      description: Creates Private App Access for the app environment identified by
+        the path. An active paid subscription is required.
       operationId: createAppAccess
       parameters:
       - explode: false
@@ -14787,7 +15681,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppAccessOperationResult'
-          description: Created app access and provisioning task
+          description: Created Private App Access and provisioning task
         default:
           content:
             application/problem+json:
@@ -14800,13 +15694,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Create app environment access
+      summary: Create Private App Access
       tags:
       - app-environments
   /app-accesses/actions/preflight:
     post:
-      description: Validates a proposed app-access configuration before an app environment
-        or access resource is created. An active paid subscription is required.
+      description: Validates a proposed Private App Access configuration before an
+        app environment or access resource is created. An active paid subscription
+        is required.
       operationId: preflightAppAccess
       requestBody:
         content:
@@ -14833,12 +15728,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Preflight app environment access
+      summary: Preflight Private App Access
       tags:
       - app-environments
   /app-accesses/{id}:
     delete:
-      description: Removes app access and returns the cleanup task identifier.
+      description: Removes Private App Access and returns the cleanup task identifier.
       operationId: deleteAppAccess
       parameters:
       - explode: false
@@ -14867,11 +15762,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Delete app access
+      summary: Delete Private App Access
       tags:
       - app-environments
     get:
-      description: Returns one app access configuration.
+      description: Returns one Private App Access configuration.
       operationId: getAppAccess
       parameters:
       - explode: false
@@ -14887,7 +15782,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppAccess'
-          description: App access
+          description: Private App Access
         default:
           content:
             application/problem+json:
@@ -14900,12 +15795,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app access
+      summary: Get Private App Access
       tags:
       - app-environments
     put:
-      description: Updates an existing app-access configuration and starts its reconciliation
-        task. An active paid subscription is required.
+      description: Updates an existing Private App Access configuration and starts
+        its reconciliation task. An active paid subscription is required.
       operationId: updateAppAccess
       parameters:
       - explode: false
@@ -14927,7 +15822,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppAccessOperationResult'
-          description: Updated app access and reconciliation task
+          description: Updated Private App Access and reconciliation task
         default:
           content:
             application/problem+json:
@@ -14940,7 +15835,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Update app access
+      summary: Update Private App Access
       tags:
       - app-environments
   /app-access-cleanups:
@@ -14983,12 +15878,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: List app-access cleanups
+      summary: List Private App Access cleanups
       tags:
       - app-environments
   /app-access-cleanups/{id}/actions/retry:
     post:
-      description: Retries a failed app-access cleanup and returns its task identifier.
+      description: Retries a failed Private App Access cleanup and returns its task
+        identifier.
       operationId: retryAppAccessCleanup
       parameters:
       - explode: false
@@ -15017,7 +15913,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Retry app-access cleanup
+      summary: Retry Private App Access cleanup
       tags:
       - app-environments
   /app-services/{id}/options/volume-storage-classes:
@@ -15147,8 +16043,8 @@ paths:
       - clusters
   /integrations/{id}/options/app-access:
     get:
-      description: "Returns supported app-access modes, scopes, fields, and hostname\
-        \ behavior for the integration."
+      description: "Returns supported Private App Access modes, scopes, fields, and\
+        \ hostname behavior for the integration."
       operationId: getAppAccessProviderOptions
       parameters:
       - explode: false
@@ -15164,7 +16060,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppAccessProviderOptions'
-          description: App-access provider options
+          description: Private App Access provider options
         default:
           content:
             application/problem+json:
@@ -15177,12 +16073,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get app-access provider options
+      summary: Get Private App Access provider options
       tags:
       - integrations
   /integrations/{id}/actions/validate-app-access-hostname:
     post:
-      description: Validates an app-access hostname against the provider settings
+      description: Validates a Private App Access hostname against the provider settings
         of the integration.
       operationId: validateAppAccessHostname
       parameters:
@@ -15218,7 +16114,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Validate an app-access hostname
+      summary: Validate a Private App Access hostname
       tags:
       - integrations
   /integrations/{id}/actions/test-permissions:
@@ -15490,6 +16386,17 @@ components:
       schema:
         type: string
       style: simple
+    OrgUsagePeriodStart:
+      description: Start of the billing period as listed by listOrgUsagePeriods. Defaults
+        to the current period.
+      explode: true
+      in: query
+      name: periodStart
+      required: false
+      schema:
+        format: date-time
+        type: string
+      style: form
     OrgId:
       description: "Optional for API-key requests; defaults to the API key's organization.\
         \ If provided, it must match the key's organization."
@@ -16371,6 +17278,154 @@ components:
       - preview
       - title
       - version
+      type: object
+    ClusterComponentUpdate:
+      example:
+        note: note
+        components:
+        - components
+        - components
+        kind: cilium
+        name: name
+        currentVersion: currentVersion
+        targetVersion: targetVersion
+      properties:
+        kind:
+          description: cilium upgrades the Cilium release on a K3S cluster; provider_addon
+            asks the provider to update an add-on.
+          enum:
+          - cilium
+          - provider_addon
+          type: string
+        name:
+          description: Identifies the update within its cluster.
+          type: string
+        currentVersion:
+          description: Absent when the update replaces a copy the provider does not
+            manage yet.
+          type: string
+        targetVersion:
+          type: string
+        components:
+          description: The names of the cluster components this update changes.
+          items:
+            type: string
+          type: array
+        note:
+          description: What to expect while the update runs.
+          type: string
+      required:
+      - components
+      - kind
+      - name
+      - targetVersion
+      type: object
+    ClusterComponent:
+      example:
+        container: container
+        image: image
+        workloadKind: workloadKind
+        manager: wodby
+        observedAt: 2000-01-23T04:56:07.000+00:00
+        count: 0
+        workload: workload
+        source: pod
+        version: version
+        imageDigest: imageDigest
+        updatePath: kubernetes_version
+        latestVersion: latestVersion
+        name: name
+        namespace: namespace
+        status: up_to_date
+      properties:
+        name:
+          type: string
+        version:
+          description: The image tag or reported version as published; empty for an
+            image referenced only by digest.
+          type: string
+        source:
+          enum:
+          - pod
+          - node
+          type: string
+        manager:
+          description: "Who can update the component. wodby is installed by Wodby\
+            \ outside an app, such as Cilium on K3S; infra_app runs in an infrastructure\
+            \ app; k3s comes with the K3S release; provider is run by the managed\
+            \ Kubernetes provider; host is the operating system of a server you run;\
+            \ and other was installed outside Wodby or is not recognized."
+          enum:
+          - wodby
+          - infra_app
+          - k3s
+          - provider
+          - host
+          - other
+          type: string
+        namespace:
+          description: "Empty for node components, as are workloadKind, workload,\
+            \ container, image and imageDigest."
+          type: string
+        workloadKind:
+          type: string
+        workload:
+          type: string
+        container:
+          description: "Container names, separated by commas when a workload runs\
+            \ several from one image."
+          type: string
+        image:
+          type: string
+        imageDigest:
+          type: string
+        count:
+          description: "Running pods, or nodes for a node component."
+          type: integer
+        observedAt:
+          format: date-time
+          type: string
+        status:
+          description: "Whether the component needs anything. update_available means\
+            \ Wodby can apply a newer version, and latestVersion and updatePath say\
+            \ which version and how. bundled follows the cluster's Kubernetes version,\
+            \ infra_app is reported by its infrastructure app, and unknown means the\
+            \ check could not run or Wodby has nothing to offer."
+          enum:
+          - up_to_date
+          - update_available
+          - bundled
+          - provider_managed
+          - infra_app
+          - customer_managed
+          - unknown
+          type: string
+        latestVersion:
+          description: The version an available update would apply.
+          type: string
+        updatePath:
+          description: The operation that updates the component.
+          enum:
+          - kubernetes_version
+          - infrastructure_version
+          - infra_apps
+          - component_update
+          - recycle_nodes
+          type: string
+      required:
+      - container
+      - count
+      - image
+      - imageDigest
+      - manager
+      - name
+      - namespace
+      - observedAt
+      - source
+      - status
+      - version
+      - workload
+      - workloadKind
       type: object
     KubernetesVersionUpgradePlan:
       example:
@@ -19380,15 +20435,17 @@ components:
         capabilities:
           webShell: true
           projects: true
-          cronSchedules: true
-          customDomains: true
           autoBackups: true
-          wodbyCloud: true
           appInstancePause: true
           orgSSO: true
           autoscale: true
-          appAccess: true
           users: true
+          previewEnvironments: true
+          cronSchedules: true
+          customDomains: true
+          vulnerabilityScanning: true
+          wodbyCloud: true
+          appAccess: true
         domain: domain
         name: name
         id: 6
@@ -19446,15 +20503,17 @@ components:
       example:
         webShell: true
         projects: true
-        cronSchedules: true
-        customDomains: true
         autoBackups: true
-        wodbyCloud: true
         appInstancePause: true
         orgSSO: true
         autoscale: true
-        appAccess: true
         users: true
+        previewEnvironments: true
+        cronSchedules: true
+        customDomains: true
+        vulnerabilityScanning: true
+        wodbyCloud: true
+        appAccess: true
       properties:
         customDomains:
           type: boolean
@@ -19478,6 +20537,14 @@ components:
           type: boolean
         wodbyCloud:
           type: boolean
+        vulnerabilityScanning:
+          description: Whether the organization's plan includes vulnerability scanning
+            of deployed builds.
+          type: boolean
+        previewEnvironments:
+          description: Whether the organization's plan includes pull request preview
+            environments.
+          type: boolean
       required:
       - appAccess
       - appInstancePause
@@ -19486,8 +20553,10 @@ components:
       - cronSchedules
       - customDomains
       - orgSSO
+      - previewEnvironments
       - projects
       - users
+      - vulnerabilityScanning
       - webShell
       - wodbyCloud
       type: object
@@ -19566,6 +20635,209 @@ components:
       - unit
       - usage
       - usageIncluded
+      type: object
+    OrgUsagePeriod:
+      example:
+        current: true
+        start: 2000-01-23T04:56:07.000+00:00
+        end: 2000-01-23T04:56:07.000+00:00
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          description: Where the period ends. A past period ends where the next one
+            starts; a plan change starts a new period early.
+          format: date-time
+          type: string
+        current:
+          description: "The subscription's current period, whose usage is still growing."
+          type: boolean
+      required:
+      - current
+      - end
+      - start
+      type: object
+    OrgUsageReport:
+      example:
+        period:
+          current: true
+          start: 2000-01-23T04:56:07.000+00:00
+          end: 2000-01-23T04:56:07.000+00:00
+        amount: 0.8008281904610115
+        projects:
+        - amount: 5.962133916683182
+          deleted: true
+          name: name
+          invoiceShare: 5.637376656633329
+          title: title
+          projectId: 1
+          items:
+          - item: app_services
+            unit: unit
+            amount: 7.061401241503109
+            quantity: 2.3021358869347655
+            invoiceShare: 9.301444243932576
+            title: title
+          - item: app_services
+            unit: unit
+            amount: 7.061401241503109
+            quantity: 2.3021358869347655
+            invoiceShare: 9.301444243932576
+            title: title
+        - amount: 5.962133916683182
+          deleted: true
+          name: name
+          invoiceShare: 5.637376656633329
+          title: title
+          projectId: 1
+          items:
+          - item: app_services
+            unit: unit
+            amount: 7.061401241503109
+            quantity: 2.3021358869347655
+            invoiceShare: 9.301444243932576
+            title: title
+          - item: app_services
+            unit: unit
+            amount: 7.061401241503109
+            quantity: 2.3021358869347655
+            invoiceShare: 9.301444243932576
+            title: title
+        invoiceAmount: 6.027456183070403
+      properties:
+        period:
+          $ref: '#/components/schemas/OrgUsagePeriod'
+        amount:
+          description: Total of all projects at the public list price in USD.
+          format: double
+          type: number
+        invoiceAmount:
+          description: "What the invoices charged for the report's items in the period,\
+            \ in USD before tax. Null while it is unknown: for the current period,\
+            \ a period that was not invoiced, or while an invoice is a draft."
+          format: double
+          nullable: true
+          type: number
+        projects:
+          description: "Projects ordered by title, with the organization row last."
+          items:
+            $ref: '#/components/schemas/OrgUsageProject'
+          type: array
+      required:
+      - amount
+      - invoiceAmount
+      - period
+      - projects
+      type: object
+    OrgUsageProject:
+      example:
+        amount: 5.962133916683182
+        deleted: true
+        name: name
+        invoiceShare: 5.637376656633329
+        title: title
+        projectId: 1
+        items:
+        - item: app_services
+          unit: unit
+          amount: 7.061401241503109
+          quantity: 2.3021358869347655
+          invoiceShare: 9.301444243932576
+          title: title
+        - item: app_services
+          unit: unit
+          amount: 7.061401241503109
+          quantity: 2.3021358869347655
+          invoiceShare: 9.301444243932576
+          title: title
+      properties:
+        projectId:
+          description: Null for usage of organization-owned resources and usage without
+            a project.
+          nullable: true
+          type: integer
+        name:
+          description: "The project name, empty for the organization row and deleted\
+            \ projects."
+          type: string
+        title:
+          type: string
+        deleted:
+          description: The project no longer exists. Its recorded usage stays in the
+            report.
+          type: boolean
+        amount:
+          description: Total of the items at the public list price in USD.
+          format: double
+          type: number
+        invoiceShare:
+          description: "Total of the items' invoice shares in USD before tax, null\
+            \ while the invoiced amount is unknown."
+          format: double
+          nullable: true
+          type: number
+        items:
+          items:
+            $ref: '#/components/schemas/OrgUsageItem'
+          type: array
+      required:
+      - amount
+      - deleted
+      - invoiceShare
+      - items
+      - name
+      - projectId
+      - title
+      type: object
+    OrgUsageItem:
+      example:
+        item: app_services
+        unit: unit
+        amount: 7.061401241503109
+        quantity: 2.3021358869347655
+        invoiceShare: 9.301444243932576
+        title: title
+      properties:
+        item:
+          enum:
+          - app_services
+          - ci_minutes
+          - registry_storage
+          - blob_storage
+          - wodby_cloud
+          - other
+          type: string
+        title:
+          type: string
+        quantity:
+          description: Usage in unit over the period.
+          format: double
+          type: number
+        unit:
+          description: "service-hour, minute, GB-hour, or USD for Wodby Cloud usage."
+          type: string
+        amount:
+          description: "Quantity at the public list price in USD, before included\
+            \ usage and discounts."
+          format: double
+          type: number
+        invoiceShare:
+          description: "This entry's share of what the invoices charged for the item's\
+            \ usage in the period, in USD before tax: the invoiced amount after included\
+            \ usage, discounts, and prorations, split between projects in proportion\
+            \ to amount. An item invoiced without recorded usage is shared to the\
+            \ organization row. Null while the invoiced amount is unknown."
+          format: double
+          nullable: true
+          type: number
+      required:
+      - amount
+      - invoiceShare
+      - item
+      - quantity
+      - title
+      - unit
       type: object
     BillingSubscriptionStatus:
       enum:
@@ -19658,15 +20930,17 @@ components:
           capabilities:
             webShell: true
             projects: true
-            cronSchedules: true
-            customDomains: true
             autoBackups: true
-            wodbyCloud: true
             appInstancePause: true
             orgSSO: true
             autoscale: true
-            appAccess: true
             users: true
+            previewEnvironments: true
+            cronSchedules: true
+            customDomains: true
+            vulnerabilityScanning: true
+            wodbyCloud: true
+            appAccess: true
           domain: domain
           name: name
           id: 6
@@ -19682,15 +20956,17 @@ components:
           capabilities:
             webShell: true
             projects: true
-            cronSchedules: true
-            customDomains: true
             autoBackups: true
-            wodbyCloud: true
             appInstancePause: true
             orgSSO: true
             autoscale: true
-            appAccess: true
             users: true
+            previewEnvironments: true
+            cronSchedules: true
+            customDomains: true
+            vulnerabilityScanning: true
+            wodbyCloud: true
+            appAccess: true
           domain: domain
           name: name
           id: 6
@@ -19790,14 +21066,8 @@ components:
     InviteOrgMemberInput:
       example:
         role: member
-        projectIds:
-        - 1
-        - 1
         orgId: 0
         email: email
-        teamIds:
-        - 6
-        - 6
       properties:
         orgId:
           description: Optional for API-key requests; defaults to the API key's organization.
@@ -19811,14 +21081,6 @@ components:
           - admin
           - owner
           type: string
-        teamIds:
-          items:
-            type: integer
-          type: array
-        projectIds:
-          items:
-            type: integer
-          type: array
       required:
       - email
       - role
@@ -19843,6 +21105,7 @@ components:
         role: read
         teamId: 5
         id: 0
+        customRoleId: 5
         projectId: 6
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -19861,7 +21124,14 @@ components:
           - read
           - write
           - admin
+          - developer
+          - developer_non_production
+          - custom
           type: string
+        customRoleId:
+          description: The custom role when role is custom.
+          nullable: true
+          type: integer
         createdAt:
           format: date-time
           type: string
@@ -19878,6 +21148,7 @@ components:
     NewProjectMembershipsInput:
       example:
         role: read
+        customRoleId: 5
         projectId: 0
         orgMembershipIds:
         - 6
@@ -19901,7 +21172,14 @@ components:
           - read
           - write
           - admin
+          - developer
+          - developer_non_production
+          - custom
           type: string
+        customRoleId:
+          description: Required when role is custom; a custom role of the project's
+            organization.
+          type: integer
       required:
       - projectId
       - role
@@ -19909,15 +21187,182 @@ components:
     ProjectMembershipRoleInput:
       example:
         role: read
+        customRoleId: 0
       properties:
         role:
           enum:
           - read
           - write
           - admin
+          - developer
+          - developer_non_production
+          - custom
           type: string
+        customRoleId:
+          description: Required when role is custom; a custom role of the project's
+            organization.
+          type: integer
       required:
       - role
+      type: object
+    ProjectRole:
+      example:
+        role: read
+        assignableToTeams: true
+        description: description
+        membershipCount: 6
+        title: title
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        system: true
+        projectPermissions:
+        - projectPermissions
+        - projectPermissions
+        supportsRuntimeSecretReveal: true
+        name: name
+        id: 0
+        envPermissions:
+          key:
+          - envPermissions
+          - envPermissions
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Custom role ID; absent for system roles.
+          nullable: true
+          type: integer
+        role:
+          description: "The system role, or custom."
+          enum:
+          - read
+          - write
+          - admin
+          - developer
+          - developer_non_production
+          - custom
+          type: string
+        system:
+          type: boolean
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        projectPermissions:
+          items:
+            type: string
+          type: array
+        envPermissions:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Environment permissions by environment type (prod, staging,\
+            \ test, dev, feature)."
+          type: object
+        assignableToTeams:
+          type: boolean
+        supportsRuntimeSecretReveal:
+          description: Whether memberships with this system role can turn on runtime
+            secret reveal.
+          type: boolean
+        membershipCount:
+          description: "Project memberships holding a custom role. Visible to organization\
+            \ owners, admins and support."
+          type: integer
+        createdAt:
+          format: date-time
+          nullable: true
+          type: string
+        updatedAt:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - assignableToTeams
+      - description
+      - envPermissions
+      - membershipCount
+      - name
+      - projectPermissions
+      - role
+      - supportsRuntimeSecretReveal
+      - system
+      - title
+      type: object
+    ProjectRoleInput:
+      example:
+        projectPermissions:
+        - projectPermissions
+        - projectPermissions
+        name: name
+        description: description
+        envPermissions:
+          key:
+          - envPermissions
+          - envPermissions
+        title: title
+        orgId: 0
+      properties:
+        orgId:
+          description: Used when creating a role. Optional for API-key requests; defaults
+            to the API key's organization.
+          type: integer
+        name:
+          description: "Lowercase letters, digits, dashes or underscores; unique in\
+            \ the organization."
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        projectPermissions:
+          items:
+            type: string
+          type: array
+        envPermissions:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Environment permissions by environment type (prod, staging,\
+            \ test, dev, feature)."
+          type: object
+      required:
+      - envPermissions
+      - name
+      - projectPermissions
+      - title
+      type: object
+    ProjectPermission:
+      example:
+        scope: project
+        name: name
+        description: description
+        alwaysGranted: true
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        scope:
+          enum:
+          - project
+          - environment
+          type: string
+        alwaysGranted:
+          description: "Every project role grants it, so it cannot be removed from\
+            \ a custom role."
+          type: boolean
+      required:
+      - alwaysGranted
+      - description
+      - name
+      - scope
+      - title
       type: object
     Team:
       example:
@@ -20026,6 +21471,22 @@ components:
       required:
       - orgMembershipId
       - role
+      type: object
+    OrgMembershipTeamsInput:
+      example:
+        teams:
+        - role: member
+          teamId: 0
+        - role: member
+          teamId: 0
+      properties:
+        teams:
+          description: The complete team list of the member.
+          items:
+            $ref: '#/components/schemas/OrgMembershipTeamsInput_teams_inner'
+          type: array
+      required:
+      - teams
       type: object
     OrgSSOProvider:
       example:
@@ -20355,7 +21816,7 @@ components:
           type: integer
         sharedProjects:
           description: The complete list of project shares. A project left out loses
-            its share. The owning project always keeps write access. You need write
+            its share. The owning project always keeps write access. You need Admin
             access to every project whose share you add or remove.
           items:
             $ref: '#/components/schemas/ProjectShareInput'
@@ -20399,8 +21860,10 @@ components:
             - appServiceName: appServiceName
               importName: importName
               backupName: backupName
+            basicAuthUsername: basicAuthUsername
             maxConcurrent: 5
             environmentType: test
+            basicAuth: true
             buildDrafts: true
             idleTtlDays: 2
             enabled: true
@@ -20466,8 +21929,10 @@ components:
           - appServiceName: appServiceName
             importName: importName
             backupName: backupName
+          basicAuthUsername: basicAuthUsername
           maxConcurrent: 5
           environmentType: test
+          basicAuth: true
           buildDrafts: true
           idleTtlDays: 2
           enabled: true
@@ -20490,8 +21955,10 @@ components:
         - appServiceName: appServiceName
           importName: importName
           backupName: backupName
+        basicAuthUsername: basicAuthUsername
         maxConcurrent: 5
         environmentType: test
+        basicAuth: true
         buildDrafts: true
         idleTtlDays: 2
         enabled: true
@@ -20524,7 +21991,17 @@ components:
           type: integer
         idleTtlDays:
           type: integer
+        basicAuth:
+          description: Every preview is protected with basic auth using one generated
+            password shared by all previews of the app.
+          type: boolean
+        basicAuthUsername:
+          description: Username of the shared preview basic auth. Members reveal the
+            password in the dashboard.
+          type: string
       required:
+      - basicAuth
+      - basicAuthUsername
       - buildDrafts
       - enabled
       - environmentType
@@ -20563,6 +22040,7 @@ components:
             backupName: backupName
           maxConcurrent: 6
           environmentType: test
+          basicAuth: true
           buildDrafts: true
           idleTtlDays: 1
           enabled: true
@@ -20583,6 +22061,7 @@ components:
           backupName: backupName
         maxConcurrent: 6
         environmentType: test
+        basicAuth: true
         buildDrafts: true
         idleTtlDays: 1
         enabled: true
@@ -20613,6 +22092,10 @@ components:
           type: integer
         idleTtlDays:
           type: integer
+        basicAuth:
+          description: Protect every preview with basic auth and one shared generated
+            password. Defaults to true.
+          type: boolean
       required:
       - enabled
       type: object
@@ -21129,6 +22612,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
@@ -21143,6 +22627,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           authorName: authorName
@@ -21151,6 +22636,7 @@ components:
           imageVoidStatus: none
           taskId: 9
           canVoidImages: true
+          vulnerabilityScan: "{}"
           status: status
           gitRefType: gitRefType
         - authorEmail: authorEmail
@@ -21182,6 +22668,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
@@ -21196,6 +22683,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           authorName: authorName
@@ -21204,6 +22692,7 @@ components:
           imageVoidStatus: none
           taskId: 9
           canVoidImages: true
+          vulnerabilityScan: "{}"
           status: status
           gitRefType: gitRefType
         id: 0
@@ -21473,6 +22962,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
@@ -21487,6 +22977,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             authorName: authorName
@@ -21495,6 +22986,7 @@ components:
             imageVoidStatus: none
             taskId: 9
             canVoidImages: true
+            vulnerabilityScan: "{}"
             status: status
             gitRefType: gitRefType
           - authorEmail: authorEmail
@@ -21526,6 +23018,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
@@ -21540,6 +23033,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             authorName: authorName
@@ -21548,6 +23042,7 @@ components:
             imageVoidStatus: none
             taskId: 9
             canVoidImages: true
+            vulnerabilityScan: "{}"
             status: status
             gitRefType: gitRefType
           id: 0
@@ -21631,6 +23126,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
@@ -21645,6 +23141,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             authorName: authorName
@@ -21653,6 +23150,7 @@ components:
             imageVoidStatus: none
             taskId: 9
             canVoidImages: true
+            vulnerabilityScan: "{}"
             status: status
             gitRefType: gitRefType
           - authorEmail: authorEmail
@@ -21684,6 +23182,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             - image: image
@@ -21698,6 +23197,7 @@ components:
               dockerfileHash: dockerfileHash
               currentBuildNumber: 7
               id: 3
+              vulnerabilityScan: "{}"
               status: status
               updatedAt: 2000-01-23T04:56:07.000+00:00
             authorName: authorName
@@ -21706,6 +23206,7 @@ components:
             imageVoidStatus: none
             taskId: 9
             canVoidImages: true
+            vulnerabilityScan: "{}"
             status: status
             gitRefType: gitRefType
           id: 0
@@ -21759,6 +23260,7 @@ components:
           dockerfileHash: dockerfileHash
           currentBuildNumber: 7
           id: 3
+          vulnerabilityScan: "{}"
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - image: image
@@ -21773,6 +23275,7 @@ components:
           dockerfileHash: dockerfileHash
           currentBuildNumber: 7
           id: 3
+          vulnerabilityScan: "{}"
           status: status
           updatedAt: 2000-01-23T04:56:07.000+00:00
         authorName: authorName
@@ -21781,6 +23284,7 @@ components:
         imageVoidStatus: none
         taskId: 9
         canVoidImages: true
+        vulnerabilityScan: "{}"
         status: status
         gitRefType: gitRefType
       properties:
@@ -21864,6 +23368,14 @@ components:
           format: date-time
           nullable: true
           type: string
+        vulnerabilityScan:
+          allOf:
+          - $ref: '#/components/schemas/AppBuildVulnerabilityScan'
+          description: Vulnerability scan summary of the build's currently deployed
+            images. Omitted when none of its images is currently deployed or scanning
+            is unavailable for the organization.
+          nullable: true
+          type: object
       required:
       - appInstanceId
       - appServiceBuilds
@@ -21881,6 +23393,107 @@ components:
       - updatedAt
       - workflow
       type: object
+    AppBuildVulnerabilityScan:
+      properties:
+        status:
+          $ref: '#/components/schemas/VulnerabilityScanStatus'
+        counts:
+          allOf:
+          - $ref: '#/components/schemas/VulnerabilityCounts'
+          description: Counts from the last successful scans. Omitted until at least
+            one deployed image was scanned successfully.
+          nullable: true
+          type: object
+        scannedAt:
+          description: Oldest last successful scan among the deployed images.
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - status
+      type: object
+    AppServiceBuildVulnerabilityScan:
+      properties:
+        status:
+          $ref: '#/components/schemas/VulnerabilityScanStatus'
+        counts:
+          allOf:
+          - $ref: '#/components/schemas/VulnerabilityCounts'
+          description: Counts from the last successful scan. A failed rescan keeps
+            them.
+          nullable: true
+          type: object
+        scannedAt:
+          description: Time of the last successful scan.
+          format: date-time
+          nullable: true
+          type: string
+        attemptedAt:
+          description: Time of the latest scan attempt.
+          format: date-time
+          nullable: true
+          type: string
+        error:
+          description: Why the latest scan attempt failed.
+          nullable: true
+          type: string
+        imageDigest:
+          nullable: true
+          type: string
+        platform:
+          nullable: true
+          type: string
+        scannerVersion:
+          nullable: true
+          type: string
+        databaseBuiltAt:
+          format: date-time
+          nullable: true
+          type: string
+        findingsTotal:
+          description: Number of findings in the last successful scan.
+          type: integer
+      required:
+      - findingsTotal
+      - status
+      type: object
+    VulnerabilityScanStatus:
+      description: completed or failed describe the latest scan attempt; pending means
+        a deployed image was not scanned yet.
+      enum:
+      - pending
+      - completed
+      - failed
+      type: string
+    VulnerabilityCounts:
+      properties:
+        critical:
+          type: integer
+        high:
+          type: integer
+        medium:
+          type: integer
+        low:
+          type: integer
+        negligible:
+          type: integer
+        unknown:
+          type: integer
+        total:
+          type: integer
+        fixable:
+          description: Findings with a released fix.
+          type: integer
+      required:
+      - critical
+      - fixable
+      - high
+      - low
+      - medium
+      - negligible
+      - total
+      - unknown
+      type: object
     AppServiceBuild:
       example:
         image: image
@@ -21895,6 +23508,7 @@ components:
         dockerfileHash: dockerfileHash
         currentBuildNumber: 7
         id: 3
+        vulnerabilityScan: "{}"
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -21930,6 +23544,15 @@ components:
         currentBuildNumber:
           nullable: true
           type: integer
+        vulnerabilityScan:
+          allOf:
+          - $ref: '#/components/schemas/AppServiceBuildVulnerabilityScan'
+          description: "Latest vulnerability scan of this image. Images are scanned\
+            \ only while they are currently deployed. Omitted when the image was never\
+            \ scanned and is not deployed, when scanning is unavailable for the organization,\
+            \ and for builds nested in deployments."
+          nullable: true
+          type: object
         createdAt:
           format: date-time
           type: string
@@ -21985,6 +23608,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
@@ -21999,6 +23623,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           authorName: authorName
@@ -22007,6 +23632,7 @@ components:
           imageVoidStatus: none
           taskId: 9
           canVoidImages: true
+          vulnerabilityScan: "{}"
           status: status
           gitRefType: gitRefType
         - authorEmail: authorEmail
@@ -22038,6 +23664,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
@@ -22052,6 +23679,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           authorName: authorName
@@ -22060,6 +23688,7 @@ components:
           imageVoidStatus: none
           taskId: 9
           canVoidImages: true
+          vulnerabilityScan: "{}"
           status: status
           gitRefType: gitRefType
       properties:
@@ -22108,6 +23737,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
@@ -22122,6 +23752,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           authorName: authorName
@@ -22130,6 +23761,7 @@ components:
           imageVoidStatus: none
           taskId: 9
           canVoidImages: true
+          vulnerabilityScan: "{}"
           status: status
           gitRefType: gitRefType
         - authorEmail: authorEmail
@@ -22161,6 +23793,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           - image: image
@@ -22175,6 +23808,7 @@ components:
             dockerfileHash: dockerfileHash
             currentBuildNumber: 7
             id: 3
+            vulnerabilityScan: "{}"
             status: status
             updatedAt: 2000-01-23T04:56:07.000+00:00
           authorName: authorName
@@ -22183,6 +23817,7 @@ components:
           imageVoidStatus: none
           taskId: 9
           canVoidImages: true
+          vulnerabilityScan: "{}"
           status: status
           gitRefType: gitRefType
         taskId: 0
@@ -24740,17 +26375,20 @@ components:
       type: object
     AppAuth:
       example:
+        appServiceIds:
+        - 1
+        - 1
+        source: USER
+        login: login
         appInstanceId: 6
         appServiceId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
         appRouteId: 5
+        generated: true
         scope: APP
         realm: realm
         id: 0
-        appServiceIds:
-        - 1
-        - 1
-        login: login
+        exempt: true
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -24775,9 +26413,20 @@ components:
           nullable: true
           type: integer
         login:
+          description: Empty for exemptions.
           type: string
         realm:
           type: string
+        source:
+          $ref: '#/components/schemas/AppAuthSource'
+        generated:
+          description: True while the password is one Wodby generated. Setting a password
+            by hand clears it.
+          type: boolean
+        exempt:
+          description: Exemptions switch basic auth off for their services or route
+            even when a wider entry covers them. They have no login or password.
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -24788,10 +26437,13 @@ components:
       - appInstanceId
       - appServiceIds
       - createdAt
+      - exempt
+      - generated
       - id
       - login
       - realm
       - scope
+      - source
       - updatedAt
       type: object
     AppAuthScope:
@@ -24802,6 +26454,19 @@ components:
       - SERVICE
       - ROUTE
       type: string
+    AppAuthSource:
+      description: What created a basic auth entry. SERVICE_DEFAULT entries come with
+        app services their service or stack protects by default; PREVIEW entries protect
+        pull request preview environments.
+      enum:
+      - USER
+      - SERVICE_DEFAULT
+      - PREVIEW
+      type: string
+      x-enum-varnames:
+      - APPAUTHSOURCE_USER
+      - APPAUTHSOURCE_SERVICE_DEFAULT
+      - APPAUTHSOURCE_PREVIEW
     AppRouteSetting:
       example:
         appInstanceId: 6
@@ -24907,8 +26572,8 @@ components:
         custom:
           type: boolean
         issuer:
-          description: "Issuer label: a certificate authority name for uploaded or\
-            \ temporary AWS certificates, otherwise the managed issuer identifier."
+          description: "Human-readable certificate authority name parsed from uploaded\
+            \ certificates, or the managed issuer identifier."
           type: string
         domain:
           type: string
@@ -25329,6 +26994,7 @@ components:
         external: true
         manifest:
           scalable: true
+          basicAuth: true
           raw: raw
           integrations:
           - variables:
@@ -25477,6 +27143,7 @@ components:
       additionalProperties: true
       example:
         scalable: true
+        basicAuth: true
         raw: raw
         integrations:
         - variables:
@@ -25539,6 +27206,10 @@ components:
         raw:
           type: string
         scalable:
+          type: boolean
+        basicAuth:
+          description: Whether the service asks for its public HTTP endpoints to be
+            protected with basic auth by default.
           type: boolean
         integrations:
           items:
@@ -25956,6 +27627,7 @@ components:
           id: 7
           secret: true
           value: value
+        basicAuthOverride: inherit
         replicas: 6
         serviceRevTitle: serviceRevTitle
         main: true
@@ -26054,6 +27726,7 @@ components:
             resourceName: resourceName
         id: 0
         serviceRevName: serviceRevName
+        basicAuthDefault: true
         serviceRevVersion: serviceRevVersion
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -26070,6 +27743,17 @@ components:
         disabled:
           type: boolean
         required:
+          type: boolean
+        basicAuthOverride:
+          description: Whether the stack overrides the service's basic auth default.
+          enum:
+          - inherit
+          - enabled
+          - disabled
+          type: string
+        basicAuthDefault:
+          description: Whether new app services of this stack service get their own
+            basic auth entry by default. Always false without a public HTTP endpoint.
           type: boolean
         replicas:
           type: integer
@@ -26112,6 +27796,8 @@ components:
           format: date-time
           type: string
       required:
+      - basicAuthDefault
+      - basicAuthOverride
       - createdAt
       - deploymentConfiguration
       - disabled
@@ -26762,9 +28448,16 @@ components:
     AppServiceLink:
       example:
         appServiceId: 6
+        targetAppInstanceId: 5
+        targetAppInstanceName: targetAppInstanceName
+        targetAppName: targetAppName
         name: name
+        targetAppInstanceTitle: targetAppInstanceTitle
         id: 0
         linkedAppServiceId: 1
+        targetAppId: 5
+        targetAppTitle: targetAppTitle
+        crossApp: true
       properties:
         id:
           type: integer
@@ -26774,11 +28467,127 @@ components:
           type: integer
         name:
           type: string
+        crossApp:
+          description: "The linked app service is in another app environment, of the\
+            \ same app or another one."
+          type: boolean
+        targetAppInstanceId:
+          description: The app environment of a linked app service in another environment;
+            null otherwise.
+          nullable: true
+          type: integer
+        targetAppInstanceName:
+          nullable: true
+          type: string
+        targetAppInstanceTitle:
+          nullable: true
+          type: string
+        targetAppId:
+          description: The app of a linked app service in another environment; null
+            otherwise.
+          nullable: true
+          type: integer
+        targetAppName:
+          nullable: true
+          type: string
+        targetAppTitle:
+          nullable: true
+          type: string
       required:
       - appServiceId
+      - crossApp
       - id
       - linkedAppServiceId
       - name
+      type: object
+    AppServiceLinkCandidate:
+      example:
+        appInstanceId: 1
+        appServiceId: 0
+        appServiceName: appServiceName
+        appInstanceTitle: appInstanceTitle
+        appId: 6
+        appServiceTitle: appServiceTitle
+        appTitle: appTitle
+        crossApp: true
+      properties:
+        appServiceId:
+          type: integer
+        appServiceName:
+          type: string
+        appServiceTitle:
+          type: string
+        crossApp:
+          description: The candidate is in another app environment.
+          type: boolean
+        appId:
+          type: integer
+        appTitle:
+          type: string
+        appInstanceId:
+          type: integer
+        appInstanceTitle:
+          type: string
+      required:
+      - appId
+      - appInstanceId
+      - appInstanceTitle
+      - appServiceId
+      - appServiceName
+      - appServiceTitle
+      - appTitle
+      - crossApp
+      type: object
+    AppServiceCustomLink:
+      example:
+        appServiceId: 0
+        values:
+        - name: name
+          hasValue: true
+          secret: true
+          value: value
+        - name: name
+          hasValue: true
+          secret: true
+          value: value
+        name: name
+      properties:
+        appServiceId:
+          type: integer
+        name:
+          type: string
+        values:
+          description: "The values the link declares, in its order."
+          items:
+            $ref: '#/components/schemas/AppServiceCustomLinkValue'
+          type: array
+      required:
+      - appServiceId
+      - name
+      - values
+      type: object
+    AppServiceCustomLinkValue:
+      example:
+        name: name
+        hasValue: true
+        secret: true
+        value: value
+      properties:
+        name:
+          type: string
+        secret:
+          type: boolean
+        hasValue:
+          type: boolean
+        value:
+          description: The value; null for a secret value.
+          nullable: true
+          type: string
+      required:
+      - hasValue
+      - name
+      - secret
+      - value
       type: object
     AppServiceContainer:
       example:
@@ -29924,6 +31733,21 @@ components:
           nullable: true
           type: integer
       type: object
+    AppServiceCustomLinkInput:
+      example:
+        values:
+        - name: name
+          value: value
+        - name: name
+          value: value
+      properties:
+        values:
+          items:
+            $ref: '#/components/schemas/AppServiceCustomLinkInput_values_inner'
+          type: array
+      required:
+      - values
+      type: object
     UpdateAppServiceDatabaseInput:
       example:
         databaseUserId: 6
@@ -30123,6 +31947,7 @@ components:
       type: object
     StackServiceInput:
       example:
+        basicAuthOverride: inherit
         replicas: 0
         disabled: true
         main: true
@@ -30166,6 +31991,15 @@ components:
         required:
           nullable: true
           type: boolean
+        basicAuthOverride:
+          description: "Follow the service's basic auth default, or protect new app\
+            \ services with basic auth or not."
+          enum:
+          - inherit
+          - enabled
+          - disabled
+          nullable: true
+          type: string
         disabled:
           nullable: true
           type: boolean
@@ -30581,6 +32415,8 @@ components:
           integrationId: 6
         environmentType: prod
         deferInitialDeployment: false
+        basicAuth: true
+        basicAuthPassword: basicAuthPassword
         executionMode: standard
         services:
         - settings:
@@ -30608,6 +32444,7 @@ components:
               backupName: backupName
             source: source
             url: url
+          basicAuth: true
           volumes:
           - size: 4
             storageClassName: storageClassName
@@ -30621,6 +32458,7 @@ components:
             requestMem: 6
             limitCPU: 7
             workload: workload
+            preset: preset
             requestCPU: 1
             gpu: ""
           disabled: true
@@ -30672,6 +32510,7 @@ components:
               backupName: backupName
             source: source
             url: url
+          basicAuth: true
           volumes:
           - size: 4
             storageClassName: storageClassName
@@ -30685,6 +32524,7 @@ components:
             requestMem: 6
             limitCPU: 7
             workload: workload
+            preset: preset
             requestCPU: 1
             gpu: ""
           disabled: true
@@ -30723,6 +32563,7 @@ components:
           - name: name
             value: value
           database: ""
+          basicAuth: true
           disabled: true
           id: 9
           buildSource:
@@ -30740,6 +32581,7 @@ components:
           - name: name
             value: value
           database: ""
+          basicAuth: true
           disabled: true
           id: 9
           buildSource:
@@ -30751,6 +32593,7 @@ components:
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
+        basicAuthUsername: basicAuthUsername
         environmentName: environmentName
         domain: domain
         name: name
@@ -30833,6 +32676,21 @@ components:
           $ref: '#/components/schemas/AppEnvironmentSettingsInput'
         access:
           $ref: '#/components/schemas/NewAppEnvironmentAccessInput'
+        basicAuth:
+          description: "Protect the whole new environment with basic auth, by default\
+            \ with the username wodby and a generated password revealed in Wodby.\
+            \ Cannot be combined with access (Private App Access)."
+          type: boolean
+        basicAuthUsername:
+          description: Username of the environment's basic auth. Requires basicAuth.
+            Defaults to wodby.
+          type: string
+        basicAuthPassword:
+          description: Password of the environment's basic auth. Requires basicAuth.
+            Omit to let Wodby generate one.
+          format: password
+          type: string
+          writeOnly: true
       required:
       - environmentName
       - environmentType
@@ -30892,6 +32750,8 @@ components:
           integrationId: 6
         environmentType: prod
         deferInitialDeployment: false
+        basicAuth: true
+        basicAuthPassword: basicAuthPassword
         executionMode: standard
         services:
         - settings:
@@ -30919,6 +32779,7 @@ components:
               backupName: backupName
             source: source
             url: url
+          basicAuth: true
           volumes:
           - size: 4
             storageClassName: storageClassName
@@ -30932,6 +32793,7 @@ components:
             requestMem: 6
             limitCPU: 7
             workload: workload
+            preset: preset
             requestCPU: 1
             gpu: ""
           disabled: true
@@ -30983,6 +32845,7 @@ components:
               backupName: backupName
             source: source
             url: url
+          basicAuth: true
           volumes:
           - size: 4
             storageClassName: storageClassName
@@ -30996,6 +32859,7 @@ components:
             requestMem: 6
             limitCPU: 7
             workload: workload
+            preset: preset
             requestCPU: 1
             gpu: ""
           disabled: true
@@ -31032,6 +32896,7 @@ components:
           - name: name
             value: value
           database: ""
+          basicAuth: true
           disabled: true
           id: 9
           buildSource:
@@ -31049,6 +32914,7 @@ components:
           - name: name
             value: value
           database: ""
+          basicAuth: true
           disabled: true
           id: 9
           buildSource:
@@ -31060,6 +32926,7 @@ components:
             newRepoName: newRepoName
             gitRefType: gitRefType
           version: version
+        basicAuthUsername: basicAuthUsername
         environmentName: environmentName
         appId: 0
         domain: domain
@@ -31121,6 +32988,21 @@ components:
           $ref: '#/components/schemas/AppEnvironmentSettingsInput'
         access:
           $ref: '#/components/schemas/NewAppEnvironmentAccessInput'
+        basicAuth:
+          description: "Protect the whole new environment with basic auth, by default\
+            \ with the username wodby and a generated password revealed in Wodby.\
+            \ Cannot be combined with access (Private App Access)."
+          type: boolean
+        basicAuthUsername:
+          description: Username of the environment's basic auth. Requires basicAuth.
+            Defaults to wodby.
+          type: string
+        basicAuthPassword:
+          description: Password of the environment's basic auth. Requires basicAuth.
+            Omit to let Wodby generate one.
+          format: password
+          type: string
+          writeOnly: true
       required:
       - appId
       - environmentName
@@ -31219,6 +33101,7 @@ components:
         - name: name
           value: value
         database: ""
+        basicAuth: true
         disabled: true
         id: 9
         buildSource:
@@ -31252,6 +33135,11 @@ components:
           description: "The database server, and optionally the database, of a database\
             \ service. Required to enable an external database service, such as a\
             \ managed PostgreSQL server."
+        basicAuth:
+          description: "Protect the service's public HTTP endpoints with their own\
+            \ basic auth and a generated password, or not. Omit to follow the stack\
+            \ service's basicAuthDefault."
+          type: boolean
       required:
       - id
       type: object
@@ -31398,6 +33286,7 @@ components:
         requestMem: 6
         limitCPU: 7
         workload: workload
+        preset: preset
         requestCPU: 1
         gpu: ""
       properties:
@@ -31410,6 +33299,12 @@ components:
           nullable: true
           type: string
         container:
+          nullable: true
+          type: string
+        preset:
+          description: "Name of a Wodby preset or of a custom preset of the organization,\
+            \ from listResourcePresets. Its values fill the CPU and memory fields\
+            \ this input leaves out; the values are stored, not the preset."
           nullable: true
           type: string
         requestCPU:
@@ -31933,6 +33828,86 @@ components:
           type: string
       required:
       - command
+      type: object
+    ResourcePreset:
+      example:
+        limitMem: 5
+        requestMem: 1
+        system: true
+        limitCPU: 5
+        name: name
+        id: 0
+        title: title
+        requestCPU: 6
+      properties:
+        id:
+          description: Set only for an organization's custom presets.
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        requestCPU:
+          description: Requested CPU in millicores.
+          nullable: true
+          type: integer
+        requestMem:
+          description: Requested memory in MiB.
+          nullable: true
+          type: integer
+        limitCPU:
+          description: CPU limit in millicores.
+          nullable: true
+          type: integer
+        limitMem:
+          description: Memory limit in MiB.
+          nullable: true
+          type: integer
+        system:
+          description: "Wodby's own presets, whose values never change."
+          type: boolean
+      required:
+      - name
+      - system
+      - title
+      type: object
+    ResourcePresetInput:
+      description: "Set at least one value. CPU is in millicores (multiples of 10),\
+        \ memory in MiB (multiples of 16)."
+      example:
+        limitMem: 5
+        requestMem: 1
+        limitCPU: 5
+        name: name
+        title: title
+        requestCPU: 6
+        orgId: 0
+      properties:
+        orgId:
+          description: Used when creating a preset. Optional for API-key requests;
+            defaults to the API key's organization.
+          type: integer
+        name:
+          description: "Lowercase letters, digits and dashes; unique in the organization\
+            \ and not the name of a Wodby preset."
+          type: string
+        title:
+          type: string
+        requestCPU:
+          nullable: true
+          type: integer
+        requestMem:
+          nullable: true
+          type: integer
+        limitCPU:
+          nullable: true
+          type: integer
+        limitMem:
+          nullable: true
+          type: integer
+      required:
+      - name
+      - title
       type: object
     WodbyCloudMachineType:
       example:
@@ -32975,6 +34950,7 @@ components:
         appServiceIds:
         - 6
         - 6
+        exempt: true
         login: login
       properties:
         appInstanceId:
@@ -32996,18 +34972,22 @@ components:
           nullable: true
           type: integer
         login:
+          description: Defaults to wodby. Ignored for exemptions.
           type: string
         password:
+          description: "Omit to let Wodby generate a password, which you reveal in\
+            \ the dashboard. Ignored for exemptions."
           format: password
           type: string
           writeOnly: true
         realm:
           type: string
+        exempt:
+          description: Switch basic auth off for the given app services or route even
+            when a wider entry covers them. Requires appServiceIds or appRouteId.
+          type: boolean
       required:
       - appInstanceId
-      - login
-      - password
-      - realm
       type: object
     UpdateAppAuthInput:
       example:
@@ -33019,6 +34999,7 @@ components:
         - 0
         - 0
         login: login
+        generatePassword: true
       properties:
         appServiceIds:
           description: "App services to protect. Omit every scope field to preserve\
@@ -33038,6 +35019,7 @@ components:
           nullable: true
           type: integer
         login:
+          description: Omit to keep the current login.
           type: string
         password:
           description: Replaces the existing secret when supplied; omit to keep the
@@ -33046,11 +35028,13 @@ components:
           nullable: true
           type: string
           writeOnly: true
+        generatePassword:
+          description: Replace the password with a newly generated one. Ignored when
+            password is given.
+          type: boolean
         realm:
+          description: Omit to keep the current realm.
           type: string
-      required:
-      - login
-      - realm
       type: object
     UpdateAppRouteInput:
       example:
@@ -33348,6 +35332,9 @@ components:
       type: object
     AppEnvironmentMigrationInput:
       example:
+        existingBackupIds:
+        - 1
+        - 1
         volumes:
         - storageClassName: storageClassName
           appServiceVolumeId: 6
@@ -33365,6 +35352,14 @@ components:
             \ the target cluster."
           items:
             $ref: '#/components/schemas/AppEnvironmentMigrationVolumeInput'
+          type: array
+        existingBackupIds:
+          description: Completed backups of this environment to restore instead of
+            creating final backups. Data written after a backup was taken does not
+            reach the target. Components without a backup listed here get a final
+            backup.
+          items:
+            type: integer
           type: array
       required:
       - targetClusterId
@@ -33396,6 +35391,7 @@ components:
             backupId: 2
             name: name
             id: 9
+            existingBackup: true
           - appServiceId: 3
             importStatus: importStatus
             importId: 4
@@ -33403,6 +35399,7 @@ components:
             backupId: 2
             name: name
             id: 9
+            existingBackup: true
           cutoverAt: 2000-01-23T04:56:07.000+00:00
           appEnvironmentId: 1
           sourceClusterId: 5
@@ -33441,6 +35438,7 @@ components:
           backupId: 2
           name: name
           id: 9
+          existingBackup: true
         - appServiceId: 3
           importStatus: importStatus
           importId: 4
@@ -33448,6 +35446,7 @@ components:
           backupId: 2
           name: name
           id: 9
+          existingBackup: true
         cutoverAt: 2000-01-23T04:56:07.000+00:00
         appEnvironmentId: 1
         sourceClusterId: 5
@@ -33549,6 +35548,7 @@ components:
         backupId: 2
         name: name
         id: 9
+        existingBackup: true
       properties:
         id:
           type: integer
@@ -33561,6 +35561,10 @@ components:
         backupStatus:
           nullable: true
           type: string
+        existingBackup:
+          description: True when the component restores a backup chosen at the start
+            instead of a final backup.
+          type: boolean
         importId:
           type: integer
         importStatus:
@@ -33569,6 +35573,7 @@ components:
       required:
       - appServiceId
       - backupId
+      - existingBackup
       - id
       - importId
       - name
@@ -33691,6 +35696,7 @@ components:
             backupName: backupName
           source: source
           url: url
+        basicAuth: true
         volumes:
         - size: 4
           storageClassName: storageClassName
@@ -33704,6 +35710,7 @@ components:
           requestMem: 6
           limitCPU: 7
           workload: workload
+          preset: preset
           requestCPU: 1
           gpu: ""
         disabled: true
@@ -33762,6 +35769,11 @@ components:
           $ref: '#/components/schemas/ResourcesInput'
         scalability:
           $ref: '#/components/schemas/ScalabilityInput'
+        basicAuth:
+          description: "Protect the service's public HTTP endpoints with their own\
+            \ basic auth and a generated password, or not. Omit to follow the stack\
+            \ service's basicAuthDefault."
+          type: boolean
       required:
       - disabled
       - id
@@ -33864,10 +35876,47 @@ components:
             type: integer
           type: array
       type: object
+    updateClusterComponent_request:
+      properties:
+        name:
+          description: "The update's name, as listed for the cluster."
+          type: string
+      required:
+      - name
+      type: object
     HelmChartServicePort_targetPort:
       oneOf:
       - type: string
       - type: integer
+    OrgMembershipTeamsInput_teams_inner:
+      example:
+        role: member
+        teamId: 0
+      properties:
+        teamId:
+          type: integer
+        role:
+          enum:
+          - member
+          - leader
+          type: string
+      required:
+      - role
+      - teamId
+      type: object
+    AppServiceCustomLinkInput_values_inner:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
   securitySchemes:
     apiKeyHeader:
       description: Organization-scoped Wodby API key. Requests are restricted to the

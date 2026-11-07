@@ -22,6 +22,8 @@ var _ MappedNullable = &ServiceManifest{}
 type ServiceManifest struct {
 	Raw string `json:"raw"`
 	Scalable bool `json:"scalable"`
+	// Whether the service asks for its public HTTP endpoints to be protected with basic auth by default.
+	BasicAuth *bool `json:"basicAuth,omitempty"`
 	Integrations []ServiceIntegrationRequirement `json:"integrations,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -95,6 +97,38 @@ func (o *ServiceManifest) SetScalable(v bool) {
 	o.Scalable = v
 }
 
+// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+func (o *ServiceManifest) GetBasicAuth() bool {
+	if o == nil || IsNil(o.BasicAuth) {
+		var ret bool
+		return ret
+	}
+	return *o.BasicAuth
+}
+
+// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetBasicAuthOk() (*bool, bool) {
+	if o == nil || IsNil(o.BasicAuth) {
+		return nil, false
+	}
+	return o.BasicAuth, true
+}
+
+// HasBasicAuth returns a boolean if a field has been set.
+func (o *ServiceManifest) HasBasicAuth() bool {
+	if o != nil && !IsNil(o.BasicAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
+func (o *ServiceManifest) SetBasicAuth(v bool) {
+	o.BasicAuth = &v
+}
+
 // GetIntegrations returns the Integrations field value if set, zero value otherwise.
 func (o *ServiceManifest) GetIntegrations() []ServiceIntegrationRequirement {
 	if o == nil || IsNil(o.Integrations) {
@@ -139,6 +173,9 @@ func (o ServiceManifest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["raw"] = o.Raw
 	toSerialize["scalable"] = o.Scalable
+	if !IsNil(o.BasicAuth) {
+		toSerialize["basicAuth"] = o.BasicAuth
+	}
 	if !IsNil(o.Integrations) {
 		toSerialize["integrations"] = o.Integrations
 	}
@@ -188,6 +225,7 @@ func (o *ServiceManifest) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "raw")
 		delete(additionalProperties, "scalable")
+		delete(additionalProperties, "basicAuth")
 		delete(additionalProperties, "integrations")
 		o.AdditionalProperties = additionalProperties
 	}

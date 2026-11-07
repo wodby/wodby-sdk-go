@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **OrgMembershipIds** | Pointer to **[]int32** |  | [optional] 
 **TeamIds** | Pointer to **[]int32** |  | [optional] 
 **Role** | **string** |  | 
+**CustomRoleId** | Pointer to **int32** | Required when role is custom; a custom role of the project&#39;s organization. | [optional] 
 
 ## Methods
 
@@ -117,6 +118,31 @@ and a boolean to check if the value has been set.
 
 SetRole sets Role field to given value.
 
+
+### GetCustomRoleId
+
+`func (o *NewProjectMembershipsInput) GetCustomRoleId() int32`
+
+GetCustomRoleId returns the CustomRoleId field if non-nil, zero value otherwise.
+
+### GetCustomRoleIdOk
+
+`func (o *NewProjectMembershipsInput) GetCustomRoleIdOk() (*int32, bool)`
+
+GetCustomRoleIdOk returns a tuple with the CustomRoleId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomRoleId
+
+`func (o *NewProjectMembershipsInput) SetCustomRoleId(v int32)`
+
+SetCustomRoleId sets CustomRoleId field to given value.
+
+### HasCustomRoleId
+
+`func (o *NewProjectMembershipsInput) HasCustomRoleId() bool`
+
+HasCustomRoleId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

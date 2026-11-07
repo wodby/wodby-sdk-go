@@ -27,6 +27,8 @@ type ProjectMembership struct {
 	OrgMembershipId NullableInt32 `json:"orgMembershipId,omitempty"`
 	TeamId NullableInt32 `json:"teamId,omitempty"`
 	Role string `json:"role"`
+	// The custom role when role is custom.
+	CustomRoleId NullableInt32 `json:"customRoleId,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -211,6 +213,48 @@ func (o *ProjectMembership) SetRole(v string) {
 	o.Role = v
 }
 
+// GetCustomRoleId returns the CustomRoleId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProjectMembership) GetCustomRoleId() int32 {
+	if o == nil || IsNil(o.CustomRoleId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.CustomRoleId.Get()
+}
+
+// GetCustomRoleIdOk returns a tuple with the CustomRoleId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProjectMembership) GetCustomRoleIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CustomRoleId.Get(), o.CustomRoleId.IsSet()
+}
+
+// HasCustomRoleId returns a boolean if a field has been set.
+func (o *ProjectMembership) HasCustomRoleId() bool {
+	if o != nil && o.CustomRoleId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomRoleId gets a reference to the given NullableInt32 and assigns it to the CustomRoleId field.
+func (o *ProjectMembership) SetCustomRoleId(v int32) {
+	o.CustomRoleId.Set(&v)
+}
+// SetCustomRoleIdNil sets the value for CustomRoleId to be an explicit nil
+func (o *ProjectMembership) SetCustomRoleIdNil() {
+	o.CustomRoleId.Set(nil)
+}
+
+// UnsetCustomRoleId ensures that no value is present for CustomRoleId, not even an explicit nil
+func (o *ProjectMembership) UnsetCustomRoleId() {
+	o.CustomRoleId.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *ProjectMembership) GetCreatedAt() time.Time {
 	if o == nil {
@@ -278,6 +322,9 @@ func (o ProjectMembership) ToMap() (map[string]interface{}, error) {
 		toSerialize["teamId"] = o.TeamId.Get()
 	}
 	toSerialize["role"] = o.Role
+	if o.CustomRoleId.IsSet() {
+		toSerialize["customRoleId"] = o.CustomRoleId.Get()
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

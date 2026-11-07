@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **BackupId** | **int32** |  | 
 **BackupStatus** | Pointer to **NullableString** |  | [optional] 
+**ExistingBackup** | **bool** | True when the component restores a backup chosen at the start instead of a final backup. | 
 **ImportId** | **int32** |  | 
 **ImportStatus** | Pointer to **NullableString** |  | [optional] 
 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewAppEnvironmentMigrationComponent
 
-`func NewAppEnvironmentMigrationComponent(id int32, appServiceId int32, name string, backupId int32, importId int32, ) *AppEnvironmentMigrationComponent`
+`func NewAppEnvironmentMigrationComponent(id int32, appServiceId int32, name string, backupId int32, existingBackup bool, importId int32, ) *AppEnvironmentMigrationComponent`
 
 NewAppEnvironmentMigrationComponent instantiates a new AppEnvironmentMigrationComponent object
 This constructor will assign default values to properties that have it defined,
@@ -146,6 +147,26 @@ HasBackupStatus returns a boolean if a field has been set.
 `func (o *AppEnvironmentMigrationComponent) UnsetBackupStatus()`
 
 UnsetBackupStatus ensures that no value is present for BackupStatus, not even an explicit nil
+### GetExistingBackup
+
+`func (o *AppEnvironmentMigrationComponent) GetExistingBackup() bool`
+
+GetExistingBackup returns the ExistingBackup field if non-nil, zero value otherwise.
+
+### GetExistingBackupOk
+
+`func (o *AppEnvironmentMigrationComponent) GetExistingBackupOk() (*bool, bool)`
+
+GetExistingBackupOk returns a tuple with the ExistingBackup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExistingBackup
+
+`func (o *AppEnvironmentMigrationComponent) SetExistingBackup(v bool)`
+
+SetExistingBackup sets ExistingBackup field to given value.
+
+
 ### GetImportId
 
 `func (o *AppEnvironmentMigrationComponent) GetImportId() int32`

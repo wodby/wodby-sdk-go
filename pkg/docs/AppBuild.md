@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | **time.Time** |  | 
 **StartedAt** | Pointer to **NullableTime** |  | [optional] 
 **EndedAt** | Pointer to **NullableTime** |  | [optional] 
+**VulnerabilityScan** | Pointer to [**NullableAppBuildVulnerabilityScan**](AppBuildVulnerabilityScan.md) | Vulnerability scan summary of the build&#39;s currently deployed images. Omitted when none of its images is currently deployed or scanning is unavailable for the organization. | [optional] 
 
 ## Methods
 
@@ -699,6 +700,41 @@ HasEndedAt returns a boolean if a field has been set.
 `func (o *AppBuild) UnsetEndedAt()`
 
 UnsetEndedAt ensures that no value is present for EndedAt, not even an explicit nil
+### GetVulnerabilityScan
+
+`func (o *AppBuild) GetVulnerabilityScan() AppBuildVulnerabilityScan`
+
+GetVulnerabilityScan returns the VulnerabilityScan field if non-nil, zero value otherwise.
+
+### GetVulnerabilityScanOk
+
+`func (o *AppBuild) GetVulnerabilityScanOk() (*AppBuildVulnerabilityScan, bool)`
+
+GetVulnerabilityScanOk returns a tuple with the VulnerabilityScan field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVulnerabilityScan
+
+`func (o *AppBuild) SetVulnerabilityScan(v AppBuildVulnerabilityScan)`
+
+SetVulnerabilityScan sets VulnerabilityScan field to given value.
+
+### HasVulnerabilityScan
+
+`func (o *AppBuild) HasVulnerabilityScan() bool`
+
+HasVulnerabilityScan returns a boolean if a field has been set.
+
+### SetVulnerabilityScanNil
+
+`func (o *AppBuild) SetVulnerabilityScanNil(b bool)`
+
+ SetVulnerabilityScanNil sets the value for VulnerabilityScan to be an explicit nil
+
+### UnsetVulnerabilityScan
+`func (o *AppBuild) UnsetVulnerabilityScan()`
+
+UnsetVulnerabilityScan ensures that no value is present for VulnerabilityScan, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

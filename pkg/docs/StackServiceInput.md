@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Replicas** | Pointer to **NullableInt32** |  | [optional] 
 **Required** | Pointer to **NullableBool** |  | [optional] 
+**BasicAuthOverride** | Pointer to **NullableString** | Follow the service&#39;s basic auth default, or protect new app services with basic auth or not. | [optional] 
 **Disabled** | Pointer to **NullableBool** |  | [optional] 
 **Main** | Pointer to **NullableBool** |  | [optional] 
 **ServiceRevPinned** | Pointer to **NullableBool** |  | [optional] 
@@ -102,6 +103,41 @@ HasRequired returns a boolean if a field has been set.
 `func (o *StackServiceInput) UnsetRequired()`
 
 UnsetRequired ensures that no value is present for Required, not even an explicit nil
+### GetBasicAuthOverride
+
+`func (o *StackServiceInput) GetBasicAuthOverride() string`
+
+GetBasicAuthOverride returns the BasicAuthOverride field if non-nil, zero value otherwise.
+
+### GetBasicAuthOverrideOk
+
+`func (o *StackServiceInput) GetBasicAuthOverrideOk() (*string, bool)`
+
+GetBasicAuthOverrideOk returns a tuple with the BasicAuthOverride field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuthOverride
+
+`func (o *StackServiceInput) SetBasicAuthOverride(v string)`
+
+SetBasicAuthOverride sets BasicAuthOverride field to given value.
+
+### HasBasicAuthOverride
+
+`func (o *StackServiceInput) HasBasicAuthOverride() bool`
+
+HasBasicAuthOverride returns a boolean if a field has been set.
+
+### SetBasicAuthOverrideNil
+
+`func (o *StackServiceInput) SetBasicAuthOverrideNil(b bool)`
+
+ SetBasicAuthOverrideNil sets the value for BasicAuthOverride to be an explicit nil
+
+### UnsetBasicAuthOverride
+`func (o *StackServiceInput) UnsetBasicAuthOverride()`
+
+UnsetBasicAuthOverride ensures that no value is present for BasicAuthOverride, not even an explicit nil
 ### GetDisabled
 
 `func (o *StackServiceInput) GetDisabled() bool`

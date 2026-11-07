@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **Main** | **bool** |  | 
 **Disabled** | **bool** |  | 
 **Required** | **bool** |  | 
+**BasicAuthOverride** | **string** | Whether the stack overrides the service&#39;s basic auth default. | 
+**BasicAuthDefault** | **bool** | Whether new app services of this stack service get their own basic auth entry by default. Always false without a public HTTP endpoint. | 
 **Replicas** | **int32** |  | 
 **ServiceRevPinned** | **bool** |  | 
 **Outdated** | **bool** |  | 
@@ -31,7 +33,7 @@ Name | Type | Description | Notes
 
 ### NewStackService
 
-`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time, ) *StackService`
+`func NewStackService(id int32, name string, title string, type_ string, main bool, disabled bool, required bool, basicAuthOverride string, basicAuthDefault bool, replicas int32, serviceRevPinned bool, outdated bool, serviceRevId int32, serviceRevName string, serviceRevTitle string, serviceRevVersion string, deploymentConfiguration ServiceDeploymentConfiguration, createdAt time.Time, updatedAt time.Time, ) *StackService`
 
 NewStackService instantiates a new StackService object
 This constructor will assign default values to properties that have it defined,
@@ -184,6 +186,46 @@ and a boolean to check if the value has been set.
 `func (o *StackService) SetRequired(v bool)`
 
 SetRequired sets Required field to given value.
+
+
+### GetBasicAuthOverride
+
+`func (o *StackService) GetBasicAuthOverride() string`
+
+GetBasicAuthOverride returns the BasicAuthOverride field if non-nil, zero value otherwise.
+
+### GetBasicAuthOverrideOk
+
+`func (o *StackService) GetBasicAuthOverrideOk() (*string, bool)`
+
+GetBasicAuthOverrideOk returns a tuple with the BasicAuthOverride field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuthOverride
+
+`func (o *StackService) SetBasicAuthOverride(v string)`
+
+SetBasicAuthOverride sets BasicAuthOverride field to given value.
+
+
+### GetBasicAuthDefault
+
+`func (o *StackService) GetBasicAuthDefault() bool`
+
+GetBasicAuthDefault returns the BasicAuthDefault field if non-nil, zero value otherwise.
+
+### GetBasicAuthDefaultOk
+
+`func (o *StackService) GetBasicAuthDefaultOk() (*bool, bool)`
+
+GetBasicAuthDefaultOk returns a tuple with the BasicAuthDefault field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicAuthDefault
+
+`func (o *StackService) SetBasicAuthDefault(v bool)`
+
+SetBasicAuthDefault sets BasicAuthDefault field to given value.
 
 
 ### GetReplicas

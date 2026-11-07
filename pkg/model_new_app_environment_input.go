@@ -41,6 +41,12 @@ type NewAppEnvironmentInput struct {
 	DeferInitialDeployment *bool `json:"deferInitialDeployment,omitempty"`
 	Settings *AppEnvironmentSettingsInput `json:"settings,omitempty"`
 	Access *NewAppEnvironmentAccessInput `json:"access,omitempty"`
+	// Protect the whole new environment with basic auth, by default with the username wodby and a generated password revealed in Wodby. Cannot be combined with access (Private App Access).
+	BasicAuth *bool `json:"basicAuth,omitempty"`
+	// Username of the environment's basic auth. Requires basicAuth. Defaults to wodby.
+	BasicAuthUsername *string `json:"basicAuthUsername,omitempty"`
+	// Password of the environment's basic auth. Requires basicAuth. Omit to let Wodby generate one.
+	BasicAuthPassword *string `json:"basicAuthPassword,omitempty"`
 }
 
 type _NewAppEnvironmentInput NewAppEnvironmentInput
@@ -584,6 +590,102 @@ func (o *NewAppEnvironmentInput) SetAccess(v NewAppEnvironmentAccessInput) {
 	o.Access = &v
 }
 
+// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+func (o *NewAppEnvironmentInput) GetBasicAuth() bool {
+	if o == nil || IsNil(o.BasicAuth) {
+		var ret bool
+		return ret
+	}
+	return *o.BasicAuth
+}
+
+// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppEnvironmentInput) GetBasicAuthOk() (*bool, bool) {
+	if o == nil || IsNil(o.BasicAuth) {
+		return nil, false
+	}
+	return o.BasicAuth, true
+}
+
+// HasBasicAuth returns a boolean if a field has been set.
+func (o *NewAppEnvironmentInput) HasBasicAuth() bool {
+	if o != nil && !IsNil(o.BasicAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
+func (o *NewAppEnvironmentInput) SetBasicAuth(v bool) {
+	o.BasicAuth = &v
+}
+
+// GetBasicAuthUsername returns the BasicAuthUsername field value if set, zero value otherwise.
+func (o *NewAppEnvironmentInput) GetBasicAuthUsername() string {
+	if o == nil || IsNil(o.BasicAuthUsername) {
+		var ret string
+		return ret
+	}
+	return *o.BasicAuthUsername
+}
+
+// GetBasicAuthUsernameOk returns a tuple with the BasicAuthUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppEnvironmentInput) GetBasicAuthUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.BasicAuthUsername) {
+		return nil, false
+	}
+	return o.BasicAuthUsername, true
+}
+
+// HasBasicAuthUsername returns a boolean if a field has been set.
+func (o *NewAppEnvironmentInput) HasBasicAuthUsername() bool {
+	if o != nil && !IsNil(o.BasicAuthUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuthUsername gets a reference to the given string and assigns it to the BasicAuthUsername field.
+func (o *NewAppEnvironmentInput) SetBasicAuthUsername(v string) {
+	o.BasicAuthUsername = &v
+}
+
+// GetBasicAuthPassword returns the BasicAuthPassword field value if set, zero value otherwise.
+func (o *NewAppEnvironmentInput) GetBasicAuthPassword() string {
+	if o == nil || IsNil(o.BasicAuthPassword) {
+		var ret string
+		return ret
+	}
+	return *o.BasicAuthPassword
+}
+
+// GetBasicAuthPasswordOk returns a tuple with the BasicAuthPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewAppEnvironmentInput) GetBasicAuthPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.BasicAuthPassword) {
+		return nil, false
+	}
+	return o.BasicAuthPassword, true
+}
+
+// HasBasicAuthPassword returns a boolean if a field has been set.
+func (o *NewAppEnvironmentInput) HasBasicAuthPassword() bool {
+	if o != nil && !IsNil(o.BasicAuthPassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicAuthPassword gets a reference to the given string and assigns it to the BasicAuthPassword field.
+func (o *NewAppEnvironmentInput) SetBasicAuthPassword(v string) {
+	o.BasicAuthPassword = &v
+}
+
 func (o NewAppEnvironmentInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -633,6 +735,15 @@ func (o NewAppEnvironmentInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Access) {
 		toSerialize["access"] = o.Access
+	}
+	if !IsNil(o.BasicAuth) {
+		toSerialize["basicAuth"] = o.BasicAuth
+	}
+	if !IsNil(o.BasicAuthUsername) {
+		toSerialize["basicAuthUsername"] = o.BasicAuthUsername
+	}
+	if !IsNil(o.BasicAuthPassword) {
+		toSerialize["basicAuthPassword"] = o.BasicAuthPassword
 	}
 	return toSerialize, nil
 }
