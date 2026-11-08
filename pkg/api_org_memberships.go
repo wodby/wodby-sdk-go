@@ -172,7 +172,7 @@ func (r ApiGetOrgMembershipRequest) Execute() (*OrgMembership, *http.Response, e
 /*
 GetOrgMembership Get org membership
 
-Returns the org membership identified by the request path.
+Returns the org membership identified by the request path. Organization owners, admins and support members also get the member's project and team memberships.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -599,7 +599,7 @@ func (r ApiUpdateOrgMembershipRequest) Execute() (*OrgMembership, *http.Response
 /*
 UpdateOrgMembership Update organization member role
 
-Changes the organization role of a member and returns the membership.
+Changes the organization role of a member and returns the membership with its project and team memberships.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

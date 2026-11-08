@@ -4120,6 +4120,150 @@ func (a *StacksAPIService) ListStacksExecute(r ApiListStacksRequest) (*StacksRes
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPreviewStackSyncWithOriginRequest struct {
+	ctx context.Context
+	ApiService *StacksAPIService
+	id int32
+	stackSyncOptionsInput *StackSyncOptionsInput
+}
+
+func (r ApiPreviewStackSyncWithOriginRequest) StackSyncOptionsInput(stackSyncOptionsInput StackSyncOptionsInput) ApiPreviewStackSyncWithOriginRequest {
+	r.stackSyncOptionsInput = &stackSyncOptionsInput
+	return r
+}
+
+func (r ApiPreviewStackSyncWithOriginRequest) Execute() (*StackOriginSyncPreview, *http.Response, error) {
+	return r.ApiService.PreviewStackSyncWithOriginExecute(r)
+}
+
+/*
+PreviewStackSyncWithOrigin Preview stack sync with origin
+
+Returns what syncing the stack with its origin with these options would do, without changing the stack: the stack services the sync has to update to the service version the origin uses, the error the sync would fail with, and the changes its task log would list. Returns null when the stack already follows the origin's latest revision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiPreviewStackSyncWithOriginRequest
+*/
+func (a *StacksAPIService) PreviewStackSyncWithOrigin(ctx context.Context, id int32) ApiPreviewStackSyncWithOriginRequest {
+	return ApiPreviewStackSyncWithOriginRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return StackOriginSyncPreview
+func (a *StacksAPIService) PreviewStackSyncWithOriginExecute(r ApiPreviewStackSyncWithOriginRequest) (*StackOriginSyncPreview, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *StackOriginSyncPreview
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StacksAPIService.PreviewStackSyncWithOrigin")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/stacks/{id}/actions/preview-sync-origin"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.stackSyncOptionsInput
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPublishStackDraftRequest struct {
 	ctx context.Context
 	ApiService *StacksAPIService
@@ -4403,11 +4547,11 @@ type ApiSyncStackWithOriginRequest struct {
 	ctx context.Context
 	ApiService *StacksAPIService
 	id int32
-	stackSyncOptionsInput *StackSyncOptionsInput
+	syncStackWithOriginInput *SyncStackWithOriginInput
 }
 
-func (r ApiSyncStackWithOriginRequest) StackSyncOptionsInput(stackSyncOptionsInput StackSyncOptionsInput) ApiSyncStackWithOriginRequest {
-	r.stackSyncOptionsInput = &stackSyncOptionsInput
+func (r ApiSyncStackWithOriginRequest) SyncStackWithOriginInput(syncStackWithOriginInput SyncStackWithOriginInput) ApiSyncStackWithOriginRequest {
+	r.syncStackWithOriginInput = &syncStackWithOriginInput
 	return r
 }
 
@@ -4472,7 +4616,7 @@ func (a *StacksAPIService) SyncStackWithOriginExecute(r ApiSyncStackWithOriginRe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.stackSyncOptionsInput
+	localVarPostBody = r.syncStackWithOriginInput
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -33,6 +33,7 @@ Method | HTTP request | Description
 [**ListStackRevisionServices**](StacksAPI.md#ListStackRevisionServices) | **Get** /stack-revisions/{id}/services | List stack services
 [**ListStackTokens**](StacksAPI.md#ListStackTokens) | **Get** /stack-revisions/{id}/tokens | List stack tokens
 [**ListStacks**](StacksAPI.md#ListStacks) | **Get** /stacks | List stacks
+[**PreviewStackSyncWithOrigin**](StacksAPI.md#PreviewStackSyncWithOrigin) | **Post** /stacks/{id}/actions/preview-sync-origin | Preview stack sync with origin
 [**PublishStackDraft**](StacksAPI.md#PublishStackDraft) | **Post** /stacks/{id}/actions/publish-draft | Publish stack draft
 [**ScaffoldStackFromHelmChart**](StacksAPI.md#ScaffoldStackFromHelmChart) | **Post** /stacks/actions/scaffold-from-helm-chart | Scaffold stack from Helm chart
 [**SyncStackWithOrigin**](StacksAPI.md#SyncStackWithOrigin) | **Post** /stacks/{id}/actions/sync-origin | Sync stack with origin
@@ -2073,6 +2074,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## PreviewStackSyncWithOrigin
+
+> StackOriginSyncPreview PreviewStackSyncWithOrigin(ctx, id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
+
+Preview stack sync with origin
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	stackSyncOptionsInput := *openapiclient.NewStackSyncOptionsInput() // StackSyncOptionsInput |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.StacksAPI.PreviewStackSyncWithOrigin(context.Background(), id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.PreviewStackSyncWithOrigin``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PreviewStackSyncWithOrigin`: StackOriginSyncPreview
+	fmt.Fprintf(os.Stdout, "Response from `StacksAPI.PreviewStackSyncWithOrigin`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPreviewStackSyncWithOriginRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **stackSyncOptionsInput** | [**StackSyncOptionsInput**](StackSyncOptionsInput.md) |  | 
+
+### Return type
+
+[**StackOriginSyncPreview**](StackOriginSyncPreview.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## PublishStackDraft
 
 > Stack PublishStackDraft(ctx, id).Execute()
@@ -2211,7 +2284,7 @@ Name | Type | Description  | Notes
 
 ## SyncStackWithOrigin
 
-> Stack SyncStackWithOrigin(ctx, id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
+> Stack SyncStackWithOrigin(ctx, id).SyncStackWithOriginInput(syncStackWithOriginInput).Execute()
 
 Sync stack with origin
 
@@ -2231,11 +2304,11 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	stackSyncOptionsInput := *openapiclient.NewStackSyncOptionsInput() // StackSyncOptionsInput |  (optional)
+	syncStackWithOriginInput := *openapiclient.NewSyncStackWithOriginInput() // SyncStackWithOriginInput |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.SyncStackWithOrigin(context.Background(), id).StackSyncOptionsInput(stackSyncOptionsInput).Execute()
+	resp, r, err := apiClient.StacksAPI.SyncStackWithOrigin(context.Background(), id).SyncStackWithOriginInput(syncStackWithOriginInput).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.SyncStackWithOrigin``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2261,7 +2334,7 @@ Other parameters are passed through a pointer to a apiSyncStackWithOriginRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **stackSyncOptionsInput** | [**StackSyncOptionsInput**](StackSyncOptionsInput.md) |  | 
+ **syncStackWithOriginInput** | [**SyncStackWithOriginInput**](SyncStackWithOriginInput.md) |  | 
 
 ### Return type
 

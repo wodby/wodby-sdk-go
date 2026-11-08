@@ -30,6 +30,10 @@ type OrgMembership struct {
 	Role string `json:"role"`
 	Status string `json:"status"`
 	JoinedAt NullableTime `json:"joinedAt,omitempty"`
+	// The member's project access: their direct project memberships, then the memberships of every team they belong to (those have teamId set). Returned for a single membership to organization owners, admins and support members; omitted otherwise.
+	ProjectMemberships []ProjectMembership `json:"projectMemberships,omitempty"`
+	// The teams the member belongs to. Returned for a single membership to organization owners, admins and support members; omitted otherwise.
+	TeamMemberships []OrgMembershipTeamMembership `json:"teamMemberships,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -323,6 +327,70 @@ func (o *OrgMembership) UnsetJoinedAt() {
 	o.JoinedAt.Unset()
 }
 
+// GetProjectMemberships returns the ProjectMemberships field value if set, zero value otherwise.
+func (o *OrgMembership) GetProjectMemberships() []ProjectMembership {
+	if o == nil || IsNil(o.ProjectMemberships) {
+		var ret []ProjectMembership
+		return ret
+	}
+	return o.ProjectMemberships
+}
+
+// GetProjectMembershipsOk returns a tuple with the ProjectMemberships field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrgMembership) GetProjectMembershipsOk() ([]ProjectMembership, bool) {
+	if o == nil || IsNil(o.ProjectMemberships) {
+		return nil, false
+	}
+	return o.ProjectMemberships, true
+}
+
+// HasProjectMemberships returns a boolean if a field has been set.
+func (o *OrgMembership) HasProjectMemberships() bool {
+	if o != nil && !IsNil(o.ProjectMemberships) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectMemberships gets a reference to the given []ProjectMembership and assigns it to the ProjectMemberships field.
+func (o *OrgMembership) SetProjectMemberships(v []ProjectMembership) {
+	o.ProjectMemberships = v
+}
+
+// GetTeamMemberships returns the TeamMemberships field value if set, zero value otherwise.
+func (o *OrgMembership) GetTeamMemberships() []OrgMembershipTeamMembership {
+	if o == nil || IsNil(o.TeamMemberships) {
+		var ret []OrgMembershipTeamMembership
+		return ret
+	}
+	return o.TeamMemberships
+}
+
+// GetTeamMembershipsOk returns a tuple with the TeamMemberships field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrgMembership) GetTeamMembershipsOk() ([]OrgMembershipTeamMembership, bool) {
+	if o == nil || IsNil(o.TeamMemberships) {
+		return nil, false
+	}
+	return o.TeamMemberships, true
+}
+
+// HasTeamMemberships returns a boolean if a field has been set.
+func (o *OrgMembership) HasTeamMemberships() bool {
+	if o != nil && !IsNil(o.TeamMemberships) {
+		return true
+	}
+
+	return false
+}
+
+// SetTeamMemberships gets a reference to the given []OrgMembershipTeamMembership and assigns it to the TeamMemberships field.
+func (o *OrgMembership) SetTeamMemberships(v []OrgMembershipTeamMembership) {
+	o.TeamMemberships = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *OrgMembership) GetCreatedAt() time.Time {
 	if o == nil {
@@ -396,6 +464,12 @@ func (o OrgMembership) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	if o.JoinedAt.IsSet() {
 		toSerialize["joinedAt"] = o.JoinedAt.Get()
+	}
+	if !IsNil(o.ProjectMemberships) {
+		toSerialize["projectMemberships"] = o.ProjectMemberships
+	}
+	if !IsNil(o.TeamMemberships) {
+		toSerialize["teamMemberships"] = o.TeamMemberships
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt

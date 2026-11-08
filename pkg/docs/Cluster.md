@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **K3s** | **bool** |  | 
 **SingleNode** | **bool** |  | 
 **Version** | Pointer to **NullableString** |  | [optional] 
+**KubernetesVersionEol** | **bool** | Whether the cluster&#39;s Kubernetes version has reached its end of life. Always false for Wodby Cloud and serverless clusters and for versions Wodby has no lifecycle data for. | 
+**KubernetesVersionEolDate** | Pointer to **NullableTime** | When the cluster&#39;s Kubernetes version reaches or reached its end of life, when known. | [optional] 
 **InfraVersion** | **string** |  | 
 **MinNodeCount** | Pointer to **NullableInt32** |  | [optional] 
 **MaxNodeCount** | Pointer to **NullableInt32** |  | [optional] 
@@ -45,7 +47,7 @@ Name | Type | Description | Notes
 
 ### NewCluster
 
-`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, availableToAllProjects bool, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
+`func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, kubernetesVersionEol bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, availableToAllProjects bool, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time, ) *Cluster`
 
 NewCluster instantiates a new Cluster object
 This constructor will assign default values to properties that have it defined,
@@ -275,6 +277,61 @@ HasVersion returns a boolean if a field has been set.
 `func (o *Cluster) UnsetVersion()`
 
 UnsetVersion ensures that no value is present for Version, not even an explicit nil
+### GetKubernetesVersionEol
+
+`func (o *Cluster) GetKubernetesVersionEol() bool`
+
+GetKubernetesVersionEol returns the KubernetesVersionEol field if non-nil, zero value otherwise.
+
+### GetKubernetesVersionEolOk
+
+`func (o *Cluster) GetKubernetesVersionEolOk() (*bool, bool)`
+
+GetKubernetesVersionEolOk returns a tuple with the KubernetesVersionEol field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetKubernetesVersionEol
+
+`func (o *Cluster) SetKubernetesVersionEol(v bool)`
+
+SetKubernetesVersionEol sets KubernetesVersionEol field to given value.
+
+
+### GetKubernetesVersionEolDate
+
+`func (o *Cluster) GetKubernetesVersionEolDate() time.Time`
+
+GetKubernetesVersionEolDate returns the KubernetesVersionEolDate field if non-nil, zero value otherwise.
+
+### GetKubernetesVersionEolDateOk
+
+`func (o *Cluster) GetKubernetesVersionEolDateOk() (*time.Time, bool)`
+
+GetKubernetesVersionEolDateOk returns a tuple with the KubernetesVersionEolDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetKubernetesVersionEolDate
+
+`func (o *Cluster) SetKubernetesVersionEolDate(v time.Time)`
+
+SetKubernetesVersionEolDate sets KubernetesVersionEolDate field to given value.
+
+### HasKubernetesVersionEolDate
+
+`func (o *Cluster) HasKubernetesVersionEolDate() bool`
+
+HasKubernetesVersionEolDate returns a boolean if a field has been set.
+
+### SetKubernetesVersionEolDateNil
+
+`func (o *Cluster) SetKubernetesVersionEolDateNil(b bool)`
+
+ SetKubernetesVersionEolDateNil sets the value for KubernetesVersionEolDate to be an explicit nil
+
+### UnsetKubernetesVersionEolDate
+`func (o *Cluster) UnsetKubernetesVersionEolDate()`
+
+UnsetKubernetesVersionEolDate ensures that no value is present for KubernetesVersionEolDate, not even an explicit nil
 ### GetInfraVersion
 
 `func (o *Cluster) GetInfraVersion() string`

@@ -3406,7 +3406,7 @@ func (r ApiListAppServiceContainersRequest) Execute() ([]AppServiceContainer, *h
 /*
 ListAppServiceContainers List app service containers
 
-Returns container resource settings for an app service.
+Returns the CPU and memory settings the app service stores for each container of its service. A container with no id stores nothing and runs with the defaults in the service revision manifest, under workloads[].containers[].resources. A stored container replaces those defaults as a whole: a value it leaves empty is not set.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -6406,7 +6406,7 @@ func (r ApiSetAppServiceResourcesRequest) Execute() (*OperationResult, *http.Res
 /*
 SetAppServiceResources Set app service resources
 
-Sets CPU and memory requests or limits for an app service container.
+Sets CPU and memory requests and limits for an app service container. The four values replace the stored ones and the service's defaults as a whole, so send every value the container should keep; an omitted value is not set. Omitting all four, without a preset, on a container with no GPU setting removes its stored settings so the service's defaults apply again.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

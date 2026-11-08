@@ -18,13 +18,21 @@ import (
 // checks if the ServiceManifest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ServiceManifest{}
 
-// ServiceManifest struct for ServiceManifest
+// ServiceManifest Typed fields of a service revision's manifest. raw holds the complete manifest as JSON, including the sections that have no typed field here.
 type ServiceManifest struct {
 	Raw string `json:"raw"`
 	Scalable bool `json:"scalable"`
 	// Whether the service asks for its public HTTP endpoints to be protected with basic auth by default.
-	BasicAuth *bool `json:"basicAuth,omitempty"`
+	BasicAuth bool `json:"basicAuth"`
+	Labels []string `json:"labels,omitempty"`
+	// Whether links of services in other app environments, of the same app or another one, may point at this service.
+	CrossApp bool `json:"crossApp"`
+	// Values the services linking to this one read as {{link.exports.<name>}}.
+	Exports []ServiceManifestExport `json:"exports"`
 	Integrations []ServiceIntegrationRequirement `json:"integrations,omitempty"`
+	Links []ServiceManifestLink `json:"links,omitempty"`
+	// Links that are alternatives to one another. An enabled app service needs at least min of them configured.
+	LinkGroups []ServiceManifestLinkGroup `json:"linkGroups,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -34,10 +42,13 @@ type _ServiceManifest ServiceManifest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewServiceManifest(raw string, scalable bool) *ServiceManifest {
+func NewServiceManifest(raw string, scalable bool, basicAuth bool, crossApp bool, exports []ServiceManifestExport) *ServiceManifest {
 	this := ServiceManifest{}
 	this.Raw = raw
 	this.Scalable = scalable
+	this.BasicAuth = basicAuth
+	this.CrossApp = crossApp
+	this.Exports = exports
 	return &this
 }
 
@@ -97,36 +108,108 @@ func (o *ServiceManifest) SetScalable(v bool) {
 	o.Scalable = v
 }
 
-// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+// GetBasicAuth returns the BasicAuth field value
 func (o *ServiceManifest) GetBasicAuth() bool {
-	if o == nil || IsNil(o.BasicAuth) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.BasicAuth
+
+	return o.BasicAuth
 }
 
-// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
+// GetBasicAuthOk returns a tuple with the BasicAuth field value
 // and a boolean to check if the value has been set.
 func (o *ServiceManifest) GetBasicAuthOk() (*bool, bool) {
-	if o == nil || IsNil(o.BasicAuth) {
+	if o == nil {
 		return nil, false
 	}
-	return o.BasicAuth, true
+	return &o.BasicAuth, true
 }
 
-// HasBasicAuth returns a boolean if a field has been set.
-func (o *ServiceManifest) HasBasicAuth() bool {
-	if o != nil && !IsNil(o.BasicAuth) {
+// SetBasicAuth sets field value
+func (o *ServiceManifest) SetBasicAuth(v bool) {
+	o.BasicAuth = v
+}
+
+// GetLabels returns the Labels field value if set, zero value otherwise.
+func (o *ServiceManifest) GetLabels() []string {
+	if o == nil || IsNil(o.Labels) {
+		var ret []string
+		return ret
+	}
+	return o.Labels
+}
+
+// GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetLabelsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Labels) {
+		return nil, false
+	}
+	return o.Labels, true
+}
+
+// HasLabels returns a boolean if a field has been set.
+func (o *ServiceManifest) HasLabels() bool {
+	if o != nil && !IsNil(o.Labels) {
 		return true
 	}
 
 	return false
 }
 
-// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
-func (o *ServiceManifest) SetBasicAuth(v bool) {
-	o.BasicAuth = &v
+// SetLabels gets a reference to the given []string and assigns it to the Labels field.
+func (o *ServiceManifest) SetLabels(v []string) {
+	o.Labels = v
+}
+
+// GetCrossApp returns the CrossApp field value
+func (o *ServiceManifest) GetCrossApp() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CrossApp
+}
+
+// GetCrossAppOk returns a tuple with the CrossApp field value
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetCrossAppOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CrossApp, true
+}
+
+// SetCrossApp sets field value
+func (o *ServiceManifest) SetCrossApp(v bool) {
+	o.CrossApp = v
+}
+
+// GetExports returns the Exports field value
+func (o *ServiceManifest) GetExports() []ServiceManifestExport {
+	if o == nil {
+		var ret []ServiceManifestExport
+		return ret
+	}
+
+	return o.Exports
+}
+
+// GetExportsOk returns a tuple with the Exports field value
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetExportsOk() ([]ServiceManifestExport, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Exports, true
+}
+
+// SetExports sets field value
+func (o *ServiceManifest) SetExports(v []ServiceManifestExport) {
+	o.Exports = v
 }
 
 // GetIntegrations returns the Integrations field value if set, zero value otherwise.
@@ -161,6 +244,70 @@ func (o *ServiceManifest) SetIntegrations(v []ServiceIntegrationRequirement) {
 	o.Integrations = v
 }
 
+// GetLinks returns the Links field value if set, zero value otherwise.
+func (o *ServiceManifest) GetLinks() []ServiceManifestLink {
+	if o == nil || IsNil(o.Links) {
+		var ret []ServiceManifestLink
+		return ret
+	}
+	return o.Links
+}
+
+// GetLinksOk returns a tuple with the Links field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetLinksOk() ([]ServiceManifestLink, bool) {
+	if o == nil || IsNil(o.Links) {
+		return nil, false
+	}
+	return o.Links, true
+}
+
+// HasLinks returns a boolean if a field has been set.
+func (o *ServiceManifest) HasLinks() bool {
+	if o != nil && !IsNil(o.Links) {
+		return true
+	}
+
+	return false
+}
+
+// SetLinks gets a reference to the given []ServiceManifestLink and assigns it to the Links field.
+func (o *ServiceManifest) SetLinks(v []ServiceManifestLink) {
+	o.Links = v
+}
+
+// GetLinkGroups returns the LinkGroups field value if set, zero value otherwise.
+func (o *ServiceManifest) GetLinkGroups() []ServiceManifestLinkGroup {
+	if o == nil || IsNil(o.LinkGroups) {
+		var ret []ServiceManifestLinkGroup
+		return ret
+	}
+	return o.LinkGroups
+}
+
+// GetLinkGroupsOk returns a tuple with the LinkGroups field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceManifest) GetLinkGroupsOk() ([]ServiceManifestLinkGroup, bool) {
+	if o == nil || IsNil(o.LinkGroups) {
+		return nil, false
+	}
+	return o.LinkGroups, true
+}
+
+// HasLinkGroups returns a boolean if a field has been set.
+func (o *ServiceManifest) HasLinkGroups() bool {
+	if o != nil && !IsNil(o.LinkGroups) {
+		return true
+	}
+
+	return false
+}
+
+// SetLinkGroups gets a reference to the given []ServiceManifestLinkGroup and assigns it to the LinkGroups field.
+func (o *ServiceManifest) SetLinkGroups(v []ServiceManifestLinkGroup) {
+	o.LinkGroups = v
+}
+
 func (o ServiceManifest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -173,11 +320,20 @@ func (o ServiceManifest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["raw"] = o.Raw
 	toSerialize["scalable"] = o.Scalable
-	if !IsNil(o.BasicAuth) {
-		toSerialize["basicAuth"] = o.BasicAuth
+	toSerialize["basicAuth"] = o.BasicAuth
+	if !IsNil(o.Labels) {
+		toSerialize["labels"] = o.Labels
 	}
+	toSerialize["crossApp"] = o.CrossApp
+	toSerialize["exports"] = o.Exports
 	if !IsNil(o.Integrations) {
 		toSerialize["integrations"] = o.Integrations
+	}
+	if !IsNil(o.Links) {
+		toSerialize["links"] = o.Links
+	}
+	if !IsNil(o.LinkGroups) {
+		toSerialize["linkGroups"] = o.LinkGroups
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -194,6 +350,9 @@ func (o *ServiceManifest) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"raw",
 		"scalable",
+		"basicAuth",
+		"crossApp",
+		"exports",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -226,7 +385,12 @@ func (o *ServiceManifest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "raw")
 		delete(additionalProperties, "scalable")
 		delete(additionalProperties, "basicAuth")
+		delete(additionalProperties, "labels")
+		delete(additionalProperties, "crossApp")
+		delete(additionalProperties, "exports")
 		delete(additionalProperties, "integrations")
+		delete(additionalProperties, "links")
+		delete(additionalProperties, "linkGroups")
 		o.AdditionalProperties = additionalProperties
 	}
 

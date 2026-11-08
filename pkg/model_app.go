@@ -31,6 +31,10 @@ type App struct {
 	OwnershipScope string `json:"ownershipScope"`
 	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
 	Settings *AppSettings `json:"settings,omitempty"`
+	// Environment types the caller can create app environments of. Returned by getApp and getAppByName only.
+	CreatableEnvironmentTypes []string `json:"creatableEnvironmentTypes,omitempty"`
+	// Whether pull request preview environments can work for this app: one of its environments has an enabled service connected to a branch of its own Git repository. Returned by getApp and getAppByName only.
+	PreviewsAvailable *bool `json:"previewsAvailable,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -305,6 +309,70 @@ func (o *App) SetSettings(v AppSettings) {
 	o.Settings = &v
 }
 
+// GetCreatableEnvironmentTypes returns the CreatableEnvironmentTypes field value if set, zero value otherwise.
+func (o *App) GetCreatableEnvironmentTypes() []string {
+	if o == nil || IsNil(o.CreatableEnvironmentTypes) {
+		var ret []string
+		return ret
+	}
+	return o.CreatableEnvironmentTypes
+}
+
+// GetCreatableEnvironmentTypesOk returns a tuple with the CreatableEnvironmentTypes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *App) GetCreatableEnvironmentTypesOk() ([]string, bool) {
+	if o == nil || IsNil(o.CreatableEnvironmentTypes) {
+		return nil, false
+	}
+	return o.CreatableEnvironmentTypes, true
+}
+
+// HasCreatableEnvironmentTypes returns a boolean if a field has been set.
+func (o *App) HasCreatableEnvironmentTypes() bool {
+	if o != nil && !IsNil(o.CreatableEnvironmentTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatableEnvironmentTypes gets a reference to the given []string and assigns it to the CreatableEnvironmentTypes field.
+func (o *App) SetCreatableEnvironmentTypes(v []string) {
+	o.CreatableEnvironmentTypes = v
+}
+
+// GetPreviewsAvailable returns the PreviewsAvailable field value if set, zero value otherwise.
+func (o *App) GetPreviewsAvailable() bool {
+	if o == nil || IsNil(o.PreviewsAvailable) {
+		var ret bool
+		return ret
+	}
+	return *o.PreviewsAvailable
+}
+
+// GetPreviewsAvailableOk returns a tuple with the PreviewsAvailable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *App) GetPreviewsAvailableOk() (*bool, bool) {
+	if o == nil || IsNil(o.PreviewsAvailable) {
+		return nil, false
+	}
+	return o.PreviewsAvailable, true
+}
+
+// HasPreviewsAvailable returns a boolean if a field has been set.
+func (o *App) HasPreviewsAvailable() bool {
+	if o != nil && !IsNil(o.PreviewsAvailable) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreviewsAvailable gets a reference to the given bool and assigns it to the PreviewsAvailable field.
+func (o *App) SetPreviewsAvailable(v bool) {
+	o.PreviewsAvailable = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *App) GetCreatedAt() time.Time {
 	if o == nil {
@@ -375,6 +443,12 @@ func (o App) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
+	}
+	if !IsNil(o.CreatableEnvironmentTypes) {
+		toSerialize["creatableEnvironmentTypes"] = o.CreatableEnvironmentTypes
+	}
+	if !IsNil(o.PreviewsAvailable) {
+		toSerialize["previewsAvailable"] = o.PreviewsAvailable
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt

@@ -91,6 +91,7 @@ docs/AppEnvironmentMigrationComponent.md
 docs/AppEnvironmentMigrationInput.md
 docs/AppEnvironmentMigrationOperationResult.md
 docs/AppEnvironmentMigrationVolumeInput.md
+docs/AppEnvironmentPermissions.md
 docs/AppEnvironmentPreview.md
 docs/AppEnvironmentSettings.md
 docs/AppEnvironmentSettingsInput.md
@@ -319,6 +320,7 @@ docs/Org.md
 docs/OrgCapabilities.md
 docs/OrgMembership.md
 docs/OrgMembershipRoleInput.md
+docs/OrgMembershipTeamMembership.md
 docs/OrgMembershipTeamsInput.md
 docs/OrgMembershipTeamsInputTeamsInner.md
 docs/OrgMembershipsAPI.md
@@ -382,6 +384,11 @@ docs/ServiceExcludedBaseVersion.md
 docs/ServiceIntegrationRequirement.md
 docs/ServiceManifest.md
 docs/ServiceManifestEnvVar.md
+docs/ServiceManifestExport.md
+docs/ServiceManifestLink.md
+docs/ServiceManifestLinkGroup.md
+docs/ServiceManifestLinkSelector.md
+docs/ServiceManifestLinkValue.md
 docs/ServiceManifestUpdateInput.md
 docs/ServiceRevision.md
 docs/ServiceRevisionChange.md
@@ -408,6 +415,8 @@ docs/StackAutoUpdateVersionPolicyInput.md
 docs/StackEnvVar.md
 docs/StackHelmValue.md
 docs/StackOriginSyncChangelog.md
+docs/StackOriginSyncPreview.md
+docs/StackOriginSyncServiceUpdate.md
 docs/StackRevision.md
 docs/StackRevisionLinkIssue.md
 docs/StackService.md
@@ -441,6 +450,7 @@ docs/StacksAPI.md
 docs/StacksResponse.md
 docs/StartAgentChatRequest.md
 docs/StorageClass.md
+docs/SyncStackWithOriginInput.md
 docs/Task.md
 docs/TaskInitiator.md
 docs/TaskJob.md
@@ -555,6 +565,7 @@ model_app_environment_migration_component.go
 model_app_environment_migration_input.go
 model_app_environment_migration_operation_result.go
 model_app_environment_migration_volume_input.go
+model_app_environment_permissions.go
 model_app_environment_preview.go
 model_app_environment_settings.go
 model_app_environment_settings_input.go
@@ -768,6 +779,7 @@ model_org.go
 model_org_capabilities.go
 model_org_membership.go
 model_org_membership_role_input.go
+model_org_membership_team_membership.go
 model_org_membership_teams_input.go
 model_org_membership_teams_input_teams_inner.go
 model_org_settings.go
@@ -824,6 +836,11 @@ model_service_excluded_base_version.go
 model_service_integration_requirement.go
 model_service_manifest.go
 model_service_manifest_env_var.go
+model_service_manifest_export.go
+model_service_manifest_link.go
+model_service_manifest_link_group.go
+model_service_manifest_link_selector.go
+model_service_manifest_link_value.go
 model_service_manifest_update_input.go
 model_service_revision.go
 model_service_revision_change.go
@@ -849,6 +866,8 @@ model_stack_auto_update_version_policy_input.go
 model_stack_env_var.go
 model_stack_helm_value.go
 model_stack_origin_sync_changelog.go
+model_stack_origin_sync_preview.go
+model_stack_origin_sync_service_update.go
 model_stack_revision.go
 model_stack_revision_link_issue.go
 model_stack_service.go
@@ -880,6 +899,7 @@ model_stack_token.go
 model_stacks_response.go
 model_start_agent_chat_request.go
 model_storage_class.go
+model_sync_stack_with_origin_input.go
 model_task.go
 model_task_initiator.go
 model_task_job.go

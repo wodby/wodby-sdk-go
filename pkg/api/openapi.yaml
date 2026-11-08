@@ -658,7 +658,9 @@ paths:
       tags:
       - org-memberships
     get:
-      description: Returns the org membership identified by the request path.
+      description: "Returns the org membership identified by the request path. Organization\
+        \ owners, admins and support members also get the member's project and team\
+        \ memberships."
       operationId: getOrgMembership
       parameters:
       - explode: false
@@ -691,7 +693,8 @@ paths:
       tags:
       - org-memberships
     put:
-      description: Changes the organization role of a member and returns the membership.
+      description: Changes the organization role of a member and returns the membership
+        with its project and team memberships.
       operationId: updateOrgMembership
       parameters:
       - explode: false
@@ -1833,7 +1836,8 @@ paths:
       - apps
   /apps/by-name/{name}:
     get:
-      description: Returns the app identified by name.
+      description: "Returns the app identified by name, with the environment types\
+        \ the caller can create and whether pull request previews can work for it."
       operationId: getAppByName
       parameters:
       - explode: false
@@ -1909,7 +1913,9 @@ paths:
       tags:
       - apps
     get:
-      description: Returns the app identified by the request path.
+      description: "Returns the app identified by the request path, with the environment\
+        \ types the caller can create and whether pull request previews can work for\
+        \ it."
       operationId: getApp
       parameters:
       - explode: false
@@ -2316,7 +2322,8 @@ paths:
       - app-environments
   /app-environments/by-name/{appName}/{environmentName}:
     get:
-      description: Returns the app environment identified by app and environment name.
+      description: "Returns the app environment identified by app and environment\
+        \ name, with the caller's permissions in it."
       operationId: getAppEnvironmentByName
       parameters:
       - explode: false
@@ -2407,7 +2414,8 @@ paths:
       tags:
       - app-environments
     get:
-      description: Returns the app environment identified by the request path.
+      description: "Returns the app environment identified by the request path, with\
+        \ the caller's permissions in it."
       operationId: getAppEnvironment
       parameters:
       - explode: false
@@ -4848,7 +4856,11 @@ paths:
       - app-services
   /app-services/{id}/containers:
     get:
-      description: Returns container resource settings for an app service.
+      description: "Returns the CPU and memory settings the app service stores for\
+        \ each container of its service. A container with no id stores nothing and\
+        \ runs with the defaults in the service revision manifest, under workloads[].containers[].resources.\
+        \ A stored container replaces those defaults as a whole: a value it leaves\
+        \ empty is not set."
       operationId: listAppServiceContainers
       parameters:
       - explode: false
@@ -4961,7 +4973,11 @@ paths:
       - app-services
   /app-services/{id}/resources:
     put:
-      description: Sets CPU and memory requests or limits for an app service container.
+      description: "Sets CPU and memory requests and limits for an app service container.\
+        \ The four values replace the stored ones and the service's defaults as a\
+        \ whole, so send every value the container should keep; an omitted value is\
+        \ not set. Omitting all four, without a preset, on a container with no GPU\
+        \ setting removes its stored settings so the service's defaults apply again."
       operationId: setAppServiceResources
       parameters:
       - explode: false
@@ -11552,7 +11568,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StackSyncOptionsInput'
+              $ref: '#/components/schemas/SyncStackWithOriginInput'
         required: false
       responses:
         "200":
@@ -16333,6 +16349,50 @@ paths:
       summary: Preview stack service revision updates
       tags:
       - stacks
+  /stacks/{id}/actions/preview-sync-origin:
+    post:
+      description: "Returns what syncing the stack with its origin with these options\
+        \ would do, without changing the stack: the stack services the sync has to\
+        \ update to the service version the origin uses, the error the sync would\
+        \ fail with, and the changes its task log would list. Returns null when the\
+        \ stack already follows the origin's latest revision."
+      operationId: previewStackSyncWithOrigin
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackSyncOptionsInput'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackOriginSyncPreview'
+          description: Stack origin sync preview
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Preview stack sync with origin
+      tags:
+      - stacks
   /stack-origin-sync-changelogs/{id}:
     get:
       description: Returns the origin stack changes that would be synchronized into
@@ -18227,6 +18287,41 @@ components:
           nullable: true
           type: boolean
         deleteStackServicesConfiguration:
+          nullable: true
+          type: boolean
+      type: object
+    SyncStackWithOriginInput:
+      example:
+        deleteStackAnnotations: true
+        deleteStackEnvVars: true
+        deleteStackHelmValues: true
+        deleteStackServicesConfiguration: true
+        deleteStackTokens: true
+        deleteStackServices: true
+        updateStackServices: true
+      properties:
+        deleteStackHelmValues:
+          nullable: true
+          type: boolean
+        deleteStackEnvVars:
+          nullable: true
+          type: boolean
+        deleteStackTokens:
+          nullable: true
+          type: boolean
+        deleteStackAnnotations:
+          nullable: true
+          type: boolean
+        deleteStackServices:
+          nullable: true
+          type: boolean
+        deleteStackServicesConfiguration:
+          nullable: true
+          type: boolean
+        updateStackServices:
+          description: "Let the sync update existing stack services to the service\
+            \ version the origin uses when the origin's changes need it. Without it,\
+            \ such a sync fails with an error that lists those stack services."
           nullable: true
           type: boolean
       type: object
@@ -21016,11 +21111,35 @@ components:
     OrgMembership:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        teamMemberships:
+        - role: member
+          teamId: 2
+          id: 3
+        - role: member
+          teamId: 2
+          id: 3
         role: role
         joinedAt: 2000-01-23T04:56:07.000+00:00
         id: 0
         userId: 6
         user: "{}"
+        projectMemberships:
+        - orgMembershipId: 2
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          role: read
+          teamId: 7
+          id: 5
+          customRoleId: 9
+          projectId: 5
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - orgMembershipId: 2
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          role: read
+          teamId: 7
+          id: 5
+          customRoleId: 9
+          projectId: 5
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         email: email
         orgId: 1
         status: status
@@ -21049,6 +21168,20 @@ components:
           format: date-time
           nullable: true
           type: string
+        projectMemberships:
+          description: "The member's project access: their direct project memberships,\
+            \ then the memberships of every team they belong to (those have teamId\
+            \ set). Returned for a single membership to organization owners, admins\
+            \ and support members; omitted otherwise."
+          items:
+            $ref: '#/components/schemas/ProjectMembership'
+          type: array
+        teamMemberships:
+          description: "The teams the member belongs to. Returned for a single membership\
+            \ to organization owners, admins and support members; omitted otherwise."
+          items:
+            $ref: '#/components/schemas/OrgMembershipTeamMembership'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -21062,6 +21195,26 @@ components:
       - role
       - status
       - updatedAt
+      type: object
+    OrgMembershipTeamMembership:
+      example:
+        role: member
+        teamId: 2
+        id: 3
+      properties:
+        id:
+          type: integer
+        teamId:
+          type: integer
+        role:
+          enum:
+          - member
+          - leader
+          type: string
+      required:
+      - id
+      - role
+      - teamId
       type: object
     InviteOrgMemberInput:
       example:
@@ -21100,13 +21253,13 @@ components:
       type: object
     ProjectMembership:
       example:
-        orgMembershipId: 1
+        orgMembershipId: 2
         createdAt: 2000-01-23T04:56:07.000+00:00
         role: read
-        teamId: 5
-        id: 0
-        customRoleId: 5
-        projectId: 6
+        teamId: 7
+        id: 5
+        customRoleId: 9
+        projectId: 5
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
@@ -21868,13 +22021,17 @@ components:
             idleTtlDays: 2
             enabled: true
             runCronJobs: true
+        title: title
+        orgId: 6
         createdAt: 2000-01-23T04:56:07.000+00:00
         ownerProjectId: 1
         clusterApp: true
+        creatableEnvironmentTypes:
+        - prod
+        - prod
         name: name
+        previewsAvailable: true
         id: 0
-        title: title
-        orgId: 6
         ownershipScope: org
         status: status
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -21901,6 +22058,23 @@ components:
           type: integer
         settings:
           $ref: '#/components/schemas/AppSettings'
+        creatableEnvironmentTypes:
+          description: Environment types the caller can create app environments of.
+            Returned by getApp and getAppByName only.
+          items:
+            enum:
+            - prod
+            - test
+            - staging
+            - dev
+            - feature
+            type: string
+          type: array
+        previewsAvailable:
+          description: "Whether pull request preview environments can work for this\
+            \ app: one of its environments has an enabled service connected to a branch\
+            \ of its own Git repository. Returned by getApp and getAppByName only."
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -22304,6 +22478,15 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         stackRevId: 9
         outdated: true
+        permissions:
+          backup: true
+          operate: true
+          upgrade: true
+          restore: true
+          shell: true
+          configure: true
+          delete: true
+          deploy: true
         appId: 5
         stackIcon: stackIcon
         id: 5
@@ -22343,6 +22526,7 @@ components:
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
             failingSchedulesCount: 7
+        mainDomainBasicAuth: true
         stackTitle: stackTitle
         stackVersion: stackVersion
         configurationIssues:
@@ -22396,6 +22580,9 @@ components:
         mainDomain:
           nullable: true
           type: string
+        mainDomainBasicAuth:
+          description: Whether basic auth protects the environment's main domain.
+          type: boolean
         mainRouteCert:
           allOf:
           - $ref: '#/components/schemas/AppEnvironmentMainRouteCert'
@@ -22445,6 +22632,8 @@ components:
           - $ref: '#/components/schemas/AppEnvironmentPreview'
           nullable: true
           type: object
+        permissions:
+          $ref: '#/components/schemas/AppEnvironmentPermissions'
         health:
           $ref: '#/components/schemas/AppEnvironmentHealth'
         createdAt:
@@ -22462,6 +22651,7 @@ components:
       - environmentType
       - health
       - id
+      - mainDomainBasicAuth
       - mainRouteCert
       - maintenanceMode
       - maintenanceModeActive
@@ -22479,6 +22669,46 @@ components:
       - status
       - title
       - updatedAt
+      type: object
+    AppEnvironmentPermissions:
+      description: "What the caller can do in the app environment, from their organization\
+        \ role and project role. Returned by getAppEnvironment and getAppEnvironmentByName\
+        \ only."
+      example:
+        backup: true
+        operate: true
+        upgrade: true
+        restore: true
+        shell: true
+        configure: true
+        delete: true
+        deploy: true
+      properties:
+        deploy:
+          type: boolean
+        operate:
+          type: boolean
+        configure:
+          type: boolean
+        upgrade:
+          type: boolean
+        shell:
+          type: boolean
+        backup:
+          type: boolean
+        restore:
+          type: boolean
+        delete:
+          type: boolean
+      required:
+      - backup
+      - configure
+      - delete
+      - deploy
+      - operate
+      - restore
+      - shell
+      - upgrade
       type: object
     AppEnvironmentMainRouteCert:
       properties:
@@ -23993,7 +24223,9 @@ components:
         ownerProjectId: 1
         storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
         zone: zone
+        kubernetesVersionEolDate: 2000-01-23T04:56:07.000+00:00
         singleNode: true
+        kubernetesVersionEol: true
         id: 0
         updatedAt: 2000-01-23T04:56:07.000+00:00
         settings:
@@ -24077,6 +24309,17 @@ components:
         singleNode:
           type: boolean
         version:
+          nullable: true
+          type: string
+        kubernetesVersionEol:
+          description: Whether the cluster's Kubernetes version has reached its end
+            of life. Always false for Wodby Cloud and serverless clusters and for
+            versions Wodby has no lifecycle data for.
+          type: boolean
+        kubernetesVersionEolDate:
+          description: "When the cluster's Kubernetes version reaches or reached its\
+            \ end of life, when known."
+          format: date-time
           nullable: true
           type: string
         infraVersion:
@@ -24191,6 +24434,7 @@ components:
       - id
       - infraVersion
       - k3s
+      - kubernetesVersionEol
       - name
       - orgId
       - ownershipScope
@@ -26350,6 +26594,106 @@ components:
       - title
       - version
       type: object
+    StackOriginSyncPreview:
+      example:
+        serviceUpdates:
+        - reason: reason
+          serviceTitle: serviceTitle
+          previousVersion: previousVersion
+          name: name
+          refusal: refusal
+          stackServiceId: 0
+          title: title
+          version: version
+        - reason: reason
+          serviceTitle: serviceTitle
+          previousVersion: previousVersion
+          name: name
+          refusal: refusal
+          stackServiceId: 0
+          title: title
+          version: version
+        previousVersion: previousVersion
+        changes:
+        - level: level
+          message: message
+          sequenceId: 6
+        - level: level
+          message: message
+          sequenceId: 6
+        error: error
+        version: version
+      properties:
+        previousVersion:
+          type: string
+        version:
+          type: string
+        serviceUpdates:
+          description: Stack services the sync has to update to the service version
+            the origin uses. The sync needs updateStackServices to update them.
+          items:
+            $ref: '#/components/schemas/StackOriginSyncServiceUpdate'
+          type: array
+        error:
+          description: Why the sync would fail. Null when it would go through once
+            the listed stack services may be updated.
+          nullable: true
+          type: string
+        changes:
+          description: "What the sync would change, as its task log will list it.\
+            \ Empty when it would fail."
+          items:
+            $ref: '#/components/schemas/LogLine'
+          type: array
+      required:
+      - changes
+      - error
+      - previousVersion
+      - serviceUpdates
+      - version
+      type: object
+    StackOriginSyncServiceUpdate:
+      example:
+        reason: reason
+        serviceTitle: serviceTitle
+        previousVersion: previousVersion
+        name: name
+        refusal: refusal
+        stackServiceId: 0
+        title: title
+        version: version
+      properties:
+        stackServiceId:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        serviceTitle:
+          type: string
+        previousVersion:
+          type: string
+        version:
+          type: string
+        reason:
+          description: "The origin's configuration that needs the newer version, such\
+            \ as option 3."
+          type: string
+        refusal:
+          description: "Why the sync can't update this stack service, such as a pin.\
+            \ Null when it can."
+          nullable: true
+          type: string
+      required:
+      - name
+      - previousVersion
+      - reason
+      - refusal
+      - serviceTitle
+      - stackServiceId
+      - title
+      - version
+      type: object
     StackOriginSyncChangelog:
       example:
         entries:
@@ -26994,8 +27338,77 @@ components:
         external: true
         manifest:
           scalable: true
+          linkGroups:
+          - min: 5
+            name: name
+            links:
+            - links
+            - links
+            title: title
+          - min: 5
+            name: name
+            links:
+            - links
+            - links
+            title: title
           basicAuth: true
+          exports:
+          - name: name
+            secret: true
+          - name: name
+            secret: true
           raw: raw
+          links:
+          - custom: true
+            values:
+            - name: name
+              optional: true
+              secret: true
+              title: title
+            - name: name
+              optional: true
+              secret: true
+              title: title
+            name: name
+            title: title
+            selectors:
+            - type: type
+              option: option
+              labels:
+              - labels
+              - labels
+            - type: type
+              option: option
+              labels:
+              - labels
+              - labels
+            required: true
+            crossApp: true
+          - custom: true
+            values:
+            - name: name
+              optional: true
+              secret: true
+              title: title
+            - name: name
+              optional: true
+              secret: true
+              title: title
+            name: name
+            title: title
+            selectors:
+            - type: type
+              option: option
+              labels:
+              - labels
+              - labels
+            - type: type
+              option: option
+              labels:
+              - labels
+              - labels
+            required: true
+            crossApp: true
           integrations:
           - variables:
             - name: name
@@ -27053,6 +27466,10 @@ components:
             labels:
             - labels
             - labels
+          labels:
+          - labels
+          - labels
+          crossApp: true
         name: name
         id: 0
         title: title
@@ -27061,7 +27478,7 @@ components:
         excludedBaseVersion:
           baseServiceRevisionId: 5
           baseServiceVersion: baseServiceVersion
-          baseServiceRevNumber: 5
+          baseServiceRevNumber: 2
           fromVersionConstraint: fromVersionConstraint
           currentVersion: currentVersion
           baseServiceName: baseServiceName
@@ -27109,7 +27526,7 @@ components:
       example:
         baseServiceRevisionId: 5
         baseServiceVersion: baseServiceVersion
-        baseServiceRevNumber: 5
+        baseServiceRevNumber: 2
         fromVersionConstraint: fromVersionConstraint
         currentVersion: currentVersion
         baseServiceName: baseServiceName
@@ -27141,10 +27558,81 @@ components:
       type: object
     ServiceManifest:
       additionalProperties: true
+      description: "Typed fields of a service revision's manifest. raw holds the complete\
+        \ manifest as JSON, including the sections that have no typed field here."
       example:
         scalable: true
+        linkGroups:
+        - min: 5
+          name: name
+          links:
+          - links
+          - links
+          title: title
+        - min: 5
+          name: name
+          links:
+          - links
+          - links
+          title: title
         basicAuth: true
+        exports:
+        - name: name
+          secret: true
+        - name: name
+          secret: true
         raw: raw
+        links:
+        - custom: true
+          values:
+          - name: name
+            optional: true
+            secret: true
+            title: title
+          - name: name
+            optional: true
+            secret: true
+            title: title
+          name: name
+          title: title
+          selectors:
+          - type: type
+            option: option
+            labels:
+            - labels
+            - labels
+          - type: type
+            option: option
+            labels:
+            - labels
+            - labels
+          required: true
+          crossApp: true
+        - custom: true
+          values:
+          - name: name
+            optional: true
+            secret: true
+            title: title
+          - name: name
+            optional: true
+            secret: true
+            title: title
+          name: name
+          title: title
+          selectors:
+          - type: type
+            option: option
+            labels:
+            - labels
+            - labels
+          - type: type
+            option: option
+            labels:
+            - labels
+            - labels
+          required: true
+          crossApp: true
         integrations:
         - variables:
           - name: name
@@ -27202,6 +27690,10 @@ components:
           labels:
           - labels
           - labels
+        labels:
+        - labels
+        - labels
+        crossApp: true
       properties:
         raw:
           type: string
@@ -27211,13 +27703,188 @@ components:
           description: Whether the service asks for its public HTTP endpoints to be
             protected with basic auth by default.
           type: boolean
+        labels:
+          items:
+            type: string
+          type: array
+        crossApp:
+          description: "Whether links of services in other app environments, of the\
+            \ same app or another one, may point at this service."
+          type: boolean
+        exports:
+          description: "Values the services linking to this one read as {{link.exports.<name>}}."
+          items:
+            $ref: '#/components/schemas/ServiceManifestExport'
+          type: array
         integrations:
           items:
             $ref: '#/components/schemas/ServiceIntegrationRequirement'
           type: array
+        links:
+          items:
+            $ref: '#/components/schemas/ServiceManifestLink'
+          type: array
+        linkGroups:
+          description: Links that are alternatives to one another. An enabled app
+            service needs at least min of them configured.
+          items:
+            $ref: '#/components/schemas/ServiceManifestLinkGroup'
+          type: array
       required:
+      - basicAuth
+      - crossApp
+      - exports
       - raw
       - scalable
+      type: object
+    ServiceManifestExport:
+      example:
+        name: name
+        secret: true
+      properties:
+        name:
+          type: string
+        secret:
+          type: boolean
+      required:
+      - name
+      - secret
+      type: object
+    ServiceManifestLink:
+      example:
+        custom: true
+        values:
+        - name: name
+          optional: true
+          secret: true
+          title: title
+        - name: name
+          optional: true
+          secret: true
+          title: title
+        name: name
+        title: title
+        selectors:
+        - type: type
+          option: option
+          labels:
+          - labels
+          - labels
+        - type: type
+          option: option
+          labels:
+          - labels
+          - labels
+        required: true
+        crossApp: true
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        required:
+          type: boolean
+        selectors:
+          description: The services the link may point at. A target must match one
+            selector.
+          items:
+            $ref: '#/components/schemas/ServiceManifestLinkSelector'
+          type: array
+        custom:
+          description: "Whether the link accepts a custom target, whose values a user\
+            \ enters instead of choosing a target service."
+          type: boolean
+        crossApp:
+          description: Whether the link may point at a service of another app environment
+            that accepts it. Across environments the link reads only the target's
+            exports.
+          type: boolean
+        values:
+          description: "The values the link hands to the service, whatever it points\
+            \ at."
+          items:
+            $ref: '#/components/schemas/ServiceManifestLinkValue'
+          type: array
+      required:
+      - crossApp
+      - custom
+      - name
+      - required
+      - title
+      - values
+      type: object
+    ServiceManifestLinkSelector:
+      example:
+        type: type
+        option: option
+        labels:
+        - labels
+        - labels
+      properties:
+        type:
+          description: "The service type a target must have, in upper case, such as\
+            \ DB or DATASTORE."
+          type: string
+        option:
+          description: "The service version a target must run, when the selector asks\
+            \ for one."
+          type: string
+        labels:
+          description: Labels a target service must all have.
+          items:
+            type: string
+          type: array
+      required:
+      - type
+      type: object
+    ServiceManifestLinkValue:
+      description: A value a service link hands to the service. A custom target of
+        the link needs it unless it is optional.
+      example:
+        name: name
+        optional: true
+        secret: true
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          nullable: true
+          type: string
+        secret:
+          type: boolean
+        optional:
+          type: boolean
+      required:
+      - name
+      - optional
+      - secret
+      type: object
+    ServiceManifestLinkGroup:
+      example:
+        min: 5
+        name: name
+        links:
+        - links
+        - links
+        title: title
+      properties:
+        name:
+          type: string
+        title:
+          nullable: true
+          type: string
+        links:
+          description: Names of the links in the group.
+          items:
+            type: string
+          type: array
+        min:
+          type: integer
+      required:
+      - links
+      - min
+      - name
       type: object
     ServiceIntegrationRequirement:
       example:
@@ -33745,7 +34412,9 @@ components:
           ownerProjectId: 1
           storageClassesObservedAt: 2000-01-23T04:56:07.000+00:00
           zone: zone
+          kubernetesVersionEolDate: 2000-01-23T04:56:07.000+00:00
           singleNode: true
+          kubernetesVersionEol: true
           id: 0
           updatedAt: 2000-01-23T04:56:07.000+00:00
           settings:

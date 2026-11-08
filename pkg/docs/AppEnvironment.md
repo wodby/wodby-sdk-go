@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **Status** | **string** |  | 
 **Outdated** | **bool** |  | 
 **MainDomain** | Pointer to **NullableString** |  | [optional] 
+**MainDomainBasicAuth** | **bool** | Whether basic auth protects the environment&#39;s main domain. | 
 **MainRouteCert** | [**NullableAppEnvironmentMainRouteCert**](AppEnvironmentMainRouteCert.md) |  | 
 **AppId** | **int32** |  | 
 **ClusterId** | **int32** |  | 
@@ -32,6 +33,7 @@ Name | Type | Description | Notes
 **ConfigurationIssues** | [**[]AppServiceConfigurationIssue**](AppServiceConfigurationIssue.md) |  | 
 **Settings** | Pointer to [**AppEnvironmentSettings**](AppEnvironmentSettings.md) |  | [optional] 
 **Preview** | Pointer to [**NullableAppEnvironmentPreview**](AppEnvironmentPreview.md) |  | [optional] 
+**Permissions** | Pointer to [**AppEnvironmentPermissions**](AppEnvironmentPermissions.md) |  | [optional] 
 **Health** | [**AppEnvironmentHealth**](AppEnvironmentHealth.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -40,7 +42,7 @@ Name | Type | Description | Notes
 
 ### NewAppEnvironment
 
-`func NewAppEnvironment(id int32, name string, title string, environmentType string, status string, outdated bool, mainRouteCert NullableAppEnvironmentMainRouteCert, appId int32, clusterId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppEnvironmentHealth, createdAt time.Time, updatedAt time.Time, ) *AppEnvironment`
+`func NewAppEnvironment(id int32, name string, title string, environmentType string, status string, outdated bool, mainDomainBasicAuth bool, mainRouteCert NullableAppEnvironmentMainRouteCert, appId int32, clusterId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppEnvironmentHealth, createdAt time.Time, updatedAt time.Time, ) *AppEnvironment`
 
 NewAppEnvironment instantiates a new AppEnvironment object
 This constructor will assign default values to properties that have it defined,
@@ -260,6 +262,26 @@ HasMainDomain returns a boolean if a field has been set.
 `func (o *AppEnvironment) UnsetMainDomain()`
 
 UnsetMainDomain ensures that no value is present for MainDomain, not even an explicit nil
+### GetMainDomainBasicAuth
+
+`func (o *AppEnvironment) GetMainDomainBasicAuth() bool`
+
+GetMainDomainBasicAuth returns the MainDomainBasicAuth field if non-nil, zero value otherwise.
+
+### GetMainDomainBasicAuthOk
+
+`func (o *AppEnvironment) GetMainDomainBasicAuthOk() (*bool, bool)`
+
+GetMainDomainBasicAuthOk returns a tuple with the MainDomainBasicAuth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMainDomainBasicAuth
+
+`func (o *AppEnvironment) SetMainDomainBasicAuth(v bool)`
+
+SetMainDomainBasicAuth sets MainDomainBasicAuth field to given value.
+
+
 ### GetMainRouteCert
 
 `func (o *AppEnvironment) GetMainRouteCert() AppEnvironmentMainRouteCert`
@@ -685,6 +707,31 @@ HasPreview returns a boolean if a field has been set.
 `func (o *AppEnvironment) UnsetPreview()`
 
 UnsetPreview ensures that no value is present for Preview, not even an explicit nil
+### GetPermissions
+
+`func (o *AppEnvironment) GetPermissions() AppEnvironmentPermissions`
+
+GetPermissions returns the Permissions field if non-nil, zero value otherwise.
+
+### GetPermissionsOk
+
+`func (o *AppEnvironment) GetPermissionsOk() (*AppEnvironmentPermissions, bool)`
+
+GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPermissions
+
+`func (o *AppEnvironment) SetPermissions(v AppEnvironmentPermissions)`
+
+SetPermissions sets Permissions field to given value.
+
+### HasPermissions
+
+`func (o *AppEnvironment) HasPermissions() bool`
+
+HasPermissions returns a boolean if a field has been set.
+
 ### GetHealth
 
 `func (o *AppEnvironment) GetHealth() AppEnvironmentHealth`

@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **OwnershipScope** | **string** |  | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **Settings** | Pointer to [**AppSettings**](AppSettings.md) |  | [optional] 
+**CreatableEnvironmentTypes** | Pointer to **[]string** | Environment types the caller can create app environments of. Returned by getApp and getAppByName only. | [optional] 
+**PreviewsAvailable** | Pointer to **bool** | Whether pull request preview environments can work for this app: one of its environments has an enabled service connected to a branch of its own Git repository. Returned by getApp and getAppByName only. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -234,6 +236,56 @@ SetSettings sets Settings field to given value.
 `func (o *App) HasSettings() bool`
 
 HasSettings returns a boolean if a field has been set.
+
+### GetCreatableEnvironmentTypes
+
+`func (o *App) GetCreatableEnvironmentTypes() []string`
+
+GetCreatableEnvironmentTypes returns the CreatableEnvironmentTypes field if non-nil, zero value otherwise.
+
+### GetCreatableEnvironmentTypesOk
+
+`func (o *App) GetCreatableEnvironmentTypesOk() (*[]string, bool)`
+
+GetCreatableEnvironmentTypesOk returns a tuple with the CreatableEnvironmentTypes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatableEnvironmentTypes
+
+`func (o *App) SetCreatableEnvironmentTypes(v []string)`
+
+SetCreatableEnvironmentTypes sets CreatableEnvironmentTypes field to given value.
+
+### HasCreatableEnvironmentTypes
+
+`func (o *App) HasCreatableEnvironmentTypes() bool`
+
+HasCreatableEnvironmentTypes returns a boolean if a field has been set.
+
+### GetPreviewsAvailable
+
+`func (o *App) GetPreviewsAvailable() bool`
+
+GetPreviewsAvailable returns the PreviewsAvailable field if non-nil, zero value otherwise.
+
+### GetPreviewsAvailableOk
+
+`func (o *App) GetPreviewsAvailableOk() (*bool, bool)`
+
+GetPreviewsAvailableOk returns a tuple with the PreviewsAvailable field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviewsAvailable
+
+`func (o *App) SetPreviewsAvailable(v bool)`
+
+SetPreviewsAvailable sets PreviewsAvailable field to given value.
+
+### HasPreviewsAvailable
+
+`func (o *App) HasPreviewsAvailable() bool`
+
+HasPreviewsAvailable returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

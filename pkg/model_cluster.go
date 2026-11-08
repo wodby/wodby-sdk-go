@@ -32,6 +32,10 @@ type Cluster struct {
 	K3s bool `json:"k3s"`
 	SingleNode bool `json:"singleNode"`
 	Version NullableString `json:"version,omitempty"`
+	// Whether the cluster's Kubernetes version has reached its end of life. Always false for Wodby Cloud and serverless clusters and for versions Wodby has no lifecycle data for.
+	KubernetesVersionEol bool `json:"kubernetesVersionEol"`
+	// When the cluster's Kubernetes version reaches or reached its end of life, when known.
+	KubernetesVersionEolDate NullableTime `json:"kubernetesVersionEolDate,omitempty"`
 	InfraVersion string `json:"infraVersion"`
 	MinNodeCount NullableInt32 `json:"minNodeCount,omitempty"`
 	MaxNodeCount NullableInt32 `json:"maxNodeCount,omitempty"`
@@ -71,7 +75,7 @@ type _Cluster Cluster
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, availableToAllProjects bool, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
+func NewCluster(id int32, name string, title string, status string, serverless bool, demo bool, wodby bool, k3s bool, singleNode bool, kubernetesVersionEol bool, infraVersion string, envId int32, envType string, envScope string, allowedEnvIds []int32, allowedEnvTypes []string, orgId int32, ownershipScope string, availableToAllProjects bool, capabilities ClusterCapabilities, createdAt time.Time, updatedAt time.Time) *Cluster {
 	this := Cluster{}
 	this.Id = id
 	this.Name = name
@@ -82,6 +86,7 @@ func NewCluster(id int32, name string, title string, status string, serverless b
 	this.Wodby = wodby
 	this.K3s = k3s
 	this.SingleNode = singleNode
+	this.KubernetesVersionEol = kubernetesVersionEol
 	this.InfraVersion = infraVersion
 	this.EnvId = envId
 	this.EnvType = envType
@@ -361,6 +366,72 @@ func (o *Cluster) SetVersionNil() {
 // UnsetVersion ensures that no value is present for Version, not even an explicit nil
 func (o *Cluster) UnsetVersion() {
 	o.Version.Unset()
+}
+
+// GetKubernetesVersionEol returns the KubernetesVersionEol field value
+func (o *Cluster) GetKubernetesVersionEol() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.KubernetesVersionEol
+}
+
+// GetKubernetesVersionEolOk returns a tuple with the KubernetesVersionEol field value
+// and a boolean to check if the value has been set.
+func (o *Cluster) GetKubernetesVersionEolOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.KubernetesVersionEol, true
+}
+
+// SetKubernetesVersionEol sets field value
+func (o *Cluster) SetKubernetesVersionEol(v bool) {
+	o.KubernetesVersionEol = v
+}
+
+// GetKubernetesVersionEolDate returns the KubernetesVersionEolDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetKubernetesVersionEolDate() time.Time {
+	if o == nil || IsNil(o.KubernetesVersionEolDate.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.KubernetesVersionEolDate.Get()
+}
+
+// GetKubernetesVersionEolDateOk returns a tuple with the KubernetesVersionEolDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetKubernetesVersionEolDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.KubernetesVersionEolDate.Get(), o.KubernetesVersionEolDate.IsSet()
+}
+
+// HasKubernetesVersionEolDate returns a boolean if a field has been set.
+func (o *Cluster) HasKubernetesVersionEolDate() bool {
+	if o != nil && o.KubernetesVersionEolDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetKubernetesVersionEolDate gets a reference to the given NullableTime and assigns it to the KubernetesVersionEolDate field.
+func (o *Cluster) SetKubernetesVersionEolDate(v time.Time) {
+	o.KubernetesVersionEolDate.Set(&v)
+}
+// SetKubernetesVersionEolDateNil sets the value for KubernetesVersionEolDate to be an explicit nil
+func (o *Cluster) SetKubernetesVersionEolDateNil() {
+	o.KubernetesVersionEolDate.Set(nil)
+}
+
+// UnsetKubernetesVersionEolDate ensures that no value is present for KubernetesVersionEolDate, not even an explicit nil
+func (o *Cluster) UnsetKubernetesVersionEolDate() {
+	o.KubernetesVersionEolDate.Unset()
 }
 
 // GetInfraVersion returns the InfraVersion field value
@@ -1239,6 +1310,10 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()
 	}
+	toSerialize["kubernetesVersionEol"] = o.KubernetesVersionEol
+	if o.KubernetesVersionEolDate.IsSet() {
+		toSerialize["kubernetesVersionEolDate"] = o.KubernetesVersionEolDate.Get()
+	}
 	toSerialize["infraVersion"] = o.InfraVersion
 	if o.MinNodeCount.IsSet() {
 		toSerialize["minNodeCount"] = o.MinNodeCount.Get()
@@ -1310,6 +1385,7 @@ func (o *Cluster) UnmarshalJSON(data []byte) (err error) {
 		"wodby",
 		"k3s",
 		"singleNode",
+		"kubernetesVersionEol",
 		"infraVersion",
 		"envId",
 		"envType",

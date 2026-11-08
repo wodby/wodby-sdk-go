@@ -1297,7 +1297,7 @@ func (r ApiGetAppEnvironmentRequest) Execute() (*AppEnvironment, *http.Response,
 /*
 GetAppEnvironment Get app environment
 
-Returns the app environment identified by the request path.
+Returns the app environment identified by the request path, with the caller's permissions in it.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1577,7 +1577,7 @@ func (r ApiGetAppEnvironmentByNameRequest) Execute() (*AppEnvironment, *http.Res
 /*
 GetAppEnvironmentByName Get app environment by name
 
-Returns the app environment identified by app and environment name.
+Returns the app environment identified by app and environment name, with the caller's permissions in it.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appName

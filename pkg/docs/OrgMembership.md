@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **Role** | **string** |  | 
 **Status** | **string** |  | 
 **JoinedAt** | Pointer to **NullableTime** |  | [optional] 
+**ProjectMemberships** | Pointer to [**[]ProjectMembership**](ProjectMembership.md) | The member&#39;s project access: their direct project memberships, then the memberships of every team they belong to (those have teamId set). Returned for a single membership to organization owners, admins and support members; omitted otherwise. | [optional] 
+**TeamMemberships** | Pointer to [**[]OrgMembershipTeamMembership**](OrgMembershipTeamMembership.md) | The teams the member belongs to. Returned for a single membership to organization owners, admins and support members; omitted otherwise. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -254,6 +256,56 @@ HasJoinedAt returns a boolean if a field has been set.
 `func (o *OrgMembership) UnsetJoinedAt()`
 
 UnsetJoinedAt ensures that no value is present for JoinedAt, not even an explicit nil
+### GetProjectMemberships
+
+`func (o *OrgMembership) GetProjectMemberships() []ProjectMembership`
+
+GetProjectMemberships returns the ProjectMemberships field if non-nil, zero value otherwise.
+
+### GetProjectMembershipsOk
+
+`func (o *OrgMembership) GetProjectMembershipsOk() (*[]ProjectMembership, bool)`
+
+GetProjectMembershipsOk returns a tuple with the ProjectMemberships field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectMemberships
+
+`func (o *OrgMembership) SetProjectMemberships(v []ProjectMembership)`
+
+SetProjectMemberships sets ProjectMemberships field to given value.
+
+### HasProjectMemberships
+
+`func (o *OrgMembership) HasProjectMemberships() bool`
+
+HasProjectMemberships returns a boolean if a field has been set.
+
+### GetTeamMemberships
+
+`func (o *OrgMembership) GetTeamMemberships() []OrgMembershipTeamMembership`
+
+GetTeamMemberships returns the TeamMemberships field if non-nil, zero value otherwise.
+
+### GetTeamMembershipsOk
+
+`func (o *OrgMembership) GetTeamMembershipsOk() (*[]OrgMembershipTeamMembership, bool)`
+
+GetTeamMembershipsOk returns a tuple with the TeamMemberships field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamMemberships
+
+`func (o *OrgMembership) SetTeamMemberships(v []OrgMembershipTeamMembership)`
+
+SetTeamMemberships sets TeamMemberships field to given value.
+
+### HasTeamMemberships
+
+`func (o *OrgMembership) HasTeamMemberships() bool`
+
+HasTeamMemberships returns a boolean if a field has been set.
+
 ### GetCreatedAt
 
 `func (o *OrgMembership) GetCreatedAt() time.Time`

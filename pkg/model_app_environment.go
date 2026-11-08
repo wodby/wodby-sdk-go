@@ -31,6 +31,8 @@ type AppEnvironment struct {
 	Status string `json:"status"`
 	Outdated bool `json:"outdated"`
 	MainDomain NullableString `json:"mainDomain,omitempty"`
+	// Whether basic auth protects the environment's main domain.
+	MainDomainBasicAuth bool `json:"mainDomainBasicAuth"`
 	MainRouteCert NullableAppEnvironmentMainRouteCert `json:"mainRouteCert"`
 	AppId int32 `json:"appId"`
 	ClusterId int32 `json:"clusterId"`
@@ -50,6 +52,7 @@ type AppEnvironment struct {
 	ConfigurationIssues []AppServiceConfigurationIssue `json:"configurationIssues"`
 	Settings *AppEnvironmentSettings `json:"settings,omitempty"`
 	Preview NullableAppEnvironmentPreview `json:"preview,omitempty"`
+	Permissions *AppEnvironmentPermissions `json:"permissions,omitempty"`
 	Health AppEnvironmentHealth `json:"health"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -61,7 +64,7 @@ type _AppEnvironment AppEnvironment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppEnvironment(id int32, name string, title string, environmentType string, status string, outdated bool, mainRouteCert NullableAppEnvironmentMainRouteCert, appId int32, clusterId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppEnvironmentHealth, createdAt time.Time, updatedAt time.Time) *AppEnvironment {
+func NewAppEnvironment(id int32, name string, title string, environmentType string, status string, outdated bool, mainDomainBasicAuth bool, mainRouteCert NullableAppEnvironmentMainRouteCert, appId int32, clusterId int32, stackId int32, stackRevId int32, stackName string, stackTitle string, stackIcon string, stackRevNumber int32, stackVersion string, routingMode string, routingPending bool, maintenanceMode bool, maintenanceModeActive bool, configurationReady bool, configurationIssues []AppServiceConfigurationIssue, health AppEnvironmentHealth, createdAt time.Time, updatedAt time.Time) *AppEnvironment {
 	this := AppEnvironment{}
 	var executionMode string = "standard"
 	this.ExecutionMode = &executionMode
@@ -71,6 +74,7 @@ func NewAppEnvironment(id int32, name string, title string, environmentType stri
 	this.EnvironmentType = environmentType
 	this.Status = status
 	this.Outdated = outdated
+	this.MainDomainBasicAuth = mainDomainBasicAuth
 	this.MainRouteCert = mainRouteCert
 	this.AppId = appId
 	this.ClusterId = clusterId
@@ -351,6 +355,30 @@ func (o *AppEnvironment) SetMainDomainNil() {
 // UnsetMainDomain ensures that no value is present for MainDomain, not even an explicit nil
 func (o *AppEnvironment) UnsetMainDomain() {
 	o.MainDomain.Unset()
+}
+
+// GetMainDomainBasicAuth returns the MainDomainBasicAuth field value
+func (o *AppEnvironment) GetMainDomainBasicAuth() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.MainDomainBasicAuth
+}
+
+// GetMainDomainBasicAuthOk returns a tuple with the MainDomainBasicAuth field value
+// and a boolean to check if the value has been set.
+func (o *AppEnvironment) GetMainDomainBasicAuthOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MainDomainBasicAuth, true
+}
+
+// SetMainDomainBasicAuth sets field value
+func (o *AppEnvironment) SetMainDomainBasicAuth(v bool) {
+	o.MainDomainBasicAuth = v
 }
 
 // GetMainRouteCert returns the MainRouteCert field value
@@ -855,6 +883,38 @@ func (o *AppEnvironment) UnsetPreview() {
 	o.Preview.Unset()
 }
 
+// GetPermissions returns the Permissions field value if set, zero value otherwise.
+func (o *AppEnvironment) GetPermissions() AppEnvironmentPermissions {
+	if o == nil || IsNil(o.Permissions) {
+		var ret AppEnvironmentPermissions
+		return ret
+	}
+	return *o.Permissions
+}
+
+// GetPermissionsOk returns a tuple with the Permissions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironment) GetPermissionsOk() (*AppEnvironmentPermissions, bool) {
+	if o == nil || IsNil(o.Permissions) {
+		return nil, false
+	}
+	return o.Permissions, true
+}
+
+// HasPermissions returns a boolean if a field has been set.
+func (o *AppEnvironment) HasPermissions() bool {
+	if o != nil && !IsNil(o.Permissions) {
+		return true
+	}
+
+	return false
+}
+
+// SetPermissions gets a reference to the given AppEnvironmentPermissions and assigns it to the Permissions field.
+func (o *AppEnvironment) SetPermissions(v AppEnvironmentPermissions) {
+	o.Permissions = &v
+}
+
 // GetHealth returns the Health field value
 func (o *AppEnvironment) GetHealth() AppEnvironmentHealth {
 	if o == nil {
@@ -952,6 +1012,7 @@ func (o AppEnvironment) ToMap() (map[string]interface{}, error) {
 	if o.MainDomain.IsSet() {
 		toSerialize["mainDomain"] = o.MainDomain.Get()
 	}
+	toSerialize["mainDomainBasicAuth"] = o.MainDomainBasicAuth
 	toSerialize["mainRouteCert"] = o.MainRouteCert.Get()
 	toSerialize["appId"] = o.AppId
 	toSerialize["clusterId"] = o.ClusterId
@@ -977,6 +1038,9 @@ func (o AppEnvironment) ToMap() (map[string]interface{}, error) {
 	if o.Preview.IsSet() {
 		toSerialize["preview"] = o.Preview.Get()
 	}
+	if !IsNil(o.Permissions) {
+		toSerialize["permissions"] = o.Permissions
+	}
 	toSerialize["health"] = o.Health
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -994,6 +1058,7 @@ func (o *AppEnvironment) UnmarshalJSON(data []byte) (err error) {
 		"environmentType",
 		"status",
 		"outdated",
+		"mainDomainBasicAuth",
 		"mainRouteCert",
 		"appId",
 		"clusterId",
