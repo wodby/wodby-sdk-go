@@ -3834,7 +3834,7 @@ func (r ApiSetStackServiceResourcesRequest) Execute() (*OperationResult, *http.R
 /*
 SetStackServiceResources Set stack service resources
 
-Sets CPU and memory requests or limits for a stack service container.
+Sets CPU and memory requests or limits for a stack service container. Each value replaces only the service's default for that value: an omitted value keeps the default, and 0 means none.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

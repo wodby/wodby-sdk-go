@@ -446,6 +446,7 @@ docs/StackSettingsInput.md
 docs/StackSyncOptions.md
 docs/StackSyncOptionsInput.md
 docs/StackToken.md
+docs/StackUpgradeVolumeDeletion.md
 docs/StacksAPI.md
 docs/StacksResponse.md
 docs/StartAgentChatRequest.md
@@ -896,6 +897,7 @@ model_stack_settings_input.go
 model_stack_sync_options.go
 model_stack_sync_options_input.go
 model_stack_token.go
+model_stack_upgrade_volume_deletion.go
 model_stacks_response.go
 model_start_agent_chat_request.go
 model_storage_class.go

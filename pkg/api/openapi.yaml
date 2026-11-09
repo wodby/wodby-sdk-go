@@ -4859,8 +4859,9 @@ paths:
       description: "Returns the CPU and memory settings the app service stores for\
         \ each container of its service. A container with no id stores nothing and\
         \ runs with the defaults in the service revision manifest, under workloads[].containers[].resources.\
-        \ A stored container replaces those defaults as a whole: a value it leaves\
-        \ empty is not set."
+        \ Each value a stored container sets replaces only that default; a value it\
+        \ leaves empty keeps the default, and 0 means none. Every container requests\
+        \ at least 10m CPU and 16 MiB of memory, never more than its limit."
       operationId: listAppServiceContainers
       parameters:
       - explode: false
@@ -4974,9 +4975,11 @@ paths:
   /app-services/{id}/resources:
     put:
       description: "Sets CPU and memory requests and limits for an app service container.\
-        \ The four values replace the stored ones and the service's defaults as a\
-        \ whole, so send every value the container should keep; an omitted value is\
-        \ not set. Omitting all four, without a preset, on a container with no GPU\
+        \ The four values replace the stored ones, so send every value the app service\
+        \ should keep setting. Each value replaces only the service's default for\
+        \ that value: an omitted value keeps the default, and 0 means none. Every\
+        \ container requests at least 10m CPU and 16 MiB of memory, never more than\
+        \ its limit. Omitting all four, without a preset, on a container with no GPU\
         \ setting removes its stored settings so the service's defaults apply again."
       operationId: setAppServiceResources
       parameters:
@@ -13394,7 +13397,9 @@ paths:
       - stack-services
   /stack-services/{id}/resources:
     put:
-      description: Sets CPU and memory requests or limits for a stack service container.
+      description: "Sets CPU and memory requests or limits for a stack service container.\
+        \ Each value replaces only the service's default for that value: an omitted\
+        \ value keeps the default, and 0 means none."
       operationId: setStackServiceResources
       parameters:
       - explode: false
@@ -26466,6 +26471,15 @@ components:
           version: version
         stackRevNumber: 6
         previousStackRevNumber: 0
+        volumeDeletions:
+        - volume: volume
+          appServiceName: appServiceName
+          serviceRemoved: true
+          appServiceTitle: appServiceTitle
+        - volume: volume
+          appServiceName: appServiceName
+          serviceRemoved: true
+          appServiceTitle: appServiceTitle
       properties:
         previousStackVersion:
           type: string
@@ -26479,12 +26493,43 @@ components:
           items:
             $ref: '#/components/schemas/ServiceRevisionChange'
           type: array
+        volumeDeletions:
+          description: Volumes the upgrade deletes with their data. The upgrade refuses
+            unless volume changes are enabled.
+          items:
+            $ref: '#/components/schemas/StackUpgradeVolumeDeletion'
+          type: array
       required:
       - previousStackRevNumber
       - previousStackVersion
       - serviceChanges
       - stackRevNumber
       - stackVersion
+      - volumeDeletions
+      type: object
+    StackUpgradeVolumeDeletion:
+      example:
+        volume: volume
+        appServiceName: appServiceName
+        serviceRemoved: true
+        appServiceTitle: appServiceTitle
+      properties:
+        appServiceName:
+          type: string
+        appServiceTitle:
+          type: string
+        volume:
+          type: string
+        serviceRemoved:
+          description: "True when the target stack revision no longer has the app\
+            \ service's stack service, so the upgrade deletes the whole app service.\
+            \ False when the service no longer uses the volume."
+          type: boolean
+      required:
+      - appServiceName
+      - appServiceTitle
+      - serviceRemoved
+      - volume
       type: object
     ClusterInfraAppUpgradeChangelog:
       example:

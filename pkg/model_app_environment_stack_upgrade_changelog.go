@@ -26,6 +26,8 @@ type AppEnvironmentStackUpgradeChangelog struct {
 	PreviousStackRevNumber int32 `json:"previousStackRevNumber"`
 	StackRevNumber int32 `json:"stackRevNumber"`
 	ServiceChanges []ServiceRevisionChange `json:"serviceChanges"`
+	// Volumes the upgrade deletes with their data. The upgrade refuses unless volume changes are enabled.
+	VolumeDeletions []StackUpgradeVolumeDeletion `json:"volumeDeletions"`
 }
 
 type _AppEnvironmentStackUpgradeChangelog AppEnvironmentStackUpgradeChangelog
@@ -34,13 +36,14 @@ type _AppEnvironmentStackUpgradeChangelog AppEnvironmentStackUpgradeChangelog
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppEnvironmentStackUpgradeChangelog(previousStackVersion string, stackVersion string, previousStackRevNumber int32, stackRevNumber int32, serviceChanges []ServiceRevisionChange) *AppEnvironmentStackUpgradeChangelog {
+func NewAppEnvironmentStackUpgradeChangelog(previousStackVersion string, stackVersion string, previousStackRevNumber int32, stackRevNumber int32, serviceChanges []ServiceRevisionChange, volumeDeletions []StackUpgradeVolumeDeletion) *AppEnvironmentStackUpgradeChangelog {
 	this := AppEnvironmentStackUpgradeChangelog{}
 	this.PreviousStackVersion = previousStackVersion
 	this.StackVersion = stackVersion
 	this.PreviousStackRevNumber = previousStackRevNumber
 	this.StackRevNumber = stackRevNumber
 	this.ServiceChanges = serviceChanges
+	this.VolumeDeletions = volumeDeletions
 	return &this
 }
 
@@ -172,6 +175,30 @@ func (o *AppEnvironmentStackUpgradeChangelog) SetServiceChanges(v []ServiceRevis
 	o.ServiceChanges = v
 }
 
+// GetVolumeDeletions returns the VolumeDeletions field value
+func (o *AppEnvironmentStackUpgradeChangelog) GetVolumeDeletions() []StackUpgradeVolumeDeletion {
+	if o == nil {
+		var ret []StackUpgradeVolumeDeletion
+		return ret
+	}
+
+	return o.VolumeDeletions
+}
+
+// GetVolumeDeletionsOk returns a tuple with the VolumeDeletions field value
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentStackUpgradeChangelog) GetVolumeDeletionsOk() ([]StackUpgradeVolumeDeletion, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VolumeDeletions, true
+}
+
+// SetVolumeDeletions sets field value
+func (o *AppEnvironmentStackUpgradeChangelog) SetVolumeDeletions(v []StackUpgradeVolumeDeletion) {
+	o.VolumeDeletions = v
+}
+
 func (o AppEnvironmentStackUpgradeChangelog) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -187,6 +214,7 @@ func (o AppEnvironmentStackUpgradeChangelog) ToMap() (map[string]interface{}, er
 	toSerialize["previousStackRevNumber"] = o.PreviousStackRevNumber
 	toSerialize["stackRevNumber"] = o.StackRevNumber
 	toSerialize["serviceChanges"] = o.ServiceChanges
+	toSerialize["volumeDeletions"] = o.VolumeDeletions
 	return toSerialize, nil
 }
 
@@ -200,6 +228,7 @@ func (o *AppEnvironmentStackUpgradeChangelog) UnmarshalJSON(data []byte) (err er
 		"previousStackRevNumber",
 		"stackRevNumber",
 		"serviceChanges",
+		"volumeDeletions",
 	}
 
 	allProperties := make(map[string]interface{})

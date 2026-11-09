@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **PreviousStackRevNumber** | **int32** |  | 
 **StackRevNumber** | **int32** |  | 
 **ServiceChanges** | [**[]ServiceRevisionChange**](ServiceRevisionChange.md) |  | 
+**VolumeDeletions** | [**[]StackUpgradeVolumeDeletion**](StackUpgradeVolumeDeletion.md) | Volumes the upgrade deletes with their data. The upgrade refuses unless volume changes are enabled. | 
 
 ## Methods
 
 ### NewAppEnvironmentStackUpgradeChangelog
 
-`func NewAppEnvironmentStackUpgradeChangelog(previousStackVersion string, stackVersion string, previousStackRevNumber int32, stackRevNumber int32, serviceChanges []ServiceRevisionChange, ) *AppEnvironmentStackUpgradeChangelog`
+`func NewAppEnvironmentStackUpgradeChangelog(previousStackVersion string, stackVersion string, previousStackRevNumber int32, stackRevNumber int32, serviceChanges []ServiceRevisionChange, volumeDeletions []StackUpgradeVolumeDeletion, ) *AppEnvironmentStackUpgradeChangelog`
 
 NewAppEnvironmentStackUpgradeChangelog instantiates a new AppEnvironmentStackUpgradeChangelog object
 This constructor will assign default values to properties that have it defined,
@@ -127,6 +128,26 @@ and a boolean to check if the value has been set.
 `func (o *AppEnvironmentStackUpgradeChangelog) SetServiceChanges(v []ServiceRevisionChange)`
 
 SetServiceChanges sets ServiceChanges field to given value.
+
+
+### GetVolumeDeletions
+
+`func (o *AppEnvironmentStackUpgradeChangelog) GetVolumeDeletions() []StackUpgradeVolumeDeletion`
+
+GetVolumeDeletions returns the VolumeDeletions field if non-nil, zero value otherwise.
+
+### GetVolumeDeletionsOk
+
+`func (o *AppEnvironmentStackUpgradeChangelog) GetVolumeDeletionsOk() (*[]StackUpgradeVolumeDeletion, bool)`
+
+GetVolumeDeletionsOk returns a tuple with the VolumeDeletions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVolumeDeletions
+
+`func (o *AppEnvironmentStackUpgradeChangelog) SetVolumeDeletions(v []StackUpgradeVolumeDeletion)`
+
+SetVolumeDeletions sets VolumeDeletions field to given value.
 
 
 
