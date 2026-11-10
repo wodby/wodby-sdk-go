@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GitRef** | **string** |  | 
 **GitRefType** | **string** |  | 
+**ServiceUpdates** | Pointer to **NullableString** | Stack updates only; other updates ignore it. What this update does with existing stack services whose stack.yml reference has no version, instead of the stack&#39;s gitServiceUpdates setting: latest, auto_update_settings or keep. | [optional] 
 
 ## Methods
 
@@ -66,6 +67,41 @@ and a boolean to check if the value has been set.
 SetGitRefType sets GitRefType field to given value.
 
 
+### GetServiceUpdates
+
+`func (o *UpdateStackFromGitRequest) GetServiceUpdates() string`
+
+GetServiceUpdates returns the ServiceUpdates field if non-nil, zero value otherwise.
+
+### GetServiceUpdatesOk
+
+`func (o *UpdateStackFromGitRequest) GetServiceUpdatesOk() (*string, bool)`
+
+GetServiceUpdatesOk returns a tuple with the ServiceUpdates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceUpdates
+
+`func (o *UpdateStackFromGitRequest) SetServiceUpdates(v string)`
+
+SetServiceUpdates sets ServiceUpdates field to given value.
+
+### HasServiceUpdates
+
+`func (o *UpdateStackFromGitRequest) HasServiceUpdates() bool`
+
+HasServiceUpdates returns a boolean if a field has been set.
+
+### SetServiceUpdatesNil
+
+`func (o *UpdateStackFromGitRequest) SetServiceUpdatesNil(b bool)`
+
+ SetServiceUpdatesNil sets the value for ServiceUpdates to be an explicit nil
+
+### UnsetServiceUpdates
+`func (o *UpdateStackFromGitRequest) UnsetServiceUpdates()`
+
+UnsetServiceUpdates ensures that no value is present for ServiceUpdates, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

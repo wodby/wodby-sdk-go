@@ -19,10 +19,12 @@ import (
 // checks if the UpdateStackFromGitRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UpdateStackFromGitRequest{}
 
-// UpdateStackFromGitRequest struct for UpdateStackFromGitRequest
+// UpdateStackFromGitRequest The Git ref to update from. Stack, service, provider and Git repository updates from Git share this body.
 type UpdateStackFromGitRequest struct {
 	GitRef string `json:"gitRef"`
 	GitRefType string `json:"gitRefType"`
+	// Stack updates only; other updates ignore it. What this update does with existing stack services whose stack.yml reference has no version, instead of the stack's gitServiceUpdates setting: latest, auto_update_settings or keep.
+	ServiceUpdates NullableString `json:"serviceUpdates,omitempty"`
 }
 
 type _UpdateStackFromGitRequest UpdateStackFromGitRequest
@@ -94,6 +96,48 @@ func (o *UpdateStackFromGitRequest) SetGitRefType(v string) {
 	o.GitRefType = v
 }
 
+// GetServiceUpdates returns the ServiceUpdates field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateStackFromGitRequest) GetServiceUpdates() string {
+	if o == nil || IsNil(o.ServiceUpdates.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ServiceUpdates.Get()
+}
+
+// GetServiceUpdatesOk returns a tuple with the ServiceUpdates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateStackFromGitRequest) GetServiceUpdatesOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ServiceUpdates.Get(), o.ServiceUpdates.IsSet()
+}
+
+// HasServiceUpdates returns a boolean if a field has been set.
+func (o *UpdateStackFromGitRequest) HasServiceUpdates() bool {
+	if o != nil && o.ServiceUpdates.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceUpdates gets a reference to the given NullableString and assigns it to the ServiceUpdates field.
+func (o *UpdateStackFromGitRequest) SetServiceUpdates(v string) {
+	o.ServiceUpdates.Set(&v)
+}
+// SetServiceUpdatesNil sets the value for ServiceUpdates to be an explicit nil
+func (o *UpdateStackFromGitRequest) SetServiceUpdatesNil() {
+	o.ServiceUpdates.Set(nil)
+}
+
+// UnsetServiceUpdates ensures that no value is present for ServiceUpdates, not even an explicit nil
+func (o *UpdateStackFromGitRequest) UnsetServiceUpdates() {
+	o.ServiceUpdates.Unset()
+}
+
 func (o UpdateStackFromGitRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +150,9 @@ func (o UpdateStackFromGitRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["gitRef"] = o.GitRef
 	toSerialize["gitRefType"] = o.GitRefType
+	if o.ServiceUpdates.IsSet() {
+		toSerialize["serviceUpdates"] = o.ServiceUpdates.Get()
+	}
 	return toSerialize, nil
 }
 

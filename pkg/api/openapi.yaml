@@ -11534,7 +11534,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StackUpdateFromGitRequest'
+              $ref: '#/components/schemas/UpdateStackFromGitRequest'
         required: true
       responses:
         "201":
@@ -33204,19 +33204,8 @@ components:
           type: string
       type: object
     UpdateStackFromGitRequest:
-      example:
-        gitRef: gitRef
-        gitRefType: gitRefType
-      properties:
-        gitRef:
-          type: string
-        gitRefType:
-          type: string
-      required:
-      - gitRef
-      - gitRefType
-      type: object
-    StackUpdateFromGitRequest:
+      description: "The Git ref to update from. Stack, service, provider and Git repository\
+        \ updates from Git share this body."
       example:
         serviceUpdates: serviceUpdates
         gitRef: gitRef
@@ -33227,9 +33216,10 @@ components:
         gitRefType:
           type: string
         serviceUpdates:
-          description: "What this update does with existing stack services whose stack.yml\
-            \ reference has no version, instead of the stack's gitServiceUpdates setting:\
-            \ latest, auto_update_settings or keep."
+          description: "Stack updates only; other updates ignore it. What this update\
+            \ does with existing stack services whose stack.yml reference has no version,\
+            \ instead of the stack's gitServiceUpdates setting: latest, auto_update_settings\
+            \ or keep."
           nullable: true
           type: string
       required:
