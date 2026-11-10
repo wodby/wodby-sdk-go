@@ -22,6 +22,8 @@ type StackSettingsInput struct {
 	GitAutoUpdate *GitAutoUpdateSettingsInput `json:"gitAutoUpdate,omitempty"`
 	AutoServiceRevisionUpdate *StackAutoServiceRevisionUpdateSettingsInput `json:"autoServiceRevisionUpdate,omitempty"`
 	AutoOriginStackUpdate *StackAutoOriginUpdateSettingsInput `json:"autoOriginStackUpdate,omitempty"`
+	// What an update from Git does with existing stack services' versions; see StackSettings.
+	GitServiceUpdates NullableString `json:"gitServiceUpdates,omitempty"`
 }
 
 // NewStackSettingsInput instantiates a new StackSettingsInput object
@@ -137,6 +139,48 @@ func (o *StackSettingsInput) SetAutoOriginStackUpdate(v StackAutoOriginUpdateSet
 	o.AutoOriginStackUpdate = &v
 }
 
+// GetGitServiceUpdates returns the GitServiceUpdates field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackSettingsInput) GetGitServiceUpdates() string {
+	if o == nil || IsNil(o.GitServiceUpdates.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.GitServiceUpdates.Get()
+}
+
+// GetGitServiceUpdatesOk returns a tuple with the GitServiceUpdates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackSettingsInput) GetGitServiceUpdatesOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitServiceUpdates.Get(), o.GitServiceUpdates.IsSet()
+}
+
+// HasGitServiceUpdates returns a boolean if a field has been set.
+func (o *StackSettingsInput) HasGitServiceUpdates() bool {
+	if o != nil && o.GitServiceUpdates.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitServiceUpdates gets a reference to the given NullableString and assigns it to the GitServiceUpdates field.
+func (o *StackSettingsInput) SetGitServiceUpdates(v string) {
+	o.GitServiceUpdates.Set(&v)
+}
+// SetGitServiceUpdatesNil sets the value for GitServiceUpdates to be an explicit nil
+func (o *StackSettingsInput) SetGitServiceUpdatesNil() {
+	o.GitServiceUpdates.Set(nil)
+}
+
+// UnsetGitServiceUpdates ensures that no value is present for GitServiceUpdates, not even an explicit nil
+func (o *StackSettingsInput) UnsetGitServiceUpdates() {
+	o.GitServiceUpdates.Unset()
+}
+
 func (o StackSettingsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -155,6 +199,9 @@ func (o StackSettingsInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AutoOriginStackUpdate) {
 		toSerialize["autoOriginStackUpdate"] = o.AutoOriginStackUpdate
+	}
+	if o.GitServiceUpdates.IsSet() {
+		toSerialize["gitServiceUpdates"] = o.GitServiceUpdates.Get()
 	}
 	return toSerialize, nil
 }

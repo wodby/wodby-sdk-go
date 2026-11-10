@@ -20,6 +20,7 @@ var _ MappedNullable = &ClusterSettings{}
 // ClusterSettings struct for ClusterSettings
 type ClusterSettings struct {
 	AutoInfrastructureUpgrade *ClusterAutoInfrastructureUpgradeSettings `json:"autoInfrastructureUpgrade,omitempty"`
+	AutoKubernetesUpgrade *ClusterAutoKubernetesUpgradeSettings `json:"autoKubernetesUpgrade,omitempty"`
 	ClusterCapabilities *ClusterCapabilityPolicy `json:"clusterCapabilities,omitempty"`
 }
 
@@ -72,6 +73,38 @@ func (o *ClusterSettings) SetAutoInfrastructureUpgrade(v ClusterAutoInfrastructu
 	o.AutoInfrastructureUpgrade = &v
 }
 
+// GetAutoKubernetesUpgrade returns the AutoKubernetesUpgrade field value if set, zero value otherwise.
+func (o *ClusterSettings) GetAutoKubernetesUpgrade() ClusterAutoKubernetesUpgradeSettings {
+	if o == nil || IsNil(o.AutoKubernetesUpgrade) {
+		var ret ClusterAutoKubernetesUpgradeSettings
+		return ret
+	}
+	return *o.AutoKubernetesUpgrade
+}
+
+// GetAutoKubernetesUpgradeOk returns a tuple with the AutoKubernetesUpgrade field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClusterSettings) GetAutoKubernetesUpgradeOk() (*ClusterAutoKubernetesUpgradeSettings, bool) {
+	if o == nil || IsNil(o.AutoKubernetesUpgrade) {
+		return nil, false
+	}
+	return o.AutoKubernetesUpgrade, true
+}
+
+// HasAutoKubernetesUpgrade returns a boolean if a field has been set.
+func (o *ClusterSettings) HasAutoKubernetesUpgrade() bool {
+	if o != nil && !IsNil(o.AutoKubernetesUpgrade) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoKubernetesUpgrade gets a reference to the given ClusterAutoKubernetesUpgradeSettings and assigns it to the AutoKubernetesUpgrade field.
+func (o *ClusterSettings) SetAutoKubernetesUpgrade(v ClusterAutoKubernetesUpgradeSettings) {
+	o.AutoKubernetesUpgrade = &v
+}
+
 // GetClusterCapabilities returns the ClusterCapabilities field value if set, zero value otherwise.
 func (o *ClusterSettings) GetClusterCapabilities() ClusterCapabilityPolicy {
 	if o == nil || IsNil(o.ClusterCapabilities) {
@@ -116,6 +149,9 @@ func (o ClusterSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AutoInfrastructureUpgrade) {
 		toSerialize["autoInfrastructureUpgrade"] = o.AutoInfrastructureUpgrade
+	}
+	if !IsNil(o.AutoKubernetesUpgrade) {
+		toSerialize["autoKubernetesUpgrade"] = o.AutoKubernetesUpgrade
 	}
 	if !IsNil(o.ClusterCapabilities) {
 		toSerialize["clusterCapabilities"] = o.ClusterCapabilities

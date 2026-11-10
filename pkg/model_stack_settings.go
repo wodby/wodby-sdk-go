@@ -22,6 +22,8 @@ type StackSettings struct {
 	GitAutoUpdate *GitAutoUpdateSettings `json:"gitAutoUpdate,omitempty"`
 	AutoServiceRevisionUpdate *StackAutoServiceRevisionUpdateSettings `json:"autoServiceRevisionUpdate,omitempty"`
 	AutoOriginStackUpdate *StackAutoOriginUpdateSettings `json:"autoOriginStackUpdate,omitempty"`
+	// What an update from Git does with existing stack services whose stack.yml reference has no version: latest moves them to the service's latest version, auto_update_settings moves them only as far as the stack's service auto update settings allow, and keep keeps their version. Versioned references, pinned stack services and new ones resolve the same way in every mode, and a stack service whose stack.yml configures something only a newer version has always moves to it.
+	GitServiceUpdates *string `json:"gitServiceUpdates,omitempty"`
 }
 
 // NewStackSettings instantiates a new StackSettings object
@@ -137,6 +139,38 @@ func (o *StackSettings) SetAutoOriginStackUpdate(v StackAutoOriginUpdateSettings
 	o.AutoOriginStackUpdate = &v
 }
 
+// GetGitServiceUpdates returns the GitServiceUpdates field value if set, zero value otherwise.
+func (o *StackSettings) GetGitServiceUpdates() string {
+	if o == nil || IsNil(o.GitServiceUpdates) {
+		var ret string
+		return ret
+	}
+	return *o.GitServiceUpdates
+}
+
+// GetGitServiceUpdatesOk returns a tuple with the GitServiceUpdates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackSettings) GetGitServiceUpdatesOk() (*string, bool) {
+	if o == nil || IsNil(o.GitServiceUpdates) {
+		return nil, false
+	}
+	return o.GitServiceUpdates, true
+}
+
+// HasGitServiceUpdates returns a boolean if a field has been set.
+func (o *StackSettings) HasGitServiceUpdates() bool {
+	if o != nil && !IsNil(o.GitServiceUpdates) {
+		return true
+	}
+
+	return false
+}
+
+// SetGitServiceUpdates gets a reference to the given string and assigns it to the GitServiceUpdates field.
+func (o *StackSettings) SetGitServiceUpdates(v string) {
+	o.GitServiceUpdates = &v
+}
+
 func (o StackSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -155,6 +189,9 @@ func (o StackSettings) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AutoOriginStackUpdate) {
 		toSerialize["autoOriginStackUpdate"] = o.AutoOriginStackUpdate
+	}
+	if !IsNil(o.GitServiceUpdates) {
+		toSerialize["gitServiceUpdates"] = o.GitServiceUpdates
 	}
 	return toSerialize, nil
 }

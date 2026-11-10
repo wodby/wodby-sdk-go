@@ -187,6 +187,8 @@ docs/ClusterAutoInfrastructureComponentSettings.md
 docs/ClusterAutoInfrastructureComponentSettingsInput.md
 docs/ClusterAutoInfrastructureUpgradeSettings.md
 docs/ClusterAutoInfrastructureUpgradeSettingsInput.md
+docs/ClusterAutoKubernetesUpgradeSettings.md
+docs/ClusterAutoKubernetesUpgradeSettingsInput.md
 docs/ClusterAutoUpgradeVersionPolicy.md
 docs/ClusterAutoUpgradeVersionPolicyInput.md
 docs/ClusterCapabilities.md
@@ -195,6 +197,7 @@ docs/ClusterComponent.md
 docs/ClusterComponentUpdate.md
 docs/ClusterCreationResult.md
 docs/ClusterEnvironmentPolicyInput.md
+docs/ClusterHostCheck.md
 docs/ClusterInfraAppUpgradeChangelog.md
 docs/ClusterNodePool.md
 docs/ClusterNodePoolInput.md
@@ -446,6 +449,7 @@ docs/StackSettingsInput.md
 docs/StackSyncOptions.md
 docs/StackSyncOptionsInput.md
 docs/StackToken.md
+docs/StackUpdateFromGitRequest.md
 docs/StackUpgradeVolumeDeletion.md
 docs/StacksAPI.md
 docs/StacksResponse.md
@@ -655,6 +659,8 @@ model_cluster_auto_infrastructure_component_settings.go
 model_cluster_auto_infrastructure_component_settings_input.go
 model_cluster_auto_infrastructure_upgrade_settings.go
 model_cluster_auto_infrastructure_upgrade_settings_input.go
+model_cluster_auto_kubernetes_upgrade_settings.go
+model_cluster_auto_kubernetes_upgrade_settings_input.go
 model_cluster_auto_upgrade_version_policy.go
 model_cluster_auto_upgrade_version_policy_input.go
 model_cluster_capabilities.go
@@ -663,6 +669,7 @@ model_cluster_component.go
 model_cluster_component_update.go
 model_cluster_creation_result.go
 model_cluster_environment_policy_input.go
+model_cluster_host_check.go
 model_cluster_infra_app_upgrade_changelog.go
 model_cluster_node_pool.go
 model_cluster_node_pool_input.go
@@ -897,6 +904,7 @@ model_stack_settings_input.go
 model_stack_sync_options.go
 model_stack_sync_options_input.go
 model_stack_token.go
+model_stack_update_from_git_request.go
 model_stack_upgrade_volume_deletion.go
 model_stacks_response.go
 model_start_agent_chat_request.go

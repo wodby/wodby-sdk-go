@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **GitAutoUpdate** | Pointer to [**GitAutoUpdateSettings**](GitAutoUpdateSettings.md) |  | [optional] 
 **AutoServiceRevisionUpdate** | Pointer to [**StackAutoServiceRevisionUpdateSettings**](StackAutoServiceRevisionUpdateSettings.md) |  | [optional] 
 **AutoOriginStackUpdate** | Pointer to [**StackAutoOriginUpdateSettings**](StackAutoOriginUpdateSettings.md) |  | [optional] 
+**GitServiceUpdates** | Pointer to **string** | What an update from Git does with existing stack services whose stack.yml reference has no version: latest moves them to the service&#39;s latest version, auto_update_settings moves them only as far as the stack&#39;s service auto update settings allow, and keep keeps their version. Versioned references, pinned stack services and new ones resolve the same way in every mode, and a stack service whose stack.yml configures something only a newer version has always moves to it. | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetAutoOriginStackUpdate sets AutoOriginStackUpdate field to given value.
 `func (o *StackSettings) HasAutoOriginStackUpdate() bool`
 
 HasAutoOriginStackUpdate returns a boolean if a field has been set.
+
+### GetGitServiceUpdates
+
+`func (o *StackSettings) GetGitServiceUpdates() string`
+
+GetGitServiceUpdates returns the GitServiceUpdates field if non-nil, zero value otherwise.
+
+### GetGitServiceUpdatesOk
+
+`func (o *StackSettings) GetGitServiceUpdatesOk() (*string, bool)`
+
+GetGitServiceUpdatesOk returns a tuple with the GitServiceUpdates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitServiceUpdates
+
+`func (o *StackSettings) SetGitServiceUpdates(v string)`
+
+SetGitServiceUpdates sets GitServiceUpdates field to given value.
+
+### HasGitServiceUpdates
+
+`func (o *StackSettings) HasGitServiceUpdates() bool`
+
+HasGitServiceUpdates returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**GetClusterByName**](ClustersAPI.md#GetClusterByName) | **Get** /clusters/by-name/{name} | Get cluster by name
 [**GetClusterComponentUpdates**](ClustersAPI.md#GetClusterComponentUpdates) | **Get** /cluster-component-updates/{id} | List cluster component updates
 [**GetClusterComponents**](ClustersAPI.md#GetClusterComponents) | **Get** /cluster-components/{id} | List cluster components
+[**GetClusterHostChecks**](ClustersAPI.md#GetClusterHostChecks) | **Get** /cluster-host-checks/{id} | List cluster host checks
 [**GetClusterInfraAppUpgradeChangelog**](ClustersAPI.md#GetClusterInfraAppUpgradeChangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
 [**GetClusterSharing**](ClustersAPI.md#GetClusterSharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
 [**GetK3SClusterInstallCommand**](ClustersAPI.md#GetK3SClusterInstallCommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
@@ -570,6 +571,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]ClusterComponent**](ClusterComponent.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetClusterHostChecks
+
+> []ClusterHostCheck GetClusterHostChecks(ctx, id).Execute()
+
+List cluster host checks
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetClusterHostChecks(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetClusterHostChecks``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetClusterHostChecks`: []ClusterHostCheck
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetClusterHostChecks`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetClusterHostChecksRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ClusterHostCheck**](ClusterHostCheck.md)
 
 ### Authorization
 

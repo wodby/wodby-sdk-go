@@ -4985,11 +4985,11 @@ type ApiUpdateStackFromGitRequest struct {
 	ctx context.Context
 	ApiService *StacksAPIService
 	id int32
-	updateStackFromGitRequest *UpdateStackFromGitRequest
+	stackUpdateFromGitRequest *StackUpdateFromGitRequest
 }
 
-func (r ApiUpdateStackFromGitRequest) UpdateStackFromGitRequest(updateStackFromGitRequest UpdateStackFromGitRequest) ApiUpdateStackFromGitRequest {
-	r.updateStackFromGitRequest = &updateStackFromGitRequest
+func (r ApiUpdateStackFromGitRequest) StackUpdateFromGitRequest(stackUpdateFromGitRequest StackUpdateFromGitRequest) ApiUpdateStackFromGitRequest {
+	r.stackUpdateFromGitRequest = &stackUpdateFromGitRequest
 	return r
 }
 
@@ -5035,8 +5035,8 @@ func (a *StacksAPIService) UpdateStackFromGitExecute(r ApiUpdateStackFromGitRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updateStackFromGitRequest == nil {
-		return localVarReturnValue, nil, reportError("updateStackFromGitRequest is required and must be specified")
+	if r.stackUpdateFromGitRequest == nil {
+		return localVarReturnValue, nil, reportError("stackUpdateFromGitRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -5057,7 +5057,7 @@ func (a *StacksAPIService) UpdateStackFromGitExecute(r ApiUpdateStackFromGitRequ
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateStackFromGitRequest
+	localVarPostBody = r.stackUpdateFromGitRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

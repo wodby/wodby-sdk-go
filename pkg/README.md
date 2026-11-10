@@ -263,6 +263,7 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**GetClusterByName**](docs/ClustersAPI.md#getclusterbyname) | **Get** /clusters/by-name/{name} | Get cluster by name
 *ClustersAPI* | [**GetClusterComponentUpdates**](docs/ClustersAPI.md#getclustercomponentupdates) | **Get** /cluster-component-updates/{id} | List cluster component updates
 *ClustersAPI* | [**GetClusterComponents**](docs/ClustersAPI.md#getclustercomponents) | **Get** /cluster-components/{id} | List cluster components
+*ClustersAPI* | [**GetClusterHostChecks**](docs/ClustersAPI.md#getclusterhostchecks) | **Get** /cluster-host-checks/{id} | List cluster host checks
 *ClustersAPI* | [**GetClusterInfraAppUpgradeChangelog**](docs/ClustersAPI.md#getclusterinfraappupgradechangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
 *ClustersAPI* | [**GetClusterSharing**](docs/ClustersAPI.md#getclustersharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
 *ClustersAPI* | [**GetK3SClusterInstallCommand**](docs/ClustersAPI.md#getk3sclusterinstallcommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
@@ -641,6 +642,8 @@ Class | Method | HTTP request | Description
  - [ClusterAutoInfrastructureComponentSettingsInput](docs/ClusterAutoInfrastructureComponentSettingsInput.md)
  - [ClusterAutoInfrastructureUpgradeSettings](docs/ClusterAutoInfrastructureUpgradeSettings.md)
  - [ClusterAutoInfrastructureUpgradeSettingsInput](docs/ClusterAutoInfrastructureUpgradeSettingsInput.md)
+ - [ClusterAutoKubernetesUpgradeSettings](docs/ClusterAutoKubernetesUpgradeSettings.md)
+ - [ClusterAutoKubernetesUpgradeSettingsInput](docs/ClusterAutoKubernetesUpgradeSettingsInput.md)
  - [ClusterAutoUpgradeVersionPolicy](docs/ClusterAutoUpgradeVersionPolicy.md)
  - [ClusterAutoUpgradeVersionPolicyInput](docs/ClusterAutoUpgradeVersionPolicyInput.md)
  - [ClusterCapabilities](docs/ClusterCapabilities.md)
@@ -649,6 +652,7 @@ Class | Method | HTTP request | Description
  - [ClusterComponentUpdate](docs/ClusterComponentUpdate.md)
  - [ClusterCreationResult](docs/ClusterCreationResult.md)
  - [ClusterEnvironmentPolicyInput](docs/ClusterEnvironmentPolicyInput.md)
+ - [ClusterHostCheck](docs/ClusterHostCheck.md)
  - [ClusterInfraAppUpgradeChangelog](docs/ClusterInfraAppUpgradeChangelog.md)
  - [ClusterNodePool](docs/ClusterNodePool.md)
  - [ClusterNodePoolInput](docs/ClusterNodePoolInput.md)
@@ -883,6 +887,7 @@ Class | Method | HTTP request | Description
  - [StackSyncOptions](docs/StackSyncOptions.md)
  - [StackSyncOptionsInput](docs/StackSyncOptionsInput.md)
  - [StackToken](docs/StackToken.md)
+ - [StackUpdateFromGitRequest](docs/StackUpdateFromGitRequest.md)
  - [StackUpgradeVolumeDeletion](docs/StackUpgradeVolumeDeletion.md)
  - [StacksResponse](docs/StacksResponse.md)
  - [StartAgentChatRequest](docs/StartAgentChatRequest.md)

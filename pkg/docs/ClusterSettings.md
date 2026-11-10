@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AutoInfrastructureUpgrade** | Pointer to [**ClusterAutoInfrastructureUpgradeSettings**](ClusterAutoInfrastructureUpgradeSettings.md) |  | [optional] 
+**AutoKubernetesUpgrade** | Pointer to [**ClusterAutoKubernetesUpgradeSettings**](ClusterAutoKubernetesUpgradeSettings.md) |  | [optional] 
 **ClusterCapabilities** | Pointer to [**ClusterCapabilityPolicy**](ClusterCapabilityPolicy.md) |  | [optional] 
 
 ## Methods
@@ -50,6 +51,31 @@ SetAutoInfrastructureUpgrade sets AutoInfrastructureUpgrade field to given value
 `func (o *ClusterSettings) HasAutoInfrastructureUpgrade() bool`
 
 HasAutoInfrastructureUpgrade returns a boolean if a field has been set.
+
+### GetAutoKubernetesUpgrade
+
+`func (o *ClusterSettings) GetAutoKubernetesUpgrade() ClusterAutoKubernetesUpgradeSettings`
+
+GetAutoKubernetesUpgrade returns the AutoKubernetesUpgrade field if non-nil, zero value otherwise.
+
+### GetAutoKubernetesUpgradeOk
+
+`func (o *ClusterSettings) GetAutoKubernetesUpgradeOk() (*ClusterAutoKubernetesUpgradeSettings, bool)`
+
+GetAutoKubernetesUpgradeOk returns a tuple with the AutoKubernetesUpgrade field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoKubernetesUpgrade
+
+`func (o *ClusterSettings) SetAutoKubernetesUpgrade(v ClusterAutoKubernetesUpgradeSettings)`
+
+SetAutoKubernetesUpgrade sets AutoKubernetesUpgrade field to given value.
+
+### HasAutoKubernetesUpgrade
+
+`func (o *ClusterSettings) HasAutoKubernetesUpgrade() bool`
+
+HasAutoKubernetesUpgrade returns a boolean if a field has been set.
 
 ### GetClusterCapabilities
 

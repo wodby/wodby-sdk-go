@@ -2500,7 +2500,7 @@ Name | Type | Description  | Notes
 
 ## UpdateStackFromGit
 
-> OperationResult UpdateStackFromGit(ctx, id).UpdateStackFromGitRequest(updateStackFromGitRequest).Execute()
+> OperationResult UpdateStackFromGit(ctx, id).StackUpdateFromGitRequest(stackUpdateFromGitRequest).Execute()
 
 Update stack from git
 
@@ -2520,11 +2520,11 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	updateStackFromGitRequest := *openapiclient.NewUpdateStackFromGitRequest("GitRef_example", "GitRefType_example") // UpdateStackFromGitRequest | 
+	stackUpdateFromGitRequest := *openapiclient.NewStackUpdateFromGitRequest("GitRef_example", "GitRefType_example") // StackUpdateFromGitRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.StacksAPI.UpdateStackFromGit(context.Background(), id).UpdateStackFromGitRequest(updateStackFromGitRequest).Execute()
+	resp, r, err := apiClient.StacksAPI.UpdateStackFromGit(context.Background(), id).StackUpdateFromGitRequest(stackUpdateFromGitRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StacksAPI.UpdateStackFromGit``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2550,7 +2550,7 @@ Other parameters are passed through a pointer to a apiUpdateStackFromGitRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **updateStackFromGitRequest** | [**UpdateStackFromGitRequest**](UpdateStackFromGitRequest.md) |  | 
+ **stackUpdateFromGitRequest** | [**StackUpdateFromGitRequest**](StackUpdateFromGitRequest.md) |  | 
 
 ### Return type
 
