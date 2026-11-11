@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **BillingOption** | Pointer to **NullableString** |  | [optional] 
 **DisableMonitoring** | **bool** |  | 
 **AutoInfrastructureUpgrade** | Pointer to **NullableBool** |  | [optional] 
+**AutoKubernetesUpgrade** | Pointer to **NullableBool** | Turns automatic Kubernetes version and component upgrades on or off. On by default. | [optional] 
 **EnvironmentPolicy** | Pointer to [**ClusterEnvironmentPolicyInput**](ClusterEnvironmentPolicyInput.md) |  | [optional] 
 
 ## Methods
@@ -624,6 +625,41 @@ HasAutoInfrastructureUpgrade returns a boolean if a field has been set.
 `func (o *NewClusterInput) UnsetAutoInfrastructureUpgrade()`
 
 UnsetAutoInfrastructureUpgrade ensures that no value is present for AutoInfrastructureUpgrade, not even an explicit nil
+### GetAutoKubernetesUpgrade
+
+`func (o *NewClusterInput) GetAutoKubernetesUpgrade() bool`
+
+GetAutoKubernetesUpgrade returns the AutoKubernetesUpgrade field if non-nil, zero value otherwise.
+
+### GetAutoKubernetesUpgradeOk
+
+`func (o *NewClusterInput) GetAutoKubernetesUpgradeOk() (*bool, bool)`
+
+GetAutoKubernetesUpgradeOk returns a tuple with the AutoKubernetesUpgrade field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoKubernetesUpgrade
+
+`func (o *NewClusterInput) SetAutoKubernetesUpgrade(v bool)`
+
+SetAutoKubernetesUpgrade sets AutoKubernetesUpgrade field to given value.
+
+### HasAutoKubernetesUpgrade
+
+`func (o *NewClusterInput) HasAutoKubernetesUpgrade() bool`
+
+HasAutoKubernetesUpgrade returns a boolean if a field has been set.
+
+### SetAutoKubernetesUpgradeNil
+
+`func (o *NewClusterInput) SetAutoKubernetesUpgradeNil(b bool)`
+
+ SetAutoKubernetesUpgradeNil sets the value for AutoKubernetesUpgrade to be an explicit nil
+
+### UnsetAutoKubernetesUpgrade
+`func (o *NewClusterInput) UnsetAutoKubernetesUpgrade()`
+
+UnsetAutoKubernetesUpgrade ensures that no value is present for AutoKubernetesUpgrade, not even an explicit nil
 ### GetEnvironmentPolicy
 
 `func (o *NewClusterInput) GetEnvironmentPolicy() ClusterEnvironmentPolicyInput`

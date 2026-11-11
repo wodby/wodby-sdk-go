@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **AllowMinor** | **bool** |  | 
 **MinorOnlyAfterEndOfLife** | **bool** | Holds an allowed minor upgrade until the current minor reaches upstream end of life. | 
 **TimeWindow** | Pointer to [**AutomationTimeWindow**](AutomationTimeWindow.md) | When an upgrade may start. Absent means any time. | [optional] 
+**IncludeComponentUpdates** | **bool** | Also applies the cluster&#39;s component updates when there is no version upgrade to start, under the same policy and window. On by default. | 
 
 ## Methods
 
 ### NewClusterAutoKubernetesUpgradeSettings
 
-`func NewClusterAutoKubernetesUpgradeSettings(enabled bool, allowPatch bool, allowMinor bool, minorOnlyAfterEndOfLife bool, ) *ClusterAutoKubernetesUpgradeSettings`
+`func NewClusterAutoKubernetesUpgradeSettings(enabled bool, allowPatch bool, allowMinor bool, minorOnlyAfterEndOfLife bool, includeComponentUpdates bool, ) *ClusterAutoKubernetesUpgradeSettings`
 
 NewClusterAutoKubernetesUpgradeSettings instantiates a new ClusterAutoKubernetesUpgradeSettings object
 This constructor will assign default values to properties that have it defined,
@@ -133,6 +134,26 @@ SetTimeWindow sets TimeWindow field to given value.
 `func (o *ClusterAutoKubernetesUpgradeSettings) HasTimeWindow() bool`
 
 HasTimeWindow returns a boolean if a field has been set.
+
+### GetIncludeComponentUpdates
+
+`func (o *ClusterAutoKubernetesUpgradeSettings) GetIncludeComponentUpdates() bool`
+
+GetIncludeComponentUpdates returns the IncludeComponentUpdates field if non-nil, zero value otherwise.
+
+### GetIncludeComponentUpdatesOk
+
+`func (o *ClusterAutoKubernetesUpgradeSettings) GetIncludeComponentUpdatesOk() (*bool, bool)`
+
+GetIncludeComponentUpdatesOk returns a tuple with the IncludeComponentUpdates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeComponentUpdates
+
+`func (o *ClusterAutoKubernetesUpgradeSettings) SetIncludeComponentUpdates(v bool)`
+
+SetIncludeComponentUpdates sets IncludeComponentUpdates field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

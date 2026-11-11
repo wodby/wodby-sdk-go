@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **AllowPatch** | Pointer to **NullableBool** |  | [optional] 
 **AllowMinor** | Pointer to **NullableBool** |  | [optional] 
 **MinorOnlyAfterEndOfLife** | Pointer to **NullableBool** |  | [optional] 
+**IncludeComponentUpdates** | Pointer to **NullableBool** |  | [optional] 
 **TimeWindow** | Pointer to [**AutomationTimeWindowInput**](AutomationTimeWindowInput.md) | A window with enabled false lets upgrades start at any time. | [optional] 
 
 ## Methods
@@ -169,6 +170,41 @@ HasMinorOnlyAfterEndOfLife returns a boolean if a field has been set.
 `func (o *ClusterAutoKubernetesUpgradeSettingsInput) UnsetMinorOnlyAfterEndOfLife()`
 
 UnsetMinorOnlyAfterEndOfLife ensures that no value is present for MinorOnlyAfterEndOfLife, not even an explicit nil
+### GetIncludeComponentUpdates
+
+`func (o *ClusterAutoKubernetesUpgradeSettingsInput) GetIncludeComponentUpdates() bool`
+
+GetIncludeComponentUpdates returns the IncludeComponentUpdates field if non-nil, zero value otherwise.
+
+### GetIncludeComponentUpdatesOk
+
+`func (o *ClusterAutoKubernetesUpgradeSettingsInput) GetIncludeComponentUpdatesOk() (*bool, bool)`
+
+GetIncludeComponentUpdatesOk returns a tuple with the IncludeComponentUpdates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeComponentUpdates
+
+`func (o *ClusterAutoKubernetesUpgradeSettingsInput) SetIncludeComponentUpdates(v bool)`
+
+SetIncludeComponentUpdates sets IncludeComponentUpdates field to given value.
+
+### HasIncludeComponentUpdates
+
+`func (o *ClusterAutoKubernetesUpgradeSettingsInput) HasIncludeComponentUpdates() bool`
+
+HasIncludeComponentUpdates returns a boolean if a field has been set.
+
+### SetIncludeComponentUpdatesNil
+
+`func (o *ClusterAutoKubernetesUpgradeSettingsInput) SetIncludeComponentUpdatesNil(b bool)`
+
+ SetIncludeComponentUpdatesNil sets the value for IncludeComponentUpdates to be an explicit nil
+
+### UnsetIncludeComponentUpdates
+`func (o *ClusterAutoKubernetesUpgradeSettingsInput) UnsetIncludeComponentUpdates()`
+
+UnsetIncludeComponentUpdates ensures that no value is present for IncludeComponentUpdates, not even an explicit nil
 ### GetTimeWindow
 
 `func (o *ClusterAutoKubernetesUpgradeSettingsInput) GetTimeWindow() AutomationTimeWindowInput`

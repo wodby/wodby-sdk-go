@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**GetClusterComponents**](ClustersAPI.md#GetClusterComponents) | **Get** /cluster-components/{id} | List cluster components
 [**GetClusterHostChecks**](ClustersAPI.md#GetClusterHostChecks) | **Get** /cluster-host-checks/{id} | List cluster host checks
 [**GetClusterInfraAppUpgradeChangelog**](ClustersAPI.md#GetClusterInfraAppUpgradeChangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
+[**GetClusterSecurityAdvisories**](ClustersAPI.md#GetClusterSecurityAdvisories) | **Get** /cluster-security-advisories/{id} | List cluster security advisories
 [**GetClusterSharing**](ClustersAPI.md#GetClusterSharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
 [**GetK3SClusterInstallCommand**](ClustersAPI.md#GetK3SClusterInstallCommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
 [**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
@@ -713,6 +714,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]ClusterInfraAppUpgradeChangelog**](ClusterInfraAppUpgradeChangelog.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetClusterSecurityAdvisories
+
+> []ClusterSecurityAdvisory GetClusterSecurityAdvisories(ctx, id).Execute()
+
+List cluster security advisories
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetClusterSecurityAdvisories(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetClusterSecurityAdvisories``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetClusterSecurityAdvisories`: []ClusterSecurityAdvisory
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetClusterSecurityAdvisories`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetClusterSecurityAdvisoriesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ClusterSecurityAdvisory**](ClusterSecurityAdvisory.md)
 
 ### Authorization
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **GitAutoUpdate** | Pointer to [**GitAutoUpdateSettingsInput**](GitAutoUpdateSettingsInput.md) |  | [optional] 
 **AutoServiceRevisionUpdate** | Pointer to [**StackAutoServiceRevisionUpdateSettingsInput**](StackAutoServiceRevisionUpdateSettingsInput.md) |  | [optional] 
 **AutoOriginStackUpdate** | Pointer to [**StackAutoOriginUpdateSettingsInput**](StackAutoOriginUpdateSettingsInput.md) |  | [optional] 
-**GitServiceUpdates** | Pointer to **NullableString** | What an update from Git does with existing stack services&#39; versions; see StackSettings. | [optional] 
+**GitServiceUpdates** | Pointer to **NullableString** | What an automatic update from Git does with existing stack services&#39; versions; see StackSettings. | [optional] 
 
 ## Methods
 

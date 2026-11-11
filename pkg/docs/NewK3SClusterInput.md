@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **DisableMonitoring** | **bool** |  | 
 **AutoInfrastructureUpgrade** | Pointer to **NullableBool** |  | [optional] 
+**AutoKubernetesUpgrade** | Pointer to **NullableBool** | Turns automatic Kubernetes version and component upgrades on or off. On by default. | [optional] 
 **EnvironmentPolicy** | Pointer to [**ClusterEnvironmentPolicyInput**](ClusterEnvironmentPolicyInput.md) |  | [optional] 
 
 ## Methods
@@ -222,6 +223,41 @@ HasAutoInfrastructureUpgrade returns a boolean if a field has been set.
 `func (o *NewK3SClusterInput) UnsetAutoInfrastructureUpgrade()`
 
 UnsetAutoInfrastructureUpgrade ensures that no value is present for AutoInfrastructureUpgrade, not even an explicit nil
+### GetAutoKubernetesUpgrade
+
+`func (o *NewK3SClusterInput) GetAutoKubernetesUpgrade() bool`
+
+GetAutoKubernetesUpgrade returns the AutoKubernetesUpgrade field if non-nil, zero value otherwise.
+
+### GetAutoKubernetesUpgradeOk
+
+`func (o *NewK3SClusterInput) GetAutoKubernetesUpgradeOk() (*bool, bool)`
+
+GetAutoKubernetesUpgradeOk returns a tuple with the AutoKubernetesUpgrade field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoKubernetesUpgrade
+
+`func (o *NewK3SClusterInput) SetAutoKubernetesUpgrade(v bool)`
+
+SetAutoKubernetesUpgrade sets AutoKubernetesUpgrade field to given value.
+
+### HasAutoKubernetesUpgrade
+
+`func (o *NewK3SClusterInput) HasAutoKubernetesUpgrade() bool`
+
+HasAutoKubernetesUpgrade returns a boolean if a field has been set.
+
+### SetAutoKubernetesUpgradeNil
+
+`func (o *NewK3SClusterInput) SetAutoKubernetesUpgradeNil(b bool)`
+
+ SetAutoKubernetesUpgradeNil sets the value for AutoKubernetesUpgrade to be an explicit nil
+
+### UnsetAutoKubernetesUpgrade
+`func (o *NewK3SClusterInput) UnsetAutoKubernetesUpgrade()`
+
+UnsetAutoKubernetesUpgrade ensures that no value is present for AutoKubernetesUpgrade, not even an explicit nil
 ### GetEnvironmentPolicy
 
 `func (o *NewK3SClusterInput) GetEnvironmentPolicy() ClusterEnvironmentPolicyInput`

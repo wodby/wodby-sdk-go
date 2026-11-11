@@ -22,7 +22,7 @@ type StackSettingsInput struct {
 	GitAutoUpdate *GitAutoUpdateSettingsInput `json:"gitAutoUpdate,omitempty"`
 	AutoServiceRevisionUpdate *StackAutoServiceRevisionUpdateSettingsInput `json:"autoServiceRevisionUpdate,omitempty"`
 	AutoOriginStackUpdate *StackAutoOriginUpdateSettingsInput `json:"autoOriginStackUpdate,omitempty"`
-	// What an update from Git does with existing stack services' versions; see StackSettings.
+	// What an automatic update from Git does with existing stack services' versions; see StackSettings.
 	GitServiceUpdates NullableString `json:"gitServiceUpdates,omitempty"`
 }
 

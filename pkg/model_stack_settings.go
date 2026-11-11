@@ -22,7 +22,7 @@ type StackSettings struct {
 	GitAutoUpdate *GitAutoUpdateSettings `json:"gitAutoUpdate,omitempty"`
 	AutoServiceRevisionUpdate *StackAutoServiceRevisionUpdateSettings `json:"autoServiceRevisionUpdate,omitempty"`
 	AutoOriginStackUpdate *StackAutoOriginUpdateSettings `json:"autoOriginStackUpdate,omitempty"`
-	// What an update from Git does with existing stack services whose stack.yml reference has no version: latest moves them to the service's latest version, auto_update_settings moves them only as far as the stack's service auto update settings allow, and keep keeps their version. Versioned references, pinned stack services and new ones resolve the same way in every mode, and a stack service whose stack.yml configures something only a newer version has always moves to it.
+	// What an automatic update from Git, started by a push, does with existing stack services whose stack.yml reference has no version: latest moves them to the service's latest version, auto_update_settings (the default) moves them only as far as the stack's service auto update settings allow, and keep keeps their version. Manual updates move them to the latest version unless the update's serviceUpdates says otherwise. Versioned references, pinned stack services and new ones resolve the same way in every mode, and a stack service whose stack.yml configures something only a newer version has always moves to it.
 	GitServiceUpdates *string `json:"gitServiceUpdates,omitempty"`
 }
 

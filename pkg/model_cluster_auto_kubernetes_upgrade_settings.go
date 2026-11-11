@@ -19,7 +19,7 @@ import (
 // checks if the ClusterAutoKubernetesUpgradeSettings type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ClusterAutoKubernetesUpgradeSettings{}
 
-// ClusterAutoKubernetesUpgradeSettings Automatic Kubernetes version upgrades. Kubernetes versions are 1.MINOR.PATCH, so there is no major upgrade. A newer provider build of the same version, such as 1.36.5-do.1 to 1.36.5-do.2, counts as a patch. Always disabled for Wodby Cloud and serverless clusters.
+// ClusterAutoKubernetesUpgradeSettings Automatic Kubernetes version upgrades. Kubernetes versions are 1.MINOR.PATCH, so there is no major upgrade. A newer provider build of the same version, such as 1.36.5-do.1 to 1.36.5-do.2, counts as a patch. When there is no version upgrade to start, the same policy and window apply the cluster's component updates, such as Cilium on k3s and EKS add-ons, unless includeComponentUpdates is off; an update within the component's minor counts as a patch. Always disabled for Wodby Cloud and serverless clusters.
 type ClusterAutoKubernetesUpgradeSettings struct {
 	Enabled bool `json:"enabled"`
 	AllowPatch bool `json:"allowPatch"`
@@ -28,6 +28,8 @@ type ClusterAutoKubernetesUpgradeSettings struct {
 	MinorOnlyAfterEndOfLife bool `json:"minorOnlyAfterEndOfLife"`
 	// When an upgrade may start. Absent means any time.
 	TimeWindow *AutomationTimeWindow `json:"timeWindow,omitempty"`
+	// Also applies the cluster's component updates when there is no version upgrade to start, under the same policy and window. On by default.
+	IncludeComponentUpdates bool `json:"includeComponentUpdates"`
 }
 
 type _ClusterAutoKubernetesUpgradeSettings ClusterAutoKubernetesUpgradeSettings
@@ -36,12 +38,13 @@ type _ClusterAutoKubernetesUpgradeSettings ClusterAutoKubernetesUpgradeSettings
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewClusterAutoKubernetesUpgradeSettings(enabled bool, allowPatch bool, allowMinor bool, minorOnlyAfterEndOfLife bool) *ClusterAutoKubernetesUpgradeSettings {
+func NewClusterAutoKubernetesUpgradeSettings(enabled bool, allowPatch bool, allowMinor bool, minorOnlyAfterEndOfLife bool, includeComponentUpdates bool) *ClusterAutoKubernetesUpgradeSettings {
 	this := ClusterAutoKubernetesUpgradeSettings{}
 	this.Enabled = enabled
 	this.AllowPatch = allowPatch
 	this.AllowMinor = allowMinor
 	this.MinorOnlyAfterEndOfLife = minorOnlyAfterEndOfLife
+	this.IncludeComponentUpdates = includeComponentUpdates
 	return &this
 }
 
@@ -181,6 +184,30 @@ func (o *ClusterAutoKubernetesUpgradeSettings) SetTimeWindow(v AutomationTimeWin
 	o.TimeWindow = &v
 }
 
+// GetIncludeComponentUpdates returns the IncludeComponentUpdates field value
+func (o *ClusterAutoKubernetesUpgradeSettings) GetIncludeComponentUpdates() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IncludeComponentUpdates
+}
+
+// GetIncludeComponentUpdatesOk returns a tuple with the IncludeComponentUpdates field value
+// and a boolean to check if the value has been set.
+func (o *ClusterAutoKubernetesUpgradeSettings) GetIncludeComponentUpdatesOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IncludeComponentUpdates, true
+}
+
+// SetIncludeComponentUpdates sets field value
+func (o *ClusterAutoKubernetesUpgradeSettings) SetIncludeComponentUpdates(v bool) {
+	o.IncludeComponentUpdates = v
+}
+
 func (o ClusterAutoKubernetesUpgradeSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -198,6 +225,7 @@ func (o ClusterAutoKubernetesUpgradeSettings) ToMap() (map[string]interface{}, e
 	if !IsNil(o.TimeWindow) {
 		toSerialize["timeWindow"] = o.TimeWindow
 	}
+	toSerialize["includeComponentUpdates"] = o.IncludeComponentUpdates
 	return toSerialize, nil
 }
 
@@ -210,6 +238,7 @@ func (o *ClusterAutoKubernetesUpgradeSettings) UnmarshalJSON(data []byte) (err e
 		"allowPatch",
 		"allowMinor",
 		"minorOnlyAfterEndOfLife",
+		"includeComponentUpdates",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -23,6 +23,7 @@ type ClusterAutoKubernetesUpgradeSettingsInput struct {
 	AllowPatch NullableBool `json:"allowPatch,omitempty"`
 	AllowMinor NullableBool `json:"allowMinor,omitempty"`
 	MinorOnlyAfterEndOfLife NullableBool `json:"minorOnlyAfterEndOfLife,omitempty"`
+	IncludeComponentUpdates NullableBool `json:"includeComponentUpdates,omitempty"`
 	// A window with enabled false lets upgrades start at any time.
 	TimeWindow *AutomationTimeWindowInput `json:"timeWindow,omitempty"`
 }
@@ -212,6 +213,48 @@ func (o *ClusterAutoKubernetesUpgradeSettingsInput) UnsetMinorOnlyAfterEndOfLife
 	o.MinorOnlyAfterEndOfLife.Unset()
 }
 
+// GetIncludeComponentUpdates returns the IncludeComponentUpdates field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterAutoKubernetesUpgradeSettingsInput) GetIncludeComponentUpdates() bool {
+	if o == nil || IsNil(o.IncludeComponentUpdates.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeComponentUpdates.Get()
+}
+
+// GetIncludeComponentUpdatesOk returns a tuple with the IncludeComponentUpdates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterAutoKubernetesUpgradeSettingsInput) GetIncludeComponentUpdatesOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IncludeComponentUpdates.Get(), o.IncludeComponentUpdates.IsSet()
+}
+
+// HasIncludeComponentUpdates returns a boolean if a field has been set.
+func (o *ClusterAutoKubernetesUpgradeSettingsInput) HasIncludeComponentUpdates() bool {
+	if o != nil && o.IncludeComponentUpdates.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeComponentUpdates gets a reference to the given NullableBool and assigns it to the IncludeComponentUpdates field.
+func (o *ClusterAutoKubernetesUpgradeSettingsInput) SetIncludeComponentUpdates(v bool) {
+	o.IncludeComponentUpdates.Set(&v)
+}
+// SetIncludeComponentUpdatesNil sets the value for IncludeComponentUpdates to be an explicit nil
+func (o *ClusterAutoKubernetesUpgradeSettingsInput) SetIncludeComponentUpdatesNil() {
+	o.IncludeComponentUpdates.Set(nil)
+}
+
+// UnsetIncludeComponentUpdates ensures that no value is present for IncludeComponentUpdates, not even an explicit nil
+func (o *ClusterAutoKubernetesUpgradeSettingsInput) UnsetIncludeComponentUpdates() {
+	o.IncludeComponentUpdates.Unset()
+}
+
 // GetTimeWindow returns the TimeWindow field value if set, zero value otherwise.
 func (o *ClusterAutoKubernetesUpgradeSettingsInput) GetTimeWindow() AutomationTimeWindowInput {
 	if o == nil || IsNil(o.TimeWindow) {
@@ -265,6 +308,9 @@ func (o ClusterAutoKubernetesUpgradeSettingsInput) ToMap() (map[string]interface
 	}
 	if o.MinorOnlyAfterEndOfLife.IsSet() {
 		toSerialize["minorOnlyAfterEndOfLife"] = o.MinorOnlyAfterEndOfLife.Get()
+	}
+	if o.IncludeComponentUpdates.IsSet() {
+		toSerialize["includeComponentUpdates"] = o.IncludeComponentUpdates.Get()
 	}
 	if !IsNil(o.TimeWindow) {
 		toSerialize["timeWindow"] = o.TimeWindow

@@ -201,6 +201,7 @@ docs/ClusterHostCheck.md
 docs/ClusterInfraAppUpgradeChangelog.md
 docs/ClusterNodePool.md
 docs/ClusterNodePoolInput.md
+docs/ClusterSecurityAdvisory.md
 docs/ClusterSettings.md
 docs/ClusterSettingsInput.md
 docs/ClustersAPI.md
@@ -672,6 +673,7 @@ model_cluster_host_check.go
 model_cluster_infra_app_upgrade_changelog.go
 model_cluster_node_pool.go
 model_cluster_node_pool_input.go
+model_cluster_security_advisory.go
 model_cluster_settings.go
 model_cluster_settings_input.go
 model_config_override_input.go

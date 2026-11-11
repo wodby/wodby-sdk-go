@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Identifies the check, such as ipv4_options_filter or mptcp_disabled. More checks may be added. | 
 **Title** | **string** |  | 
+**Advisory** | **string** | The security advisory the check protects against, such as CVE-2026-98432. Group checks by this field. | 
+**AdvisoryTitle** | **string** | Describes the advisory, such as Linux kernel TCP bug. | 
 **Node** | **string** | The node that reported the check; empty when no node has reported. | 
 **State** | **string** | Whether the protection is in place. unknown means the server hasn&#39;t reported the check, or its last report is more than two days old. | 
 **Message** | **string** | What the state means and what to do about it. | 
@@ -17,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewClusterHostCheck
 
-`func NewClusterHostCheck(name string, title string, node string, state string, message string, kernel string, ) *ClusterHostCheck`
+`func NewClusterHostCheck(name string, title string, advisory string, advisoryTitle string, node string, state string, message string, kernel string, ) *ClusterHostCheck`
 
 NewClusterHostCheck instantiates a new ClusterHostCheck object
 This constructor will assign default values to properties that have it defined,
@@ -70,6 +72,46 @@ and a boolean to check if the value has been set.
 `func (o *ClusterHostCheck) SetTitle(v string)`
 
 SetTitle sets Title field to given value.
+
+
+### GetAdvisory
+
+`func (o *ClusterHostCheck) GetAdvisory() string`
+
+GetAdvisory returns the Advisory field if non-nil, zero value otherwise.
+
+### GetAdvisoryOk
+
+`func (o *ClusterHostCheck) GetAdvisoryOk() (*string, bool)`
+
+GetAdvisoryOk returns a tuple with the Advisory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdvisory
+
+`func (o *ClusterHostCheck) SetAdvisory(v string)`
+
+SetAdvisory sets Advisory field to given value.
+
+
+### GetAdvisoryTitle
+
+`func (o *ClusterHostCheck) GetAdvisoryTitle() string`
+
+GetAdvisoryTitle returns the AdvisoryTitle field if non-nil, zero value otherwise.
+
+### GetAdvisoryTitleOk
+
+`func (o *ClusterHostCheck) GetAdvisoryTitleOk() (*string, bool)`
+
+GetAdvisoryTitleOk returns a tuple with the AdvisoryTitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdvisoryTitle
+
+`func (o *ClusterHostCheck) SetAdvisoryTitle(v string)`
+
+SetAdvisoryTitle sets AdvisoryTitle field to given value.
 
 
 ### GetNode

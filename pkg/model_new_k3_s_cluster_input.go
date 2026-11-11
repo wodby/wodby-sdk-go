@@ -30,6 +30,8 @@ type NewK3SClusterInput struct {
 	Title string `json:"title"`
 	DisableMonitoring bool `json:"disableMonitoring"`
 	AutoInfrastructureUpgrade NullableBool `json:"autoInfrastructureUpgrade,omitempty"`
+	// Turns automatic Kubernetes version and component upgrades on or off. On by default.
+	AutoKubernetesUpgrade NullableBool `json:"autoKubernetesUpgrade,omitempty"`
 	EnvironmentPolicy *ClusterEnvironmentPolicyInput `json:"environmentPolicy,omitempty"`
 }
 
@@ -285,6 +287,48 @@ func (o *NewK3SClusterInput) UnsetAutoInfrastructureUpgrade() {
 	o.AutoInfrastructureUpgrade.Unset()
 }
 
+// GetAutoKubernetesUpgrade returns the AutoKubernetesUpgrade field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewK3SClusterInput) GetAutoKubernetesUpgrade() bool {
+	if o == nil || IsNil(o.AutoKubernetesUpgrade.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.AutoKubernetesUpgrade.Get()
+}
+
+// GetAutoKubernetesUpgradeOk returns a tuple with the AutoKubernetesUpgrade field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewK3SClusterInput) GetAutoKubernetesUpgradeOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AutoKubernetesUpgrade.Get(), o.AutoKubernetesUpgrade.IsSet()
+}
+
+// HasAutoKubernetesUpgrade returns a boolean if a field has been set.
+func (o *NewK3SClusterInput) HasAutoKubernetesUpgrade() bool {
+	if o != nil && o.AutoKubernetesUpgrade.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoKubernetesUpgrade gets a reference to the given NullableBool and assigns it to the AutoKubernetesUpgrade field.
+func (o *NewK3SClusterInput) SetAutoKubernetesUpgrade(v bool) {
+	o.AutoKubernetesUpgrade.Set(&v)
+}
+// SetAutoKubernetesUpgradeNil sets the value for AutoKubernetesUpgrade to be an explicit nil
+func (o *NewK3SClusterInput) SetAutoKubernetesUpgradeNil() {
+	o.AutoKubernetesUpgrade.Set(nil)
+}
+
+// UnsetAutoKubernetesUpgrade ensures that no value is present for AutoKubernetesUpgrade, not even an explicit nil
+func (o *NewK3SClusterInput) UnsetAutoKubernetesUpgrade() {
+	o.AutoKubernetesUpgrade.Unset()
+}
+
 // GetEnvironmentPolicy returns the EnvironmentPolicy field value if set, zero value otherwise.
 func (o *NewK3SClusterInput) GetEnvironmentPolicy() ClusterEnvironmentPolicyInput {
 	if o == nil || IsNil(o.EnvironmentPolicy) {
@@ -341,6 +385,9 @@ func (o NewK3SClusterInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["disableMonitoring"] = o.DisableMonitoring
 	if o.AutoInfrastructureUpgrade.IsSet() {
 		toSerialize["autoInfrastructureUpgrade"] = o.AutoInfrastructureUpgrade.Get()
+	}
+	if o.AutoKubernetesUpgrade.IsSet() {
+		toSerialize["autoKubernetesUpgrade"] = o.AutoKubernetesUpgrade.Get()
 	}
 	if !IsNil(o.EnvironmentPolicy) {
 		toSerialize["environmentPolicy"] = o.EnvironmentPolicy

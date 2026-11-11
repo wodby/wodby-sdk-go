@@ -25,6 +25,10 @@ type ClusterHostCheck struct {
 	// Identifies the check, such as ipv4_options_filter or mptcp_disabled. More checks may be added.
 	Name string `json:"name"`
 	Title string `json:"title"`
+	// The security advisory the check protects against, such as CVE-2026-98432. Group checks by this field.
+	Advisory string `json:"advisory"`
+	// Describes the advisory, such as Linux kernel TCP bug.
+	AdvisoryTitle string `json:"advisoryTitle"`
 	// The node that reported the check; empty when no node has reported.
 	Node string `json:"node"`
 	// Whether the protection is in place. unknown means the server hasn't reported the check, or its last report is more than two days old.
@@ -45,10 +49,12 @@ type _ClusterHostCheck ClusterHostCheck
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewClusterHostCheck(name string, title string, node string, state string, message string, kernel string) *ClusterHostCheck {
+func NewClusterHostCheck(name string, title string, advisory string, advisoryTitle string, node string, state string, message string, kernel string) *ClusterHostCheck {
 	this := ClusterHostCheck{}
 	this.Name = name
 	this.Title = title
+	this.Advisory = advisory
+	this.AdvisoryTitle = advisoryTitle
 	this.Node = node
 	this.State = state
 	this.Message = message
@@ -110,6 +116,54 @@ func (o *ClusterHostCheck) GetTitleOk() (*string, bool) {
 // SetTitle sets field value
 func (o *ClusterHostCheck) SetTitle(v string) {
 	o.Title = v
+}
+
+// GetAdvisory returns the Advisory field value
+func (o *ClusterHostCheck) GetAdvisory() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Advisory
+}
+
+// GetAdvisoryOk returns a tuple with the Advisory field value
+// and a boolean to check if the value has been set.
+func (o *ClusterHostCheck) GetAdvisoryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Advisory, true
+}
+
+// SetAdvisory sets field value
+func (o *ClusterHostCheck) SetAdvisory(v string) {
+	o.Advisory = v
+}
+
+// GetAdvisoryTitle returns the AdvisoryTitle field value
+func (o *ClusterHostCheck) GetAdvisoryTitle() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.AdvisoryTitle
+}
+
+// GetAdvisoryTitleOk returns a tuple with the AdvisoryTitle field value
+// and a boolean to check if the value has been set.
+func (o *ClusterHostCheck) GetAdvisoryTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AdvisoryTitle, true
+}
+
+// SetAdvisoryTitle sets field value
+func (o *ClusterHostCheck) SetAdvisoryTitle(v string) {
+	o.AdvisoryTitle = v
 }
 
 // GetNode returns the Node field value
@@ -284,6 +338,8 @@ func (o ClusterHostCheck) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["title"] = o.Title
+	toSerialize["advisory"] = o.Advisory
+	toSerialize["advisoryTitle"] = o.AdvisoryTitle
 	toSerialize["node"] = o.Node
 	toSerialize["state"] = o.State
 	toSerialize["message"] = o.Message
@@ -304,6 +360,8 @@ func (o *ClusterHostCheck) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"name",
 		"title",
+		"advisory",
+		"advisoryTitle",
 		"node",
 		"state",
 		"message",
