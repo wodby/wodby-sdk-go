@@ -24,6 +24,11 @@ Name | Type | Description | Notes
 **OriginStackRevNumber** | Pointer to **NullableInt32** |  | [optional] 
 **OriginStackRevVersion** | Pointer to **NullableString** |  | [optional] 
 **OriginStackRevCreatedAt** | Pointer to **NullableTime** |  | [optional] 
+**VariantOfStackId** | Pointer to **NullableInt32** | Main stack this stack is a variant of, such as Drupal for a high-availability Drupal stack. Absent when the stack is not a variant, or the main stack does not exist or is not visible to you. | [optional] 
+**VariantOfStackName** | Pointer to **NullableString** |  | [optional] 
+**VariantTitle** | Pointer to **NullableString** | Short label that tells this variant apart, such as High availability. | [optional] 
+**VariantDescription** | Pointer to **NullableString** | When to choose this stack over the other stacks of its variant family, such as building the app from your own repository to customize it. A main stack can have one too. | [optional] 
+**VariantStackIds** | **[]int32** | Variants of this stack that you can see, ordered by title. Empty for a stack that is a variant itself. | 
 **OrgId** | **int32** |  | 
 **OwnershipScope** | **string** | org when the organization owns the resource, project when one project owns it. | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
@@ -36,7 +41,7 @@ Name | Type | Description | Notes
 
 ### NewStack
 
-`func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time, ) *Stack`
+`func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, variantStackIds []int32, orgId int32, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time, ) *Stack`
 
 NewStack instantiates a new Stack object
 This constructor will assign default values to properties that have it defined,
@@ -616,6 +621,166 @@ HasOriginStackRevCreatedAt returns a boolean if a field has been set.
 `func (o *Stack) UnsetOriginStackRevCreatedAt()`
 
 UnsetOriginStackRevCreatedAt ensures that no value is present for OriginStackRevCreatedAt, not even an explicit nil
+### GetVariantOfStackId
+
+`func (o *Stack) GetVariantOfStackId() int32`
+
+GetVariantOfStackId returns the VariantOfStackId field if non-nil, zero value otherwise.
+
+### GetVariantOfStackIdOk
+
+`func (o *Stack) GetVariantOfStackIdOk() (*int32, bool)`
+
+GetVariantOfStackIdOk returns a tuple with the VariantOfStackId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVariantOfStackId
+
+`func (o *Stack) SetVariantOfStackId(v int32)`
+
+SetVariantOfStackId sets VariantOfStackId field to given value.
+
+### HasVariantOfStackId
+
+`func (o *Stack) HasVariantOfStackId() bool`
+
+HasVariantOfStackId returns a boolean if a field has been set.
+
+### SetVariantOfStackIdNil
+
+`func (o *Stack) SetVariantOfStackIdNil(b bool)`
+
+ SetVariantOfStackIdNil sets the value for VariantOfStackId to be an explicit nil
+
+### UnsetVariantOfStackId
+`func (o *Stack) UnsetVariantOfStackId()`
+
+UnsetVariantOfStackId ensures that no value is present for VariantOfStackId, not even an explicit nil
+### GetVariantOfStackName
+
+`func (o *Stack) GetVariantOfStackName() string`
+
+GetVariantOfStackName returns the VariantOfStackName field if non-nil, zero value otherwise.
+
+### GetVariantOfStackNameOk
+
+`func (o *Stack) GetVariantOfStackNameOk() (*string, bool)`
+
+GetVariantOfStackNameOk returns a tuple with the VariantOfStackName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVariantOfStackName
+
+`func (o *Stack) SetVariantOfStackName(v string)`
+
+SetVariantOfStackName sets VariantOfStackName field to given value.
+
+### HasVariantOfStackName
+
+`func (o *Stack) HasVariantOfStackName() bool`
+
+HasVariantOfStackName returns a boolean if a field has been set.
+
+### SetVariantOfStackNameNil
+
+`func (o *Stack) SetVariantOfStackNameNil(b bool)`
+
+ SetVariantOfStackNameNil sets the value for VariantOfStackName to be an explicit nil
+
+### UnsetVariantOfStackName
+`func (o *Stack) UnsetVariantOfStackName()`
+
+UnsetVariantOfStackName ensures that no value is present for VariantOfStackName, not even an explicit nil
+### GetVariantTitle
+
+`func (o *Stack) GetVariantTitle() string`
+
+GetVariantTitle returns the VariantTitle field if non-nil, zero value otherwise.
+
+### GetVariantTitleOk
+
+`func (o *Stack) GetVariantTitleOk() (*string, bool)`
+
+GetVariantTitleOk returns a tuple with the VariantTitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVariantTitle
+
+`func (o *Stack) SetVariantTitle(v string)`
+
+SetVariantTitle sets VariantTitle field to given value.
+
+### HasVariantTitle
+
+`func (o *Stack) HasVariantTitle() bool`
+
+HasVariantTitle returns a boolean if a field has been set.
+
+### SetVariantTitleNil
+
+`func (o *Stack) SetVariantTitleNil(b bool)`
+
+ SetVariantTitleNil sets the value for VariantTitle to be an explicit nil
+
+### UnsetVariantTitle
+`func (o *Stack) UnsetVariantTitle()`
+
+UnsetVariantTitle ensures that no value is present for VariantTitle, not even an explicit nil
+### GetVariantDescription
+
+`func (o *Stack) GetVariantDescription() string`
+
+GetVariantDescription returns the VariantDescription field if non-nil, zero value otherwise.
+
+### GetVariantDescriptionOk
+
+`func (o *Stack) GetVariantDescriptionOk() (*string, bool)`
+
+GetVariantDescriptionOk returns a tuple with the VariantDescription field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVariantDescription
+
+`func (o *Stack) SetVariantDescription(v string)`
+
+SetVariantDescription sets VariantDescription field to given value.
+
+### HasVariantDescription
+
+`func (o *Stack) HasVariantDescription() bool`
+
+HasVariantDescription returns a boolean if a field has been set.
+
+### SetVariantDescriptionNil
+
+`func (o *Stack) SetVariantDescriptionNil(b bool)`
+
+ SetVariantDescriptionNil sets the value for VariantDescription to be an explicit nil
+
+### UnsetVariantDescription
+`func (o *Stack) UnsetVariantDescription()`
+
+UnsetVariantDescription ensures that no value is present for VariantDescription, not even an explicit nil
+### GetVariantStackIds
+
+`func (o *Stack) GetVariantStackIds() []int32`
+
+GetVariantStackIds returns the VariantStackIds field if non-nil, zero value otherwise.
+
+### GetVariantStackIdsOk
+
+`func (o *Stack) GetVariantStackIdsOk() (*[]int32, bool)`
+
+GetVariantStackIdsOk returns a tuple with the VariantStackIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVariantStackIds
+
+`func (o *Stack) SetVariantStackIds(v []int32)`
+
+SetVariantStackIds sets VariantStackIds field to given value.
+
+
 ### GetOrgId
 
 `func (o *Stack) GetOrgId() int32`

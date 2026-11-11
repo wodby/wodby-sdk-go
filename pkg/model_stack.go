@@ -42,6 +42,15 @@ type Stack struct {
 	OriginStackRevNumber NullableInt32 `json:"originStackRevNumber,omitempty"`
 	OriginStackRevVersion NullableString `json:"originStackRevVersion,omitempty"`
 	OriginStackRevCreatedAt NullableTime `json:"originStackRevCreatedAt,omitempty"`
+	// Main stack this stack is a variant of, such as Drupal for a high-availability Drupal stack. Absent when the stack is not a variant, or the main stack does not exist or is not visible to you.
+	VariantOfStackId NullableInt32 `json:"variantOfStackId,omitempty"`
+	VariantOfStackName NullableString `json:"variantOfStackName,omitempty"`
+	// Short label that tells this variant apart, such as High availability.
+	VariantTitle NullableString `json:"variantTitle,omitempty"`
+	// When to choose this stack over the other stacks of its variant family, such as building the app from your own repository to customize it. A main stack can have one too.
+	VariantDescription NullableString `json:"variantDescription,omitempty"`
+	// Variants of this stack that you can see, ordered by title. Empty for a stack that is a variant itself.
+	VariantStackIds []int32 `json:"variantStackIds"`
 	OrgId int32 `json:"orgId"`
 	// org when the organization owns the resource, project when one project owns it.
 	OwnershipScope string `json:"ownershipScope"`
@@ -59,7 +68,7 @@ type _Stack Stack
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, orgId int32, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time) *Stack {
+func NewStack(id int32, name string, title string, icon string, status string, outdated bool, public bool, revId int32, latestRevNumber int32, variantStackIds []int32, orgId int32, ownershipScope string, availableToAllProjects bool, createdAt time.Time, updatedAt time.Time) *Stack {
 	this := Stack{}
 	this.Id = id
 	this.Name = name
@@ -70,6 +79,7 @@ func NewStack(id int32, name string, title string, icon string, status string, o
 	this.Public = public
 	this.RevId = revId
 	this.LatestRevNumber = latestRevNumber
+	this.VariantStackIds = variantStackIds
 	this.OrgId = orgId
 	this.OwnershipScope = ownershipScope
 	this.AvailableToAllProjects = availableToAllProjects
@@ -764,6 +774,198 @@ func (o *Stack) UnsetOriginStackRevCreatedAt() {
 	o.OriginStackRevCreatedAt.Unset()
 }
 
+// GetVariantOfStackId returns the VariantOfStackId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetVariantOfStackId() int32 {
+	if o == nil || IsNil(o.VariantOfStackId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.VariantOfStackId.Get()
+}
+
+// GetVariantOfStackIdOk returns a tuple with the VariantOfStackId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetVariantOfStackIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VariantOfStackId.Get(), o.VariantOfStackId.IsSet()
+}
+
+// HasVariantOfStackId returns a boolean if a field has been set.
+func (o *Stack) HasVariantOfStackId() bool {
+	if o != nil && o.VariantOfStackId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVariantOfStackId gets a reference to the given NullableInt32 and assigns it to the VariantOfStackId field.
+func (o *Stack) SetVariantOfStackId(v int32) {
+	o.VariantOfStackId.Set(&v)
+}
+// SetVariantOfStackIdNil sets the value for VariantOfStackId to be an explicit nil
+func (o *Stack) SetVariantOfStackIdNil() {
+	o.VariantOfStackId.Set(nil)
+}
+
+// UnsetVariantOfStackId ensures that no value is present for VariantOfStackId, not even an explicit nil
+func (o *Stack) UnsetVariantOfStackId() {
+	o.VariantOfStackId.Unset()
+}
+
+// GetVariantOfStackName returns the VariantOfStackName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetVariantOfStackName() string {
+	if o == nil || IsNil(o.VariantOfStackName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.VariantOfStackName.Get()
+}
+
+// GetVariantOfStackNameOk returns a tuple with the VariantOfStackName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetVariantOfStackNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VariantOfStackName.Get(), o.VariantOfStackName.IsSet()
+}
+
+// HasVariantOfStackName returns a boolean if a field has been set.
+func (o *Stack) HasVariantOfStackName() bool {
+	if o != nil && o.VariantOfStackName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVariantOfStackName gets a reference to the given NullableString and assigns it to the VariantOfStackName field.
+func (o *Stack) SetVariantOfStackName(v string) {
+	o.VariantOfStackName.Set(&v)
+}
+// SetVariantOfStackNameNil sets the value for VariantOfStackName to be an explicit nil
+func (o *Stack) SetVariantOfStackNameNil() {
+	o.VariantOfStackName.Set(nil)
+}
+
+// UnsetVariantOfStackName ensures that no value is present for VariantOfStackName, not even an explicit nil
+func (o *Stack) UnsetVariantOfStackName() {
+	o.VariantOfStackName.Unset()
+}
+
+// GetVariantTitle returns the VariantTitle field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetVariantTitle() string {
+	if o == nil || IsNil(o.VariantTitle.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.VariantTitle.Get()
+}
+
+// GetVariantTitleOk returns a tuple with the VariantTitle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetVariantTitleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VariantTitle.Get(), o.VariantTitle.IsSet()
+}
+
+// HasVariantTitle returns a boolean if a field has been set.
+func (o *Stack) HasVariantTitle() bool {
+	if o != nil && o.VariantTitle.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVariantTitle gets a reference to the given NullableString and assigns it to the VariantTitle field.
+func (o *Stack) SetVariantTitle(v string) {
+	o.VariantTitle.Set(&v)
+}
+// SetVariantTitleNil sets the value for VariantTitle to be an explicit nil
+func (o *Stack) SetVariantTitleNil() {
+	o.VariantTitle.Set(nil)
+}
+
+// UnsetVariantTitle ensures that no value is present for VariantTitle, not even an explicit nil
+func (o *Stack) UnsetVariantTitle() {
+	o.VariantTitle.Unset()
+}
+
+// GetVariantDescription returns the VariantDescription field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetVariantDescription() string {
+	if o == nil || IsNil(o.VariantDescription.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.VariantDescription.Get()
+}
+
+// GetVariantDescriptionOk returns a tuple with the VariantDescription field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetVariantDescriptionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VariantDescription.Get(), o.VariantDescription.IsSet()
+}
+
+// HasVariantDescription returns a boolean if a field has been set.
+func (o *Stack) HasVariantDescription() bool {
+	if o != nil && o.VariantDescription.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVariantDescription gets a reference to the given NullableString and assigns it to the VariantDescription field.
+func (o *Stack) SetVariantDescription(v string) {
+	o.VariantDescription.Set(&v)
+}
+// SetVariantDescriptionNil sets the value for VariantDescription to be an explicit nil
+func (o *Stack) SetVariantDescriptionNil() {
+	o.VariantDescription.Set(nil)
+}
+
+// UnsetVariantDescription ensures that no value is present for VariantDescription, not even an explicit nil
+func (o *Stack) UnsetVariantDescription() {
+	o.VariantDescription.Unset()
+}
+
+// GetVariantStackIds returns the VariantStackIds field value
+func (o *Stack) GetVariantStackIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+
+	return o.VariantStackIds
+}
+
+// GetVariantStackIdsOk returns a tuple with the VariantStackIds field value
+// and a boolean to check if the value has been set.
+func (o *Stack) GetVariantStackIdsOk() ([]int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VariantStackIds, true
+}
+
+// SetVariantStackIds sets field value
+func (o *Stack) SetVariantStackIds(v []int32) {
+	o.VariantStackIds = v
+}
+
 // GetOrgId returns the OrgId field value
 func (o *Stack) GetOrgId() int32 {
 	if o == nil {
@@ -1010,6 +1212,19 @@ func (o Stack) ToMap() (map[string]interface{}, error) {
 	if o.OriginStackRevCreatedAt.IsSet() {
 		toSerialize["originStackRevCreatedAt"] = o.OriginStackRevCreatedAt.Get()
 	}
+	if o.VariantOfStackId.IsSet() {
+		toSerialize["variantOfStackId"] = o.VariantOfStackId.Get()
+	}
+	if o.VariantOfStackName.IsSet() {
+		toSerialize["variantOfStackName"] = o.VariantOfStackName.Get()
+	}
+	if o.VariantTitle.IsSet() {
+		toSerialize["variantTitle"] = o.VariantTitle.Get()
+	}
+	if o.VariantDescription.IsSet() {
+		toSerialize["variantDescription"] = o.VariantDescription.Get()
+	}
+	toSerialize["variantStackIds"] = o.VariantStackIds
 	toSerialize["orgId"] = o.OrgId
 	toSerialize["ownershipScope"] = o.OwnershipScope
 	if o.OwnerProjectId.IsSet() {
@@ -1038,6 +1253,7 @@ func (o *Stack) UnmarshalJSON(data []byte) (err error) {
 		"public",
 		"revId",
 		"latestRevNumber",
+		"variantStackIds",
 		"orgId",
 		"ownershipScope",
 		"availableToAllProjects",
