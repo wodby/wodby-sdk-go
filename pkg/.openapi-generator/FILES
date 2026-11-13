@@ -270,7 +270,9 @@ docs/IntegrationVariableRequirement.md
 docs/IntegrationVariableRequirementInput.md
 docs/IntegrationsAPI.md
 docs/InviteOrgMemberInput.md
+docs/K3SClusterNode.md
 docs/K3SInstallCommand.md
+docs/K3SJoinCommand.md
 docs/KubeVersion.md
 docs/KubernetesVersionUpgradePlan.md
 docs/KubernetesVersionUpgradeTarget.md
@@ -364,6 +366,7 @@ docs/ProvidersAPI.md
 docs/ProvidersResponse.md
 docs/RemoteGitRepo.md
 docs/RemoteGitRepoFilePresence.md
+docs/RemoveK3SClusterNodeInput.md
 docs/RepeatTaskRequest.md
 docs/ResolveIntegrationResult.md
 docs/ResolvedServiceConfig.md
@@ -734,7 +737,9 @@ model_integration_usages_response.go
 model_integration_variable_requirement.go
 model_integration_variable_requirement_input.go
 model_invite_org_member_input.go
+model_k3_s_cluster_node.go
 model_k3_s_install_command.go
+model_k3_s_join_command.go
 model_kube_version.go
 model_kubernetes_version_upgrade_plan.go
 model_kubernetes_version_upgrade_target.go
@@ -821,6 +826,7 @@ model_provider_settings_input.go
 model_providers_response.go
 model_remote_git_repo.go
 model_remote_git_repo_file_presence.go
+model_remove_k3_s_cluster_node_input.go
 model_repeat_task_request.go
 model_resolve_integration_result.go
 model_resolved_service_config.go

@@ -25,6 +25,8 @@ type UpdateBackupPresetInput struct {
 	EnvTypes []string `json:"envTypes,omitempty"`
 	// Omit to preserve the current category.
 	BackupCategory NullableString `json:"backupCategory,omitempty"`
+	// Organization-wide presets only. Omit to preserve the current project selection; use an empty array to apply the preset to every project.
+	ProjectIds []int32 `json:"projectIds,omitempty"`
 	// Use 0 for Wodby Blob Storage. Enabling the preset requires a paid subscription.
 	IntegrationId int32 `json:"integrationId"`
 	// Must be empty for Wodby Blob Storage.
@@ -138,6 +140,39 @@ func (o *UpdateBackupPresetInput) SetBackupCategoryNil() {
 // UnsetBackupCategory ensures that no value is present for BackupCategory, not even an explicit nil
 func (o *UpdateBackupPresetInput) UnsetBackupCategory() {
 	o.BackupCategory.Unset()
+}
+
+// GetProjectIds returns the ProjectIds field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateBackupPresetInput) GetProjectIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+	return o.ProjectIds
+}
+
+// GetProjectIdsOk returns a tuple with the ProjectIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateBackupPresetInput) GetProjectIdsOk() ([]int32, bool) {
+	if o == nil || IsNil(o.ProjectIds) {
+		return nil, false
+	}
+	return o.ProjectIds, true
+}
+
+// HasProjectIds returns a boolean if a field has been set.
+func (o *UpdateBackupPresetInput) HasProjectIds() bool {
+	if o != nil && !IsNil(o.ProjectIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectIds gets a reference to the given []int32 and assigns it to the ProjectIds field.
+func (o *UpdateBackupPresetInput) SetProjectIds(v []int32) {
+	o.ProjectIds = v
 }
 
 // GetIntegrationId returns the IntegrationId field value
@@ -508,6 +543,9 @@ func (o UpdateBackupPresetInput) ToMap() (map[string]interface{}, error) {
 	}
 	if o.BackupCategory.IsSet() {
 		toSerialize["backupCategory"] = o.BackupCategory.Get()
+	}
+	if o.ProjectIds != nil {
+		toSerialize["projectIds"] = o.ProjectIds
 	}
 	toSerialize["integrationId"] = o.IntegrationId
 	toSerialize["bucket"] = o.Bucket

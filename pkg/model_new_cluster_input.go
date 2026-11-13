@@ -42,7 +42,7 @@ type NewClusterInput struct {
 	BillingOption NullableString `json:"billingOption,omitempty"`
 	DisableMonitoring bool `json:"disableMonitoring"`
 	AutoInfrastructureUpgrade NullableBool `json:"autoInfrastructureUpgrade,omitempty"`
-	// Turns automatic Kubernetes version and component upgrades on or off. On by default.
+	// Turns automatic Kubernetes version and component upgrades on or off. Off by default, because each Kubernetes upgrade of a managed cluster replaces its nodes and restarts every pod. Serverless clusters are always off.
 	AutoKubernetesUpgrade NullableBool `json:"autoKubernetesUpgrade,omitempty"`
 	EnvironmentPolicy *ClusterEnvironmentPolicyInput `json:"environmentPolicy,omitempty"`
 }

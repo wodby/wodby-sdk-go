@@ -1020,6 +1020,8 @@ type ApiListBackupPresetsRequest struct {
 	backupName *string
 	applicableEnvId *int32
 	applicableBackupCategory *string
+	applicableAppInstanceId *int32
+	applicableDatabaseId *int32
 }
 
 func (r ApiListBackupPresetsRequest) AppInstanceId(appInstanceId int32) ApiListBackupPresetsRequest {
@@ -1062,6 +1064,18 @@ func (r ApiListBackupPresetsRequest) ApplicableEnvId(applicableEnvId int32) ApiL
 // Return only presets that apply to this backup category.
 func (r ApiListBackupPresetsRequest) ApplicableBackupCategory(applicableBackupCategory string) ApiListBackupPresetsRequest {
 	r.applicableBackupCategory = &applicableBackupCategory
+	return r
+}
+
+// Return only presets that apply to this app environment, by its environment and the projects its app is in.
+func (r ApiListBackupPresetsRequest) ApplicableAppInstanceId(applicableAppInstanceId int32) ApiListBackupPresetsRequest {
+	r.applicableAppInstanceId = &applicableAppInstanceId
+	return r
+}
+
+// Return only presets that apply to this database, by its environment and the projects it is in.
+func (r ApiListBackupPresetsRequest) ApplicableDatabaseId(applicableDatabaseId int32) ApiListBackupPresetsRequest {
+	r.applicableDatabaseId = &applicableDatabaseId
 	return r
 }
 
@@ -1128,6 +1142,12 @@ func (a *BackupsAPIService) ListBackupPresetsExecute(r ApiListBackupPresetsReque
 	}
 	if r.applicableBackupCategory != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "applicableBackupCategory", r.applicableBackupCategory, "form", "")
+	}
+	if r.applicableAppInstanceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "applicableAppInstanceId", r.applicableAppInstanceId, "form", "")
+	}
+	if r.applicableDatabaseId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "applicableDatabaseId", r.applicableDatabaseId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

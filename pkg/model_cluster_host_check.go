@@ -29,7 +29,7 @@ type ClusterHostCheck struct {
 	Advisory string `json:"advisory"`
 	// Describes the advisory, such as Linux kernel TCP bug.
 	AdvisoryTitle string `json:"advisoryTitle"`
-	// The node that reported the check; empty when no node has reported.
+	// The node the check is for. Each node of the cluster is listed; empty when the nodes have not been observed yet.
 	Node string `json:"node"`
 	// Whether the protection is in place. unknown means the server hasn't reported the check, or its last report is more than two days old.
 	State string `json:"state"`

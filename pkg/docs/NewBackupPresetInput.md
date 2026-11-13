@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **EnvId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvTypes** | Pointer to **[]string** |  | [optional] 
 **BackupCategory** | Pointer to **NullableString** |  | [optional] 
+**ProjectIds** | Pointer to **[]int32** | Organization-wide presets only. Limits the preset to apps and databases in these projects of the organization; omit or leave empty for every project. | [optional] 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Free subscriptions may create only an automatic preset that is disabled. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
@@ -324,6 +325,41 @@ HasBackupCategory returns a boolean if a field has been set.
 `func (o *NewBackupPresetInput) UnsetBackupCategory()`
 
 UnsetBackupCategory ensures that no value is present for BackupCategory, not even an explicit nil
+### GetProjectIds
+
+`func (o *NewBackupPresetInput) GetProjectIds() []int32`
+
+GetProjectIds returns the ProjectIds field if non-nil, zero value otherwise.
+
+### GetProjectIdsOk
+
+`func (o *NewBackupPresetInput) GetProjectIdsOk() (*[]int32, bool)`
+
+GetProjectIdsOk returns a tuple with the ProjectIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectIds
+
+`func (o *NewBackupPresetInput) SetProjectIds(v []int32)`
+
+SetProjectIds sets ProjectIds field to given value.
+
+### HasProjectIds
+
+`func (o *NewBackupPresetInput) HasProjectIds() bool`
+
+HasProjectIds returns a boolean if a field has been set.
+
+### SetProjectIdsNil
+
+`func (o *NewBackupPresetInput) SetProjectIdsNil(b bool)`
+
+ SetProjectIdsNil sets the value for ProjectIds to be an explicit nil
+
+### UnsetProjectIds
+`func (o *NewBackupPresetInput) UnsetProjectIds()`
+
+UnsetProjectIds ensures that no value is present for ProjectIds, not even an explicit nil
 ### GetBackupName
 
 `func (o *NewBackupPresetInput) GetBackupName() string`

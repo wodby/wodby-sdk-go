@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Outdated** | **bool** |  | 
 **MainDomain** | Pointer to **NullableString** |  | [optional] 
 **MainDomainBasicAuth** | **bool** | Whether basic auth protects the environment&#39;s main domain. | 
+**DnsTarget** | Pointer to **NullableString** | Hostname to point custom domains at: a CNAME for subdomains, an ALIAS or flattened CNAME for root domains. Wodby keeps it pointed at wherever the environment runs. Null until it is published. | [optional] 
 **MainRouteCert** | [**NullableAppEnvironmentMainRouteCert**](AppEnvironmentMainRouteCert.md) |  | 
 **AppId** | **int32** |  | 
 **ClusterId** | **int32** |  | 
@@ -282,6 +283,41 @@ and a boolean to check if the value has been set.
 SetMainDomainBasicAuth sets MainDomainBasicAuth field to given value.
 
 
+### GetDnsTarget
+
+`func (o *AppEnvironment) GetDnsTarget() string`
+
+GetDnsTarget returns the DnsTarget field if non-nil, zero value otherwise.
+
+### GetDnsTargetOk
+
+`func (o *AppEnvironment) GetDnsTargetOk() (*string, bool)`
+
+GetDnsTargetOk returns a tuple with the DnsTarget field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDnsTarget
+
+`func (o *AppEnvironment) SetDnsTarget(v string)`
+
+SetDnsTarget sets DnsTarget field to given value.
+
+### HasDnsTarget
+
+`func (o *AppEnvironment) HasDnsTarget() bool`
+
+HasDnsTarget returns a boolean if a field has been set.
+
+### SetDnsTargetNil
+
+`func (o *AppEnvironment) SetDnsTargetNil(b bool)`
+
+ SetDnsTargetNil sets the value for DnsTarget to be an explicit nil
+
+### UnsetDnsTarget
+`func (o *AppEnvironment) UnsetDnsTarget()`
+
+UnsetDnsTarget ensures that no value is present for DnsTarget, not even an explicit nil
 ### GetMainRouteCert
 
 `func (o *AppEnvironment) GetMainRouteCert() AppEnvironmentMainRouteCert`

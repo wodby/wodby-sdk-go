@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **EnvTypes** | Pointer to **[]string** | Omit to preserve the current filter; use an empty array to clear it. | [optional] 
 **BackupCategory** | Pointer to **NullableString** | Omit to preserve the current category. | [optional] 
+**ProjectIds** | Pointer to **[]int32** | Organization-wide presets only. Omit to preserve the current project selection; use an empty array to apply the preset to every project. | [optional] 
 **IntegrationId** | **int32** | Use 0 for Wodby Blob Storage. Enabling the preset requires a paid subscription. | 
 **Bucket** | **string** | Must be empty for Wodby Blob Storage. | 
 **StorageClass** | Pointer to **NullableString** |  | [optional] 
@@ -107,6 +108,41 @@ HasBackupCategory returns a boolean if a field has been set.
 `func (o *UpdateBackupPresetInput) UnsetBackupCategory()`
 
 UnsetBackupCategory ensures that no value is present for BackupCategory, not even an explicit nil
+### GetProjectIds
+
+`func (o *UpdateBackupPresetInput) GetProjectIds() []int32`
+
+GetProjectIds returns the ProjectIds field if non-nil, zero value otherwise.
+
+### GetProjectIdsOk
+
+`func (o *UpdateBackupPresetInput) GetProjectIdsOk() (*[]int32, bool)`
+
+GetProjectIdsOk returns a tuple with the ProjectIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectIds
+
+`func (o *UpdateBackupPresetInput) SetProjectIds(v []int32)`
+
+SetProjectIds sets ProjectIds field to given value.
+
+### HasProjectIds
+
+`func (o *UpdateBackupPresetInput) HasProjectIds() bool`
+
+HasProjectIds returns a boolean if a field has been set.
+
+### SetProjectIdsNil
+
+`func (o *UpdateBackupPresetInput) SetProjectIdsNil(b bool)`
+
+ SetProjectIdsNil sets the value for ProjectIds to be an explicit nil
+
+### UnsetProjectIds
+`func (o *UpdateBackupPresetInput) UnsetProjectIds()`
+
+UnsetProjectIds ensures that no value is present for ProjectIds, not even an explicit nil
 ### GetIntegrationId
 
 `func (o *UpdateBackupPresetInput) GetIntegrationId() int32`

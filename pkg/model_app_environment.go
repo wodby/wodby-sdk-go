@@ -33,6 +33,8 @@ type AppEnvironment struct {
 	MainDomain NullableString `json:"mainDomain,omitempty"`
 	// Whether basic auth protects the environment's main domain.
 	MainDomainBasicAuth bool `json:"mainDomainBasicAuth"`
+	// Hostname to point custom domains at: a CNAME for subdomains, an ALIAS or flattened CNAME for root domains. Wodby keeps it pointed at wherever the environment runs. Null until it is published.
+	DnsTarget NullableString `json:"dnsTarget,omitempty"`
 	MainRouteCert NullableAppEnvironmentMainRouteCert `json:"mainRouteCert"`
 	AppId int32 `json:"appId"`
 	ClusterId int32 `json:"clusterId"`
@@ -379,6 +381,48 @@ func (o *AppEnvironment) GetMainDomainBasicAuthOk() (*bool, bool) {
 // SetMainDomainBasicAuth sets field value
 func (o *AppEnvironment) SetMainDomainBasicAuth(v bool) {
 	o.MainDomainBasicAuth = v
+}
+
+// GetDnsTarget returns the DnsTarget field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppEnvironment) GetDnsTarget() string {
+	if o == nil || IsNil(o.DnsTarget.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DnsTarget.Get()
+}
+
+// GetDnsTargetOk returns a tuple with the DnsTarget field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppEnvironment) GetDnsTargetOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DnsTarget.Get(), o.DnsTarget.IsSet()
+}
+
+// HasDnsTarget returns a boolean if a field has been set.
+func (o *AppEnvironment) HasDnsTarget() bool {
+	if o != nil && o.DnsTarget.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDnsTarget gets a reference to the given NullableString and assigns it to the DnsTarget field.
+func (o *AppEnvironment) SetDnsTarget(v string) {
+	o.DnsTarget.Set(&v)
+}
+// SetDnsTargetNil sets the value for DnsTarget to be an explicit nil
+func (o *AppEnvironment) SetDnsTargetNil() {
+	o.DnsTarget.Set(nil)
+}
+
+// UnsetDnsTarget ensures that no value is present for DnsTarget, not even an explicit nil
+func (o *AppEnvironment) UnsetDnsTarget() {
+	o.DnsTarget.Unset()
 }
 
 // GetMainRouteCert returns the MainRouteCert field value
@@ -1013,6 +1057,9 @@ func (o AppEnvironment) ToMap() (map[string]interface{}, error) {
 		toSerialize["mainDomain"] = o.MainDomain.Get()
 	}
 	toSerialize["mainDomainBasicAuth"] = o.MainDomainBasicAuth
+	if o.DnsTarget.IsSet() {
+		toSerialize["dnsTarget"] = o.DnsTarget.Get()
+	}
 	toSerialize["mainRouteCert"] = o.MainRouteCert.Get()
 	toSerialize["appId"] = o.AppId
 	toSerialize["clusterId"] = o.ClusterId

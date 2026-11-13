@@ -506,7 +506,7 @@ Name | Type | Description  | Notes
 
 ## ListBackupPresets
 
-> []BackupPreset ListBackupPresets(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).ApplicableEnvId(applicableEnvId).ApplicableBackupCategory(applicableBackupCategory).Execute()
+> []BackupPreset ListBackupPresets(ctx).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).ApplicableEnvId(applicableEnvId).ApplicableBackupCategory(applicableBackupCategory).ApplicableAppInstanceId(applicableAppInstanceId).ApplicableDatabaseId(applicableDatabaseId).Execute()
 
 List backup presets
 
@@ -533,10 +533,12 @@ func main() {
 	backupName := "backupName_example" // string |  (optional)
 	applicableEnvId := int32(56) // int32 | Return only presets that apply to this environment. (optional)
 	applicableBackupCategory := "applicableBackupCategory_example" // string | Return only presets that apply to this backup category. (optional)
+	applicableAppInstanceId := int32(56) // int32 | Return only presets that apply to this app environment, by its environment and the projects its app is in. (optional)
+	applicableDatabaseId := int32(56) // int32 | Return only presets that apply to this database, by its environment and the projects it is in. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BackupsAPI.ListBackupPresets(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).ApplicableEnvId(applicableEnvId).ApplicableBackupCategory(applicableBackupCategory).Execute()
+	resp, r, err := apiClient.BackupsAPI.ListBackupPresets(context.Background()).AppInstanceId(appInstanceId).AppServiceId(appServiceId).DatabaseId(databaseId).DatabaseDbId(databaseDbId).OrgId(orgId).BackupName(backupName).ApplicableEnvId(applicableEnvId).ApplicableBackupCategory(applicableBackupCategory).ApplicableAppInstanceId(applicableAppInstanceId).ApplicableDatabaseId(applicableDatabaseId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BackupsAPI.ListBackupPresets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -565,6 +567,8 @@ Name | Type | Description  | Notes
  **backupName** | **string** |  | 
  **applicableEnvId** | **int32** | Return only presets that apply to this environment. | 
  **applicableBackupCategory** | **string** | Return only presets that apply to this backup category. | 
+ **applicableAppInstanceId** | **int32** | Return only presets that apply to this app environment, by its environment and the projects its app is in. | 
+ **applicableDatabaseId** | **int32** | Return only presets that apply to this database, by its environment and the projects it is in. | 
 
 ### Return type
 

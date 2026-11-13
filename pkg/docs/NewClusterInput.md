@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **BillingOption** | Pointer to **NullableString** |  | [optional] 
 **DisableMonitoring** | **bool** |  | 
 **AutoInfrastructureUpgrade** | Pointer to **NullableBool** |  | [optional] 
-**AutoKubernetesUpgrade** | Pointer to **NullableBool** | Turns automatic Kubernetes version and component upgrades on or off. On by default. | [optional] 
+**AutoKubernetesUpgrade** | Pointer to **NullableBool** | Turns automatic Kubernetes version and component upgrades on or off. Off by default, because each Kubernetes upgrade of a managed cluster replaces its nodes and restarts every pod. Serverless clusters are always off. | [optional] 
 **EnvironmentPolicy** | Pointer to [**ClusterEnvironmentPolicyInput**](ClusterEnvironmentPolicyInput.md) |  | [optional] 
 
 ## Methods

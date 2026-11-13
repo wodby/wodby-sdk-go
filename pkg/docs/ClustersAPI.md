@@ -17,10 +17,13 @@ Method | HTTP request | Description
 [**GetClusterSecurityAdvisories**](ClustersAPI.md#GetClusterSecurityAdvisories) | **Get** /cluster-security-advisories/{id} | List cluster security advisories
 [**GetClusterSharing**](ClustersAPI.md#GetClusterSharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
 [**GetK3SClusterInstallCommand**](ClustersAPI.md#GetK3SClusterInstallCommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
+[**GetK3SClusterJoinCommand**](ClustersAPI.md#GetK3SClusterJoinCommand) | **Get** /clusters/k3s-join-command/{id} | Get k3s join command
 [**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
+[**ListK3SClusterNodes**](ClustersAPI.md#ListK3SClusterNodes) | **Get** /cluster-k3s-nodes/{id} | List k3s cluster nodes
 [**ListWodbyCloudMachineTypes**](ClustersAPI.md#ListWodbyCloudMachineTypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 [**RecycleClusterNodes**](ClustersAPI.md#RecycleClusterNodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
+[**RemoveK3SClusterNode**](ClustersAPI.md#RemoveK3SClusterNode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove k3s cluster node
 [**ScaleCluster**](ClustersAPI.md#ScaleCluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
 [**UpdateClusterComponent**](ClustersAPI.md#UpdateClusterComponent) | **Post** /clusters/{id}/actions/update-component | Update a cluster component
@@ -939,6 +942,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetK3SClusterJoinCommand
+
+> K3SJoinCommand GetK3SClusterJoinCommand(ctx, id).Execute()
+
+Get k3s join command
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetK3SClusterJoinCommand(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetK3SClusterJoinCommand``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetK3SClusterJoinCommand`: K3SJoinCommand
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetK3SClusterJoinCommand`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetK3SClusterJoinCommandRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**K3SJoinCommand**](K3SJoinCommand.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetKubernetesVersionUpgradePlan
 
 > KubernetesVersionUpgradePlan GetKubernetesVersionUpgradePlan(ctx, id).Execute()
@@ -1081,6 +1154,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListK3SClusterNodes
+
+> []K3SClusterNode ListK3SClusterNodes(ctx, id).Execute()
+
+List k3s cluster nodes
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.ListK3SClusterNodes(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.ListK3SClusterNodes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListK3SClusterNodes`: []K3SClusterNode
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.ListK3SClusterNodes`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListK3SClusterNodesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]K3SClusterNode**](K3SClusterNode.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListWodbyCloudMachineTypes
 
 > []WodbyCloudMachineType ListWodbyCloudMachineTypes(ctx).Execute()
@@ -1205,6 +1348,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RemoveK3SClusterNode
+
+> OperationResult RemoveK3SClusterNode(ctx, id).RemoveK3SClusterNodeInput(removeK3SClusterNodeInput).Execute()
+
+Remove k3s cluster node
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	removeK3SClusterNodeInput := *openapiclient.NewRemoveK3SClusterNodeInput("NodeName_example") // RemoveK3SClusterNodeInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.RemoveK3SClusterNode(context.Background(), id).RemoveK3SClusterNodeInput(removeK3SClusterNodeInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.RemoveK3SClusterNode``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RemoveK3SClusterNode`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.RemoveK3SClusterNode`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRemoveK3SClusterNodeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **removeK3SClusterNodeInput** | [**RemoveK3SClusterNodeInput**](RemoveK3SClusterNodeInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

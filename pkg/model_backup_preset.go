@@ -31,6 +31,8 @@ type BackupPreset struct {
 	EnvId NullableInt32 `json:"envId,omitempty"`
 	EnvTypes []string `json:"envTypes"`
 	BackupCategory string `json:"backupCategory"`
+	// Organization-wide presets only. Projects whose apps and databases the preset backs up; empty means every project.
+	ProjectIds []int32 `json:"projectIds"`
 	BackupName NullableString `json:"backupName,omitempty"`
 	IntegrationId int32 `json:"integrationId"`
 	Bucket string `json:"bucket"`
@@ -55,11 +57,12 @@ type _BackupPreset BackupPreset
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBackupPreset(id int32, envTypes []string, backupCategory string, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time) *BackupPreset {
+func NewBackupPreset(id int32, envTypes []string, backupCategory string, projectIds []int32, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time) *BackupPreset {
 	this := BackupPreset{}
 	this.Id = id
 	this.EnvTypes = envTypes
 	this.BackupCategory = backupCategory
+	this.ProjectIds = projectIds
 	this.IntegrationId = integrationId
 	this.Bucket = bucket
 	this.Options = options
@@ -401,6 +404,30 @@ func (o *BackupPreset) GetBackupCategoryOk() (*string, bool) {
 // SetBackupCategory sets field value
 func (o *BackupPreset) SetBackupCategory(v string) {
 	o.BackupCategory = v
+}
+
+// GetProjectIds returns the ProjectIds field value
+func (o *BackupPreset) GetProjectIds() []int32 {
+	if o == nil {
+		var ret []int32
+		return ret
+	}
+
+	return o.ProjectIds
+}
+
+// GetProjectIdsOk returns a tuple with the ProjectIds field value
+// and a boolean to check if the value has been set.
+func (o *BackupPreset) GetProjectIdsOk() ([]int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ProjectIds, true
+}
+
+// SetProjectIds sets field value
+func (o *BackupPreset) SetProjectIds(v []int32) {
+	o.ProjectIds = v
 }
 
 // GetBackupName returns the BackupName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -910,6 +937,7 @@ func (o BackupPreset) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["envTypes"] = o.EnvTypes
 	toSerialize["backupCategory"] = o.BackupCategory
+	toSerialize["projectIds"] = o.ProjectIds
 	if o.BackupName.IsSet() {
 		toSerialize["backupName"] = o.BackupName.Get()
 	}
@@ -950,6 +978,7 @@ func (o *BackupPreset) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"envTypes",
 		"backupCategory",
+		"projectIds",
 		"integrationId",
 		"bucket",
 		"options",

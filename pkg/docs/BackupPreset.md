@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **EnvId** | Pointer to **NullableInt32** |  | [optional] 
 **EnvTypes** | **[]string** |  | 
 **BackupCategory** | **string** |  | 
+**ProjectIds** | **[]int32** | Organization-wide presets only. Projects whose apps and databases the preset backs up; empty means every project. | 
 **BackupName** | Pointer to **NullableString** |  | [optional] 
 **IntegrationId** | **int32** |  | 
 **Bucket** | **string** |  | 
@@ -33,7 +34,7 @@ Name | Type | Description | Notes
 
 ### NewBackupPreset
 
-`func NewBackupPreset(id int32, envTypes []string, backupCategory string, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time, ) *BackupPreset`
+`func NewBackupPreset(id int32, envTypes []string, backupCategory string, projectIds []int32, integrationId int32, bucket string, options []BackupOption, override bool, auto bool, disabled bool, createdAt time.Time, updatedAt time.Time, ) *BackupPreset`
 
 NewBackupPreset instantiates a new BackupPreset object
 This constructor will assign default values to properties that have it defined,
@@ -316,6 +317,26 @@ and a boolean to check if the value has been set.
 `func (o *BackupPreset) SetBackupCategory(v string)`
 
 SetBackupCategory sets BackupCategory field to given value.
+
+
+### GetProjectIds
+
+`func (o *BackupPreset) GetProjectIds() []int32`
+
+GetProjectIds returns the ProjectIds field if non-nil, zero value otherwise.
+
+### GetProjectIdsOk
+
+`func (o *BackupPreset) GetProjectIdsOk() (*[]int32, bool)`
+
+GetProjectIdsOk returns a tuple with the ProjectIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectIds
+
+`func (o *BackupPreset) SetProjectIds(v []int32)`
+
+SetProjectIds sets ProjectIds field to given value.
 
 
 ### GetBackupName

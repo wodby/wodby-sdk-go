@@ -268,10 +268,13 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**GetClusterSecurityAdvisories**](docs/ClustersAPI.md#getclustersecurityadvisories) | **Get** /cluster-security-advisories/{id} | List cluster security advisories
 *ClustersAPI* | [**GetClusterSharing**](docs/ClustersAPI.md#getclustersharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
 *ClustersAPI* | [**GetK3SClusterInstallCommand**](docs/ClustersAPI.md#getk3sclusterinstallcommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
+*ClustersAPI* | [**GetK3SClusterJoinCommand**](docs/ClustersAPI.md#getk3sclusterjoincommand) | **Get** /clusters/k3s-join-command/{id} | Get k3s join command
 *ClustersAPI* | [**GetKubernetesVersionUpgradePlan**](docs/ClustersAPI.md#getkubernetesversionupgradeplan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 *ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
+*ClustersAPI* | [**ListK3SClusterNodes**](docs/ClustersAPI.md#listk3sclusternodes) | **Get** /cluster-k3s-nodes/{id} | List k3s cluster nodes
 *ClustersAPI* | [**ListWodbyCloudMachineTypes**](docs/ClustersAPI.md#listwodbycloudmachinetypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 *ClustersAPI* | [**RecycleClusterNodes**](docs/ClustersAPI.md#recycleclusternodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
+*ClustersAPI* | [**RemoveK3SClusterNode**](docs/ClustersAPI.md#removek3sclusternode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove k3s cluster node
 *ClustersAPI* | [**ScaleCluster**](docs/ClustersAPI.md#scalecluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 *ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
 *ClustersAPI* | [**UpdateClusterComponent**](docs/ClustersAPI.md#updateclustercomponent) | **Post** /clusters/{id}/actions/update-component | Update a cluster component
@@ -718,7 +721,9 @@ Class | Method | HTTP request | Description
  - [IntegrationVariableRequirement](docs/IntegrationVariableRequirement.md)
  - [IntegrationVariableRequirementInput](docs/IntegrationVariableRequirementInput.md)
  - [InviteOrgMemberInput](docs/InviteOrgMemberInput.md)
+ - [K3SClusterNode](docs/K3SClusterNode.md)
  - [K3SInstallCommand](docs/K3SInstallCommand.md)
+ - [K3SJoinCommand](docs/K3SJoinCommand.md)
  - [KubeVersion](docs/KubeVersion.md)
  - [KubernetesVersionUpgradePlan](docs/KubernetesVersionUpgradePlan.md)
  - [KubernetesVersionUpgradeTarget](docs/KubernetesVersionUpgradeTarget.md)
@@ -805,6 +810,7 @@ Class | Method | HTTP request | Description
  - [ProvidersResponse](docs/ProvidersResponse.md)
  - [RemoteGitRepo](docs/RemoteGitRepo.md)
  - [RemoteGitRepoFilePresence](docs/RemoteGitRepoFilePresence.md)
+ - [RemoveK3SClusterNodeInput](docs/RemoveK3SClusterNodeInput.md)
  - [RepeatTaskRequest](docs/RepeatTaskRequest.md)
  - [ResolveIntegrationResult](docs/ResolveIntegrationResult.md)
  - [ResolvedServiceConfig](docs/ResolvedServiceConfig.md)
