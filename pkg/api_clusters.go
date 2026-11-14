@@ -182,9 +182,9 @@ func (r ApiCreateK3SClusterRequest) Execute() (*Cluster, *http.Response, error) 
 }
 
 /*
-CreateK3SCluster Create k3s cluster
+CreateK3SCluster Create K3s cluster
 
-Registers a self-hosted k3s cluster. Run the command from GET /clusters/k3s-install-command/{id} on the server to connect it.
+Registers a self-hosted K3s cluster. Run the command from GET /clusters/k3s-install-command/{id} on the server to connect it.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateK3SClusterRequest
@@ -895,7 +895,7 @@ func (r ApiGetClusterComponentUpdatesRequest) Execute() ([]ClusterComponentUpdat
 /*
 GetClusterComponentUpdates List cluster component updates
 
-Returns the updates Wodby can apply to single components of a healthy cluster, without a Kubernetes or infrastructure upgrade. The ID is the cluster's. Most components cannot be updated this way, because their provider or K3S release owns them, so the list is often empty.
+Returns the updates Wodby can apply to single components of a healthy cluster, without a Kubernetes or infrastructure upgrade. The ID is the cluster's. Most components cannot be updated this way, because their provider or K3s release owns them, so the list is often empty.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1167,7 +1167,7 @@ func (r ApiGetClusterHostChecksRequest) Execute() ([]ClusterHostCheck, *http.Res
 /*
 GetClusterHostChecks List cluster host checks
 
-Returns what a K3S cluster's server last reported about its protections against the Linux kernel bug CVE-2026-98432. The server checks after each boot and once a day, puts back a protection that is missing, and reports the result. The ID is the cluster's. Every known check is listed, as unknown when the server hasn't reported it or its last report is more than two days old. Managed clusters return an empty list.
+Returns what a K3s cluster's server last reported about its protections against the Linux kernel bug CVE-2026-98432. The server checks after each boot and once a day, puts back a protection that is missing, and reports the result. The ID is the cluster's. Every known check is listed, as unknown when the server hasn't reported it or its last report is more than two days old. Managed clusters return an empty list.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1435,6 +1435,142 @@ func (a *ClustersAPIService) GetClusterInfraAppUpgradeChangelogExecute(r ApiGetC
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetClusterKubernetesVulnerabilitiesRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+}
+
+func (r ApiGetClusterKubernetesVulnerabilitiesRequest) Execute() (*ClusterKubernetesVulnerabilities, *http.Response, error) {
+	return r.ApiService.GetClusterKubernetesVulnerabilitiesExecute(r)
+}
+
+/*
+GetClusterKubernetesVulnerabilities List Kubernetes version vulnerabilities
+
+Returns the known upstream vulnerabilities of the Kubernetes version the cluster last reported. The ID is the cluster's. The vulnerabilities describe the upstream patch level of the version; K3s and managed Kubernetes builds can carry fixes that are newer than that patch. Returns null while they are unknown: for Wodby Cloud and serverless clusters, before the cluster reports its version, or while they can't be loaded.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetClusterKubernetesVulnerabilitiesRequest
+*/
+func (a *ClustersAPIService) GetClusterKubernetesVulnerabilities(ctx context.Context, id int32) ApiGetClusterKubernetesVulnerabilitiesRequest {
+	return ApiGetClusterKubernetesVulnerabilitiesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return ClusterKubernetesVulnerabilities
+func (a *ClustersAPIService) GetClusterKubernetesVulnerabilitiesExecute(r ApiGetClusterKubernetesVulnerabilitiesRequest) (*ClusterKubernetesVulnerabilities, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ClusterKubernetesVulnerabilities
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.GetClusterKubernetesVulnerabilities")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cluster-kubernetes-vulnerabilities/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetClusterSecurityAdvisoriesRequest struct {
 	ctx context.Context
 	ApiService *ClustersAPIService
@@ -1448,7 +1584,7 @@ func (r ApiGetClusterSecurityAdvisoriesRequest) Execute() ([]ClusterSecurityAdvi
 /*
 GetClusterSecurityAdvisories List cluster security advisories
 
-Returns where the cluster stands on each security advisory Wodby tracks, such as CVE-2026-98432. The ID is the cluster's. A K3S cluster is mitigated or not by the protections Wodby keeps on its server. A managed cluster is fixed or not by the node images its provider ships. An advisory is left out when Wodby can't tell, for example when the provider hasn't said which node images carry the fix. Wodby Cloud and serverless clusters return an empty list.
+Returns where the cluster stands on each security advisory Wodby tracks, such as CVE-2026-98432. The ID is the cluster's. A K3s cluster is mitigated or not by the protections Wodby keeps on its server. A managed cluster is fixed or not by the node images its provider ships, as Wodby last checked them: once a day, and when a task that replaces nodes finishes. A managed cluster returns an empty list until its first check, within minutes of its creation. An advisory is left out when Wodby can't tell, for example when the provider hasn't said which node images carry the fix. Wodby Cloud and serverless clusters return an empty list.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1718,9 +1854,9 @@ func (r ApiGetK3SClusterInstallCommandRequest) Execute() (*K3SInstallCommand, *h
 }
 
 /*
-GetK3SClusterInstallCommand Get k3s install command
+GetK3SClusterInstallCommand Get K3s install command
 
-Returns the shell command that installs Wodby on the k3s server and connects the cluster. The command contains short-lived credentials; treat it as a secret.
+Returns the shell command that installs Wodby on the K3s server and connects the cluster. The command contains short-lived credentials; treat it as a secret.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -1854,9 +1990,9 @@ func (r ApiGetK3SClusterJoinCommandRequest) Execute() (*K3SJoinCommand, *http.Re
 }
 
 /*
-GetK3SClusterJoinCommand Get k3s join command
+GetK3SClusterJoinCommand Get K3s join command
 
-Returns a one-time shell command that joins another server to a k3s cluster as a worker node. Run it as root on that server within 15 minutes. Both servers must share a private network, and the cluster must be in OK status on current infrastructure. The command contains short-lived credentials; treat it as a secret.
+Returns a one-time shell command that joins another server to a K3s cluster as a worker node. Run it as root on that server within 15 minutes. Both servers must share a private network, and the cluster must be in OK status on current infrastructure. The command contains short-lived credentials; treat it as a secret.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -2022,6 +2158,142 @@ func (a *ClustersAPIService) GetKubernetesVersionUpgradePlanExecute(r ApiGetKube
 	}
 
 	localVarPath := localBasePath + "/cluster-kubernetes-version-upgrade-plans/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListClusterNodesRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+}
+
+func (r ApiListClusterNodesRequest) Execute() ([]ClusterNode, *http.Response, error) {
+	return r.ApiService.ListClusterNodesExecute(r)
+}
+
+/*
+ListClusterNodes List cluster nodes
+
+Returns the nodes of a cluster, read live from the cluster: the general nodes first, then the GPU node pool. Wodby Cloud and serverless clusters don't list nodes. The ID is the cluster's.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiListClusterNodesRequest
+*/
+func (a *ClustersAPIService) ListClusterNodes(ctx context.Context, id int32) ApiListClusterNodesRequest {
+	return ApiListClusterNodesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return []ClusterNode
+func (a *ClustersAPIService) ListClusterNodesExecute(r ApiListClusterNodesRequest) ([]ClusterNode, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ClusterNode
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.ListClusterNodes")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cluster-nodes/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -2296,9 +2568,9 @@ func (r ApiListK3SClusterNodesRequest) Execute() ([]K3SClusterNode, *http.Respon
 }
 
 /*
-ListK3SClusterNodes List k3s cluster nodes
+ListK3SClusterNodes List K3s cluster nodes
 
-Returns the nodes of a k3s cluster, read live from the cluster, the server first. The ID is the cluster's.
+Returns the nodes of a K3s cluster, read live from the cluster, the server first. The ID is the cluster's.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -2432,9 +2704,9 @@ func (r ApiListK3SServerPrivateAddressesRequest) Execute() ([]K3SPrivateAddress,
 }
 
 /*
-ListK3SServerPrivateAddresses List k3s server private addresses
+ListK3SServerPrivateAddresses List K3s server private addresses
 
-Returns the private addresses the server of a k3s cluster could switch to, read from the server itself. Only for a server that uses its public address for cluster traffic, which keeps worker nodes out. Runs a short check on the server and needs permission to modify the cluster. The ID is the cluster's.
+Returns the private addresses the server of a K3s cluster could switch to, read from the server itself. Only for a server that uses its public address for cluster traffic, which keeps worker nodes out. Runs a short check on the server and needs permission to modify the cluster. The ID is the cluster's.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -2702,7 +2974,7 @@ func (r ApiRecycleClusterNodesRequest) Execute() (*OperationResult, *http.Respon
 /*
 RecycleClusterNodes Recycle cluster nodes
 
-Starts refreshing the cluster's worker nodes, so applications restart as their pods move. EKS moves each node group to its latest node image and leaves a group that already runs it in place. AKS and DigitalOcean replace every node. A single-node DigitalOcean cluster gets a temporary second node first, and its public IP changes: Wodby updates the technical domains, but custom domains with an A record to the old IP must be updated. Refused for providers whose kube settings report nodeRecycling as false, currently GKE and OVHcloud, for K3S, Wodby Cloud and serverless clusters, and while application operations are active. New deployments wait until it ends.
+Starts refreshing the cluster's worker nodes, so applications restart as their pods move. EKS moves each node group to its latest node image and leaves a group that already runs it in place. AKS and DigitalOcean replace every node. A single-node DigitalOcean cluster gets a temporary second node first, and its public IP changes: Wodby updates the technical domains, but custom domains with an A record to the old IP must be updated. Refused for providers whose kube settings report nodeRecycling as false, currently GKE and OVHcloud, for K3s, Wodby Cloud and serverless clusters, and while application operations are active. New deployments wait until it ends.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -2842,9 +3114,9 @@ func (r ApiRemoveK3SClusterNodeRequest) Execute() (*OperationResult, *http.Respo
 }
 
 /*
-RemoveK3SClusterNode Remove k3s cluster node
+RemoveK3SClusterNode Remove K3s cluster node
 
-Takes a worker node out of a k3s cluster: moves its pods to other nodes, stops k3s on it and deletes the node. Refuses the server, and without force a node that stores persistent volumes, whose data would be lost. Run sudo /usr/local/bin/wodby-k3s-uninstall on that server afterwards to remove k3s from it.
+Takes a worker node out of a K3s cluster: moves its pods to other nodes, stops K3s on it and deletes the node. Refuses the server, and without force a node that stores persistent volumes, whose data would be lost. Run sudo /usr/local/bin/wodby-k3s-uninstall on that server afterwards to remove K3s from it.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -3136,9 +3408,9 @@ func (r ApiSwitchK3SServerAddressRequest) Execute() (*OperationResult, *http.Res
 }
 
 /*
-SwitchK3SServerAddress Switch k3s server to a private address
+SwitchK3SServerAddress Switch K3s server to a private address
 
-Switches the server of a k3s cluster from its public address to a private one from GET /cluster-k3s-private-addresses/{id} for cluster traffic, so worker nodes can join, and keeps the public address for public traffic. k3s restarts once: the Kubernetes API pauses for about a minute while apps keep running, and new deployments wait until the switch ends. Refused while application operations are active. If k3s doesn't come back on the private address, the server restores its previous settings.
+Switches the server of a K3s cluster from its public address to a private one from GET /cluster-k3s-private-addresses/{id} for cluster traffic, so worker nodes can join, and keeps the public address for public traffic. K3s restarts once: the Kubernetes API pauses for about a minute while apps keep running, and new deployments wait until the switch ends. Refused while application operations are active. If K3s doesn't come back on the private address, the server restores its previous settings.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -4295,6 +4567,153 @@ func (a *ClustersAPIService) UpdateClusterSharingExecute(r ApiUpdateClusterShari
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateK3SClusterMaxPodsRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+	updateK3SClusterMaxPodsInput *UpdateK3SClusterMaxPodsInput
+}
+
+func (r ApiUpdateK3SClusterMaxPodsRequest) UpdateK3SClusterMaxPodsInput(updateK3SClusterMaxPodsInput UpdateK3SClusterMaxPodsInput) ApiUpdateK3SClusterMaxPodsRequest {
+	r.updateK3SClusterMaxPodsInput = &updateK3SClusterMaxPodsInput
+	return r
+}
+
+func (r ApiUpdateK3SClusterMaxPodsRequest) Execute() (*OperationResult, *http.Response, error) {
+	return r.ApiService.UpdateK3SClusterMaxPodsExecute(r)
+}
+
+/*
+UpdateK3SClusterMaxPods Set pods per node of a K3s cluster
+
+Sets how many pods each node of a K3s cluster runs at most. K3s restarts on every node whose setting changes, one node at a time: apps keep running, the Kubernetes API pauses for about a minute while the server restarts, and new deployments wait until it ends. Refused while application operations are active, below the pods a node already runs, on a node with no free pod slot, and before the cluster's infrastructure upgrade that sets it.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateK3SClusterMaxPodsRequest
+*/
+func (a *ClustersAPIService) UpdateK3SClusterMaxPods(ctx context.Context, id int32) ApiUpdateK3SClusterMaxPodsRequest {
+	return ApiUpdateK3SClusterMaxPodsRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return OperationResult
+func (a *ClustersAPIService) UpdateK3SClusterMaxPodsExecute(r ApiUpdateK3SClusterMaxPodsRequest) (*OperationResult, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OperationResult
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.UpdateK3SClusterMaxPods")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/clusters/{id}/actions/update-k3s-max-pods"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateK3SClusterMaxPodsInput == nil {
+		return localVarReturnValue, nil, reportError("updateK3SClusterMaxPodsInput is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateK3SClusterMaxPodsInput
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateK3SClusterPublicIpRequest struct {
 	ctx context.Context
 	ApiService *ClustersAPIService
@@ -4312,9 +4731,9 @@ func (r ApiUpdateK3SClusterPublicIpRequest) Execute() (*Cluster, *http.Response,
 }
 
 /*
-UpdateK3SClusterPublicIp Update k3s cluster public IP
+UpdateK3SClusterPublicIp Update K3s cluster public IP
 
-Changes the public IP address that routes to a self-hosted k3s cluster. Returns the cluster.
+Changes the public IP address that routes to a self-hosted K3s cluster. Returns the cluster.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

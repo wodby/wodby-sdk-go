@@ -24,7 +24,7 @@ type ClusterSecurityAdvisory struct {
 	// The advisory, such as CVE-2026-98432.
 	Advisory string `json:"advisory"`
 	Title string `json:"title"`
-	// mitigated or not_mitigated for a K3S cluster, by the protections Wodby keeps on its server. fixed or not_fixed for a managed cluster, by the node images its provider ships.
+	// mitigated or not_mitigated for a K3s cluster, by the protections Wodby keeps on its server. fixed or not_fixed for a managed cluster, by the node images its provider ships.
 	State string `json:"state"`
 	// The operation that fixes or mitigates the advisory. Absent when nothing is needed, or when the provider has no fixed node image yet.
 	Action *string `json:"action,omitempty"`

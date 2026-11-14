@@ -26,7 +26,7 @@ type K3SPrivateAddress struct {
 	NetworkInterface string `json:"networkInterface"`
 	// The interface's MTU, or 0 when the server doesn't report it.
 	Mtu int32 `json:"mtu"`
-	// Whether the server's network configuration brings the address back after a reboot. k3s doesn't start when its address is gone, so switching to an address that isn't persistent needs force.
+	// Whether the server's network configuration brings the address back after a reboot. K3s doesn't start when its address is gone, so switching to an address that isn't persistent needs force.
 	Persistent bool `json:"persistent"`
 	// What keeps the address after a reboot, such as systemd-networkd or NetworkManager.
 	PersistentSource *string `json:"persistentSource,omitempty"`

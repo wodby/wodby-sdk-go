@@ -2028,6 +2028,121 @@ paths:
       summary: Update app settings
       tags:
       - apps
+  /apps/vulnerability-ignores/{id}:
+    get:
+      description: "Lists the vulnerabilities the app ignores, newest first. Each\
+        \ one applies to its package in every build of every environment of the app."
+      operationId: listAppVulnerabilityIgnores
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppVulnerabilityIgnore'
+                type: array
+          description: Ignored vulnerabilities
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List ignored vulnerabilities
+      tags:
+      - apps
+    post:
+      description: "Ignores a vulnerability in one package for every build of the\
+        \ app, including later scans. Ignored findings are left out of vulnerability\
+        \ counts and reported in the ignored count instead. Needs permission to modify\
+        \ the app and vulnerability scanning on the organization's plan. Fails when\
+        \ the app already ignores the vulnerability in that package."
+      operationId: createAppVulnerabilityIgnore
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppVulnerabilityIgnoreInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppVulnerabilityIgnore'
+          description: Created ignore
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Ignore a vulnerability
+      tags:
+      - apps
+  /app-vulnerability-ignores/{id}:
+    delete:
+      description: "Removes an ignore, so matching findings count again. Needs permission\
+        \ to modify the app."
+      operationId: deleteAppVulnerabilityIgnore
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Stop ignoring a vulnerability
+      tags:
+      - apps
   /apps/preview-pull-requests/{id}:
     get:
       description: "Lists the app's open pull requests into the branch the preview\
@@ -6889,7 +7004,7 @@ paths:
       description: "Returns the updates Wodby can apply to single components of a\
         \ healthy cluster, without a Kubernetes or infrastructure upgrade. The ID\
         \ is the cluster's. Most components cannot be updated this way, because their\
-        \ provider or K3S release owns them, so the list is often empty."
+        \ provider or K3s release owns them, so the list is often empty."
       operationId: getClusterComponentUpdates
       parameters:
       - explode: false
@@ -6966,7 +7081,7 @@ paths:
       - clusters
   /cluster-host-checks/{id}:
     get:
-      description: "Returns what a K3S cluster's server last reported about its protections\
+      description: "Returns what a K3s cluster's server last reported about its protections\
         \ against the Linux kernel bug CVE-2026-98432. The server checks after each\
         \ boot and once a day, puts back a protection that is missing, and reports\
         \ the result. The ID is the cluster's. Every known check is listed, as unknown\
@@ -7008,12 +7123,14 @@ paths:
   /cluster-security-advisories/{id}:
     get:
       description: "Returns where the cluster stands on each security advisory Wodby\
-        \ tracks, such as CVE-2026-98432. The ID is the cluster's. A K3S cluster is\
+        \ tracks, such as CVE-2026-98432. The ID is the cluster's. A K3s cluster is\
         \ mitigated or not by the protections Wodby keeps on its server. A managed\
-        \ cluster is fixed or not by the node images its provider ships. An advisory\
-        \ is left out when Wodby can't tell, for example when the provider hasn't\
-        \ said which node images carry the fix. Wodby Cloud and serverless clusters\
-        \ return an empty list."
+        \ cluster is fixed or not by the node images its provider ships, as Wodby\
+        \ last checked them: once a day, and when a task that replaces nodes finishes.\
+        \ A managed cluster returns an empty list until its first check, within minutes\
+        \ of its creation. An advisory is left out when Wodby can't tell, for example\
+        \ when the provider hasn't said which node images carry the fix. Wodby Cloud\
+        \ and serverless clusters return an empty list."
       operationId: getClusterSecurityAdvisories
       parameters:
       - explode: false
@@ -7045,6 +7162,49 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List cluster security advisories
+      tags:
+      - clusters
+  /cluster-kubernetes-vulnerabilities/{id}:
+    get:
+      description: "Returns the known upstream vulnerabilities of the Kubernetes version\
+        \ the cluster last reported. The ID is the cluster's. The vulnerabilities\
+        \ describe the upstream patch level of the version; K3s and managed Kubernetes\
+        \ builds can carry fixes that are newer than that patch. Returns null while\
+        \ they are unknown: for Wodby Cloud and serverless clusters, before the cluster\
+        \ reports its version, or while they can't be loaded."
+      operationId: getClusterKubernetesVulnerabilities
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ClusterKubernetesVulnerabilities'
+                nullable: true
+                type: object
+          description: "Kubernetes version vulnerabilities, or null while they are\
+            \ unknown"
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List Kubernetes version vulnerabilities
       tags:
       - clusters
   /clusters/settings/{id}:
@@ -10752,7 +10912,7 @@ paths:
         \ second node first, and its public IP changes: Wodby updates the technical\
         \ domains, but custom domains with an A record to the old IP must be updated.\
         \ Refused for providers whose kube settings report nodeRecycling as false,\
-        \ currently GKE and OVHcloud, for K3S, Wodby Cloud and serverless clusters,\
+        \ currently GKE and OVHcloud, for K3s, Wodby Cloud and serverless clusters,\
         \ and while application operations are active. New deployments wait until\
         \ it ends."
       operationId: recycleClusterNodes
@@ -10788,7 +10948,7 @@ paths:
       - clusters
   /clusters/{id}/actions/update-k3s-public-ip:
     post:
-      description: Changes the public IP address that routes to a self-hosted k3s
+      description: Changes the public IP address that routes to a self-hosted K3s
         cluster. Returns the cluster.
       operationId: updateK3SClusterPublicIp
       parameters:
@@ -10824,16 +10984,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Update k3s cluster public IP
+      summary: Update K3s cluster public IP
       tags:
       - clusters
   /clusters/{id}/actions/remove-k3s-node:
     post:
-      description: "Takes a worker node out of a k3s cluster: moves its pods to other\
-        \ nodes, stops k3s on it and deletes the node. Refuses the server, and without\
+      description: "Takes a worker node out of a K3s cluster: moves its pods to other\
+        \ nodes, stops K3s on it and deletes the node. Refuses the server, and without\
         \ force a node that stores persistent volumes, whose data would be lost. Run\
         \ sudo /usr/local/bin/wodby-k3s-uninstall on that server afterwards to remove\
-        \ k3s from it."
+        \ K3s from it."
       operationId: removeK3SClusterNode
       parameters:
       - explode: false
@@ -10868,17 +11028,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Remove k3s cluster node
+      summary: Remove K3s cluster node
       tags:
       - clusters
   /clusters/{id}/actions/switch-k3s-server-address:
     post:
-      description: "Switches the server of a k3s cluster from its public address to\
+      description: "Switches the server of a K3s cluster from its public address to\
         \ a private one from GET /cluster-k3s-private-addresses/{id} for cluster traffic,\
         \ so worker nodes can join, and keeps the public address for public traffic.\
-        \ k3s restarts once: the Kubernetes API pauses for about a minute while apps\
+        \ K3s restarts once: the Kubernetes API pauses for about a minute while apps\
         \ keep running, and new deployments wait until the switch ends. Refused while\
-        \ application operations are active. If k3s doesn't come back on the private\
+        \ application operations are active. If K3s doesn't come back on the private\
         \ address, the server restores its previous settings."
       operationId: switchK3SServerAddress
       parameters:
@@ -10914,12 +11074,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Switch k3s server to a private address
+      summary: Switch K3s server to a private address
+      tags:
+      - clusters
+  /clusters/{id}/actions/update-k3s-max-pods:
+    post:
+      description: "Sets how many pods each node of a K3s cluster runs at most. K3s\
+        \ restarts on every node whose setting changes, one node at a time: apps keep\
+        \ running, the Kubernetes API pauses for about a minute while the server restarts,\
+        \ and new deployments wait until it ends. Refused while application operations\
+        \ are active, below the pods a node already runs, on a node with no free pod\
+        \ slot, and before the cluster's infrastructure upgrade that sets it."
+      operationId: updateK3SClusterMaxPods
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateK3SClusterMaxPodsInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Pods per node task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Set pods per node of a K3s cluster
       tags:
       - clusters
   /clusters/actions/create-k3s:
     post:
-      description: "Registers a self-hosted k3s cluster. Run the command from GET\
+      description: "Registers a self-hosted K3s cluster. Run the command from GET\
         \ /clusters/k3s-install-command/{id} on the server to connect it."
       operationId: createK3SCluster
       requestBody:
@@ -10947,7 +11152,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Create k3s cluster
+      summary: Create K3s cluster
       tags:
       - clusters
   /clusters/actions/create-wodby-cloud:
@@ -10985,7 +11190,7 @@ paths:
       - clusters
   /clusters/k3s-install-command/{id}:
     get:
-      description: Returns the shell command that installs Wodby on the k3s server
+      description: Returns the shell command that installs Wodby on the K3s server
         and connects the cluster. The command contains short-lived credentials; treat
         it as a secret.
       operationId: getK3SClusterInstallCommand
@@ -11016,13 +11221,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get k3s install command
+      summary: Get K3s install command
       tags:
       - clusters
   /clusters/k3s-join-command/{id}:
     get:
       description: "Returns a one-time shell command that joins another server to\
-        \ a k3s cluster as a worker node. Run it as root on that server within 15\
+        \ a K3s cluster as a worker node. Run it as root on that server within 15\
         \ minutes. Both servers must share a private network, and the cluster must\
         \ be in OK status on current infrastructure. The command contains short-lived\
         \ credentials; treat it as a secret."
@@ -11054,12 +11259,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: Get k3s join command
+      summary: Get K3s join command
       tags:
       - clusters
   /cluster-k3s-nodes/{id}:
     get:
-      description: "Returns the nodes of a k3s cluster, read live from the cluster,\
+      description: "Returns the nodes of a K3s cluster, read live from the cluster,\
         \ the server first. The ID is the cluster's."
       operationId: listK3SClusterNodes
       parameters:
@@ -11091,12 +11296,50 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: List k3s cluster nodes
+      summary: List K3s cluster nodes
+      tags:
+      - clusters
+  /cluster-nodes/{id}:
+    get:
+      description: "Returns the nodes of a cluster, read live from the cluster: the\
+        \ general nodes first, then the GPU node pool. Wodby Cloud and serverless\
+        \ clusters don't list nodes. The ID is the cluster's."
+      operationId: listClusterNodes
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClusterNode'
+                type: array
+          description: Cluster nodes
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List cluster nodes
       tags:
       - clusters
   /cluster-k3s-private-addresses/{id}:
     get:
-      description: "Returns the private addresses the server of a k3s cluster could\
+      description: "Returns the private addresses the server of a K3s cluster could\
         \ switch to, read from the server itself. Only for a server that uses its\
         \ public address for cluster traffic, which keeps worker nodes out. Runs a\
         \ short check on the server and needs permission to modify the cluster. The\
@@ -11131,7 +11374,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
-      summary: List k3s server private addresses
+      summary: List K3s server private addresses
       tags:
       - clusters
   /wodby-cloud/machine-types:
@@ -17669,7 +17912,7 @@ components:
         targetVersion: targetVersion
       properties:
         kind:
-          description: cilium upgrades the Cilium release on a K3S cluster; provider_addon
+          description: cilium upgrades the Cilium release on a K3s cluster; provider_addon
             asks the provider to update an add-on.
           enum:
           - cilium
@@ -17729,8 +17972,8 @@ components:
           type: string
         manager:
           description: "Who can update the component. wodby is installed by Wodby\
-            \ outside an app, such as Cilium on K3S; infra_app runs in an infrastructure\
-            \ app; k3s comes with the K3S release; provider is run by the managed\
+            \ outside an app, such as Cilium on K3s; infra_app runs in an infrastructure\
+            \ app; k3s comes with the K3s release; provider is run by the managed\
             \ Kubernetes provider; host is the operating system of a server you run;\
             \ and other was installed outside Wodby or is not recognized."
           enum:
@@ -17883,7 +18126,7 @@ components:
         title:
           type: string
         state:
-          description: "mitigated or not_mitigated for a K3S cluster, by the protections\
+          description: "mitigated or not_mitigated for a K3s cluster, by the protections\
             \ Wodby keeps on its server. fixed or not_fixed for a managed cluster,\
             \ by the node images its provider ships."
           enum:
@@ -17909,6 +18152,50 @@ components:
       - message
       - state
       - title
+      type: object
+    ClusterKubernetesVulnerability:
+      properties:
+        id:
+          description: "The CVE ID, such as CVE-2024-10220, or the OSV ID when the\
+            \ vulnerability has no CVE."
+          type: string
+        summary:
+          type: string
+        severity:
+          enum:
+          - critical
+          - high
+          - medium
+          - low
+          - negligible
+          - unknown
+          type: string
+        url:
+          description: The vulnerability's record at cve.org or osv.dev.
+          type: string
+        fixedIn:
+          description: The closest upstream Kubernetes version that fixes the vulnerability.
+            Absent when no fixed version is known.
+          type: string
+      required:
+      - id
+      - severity
+      - summary
+      - url
+      type: object
+    ClusterKubernetesVulnerabilities:
+      properties:
+        version:
+          description: "The upstream patch version the vulnerabilities apply to, such\
+            \ as 1.33.5."
+          type: string
+        vulnerabilities:
+          items:
+            $ref: '#/components/schemas/ClusterKubernetesVulnerability'
+          type: array
+      required:
+      - version
+      - vulnerabilities
       type: object
     KubernetesVersionUpgradePlan:
       example:
@@ -19182,9 +19469,9 @@ components:
         \ 1.MINOR.PATCH, so there is no major upgrade. A newer provider build of the\
         \ same version, such as 1.36.5-do.1 to 1.36.5-do.2, counts as a patch. When\
         \ there is no version upgrade to start, the same policy and window apply the\
-        \ cluster's component updates, such as Cilium on k3s and EKS add-ons, unless\
+        \ cluster's component updates, such as Cilium on K3s and EKS add-ons, unless\
         \ includeComponentUpdates is off; an update within the component's minor counts\
-        \ as a patch. On by default for k3s clusters, which are upgraded in place.\
+        \ as a patch. On by default for K3s clusters, which are upgraded in place.\
         \ Off by default for managed clusters, because each upgrade replaces their\
         \ nodes and restarts every pod. Always disabled for Wodby Cloud and serverless\
         \ clusters. Turning it on is refused for a single-node managed cluster with\
@@ -23060,6 +23347,7 @@ components:
           cron:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
             failingSchedulesCount: 4
+          vulnerabilities: "{}"
           backups:
             latestFailureAt: 2000-01-23T04:56:07.000+00:00
             failingSchedulesCount: 7
@@ -23268,6 +23556,7 @@ components:
         cron:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
           failingSchedulesCount: 4
+        vulnerabilities: "{}"
         backups:
           latestFailureAt: 2000-01-23T04:56:07.000+00:00
           failingSchedulesCount: 7
@@ -23276,9 +23565,27 @@ components:
           $ref: '#/components/schemas/AppEnvironmentCronHealth'
         backups:
           $ref: '#/components/schemas/AppEnvironmentBackupHealth'
+        vulnerabilities:
+          allOf:
+          - $ref: '#/components/schemas/AppEnvironmentVulnerabilityHealth'
+          description: "Critical and high vulnerabilities in the build images the\
+            \ environment currently runs, from their last successful scans. Null when\
+            \ vulnerability scanning is unavailable for the organization."
+          nullable: true
+          type: object
       required:
       - backups
       - cron
+      type: object
+    AppEnvironmentVulnerabilityHealth:
+      properties:
+        critical:
+          type: integer
+        high:
+          type: integer
+      required:
+      - critical
+      - high
       type: object
     AppEnvironmentCronHealth:
       example:
@@ -24239,6 +24546,8 @@ components:
       - failed
       type: string
     VulnerabilityCounts:
+      description: "Findings the app ignores are counted only in ignored, never in\
+        \ a severity, total or fixable."
       properties:
         critical:
           type: integer
@@ -24257,6 +24566,9 @@ components:
         fixable:
           description: Findings with a released fix.
           type: integer
+        ignored:
+          description: Findings the app ignores.
+          type: integer
       required:
       - critical
       - fixable
@@ -24266,6 +24578,57 @@ components:
       - negligible
       - total
       - unknown
+      type: object
+    AppVulnerabilityIgnore:
+      example:
+        reason: reason
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        vulnerabilityId: vulnerabilityId
+        appId: 6
+        id: 0
+        packageName: packageName
+      properties:
+        id:
+          type: integer
+        appId:
+          type: integer
+        vulnerabilityId:
+          type: string
+        packageName:
+          type: string
+        reason:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - appId
+      - createdAt
+      - id
+      - packageName
+      - vulnerabilityId
+      type: object
+    AppVulnerabilityIgnoreInput:
+      example:
+        reason: reason
+        vulnerabilityId: vulnerabilityId
+        packageName: packageName
+      properties:
+        vulnerabilityId:
+          description: "Vulnerability ID as reported by the scan, such as CVE-2024-12345."
+          maxLength: 64
+          type: string
+        packageName:
+          description: Name of the vulnerable package as reported by the scan.
+          maxLength: 256
+          type: string
+        reason:
+          description: Why the vulnerability is accepted.
+          maxLength: 1000
+          type: string
+      required:
+      - packageName
+      - vulnerabilityId
       type: object
     AppServiceBuild:
       example:
@@ -24746,8 +25109,9 @@ components:
           - mountOptions
           - mountOptions
         availableToAllProjects: true
-        lastNodesReady: 7
-        lastNodesTotal: 9
+        lastNodesReady: 9
+        lastNodesTotal: 3
+        k3sMaxPods: 5
         envScope: all
         maxNodeCount: 1
         k3s: true
@@ -24756,10 +25120,10 @@ components:
         - prod
         - prod
         demo: true
-        orgId: 7
+        orgId: 1
         allowedEnvIds:
-        - 4
-        - 4
+        - 7
+        - 7
         createdAt: 2000-01-23T04:56:07.000+00:00
         hostname: hostname
         minNodeCount: 6
@@ -24822,8 +25186,8 @@ components:
           redirectRoutes: true
           envoyGateway: true
         serverless: true
-        integrationId: 3
-        envId: 2
+        integrationId: 2
+        envId: 4
         version: version
         ips:
         - ips
@@ -24836,8 +25200,8 @@ components:
         status: status
         gpuNodePool:
           minNodeCount: 5
-          nodeDiskSize: 2
-          maxNodeCount: 5
+          nodeDiskSize: 7
+          maxNodeCount: 2
           machineType: machineType
       properties:
         id:
@@ -24878,6 +25242,12 @@ components:
           nullable: true
           type: integer
         maxNodeCount:
+          nullable: true
+          type: integer
+        k3sMaxPods:
+          description: "How many pods each node of a K3s cluster runs at most. Absent\
+            \ when it can't be changed: the cluster isn't k3s, or its infrastructure\
+            \ hasn't been upgraded to set it yet."
           nullable: true
           type: integer
         gpuNodePool:
@@ -32771,6 +33141,12 @@ components:
         appServiceId:
           type: integer
         appServiceBuildId:
+          description: "Build image to deploy for this service: the `id` of an item\
+            \ in an app build's `appServiceBuilds` that belongs to this service, not\
+            \ the app build `id`. A derivative service may name its parent service's\
+            \ build. Use `0` to start a new build. Required for services with a build\
+            \ source. To deploy every image of an app build, use `POST /app-builds/{id}/deploy`\
+            \ instead."
           nullable: true
           type: integer
         skipPostDeployment:
@@ -35116,8 +35492,8 @@ components:
       description: "An optional node pool of the cluster, such as the GPU node pool."
       example:
         minNodeCount: 5
-        nodeDiskSize: 2
-        maxNodeCount: 5
+        nodeDiskSize: 7
+        maxNodeCount: 2
         machineType: machineType
       nullable: true
       properties:
@@ -35342,8 +35718,9 @@ components:
             - mountOptions
             - mountOptions
           availableToAllProjects: true
-          lastNodesReady: 7
-          lastNodesTotal: 9
+          lastNodesReady: 9
+          lastNodesTotal: 3
+          k3sMaxPods: 5
           envScope: all
           maxNodeCount: 1
           k3s: true
@@ -35352,10 +35729,10 @@ components:
           - prod
           - prod
           demo: true
-          orgId: 7
+          orgId: 1
           allowedEnvIds:
-          - 4
-          - 4
+          - 7
+          - 7
           createdAt: 2000-01-23T04:56:07.000+00:00
           hostname: hostname
           minNodeCount: 6
@@ -35418,8 +35795,8 @@ components:
             redirectRoutes: true
             envoyGateway: true
           serverless: true
-          integrationId: 3
-          envId: 2
+          integrationId: 2
+          envId: 4
           version: version
           ips:
           - ips
@@ -35432,8 +35809,8 @@ components:
           status: status
           gpuNodePool:
             minNodeCount: 5
-            nodeDiskSize: 2
-            maxNodeCount: 5
+            nodeDiskSize: 7
+            maxNodeCount: 2
             machineType: machineType
         taskId: 0
       properties:
@@ -35477,11 +35854,16 @@ components:
         version: version
         internalIp: internalIp
         externalIp: externalIp
+        capacity:
+          disk: 1
+          memory: 6
+          gpus: 5
+          cpu: 0.8008281904610115
       properties:
         name:
           type: string
         role:
-          description: server runs the k3s control plane; agent is a worker node joined
+          description: server runs the K3s control plane; agent is a worker node joined
             with the join command.
           enum:
           - server
@@ -35494,7 +35876,7 @@ components:
             upgraded doesn't.
           type: boolean
         version:
-          description: "The node's k3s release, such as v1.36.6+k3s1."
+          description: "The node's K3s release, such as v1.36.6+k3s1."
           type: string
         internalIp:
           description: The private address the node uses for cluster traffic.
@@ -35508,10 +35890,13 @@ components:
           items:
             type: string
           type: array
+        capacity:
+          $ref: '#/components/schemas/NodeCapacity'
         createdAt:
           format: date-time
           type: string
       required:
+      - capacity
       - createdAt
       - localVolumes
       - name
@@ -35519,6 +35904,92 @@ components:
       - role
       - schedulable
       - version
+      type: object
+    ClusterNode:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        schedulable: true
+        zone: zone
+        ready: true
+        name: name
+        version: version
+        internalIp: internalIp
+        externalIp: externalIp
+        machineType: machineType
+        gpuNodePool: true
+        capacity:
+          disk: 1
+          memory: 6
+          gpus: 5
+          cpu: 0.8008281904610115
+      properties:
+        name:
+          type: string
+        ready:
+          type: boolean
+        schedulable:
+          description: "Whether the node accepts new pods. A node being drained, recycled\
+            \ or upgraded doesn't."
+          type: boolean
+        version:
+          description: "The node's Kubernetes version, as its kubelet reports it."
+          type: string
+        machineType:
+          description: "The provider's machine type of the node, such as m6i.large,\
+            \ when the node reports it."
+          type: string
+        zone:
+          description: "The availability zone of the node, when the node reports it."
+          type: string
+        gpuNodePool:
+          description: Whether the node belongs to the cluster's GPU node pool.
+          type: boolean
+        internalIp:
+          type: string
+        externalIp:
+          type: string
+        capacity:
+          $ref: '#/components/schemas/NodeCapacity'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - capacity
+      - createdAt
+      - gpuNodePool
+      - name
+      - ready
+      - schedulable
+      - version
+      type: object
+    NodeCapacity:
+      description: "What a node's machine provides, as the node reports it."
+      example:
+        disk: 1
+        memory: 6
+        gpus: 5
+        cpu: 0.8008281904610115
+      properties:
+        cpu:
+          description: CPU cores.
+          type: number
+        memory:
+          description: Memory in bytes.
+          format: int64
+          type: integer
+        disk:
+          description: "The size of the node's root disk in bytes, when the node reports\
+            \ it."
+          format: int64
+          type: integer
+        gpus:
+          description: "GPUs the node offers to pods. 0 without GPUs, and until the\
+            \ node's GPU driver reports them."
+          type: integer
+      required:
+      - cpu
+      - gpus
+      - memory
       type: object
     RemoveK3SClusterNodeInput:
       example:
@@ -35553,7 +36024,7 @@ components:
           type: integer
         persistent:
           description: "Whether the server's network configuration brings the address\
-            \ back after a reboot. k3s doesn't start when its address is gone, so\
+            \ back after a reboot. K3s doesn't start when its address is gone, so\
             \ switching to an address that isn't persistent needs force."
           type: boolean
         persistentSource:
@@ -35580,6 +36051,18 @@ components:
           type: boolean
       required:
       - address
+      type: object
+    UpdateK3SClusterMaxPodsInput:
+      example:
+        maxPods: 66
+      properties:
+        maxPods:
+          description: Pods each node runs at most.
+          maximum: 250
+          minimum: 50
+          type: integer
+      required:
+      - maxPods
       type: object
     ResourcePreset:
       example:

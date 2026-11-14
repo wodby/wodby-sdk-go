@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppServiceId** | **int32** |  | 
-**AppServiceBuildId** | Pointer to **NullableInt32** |  | [optional] 
+**AppServiceBuildId** | Pointer to **NullableInt32** | Build image to deploy for this service: the &#x60;id&#x60; of an item in an app build&#39;s &#x60;appServiceBuilds&#x60; that belongs to this service, not the app build &#x60;id&#x60;. A derivative service may name its parent service&#39;s build. Use &#x60;0&#x60; to start a new build. Required for services with a build source. To deploy every image of an app build, use &#x60;POST /app-builds/{id}/deploy&#x60; instead. | [optional] 
 **SkipPostDeployment** | Pointer to **NullableBool** |  | [optional] 
 **Force** | **bool** |  | 
 

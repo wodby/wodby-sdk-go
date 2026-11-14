@@ -100,6 +100,7 @@ docs/AppEnvironmentStackUpgradeChangelog.md
 docs/AppEnvironmentStackUpgradeInput.md
 docs/AppEnvironmentStackUpgradeSettings.md
 docs/AppEnvironmentStackUpgradeSettingsInput.md
+docs/AppEnvironmentVulnerabilityHealth.md
 docs/AppEnvironmentsAPI.md
 docs/AppPort.md
 docs/AppPortSetting.md
@@ -166,6 +167,8 @@ docs/AppServiceWorkspaceMount.md
 docs/AppServicesAPI.md
 docs/AppSettings.md
 docs/AppSettingsInput.md
+docs/AppVulnerabilityIgnore.md
+docs/AppVulnerabilityIgnoreInput.md
 docs/AppsAPI.md
 docs/AutomationTimeWindow.md
 docs/AutomationTimeWindowInput.md
@@ -201,6 +204,9 @@ docs/ClusterCreationResult.md
 docs/ClusterEnvironmentPolicyInput.md
 docs/ClusterHostCheck.md
 docs/ClusterInfraAppUpgradeChangelog.md
+docs/ClusterKubernetesVulnerabilities.md
+docs/ClusterKubernetesVulnerability.md
+docs/ClusterNode.md
 docs/ClusterNodePool.md
 docs/ClusterNodePoolInput.md
 docs/ClusterSecurityAdvisory.md
@@ -326,6 +332,7 @@ docs/NewVariableProviderFieldInput.md
 docs/NewVariableProviderInput.md
 docs/NewWodbyCloudClusterInput.md
 docs/NewWorkspaceInput.md
+docs/NodeCapacity.md
 docs/OperationResult.md
 docs/Org.md
 docs/OrgCapabilities.md
@@ -494,6 +501,7 @@ docs/UpdateClusterGPUNodePoolInput.md
 docs/UpdateCurrentUserRequest.md
 docs/UpdateDatabaseUserDBsInput.md
 docs/UpdateIntegrationInput.md
+docs/UpdateK3SClusterMaxPodsInput.md
 docs/UpdateK3SClusterPublicIPInput.md
 docs/UpdateKubernetesVersionInput.md
 docs/UpdateOrgRequest.md
@@ -588,6 +596,7 @@ model_app_environment_stack_upgrade_changelog.go
 model_app_environment_stack_upgrade_input.go
 model_app_environment_stack_upgrade_settings.go
 model_app_environment_stack_upgrade_settings_input.go
+model_app_environment_vulnerability_health.go
 model_app_port.go
 model_app_port_setting.go
 model_app_port_setting_input.go
@@ -650,6 +659,8 @@ model_app_service_volume_storage_class_state.go
 model_app_service_workspace_mount.go
 model_app_settings.go
 model_app_settings_input.go
+model_app_vulnerability_ignore.go
+model_app_vulnerability_ignore_input.go
 model_automation_time_window.go
 model_automation_time_window_input.go
 model_backup.go
@@ -682,6 +693,9 @@ model_cluster_creation_result.go
 model_cluster_environment_policy_input.go
 model_cluster_host_check.go
 model_cluster_infra_app_upgrade_changelog.go
+model_cluster_kubernetes_vulnerabilities.go
+model_cluster_kubernetes_vulnerability.go
+model_cluster_node.go
 model_cluster_node_pool.go
 model_cluster_node_pool_input.go
 model_cluster_security_advisory.go
@@ -799,6 +813,7 @@ model_new_variable_provider_field_input.go
 model_new_variable_provider_input.go
 model_new_wodby_cloud_cluster_input.go
 model_new_workspace_input.go
+model_node_capacity.go
 model_operation_result.go
 model_org.go
 model_org_capabilities.go
@@ -953,6 +968,7 @@ model_update_cluster_gpu_node_pool_input.go
 model_update_current_user_request.go
 model_update_database_user_dbs_input.go
 model_update_integration_input.go
+model_update_k3_s_cluster_max_pods_input.go
 model_update_k3_s_cluster_public_ip_input.go
 model_update_kubernetes_version_input.go
 model_update_org_request.go

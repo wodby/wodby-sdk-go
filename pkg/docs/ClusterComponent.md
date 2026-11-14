@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Version** | **string** | The image tag or reported version as published; empty for an image referenced only by digest. | 
 **Source** | **string** |  | 
-**Manager** | **string** | Who can update the component. wodby is installed by Wodby outside an app, such as Cilium on K3S; infra_app runs in an infrastructure app; k3s comes with the K3S release; provider is run by the managed Kubernetes provider; host is the operating system of a server you run; and other was installed outside Wodby or is not recognized. | 
+**Manager** | **string** | Who can update the component. wodby is installed by Wodby outside an app, such as Cilium on K3s; infra_app runs in an infrastructure app; k3s comes with the K3s release; provider is run by the managed Kubernetes provider; host is the operating system of a server you run; and other was installed outside Wodby or is not recognized. | 
 **Namespace** | **string** | Empty for node components, as are workloadKind, workload, container, image and imageDigest. | 
 **WorkloadKind** | **string** |  | 
 **Workload** | **string** |  | 

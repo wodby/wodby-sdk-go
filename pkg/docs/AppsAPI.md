@@ -6,11 +6,14 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateApp**](AppsAPI.md#CreateApp) | **Post** /apps | Create app
 [**CreateAppPreviewEnvironment**](AppsAPI.md#CreateAppPreviewEnvironment) | **Post** /apps/preview-environments/{id} | Create a pull request preview environment
+[**CreateAppVulnerabilityIgnore**](AppsAPI.md#CreateAppVulnerabilityIgnore) | **Post** /apps/vulnerability-ignores/{id} | Ignore a vulnerability
 [**DeleteApp**](AppsAPI.md#DeleteApp) | **Delete** /apps/{id} | Delete app
+[**DeleteAppVulnerabilityIgnore**](AppsAPI.md#DeleteAppVulnerabilityIgnore) | **Delete** /app-vulnerability-ignores/{id} | Stop ignoring a vulnerability
 [**GetApp**](AppsAPI.md#GetApp) | **Get** /apps/{id} | Get app
 [**GetAppByName**](AppsAPI.md#GetAppByName) | **Get** /apps/by-name/{name} | Get app by name
 [**GetAppSharing**](AppsAPI.md#GetAppSharing) | **Get** /apps/sharing/{id} | Get app sharing
 [**ListAppPreviewPullRequests**](AppsAPI.md#ListAppPreviewPullRequests) | **Get** /apps/preview-pull-requests/{id} | List pull requests for preview environments
+[**ListAppVulnerabilityIgnores**](AppsAPI.md#ListAppVulnerabilityIgnores) | **Get** /apps/vulnerability-ignores/{id} | List ignored vulnerabilities
 [**ListApps**](AppsAPI.md#ListApps) | **Get** /apps | List apps
 [**RegenerateAppPreviewPassword**](AppsAPI.md#RegenerateAppPreviewPassword) | **Post** /apps/preview-password/regenerate/{id} | Regenerate the preview password
 [**UpdateApp**](AppsAPI.md#UpdateApp) | **Put** /apps/{id} | Update app
@@ -157,6 +160,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateAppVulnerabilityIgnore
+
+> AppVulnerabilityIgnore CreateAppVulnerabilityIgnore(ctx, id).AppVulnerabilityIgnoreInput(appVulnerabilityIgnoreInput).Execute()
+
+Ignore a vulnerability
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appVulnerabilityIgnoreInput := *openapiclient.NewAppVulnerabilityIgnoreInput("VulnerabilityId_example", "PackageName_example") // AppVulnerabilityIgnoreInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.CreateAppVulnerabilityIgnore(context.Background(), id).AppVulnerabilityIgnoreInput(appVulnerabilityIgnoreInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.CreateAppVulnerabilityIgnore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateAppVulnerabilityIgnore`: AppVulnerabilityIgnore
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.CreateAppVulnerabilityIgnore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateAppVulnerabilityIgnoreRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appVulnerabilityIgnoreInput** | [**AppVulnerabilityIgnoreInput**](AppVulnerabilityIgnoreInput.md) |  | 
+
+### Return type
+
+[**AppVulnerabilityIgnore**](AppVulnerabilityIgnore.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteApp
 
 > OperationResult DeleteApp(ctx, id).Execute()
@@ -203,6 +278,76 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteAppRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteAppVulnerabilityIgnore
+
+> OperationResult DeleteAppVulnerabilityIgnore(ctx, id).Execute()
+
+Stop ignoring a vulnerability
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.DeleteAppVulnerabilityIgnore(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.DeleteAppVulnerabilityIgnore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteAppVulnerabilityIgnore`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.DeleteAppVulnerabilityIgnore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteAppVulnerabilityIgnoreRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -494,6 +639,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AppPreviewPullRequestList**](AppPreviewPullRequestList.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppVulnerabilityIgnores
+
+> []AppVulnerabilityIgnore ListAppVulnerabilityIgnores(ctx, id).Execute()
+
+List ignored vulnerabilities
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppsAPI.ListAppVulnerabilityIgnores(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppsAPI.ListAppVulnerabilityIgnores``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppVulnerabilityIgnores`: []AppVulnerabilityIgnore
+	fmt.Fprintf(os.Stdout, "Response from `AppsAPI.ListAppVulnerabilityIgnores`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppVulnerabilityIgnoresRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppVulnerabilityIgnore**](AppVulnerabilityIgnore.md)
 
 ### Authorization
 

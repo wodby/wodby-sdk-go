@@ -23,6 +23,8 @@ var _ MappedNullable = &AppEnvironmentHealth{}
 type AppEnvironmentHealth struct {
 	Cron AppEnvironmentCronHealth `json:"cron"`
 	Backups AppEnvironmentBackupHealth `json:"backups"`
+	// Critical and high vulnerabilities in the build images the environment currently runs, from their last successful scans. Null when vulnerability scanning is unavailable for the organization.
+	Vulnerabilities NullableAppEnvironmentVulnerabilityHealth `json:"vulnerabilities,omitempty"`
 }
 
 type _AppEnvironmentHealth AppEnvironmentHealth
@@ -94,6 +96,48 @@ func (o *AppEnvironmentHealth) SetBackups(v AppEnvironmentBackupHealth) {
 	o.Backups = v
 }
 
+// GetVulnerabilities returns the Vulnerabilities field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppEnvironmentHealth) GetVulnerabilities() AppEnvironmentVulnerabilityHealth {
+	if o == nil || IsNil(o.Vulnerabilities.Get()) {
+		var ret AppEnvironmentVulnerabilityHealth
+		return ret
+	}
+	return *o.Vulnerabilities.Get()
+}
+
+// GetVulnerabilitiesOk returns a tuple with the Vulnerabilities field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppEnvironmentHealth) GetVulnerabilitiesOk() (*AppEnvironmentVulnerabilityHealth, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Vulnerabilities.Get(), o.Vulnerabilities.IsSet()
+}
+
+// HasVulnerabilities returns a boolean if a field has been set.
+func (o *AppEnvironmentHealth) HasVulnerabilities() bool {
+	if o != nil && o.Vulnerabilities.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVulnerabilities gets a reference to the given NullableAppEnvironmentVulnerabilityHealth and assigns it to the Vulnerabilities field.
+func (o *AppEnvironmentHealth) SetVulnerabilities(v AppEnvironmentVulnerabilityHealth) {
+	o.Vulnerabilities.Set(&v)
+}
+// SetVulnerabilitiesNil sets the value for Vulnerabilities to be an explicit nil
+func (o *AppEnvironmentHealth) SetVulnerabilitiesNil() {
+	o.Vulnerabilities.Set(nil)
+}
+
+// UnsetVulnerabilities ensures that no value is present for Vulnerabilities, not even an explicit nil
+func (o *AppEnvironmentHealth) UnsetVulnerabilities() {
+	o.Vulnerabilities.Unset()
+}
+
 func (o AppEnvironmentHealth) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +150,9 @@ func (o AppEnvironmentHealth) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["cron"] = o.Cron
 	toSerialize["backups"] = o.Backups
+	if o.Vulnerabilities.IsSet() {
+		toSerialize["vulnerabilities"] = o.Vulnerabilities.Get()
+	}
 	return toSerialize, nil
 }
 

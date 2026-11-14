@@ -5,7 +5,7 @@ All URIs are relative to */v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateCluster**](ClustersAPI.md#CreateCluster) | **Post** /clusters | Create cluster
-[**CreateK3SCluster**](ClustersAPI.md#CreateK3SCluster) | **Post** /clusters/actions/create-k3s | Create k3s cluster
+[**CreateK3SCluster**](ClustersAPI.md#CreateK3SCluster) | **Post** /clusters/actions/create-k3s | Create K3s cluster
 [**CreateWodbyCloudCluster**](ClustersAPI.md#CreateWodbyCloudCluster) | **Post** /clusters/actions/create-wodby-cloud | Create Wodby Cloud cluster
 [**DeleteCluster**](ClustersAPI.md#DeleteCluster) | **Delete** /clusters/{id} | Delete cluster
 [**GetCluster**](ClustersAPI.md#GetCluster) | **Get** /clusters/{id} | Get cluster
@@ -14,19 +14,21 @@ Method | HTTP request | Description
 [**GetClusterComponents**](ClustersAPI.md#GetClusterComponents) | **Get** /cluster-components/{id} | List cluster components
 [**GetClusterHostChecks**](ClustersAPI.md#GetClusterHostChecks) | **Get** /cluster-host-checks/{id} | List cluster host checks
 [**GetClusterInfraAppUpgradeChangelog**](ClustersAPI.md#GetClusterInfraAppUpgradeChangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
+[**GetClusterKubernetesVulnerabilities**](ClustersAPI.md#GetClusterKubernetesVulnerabilities) | **Get** /cluster-kubernetes-vulnerabilities/{id} | List Kubernetes version vulnerabilities
 [**GetClusterSecurityAdvisories**](ClustersAPI.md#GetClusterSecurityAdvisories) | **Get** /cluster-security-advisories/{id} | List cluster security advisories
 [**GetClusterSharing**](ClustersAPI.md#GetClusterSharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
-[**GetK3SClusterInstallCommand**](ClustersAPI.md#GetK3SClusterInstallCommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
-[**GetK3SClusterJoinCommand**](ClustersAPI.md#GetK3SClusterJoinCommand) | **Get** /clusters/k3s-join-command/{id} | Get k3s join command
+[**GetK3SClusterInstallCommand**](ClustersAPI.md#GetK3SClusterInstallCommand) | **Get** /clusters/k3s-install-command/{id} | Get K3s install command
+[**GetK3SClusterJoinCommand**](ClustersAPI.md#GetK3SClusterJoinCommand) | **Get** /clusters/k3s-join-command/{id} | Get K3s join command
 [**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
+[**ListClusterNodes**](ClustersAPI.md#ListClusterNodes) | **Get** /cluster-nodes/{id} | List cluster nodes
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
-[**ListK3SClusterNodes**](ClustersAPI.md#ListK3SClusterNodes) | **Get** /cluster-k3s-nodes/{id} | List k3s cluster nodes
-[**ListK3SServerPrivateAddresses**](ClustersAPI.md#ListK3SServerPrivateAddresses) | **Get** /cluster-k3s-private-addresses/{id} | List k3s server private addresses
+[**ListK3SClusterNodes**](ClustersAPI.md#ListK3SClusterNodes) | **Get** /cluster-k3s-nodes/{id} | List K3s cluster nodes
+[**ListK3SServerPrivateAddresses**](ClustersAPI.md#ListK3SServerPrivateAddresses) | **Get** /cluster-k3s-private-addresses/{id} | List K3s server private addresses
 [**ListWodbyCloudMachineTypes**](ClustersAPI.md#ListWodbyCloudMachineTypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 [**RecycleClusterNodes**](ClustersAPI.md#RecycleClusterNodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
-[**RemoveK3SClusterNode**](ClustersAPI.md#RemoveK3SClusterNode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove k3s cluster node
+[**RemoveK3SClusterNode**](ClustersAPI.md#RemoveK3SClusterNode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove K3s cluster node
 [**ScaleCluster**](ClustersAPI.md#ScaleCluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
-[**SwitchK3SServerAddress**](ClustersAPI.md#SwitchK3SServerAddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch k3s server to a private address
+[**SwitchK3SServerAddress**](ClustersAPI.md#SwitchK3SServerAddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch K3s server to a private address
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
 [**UpdateClusterComponent**](ClustersAPI.md#UpdateClusterComponent) | **Post** /clusters/{id}/actions/update-component | Update a cluster component
 [**UpdateClusterEnvironmentPolicy**](ClustersAPI.md#UpdateClusterEnvironmentPolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
@@ -34,7 +36,8 @@ Method | HTTP request | Description
 [**UpdateClusterKubernetesVersion**](ClustersAPI.md#UpdateClusterKubernetesVersion) | **Post** /clusters/{id}/actions/update-kubernetes-version | Update cluster Kubernetes version
 [**UpdateClusterSettings**](ClustersAPI.md#UpdateClusterSettings) | **Put** /clusters/settings/{id} | Update cluster settings
 [**UpdateClusterSharing**](ClustersAPI.md#UpdateClusterSharing) | **Put** /clusters/sharing/{id} | Update cluster sharing
-[**UpdateK3SClusterPublicIp**](ClustersAPI.md#UpdateK3SClusterPublicIp) | **Post** /clusters/{id}/actions/update-k3s-public-ip | Update k3s cluster public IP
+[**UpdateK3SClusterMaxPods**](ClustersAPI.md#UpdateK3SClusterMaxPods) | **Post** /clusters/{id}/actions/update-k3s-max-pods | Set pods per node of a K3s cluster
+[**UpdateK3SClusterPublicIp**](ClustersAPI.md#UpdateK3SClusterPublicIp) | **Post** /clusters/{id}/actions/update-k3s-public-ip | Update K3s cluster public IP
 [**UpgradeClusterInfra**](ClustersAPI.md#UpgradeClusterInfra) | **Post** /clusters/{id}/actions/upgrade-infra | Upgrade cluster infrastructure
 [**UpgradeClusterInfraApps**](ClustersAPI.md#UpgradeClusterInfraApps) | **Post** /clusters/{id}/actions/upgrade-infra-apps | Upgrade cluster infrastructure app stacks
 
@@ -110,7 +113,7 @@ Name | Type | Description  | Notes
 
 > Cluster CreateK3SCluster(ctx).NewK3SClusterInput(newK3SClusterInput).Execute()
 
-Create k3s cluster
+Create K3s cluster
 
 
 
@@ -734,6 +737,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetClusterKubernetesVulnerabilities
+
+> ClusterKubernetesVulnerabilities GetClusterKubernetesVulnerabilities(ctx, id).Execute()
+
+List Kubernetes version vulnerabilities
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.GetClusterKubernetesVulnerabilities(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.GetClusterKubernetesVulnerabilities``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetClusterKubernetesVulnerabilities`: ClusterKubernetesVulnerabilities
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.GetClusterKubernetesVulnerabilities`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetClusterKubernetesVulnerabilitiesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ClusterKubernetesVulnerabilities**](ClusterKubernetesVulnerabilities.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetClusterSecurityAdvisories
 
 > []ClusterSecurityAdvisory GetClusterSecurityAdvisories(ctx, id).Execute()
@@ -878,7 +951,7 @@ Name | Type | Description  | Notes
 
 > K3SInstallCommand GetK3SClusterInstallCommand(ctx, id).Execute()
 
-Get k3s install command
+Get K3s install command
 
 
 
@@ -948,7 +1021,7 @@ Name | Type | Description  | Notes
 
 > K3SJoinCommand GetK3SClusterJoinCommand(ctx, id).Execute()
 
-Get k3s join command
+Get K3s join command
 
 
 
@@ -1084,6 +1157,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListClusterNodes
+
+> []ClusterNode ListClusterNodes(ctx, id).Execute()
+
+List cluster nodes
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.ListClusterNodes(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.ListClusterNodes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListClusterNodes`: []ClusterNode
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.ListClusterNodes`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListClusterNodesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ClusterNode**](ClusterNode.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListClusters
 
 > []Cluster ListClusters(ctx).OrgId(orgId).ProjectIds(projectIds).IntegrationId(integrationId).EnvironmentId(environmentId).Execute()
@@ -1160,7 +1303,7 @@ Name | Type | Description  | Notes
 
 > []K3SClusterNode ListK3SClusterNodes(ctx, id).Execute()
 
-List k3s cluster nodes
+List K3s cluster nodes
 
 
 
@@ -1230,7 +1373,7 @@ Name | Type | Description  | Notes
 
 > []K3SPrivateAddress ListK3SServerPrivateAddresses(ctx, id).Execute()
 
-List k3s server private addresses
+List K3s server private addresses
 
 
 
@@ -1431,7 +1574,7 @@ Name | Type | Description  | Notes
 
 > OperationResult RemoveK3SClusterNode(ctx, id).RemoveK3SClusterNodeInput(removeK3SClusterNodeInput).Execute()
 
-Remove k3s cluster node
+Remove K3s cluster node
 
 
 
@@ -1575,7 +1718,7 @@ Name | Type | Description  | Notes
 
 > OperationResult SwitchK3SServerAddress(ctx, id).SwitchK3SServerAddressInput(switchK3SServerAddressInput).Execute()
 
-Switch k3s server to a private address
+Switch K3s server to a private address
 
 
 
@@ -2147,11 +2290,83 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## UpdateK3SClusterMaxPods
+
+> OperationResult UpdateK3SClusterMaxPods(ctx, id).UpdateK3SClusterMaxPodsInput(updateK3SClusterMaxPodsInput).Execute()
+
+Set pods per node of a K3s cluster
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateK3SClusterMaxPodsInput := *openapiclient.NewUpdateK3SClusterMaxPodsInput(int32(123)) // UpdateK3SClusterMaxPodsInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.UpdateK3SClusterMaxPods(context.Background(), id).UpdateK3SClusterMaxPodsInput(updateK3SClusterMaxPodsInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.UpdateK3SClusterMaxPods``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateK3SClusterMaxPods`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.UpdateK3SClusterMaxPods`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateK3SClusterMaxPodsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateK3SClusterMaxPodsInput** | [**UpdateK3SClusterMaxPodsInput**](UpdateK3SClusterMaxPodsInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateK3SClusterPublicIp
 
 > Cluster UpdateK3SClusterPublicIp(ctx, id).UpdateK3SClusterPublicIPInput(updateK3SClusterPublicIPInput).Execute()
 
-Update k3s cluster public IP
+Update K3s cluster public IP
 
 
 

@@ -21,7 +21,7 @@ var _ MappedNullable = &ClusterComponentUpdate{}
 
 // ClusterComponentUpdate struct for ClusterComponentUpdate
 type ClusterComponentUpdate struct {
-	// cilium upgrades the Cilium release on a K3S cluster; provider_addon asks the provider to update an add-on.
+	// cilium upgrades the Cilium release on a K3s cluster; provider_addon asks the provider to update an add-on.
 	Kind string `json:"kind"`
 	// Identifies the update within its cluster.
 	Name string `json:"name"`

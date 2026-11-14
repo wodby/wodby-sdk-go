@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **InfraVersion** | **string** |  | 
 **MinNodeCount** | Pointer to **NullableInt32** |  | [optional] 
 **MaxNodeCount** | Pointer to **NullableInt32** |  | [optional] 
+**K3sMaxPods** | Pointer to **NullableInt32** | How many pods each node of a K3s cluster runs at most. Absent when it can&#39;t be changed: the cluster isn&#39;t k3s, or its infrastructure hasn&#39;t been upgraded to set it yet. | [optional] 
 **GpuNodePool** | Pointer to [**NullableClusterNodePool**](ClusterNodePool.md) |  | [optional] 
 **LastNodesReady** | Pointer to **NullableInt32** |  | [optional] 
 **LastNodesTotal** | Pointer to **NullableInt32** |  | [optional] 
@@ -422,6 +423,41 @@ HasMaxNodeCount returns a boolean if a field has been set.
 `func (o *Cluster) UnsetMaxNodeCount()`
 
 UnsetMaxNodeCount ensures that no value is present for MaxNodeCount, not even an explicit nil
+### GetK3sMaxPods
+
+`func (o *Cluster) GetK3sMaxPods() int32`
+
+GetK3sMaxPods returns the K3sMaxPods field if non-nil, zero value otherwise.
+
+### GetK3sMaxPodsOk
+
+`func (o *Cluster) GetK3sMaxPodsOk() (*int32, bool)`
+
+GetK3sMaxPodsOk returns a tuple with the K3sMaxPods field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetK3sMaxPods
+
+`func (o *Cluster) SetK3sMaxPods(v int32)`
+
+SetK3sMaxPods sets K3sMaxPods field to given value.
+
+### HasK3sMaxPods
+
+`func (o *Cluster) HasK3sMaxPods() bool`
+
+HasK3sMaxPods returns a boolean if a field has been set.
+
+### SetK3sMaxPodsNil
+
+`func (o *Cluster) SetK3sMaxPodsNil(b bool)`
+
+ SetK3sMaxPodsNil sets the value for K3sMaxPods to be an explicit nil
+
+### UnsetK3sMaxPods
+`func (o *Cluster) UnsetK3sMaxPods()`
+
+UnsetK3sMaxPods ensures that no value is present for K3sMaxPods, not even an explicit nil
 ### GetGpuNodePool
 
 `func (o *Cluster) GetGpuNodePool() ClusterNodePool`

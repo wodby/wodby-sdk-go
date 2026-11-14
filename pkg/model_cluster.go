@@ -39,6 +39,8 @@ type Cluster struct {
 	InfraVersion string `json:"infraVersion"`
 	MinNodeCount NullableInt32 `json:"minNodeCount,omitempty"`
 	MaxNodeCount NullableInt32 `json:"maxNodeCount,omitempty"`
+	// How many pods each node of a K3s cluster runs at most. Absent when it can't be changed: the cluster isn't k3s, or its infrastructure hasn't been upgraded to set it yet.
+	K3sMaxPods NullableInt32 `json:"k3sMaxPods,omitempty"`
 	GpuNodePool NullableClusterNodePool `json:"gpuNodePool,omitempty"`
 	LastNodesReady NullableInt32 `json:"lastNodesReady,omitempty"`
 	LastNodesTotal NullableInt32 `json:"lastNodesTotal,omitempty"`
@@ -540,6 +542,48 @@ func (o *Cluster) SetMaxNodeCountNil() {
 // UnsetMaxNodeCount ensures that no value is present for MaxNodeCount, not even an explicit nil
 func (o *Cluster) UnsetMaxNodeCount() {
 	o.MaxNodeCount.Unset()
+}
+
+// GetK3sMaxPods returns the K3sMaxPods field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Cluster) GetK3sMaxPods() int32 {
+	if o == nil || IsNil(o.K3sMaxPods.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.K3sMaxPods.Get()
+}
+
+// GetK3sMaxPodsOk returns a tuple with the K3sMaxPods field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Cluster) GetK3sMaxPodsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.K3sMaxPods.Get(), o.K3sMaxPods.IsSet()
+}
+
+// HasK3sMaxPods returns a boolean if a field has been set.
+func (o *Cluster) HasK3sMaxPods() bool {
+	if o != nil && o.K3sMaxPods.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetK3sMaxPods gets a reference to the given NullableInt32 and assigns it to the K3sMaxPods field.
+func (o *Cluster) SetK3sMaxPods(v int32) {
+	o.K3sMaxPods.Set(&v)
+}
+// SetK3sMaxPodsNil sets the value for K3sMaxPods to be an explicit nil
+func (o *Cluster) SetK3sMaxPodsNil() {
+	o.K3sMaxPods.Set(nil)
+}
+
+// UnsetK3sMaxPods ensures that no value is present for K3sMaxPods, not even an explicit nil
+func (o *Cluster) UnsetK3sMaxPods() {
+	o.K3sMaxPods.Unset()
 }
 
 // GetGpuNodePool returns the GpuNodePool field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1320,6 +1364,9 @@ func (o Cluster) ToMap() (map[string]interface{}, error) {
 	}
 	if o.MaxNodeCount.IsSet() {
 		toSerialize["maxNodeCount"] = o.MaxNodeCount.Get()
+	}
+	if o.K3sMaxPods.IsSet() {
+		toSerialize["k3sMaxPods"] = o.K3sMaxPods.Get()
 	}
 	if o.GpuNodePool.IsSet() {
 		toSerialize["gpuNodePool"] = o.GpuNodePool.Get()

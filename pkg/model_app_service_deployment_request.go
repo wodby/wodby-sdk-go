@@ -22,6 +22,7 @@ var _ MappedNullable = &AppServiceDeploymentRequest{}
 // AppServiceDeploymentRequest struct for AppServiceDeploymentRequest
 type AppServiceDeploymentRequest struct {
 	AppServiceId int32 `json:"appServiceId"`
+	// Build image to deploy for this service: the `id` of an item in an app build's `appServiceBuilds` that belongs to this service, not the app build `id`. A derivative service may name its parent service's build. Use `0` to start a new build. Required for services with a build source. To deploy every image of an app build, use `POST /app-builds/{id}/deploy` instead.
 	AppServiceBuildId NullableInt32 `json:"appServiceBuildId,omitempty"`
 	SkipPostDeployment NullableBool `json:"skipPostDeployment,omitempty"`
 	Force bool `json:"force"`

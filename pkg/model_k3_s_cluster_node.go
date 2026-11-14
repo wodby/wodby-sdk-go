@@ -23,18 +23,19 @@ var _ MappedNullable = &K3SClusterNode{}
 // K3SClusterNode struct for K3SClusterNode
 type K3SClusterNode struct {
 	Name string `json:"name"`
-	// server runs the k3s control plane; agent is a worker node joined with the join command.
+	// server runs the K3s control plane; agent is a worker node joined with the join command.
 	Role string `json:"role"`
 	Ready bool `json:"ready"`
 	// Whether the node accepts new pods. A node being removed or upgraded doesn't.
 	Schedulable bool `json:"schedulable"`
-	// The node's k3s release, such as v1.36.6+k3s1.
+	// The node's K3s release, such as v1.36.6+k3s1.
 	Version string `json:"version"`
 	// The private address the node uses for cluster traffic.
 	InternalIp *string `json:"internalIp,omitempty"`
 	ExternalIp *string `json:"externalIp,omitempty"`
 	// Persistent volumes stored on the node, as namespace/name of their claims. Their data stays on that server, so removing the node loses it.
 	LocalVolumes []string `json:"localVolumes"`
+	Capacity NodeCapacity `json:"capacity"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
@@ -44,7 +45,7 @@ type _K3SClusterNode K3SClusterNode
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewK3SClusterNode(name string, role string, ready bool, schedulable bool, version string, localVolumes []string, createdAt time.Time) *K3SClusterNode {
+func NewK3SClusterNode(name string, role string, ready bool, schedulable bool, version string, localVolumes []string, capacity NodeCapacity, createdAt time.Time) *K3SClusterNode {
 	this := K3SClusterNode{}
 	this.Name = name
 	this.Role = role
@@ -52,6 +53,7 @@ func NewK3SClusterNode(name string, role string, ready bool, schedulable bool, v
 	this.Schedulable = schedulable
 	this.Version = version
 	this.LocalVolumes = localVolumes
+	this.Capacity = capacity
 	this.CreatedAt = createdAt
 	return &this
 }
@@ -272,6 +274,30 @@ func (o *K3SClusterNode) SetLocalVolumes(v []string) {
 	o.LocalVolumes = v
 }
 
+// GetCapacity returns the Capacity field value
+func (o *K3SClusterNode) GetCapacity() NodeCapacity {
+	if o == nil {
+		var ret NodeCapacity
+		return ret
+	}
+
+	return o.Capacity
+}
+
+// GetCapacityOk returns a tuple with the Capacity field value
+// and a boolean to check if the value has been set.
+func (o *K3SClusterNode) GetCapacityOk() (*NodeCapacity, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Capacity, true
+}
+
+// SetCapacity sets field value
+func (o *K3SClusterNode) SetCapacity(v NodeCapacity) {
+	o.Capacity = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *K3SClusterNode) GetCreatedAt() time.Time {
 	if o == nil {
@@ -318,6 +344,7 @@ func (o K3SClusterNode) ToMap() (map[string]interface{}, error) {
 		toSerialize["externalIp"] = o.ExternalIp
 	}
 	toSerialize["localVolumes"] = o.LocalVolumes
+	toSerialize["capacity"] = o.Capacity
 	toSerialize["createdAt"] = o.CreatedAt
 	return toSerialize, nil
 }
@@ -333,6 +360,7 @@ func (o *K3SClusterNode) UnmarshalJSON(data []byte) (err error) {
 		"schedulable",
 		"version",
 		"localVolumes",
+		"capacity",
 		"createdAt",
 	}
 

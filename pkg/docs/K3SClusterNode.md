@@ -5,20 +5,21 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**Role** | **string** | server runs the k3s control plane; agent is a worker node joined with the join command. | 
+**Role** | **string** | server runs the K3s control plane; agent is a worker node joined with the join command. | 
 **Ready** | **bool** |  | 
 **Schedulable** | **bool** | Whether the node accepts new pods. A node being removed or upgraded doesn&#39;t. | 
-**Version** | **string** | The node&#39;s k3s release, such as v1.36.6+k3s1. | 
+**Version** | **string** | The node&#39;s K3s release, such as v1.36.6+k3s1. | 
 **InternalIp** | Pointer to **string** | The private address the node uses for cluster traffic. | [optional] 
 **ExternalIp** | Pointer to **string** |  | [optional] 
 **LocalVolumes** | **[]string** | Persistent volumes stored on the node, as namespace/name of their claims. Their data stays on that server, so removing the node loses it. | 
+**Capacity** | [**NodeCapacity**](NodeCapacity.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 
 ## Methods
 
 ### NewK3SClusterNode
 
-`func NewK3SClusterNode(name string, role string, ready bool, schedulable bool, version string, localVolumes []string, createdAt time.Time, ) *K3SClusterNode`
+`func NewK3SClusterNode(name string, role string, ready bool, schedulable bool, version string, localVolumes []string, capacity NodeCapacity, createdAt time.Time, ) *K3SClusterNode`
 
 NewK3SClusterNode instantiates a new K3SClusterNode object
 This constructor will assign default values to properties that have it defined,
@@ -201,6 +202,26 @@ and a boolean to check if the value has been set.
 `func (o *K3SClusterNode) SetLocalVolumes(v []string)`
 
 SetLocalVolumes sets LocalVolumes field to given value.
+
+
+### GetCapacity
+
+`func (o *K3SClusterNode) GetCapacity() NodeCapacity`
+
+GetCapacity returns the Capacity field if non-nil, zero value otherwise.
+
+### GetCapacityOk
+
+`func (o *K3SClusterNode) GetCapacityOk() (*NodeCapacity, bool)`
+
+GetCapacityOk returns a tuple with the Capacity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCapacity
+
+`func (o *K3SClusterNode) SetCapacity(v NodeCapacity)`
+
+SetCapacity sets Capacity field to given value.
 
 
 ### GetCreatedAt

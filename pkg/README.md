@@ -231,11 +231,14 @@ Class | Method | HTTP request | Description
 *AppServicesAPI* | [**UpdateResourcePreset**](docs/AppServicesAPI.md#updateresourcepreset) | **Put** /resource-presets/{id} | Update custom resource preset
 *AppsAPI* | [**CreateApp**](docs/AppsAPI.md#createapp) | **Post** /apps | Create app
 *AppsAPI* | [**CreateAppPreviewEnvironment**](docs/AppsAPI.md#createapppreviewenvironment) | **Post** /apps/preview-environments/{id} | Create a pull request preview environment
+*AppsAPI* | [**CreateAppVulnerabilityIgnore**](docs/AppsAPI.md#createappvulnerabilityignore) | **Post** /apps/vulnerability-ignores/{id} | Ignore a vulnerability
 *AppsAPI* | [**DeleteApp**](docs/AppsAPI.md#deleteapp) | **Delete** /apps/{id} | Delete app
+*AppsAPI* | [**DeleteAppVulnerabilityIgnore**](docs/AppsAPI.md#deleteappvulnerabilityignore) | **Delete** /app-vulnerability-ignores/{id} | Stop ignoring a vulnerability
 *AppsAPI* | [**GetApp**](docs/AppsAPI.md#getapp) | **Get** /apps/{id} | Get app
 *AppsAPI* | [**GetAppByName**](docs/AppsAPI.md#getappbyname) | **Get** /apps/by-name/{name} | Get app by name
 *AppsAPI* | [**GetAppSharing**](docs/AppsAPI.md#getappsharing) | **Get** /apps/sharing/{id} | Get app sharing
 *AppsAPI* | [**ListAppPreviewPullRequests**](docs/AppsAPI.md#listapppreviewpullrequests) | **Get** /apps/preview-pull-requests/{id} | List pull requests for preview environments
+*AppsAPI* | [**ListAppVulnerabilityIgnores**](docs/AppsAPI.md#listappvulnerabilityignores) | **Get** /apps/vulnerability-ignores/{id} | List ignored vulnerabilities
 *AppsAPI* | [**ListApps**](docs/AppsAPI.md#listapps) | **Get** /apps | List apps
 *AppsAPI* | [**RegenerateAppPreviewPassword**](docs/AppsAPI.md#regenerateapppreviewpassword) | **Post** /apps/preview-password/regenerate/{id} | Regenerate the preview password
 *AppsAPI* | [**UpdateApp**](docs/AppsAPI.md#updateapp) | **Put** /apps/{id} | Update app
@@ -256,7 +259,7 @@ Class | Method | HTTP request | Description
 *CertsAPI* | [**GetCert**](docs/CertsAPI.md#getcert) | **Get** /certs/{id} | Get cert
 *CertsAPI* | [**ListCerts**](docs/CertsAPI.md#listcerts) | **Get** /certs | List certs
 *ClustersAPI* | [**CreateCluster**](docs/ClustersAPI.md#createcluster) | **Post** /clusters | Create cluster
-*ClustersAPI* | [**CreateK3SCluster**](docs/ClustersAPI.md#createk3scluster) | **Post** /clusters/actions/create-k3s | Create k3s cluster
+*ClustersAPI* | [**CreateK3SCluster**](docs/ClustersAPI.md#createk3scluster) | **Post** /clusters/actions/create-k3s | Create K3s cluster
 *ClustersAPI* | [**CreateWodbyCloudCluster**](docs/ClustersAPI.md#createwodbycloudcluster) | **Post** /clusters/actions/create-wodby-cloud | Create Wodby Cloud cluster
 *ClustersAPI* | [**DeleteCluster**](docs/ClustersAPI.md#deletecluster) | **Delete** /clusters/{id} | Delete cluster
 *ClustersAPI* | [**GetCluster**](docs/ClustersAPI.md#getcluster) | **Get** /clusters/{id} | Get cluster
@@ -265,19 +268,21 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**GetClusterComponents**](docs/ClustersAPI.md#getclustercomponents) | **Get** /cluster-components/{id} | List cluster components
 *ClustersAPI* | [**GetClusterHostChecks**](docs/ClustersAPI.md#getclusterhostchecks) | **Get** /cluster-host-checks/{id} | List cluster host checks
 *ClustersAPI* | [**GetClusterInfraAppUpgradeChangelog**](docs/ClustersAPI.md#getclusterinfraappupgradechangelog) | **Get** /cluster-infra-app-upgrade-changelogs/{id} | Preview cluster infrastructure app upgrades
+*ClustersAPI* | [**GetClusterKubernetesVulnerabilities**](docs/ClustersAPI.md#getclusterkubernetesvulnerabilities) | **Get** /cluster-kubernetes-vulnerabilities/{id} | List Kubernetes version vulnerabilities
 *ClustersAPI* | [**GetClusterSecurityAdvisories**](docs/ClustersAPI.md#getclustersecurityadvisories) | **Get** /cluster-security-advisories/{id} | List cluster security advisories
 *ClustersAPI* | [**GetClusterSharing**](docs/ClustersAPI.md#getclustersharing) | **Get** /clusters/sharing/{id} | Get cluster sharing
-*ClustersAPI* | [**GetK3SClusterInstallCommand**](docs/ClustersAPI.md#getk3sclusterinstallcommand) | **Get** /clusters/k3s-install-command/{id} | Get k3s install command
-*ClustersAPI* | [**GetK3SClusterJoinCommand**](docs/ClustersAPI.md#getk3sclusterjoincommand) | **Get** /clusters/k3s-join-command/{id} | Get k3s join command
+*ClustersAPI* | [**GetK3SClusterInstallCommand**](docs/ClustersAPI.md#getk3sclusterinstallcommand) | **Get** /clusters/k3s-install-command/{id} | Get K3s install command
+*ClustersAPI* | [**GetK3SClusterJoinCommand**](docs/ClustersAPI.md#getk3sclusterjoincommand) | **Get** /clusters/k3s-join-command/{id} | Get K3s join command
 *ClustersAPI* | [**GetKubernetesVersionUpgradePlan**](docs/ClustersAPI.md#getkubernetesversionupgradeplan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
+*ClustersAPI* | [**ListClusterNodes**](docs/ClustersAPI.md#listclusternodes) | **Get** /cluster-nodes/{id} | List cluster nodes
 *ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
-*ClustersAPI* | [**ListK3SClusterNodes**](docs/ClustersAPI.md#listk3sclusternodes) | **Get** /cluster-k3s-nodes/{id} | List k3s cluster nodes
-*ClustersAPI* | [**ListK3SServerPrivateAddresses**](docs/ClustersAPI.md#listk3sserverprivateaddresses) | **Get** /cluster-k3s-private-addresses/{id} | List k3s server private addresses
+*ClustersAPI* | [**ListK3SClusterNodes**](docs/ClustersAPI.md#listk3sclusternodes) | **Get** /cluster-k3s-nodes/{id} | List K3s cluster nodes
+*ClustersAPI* | [**ListK3SServerPrivateAddresses**](docs/ClustersAPI.md#listk3sserverprivateaddresses) | **Get** /cluster-k3s-private-addresses/{id} | List K3s server private addresses
 *ClustersAPI* | [**ListWodbyCloudMachineTypes**](docs/ClustersAPI.md#listwodbycloudmachinetypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 *ClustersAPI* | [**RecycleClusterNodes**](docs/ClustersAPI.md#recycleclusternodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
-*ClustersAPI* | [**RemoveK3SClusterNode**](docs/ClustersAPI.md#removek3sclusternode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove k3s cluster node
+*ClustersAPI* | [**RemoveK3SClusterNode**](docs/ClustersAPI.md#removek3sclusternode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove K3s cluster node
 *ClustersAPI* | [**ScaleCluster**](docs/ClustersAPI.md#scalecluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
-*ClustersAPI* | [**SwitchK3SServerAddress**](docs/ClustersAPI.md#switchk3sserveraddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch k3s server to a private address
+*ClustersAPI* | [**SwitchK3SServerAddress**](docs/ClustersAPI.md#switchk3sserveraddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch K3s server to a private address
 *ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
 *ClustersAPI* | [**UpdateClusterComponent**](docs/ClustersAPI.md#updateclustercomponent) | **Post** /clusters/{id}/actions/update-component | Update a cluster component
 *ClustersAPI* | [**UpdateClusterEnvironmentPolicy**](docs/ClustersAPI.md#updateclusterenvironmentpolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
@@ -285,7 +290,8 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**UpdateClusterKubernetesVersion**](docs/ClustersAPI.md#updateclusterkubernetesversion) | **Post** /clusters/{id}/actions/update-kubernetes-version | Update cluster Kubernetes version
 *ClustersAPI* | [**UpdateClusterSettings**](docs/ClustersAPI.md#updateclustersettings) | **Put** /clusters/settings/{id} | Update cluster settings
 *ClustersAPI* | [**UpdateClusterSharing**](docs/ClustersAPI.md#updateclustersharing) | **Put** /clusters/sharing/{id} | Update cluster sharing
-*ClustersAPI* | [**UpdateK3SClusterPublicIp**](docs/ClustersAPI.md#updatek3sclusterpublicip) | **Post** /clusters/{id}/actions/update-k3s-public-ip | Update k3s cluster public IP
+*ClustersAPI* | [**UpdateK3SClusterMaxPods**](docs/ClustersAPI.md#updatek3sclustermaxpods) | **Post** /clusters/{id}/actions/update-k3s-max-pods | Set pods per node of a K3s cluster
+*ClustersAPI* | [**UpdateK3SClusterPublicIp**](docs/ClustersAPI.md#updatek3sclusterpublicip) | **Post** /clusters/{id}/actions/update-k3s-public-ip | Update K3s cluster public IP
 *ClustersAPI* | [**UpgradeClusterInfra**](docs/ClustersAPI.md#upgradeclusterinfra) | **Post** /clusters/{id}/actions/upgrade-infra | Upgrade cluster infrastructure
 *ClustersAPI* | [**UpgradeClusterInfraApps**](docs/ClustersAPI.md#upgradeclusterinfraapps) | **Post** /clusters/{id}/actions/upgrade-infra-apps | Upgrade cluster infrastructure app stacks
 *DatabasesAPI* | [**CreateDatabase**](docs/DatabasesAPI.md#createdatabase) | **Post** /databases | Create database
@@ -568,6 +574,7 @@ Class | Method | HTTP request | Description
  - [AppEnvironmentStackUpgradeInput](docs/AppEnvironmentStackUpgradeInput.md)
  - [AppEnvironmentStackUpgradeSettings](docs/AppEnvironmentStackUpgradeSettings.md)
  - [AppEnvironmentStackUpgradeSettingsInput](docs/AppEnvironmentStackUpgradeSettingsInput.md)
+ - [AppEnvironmentVulnerabilityHealth](docs/AppEnvironmentVulnerabilityHealth.md)
  - [AppPort](docs/AppPort.md)
  - [AppPortSetting](docs/AppPortSetting.md)
  - [AppPortSettingInput](docs/AppPortSettingInput.md)
@@ -630,6 +637,8 @@ Class | Method | HTTP request | Description
  - [AppServiceWorkspaceMount](docs/AppServiceWorkspaceMount.md)
  - [AppSettings](docs/AppSettings.md)
  - [AppSettingsInput](docs/AppSettingsInput.md)
+ - [AppVulnerabilityIgnore](docs/AppVulnerabilityIgnore.md)
+ - [AppVulnerabilityIgnoreInput](docs/AppVulnerabilityIgnoreInput.md)
  - [AutomationTimeWindow](docs/AutomationTimeWindow.md)
  - [AutomationTimeWindowInput](docs/AutomationTimeWindowInput.md)
  - [Backup](docs/Backup.md)
@@ -662,6 +671,9 @@ Class | Method | HTTP request | Description
  - [ClusterEnvironmentPolicyInput](docs/ClusterEnvironmentPolicyInput.md)
  - [ClusterHostCheck](docs/ClusterHostCheck.md)
  - [ClusterInfraAppUpgradeChangelog](docs/ClusterInfraAppUpgradeChangelog.md)
+ - [ClusterKubernetesVulnerabilities](docs/ClusterKubernetesVulnerabilities.md)
+ - [ClusterKubernetesVulnerability](docs/ClusterKubernetesVulnerability.md)
+ - [ClusterNode](docs/ClusterNode.md)
  - [ClusterNodePool](docs/ClusterNodePool.md)
  - [ClusterNodePoolInput](docs/ClusterNodePoolInput.md)
  - [ClusterSecurityAdvisory](docs/ClusterSecurityAdvisory.md)
@@ -779,6 +791,7 @@ Class | Method | HTTP request | Description
  - [NewVariableProviderInput](docs/NewVariableProviderInput.md)
  - [NewWodbyCloudClusterInput](docs/NewWodbyCloudClusterInput.md)
  - [NewWorkspaceInput](docs/NewWorkspaceInput.md)
+ - [NodeCapacity](docs/NodeCapacity.md)
  - [OperationResult](docs/OperationResult.md)
  - [Org](docs/Org.md)
  - [OrgCapabilities](docs/OrgCapabilities.md)
@@ -934,6 +947,7 @@ Class | Method | HTTP request | Description
  - [UpdateCurrentUserRequest](docs/UpdateCurrentUserRequest.md)
  - [UpdateDatabaseUserDBsInput](docs/UpdateDatabaseUserDBsInput.md)
  - [UpdateIntegrationInput](docs/UpdateIntegrationInput.md)
+ - [UpdateK3SClusterMaxPodsInput](docs/UpdateK3SClusterMaxPodsInput.md)
  - [UpdateK3SClusterPublicIPInput](docs/UpdateK3SClusterPublicIPInput.md)
  - [UpdateKubernetesVersionInput](docs/UpdateKubernetesVersionInput.md)
  - [UpdateOrgRequest](docs/UpdateOrgRequest.md)
