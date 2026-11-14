@@ -31,6 +31,28 @@ type Database struct {
 	Version string `json:"version"`
 	Region NullableString `json:"region,omitempty"`
 	Zone NullableString `json:"zone,omitempty"`
+	Replicas *int32 `json:"replicas,omitempty"`
+	// Storage size in GB. Null when the database does not set one.
+	StorageSize NullableInt32 `json:"storageSize,omitempty"`
+	// Provisioned storage IOPS. Null when the database does not set them.
+	StorageIOPS NullableInt32 `json:"storageIOPS,omitempty"`
+	MachineType NullableString `json:"machineType,omitempty"`
+	HighAvailability *bool `json:"highAvailability,omitempty"`
+	// True for a database that runs outside Wodby, such as a provider-managed database server.
+	External *bool `json:"external,omitempty"`
+	// The database's ID at its provider.
+	ExternalId NullableString `json:"externalId,omitempty"`
+	// True when connections to the database use TLS.
+	Ssl *bool `json:"ssl,omitempty"`
+	// Host name for connections from outside the database's network. Null when the database has none.
+	PublicHost NullableString `json:"publicHost,omitempty"`
+	PublicPort NullableInt32 `json:"publicPort,omitempty"`
+	// Host name for connections from inside the database's network.
+	PrivateHost NullableString `json:"privateHost,omitempty"`
+	// The cluster that runs the database.
+	ClusterId NullableInt32 `json:"clusterId,omitempty"`
+	// The cluster whose network a provider-managed database is placed in.
+	ResidedClusterId NullableInt32 `json:"residedClusterId,omitempty"`
 	IntegrationId NullableInt32 `json:"integrationId,omitempty"`
 	AppServiceId NullableInt32 `json:"appServiceId,omitempty"`
 	// org when the organization owns the resource, project when one project owns it.
@@ -329,6 +351,512 @@ func (o *Database) UnsetZone() {
 	o.Zone.Unset()
 }
 
+// GetReplicas returns the Replicas field value if set, zero value otherwise.
+func (o *Database) GetReplicas() int32 {
+	if o == nil || IsNil(o.Replicas) {
+		var ret int32
+		return ret
+	}
+	return *o.Replicas
+}
+
+// GetReplicasOk returns a tuple with the Replicas field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Database) GetReplicasOk() (*int32, bool) {
+	if o == nil || IsNil(o.Replicas) {
+		return nil, false
+	}
+	return o.Replicas, true
+}
+
+// HasReplicas returns a boolean if a field has been set.
+func (o *Database) HasReplicas() bool {
+	if o != nil && !IsNil(o.Replicas) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicas gets a reference to the given int32 and assigns it to the Replicas field.
+func (o *Database) SetReplicas(v int32) {
+	o.Replicas = &v
+}
+
+// GetStorageSize returns the StorageSize field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetStorageSize() int32 {
+	if o == nil || IsNil(o.StorageSize.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.StorageSize.Get()
+}
+
+// GetStorageSizeOk returns a tuple with the StorageSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetStorageSizeOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StorageSize.Get(), o.StorageSize.IsSet()
+}
+
+// HasStorageSize returns a boolean if a field has been set.
+func (o *Database) HasStorageSize() bool {
+	if o != nil && o.StorageSize.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageSize gets a reference to the given NullableInt32 and assigns it to the StorageSize field.
+func (o *Database) SetStorageSize(v int32) {
+	o.StorageSize.Set(&v)
+}
+// SetStorageSizeNil sets the value for StorageSize to be an explicit nil
+func (o *Database) SetStorageSizeNil() {
+	o.StorageSize.Set(nil)
+}
+
+// UnsetStorageSize ensures that no value is present for StorageSize, not even an explicit nil
+func (o *Database) UnsetStorageSize() {
+	o.StorageSize.Unset()
+}
+
+// GetStorageIOPS returns the StorageIOPS field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetStorageIOPS() int32 {
+	if o == nil || IsNil(o.StorageIOPS.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.StorageIOPS.Get()
+}
+
+// GetStorageIOPSOk returns a tuple with the StorageIOPS field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetStorageIOPSOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StorageIOPS.Get(), o.StorageIOPS.IsSet()
+}
+
+// HasStorageIOPS returns a boolean if a field has been set.
+func (o *Database) HasStorageIOPS() bool {
+	if o != nil && o.StorageIOPS.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageIOPS gets a reference to the given NullableInt32 and assigns it to the StorageIOPS field.
+func (o *Database) SetStorageIOPS(v int32) {
+	o.StorageIOPS.Set(&v)
+}
+// SetStorageIOPSNil sets the value for StorageIOPS to be an explicit nil
+func (o *Database) SetStorageIOPSNil() {
+	o.StorageIOPS.Set(nil)
+}
+
+// UnsetStorageIOPS ensures that no value is present for StorageIOPS, not even an explicit nil
+func (o *Database) UnsetStorageIOPS() {
+	o.StorageIOPS.Unset()
+}
+
+// GetMachineType returns the MachineType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetMachineType() string {
+	if o == nil || IsNil(o.MachineType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MachineType.Get()
+}
+
+// GetMachineTypeOk returns a tuple with the MachineType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetMachineTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MachineType.Get(), o.MachineType.IsSet()
+}
+
+// HasMachineType returns a boolean if a field has been set.
+func (o *Database) HasMachineType() bool {
+	if o != nil && o.MachineType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMachineType gets a reference to the given NullableString and assigns it to the MachineType field.
+func (o *Database) SetMachineType(v string) {
+	o.MachineType.Set(&v)
+}
+// SetMachineTypeNil sets the value for MachineType to be an explicit nil
+func (o *Database) SetMachineTypeNil() {
+	o.MachineType.Set(nil)
+}
+
+// UnsetMachineType ensures that no value is present for MachineType, not even an explicit nil
+func (o *Database) UnsetMachineType() {
+	o.MachineType.Unset()
+}
+
+// GetHighAvailability returns the HighAvailability field value if set, zero value otherwise.
+func (o *Database) GetHighAvailability() bool {
+	if o == nil || IsNil(o.HighAvailability) {
+		var ret bool
+		return ret
+	}
+	return *o.HighAvailability
+}
+
+// GetHighAvailabilityOk returns a tuple with the HighAvailability field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Database) GetHighAvailabilityOk() (*bool, bool) {
+	if o == nil || IsNil(o.HighAvailability) {
+		return nil, false
+	}
+	return o.HighAvailability, true
+}
+
+// HasHighAvailability returns a boolean if a field has been set.
+func (o *Database) HasHighAvailability() bool {
+	if o != nil && !IsNil(o.HighAvailability) {
+		return true
+	}
+
+	return false
+}
+
+// SetHighAvailability gets a reference to the given bool and assigns it to the HighAvailability field.
+func (o *Database) SetHighAvailability(v bool) {
+	o.HighAvailability = &v
+}
+
+// GetExternal returns the External field value if set, zero value otherwise.
+func (o *Database) GetExternal() bool {
+	if o == nil || IsNil(o.External) {
+		var ret bool
+		return ret
+	}
+	return *o.External
+}
+
+// GetExternalOk returns a tuple with the External field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Database) GetExternalOk() (*bool, bool) {
+	if o == nil || IsNil(o.External) {
+		return nil, false
+	}
+	return o.External, true
+}
+
+// HasExternal returns a boolean if a field has been set.
+func (o *Database) HasExternal() bool {
+	if o != nil && !IsNil(o.External) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternal gets a reference to the given bool and assigns it to the External field.
+func (o *Database) SetExternal(v bool) {
+	o.External = &v
+}
+
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId.Get()
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetExternalIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *Database) HasExternalId() bool {
+	if o != nil && o.ExternalId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
+func (o *Database) SetExternalId(v string) {
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *Database) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *Database) UnsetExternalId() {
+	o.ExternalId.Unset()
+}
+
+// GetSsl returns the Ssl field value if set, zero value otherwise.
+func (o *Database) GetSsl() bool {
+	if o == nil || IsNil(o.Ssl) {
+		var ret bool
+		return ret
+	}
+	return *o.Ssl
+}
+
+// GetSslOk returns a tuple with the Ssl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Database) GetSslOk() (*bool, bool) {
+	if o == nil || IsNil(o.Ssl) {
+		return nil, false
+	}
+	return o.Ssl, true
+}
+
+// HasSsl returns a boolean if a field has been set.
+func (o *Database) HasSsl() bool {
+	if o != nil && !IsNil(o.Ssl) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsl gets a reference to the given bool and assigns it to the Ssl field.
+func (o *Database) SetSsl(v bool) {
+	o.Ssl = &v
+}
+
+// GetPublicHost returns the PublicHost field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetPublicHost() string {
+	if o == nil || IsNil(o.PublicHost.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PublicHost.Get()
+}
+
+// GetPublicHostOk returns a tuple with the PublicHost field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetPublicHostOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PublicHost.Get(), o.PublicHost.IsSet()
+}
+
+// HasPublicHost returns a boolean if a field has been set.
+func (o *Database) HasPublicHost() bool {
+	if o != nil && o.PublicHost.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPublicHost gets a reference to the given NullableString and assigns it to the PublicHost field.
+func (o *Database) SetPublicHost(v string) {
+	o.PublicHost.Set(&v)
+}
+// SetPublicHostNil sets the value for PublicHost to be an explicit nil
+func (o *Database) SetPublicHostNil() {
+	o.PublicHost.Set(nil)
+}
+
+// UnsetPublicHost ensures that no value is present for PublicHost, not even an explicit nil
+func (o *Database) UnsetPublicHost() {
+	o.PublicHost.Unset()
+}
+
+// GetPublicPort returns the PublicPort field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetPublicPort() int32 {
+	if o == nil || IsNil(o.PublicPort.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.PublicPort.Get()
+}
+
+// GetPublicPortOk returns a tuple with the PublicPort field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetPublicPortOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PublicPort.Get(), o.PublicPort.IsSet()
+}
+
+// HasPublicPort returns a boolean if a field has been set.
+func (o *Database) HasPublicPort() bool {
+	if o != nil && o.PublicPort.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPublicPort gets a reference to the given NullableInt32 and assigns it to the PublicPort field.
+func (o *Database) SetPublicPort(v int32) {
+	o.PublicPort.Set(&v)
+}
+// SetPublicPortNil sets the value for PublicPort to be an explicit nil
+func (o *Database) SetPublicPortNil() {
+	o.PublicPort.Set(nil)
+}
+
+// UnsetPublicPort ensures that no value is present for PublicPort, not even an explicit nil
+func (o *Database) UnsetPublicPort() {
+	o.PublicPort.Unset()
+}
+
+// GetPrivateHost returns the PrivateHost field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetPrivateHost() string {
+	if o == nil || IsNil(o.PrivateHost.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PrivateHost.Get()
+}
+
+// GetPrivateHostOk returns a tuple with the PrivateHost field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetPrivateHostOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PrivateHost.Get(), o.PrivateHost.IsSet()
+}
+
+// HasPrivateHost returns a boolean if a field has been set.
+func (o *Database) HasPrivateHost() bool {
+	if o != nil && o.PrivateHost.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivateHost gets a reference to the given NullableString and assigns it to the PrivateHost field.
+func (o *Database) SetPrivateHost(v string) {
+	o.PrivateHost.Set(&v)
+}
+// SetPrivateHostNil sets the value for PrivateHost to be an explicit nil
+func (o *Database) SetPrivateHostNil() {
+	o.PrivateHost.Set(nil)
+}
+
+// UnsetPrivateHost ensures that no value is present for PrivateHost, not even an explicit nil
+func (o *Database) UnsetPrivateHost() {
+	o.PrivateHost.Unset()
+}
+
+// GetClusterId returns the ClusterId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetClusterId() int32 {
+	if o == nil || IsNil(o.ClusterId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.ClusterId.Get()
+}
+
+// GetClusterIdOk returns a tuple with the ClusterId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetClusterIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ClusterId.Get(), o.ClusterId.IsSet()
+}
+
+// HasClusterId returns a boolean if a field has been set.
+func (o *Database) HasClusterId() bool {
+	if o != nil && o.ClusterId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterId gets a reference to the given NullableInt32 and assigns it to the ClusterId field.
+func (o *Database) SetClusterId(v int32) {
+	o.ClusterId.Set(&v)
+}
+// SetClusterIdNil sets the value for ClusterId to be an explicit nil
+func (o *Database) SetClusterIdNil() {
+	o.ClusterId.Set(nil)
+}
+
+// UnsetClusterId ensures that no value is present for ClusterId, not even an explicit nil
+func (o *Database) UnsetClusterId() {
+	o.ClusterId.Unset()
+}
+
+// GetResidedClusterId returns the ResidedClusterId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Database) GetResidedClusterId() int32 {
+	if o == nil || IsNil(o.ResidedClusterId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.ResidedClusterId.Get()
+}
+
+// GetResidedClusterIdOk returns a tuple with the ResidedClusterId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Database) GetResidedClusterIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ResidedClusterId.Get(), o.ResidedClusterId.IsSet()
+}
+
+// HasResidedClusterId returns a boolean if a field has been set.
+func (o *Database) HasResidedClusterId() bool {
+	if o != nil && o.ResidedClusterId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetResidedClusterId gets a reference to the given NullableInt32 and assigns it to the ResidedClusterId field.
+func (o *Database) SetResidedClusterId(v int32) {
+	o.ResidedClusterId.Set(&v)
+}
+// SetResidedClusterIdNil sets the value for ResidedClusterId to be an explicit nil
+func (o *Database) SetResidedClusterIdNil() {
+	o.ResidedClusterId.Set(nil)
+}
+
+// UnsetResidedClusterId ensures that no value is present for ResidedClusterId, not even an explicit nil
+func (o *Database) UnsetResidedClusterId() {
+	o.ResidedClusterId.Unset()
+}
+
 // GetIntegrationId returns the IntegrationId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Database) GetIntegrationId() int32 {
 	if o == nil || IsNil(o.IntegrationId.Get()) {
@@ -624,6 +1152,45 @@ func (o Database) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Zone.IsSet() {
 		toSerialize["zone"] = o.Zone.Get()
+	}
+	if !IsNil(o.Replicas) {
+		toSerialize["replicas"] = o.Replicas
+	}
+	if o.StorageSize.IsSet() {
+		toSerialize["storageSize"] = o.StorageSize.Get()
+	}
+	if o.StorageIOPS.IsSet() {
+		toSerialize["storageIOPS"] = o.StorageIOPS.Get()
+	}
+	if o.MachineType.IsSet() {
+		toSerialize["machineType"] = o.MachineType.Get()
+	}
+	if !IsNil(o.HighAvailability) {
+		toSerialize["highAvailability"] = o.HighAvailability
+	}
+	if !IsNil(o.External) {
+		toSerialize["external"] = o.External
+	}
+	if o.ExternalId.IsSet() {
+		toSerialize["externalId"] = o.ExternalId.Get()
+	}
+	if !IsNil(o.Ssl) {
+		toSerialize["ssl"] = o.Ssl
+	}
+	if o.PublicHost.IsSet() {
+		toSerialize["publicHost"] = o.PublicHost.Get()
+	}
+	if o.PublicPort.IsSet() {
+		toSerialize["publicPort"] = o.PublicPort.Get()
+	}
+	if o.PrivateHost.IsSet() {
+		toSerialize["privateHost"] = o.PrivateHost.Get()
+	}
+	if o.ClusterId.IsSet() {
+		toSerialize["clusterId"] = o.ClusterId.Get()
+	}
+	if o.ResidedClusterId.IsSet() {
+		toSerialize["residedClusterId"] = o.ResidedClusterId.Get()
 	}
 	if o.IntegrationId.IsSet() {
 		toSerialize["integrationId"] = o.IntegrationId.Get()

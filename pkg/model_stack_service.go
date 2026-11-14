@@ -36,6 +36,13 @@ type StackService struct {
 	Replicas int32 `json:"replicas"`
 	ServiceRevPinned bool `json:"serviceRevPinned"`
 	Outdated bool `json:"outdated"`
+	Icon *string `json:"icon,omitempty"`
+	// True when the version of the stack service's default option has reached its end of life.
+	Eol *bool `json:"eol,omitempty"`
+	// The service derivative the stack service runs. Null for the service itself.
+	Derivative NullableString `json:"derivative,omitempty"`
+	// The stack service this derivative stack service belongs to. Null for the service itself.
+	ParentStackServiceId NullableInt32 `json:"parentStackServiceId,omitempty"`
 	ServiceRevId int32 `json:"serviceRevId"`
 	ServiceRevName string `json:"serviceRevName"`
 	ServiceRevTitle string `json:"serviceRevTitle"`
@@ -374,6 +381,154 @@ func (o *StackService) GetOutdatedOk() (*bool, bool) {
 // SetOutdated sets field value
 func (o *StackService) SetOutdated(v bool) {
 	o.Outdated = v
+}
+
+// GetIcon returns the Icon field value if set, zero value otherwise.
+func (o *StackService) GetIcon() string {
+	if o == nil || IsNil(o.Icon) {
+		var ret string
+		return ret
+	}
+	return *o.Icon
+}
+
+// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackService) GetIconOk() (*string, bool) {
+	if o == nil || IsNil(o.Icon) {
+		return nil, false
+	}
+	return o.Icon, true
+}
+
+// HasIcon returns a boolean if a field has been set.
+func (o *StackService) HasIcon() bool {
+	if o != nil && !IsNil(o.Icon) {
+		return true
+	}
+
+	return false
+}
+
+// SetIcon gets a reference to the given string and assigns it to the Icon field.
+func (o *StackService) SetIcon(v string) {
+	o.Icon = &v
+}
+
+// GetEol returns the Eol field value if set, zero value otherwise.
+func (o *StackService) GetEol() bool {
+	if o == nil || IsNil(o.Eol) {
+		var ret bool
+		return ret
+	}
+	return *o.Eol
+}
+
+// GetEolOk returns a tuple with the Eol field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StackService) GetEolOk() (*bool, bool) {
+	if o == nil || IsNil(o.Eol) {
+		return nil, false
+	}
+	return o.Eol, true
+}
+
+// HasEol returns a boolean if a field has been set.
+func (o *StackService) HasEol() bool {
+	if o != nil && !IsNil(o.Eol) {
+		return true
+	}
+
+	return false
+}
+
+// SetEol gets a reference to the given bool and assigns it to the Eol field.
+func (o *StackService) SetEol(v bool) {
+	o.Eol = &v
+}
+
+// GetDerivative returns the Derivative field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackService) GetDerivative() string {
+	if o == nil || IsNil(o.Derivative.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Derivative.Get()
+}
+
+// GetDerivativeOk returns a tuple with the Derivative field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackService) GetDerivativeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Derivative.Get(), o.Derivative.IsSet()
+}
+
+// HasDerivative returns a boolean if a field has been set.
+func (o *StackService) HasDerivative() bool {
+	if o != nil && o.Derivative.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDerivative gets a reference to the given NullableString and assigns it to the Derivative field.
+func (o *StackService) SetDerivative(v string) {
+	o.Derivative.Set(&v)
+}
+// SetDerivativeNil sets the value for Derivative to be an explicit nil
+func (o *StackService) SetDerivativeNil() {
+	o.Derivative.Set(nil)
+}
+
+// UnsetDerivative ensures that no value is present for Derivative, not even an explicit nil
+func (o *StackService) UnsetDerivative() {
+	o.Derivative.Unset()
+}
+
+// GetParentStackServiceId returns the ParentStackServiceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackService) GetParentStackServiceId() int32 {
+	if o == nil || IsNil(o.ParentStackServiceId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.ParentStackServiceId.Get()
+}
+
+// GetParentStackServiceIdOk returns a tuple with the ParentStackServiceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackService) GetParentStackServiceIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ParentStackServiceId.Get(), o.ParentStackServiceId.IsSet()
+}
+
+// HasParentStackServiceId returns a boolean if a field has been set.
+func (o *StackService) HasParentStackServiceId() bool {
+	if o != nil && o.ParentStackServiceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParentStackServiceId gets a reference to the given NullableInt32 and assigns it to the ParentStackServiceId field.
+func (o *StackService) SetParentStackServiceId(v int32) {
+	o.ParentStackServiceId.Set(&v)
+}
+// SetParentStackServiceIdNil sets the value for ParentStackServiceId to be an explicit nil
+func (o *StackService) SetParentStackServiceIdNil() {
+	o.ParentStackServiceId.Set(nil)
+}
+
+// UnsetParentStackServiceId ensures that no value is present for ParentStackServiceId, not even an explicit nil
+func (o *StackService) UnsetParentStackServiceId() {
+	o.ParentStackServiceId.Unset()
 }
 
 // GetServiceRevId returns the ServiceRevId field value
@@ -746,6 +901,18 @@ func (o StackService) ToMap() (map[string]interface{}, error) {
 	toSerialize["replicas"] = o.Replicas
 	toSerialize["serviceRevPinned"] = o.ServiceRevPinned
 	toSerialize["outdated"] = o.Outdated
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Eol) {
+		toSerialize["eol"] = o.Eol
+	}
+	if o.Derivative.IsSet() {
+		toSerialize["derivative"] = o.Derivative.Get()
+	}
+	if o.ParentStackServiceId.IsSet() {
+		toSerialize["parentStackServiceId"] = o.ParentStackServiceId.Get()
+	}
 	toSerialize["serviceRevId"] = o.ServiceRevId
 	toSerialize["serviceRevName"] = o.ServiceRevName
 	toSerialize["serviceRevTitle"] = o.ServiceRevTitle

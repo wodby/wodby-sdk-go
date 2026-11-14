@@ -44,6 +44,11 @@ type Integration struct {
 	OwnerProjectId NullableInt32 `json:"ownerProjectId,omitempty"`
 	// True when every project in the organization can use the resource without a project share.
 	AvailableToAllProjects bool `json:"availableToAllProjects"`
+	Icon *string `json:"icon,omitempty"`
+	// The integration types the credentials are set up for.
+	Kinds []IntegrationKind `json:"kinds,omitempty"`
+	// The provider fields of the integration. A secret field is returned without its value. Returned only by GET /integrations/{id}.
+	FieldValues []IntegrationFieldValue `json:"fieldValues,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -560,6 +565,102 @@ func (o *Integration) SetAvailableToAllProjects(v bool) {
 	o.AvailableToAllProjects = v
 }
 
+// GetIcon returns the Icon field value if set, zero value otherwise.
+func (o *Integration) GetIcon() string {
+	if o == nil || IsNil(o.Icon) {
+		var ret string
+		return ret
+	}
+	return *o.Icon
+}
+
+// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Integration) GetIconOk() (*string, bool) {
+	if o == nil || IsNil(o.Icon) {
+		return nil, false
+	}
+	return o.Icon, true
+}
+
+// HasIcon returns a boolean if a field has been set.
+func (o *Integration) HasIcon() bool {
+	if o != nil && !IsNil(o.Icon) {
+		return true
+	}
+
+	return false
+}
+
+// SetIcon gets a reference to the given string and assigns it to the Icon field.
+func (o *Integration) SetIcon(v string) {
+	o.Icon = &v
+}
+
+// GetKinds returns the Kinds field value if set, zero value otherwise.
+func (o *Integration) GetKinds() []IntegrationKind {
+	if o == nil || IsNil(o.Kinds) {
+		var ret []IntegrationKind
+		return ret
+	}
+	return o.Kinds
+}
+
+// GetKindsOk returns a tuple with the Kinds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Integration) GetKindsOk() ([]IntegrationKind, bool) {
+	if o == nil || IsNil(o.Kinds) {
+		return nil, false
+	}
+	return o.Kinds, true
+}
+
+// HasKinds returns a boolean if a field has been set.
+func (o *Integration) HasKinds() bool {
+	if o != nil && !IsNil(o.Kinds) {
+		return true
+	}
+
+	return false
+}
+
+// SetKinds gets a reference to the given []IntegrationKind and assigns it to the Kinds field.
+func (o *Integration) SetKinds(v []IntegrationKind) {
+	o.Kinds = v
+}
+
+// GetFieldValues returns the FieldValues field value if set, zero value otherwise.
+func (o *Integration) GetFieldValues() []IntegrationFieldValue {
+	if o == nil || IsNil(o.FieldValues) {
+		var ret []IntegrationFieldValue
+		return ret
+	}
+	return o.FieldValues
+}
+
+// GetFieldValuesOk returns a tuple with the FieldValues field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Integration) GetFieldValuesOk() ([]IntegrationFieldValue, bool) {
+	if o == nil || IsNil(o.FieldValues) {
+		return nil, false
+	}
+	return o.FieldValues, true
+}
+
+// HasFieldValues returns a boolean if a field has been set.
+func (o *Integration) HasFieldValues() bool {
+	if o != nil && !IsNil(o.FieldValues) {
+		return true
+	}
+
+	return false
+}
+
+// SetFieldValues gets a reference to the given []IntegrationFieldValue and assigns it to the FieldValues field.
+func (o *Integration) SetFieldValues(v []IntegrationFieldValue) {
+	o.FieldValues = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Integration) GetCreatedAt() time.Time {
 	if o == nil {
@@ -644,6 +745,15 @@ func (o Integration) ToMap() (map[string]interface{}, error) {
 		toSerialize["ownerProjectId"] = o.OwnerProjectId.Get()
 	}
 	toSerialize["availableToAllProjects"] = o.AvailableToAllProjects
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Kinds) {
+		toSerialize["kinds"] = o.Kinds
+	}
+	if !IsNil(o.FieldValues) {
+		toSerialize["fieldValues"] = o.FieldValues
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

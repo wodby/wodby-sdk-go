@@ -734,7 +734,7 @@ func (r ApiGetIntegrationKubeSettingsRequest) Execute() (map[string]interface{},
 /*
 GetIntegrationKubeSettings Get Kubernetes settings
 
-Returns what clusters of the integration's Kubernetes provider support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode, serverless, billingOptions, gpuNodePool (whether a cluster can have an optional GPU node pool), gpuNodePoolScalesToZero (whether that pool's minimum may be 0) and nodeRecycling (whether a running cluster's worker nodes can be recycled).
+Returns what clusters of the integration's Kubernetes provider support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode, serverless, billingOptions, gpuNodePool (whether a cluster can have an optional GPU node pool), gpuNodePoolScalesToZero (whether that pool's minimum may be 0), nodeRecycling (whether a running cluster's worker nodes can be recycled) and nodeAutoscaling (whether the provider scales nodes between the minimum and maximum node counts; when false, a cluster has a fixed number of nodes and must be created and scaled with equal minimum and maximum node counts).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

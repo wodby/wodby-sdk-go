@@ -139,6 +139,7 @@ docs/AppServiceCustomLink.md
 docs/AppServiceCustomLinkInput.md
 docs/AppServiceCustomLinkInputValuesInner.md
 docs/AppServiceCustomLinkValue.md
+docs/AppServiceCustomization.md
 docs/AppServiceDatabaseInput.md
 docs/AppServiceDeployment.md
 docs/AppServiceDeploymentRequest.md
@@ -161,6 +162,7 @@ docs/AppServiceSettingInput.md
 docs/AppServiceToken.md
 docs/AppServiceVolume.md
 docs/AppServiceVolumeStorageClassState.md
+docs/AppServiceWorkspaceMount.md
 docs/AppServicesAPI.md
 docs/AppSettings.md
 docs/AppSettingsInput.md
@@ -259,6 +261,8 @@ docs/ImportsAPI.md
 docs/Integration.md
 docs/IntegrationConfigurationResult.md
 docs/IntegrationEnvironmentPolicyInput.md
+docs/IntegrationFieldValue.md
+docs/IntegrationKind.md
 docs/IntegrationKindsAPI.md
 docs/IntegrationLinkInput.md
 docs/IntegrationProviderRevisionUpgrade.md
@@ -273,6 +277,7 @@ docs/InviteOrgMemberInput.md
 docs/K3SClusterNode.md
 docs/K3SInstallCommand.md
 docs/K3SJoinCommand.md
+docs/K3SPrivateAddress.md
 docs/KubeVersion.md
 docs/KubernetesVersionUpgradePlan.md
 docs/KubernetesVersionUpgradeTarget.md
@@ -458,6 +463,7 @@ docs/StacksAPI.md
 docs/StacksResponse.md
 docs/StartAgentChatRequest.md
 docs/StorageClass.md
+docs/SwitchK3SServerAddressInput.md
 docs/SyncStackWithOriginInput.md
 docs/Task.md
 docs/TaskInitiator.md
@@ -618,6 +624,7 @@ model_app_service_custom_link.go
 model_app_service_custom_link_input.go
 model_app_service_custom_link_input_values_inner.go
 model_app_service_custom_link_value.go
+model_app_service_customization.go
 model_app_service_database_input.go
 model_app_service_deployment.go
 model_app_service_deployment_request.go
@@ -640,6 +647,7 @@ model_app_service_setting_input.go
 model_app_service_token.go
 model_app_service_volume.go
 model_app_service_volume_storage_class_state.go
+model_app_service_workspace_mount.go
 model_app_settings.go
 model_app_settings_input.go
 model_automation_time_window.go
@@ -728,6 +736,8 @@ model_import_stacks_from_git_input.go
 model_integration.go
 model_integration_configuration_result.go
 model_integration_environment_policy_input.go
+model_integration_field_value.go
+model_integration_kind.go
 model_integration_link_input.go
 model_integration_provider_revision_upgrade.go
 model_integration_scope.go
@@ -740,6 +750,7 @@ model_invite_org_member_input.go
 model_k3_s_cluster_node.go
 model_k3_s_install_command.go
 model_k3_s_join_command.go
+model_k3_s_private_address.go
 model_kube_version.go
 model_kubernetes_version_upgrade_plan.go
 model_kubernetes_version_upgrade_target.go
@@ -915,6 +926,7 @@ model_stack_upgrade_volume_deletion.go
 model_stacks_response.go
 model_start_agent_chat_request.go
 model_storage_class.go
+model_switch_k3_s_server_address_input.go
 model_sync_stack_with_origin_input.go
 model_task.go
 model_task_initiator.go

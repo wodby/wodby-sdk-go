@@ -23,6 +23,8 @@ var _ MappedNullable = &AppEnvironmentStackUpgradeInput{}
 type AppEnvironmentStackUpgradeInput struct {
 	// Build affected services when required and deploy the upgraded stack configuration.
 	Deployment *bool `json:"deployment,omitempty"`
+	// Build services whose build inputs the upgrade changes before deploying them. When false, those services are deployed with their current build and stay marked as needing a rebuild until their next build; a service with no build to reuse is still built. Ignored when deployment is false.
+	Rebuild *bool `json:"rebuild,omitempty"`
 	Versions bool `json:"versions"`
 	Replicas bool `json:"replicas"`
 	Resources bool `json:"resources"`
@@ -47,6 +49,8 @@ func NewAppEnvironmentStackUpgradeInput(versions bool, replicas bool, resources 
 	this := AppEnvironmentStackUpgradeInput{}
 	var deployment bool = true
 	this.Deployment = &deployment
+	var rebuild bool = true
+	this.Rebuild = &rebuild
 	this.Versions = versions
 	this.Replicas = replicas
 	this.Resources = resources
@@ -69,6 +73,8 @@ func NewAppEnvironmentStackUpgradeInputWithDefaults() *AppEnvironmentStackUpgrad
 	this := AppEnvironmentStackUpgradeInput{}
 	var deployment bool = true
 	this.Deployment = &deployment
+	var rebuild bool = true
+	this.Rebuild = &rebuild
 	return &this
 }
 
@@ -102,6 +108,38 @@ func (o *AppEnvironmentStackUpgradeInput) HasDeployment() bool {
 // SetDeployment gets a reference to the given bool and assigns it to the Deployment field.
 func (o *AppEnvironmentStackUpgradeInput) SetDeployment(v bool) {
 	o.Deployment = &v
+}
+
+// GetRebuild returns the Rebuild field value if set, zero value otherwise.
+func (o *AppEnvironmentStackUpgradeInput) GetRebuild() bool {
+	if o == nil || IsNil(o.Rebuild) {
+		var ret bool
+		return ret
+	}
+	return *o.Rebuild
+}
+
+// GetRebuildOk returns a tuple with the Rebuild field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentStackUpgradeInput) GetRebuildOk() (*bool, bool) {
+	if o == nil || IsNil(o.Rebuild) {
+		return nil, false
+	}
+	return o.Rebuild, true
+}
+
+// HasRebuild returns a boolean if a field has been set.
+func (o *AppEnvironmentStackUpgradeInput) HasRebuild() bool {
+	if o != nil && !IsNil(o.Rebuild) {
+		return true
+	}
+
+	return false
+}
+
+// SetRebuild gets a reference to the given bool and assigns it to the Rebuild field.
+func (o *AppEnvironmentStackUpgradeInput) SetRebuild(v bool) {
+	o.Rebuild = &v
 }
 
 // GetVersions returns the Versions field value
@@ -404,6 +442,9 @@ func (o AppEnvironmentStackUpgradeInput) ToMap() (map[string]interface{}, error)
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Deployment) {
 		toSerialize["deployment"] = o.Deployment
+	}
+	if !IsNil(o.Rebuild) {
+		toSerialize["rebuild"] = o.Rebuild
 	}
 	toSerialize["versions"] = o.Versions
 	toSerialize["replicas"] = o.Replicas

@@ -28,6 +28,15 @@ Name | Type | Description | Notes
 **ServiceRevId** | **int32** |  | 
 **ParentAppServiceId** | Pointer to **NullableInt32** |  | [optional] 
 **DeploymentConfiguration** | [**ServiceDeploymentConfiguration**](ServiceDeploymentConfiguration.md) |  | 
+**Icon** | Pointer to **string** |  | [optional] 
+**Eol** | Pointer to **bool** | True when the app service&#39;s version has reached its end of life. | [optional] 
+**BuildSourceType** | Pointer to **NullableString** | How the app service gets its source code to build, public, clone or connect. Null when it is not built from source. | [optional] 
+**Derivative** | Pointer to **NullableString** | The service derivative the app service runs. Null for the service itself. | [optional] 
+**GitRepoId** | Pointer to **NullableInt32** |  | [optional] 
+**WorkspaceMounts** | Pointer to [**[]AppServiceWorkspaceMount**](AppServiceWorkspaceMount.md) | Workspace code mounts of the service, with its settings resolved in the paths. Empty without a workspace contract. | [optional] 
+**DatabaseDbId** | Pointer to **NullableInt32** | The database the app service uses on a provider-managed database server. | [optional] 
+**DatabaseUserId** | Pointer to **NullableInt32** | The database user the app service connects as on a provider-managed database server. | [optional] 
+**Customizations** | Pointer to [**[]AppServiceCustomization**](AppServiceCustomization.md) | What this app environment set differently from the stack service the app service was created from, such as a setting value, an extra variable or another link target. Only names are returned, never values. Returned only by GET /app-services/{id}. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -589,6 +598,281 @@ and a boolean to check if the value has been set.
 
 SetDeploymentConfiguration sets DeploymentConfiguration field to given value.
 
+
+### GetIcon
+
+`func (o *AppService) GetIcon() string`
+
+GetIcon returns the Icon field if non-nil, zero value otherwise.
+
+### GetIconOk
+
+`func (o *AppService) GetIconOk() (*string, bool)`
+
+GetIconOk returns a tuple with the Icon field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIcon
+
+`func (o *AppService) SetIcon(v string)`
+
+SetIcon sets Icon field to given value.
+
+### HasIcon
+
+`func (o *AppService) HasIcon() bool`
+
+HasIcon returns a boolean if a field has been set.
+
+### GetEol
+
+`func (o *AppService) GetEol() bool`
+
+GetEol returns the Eol field if non-nil, zero value otherwise.
+
+### GetEolOk
+
+`func (o *AppService) GetEolOk() (*bool, bool)`
+
+GetEolOk returns a tuple with the Eol field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEol
+
+`func (o *AppService) SetEol(v bool)`
+
+SetEol sets Eol field to given value.
+
+### HasEol
+
+`func (o *AppService) HasEol() bool`
+
+HasEol returns a boolean if a field has been set.
+
+### GetBuildSourceType
+
+`func (o *AppService) GetBuildSourceType() string`
+
+GetBuildSourceType returns the BuildSourceType field if non-nil, zero value otherwise.
+
+### GetBuildSourceTypeOk
+
+`func (o *AppService) GetBuildSourceTypeOk() (*string, bool)`
+
+GetBuildSourceTypeOk returns a tuple with the BuildSourceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuildSourceType
+
+`func (o *AppService) SetBuildSourceType(v string)`
+
+SetBuildSourceType sets BuildSourceType field to given value.
+
+### HasBuildSourceType
+
+`func (o *AppService) HasBuildSourceType() bool`
+
+HasBuildSourceType returns a boolean if a field has been set.
+
+### SetBuildSourceTypeNil
+
+`func (o *AppService) SetBuildSourceTypeNil(b bool)`
+
+ SetBuildSourceTypeNil sets the value for BuildSourceType to be an explicit nil
+
+### UnsetBuildSourceType
+`func (o *AppService) UnsetBuildSourceType()`
+
+UnsetBuildSourceType ensures that no value is present for BuildSourceType, not even an explicit nil
+### GetDerivative
+
+`func (o *AppService) GetDerivative() string`
+
+GetDerivative returns the Derivative field if non-nil, zero value otherwise.
+
+### GetDerivativeOk
+
+`func (o *AppService) GetDerivativeOk() (*string, bool)`
+
+GetDerivativeOk returns a tuple with the Derivative field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDerivative
+
+`func (o *AppService) SetDerivative(v string)`
+
+SetDerivative sets Derivative field to given value.
+
+### HasDerivative
+
+`func (o *AppService) HasDerivative() bool`
+
+HasDerivative returns a boolean if a field has been set.
+
+### SetDerivativeNil
+
+`func (o *AppService) SetDerivativeNil(b bool)`
+
+ SetDerivativeNil sets the value for Derivative to be an explicit nil
+
+### UnsetDerivative
+`func (o *AppService) UnsetDerivative()`
+
+UnsetDerivative ensures that no value is present for Derivative, not even an explicit nil
+### GetGitRepoId
+
+`func (o *AppService) GetGitRepoId() int32`
+
+GetGitRepoId returns the GitRepoId field if non-nil, zero value otherwise.
+
+### GetGitRepoIdOk
+
+`func (o *AppService) GetGitRepoIdOk() (*int32, bool)`
+
+GetGitRepoIdOk returns a tuple with the GitRepoId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitRepoId
+
+`func (o *AppService) SetGitRepoId(v int32)`
+
+SetGitRepoId sets GitRepoId field to given value.
+
+### HasGitRepoId
+
+`func (o *AppService) HasGitRepoId() bool`
+
+HasGitRepoId returns a boolean if a field has been set.
+
+### SetGitRepoIdNil
+
+`func (o *AppService) SetGitRepoIdNil(b bool)`
+
+ SetGitRepoIdNil sets the value for GitRepoId to be an explicit nil
+
+### UnsetGitRepoId
+`func (o *AppService) UnsetGitRepoId()`
+
+UnsetGitRepoId ensures that no value is present for GitRepoId, not even an explicit nil
+### GetWorkspaceMounts
+
+`func (o *AppService) GetWorkspaceMounts() []AppServiceWorkspaceMount`
+
+GetWorkspaceMounts returns the WorkspaceMounts field if non-nil, zero value otherwise.
+
+### GetWorkspaceMountsOk
+
+`func (o *AppService) GetWorkspaceMountsOk() (*[]AppServiceWorkspaceMount, bool)`
+
+GetWorkspaceMountsOk returns a tuple with the WorkspaceMounts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorkspaceMounts
+
+`func (o *AppService) SetWorkspaceMounts(v []AppServiceWorkspaceMount)`
+
+SetWorkspaceMounts sets WorkspaceMounts field to given value.
+
+### HasWorkspaceMounts
+
+`func (o *AppService) HasWorkspaceMounts() bool`
+
+HasWorkspaceMounts returns a boolean if a field has been set.
+
+### GetDatabaseDbId
+
+`func (o *AppService) GetDatabaseDbId() int32`
+
+GetDatabaseDbId returns the DatabaseDbId field if non-nil, zero value otherwise.
+
+### GetDatabaseDbIdOk
+
+`func (o *AppService) GetDatabaseDbIdOk() (*int32, bool)`
+
+GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatabaseDbId
+
+`func (o *AppService) SetDatabaseDbId(v int32)`
+
+SetDatabaseDbId sets DatabaseDbId field to given value.
+
+### HasDatabaseDbId
+
+`func (o *AppService) HasDatabaseDbId() bool`
+
+HasDatabaseDbId returns a boolean if a field has been set.
+
+### SetDatabaseDbIdNil
+
+`func (o *AppService) SetDatabaseDbIdNil(b bool)`
+
+ SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
+
+### UnsetDatabaseDbId
+`func (o *AppService) UnsetDatabaseDbId()`
+
+UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+### GetDatabaseUserId
+
+`func (o *AppService) GetDatabaseUserId() int32`
+
+GetDatabaseUserId returns the DatabaseUserId field if non-nil, zero value otherwise.
+
+### GetDatabaseUserIdOk
+
+`func (o *AppService) GetDatabaseUserIdOk() (*int32, bool)`
+
+GetDatabaseUserIdOk returns a tuple with the DatabaseUserId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatabaseUserId
+
+`func (o *AppService) SetDatabaseUserId(v int32)`
+
+SetDatabaseUserId sets DatabaseUserId field to given value.
+
+### HasDatabaseUserId
+
+`func (o *AppService) HasDatabaseUserId() bool`
+
+HasDatabaseUserId returns a boolean if a field has been set.
+
+### SetDatabaseUserIdNil
+
+`func (o *AppService) SetDatabaseUserIdNil(b bool)`
+
+ SetDatabaseUserIdNil sets the value for DatabaseUserId to be an explicit nil
+
+### UnsetDatabaseUserId
+`func (o *AppService) UnsetDatabaseUserId()`
+
+UnsetDatabaseUserId ensures that no value is present for DatabaseUserId, not even an explicit nil
+### GetCustomizations
+
+`func (o *AppService) GetCustomizations() []AppServiceCustomization`
+
+GetCustomizations returns the Customizations field if non-nil, zero value otherwise.
+
+### GetCustomizationsOk
+
+`func (o *AppService) GetCustomizationsOk() (*[]AppServiceCustomization, bool)`
+
+GetCustomizationsOk returns a tuple with the Customizations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomizations
+
+`func (o *AppService) SetCustomizations(v []AppServiceCustomization)`
+
+SetCustomizations sets Customizations field to given value.
+
+### HasCustomizations
+
+`func (o *AppService) HasCustomizations() bool`
+
+HasCustomizations returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

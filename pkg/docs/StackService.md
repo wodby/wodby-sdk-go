@@ -16,6 +16,10 @@ Name | Type | Description | Notes
 **Replicas** | **int32** |  | 
 **ServiceRevPinned** | **bool** |  | 
 **Outdated** | **bool** |  | 
+**Icon** | Pointer to **string** |  | [optional] 
+**Eol** | Pointer to **bool** | True when the version of the stack service&#39;s default option has reached its end of life. | [optional] 
+**Derivative** | Pointer to **NullableString** | The service derivative the stack service runs. Null for the service itself. | [optional] 
+**ParentStackServiceId** | Pointer to **NullableInt32** | The stack service this derivative stack service belongs to. Null for the service itself. | [optional] 
 **ServiceRevId** | **int32** |  | 
 **ServiceRevName** | **string** |  | 
 **ServiceRevTitle** | **string** |  | 
@@ -288,6 +292,126 @@ and a boolean to check if the value has been set.
 SetOutdated sets Outdated field to given value.
 
 
+### GetIcon
+
+`func (o *StackService) GetIcon() string`
+
+GetIcon returns the Icon field if non-nil, zero value otherwise.
+
+### GetIconOk
+
+`func (o *StackService) GetIconOk() (*string, bool)`
+
+GetIconOk returns a tuple with the Icon field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIcon
+
+`func (o *StackService) SetIcon(v string)`
+
+SetIcon sets Icon field to given value.
+
+### HasIcon
+
+`func (o *StackService) HasIcon() bool`
+
+HasIcon returns a boolean if a field has been set.
+
+### GetEol
+
+`func (o *StackService) GetEol() bool`
+
+GetEol returns the Eol field if non-nil, zero value otherwise.
+
+### GetEolOk
+
+`func (o *StackService) GetEolOk() (*bool, bool)`
+
+GetEolOk returns a tuple with the Eol field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEol
+
+`func (o *StackService) SetEol(v bool)`
+
+SetEol sets Eol field to given value.
+
+### HasEol
+
+`func (o *StackService) HasEol() bool`
+
+HasEol returns a boolean if a field has been set.
+
+### GetDerivative
+
+`func (o *StackService) GetDerivative() string`
+
+GetDerivative returns the Derivative field if non-nil, zero value otherwise.
+
+### GetDerivativeOk
+
+`func (o *StackService) GetDerivativeOk() (*string, bool)`
+
+GetDerivativeOk returns a tuple with the Derivative field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDerivative
+
+`func (o *StackService) SetDerivative(v string)`
+
+SetDerivative sets Derivative field to given value.
+
+### HasDerivative
+
+`func (o *StackService) HasDerivative() bool`
+
+HasDerivative returns a boolean if a field has been set.
+
+### SetDerivativeNil
+
+`func (o *StackService) SetDerivativeNil(b bool)`
+
+ SetDerivativeNil sets the value for Derivative to be an explicit nil
+
+### UnsetDerivative
+`func (o *StackService) UnsetDerivative()`
+
+UnsetDerivative ensures that no value is present for Derivative, not even an explicit nil
+### GetParentStackServiceId
+
+`func (o *StackService) GetParentStackServiceId() int32`
+
+GetParentStackServiceId returns the ParentStackServiceId field if non-nil, zero value otherwise.
+
+### GetParentStackServiceIdOk
+
+`func (o *StackService) GetParentStackServiceIdOk() (*int32, bool)`
+
+GetParentStackServiceIdOk returns a tuple with the ParentStackServiceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentStackServiceId
+
+`func (o *StackService) SetParentStackServiceId(v int32)`
+
+SetParentStackServiceId sets ParentStackServiceId field to given value.
+
+### HasParentStackServiceId
+
+`func (o *StackService) HasParentStackServiceId() bool`
+
+HasParentStackServiceId returns a boolean if a field has been set.
+
+### SetParentStackServiceIdNil
+
+`func (o *StackService) SetParentStackServiceIdNil(b bool)`
+
+ SetParentStackServiceIdNil sets the value for ParentStackServiceId to be an explicit nil
+
+### UnsetParentStackServiceId
+`func (o *StackService) UnsetParentStackServiceId()`
+
+UnsetParentStackServiceId ensures that no value is present for ParentStackServiceId, not even an explicit nil
 ### GetServiceRevId
 
 `func (o *StackService) GetServiceRevId() int32`

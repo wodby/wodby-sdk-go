@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Deployment** | Pointer to **bool** | Build affected services when required and deploy the upgraded stack configuration. | [optional] [default to true]
+**Rebuild** | Pointer to **bool** | Build services whose build inputs the upgrade changes before deploying them. When false, those services are deployed with their current build and stay marked as needing a rebuild until their next build; a service with no build to reuse is still built. Ignored when deployment is false. | [optional] [default to true]
 **Versions** | **bool** |  | 
 **Replicas** | **bool** |  | 
 **Resources** | **bool** |  | 
@@ -61,6 +62,31 @@ SetDeployment sets Deployment field to given value.
 `func (o *AppEnvironmentStackUpgradeInput) HasDeployment() bool`
 
 HasDeployment returns a boolean if a field has been set.
+
+### GetRebuild
+
+`func (o *AppEnvironmentStackUpgradeInput) GetRebuild() bool`
+
+GetRebuild returns the Rebuild field if non-nil, zero value otherwise.
+
+### GetRebuildOk
+
+`func (o *AppEnvironmentStackUpgradeInput) GetRebuildOk() (*bool, bool)`
+
+GetRebuildOk returns a tuple with the Rebuild field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRebuild
+
+`func (o *AppEnvironmentStackUpgradeInput) SetRebuild(v bool)`
+
+SetRebuild sets Rebuild field to given value.
+
+### HasRebuild
+
+`func (o *AppEnvironmentStackUpgradeInput) HasRebuild() bool`
+
+HasRebuild returns a boolean if a field has been set.
 
 ### GetVersions
 

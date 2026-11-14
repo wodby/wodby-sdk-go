@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **OwnershipScope** | **string** | org when the organization owns the resource, project when one project owns it. | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **AvailableToAllProjects** | **bool** | True when every project in the organization can use the resource without a project share. | 
+**Icon** | Pointer to **string** |  | [optional] 
+**Kinds** | Pointer to [**[]IntegrationKind**](IntegrationKind.md) | The integration types the credentials are set up for. | [optional] 
+**FieldValues** | Pointer to [**[]IntegrationFieldValue**](IntegrationFieldValue.md) | The provider fields of the integration. A secret field is returned without its value. Returned only by GET /integrations/{id}. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -436,6 +439,81 @@ and a boolean to check if the value has been set.
 
 SetAvailableToAllProjects sets AvailableToAllProjects field to given value.
 
+
+### GetIcon
+
+`func (o *Integration) GetIcon() string`
+
+GetIcon returns the Icon field if non-nil, zero value otherwise.
+
+### GetIconOk
+
+`func (o *Integration) GetIconOk() (*string, bool)`
+
+GetIconOk returns a tuple with the Icon field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIcon
+
+`func (o *Integration) SetIcon(v string)`
+
+SetIcon sets Icon field to given value.
+
+### HasIcon
+
+`func (o *Integration) HasIcon() bool`
+
+HasIcon returns a boolean if a field has been set.
+
+### GetKinds
+
+`func (o *Integration) GetKinds() []IntegrationKind`
+
+GetKinds returns the Kinds field if non-nil, zero value otherwise.
+
+### GetKindsOk
+
+`func (o *Integration) GetKindsOk() (*[]IntegrationKind, bool)`
+
+GetKindsOk returns a tuple with the Kinds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetKinds
+
+`func (o *Integration) SetKinds(v []IntegrationKind)`
+
+SetKinds sets Kinds field to given value.
+
+### HasKinds
+
+`func (o *Integration) HasKinds() bool`
+
+HasKinds returns a boolean if a field has been set.
+
+### GetFieldValues
+
+`func (o *Integration) GetFieldValues() []IntegrationFieldValue`
+
+GetFieldValues returns the FieldValues field if non-nil, zero value otherwise.
+
+### GetFieldValuesOk
+
+`func (o *Integration) GetFieldValuesOk() (*[]IntegrationFieldValue, bool)`
+
+GetFieldValuesOk returns a tuple with the FieldValues field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFieldValues
+
+`func (o *Integration) SetFieldValues(v []IntegrationFieldValue)`
+
+SetFieldValues sets FieldValues field to given value.
+
+### HasFieldValues
+
+`func (o *Integration) HasFieldValues() bool`
+
+HasFieldValues returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

@@ -8489,8 +8489,10 @@ paths:
         \ support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode,\
         \ serverless, billingOptions, gpuNodePool (whether a cluster can have an optional\
         \ GPU node pool), gpuNodePoolScalesToZero (whether that pool's minimum may\
-        \ be 0) and nodeRecycling (whether a running cluster's worker nodes can be\
-        \ recycled)."
+        \ be 0), nodeRecycling (whether a running cluster's worker nodes can be recycled)\
+        \ and nodeAutoscaling (whether the provider scales nodes between the minimum\
+        \ and maximum node counts; when false, a cluster has a fixed number of nodes\
+        \ and must be created and scaled with equal minimum and maximum node counts)."
       operationId: getIntegrationKubeSettings
       parameters:
       - explode: false
@@ -10869,6 +10871,52 @@ paths:
       summary: Remove k3s cluster node
       tags:
       - clusters
+  /clusters/{id}/actions/switch-k3s-server-address:
+    post:
+      description: "Switches the server of a k3s cluster from its public address to\
+        \ a private one from GET /cluster-k3s-private-addresses/{id} for cluster traffic,\
+        \ so worker nodes can join, and keeps the public address for public traffic.\
+        \ k3s restarts once: the Kubernetes API pauses for about a minute while apps\
+        \ keep running, and new deployments wait until the switch ends. Refused while\
+        \ application operations are active. If k3s doesn't come back on the private\
+        \ address, the server restores its previous settings."
+      operationId: switchK3SServerAddress
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SwitchK3SServerAddressInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Address switch task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Switch k3s server to a private address
+      tags:
+      - clusters
   /clusters/actions/create-k3s:
     post:
       description: "Registers a self-hosted k3s cluster. Run the command from GET\
@@ -11044,6 +11092,46 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List k3s cluster nodes
+      tags:
+      - clusters
+  /cluster-k3s-private-addresses/{id}:
+    get:
+      description: "Returns the private addresses the server of a k3s cluster could\
+        \ switch to, read from the server itself. Only for a server that uses its\
+        \ public address for cluster traffic, which keeps worker nodes out. Runs a\
+        \ short check on the server and needs permission to modify the cluster. The\
+        \ ID is the cluster's."
+      operationId: listK3SServerPrivateAddresses
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/K3SPrivateAddress'
+                type: array
+          description: Private addresses
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List k3s server private addresses
       tags:
       - clusters
   /wodby-cloud/machine-types:
@@ -24965,24 +25053,37 @@ components:
       type: object
     Database:
       example:
-        kind: kind
-        integrationId: 6
-        envId: 5
+        storageIOPS: 5
+        publicPort: 5
+        clusterId: 2
         title: title
         type: type
-        version: version
-        orgId: 2
-        appServiceId: 1
+        ssl: true
+        orgId: 7
+        highAvailability: true
+        publicHost: publicHost
+        appServiceId: 3
         createdAt: 2000-01-23T04:56:07.000+00:00
-        ownerProjectId: 5
+        ownerProjectId: 2
         zone: zone
-        envType: prod
-        name: name
         id: 0
+        machineType: machineType
+        residedClusterId: 7
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        kind: kind
+        replicas: 6
+        externalId: externalId
+        integrationId: 9
+        envId: 4
+        version: version
+        external: true
+        privateHost: privateHost
+        envType: prod
+        storageSize: 1
+        name: name
         region: region
         ownershipScope: org
         status: status
-        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -25004,6 +25105,54 @@ components:
         zone:
           nullable: true
           type: string
+        replicas:
+          type: integer
+        storageSize:
+          description: Storage size in GB. Null when the database does not set one.
+          nullable: true
+          type: integer
+        storageIOPS:
+          description: Provisioned storage IOPS. Null when the database does not set
+            them.
+          nullable: true
+          type: integer
+        machineType:
+          nullable: true
+          type: string
+        highAvailability:
+          type: boolean
+        external:
+          description: "True for a database that runs outside Wodby, such as a provider-managed\
+            \ database server."
+          type: boolean
+        externalId:
+          description: The database's ID at its provider.
+          nullable: true
+          type: string
+        ssl:
+          description: True when connections to the database use TLS.
+          type: boolean
+        publicHost:
+          description: Host name for connections from outside the database's network.
+            Null when the database has none.
+          nullable: true
+          type: string
+        publicPort:
+          nullable: true
+          type: integer
+        privateHost:
+          description: Host name for connections from inside the database's network.
+          nullable: true
+          type: string
+        clusterId:
+          description: The cluster that runs the database.
+          nullable: true
+          type: integer
+        residedClusterId:
+          description: The cluster whose network a provider-managed database is placed
+            in.
+          nullable: true
+          type: integer
         integrationId:
           nullable: true
           type: integer
@@ -25063,6 +25212,25 @@ components:
         primaryEnvType: prod
         providerRevId: 6
         envScope: all
+        icon: icon
+        kinds:
+        - name: name
+          id: 7
+          title: title
+          type: type
+          status: status
+        - name: name
+          id: 7
+          title: title
+          type: type
+          status: status
+        fieldValues:
+        - field: field
+          id: 9
+          value: value
+        - field: field
+          id: 9
+          value: value
         title: title
         allowedEnvTypes:
         - prod
@@ -25147,6 +25315,19 @@ components:
           description: True when every project in the organization can use the resource
             without a project share.
           type: boolean
+        icon:
+          type: string
+        kinds:
+          description: The integration types the credentials are set up for.
+          items:
+            $ref: '#/components/schemas/IntegrationKind'
+          type: array
+        fieldValues:
+          description: "The provider fields of the integration. A secret field is\
+            \ returned without its value. Returned only by GET /integrations/{id}."
+          items:
+            $ref: '#/components/schemas/IntegrationFieldValue'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -25167,6 +25348,51 @@ components:
       - status
       - title
       - updatedAt
+      type: object
+    IntegrationKind:
+      example:
+        name: name
+        id: 7
+        title: title
+        type: type
+        status: status
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        type:
+          description: "The integration type in lower case, such as kubernetes, git\
+            \ or registry."
+          type: string
+        status:
+          type: string
+      required:
+      - id
+      - name
+      - status
+      - title
+      - type
+      type: object
+    IntegrationFieldValue:
+      example:
+        field: field
+        id: 9
+        value: value
+      properties:
+        id:
+          type: integer
+        field:
+          type: string
+        value:
+          description: The field's value. Null for a secret field.
+          nullable: true
+          type: string
+      required:
+      - field
+      - id
       type: object
     Backup:
       example:
@@ -28827,29 +29053,17 @@ components:
       type: object
     StackService:
       example:
-        settings:
-        - name: name
-          stackServiceId: 9
-          hasValue: true
-          id: 7
-          secret: true
-          value: value
-        - name: name
-          stackServiceId: 9
-          hasValue: true
-          id: 7
-          secret: true
-          value: value
+        eol: true
         basicAuthOverride: inherit
-        replicas: 6
-        serviceRevTitle: serviceRevTitle
+        icon: icon
         main: true
+        derivative: derivative
         buildSourceRemoteRepoId: buildSourceRemoteRepoId
         title: title
         type: type
         required: true
         serviceRevPinned: true
-        serviceRevId: 1
+        serviceRevId: 5
         createdAt: 2000-01-23T04:56:07.000+00:00
         deploymentConfiguration:
           effective:
@@ -28900,48 +29114,64 @@ components:
             strategy: ROLLING
             progressDeadline: progressDeadline
         outdated: true
-        buildSourceIntegrationId: 5
-        name: name
         options:
         - default: true
-          stackServiceId: 2
+          stackServiceId: 7
           disabled: true
-          id: 5
+          id: 2
           version: version
         - default: true
-          stackServiceId: 2
+          stackServiceId: 7
           disabled: true
-          id: 5
+          id: 2
           version: version
+        parentStackServiceId: 1
         disabled: true
-        containers:
-        - limitMem: 1
-          requestMem: 7
-          limitCPU: 1
-          name: name
-          workload: workload
-          stackServiceId: 2
-          id: 3
-          requestCPU: 4
-          gpu:
-            count: 171976544
-            resourceName: resourceName
-        - limitMem: 1
-          requestMem: 7
-          limitCPU: 1
-          name: name
-          workload: workload
-          stackServiceId: 2
-          id: 3
-          requestCPU: 4
-          gpu:
-            count: 171976544
-            resourceName: resourceName
         id: 0
         serviceRevName: serviceRevName
         basicAuthDefault: true
-        serviceRevVersion: serviceRevVersion
         updatedAt: 2000-01-23T04:56:07.000+00:00
+        settings:
+        - name: name
+          stackServiceId: 3
+          hasValue: true
+          id: 9
+          secret: true
+          value: value
+        - name: name
+          stackServiceId: 3
+          hasValue: true
+          id: 9
+          secret: true
+          value: value
+        replicas: 6
+        serviceRevTitle: serviceRevTitle
+        buildSourceIntegrationId: 5
+        name: name
+        containers:
+        - limitMem: 1
+          requestMem: 1
+          limitCPU: 1
+          name: name
+          workload: workload
+          stackServiceId: 4
+          id: 2
+          requestCPU: 7
+          gpu:
+            count: 171976544
+            resourceName: resourceName
+        - limitMem: 1
+          requestMem: 1
+          limitCPU: 1
+          name: name
+          workload: workload
+          stackServiceId: 4
+          id: 2
+          requestCPU: 7
+          gpu:
+            count: 171976544
+            resourceName: resourceName
+        serviceRevVersion: serviceRevVersion
       properties:
         id:
           type: integer
@@ -28974,6 +29204,22 @@ components:
           type: boolean
         outdated:
           type: boolean
+        icon:
+          type: string
+        eol:
+          description: True when the version of the stack service's default option
+            has reached its end of life.
+          type: boolean
+        derivative:
+          description: The service derivative the stack service runs. Null for the
+            service itself.
+          nullable: true
+          type: string
+        parentStackServiceId:
+          description: The stack service this derivative stack service belongs to.
+            Null for the service itself.
+          nullable: true
+          type: integer
         serviceRevId:
           type: integer
         serviceRevName:
@@ -29180,8 +29426,21 @@ components:
       type: object
     AppService:
       example:
+        workspaceMounts:
+        - path: path
+          name: name
+          readOnly: true
+          subPath: subPath
+        - path: path
+          name: name
+          readOnly: true
+          subPath: subPath
+        eol: true
         effectiveCiIntegrationId: 1
+        icon: icon
         main: true
+        derivative: derivative
+        databaseDbId: 9
         title: title
         type: type
         scalability: "{}"
@@ -29246,8 +29505,10 @@ components:
         buildSourceBoilerplate: buildSourceBoilerplate
         needsRebuild: true
         replicas: 6
+        databaseUserId: 3
         version: version
         ciPolicy: INHERIT
+        buildSourceType: buildSourceType
         external: true
         configurationIssues:
         - appServiceId: 2
@@ -29264,8 +29525,16 @@ components:
           appServiceTitle: appServiceTitle
           title: title
           message: message
+        gitRepoId: 7
         name: name
         needsRedeploy: true
+        customizations:
+        - name: name
+          section: section
+          title: title
+        - name: name
+          section: section
+          title: title
         status: status
       properties:
         id:
@@ -29332,6 +29601,49 @@ components:
           type: integer
         deploymentConfiguration:
           $ref: '#/components/schemas/ServiceDeploymentConfiguration'
+        icon:
+          type: string
+        eol:
+          description: True when the app service's version has reached its end of
+            life.
+          type: boolean
+        buildSourceType:
+          description: "How the app service gets its source code to build, public,\
+            \ clone or connect. Null when it is not built from source."
+          nullable: true
+          type: string
+        derivative:
+          description: The service derivative the app service runs. Null for the service
+            itself.
+          nullable: true
+          type: string
+        gitRepoId:
+          nullable: true
+          type: integer
+        workspaceMounts:
+          description: "Workspace code mounts of the service, with its settings resolved\
+            \ in the paths. Empty without a workspace contract."
+          items:
+            $ref: '#/components/schemas/AppServiceWorkspaceMount'
+          type: array
+        databaseDbId:
+          description: The database the app service uses on a provider-managed database
+            server.
+          nullable: true
+          type: integer
+        databaseUserId:
+          description: The database user the app service connects as on a provider-managed
+            database server.
+          nullable: true
+          type: integer
+        customizations:
+          description: "What this app environment set differently from the stack service\
+            \ the app service was created from, such as a setting value, an extra\
+            \ variable or another link target. Only names are returned, never values.\
+            \ Returned only by GET /app-services/{id}."
+          items:
+            $ref: '#/components/schemas/AppServiceCustomization'
+          type: array
         createdAt:
           format: date-time
           type: string
@@ -29361,6 +29673,50 @@ components:
       - type
       - updatedAt
       - version
+      type: object
+    AppServiceWorkspaceMount:
+      example:
+        path: path
+        name: name
+        readOnly: true
+        subPath: subPath
+      properties:
+        name:
+          type: string
+        path:
+          description: Absolute path in the container.
+          type: string
+        subPath:
+          description: Directory of the checkout that is mounted; empty for the whole
+            repository.
+          type: string
+        readOnly:
+          type: boolean
+      required:
+      - name
+      - path
+      - readOnly
+      - subPath
+      type: object
+    AppServiceCustomization:
+      example:
+        name: name
+        section: section
+        title: title
+      properties:
+        section:
+          description: "The part of the app service where the customization is: general,\
+            \ resources, variables, helm, annotations, settings, links, integrations,\
+            \ volumes or configs."
+          type: string
+        name:
+          type: string
+        title:
+          type: string
+      required:
+      - name
+      - section
+      - title
       type: object
     AppServiceEnvVarSource:
       properties:
@@ -29863,13 +30219,13 @@ components:
     StackServiceContainer:
       example:
         limitMem: 1
-        requestMem: 7
+        requestMem: 1
         limitCPU: 1
         name: name
         workload: workload
-        stackServiceId: 2
-        id: 3
-        requestCPU: 4
+        stackServiceId: 4
+        id: 2
+        requestCPU: 7
         gpu:
           count: 171976544
           resourceName: resourceName
@@ -29905,9 +30261,9 @@ components:
     StackServiceOption:
       example:
         default: true
-        stackServiceId: 2
+        stackServiceId: 7
         disabled: true
-        id: 5
+        id: 2
         version: version
       properties:
         id:
@@ -29930,9 +30286,9 @@ components:
     StackServiceSetting:
       example:
         name: name
-        stackServiceId: 9
+        stackServiceId: 3
         hasValue: true
-        id: 7
+        id: 9
         secret: true
         value: value
       properties:
@@ -33064,6 +33420,7 @@ components:
       type: object
     AppEnvironmentStackUpgradeInput:
       example:
+        rebuild: true
         cron: true
         settings: true
         configs: true
@@ -33082,6 +33439,14 @@ components:
           default: true
           description: Build affected services when required and deploy the upgraded
             stack configuration.
+          type: boolean
+        rebuild:
+          default: true
+          description: "Build services whose build inputs the upgrade changes before\
+            \ deploying them. When false, those services are deployed with their current\
+            \ build and stay marked as needing a rebuild until their next build; a\
+            \ service with no build to reuse is still built. Ignored when deployment\
+            \ is false."
           type: boolean
         versions:
           type: boolean
@@ -35169,6 +35534,53 @@ components:
       required:
       - nodeName
       type: object
+    K3SPrivateAddress:
+      example:
+        address: address
+        networkInterface: networkInterface
+        persistentSource: persistentSource
+        persistent: true
+        mtu: 0
+      properties:
+        address:
+          type: string
+        networkInterface:
+          description: "The network interface the address is on, such as enp0s31f6.4000\
+            \ for a VLAN."
+          type: string
+        mtu:
+          description: "The interface's MTU, or 0 when the server doesn't report it."
+          type: integer
+        persistent:
+          description: "Whether the server's network configuration brings the address\
+            \ back after a reboot. k3s doesn't start when its address is gone, so\
+            \ switching to an address that isn't persistent needs force."
+          type: boolean
+        persistentSource:
+          description: "What keeps the address after a reboot, such as systemd-networkd\
+            \ or NetworkManager."
+          type: string
+      required:
+      - address
+      - mtu
+      - networkInterface
+      - persistent
+      type: object
+    SwitchK3SServerAddressInput:
+      example:
+        address: address
+        force: true
+      properties:
+        address:
+          description: "A private address from GET /cluster-k3s-private-addresses/{id}."
+          type: string
+        force:
+          description: Switch to an address the server's network configuration isn't
+            known to keep after a reboot.
+          type: boolean
+      required:
+      - address
+      type: object
     ResourcePreset:
       example:
         limitMem: 5
@@ -35724,6 +36136,25 @@ components:
           primaryEnvType: prod
           providerRevId: 6
           envScope: all
+          icon: icon
+          kinds:
+          - name: name
+            id: 7
+            title: title
+            type: type
+            status: status
+          - name: name
+            id: 7
+            title: title
+            type: type
+            status: status
+          fieldValues:
+          - field: field
+            id: 9
+            value: value
+          - field: field
+            id: 9
+            value: value
           title: title
           allowedEnvTypes:
           - prod
@@ -35856,6 +36287,25 @@ components:
           primaryEnvType: prod
           providerRevId: 6
           envScope: all
+          icon: icon
+          kinds:
+          - name: name
+            id: 7
+            title: title
+            type: type
+            status: status
+          - name: name
+            id: 7
+            title: title
+            type: type
+            status: status
+          fieldValues:
+          - field: field
+            id: 9
+            value: value
+          - field: field
+            id: 9
+            value: value
           title: title
           allowedEnvTypes:
           - prod

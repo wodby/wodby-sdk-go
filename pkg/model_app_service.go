@@ -46,6 +46,22 @@ type AppService struct {
 	ServiceRevId int32 `json:"serviceRevId"`
 	ParentAppServiceId NullableInt32 `json:"parentAppServiceId,omitempty"`
 	DeploymentConfiguration ServiceDeploymentConfiguration `json:"deploymentConfiguration"`
+	Icon *string `json:"icon,omitempty"`
+	// True when the app service's version has reached its end of life.
+	Eol *bool `json:"eol,omitempty"`
+	// How the app service gets its source code to build, public, clone or connect. Null when it is not built from source.
+	BuildSourceType NullableString `json:"buildSourceType,omitempty"`
+	// The service derivative the app service runs. Null for the service itself.
+	Derivative NullableString `json:"derivative,omitempty"`
+	GitRepoId NullableInt32 `json:"gitRepoId,omitempty"`
+	// Workspace code mounts of the service, with its settings resolved in the paths. Empty without a workspace contract.
+	WorkspaceMounts []AppServiceWorkspaceMount `json:"workspaceMounts,omitempty"`
+	// The database the app service uses on a provider-managed database server.
+	DatabaseDbId NullableInt32 `json:"databaseDbId,omitempty"`
+	// The database user the app service connects as on a provider-managed database server.
+	DatabaseUserId NullableInt32 `json:"databaseUserId,omitempty"`
+	// What this app environment set differently from the stack service the app service was created from, such as a setting value, an extra variable or another link target. Only names are returned, never values. Returned only by GET /app-services/{id}.
+	Customizations []AppServiceCustomization `json:"customizations,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -739,6 +755,344 @@ func (o *AppService) SetDeploymentConfiguration(v ServiceDeploymentConfiguration
 	o.DeploymentConfiguration = v
 }
 
+// GetIcon returns the Icon field value if set, zero value otherwise.
+func (o *AppService) GetIcon() string {
+	if o == nil || IsNil(o.Icon) {
+		var ret string
+		return ret
+	}
+	return *o.Icon
+}
+
+// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppService) GetIconOk() (*string, bool) {
+	if o == nil || IsNil(o.Icon) {
+		return nil, false
+	}
+	return o.Icon, true
+}
+
+// HasIcon returns a boolean if a field has been set.
+func (o *AppService) HasIcon() bool {
+	if o != nil && !IsNil(o.Icon) {
+		return true
+	}
+
+	return false
+}
+
+// SetIcon gets a reference to the given string and assigns it to the Icon field.
+func (o *AppService) SetIcon(v string) {
+	o.Icon = &v
+}
+
+// GetEol returns the Eol field value if set, zero value otherwise.
+func (o *AppService) GetEol() bool {
+	if o == nil || IsNil(o.Eol) {
+		var ret bool
+		return ret
+	}
+	return *o.Eol
+}
+
+// GetEolOk returns a tuple with the Eol field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppService) GetEolOk() (*bool, bool) {
+	if o == nil || IsNil(o.Eol) {
+		return nil, false
+	}
+	return o.Eol, true
+}
+
+// HasEol returns a boolean if a field has been set.
+func (o *AppService) HasEol() bool {
+	if o != nil && !IsNil(o.Eol) {
+		return true
+	}
+
+	return false
+}
+
+// SetEol gets a reference to the given bool and assigns it to the Eol field.
+func (o *AppService) SetEol(v bool) {
+	o.Eol = &v
+}
+
+// GetBuildSourceType returns the BuildSourceType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetBuildSourceType() string {
+	if o == nil || IsNil(o.BuildSourceType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BuildSourceType.Get()
+}
+
+// GetBuildSourceTypeOk returns a tuple with the BuildSourceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetBuildSourceTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BuildSourceType.Get(), o.BuildSourceType.IsSet()
+}
+
+// HasBuildSourceType returns a boolean if a field has been set.
+func (o *AppService) HasBuildSourceType() bool {
+	if o != nil && o.BuildSourceType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildSourceType gets a reference to the given NullableString and assigns it to the BuildSourceType field.
+func (o *AppService) SetBuildSourceType(v string) {
+	o.BuildSourceType.Set(&v)
+}
+// SetBuildSourceTypeNil sets the value for BuildSourceType to be an explicit nil
+func (o *AppService) SetBuildSourceTypeNil() {
+	o.BuildSourceType.Set(nil)
+}
+
+// UnsetBuildSourceType ensures that no value is present for BuildSourceType, not even an explicit nil
+func (o *AppService) UnsetBuildSourceType() {
+	o.BuildSourceType.Unset()
+}
+
+// GetDerivative returns the Derivative field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetDerivative() string {
+	if o == nil || IsNil(o.Derivative.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Derivative.Get()
+}
+
+// GetDerivativeOk returns a tuple with the Derivative field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetDerivativeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Derivative.Get(), o.Derivative.IsSet()
+}
+
+// HasDerivative returns a boolean if a field has been set.
+func (o *AppService) HasDerivative() bool {
+	if o != nil && o.Derivative.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDerivative gets a reference to the given NullableString and assigns it to the Derivative field.
+func (o *AppService) SetDerivative(v string) {
+	o.Derivative.Set(&v)
+}
+// SetDerivativeNil sets the value for Derivative to be an explicit nil
+func (o *AppService) SetDerivativeNil() {
+	o.Derivative.Set(nil)
+}
+
+// UnsetDerivative ensures that no value is present for Derivative, not even an explicit nil
+func (o *AppService) UnsetDerivative() {
+	o.Derivative.Unset()
+}
+
+// GetGitRepoId returns the GitRepoId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetGitRepoId() int32 {
+	if o == nil || IsNil(o.GitRepoId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.GitRepoId.Get()
+}
+
+// GetGitRepoIdOk returns a tuple with the GitRepoId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetGitRepoIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GitRepoId.Get(), o.GitRepoId.IsSet()
+}
+
+// HasGitRepoId returns a boolean if a field has been set.
+func (o *AppService) HasGitRepoId() bool {
+	if o != nil && o.GitRepoId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGitRepoId gets a reference to the given NullableInt32 and assigns it to the GitRepoId field.
+func (o *AppService) SetGitRepoId(v int32) {
+	o.GitRepoId.Set(&v)
+}
+// SetGitRepoIdNil sets the value for GitRepoId to be an explicit nil
+func (o *AppService) SetGitRepoIdNil() {
+	o.GitRepoId.Set(nil)
+}
+
+// UnsetGitRepoId ensures that no value is present for GitRepoId, not even an explicit nil
+func (o *AppService) UnsetGitRepoId() {
+	o.GitRepoId.Unset()
+}
+
+// GetWorkspaceMounts returns the WorkspaceMounts field value if set, zero value otherwise.
+func (o *AppService) GetWorkspaceMounts() []AppServiceWorkspaceMount {
+	if o == nil || IsNil(o.WorkspaceMounts) {
+		var ret []AppServiceWorkspaceMount
+		return ret
+	}
+	return o.WorkspaceMounts
+}
+
+// GetWorkspaceMountsOk returns a tuple with the WorkspaceMounts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppService) GetWorkspaceMountsOk() ([]AppServiceWorkspaceMount, bool) {
+	if o == nil || IsNil(o.WorkspaceMounts) {
+		return nil, false
+	}
+	return o.WorkspaceMounts, true
+}
+
+// HasWorkspaceMounts returns a boolean if a field has been set.
+func (o *AppService) HasWorkspaceMounts() bool {
+	if o != nil && !IsNil(o.WorkspaceMounts) {
+		return true
+	}
+
+	return false
+}
+
+// SetWorkspaceMounts gets a reference to the given []AppServiceWorkspaceMount and assigns it to the WorkspaceMounts field.
+func (o *AppService) SetWorkspaceMounts(v []AppServiceWorkspaceMount) {
+	o.WorkspaceMounts = v
+}
+
+// GetDatabaseDbId returns the DatabaseDbId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetDatabaseDbId() int32 {
+	if o == nil || IsNil(o.DatabaseDbId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.DatabaseDbId.Get()
+}
+
+// GetDatabaseDbIdOk returns a tuple with the DatabaseDbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetDatabaseDbIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DatabaseDbId.Get(), o.DatabaseDbId.IsSet()
+}
+
+// HasDatabaseDbId returns a boolean if a field has been set.
+func (o *AppService) HasDatabaseDbId() bool {
+	if o != nil && o.DatabaseDbId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseDbId gets a reference to the given NullableInt32 and assigns it to the DatabaseDbId field.
+func (o *AppService) SetDatabaseDbId(v int32) {
+	o.DatabaseDbId.Set(&v)
+}
+// SetDatabaseDbIdNil sets the value for DatabaseDbId to be an explicit nil
+func (o *AppService) SetDatabaseDbIdNil() {
+	o.DatabaseDbId.Set(nil)
+}
+
+// UnsetDatabaseDbId ensures that no value is present for DatabaseDbId, not even an explicit nil
+func (o *AppService) UnsetDatabaseDbId() {
+	o.DatabaseDbId.Unset()
+}
+
+// GetDatabaseUserId returns the DatabaseUserId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppService) GetDatabaseUserId() int32 {
+	if o == nil || IsNil(o.DatabaseUserId.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.DatabaseUserId.Get()
+}
+
+// GetDatabaseUserIdOk returns a tuple with the DatabaseUserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppService) GetDatabaseUserIdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DatabaseUserId.Get(), o.DatabaseUserId.IsSet()
+}
+
+// HasDatabaseUserId returns a boolean if a field has been set.
+func (o *AppService) HasDatabaseUserId() bool {
+	if o != nil && o.DatabaseUserId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUserId gets a reference to the given NullableInt32 and assigns it to the DatabaseUserId field.
+func (o *AppService) SetDatabaseUserId(v int32) {
+	o.DatabaseUserId.Set(&v)
+}
+// SetDatabaseUserIdNil sets the value for DatabaseUserId to be an explicit nil
+func (o *AppService) SetDatabaseUserIdNil() {
+	o.DatabaseUserId.Set(nil)
+}
+
+// UnsetDatabaseUserId ensures that no value is present for DatabaseUserId, not even an explicit nil
+func (o *AppService) UnsetDatabaseUserId() {
+	o.DatabaseUserId.Unset()
+}
+
+// GetCustomizations returns the Customizations field value if set, zero value otherwise.
+func (o *AppService) GetCustomizations() []AppServiceCustomization {
+	if o == nil || IsNil(o.Customizations) {
+		var ret []AppServiceCustomization
+		return ret
+	}
+	return o.Customizations
+}
+
+// GetCustomizationsOk returns a tuple with the Customizations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppService) GetCustomizationsOk() ([]AppServiceCustomization, bool) {
+	if o == nil || IsNil(o.Customizations) {
+		return nil, false
+	}
+	return o.Customizations, true
+}
+
+// HasCustomizations returns a boolean if a field has been set.
+func (o *AppService) HasCustomizations() bool {
+	if o != nil && !IsNil(o.Customizations) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomizations gets a reference to the given []AppServiceCustomization and assigns it to the Customizations field.
+func (o *AppService) SetCustomizations(v []AppServiceCustomization) {
+	o.Customizations = v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *AppService) GetCreatedAt() time.Time {
 	if o == nil {
@@ -829,6 +1183,33 @@ func (o AppService) ToMap() (map[string]interface{}, error) {
 		toSerialize["parentAppServiceId"] = o.ParentAppServiceId.Get()
 	}
 	toSerialize["deploymentConfiguration"] = o.DeploymentConfiguration
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Eol) {
+		toSerialize["eol"] = o.Eol
+	}
+	if o.BuildSourceType.IsSet() {
+		toSerialize["buildSourceType"] = o.BuildSourceType.Get()
+	}
+	if o.Derivative.IsSet() {
+		toSerialize["derivative"] = o.Derivative.Get()
+	}
+	if o.GitRepoId.IsSet() {
+		toSerialize["gitRepoId"] = o.GitRepoId.Get()
+	}
+	if !IsNil(o.WorkspaceMounts) {
+		toSerialize["workspaceMounts"] = o.WorkspaceMounts
+	}
+	if o.DatabaseDbId.IsSet() {
+		toSerialize["databaseDbId"] = o.DatabaseDbId.Get()
+	}
+	if o.DatabaseUserId.IsSet() {
+		toSerialize["databaseUserId"] = o.DatabaseUserId.Get()
+	}
+	if !IsNil(o.Customizations) {
+		toSerialize["customizations"] = o.Customizations
+	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	return toSerialize, nil

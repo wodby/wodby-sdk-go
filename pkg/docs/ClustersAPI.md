@@ -21,10 +21,12 @@ Method | HTTP request | Description
 [**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
 [**ListK3SClusterNodes**](ClustersAPI.md#ListK3SClusterNodes) | **Get** /cluster-k3s-nodes/{id} | List k3s cluster nodes
+[**ListK3SServerPrivateAddresses**](ClustersAPI.md#ListK3SServerPrivateAddresses) | **Get** /cluster-k3s-private-addresses/{id} | List k3s server private addresses
 [**ListWodbyCloudMachineTypes**](ClustersAPI.md#ListWodbyCloudMachineTypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 [**RecycleClusterNodes**](ClustersAPI.md#RecycleClusterNodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
 [**RemoveK3SClusterNode**](ClustersAPI.md#RemoveK3SClusterNode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove k3s cluster node
 [**ScaleCluster**](ClustersAPI.md#ScaleCluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
+[**SwitchK3SServerAddress**](ClustersAPI.md#SwitchK3SServerAddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch k3s server to a private address
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
 [**UpdateClusterComponent**](ClustersAPI.md#UpdateClusterComponent) | **Post** /clusters/{id}/actions/update-component | Update a cluster component
 [**UpdateClusterEnvironmentPolicy**](ClustersAPI.md#UpdateClusterEnvironmentPolicy) | **Put** /clusters/environment-policy/{id} | Update cluster environment policy
@@ -1224,6 +1226,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListK3SServerPrivateAddresses
+
+> []K3SPrivateAddress ListK3SServerPrivateAddresses(ctx, id).Execute()
+
+List k3s server private addresses
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.ListK3SServerPrivateAddresses(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.ListK3SServerPrivateAddresses``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListK3SServerPrivateAddresses`: []K3SPrivateAddress
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.ListK3SServerPrivateAddresses`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListK3SServerPrivateAddressesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]K3SPrivateAddress**](K3SPrivateAddress.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListWodbyCloudMachineTypes
 
 > []WodbyCloudMachineType ListWodbyCloudMachineTypes(ctx).Execute()
@@ -1480,6 +1552,78 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **scaleClusterInput** | [**ScaleClusterInput**](ScaleClusterInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SwitchK3SServerAddress
+
+> OperationResult SwitchK3SServerAddress(ctx, id).SwitchK3SServerAddressInput(switchK3SServerAddressInput).Execute()
+
+Switch k3s server to a private address
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	switchK3SServerAddressInput := *openapiclient.NewSwitchK3SServerAddressInput("Address_example") // SwitchK3SServerAddressInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.SwitchK3SServerAddress(context.Background(), id).SwitchK3SServerAddressInput(switchK3SServerAddressInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.SwitchK3SServerAddress``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SwitchK3SServerAddress`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.SwitchK3SServerAddress`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSwitchK3SServerAddressRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **switchK3SServerAddressInput** | [**SwitchK3SServerAddressInput**](SwitchK3SServerAddressInput.md) |  | 
 
 ### Return type
 
