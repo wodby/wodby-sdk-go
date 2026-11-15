@@ -1,7 +1,7 @@
 # Go API client for client
 
-Public REST API for customer SDKs and code integrations.
-GraphQL remains internal for the dashboard. This contract is the versioned public surface.
+REST API for automating Wodby 2. Manage organizations, projects, apps, environments, clusters,
+databases and integrations, authenticated with an API key.
 
 
 ## Overview
@@ -275,6 +275,7 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**GetK3SClusterJoinCommand**](docs/ClustersAPI.md#getk3sclusterjoincommand) | **Get** /clusters/k3s-join-command/{id} | Get K3s join command
 *ClustersAPI* | [**GetKubernetesVersionUpgradePlan**](docs/ClustersAPI.md#getkubernetesversionupgradeplan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 *ClustersAPI* | [**ListClusterNodes**](docs/ClustersAPI.md#listclusternodes) | **Get** /cluster-nodes/{id} | List cluster nodes
+*ClustersAPI* | [**ListClusterVulnerabilities**](docs/ClustersAPI.md#listclustervulnerabilities) | **Get** /cluster-vulnerabilities/{id} | List cluster vulnerabilities
 *ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
 *ClustersAPI* | [**ListK3SClusterNodes**](docs/ClustersAPI.md#listk3sclusternodes) | **Get** /cluster-k3s-nodes/{id} | List K3s cluster nodes
 *ClustersAPI* | [**ListK3SServerPrivateAddresses**](docs/ClustersAPI.md#listk3sserverprivateaddresses) | **Get** /cluster-k3s-private-addresses/{id} | List K3s server private addresses
@@ -359,12 +360,8 @@ Class | Method | HTTP request | Description
 *OrgMembershipsAPI* | [**ListOrgMemberships**](docs/OrgMembershipsAPI.md#listorgmemberships) | **Get** /org-memberships | List org memberships
 *OrgMembershipsAPI* | [**UpdateOrgMembership**](docs/OrgMembershipsAPI.md#updateorgmembership) | **Put** /org-memberships/{id} | Update organization member role
 *OrgMembershipsAPI* | [**UpdateOrgMembershipTeams**](docs/OrgMembershipsAPI.md#updateorgmembershipteams) | **Put** /org-memberships/{id}/teams | Set organization member teams
-*OrgSsoAPI* | [**CreateOrgSSOProvider**](docs/OrgSsoAPI.md#createorgssoprovider) | **Post** /org-sso-providers | Create organization SSO provider
-*OrgSsoAPI* | [**DeleteOrgSSOProvider**](docs/OrgSsoAPI.md#deleteorgssoprovider) | **Delete** /org-sso-providers/{id} | Delete organization SSO provider
 *OrgSsoAPI* | [**GetOrgSSOProvider**](docs/OrgSsoAPI.md#getorgssoprovider) | **Get** /org-sso-providers/{id} | Get organization SSO provider
 *OrgSsoAPI* | [**ListOrgSSOProviders**](docs/OrgSsoAPI.md#listorgssoproviders) | **Get** /org-sso-providers | List organization SSO providers
-*OrgSsoAPI* | [**UpdateOrgSSOProvider**](docs/OrgSsoAPI.md#updateorgssoprovider) | **Put** /org-sso-providers/{id} | Update organization SSO provider
-*OrgSsoAPI* | [**VerifyOrgSSODomain**](docs/OrgSsoAPI.md#verifyorgssodomain) | **Post** /org-sso-providers/{id}/actions/verify-domain | Verify SSO domain
 *OrgsAPI* | [**ExportOrgUsageCSV**](docs/OrgsAPI.md#exportorgusagecsv) | **Get** /orgs/{id}/usage/csv | Export org usage by project as CSV
 *OrgsAPI* | [**GetOrg**](docs/OrgsAPI.md#getorg) | **Get** /orgs/{id} | Get org
 *OrgsAPI* | [**GetOrgSubscription**](docs/OrgsAPI.md#getorgsubscription) | **Get** /orgs/{id}/subscription | Get org subscription
@@ -679,6 +676,9 @@ Class | Method | HTTP request | Description
  - [ClusterSecurityAdvisory](docs/ClusterSecurityAdvisory.md)
  - [ClusterSettings](docs/ClusterSettings.md)
  - [ClusterSettingsInput](docs/ClusterSettingsInput.md)
+ - [ClusterVulnerabilitiesResponse](docs/ClusterVulnerabilitiesResponse.md)
+ - [ClusterVulnerability](docs/ClusterVulnerability.md)
+ - [ClusterVulnerabilitySource](docs/ClusterVulnerabilitySource.md)
  - [ConfigOverrideInput](docs/ConfigOverrideInput.md)
  - [CopyStackSettingsInput](docs/CopyStackSettingsInput.md)
  - [CreateAppServiceInput](docs/CreateAppServiceInput.md)
@@ -802,7 +802,6 @@ Class | Method | HTTP request | Description
  - [OrgMembershipTeamsInputTeamsInner](docs/OrgMembershipTeamsInputTeamsInner.md)
  - [OrgSSODomain](docs/OrgSSODomain.md)
  - [OrgSSOProvider](docs/OrgSSOProvider.md)
- - [OrgSSOProviderInput](docs/OrgSSOProviderInput.md)
  - [OrgSettings](docs/OrgSettings.md)
  - [OrgSettingsInput](docs/OrgSettingsInput.md)
  - [OrgSubscription](docs/OrgSubscription.md)
@@ -968,7 +967,6 @@ Class | Method | HTTP request | Description
  - [User](docs/User.md)
  - [ValidateAppAccessHostnameInput](docs/ValidateAppAccessHostnameInput.md)
  - [ValidationResult](docs/ValidationResult.md)
- - [VerifyOrgSSODomainInput](docs/VerifyOrgSSODomainInput.md)
  - [VolumeSizeInput](docs/VolumeSizeInput.md)
  - [VulnerabilityCounts](docs/VulnerabilityCounts.md)
  - [VulnerabilityScanStatus](docs/VulnerabilityScanStatus.md)

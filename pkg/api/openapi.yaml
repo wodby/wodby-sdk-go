@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   description: |
-    Public REST API for customer SDKs and code integrations.
-    GraphQL remains internal for the dashboard. This contract is the versioned public surface.
+    REST API for automating Wodby 2. Manage organizations, projects, apps, environments, clusters,
+    databases and integrations, authenticated with an API key.
   license:
     name: Proprietary
     url: https://wodby.com/legal
@@ -26,7 +26,9 @@ tags:
   name: project-memberships
 - description: "System and custom project roles, and the permissions they grant."
   name: project-roles
-- description: Single sign-on providers and verified email domains of organizations.
+- description: "Single sign-on providers and verified email domains of organizations.\
+    \ Read-only: an organization owner adds, changes and removes providers in the\
+    \ dashboard."
   name: org-sso
 - description: Project containers within organizations.
   name: projects
@@ -1352,72 +1354,7 @@ paths:
       summary: List organization SSO providers
       tags:
       - org-sso
-    post:
-      description: "Adds an OIDC, GitHub or SAML single sign-on provider. The client\
-        \ secret is write-only."
-      operationId: createOrgSSOProvider
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrgSSOProviderInput'
-        required: true
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrgSSOProvider'
-          description: Created SSO provider
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Create organization SSO provider
-      tags:
-      - org-sso
   /org-sso-providers/{id}:
-    delete:
-      description: Deletes a single sign-on provider.
-      operationId: deleteOrgSSOProvider
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OperationResult'
-          description: Deletion result
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Delete organization SSO provider
-      tags:
-      - org-sso
     get:
       description: Returns one single sign-on provider with its domains.
       operationId: getOrgSSOProvider
@@ -1449,87 +1386,6 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get organization SSO provider
-      tags:
-      - org-sso
-    put:
-      description: Replaces the provider settings. Leave clientSecret out to keep
-        the stored secret.
-      operationId: updateOrgSSOProvider
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrgSSOProviderInput'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrgSSOProvider'
-          description: Updated SSO provider
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Update organization SSO provider
-      tags:
-      - org-sso
-  /org-sso-providers/{id}/actions/verify-domain:
-    post:
-      description: Checks the DNS TXT record that proves the organization owns one
-        of the provider's email domains and returns the domain.
-      operationId: verifyOrgSSODomain
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VerifyOrgSSODomainInput'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrgSSODomain'
-          description: Domain with its verification state
-        default:
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-        "4XX":
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-          description: Error response
-      summary: Verify SSO domain
       tags:
       - org-sso
   /projects:
@@ -7162,6 +7018,90 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List cluster security advisories
+      tags:
+      - clusters
+  /cluster-vulnerabilities/{id}:
+    get:
+      description: "Lists the cluster's vulnerabilities from every source Wodby has,\
+        \ in one list: the security advisories Wodby tracks, the scans of a K3s cluster's\
+        \ server packages, managed node pools on an outdated image, the known vulnerabilities\
+        \ of the cluster's Kubernetes version, and the scans of the images Wodby's\
+        \ infrastructure apps run. The ID is the cluster's. Vulnerabilities the cluster\
+        \ is still exposed to come first, then the most severe. Wodby Cloud and serverless\
+        \ clusters return an empty list."
+      operationId: listClusterVulnerabilities
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Comma-separated components to list: operating_system, node_image,\
+          \ kubernetes, infrastructure_app. All when omitted."
+        explode: true
+        in: query
+        name: components
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Comma-separated severities to list, such as critical,high. All\
+          \ when omitted."
+        explode: true
+        in: query
+        name: severities
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Only vulnerabilities the cluster is still exposed to.
+        explode: true
+        in: query
+        name: unresolved
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "Page number, defaults to 1"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Page size, defaults to 30"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterVulnerabilitiesResponse'
+          description: One page of the cluster's vulnerabilities
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List cluster vulnerabilities
       tags:
       - clusters
   /cluster-kubernetes-vulnerabilities/{id}:
@@ -18153,6 +18093,180 @@ components:
       - state
       - title
       type: object
+    ClusterVulnerability:
+      example:
+        summary: summary
+        severity: critical
+        component: operating_system
+        action: update_kubernetes
+        id: id
+        state: not_fixed
+        fixedIn: fixedIn
+        message: message
+        affected: affected
+        url: url
+      properties:
+        id:
+          description: "The CVE ID when there is one, otherwise the advisory's own\
+            \ ID. Not unique: the same vulnerability is listed once per affected thing."
+          type: string
+        summary:
+          type: string
+        component:
+          enum:
+          - operating_system
+          - node_image
+          - kubernetes
+          - infrastructure_app
+          type: string
+        affected:
+          description: "What is vulnerable, such as Kubernetes 1.35.10."
+          type: string
+        severity:
+          enum:
+          - critical
+          - high
+          - medium
+          - low
+          - negligible
+          - unknown
+          type: string
+        state:
+          description: "Whether the cluster is still exposed: not_fixed or not_mitigated.\
+            \ Wodby's protections mitigate some vulnerabilities without fixing them."
+          enum:
+          - not_fixed
+          - not_mitigated
+          - mitigated
+          - fixed
+          type: string
+        action:
+          description: "What fixes or mitigates the vulnerability. update_server_packages\
+            \ is done on the K3s server, not by Wodby. Absent when nothing is needed\
+            \ or no fix is available yet."
+          enum:
+          - update_kubernetes
+          - upgrade_infrastructure
+          - upgrade_infrastructure_apps
+          - recycle_nodes
+          - update_server_packages
+          type: string
+        fixedIn:
+          description: The version that fixes the vulnerability. Absent when none
+            is known.
+          type: string
+        url:
+          description: The vulnerability's public record. Absent when Wodby has none.
+          type: string
+        message:
+          description: "Why the cluster is in this state, for vulnerabilities Wodby\
+            \ tracks itself."
+          type: string
+      required:
+      - affected
+      - component
+      - id
+      - severity
+      - state
+      - summary
+      type: object
+    ClusterVulnerabilitySource:
+      example:
+        component: operating_system
+        checkedAt: 2000-01-23T04:56:07.000+00:00
+        message: message
+        status: checked
+      properties:
+        component:
+          enum:
+          - operating_system
+          - node_image
+          - kubernetes
+          - infrastructure_app
+          type: string
+        status:
+          description: checked when the component's vulnerabilities are listed; failed
+            keeps earlier results.
+          enum:
+          - checked
+          - pending
+          - failed
+          type: string
+        checkedAt:
+          format: date-time
+          type: string
+        message:
+          description: Why the check is pending or failed.
+          type: string
+      required:
+      - component
+      - status
+      type: object
+    ClusterVulnerabilitiesResponse:
+      example:
+        sources:
+        - component: operating_system
+          checkedAt: 2000-01-23T04:56:07.000+00:00
+          message: message
+          status: checked
+        - component: operating_system
+          checkedAt: 2000-01-23T04:56:07.000+00:00
+          message: message
+          status: checked
+        nextPage: 6
+        counts:
+          ignored: 4
+          high: 5
+          total: 3
+          critical: 1
+          low: 2
+          medium: 5
+          negligible: 7
+          fixable: 2
+          unknown: 9
+        totalCount: 0
+        items:
+        - summary: summary
+          severity: critical
+          component: operating_system
+          action: update_kubernetes
+          id: id
+          state: not_fixed
+          fixedIn: fixedIn
+          message: message
+          affected: affected
+          url: url
+        - summary: summary
+          severity: critical
+          component: operating_system
+          action: update_kubernetes
+          id: id
+          state: not_fixed
+          fixedIn: fixedIn
+          message: message
+          affected: affected
+          url: url
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ClusterVulnerability'
+          type: array
+        totalCount:
+          type: integer
+        nextPage:
+          type: integer
+        counts:
+          $ref: '#/components/schemas/VulnerabilityCounts'
+        sources:
+          items:
+            $ref: '#/components/schemas/ClusterVulnerabilitySource'
+          type: array
+      required:
+      - counts
+      - items
+      - sources
+      - totalCount
+      type: object
     ClusterKubernetesVulnerability:
       properties:
         id:
@@ -22606,79 +22720,6 @@ components:
       - verificationRecordValue
       - verified
       type: object
-    OrgSSOProviderInput:
-      example:
-        clientId: clientId
-        samlIdpMetadataXml: samlIdpMetadataXml
-        kind: kind
-        issuerUrl: issuerUrl
-        jitEnabled: true
-        name: name
-        domains:
-        - domains
-        - domains
-        clientSecret: clientSecret
-        githubOrg: githubOrg
-        samlIdpMetadataUrl: samlIdpMetadataUrl
-        orgId: 0
-        enabled: true
-      properties:
-        orgId:
-          description: Used when creating a provider. Optional for API-key requests;
-            defaults to the API key's organization.
-          type: integer
-        kind:
-          description: "Provider kind when creating, such as oidc, github or saml.\
-            \ It cannot be changed."
-          nullable: true
-          type: string
-        name:
-          type: string
-        issuerUrl:
-          nullable: true
-          type: string
-        clientId:
-          nullable: true
-          type: string
-        clientSecret:
-          description: OIDC or GitHub client secret. Leave it out on update to keep
-            the stored secret.
-          nullable: true
-          type: string
-          writeOnly: true
-        githubOrg:
-          nullable: true
-          type: string
-        samlIdpMetadataUrl:
-          nullable: true
-          type: string
-        samlIdpMetadataXml:
-          nullable: true
-          type: string
-        enabled:
-          type: boolean
-        jitEnabled:
-          type: boolean
-        domains:
-          items:
-            type: string
-          type: array
-      required:
-      - domains
-      - enabled
-      - jitEnabled
-      - name
-      type: object
-    VerifyOrgSSODomainInput:
-      example:
-        domain: domain
-      properties:
-        domain:
-          minLength: 1
-          type: string
-      required:
-      - domain
-      type: object
     Project:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -24548,6 +24589,16 @@ components:
     VulnerabilityCounts:
       description: "Findings the app ignores are counted only in ignored, never in\
         \ a severity, total or fixable."
+      example:
+        ignored: 4
+        high: 5
+        total: 3
+        critical: 1
+        low: 2
+        medium: 5
+        negligible: 7
+        fixable: 2
+        unknown: 9
       properties:
         critical:
           type: integer

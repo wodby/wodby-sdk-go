@@ -1,7 +1,7 @@
 /*
 Wodby 2 Public API
 
-Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
+REST API for automating Wodby 2. Manage organizations, projects, apps, environments, clusters, databases and integrations, authenticated with an API key. 
 
 API version: 1.0.0
 */

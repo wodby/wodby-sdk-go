@@ -212,6 +212,9 @@ docs/ClusterNodePoolInput.md
 docs/ClusterSecurityAdvisory.md
 docs/ClusterSettings.md
 docs/ClusterSettingsInput.md
+docs/ClusterVulnerabilitiesResponse.md
+docs/ClusterVulnerability.md
+docs/ClusterVulnerabilitySource.md
 docs/ClustersAPI.md
 docs/ConfigOverrideInput.md
 docs/CopyStackSettingsInput.md
@@ -344,7 +347,6 @@ docs/OrgMembershipTeamsInputTeamsInner.md
 docs/OrgMembershipsAPI.md
 docs/OrgSSODomain.md
 docs/OrgSSOProvider.md
-docs/OrgSSOProviderInput.md
 docs/OrgSettings.md
 docs/OrgSettingsInput.md
 docs/OrgSsoAPI.md
@@ -523,7 +525,6 @@ docs/User.md
 docs/UserAPI.md
 docs/ValidateAppAccessHostnameInput.md
 docs/ValidationResult.md
-docs/VerifyOrgSSODomainInput.md
 docs/VolumeSizeInput.md
 docs/VulnerabilityCounts.md
 docs/VulnerabilityScanStatus.md
@@ -701,6 +702,9 @@ model_cluster_node_pool_input.go
 model_cluster_security_advisory.go
 model_cluster_settings.go
 model_cluster_settings_input.go
+model_cluster_vulnerabilities_response.go
+model_cluster_vulnerability.go
+model_cluster_vulnerability_source.go
 model_config_override_input.go
 model_copy_stack_settings_input.go
 model_create_app_service_input.go
@@ -826,7 +830,6 @@ model_org_settings.go
 model_org_settings_input.go
 model_org_sso_domain.go
 model_org_sso_provider.go
-model_org_sso_provider_input.go
 model_org_subscription.go
 model_org_subscription_details.go
 model_org_subscription_plan.go
@@ -990,7 +993,6 @@ model_url_response.go
 model_user.go
 model_validate_app_access_hostname_input.go
 model_validation_result.go
-model_verify_org_sso_domain_input.go
 model_volume_size_input.go
 model_vulnerability_counts.go
 model_vulnerability_scan_status.go

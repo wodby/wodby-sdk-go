@@ -1,7 +1,7 @@
 /*
 Wodby 2 Public API
 
-Public REST API for customer SDKs and code integrations. GraphQL remains internal for the dashboard. This contract is the versioned public surface. 
+REST API for automating Wodby 2. Manage organizations, projects, apps, environments, clusters, databases and integrations, authenticated with an API key. 
 
 API version: 1.0.0
 */
@@ -2300,6 +2300,192 @@ func (a *ClustersAPIService) ListClusterNodesExecute(r ApiListClusterNodesReques
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListClusterVulnerabilitiesRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+	components *string
+	severities *string
+	unresolved *bool
+	page *int32
+	pageSize *int32
+}
+
+// Comma-separated components to list: operating_system, node_image, kubernetes, infrastructure_app. All when omitted.
+func (r ApiListClusterVulnerabilitiesRequest) Components(components string) ApiListClusterVulnerabilitiesRequest {
+	r.components = &components
+	return r
+}
+
+// Comma-separated severities to list, such as critical,high. All when omitted.
+func (r ApiListClusterVulnerabilitiesRequest) Severities(severities string) ApiListClusterVulnerabilitiesRequest {
+	r.severities = &severities
+	return r
+}
+
+// Only vulnerabilities the cluster is still exposed to.
+func (r ApiListClusterVulnerabilitiesRequest) Unresolved(unresolved bool) ApiListClusterVulnerabilitiesRequest {
+	r.unresolved = &unresolved
+	return r
+}
+
+// Page number, defaults to 1
+func (r ApiListClusterVulnerabilitiesRequest) Page(page int32) ApiListClusterVulnerabilitiesRequest {
+	r.page = &page
+	return r
+}
+
+// Page size, defaults to 30
+func (r ApiListClusterVulnerabilitiesRequest) PageSize(pageSize int32) ApiListClusterVulnerabilitiesRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiListClusterVulnerabilitiesRequest) Execute() (*ClusterVulnerabilitiesResponse, *http.Response, error) {
+	return r.ApiService.ListClusterVulnerabilitiesExecute(r)
+}
+
+/*
+ListClusterVulnerabilities List cluster vulnerabilities
+
+Lists the cluster's vulnerabilities from every source Wodby has, in one list: the security advisories Wodby tracks, the scans of a K3s cluster's server packages, managed node pools on an outdated image, the known vulnerabilities of the cluster's Kubernetes version, and the scans of the images Wodby's infrastructure apps run. The ID is the cluster's. Vulnerabilities the cluster is still exposed to come first, then the most severe. Wodby Cloud and serverless clusters return an empty list.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiListClusterVulnerabilitiesRequest
+*/
+func (a *ClustersAPIService) ListClusterVulnerabilities(ctx context.Context, id int32) ApiListClusterVulnerabilitiesRequest {
+	return ApiListClusterVulnerabilitiesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return ClusterVulnerabilitiesResponse
+func (a *ClustersAPIService) ListClusterVulnerabilitiesExecute(r ApiListClusterVulnerabilitiesRequest) (*ClusterVulnerabilitiesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ClusterVulnerabilitiesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.ListClusterVulnerabilities")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cluster-vulnerabilities/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.components != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "components", r.components, "form", "")
+	}
+	if r.severities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "severities", r.severities, "form", "")
+	}
+	if r.unresolved != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unresolved", r.unresolved, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

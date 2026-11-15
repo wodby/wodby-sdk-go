@@ -21,6 +21,7 @@ Method | HTTP request | Description
 [**GetK3SClusterJoinCommand**](ClustersAPI.md#GetK3SClusterJoinCommand) | **Get** /clusters/k3s-join-command/{id} | Get K3s join command
 [**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 [**ListClusterNodes**](ClustersAPI.md#ListClusterNodes) | **Get** /cluster-nodes/{id} | List cluster nodes
+[**ListClusterVulnerabilities**](ClustersAPI.md#ListClusterVulnerabilities) | **Get** /cluster-vulnerabilities/{id} | List cluster vulnerabilities
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
 [**ListK3SClusterNodes**](ClustersAPI.md#ListK3SClusterNodes) | **Get** /cluster-k3s-nodes/{id} | List K3s cluster nodes
 [**ListK3SServerPrivateAddresses**](ClustersAPI.md#ListK3SServerPrivateAddresses) | **Get** /cluster-k3s-private-addresses/{id} | List K3s server private addresses
@@ -1212,6 +1213,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]ClusterNode**](ClusterNode.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListClusterVulnerabilities
+
+> ClusterVulnerabilitiesResponse ListClusterVulnerabilities(ctx, id).Components(components).Severities(severities).Unresolved(unresolved).Page(page).PageSize(pageSize).Execute()
+
+List cluster vulnerabilities
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	components := "components_example" // string | Comma-separated components to list: operating_system, node_image, kubernetes, infrastructure_app. All when omitted. (optional)
+	severities := "severities_example" // string | Comma-separated severities to list, such as critical,high. All when omitted. (optional)
+	unresolved := true // bool | Only vulnerabilities the cluster is still exposed to. (optional)
+	page := int32(56) // int32 | Page number, defaults to 1 (optional)
+	pageSize := int32(56) // int32 | Page size, defaults to 30 (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.ListClusterVulnerabilities(context.Background(), id).Components(components).Severities(severities).Unresolved(unresolved).Page(page).PageSize(pageSize).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.ListClusterVulnerabilities``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListClusterVulnerabilities`: ClusterVulnerabilitiesResponse
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.ListClusterVulnerabilities`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListClusterVulnerabilitiesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **components** | **string** | Comma-separated components to list: operating_system, node_image, kubernetes, infrastructure_app. All when omitted. | 
+ **severities** | **string** | Comma-separated severities to list, such as critical,high. All when omitted. | 
+ **unresolved** | **bool** | Only vulnerabilities the cluster is still exposed to. | 
+ **page** | **int32** | Page number, defaults to 1 | 
+ **pageSize** | **int32** | Page size, defaults to 30 | 
+
+### Return type
+
+[**ClusterVulnerabilitiesResponse**](ClusterVulnerabilitiesResponse.md)
 
 ### Authorization
 
