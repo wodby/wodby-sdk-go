@@ -8,11 +8,11 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **AvailableToAllProjects** | Pointer to **NullableBool** | Lets every project in the organization use the new resource without a project share. Only an organization-owned resource, created without projectId, can be available to all projects. | [optional] 
 **Demo** | **bool** | Create a free demo cluster with limited resources. | 
-**SingleNode** | Pointer to **NullableBool** |  | [optional] 
+**SingleNode** | Pointer to **NullableBool** | Persistent Wodby Cloud clusters can&#39;t be single-node; true is refused unless demo is true. Set minNodeCount and maxNodeCount instead. Demo clusters always run on one node. | [optional] 
 **Region** | Pointer to **NullableString** |  | [optional] 
 **MachineType** | Pointer to **NullableString** | Machine type name from GET /wodby-cloud/machine-types. | [optional] 
-**MinNodeCount** | Pointer to **NullableInt32** |  | [optional] 
-**MaxNodeCount** | Pointer to **NullableInt32** |  | [optional] 
+**MinNodeCount** | Pointer to **NullableInt32** | Minimum node count of a persistent cluster, at least 1. Required unless demo is true. | [optional] 
+**MaxNodeCount** | Pointer to **NullableInt32** | Maximum node count of a persistent cluster. Required unless demo is true. | [optional] 
 **EnvironmentPolicy** | Pointer to [**ClusterEnvironmentPolicyInput**](ClusterEnvironmentPolicyInput.md) |  | [optional] 
 
 ## Methods

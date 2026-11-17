@@ -259,9 +259,11 @@ Class | Method | HTTP request | Description
 *CertsAPI* | [**GetCert**](docs/CertsAPI.md#getcert) | **Get** /certs/{id} | Get cert
 *CertsAPI* | [**ListCerts**](docs/CertsAPI.md#listcerts) | **Get** /certs | List certs
 *ClustersAPI* | [**CreateCluster**](docs/ClustersAPI.md#createcluster) | **Post** /clusters | Create cluster
+*ClustersAPI* | [**CreateClusterVulnerabilityIgnore**](docs/ClustersAPI.md#createclustervulnerabilityignore) | **Post** /clusters/vulnerability-ignores/{id} | Ignore a cluster vulnerability
 *ClustersAPI* | [**CreateK3SCluster**](docs/ClustersAPI.md#createk3scluster) | **Post** /clusters/actions/create-k3s | Create K3s cluster
 *ClustersAPI* | [**CreateWodbyCloudCluster**](docs/ClustersAPI.md#createwodbycloudcluster) | **Post** /clusters/actions/create-wodby-cloud | Create Wodby Cloud cluster
 *ClustersAPI* | [**DeleteCluster**](docs/ClustersAPI.md#deletecluster) | **Delete** /clusters/{id} | Delete cluster
+*ClustersAPI* | [**DeleteClusterVulnerabilityIgnore**](docs/ClustersAPI.md#deleteclustervulnerabilityignore) | **Delete** /cluster-vulnerability-ignores/{id} | Stop ignoring a cluster vulnerability
 *ClustersAPI* | [**GetCluster**](docs/ClustersAPI.md#getcluster) | **Get** /clusters/{id} | Get cluster
 *ClustersAPI* | [**GetClusterByName**](docs/ClustersAPI.md#getclusterbyname) | **Get** /clusters/by-name/{name} | Get cluster by name
 *ClustersAPI* | [**GetClusterComponentUpdates**](docs/ClustersAPI.md#getclustercomponentupdates) | **Get** /cluster-component-updates/{id} | List cluster component updates
@@ -276,12 +278,14 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**GetKubernetesVersionUpgradePlan**](docs/ClustersAPI.md#getkubernetesversionupgradeplan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 *ClustersAPI* | [**ListClusterNodes**](docs/ClustersAPI.md#listclusternodes) | **Get** /cluster-nodes/{id} | List cluster nodes
 *ClustersAPI* | [**ListClusterVulnerabilities**](docs/ClustersAPI.md#listclustervulnerabilities) | **Get** /cluster-vulnerabilities/{id} | List cluster vulnerabilities
+*ClustersAPI* | [**ListClusterVulnerabilityIgnores**](docs/ClustersAPI.md#listclustervulnerabilityignores) | **Get** /clusters/vulnerability-ignores/{id} | List ignored cluster vulnerabilities
 *ClustersAPI* | [**ListClusters**](docs/ClustersAPI.md#listclusters) | **Get** /clusters | List clusters
 *ClustersAPI* | [**ListK3SClusterNodes**](docs/ClustersAPI.md#listk3sclusternodes) | **Get** /cluster-k3s-nodes/{id} | List K3s cluster nodes
 *ClustersAPI* | [**ListK3SServerPrivateAddresses**](docs/ClustersAPI.md#listk3sserverprivateaddresses) | **Get** /cluster-k3s-private-addresses/{id} | List K3s server private addresses
 *ClustersAPI* | [**ListWodbyCloudMachineTypes**](docs/ClustersAPI.md#listwodbycloudmachinetypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 *ClustersAPI* | [**RecycleClusterNodes**](docs/ClustersAPI.md#recycleclusternodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
 *ClustersAPI* | [**RemoveK3SClusterNode**](docs/ClustersAPI.md#removek3sclusternode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove K3s cluster node
+*ClustersAPI* | [**RestartK3SServers**](docs/ClustersAPI.md#restartk3sservers) | **Post** /clusters/{id}/actions/restart-k3s-servers | Restart K3s servers
 *ClustersAPI* | [**ScaleCluster**](docs/ClustersAPI.md#scalecluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 *ClustersAPI* | [**SwitchK3SServerAddress**](docs/ClustersAPI.md#switchk3sserveraddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch K3s server to a private address
 *ClustersAPI* | [**UpdateCluster**](docs/ClustersAPI.md#updatecluster) | **Put** /clusters/{id} | Update cluster
@@ -293,6 +297,7 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**UpdateClusterSharing**](docs/ClustersAPI.md#updateclustersharing) | **Put** /clusters/sharing/{id} | Update cluster sharing
 *ClustersAPI* | [**UpdateK3SClusterMaxPods**](docs/ClustersAPI.md#updatek3sclustermaxpods) | **Post** /clusters/{id}/actions/update-k3s-max-pods | Set pods per node of a K3s cluster
 *ClustersAPI* | [**UpdateK3SClusterPublicIp**](docs/ClustersAPI.md#updatek3sclusterpublicip) | **Post** /clusters/{id}/actions/update-k3s-public-ip | Update K3s cluster public IP
+*ClustersAPI* | [**UpdateK3SServerPackages**](docs/ClustersAPI.md#updatek3sserverpackages) | **Post** /clusters/{id}/actions/update-k3s-server-packages | Update K3s server packages
 *ClustersAPI* | [**UpgradeClusterInfra**](docs/ClustersAPI.md#upgradeclusterinfra) | **Post** /clusters/{id}/actions/upgrade-infra | Upgrade cluster infrastructure
 *ClustersAPI* | [**UpgradeClusterInfraApps**](docs/ClustersAPI.md#upgradeclusterinfraapps) | **Post** /clusters/{id}/actions/upgrade-infra-apps | Upgrade cluster infrastructure app stacks
 *DatabasesAPI* | [**CreateDatabase**](docs/DatabasesAPI.md#createdatabase) | **Post** /databases | Create database
@@ -678,6 +683,8 @@ Class | Method | HTTP request | Description
  - [ClusterSettingsInput](docs/ClusterSettingsInput.md)
  - [ClusterVulnerabilitiesResponse](docs/ClusterVulnerabilitiesResponse.md)
  - [ClusterVulnerability](docs/ClusterVulnerability.md)
+ - [ClusterVulnerabilityIgnore](docs/ClusterVulnerabilityIgnore.md)
+ - [ClusterVulnerabilityIgnoreInput](docs/ClusterVulnerabilityIgnoreInput.md)
  - [ClusterVulnerabilitySource](docs/ClusterVulnerabilitySource.md)
  - [ConfigOverrideInput](docs/ConfigOverrideInput.md)
  - [CopyStackSettingsInput](docs/CopyStackSettingsInput.md)
@@ -743,6 +750,7 @@ Class | Method | HTTP request | Description
  - [K3SInstallCommand](docs/K3SInstallCommand.md)
  - [K3SJoinCommand](docs/K3SJoinCommand.md)
  - [K3SPrivateAddress](docs/K3SPrivateAddress.md)
+ - [K3SServerNodesInput](docs/K3SServerNodesInput.md)
  - [KubeVersion](docs/KubeVersion.md)
  - [KubernetesVersionUpgradePlan](docs/KubernetesVersionUpgradePlan.md)
  - [KubernetesVersionUpgradeTarget](docs/KubernetesVersionUpgradeTarget.md)

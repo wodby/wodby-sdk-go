@@ -5,9 +5,11 @@ All URIs are relative to */v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateCluster**](ClustersAPI.md#CreateCluster) | **Post** /clusters | Create cluster
+[**CreateClusterVulnerabilityIgnore**](ClustersAPI.md#CreateClusterVulnerabilityIgnore) | **Post** /clusters/vulnerability-ignores/{id} | Ignore a cluster vulnerability
 [**CreateK3SCluster**](ClustersAPI.md#CreateK3SCluster) | **Post** /clusters/actions/create-k3s | Create K3s cluster
 [**CreateWodbyCloudCluster**](ClustersAPI.md#CreateWodbyCloudCluster) | **Post** /clusters/actions/create-wodby-cloud | Create Wodby Cloud cluster
 [**DeleteCluster**](ClustersAPI.md#DeleteCluster) | **Delete** /clusters/{id} | Delete cluster
+[**DeleteClusterVulnerabilityIgnore**](ClustersAPI.md#DeleteClusterVulnerabilityIgnore) | **Delete** /cluster-vulnerability-ignores/{id} | Stop ignoring a cluster vulnerability
 [**GetCluster**](ClustersAPI.md#GetCluster) | **Get** /clusters/{id} | Get cluster
 [**GetClusterByName**](ClustersAPI.md#GetClusterByName) | **Get** /clusters/by-name/{name} | Get cluster by name
 [**GetClusterComponentUpdates**](ClustersAPI.md#GetClusterComponentUpdates) | **Get** /cluster-component-updates/{id} | List cluster component updates
@@ -22,12 +24,14 @@ Method | HTTP request | Description
 [**GetKubernetesVersionUpgradePlan**](ClustersAPI.md#GetKubernetesVersionUpgradePlan) | **Get** /cluster-kubernetes-version-upgrade-plans/{id} | Get Kubernetes version upgrade plan
 [**ListClusterNodes**](ClustersAPI.md#ListClusterNodes) | **Get** /cluster-nodes/{id} | List cluster nodes
 [**ListClusterVulnerabilities**](ClustersAPI.md#ListClusterVulnerabilities) | **Get** /cluster-vulnerabilities/{id} | List cluster vulnerabilities
+[**ListClusterVulnerabilityIgnores**](ClustersAPI.md#ListClusterVulnerabilityIgnores) | **Get** /clusters/vulnerability-ignores/{id} | List ignored cluster vulnerabilities
 [**ListClusters**](ClustersAPI.md#ListClusters) | **Get** /clusters | List clusters
 [**ListK3SClusterNodes**](ClustersAPI.md#ListK3SClusterNodes) | **Get** /cluster-k3s-nodes/{id} | List K3s cluster nodes
 [**ListK3SServerPrivateAddresses**](ClustersAPI.md#ListK3SServerPrivateAddresses) | **Get** /cluster-k3s-private-addresses/{id} | List K3s server private addresses
 [**ListWodbyCloudMachineTypes**](ClustersAPI.md#ListWodbyCloudMachineTypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 [**RecycleClusterNodes**](ClustersAPI.md#RecycleClusterNodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
 [**RemoveK3SClusterNode**](ClustersAPI.md#RemoveK3SClusterNode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove K3s cluster node
+[**RestartK3SServers**](ClustersAPI.md#RestartK3SServers) | **Post** /clusters/{id}/actions/restart-k3s-servers | Restart K3s servers
 [**ScaleCluster**](ClustersAPI.md#ScaleCluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 [**SwitchK3SServerAddress**](ClustersAPI.md#SwitchK3SServerAddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch K3s server to a private address
 [**UpdateCluster**](ClustersAPI.md#UpdateCluster) | **Put** /clusters/{id} | Update cluster
@@ -39,6 +43,7 @@ Method | HTTP request | Description
 [**UpdateClusterSharing**](ClustersAPI.md#UpdateClusterSharing) | **Put** /clusters/sharing/{id} | Update cluster sharing
 [**UpdateK3SClusterMaxPods**](ClustersAPI.md#UpdateK3SClusterMaxPods) | **Post** /clusters/{id}/actions/update-k3s-max-pods | Set pods per node of a K3s cluster
 [**UpdateK3SClusterPublicIp**](ClustersAPI.md#UpdateK3SClusterPublicIp) | **Post** /clusters/{id}/actions/update-k3s-public-ip | Update K3s cluster public IP
+[**UpdateK3SServerPackages**](ClustersAPI.md#UpdateK3SServerPackages) | **Post** /clusters/{id}/actions/update-k3s-server-packages | Update K3s server packages
 [**UpgradeClusterInfra**](ClustersAPI.md#UpgradeClusterInfra) | **Post** /clusters/{id}/actions/upgrade-infra | Upgrade cluster infrastructure
 [**UpgradeClusterInfraApps**](ClustersAPI.md#UpgradeClusterInfraApps) | **Post** /clusters/{id}/actions/upgrade-infra-apps | Upgrade cluster infrastructure app stacks
 
@@ -95,6 +100,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Cluster**](Cluster.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateClusterVulnerabilityIgnore
+
+> ClusterVulnerabilityIgnore CreateClusterVulnerabilityIgnore(ctx, id).ClusterVulnerabilityIgnoreInput(clusterVulnerabilityIgnoreInput).Execute()
+
+Ignore a cluster vulnerability
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	clusterVulnerabilityIgnoreInput := *openapiclient.NewClusterVulnerabilityIgnoreInput("VulnerabilityId_example") // ClusterVulnerabilityIgnoreInput | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.CreateClusterVulnerabilityIgnore(context.Background(), id).ClusterVulnerabilityIgnoreInput(clusterVulnerabilityIgnoreInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.CreateClusterVulnerabilityIgnore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateClusterVulnerabilityIgnore`: ClusterVulnerabilityIgnore
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.CreateClusterVulnerabilityIgnore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateClusterVulnerabilityIgnoreRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **clusterVulnerabilityIgnoreInput** | [**ClusterVulnerabilityIgnoreInput**](ClusterVulnerabilityIgnoreInput.md) |  | 
+
+### Return type
+
+[**ClusterVulnerabilityIgnore**](ClusterVulnerabilityIgnore.md)
 
 ### Authorization
 
@@ -295,6 +372,76 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **force** | **bool** |  | [default to false]
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteClusterVulnerabilityIgnore
+
+> OperationResult DeleteClusterVulnerabilityIgnore(ctx, id).Execute()
+
+Stop ignoring a cluster vulnerability
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.DeleteClusterVulnerabilityIgnore(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.DeleteClusterVulnerabilityIgnore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteClusterVulnerabilityIgnore`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.DeleteClusterVulnerabilityIgnore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteClusterVulnerabilityIgnoreRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
 
 ### Return type
 
@@ -1252,7 +1399,7 @@ func main() {
 	id := int32(56) // int32 | 
 	components := "components_example" // string | Comma-separated components to list: operating_system, node_image, kubernetes, infrastructure_app. All when omitted. (optional)
 	severities := "severities_example" // string | Comma-separated severities to list, such as critical,high. All when omitted. (optional)
-	unresolved := true // bool | Only vulnerabilities the cluster is still exposed to. (optional)
+	unresolved := true // bool | Only vulnerabilities the cluster is still exposed to and doesn't ignore. (optional)
 	page := int32(56) // int32 | Page number, defaults to 1 (optional)
 	pageSize := int32(56) // int32 | Page size, defaults to 30 (optional)
 
@@ -1286,13 +1433,83 @@ Name | Type | Description  | Notes
 
  **components** | **string** | Comma-separated components to list: operating_system, node_image, kubernetes, infrastructure_app. All when omitted. | 
  **severities** | **string** | Comma-separated severities to list, such as critical,high. All when omitted. | 
- **unresolved** | **bool** | Only vulnerabilities the cluster is still exposed to. | 
+ **unresolved** | **bool** | Only vulnerabilities the cluster is still exposed to and doesn&#39;t ignore. | 
  **page** | **int32** | Page number, defaults to 1 | 
  **pageSize** | **int32** | Page size, defaults to 30 | 
 
 ### Return type
 
 [**ClusterVulnerabilitiesResponse**](ClusterVulnerabilitiesResponse.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListClusterVulnerabilityIgnores
+
+> []ClusterVulnerabilityIgnore ListClusterVulnerabilityIgnores(ctx, id).Execute()
+
+List ignored cluster vulnerabilities
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.ListClusterVulnerabilityIgnores(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.ListClusterVulnerabilityIgnores``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListClusterVulnerabilityIgnores`: []ClusterVulnerabilityIgnore
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.ListClusterVulnerabilityIgnores`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListClusterVulnerabilityIgnoresRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ClusterVulnerabilityIgnore**](ClusterVulnerabilityIgnore.md)
 
 ### Authorization
 
@@ -1704,6 +1921,78 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **removeK3SClusterNodeInput** | [**RemoveK3SClusterNodeInput**](RemoveK3SClusterNodeInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RestartK3SServers
+
+> OperationResult RestartK3SServers(ctx, id).K3SServerNodesInput(k3SServerNodesInput).Execute()
+
+Restart K3s servers
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	k3SServerNodesInput := *openapiclient.NewK3SServerNodesInput() // K3SServerNodesInput |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.RestartK3SServers(context.Background(), id).K3SServerNodesInput(k3SServerNodesInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.RestartK3SServers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RestartK3SServers`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.RestartK3SServers`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRestartK3SServersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **k3SServerNodesInput** | [**K3SServerNodesInput**](K3SServerNodesInput.md) |  | 
 
 ### Return type
 
@@ -2500,6 +2789,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Cluster**](Cluster.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateK3SServerPackages
+
+> OperationResult UpdateK3SServerPackages(ctx, id).K3SServerNodesInput(k3SServerNodesInput).Execute()
+
+Update K3s server packages
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	k3SServerNodesInput := *openapiclient.NewK3SServerNodesInput() // K3SServerNodesInput |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.UpdateK3SServerPackages(context.Background(), id).K3SServerNodesInput(k3SServerNodesInput).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.UpdateK3SServerPackages``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateK3SServerPackages`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.UpdateK3SServerPackages`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateK3SServerPackagesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **k3SServerNodesInput** | [**K3SServerNodesInput**](K3SServerNodesInput.md) |  | 
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
 
 ### Authorization
 

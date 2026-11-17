@@ -28,11 +28,15 @@ type NewWodbyCloudClusterInput struct {
 	AvailableToAllProjects NullableBool `json:"availableToAllProjects,omitempty"`
 	// Create a free demo cluster with limited resources.
 	Demo bool `json:"demo"`
+	// Persistent Wodby Cloud clusters can't be single-node; true is refused unless demo is true. Set minNodeCount and maxNodeCount instead. Demo clusters always run on one node.
+	// Deprecated
 	SingleNode NullableBool `json:"singleNode,omitempty"`
 	Region NullableString `json:"region,omitempty"`
 	// Machine type name from GET /wodby-cloud/machine-types.
 	MachineType NullableString `json:"machineType,omitempty"`
+	// Minimum node count of a persistent cluster, at least 1. Required unless demo is true.
 	MinNodeCount NullableInt32 `json:"minNodeCount,omitempty"`
+	// Maximum node count of a persistent cluster. Required unless demo is true.
 	MaxNodeCount NullableInt32 `json:"maxNodeCount,omitempty"`
 	EnvironmentPolicy *ClusterEnvironmentPolicyInput `json:"environmentPolicy,omitempty"`
 }
@@ -198,6 +202,7 @@ func (o *NewWodbyCloudClusterInput) SetDemo(v bool) {
 }
 
 // GetSingleNode returns the SingleNode field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *NewWodbyCloudClusterInput) GetSingleNode() bool {
 	if o == nil || IsNil(o.SingleNode.Get()) {
 		var ret bool
@@ -209,6 +214,7 @@ func (o *NewWodbyCloudClusterInput) GetSingleNode() bool {
 // GetSingleNodeOk returns a tuple with the SingleNode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *NewWodbyCloudClusterInput) GetSingleNodeOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
@@ -226,6 +232,7 @@ func (o *NewWodbyCloudClusterInput) HasSingleNode() bool {
 }
 
 // SetSingleNode gets a reference to the given NullableBool and assigns it to the SingleNode field.
+// Deprecated
 func (o *NewWodbyCloudClusterInput) SetSingleNode(v bool) {
 	o.SingleNode.Set(&v)
 }

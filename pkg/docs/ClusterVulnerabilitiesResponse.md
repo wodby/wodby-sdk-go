@@ -9,12 +9,15 @@ Name | Type | Description | Notes
 **NextPage** | Pointer to **int32** |  | [optional] 
 **Counts** | [**VulnerabilityCounts**](VulnerabilityCounts.md) |  | 
 **Sources** | [**[]ClusterVulnerabilitySource**](ClusterVulnerabilitySource.md) |  | 
+**Scanning** | **bool** | Whether a vulnerability check of the cluster is waiting or running. Until it ends, the list shows the results of the checks that finished before it. | 
+**RestartRequired** | **int32** | The cluster&#39;s critical and high vulnerabilities, not ignored, that a restart of its K3s servers fixes: the fix is installed and runs after the restart. Covers the whole cluster, whatever the filter. | 
+**WaitingForUpstream** | **int32** | The cluster&#39;s critical and high vulnerabilities, not ignored, that wait for a fix from an infrastructure image&#39;s maintainers. They aren&#39;t in counts. Covers the whole cluster, whatever the filter. | 
 
 ## Methods
 
 ### NewClusterVulnerabilitiesResponse
 
-`func NewClusterVulnerabilitiesResponse(items []ClusterVulnerability, totalCount int32, counts VulnerabilityCounts, sources []ClusterVulnerabilitySource, ) *ClusterVulnerabilitiesResponse`
+`func NewClusterVulnerabilitiesResponse(items []ClusterVulnerability, totalCount int32, counts VulnerabilityCounts, sources []ClusterVulnerabilitySource, scanning bool, restartRequired int32, waitingForUpstream int32, ) *ClusterVulnerabilitiesResponse`
 
 NewClusterVulnerabilitiesResponse instantiates a new ClusterVulnerabilitiesResponse object
 This constructor will assign default values to properties that have it defined,
@@ -132,6 +135,66 @@ and a boolean to check if the value has been set.
 `func (o *ClusterVulnerabilitiesResponse) SetSources(v []ClusterVulnerabilitySource)`
 
 SetSources sets Sources field to given value.
+
+
+### GetScanning
+
+`func (o *ClusterVulnerabilitiesResponse) GetScanning() bool`
+
+GetScanning returns the Scanning field if non-nil, zero value otherwise.
+
+### GetScanningOk
+
+`func (o *ClusterVulnerabilitiesResponse) GetScanningOk() (*bool, bool)`
+
+GetScanningOk returns a tuple with the Scanning field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScanning
+
+`func (o *ClusterVulnerabilitiesResponse) SetScanning(v bool)`
+
+SetScanning sets Scanning field to given value.
+
+
+### GetRestartRequired
+
+`func (o *ClusterVulnerabilitiesResponse) GetRestartRequired() int32`
+
+GetRestartRequired returns the RestartRequired field if non-nil, zero value otherwise.
+
+### GetRestartRequiredOk
+
+`func (o *ClusterVulnerabilitiesResponse) GetRestartRequiredOk() (*int32, bool)`
+
+GetRestartRequiredOk returns a tuple with the RestartRequired field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRestartRequired
+
+`func (o *ClusterVulnerabilitiesResponse) SetRestartRequired(v int32)`
+
+SetRestartRequired sets RestartRequired field to given value.
+
+
+### GetWaitingForUpstream
+
+`func (o *ClusterVulnerabilitiesResponse) GetWaitingForUpstream() int32`
+
+GetWaitingForUpstream returns the WaitingForUpstream field if non-nil, zero value otherwise.
+
+### GetWaitingForUpstreamOk
+
+`func (o *ClusterVulnerabilitiesResponse) GetWaitingForUpstreamOk() (*int32, bool)`
+
+GetWaitingForUpstreamOk returns a tuple with the WaitingForUpstream field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWaitingForUpstream
+
+`func (o *ClusterVulnerabilitiesResponse) SetWaitingForUpstream(v int32)`
+
+SetWaitingForUpstream sets WaitingForUpstream field to given value.
 
 
 

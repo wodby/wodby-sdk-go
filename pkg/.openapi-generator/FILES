@@ -214,6 +214,8 @@ docs/ClusterSettings.md
 docs/ClusterSettingsInput.md
 docs/ClusterVulnerabilitiesResponse.md
 docs/ClusterVulnerability.md
+docs/ClusterVulnerabilityIgnore.md
+docs/ClusterVulnerabilityIgnoreInput.md
 docs/ClusterVulnerabilitySource.md
 docs/ClustersAPI.md
 docs/ConfigOverrideInput.md
@@ -287,6 +289,7 @@ docs/K3SClusterNode.md
 docs/K3SInstallCommand.md
 docs/K3SJoinCommand.md
 docs/K3SPrivateAddress.md
+docs/K3SServerNodesInput.md
 docs/KubeVersion.md
 docs/KubernetesVersionUpgradePlan.md
 docs/KubernetesVersionUpgradeTarget.md
@@ -704,6 +707,8 @@ model_cluster_settings.go
 model_cluster_settings_input.go
 model_cluster_vulnerabilities_response.go
 model_cluster_vulnerability.go
+model_cluster_vulnerability_ignore.go
+model_cluster_vulnerability_ignore_input.go
 model_cluster_vulnerability_source.go
 model_config_override_input.go
 model_copy_stack_settings_input.go
@@ -769,6 +774,7 @@ model_k3_s_cluster_node.go
 model_k3_s_install_command.go
 model_k3_s_join_command.go
 model_k3_s_private_address.go
+model_k3_s_server_nodes_input.go
 model_kube_version.go
 model_kubernetes_version_upgrade_plan.go
 model_kubernetes_version_upgrade_target.go

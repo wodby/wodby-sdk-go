@@ -26,6 +26,12 @@ type ClusterVulnerabilitiesResponse struct {
 	NextPage *int32 `json:"nextPage,omitempty"`
 	Counts VulnerabilityCounts `json:"counts"`
 	Sources []ClusterVulnerabilitySource `json:"sources"`
+	// Whether a vulnerability check of the cluster is waiting or running. Until it ends, the list shows the results of the checks that finished before it.
+	Scanning bool `json:"scanning"`
+	// The cluster's critical and high vulnerabilities, not ignored, that a restart of its K3s servers fixes: the fix is installed and runs after the restart. Covers the whole cluster, whatever the filter.
+	RestartRequired int32 `json:"restartRequired"`
+	// The cluster's critical and high vulnerabilities, not ignored, that wait for a fix from an infrastructure image's maintainers. They aren't in counts. Covers the whole cluster, whatever the filter.
+	WaitingForUpstream int32 `json:"waitingForUpstream"`
 }
 
 type _ClusterVulnerabilitiesResponse ClusterVulnerabilitiesResponse
@@ -34,12 +40,15 @@ type _ClusterVulnerabilitiesResponse ClusterVulnerabilitiesResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewClusterVulnerabilitiesResponse(items []ClusterVulnerability, totalCount int32, counts VulnerabilityCounts, sources []ClusterVulnerabilitySource) *ClusterVulnerabilitiesResponse {
+func NewClusterVulnerabilitiesResponse(items []ClusterVulnerability, totalCount int32, counts VulnerabilityCounts, sources []ClusterVulnerabilitySource, scanning bool, restartRequired int32, waitingForUpstream int32) *ClusterVulnerabilitiesResponse {
 	this := ClusterVulnerabilitiesResponse{}
 	this.Items = items
 	this.TotalCount = totalCount
 	this.Counts = counts
 	this.Sources = sources
+	this.Scanning = scanning
+	this.RestartRequired = restartRequired
+	this.WaitingForUpstream = waitingForUpstream
 	return &this
 }
 
@@ -179,6 +188,78 @@ func (o *ClusterVulnerabilitiesResponse) SetSources(v []ClusterVulnerabilitySour
 	o.Sources = v
 }
 
+// GetScanning returns the Scanning field value
+func (o *ClusterVulnerabilitiesResponse) GetScanning() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Scanning
+}
+
+// GetScanningOk returns a tuple with the Scanning field value
+// and a boolean to check if the value has been set.
+func (o *ClusterVulnerabilitiesResponse) GetScanningOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Scanning, true
+}
+
+// SetScanning sets field value
+func (o *ClusterVulnerabilitiesResponse) SetScanning(v bool) {
+	o.Scanning = v
+}
+
+// GetRestartRequired returns the RestartRequired field value
+func (o *ClusterVulnerabilitiesResponse) GetRestartRequired() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.RestartRequired
+}
+
+// GetRestartRequiredOk returns a tuple with the RestartRequired field value
+// and a boolean to check if the value has been set.
+func (o *ClusterVulnerabilitiesResponse) GetRestartRequiredOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.RestartRequired, true
+}
+
+// SetRestartRequired sets field value
+func (o *ClusterVulnerabilitiesResponse) SetRestartRequired(v int32) {
+	o.RestartRequired = v
+}
+
+// GetWaitingForUpstream returns the WaitingForUpstream field value
+func (o *ClusterVulnerabilitiesResponse) GetWaitingForUpstream() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.WaitingForUpstream
+}
+
+// GetWaitingForUpstreamOk returns a tuple with the WaitingForUpstream field value
+// and a boolean to check if the value has been set.
+func (o *ClusterVulnerabilitiesResponse) GetWaitingForUpstreamOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.WaitingForUpstream, true
+}
+
+// SetWaitingForUpstream sets field value
+func (o *ClusterVulnerabilitiesResponse) SetWaitingForUpstream(v int32) {
+	o.WaitingForUpstream = v
+}
+
 func (o ClusterVulnerabilitiesResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -196,6 +277,9 @@ func (o ClusterVulnerabilitiesResponse) ToMap() (map[string]interface{}, error) 
 	}
 	toSerialize["counts"] = o.Counts
 	toSerialize["sources"] = o.Sources
+	toSerialize["scanning"] = o.Scanning
+	toSerialize["restartRequired"] = o.RestartRequired
+	toSerialize["waitingForUpstream"] = o.WaitingForUpstream
 	return toSerialize, nil
 }
 
@@ -208,6 +292,9 @@ func (o *ClusterVulnerabilitiesResponse) UnmarshalJSON(data []byte) (err error) 
 		"totalCount",
 		"counts",
 		"sources",
+		"scanning",
+		"restartRequired",
+		"waitingForUpstream",
 	}
 
 	allProperties := make(map[string]interface{})

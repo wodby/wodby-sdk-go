@@ -7056,7 +7056,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: Only vulnerabilities the cluster is still exposed to.
+      - description: Only vulnerabilities the cluster is still exposed to and doesn't
+          ignore.
         explode: true
         in: query
         name: unresolved
@@ -7102,6 +7103,122 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: List cluster vulnerabilities
+      tags:
+      - clusters
+  /clusters/vulnerability-ignores/{id}:
+    get:
+      description: "Lists the vulnerabilities the cluster ignores, newest first, including\
+        \ those that match nothing listed now. The ID is the cluster's."
+      operationId: listClusterVulnerabilityIgnores
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClusterVulnerabilityIgnore'
+                type: array
+          description: Ignored vulnerabilities
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List ignored cluster vulnerabilities
+      tags:
+      - clusters
+    post:
+      description: "Ignores a vulnerability in every component of the cluster, including\
+        \ later checks. Ignored vulnerabilities stay listed, last, and are left out\
+        \ of the cluster's vulnerability counts and reported in the ignored count\
+        \ instead. Only vulnerabilities listed as ignorable are affected. The ID is\
+        \ the cluster's. Needs permission to modify the cluster. Fails when the cluster\
+        \ already ignores the vulnerability."
+      operationId: createClusterVulnerabilityIgnore
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterVulnerabilityIgnoreInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterVulnerabilityIgnore'
+          description: Created ignore
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Ignore a cluster vulnerability
+      tags:
+      - clusters
+  /cluster-vulnerability-ignores/{id}:
+    delete:
+      description: "Removes an ignore, so the vulnerability counts again. The ID is\
+        \ the ignore's. Needs permission to modify the cluster."
+      operationId: deleteClusterVulnerabilityIgnore
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Deletion result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Stop ignoring a cluster vulnerability
       tags:
       - clusters
   /cluster-kubernetes-vulnerabilities/{id}:
@@ -8587,12 +8704,15 @@ paths:
     get:
       description: "Returns what clusters of the integration's Kubernetes provider\
         \ support: highAvailability, nodeDiskSizeIsConfigurable, noSingleAZ, singleNode,\
-        \ serverless, billingOptions, gpuNodePool (whether a cluster can have an optional\
-        \ GPU node pool), gpuNodePoolScalesToZero (whether that pool's minimum may\
-        \ be 0), nodeRecycling (whether a running cluster's worker nodes can be recycled)\
-        \ and nodeAutoscaling (whether the provider scales nodes between the minimum\
-        \ and maximum node counts; when false, a cluster has a fixed number of nodes\
-        \ and must be created and scaled with equal minimum and maximum node counts)."
+        \ serverless, billingOptions (each with multiNodeOnly when a single-node cluster\
+        \ can't use it), billingOptionsTitle (how the provider names those options,\
+        \ such as Tier; null for the generic name), gpuNodePool (whether a cluster\
+        \ can have an optional GPU node pool), gpuNodePoolScalesToZero (whether that\
+        \ pool's minimum may be 0), nodeRecycling (whether a running cluster's worker\
+        \ nodes can be recycled) and nodeAutoscaling (whether the provider scales\
+        \ nodes between the minimum and maximum node counts; when false, a cluster\
+        \ has a fixed number of nodes and must be created and scaled with equal minimum\
+        \ and maximum node counts)."
       operationId: getIntegrationKubeSettings
       parameters:
       - explode: false
@@ -11060,6 +11180,96 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Set pods per node of a K3s cluster
+      tags:
+      - clusters
+  /clusters/{id}/actions/update-k3s-server-packages:
+    post:
+      description: "Updates the operating system packages of a K3s cluster's nodes\
+        \ with each server's package manager, one node at a time, within the installed\
+        \ release. Leave nodes empty to update every node. Apps keep running. A node\
+        \ that needs a restart to apply the updates, such as for a new kernel, shows\
+        \ it in GET /cluster-vulnerabilities/{id} after its next scan. Supported on\
+        \ Debian, Ubuntu, RHEL-family and SUSE servers that run systemd."
+      operationId: updateK3SServerPackages
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/K3SServerNodesInput'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Package update task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Update K3s server packages
+      tags:
+      - clusters
+  /clusters/{id}/actions/restart-k3s-servers:
+    post:
+      description: "Restarts a K3s cluster's nodes one at a time and waits for each\
+        \ to come back Ready. Leave nodes empty to restart only the nodes that say\
+        \ a restart is pending. A node is drained first when another node can take\
+        \ its pods; on a cluster with one node, every app is unavailable until the\
+        \ node is back, usually a few minutes. New deployments wait until the restarts\
+        \ end. Refused while application operations are active."
+      operationId: restartK3SServers
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/K3SServerNodesInput'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Restart task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Restart K3s servers
       tags:
       - clusters
   /clusters/actions/create-k3s:
@@ -18097,14 +18307,20 @@ components:
       example:
         summary: summary
         severity: critical
-        component: operating_system
-        action: update_kubernetes
-        id: id
-        state: not_fixed
+        ignored: true
+        epss: 6.027456183070403
         fixedIn: fixedIn
         message: message
         affected: affected
         url: url
+        ignoreId: 0
+        component: operating_system
+        exploited: true
+        action: update_kubernetes
+        id: id
+        state: not_fixed
+        ignorable: true
+        urgent: true
       properties:
         id:
           description: "The CVE ID when there is one, otherwise the advisory's own\
@@ -18132,24 +18348,34 @@ components:
           - unknown
           type: string
         state:
-          description: "Whether the cluster is still exposed: not_fixed or not_mitigated.\
-            \ Wodby's protections mitigate some vulnerabilities without fixing them."
+          description: "Whether the cluster is still exposed: not_fixed, not_mitigated\
+            \ or fixed_after_restart. Wodby's protections mitigate some vulnerabilities\
+            \ without fixing them. fixed_after_restart is a vulnerability of a K3s\
+            \ server's running kernel that the newer kernel installed on the server\
+            \ doesn't have; the server is exposed until it restarts into that kernel.\
+            \ waiting_for_upstream is a vulnerability of an infrastructure app's image\
+            \ that no upgrade Wodby can offer fixes yet; it needs a new release from\
+            \ the image's maintainers and isn't counted among those that need action."
           enum:
           - not_fixed
           - not_mitigated
           - mitigated
           - fixed
+          - fixed_after_restart
+          - waiting_for_upstream
           type: string
         action:
           description: "What fixes or mitigates the vulnerability. update_server_packages\
-            \ is done on the K3s server, not by Wodby. Absent when nothing is needed\
-            \ or no fix is available yet."
+            \ and restart_server are done on the K3s server, not by Wodby: restart_server\
+            \ applies updates already installed on it, such as a new kernel. Absent\
+            \ when nothing is needed or no fix is available yet."
           enum:
           - update_kubernetes
           - upgrade_infrastructure
           - upgrade_infrastructure_apps
           - recycle_nodes
           - update_server_packages
+          - restart_server
           type: string
         fixedIn:
           description: The version that fixes the vulnerability. Absent when none
@@ -18160,15 +18386,86 @@ components:
           type: string
         message:
           description: "Why the cluster is in this state, for vulnerabilities Wodby\
-            \ tracks itself."
+            \ tracks itself and those a restart fixes."
           type: string
+        ignorable:
+          description: "Whether the cluster can ignore the vulnerability: true for\
+            \ findings of a scan and the known vulnerabilities of the Kubernetes version,\
+            \ false for the advisories Wodby tracks itself and notices such as an\
+            \ outdated node image."
+          type: boolean
+        ignored:
+          description: Whether the cluster ignores the vulnerability. Ignored vulnerabilities
+            are listed last.
+          type: boolean
+        ignoreId:
+          description: The ignore that matches an ignored vulnerability. Absent when
+            not ignored.
+          type: integer
+        exploited:
+          description: Whether the vulnerability is on CISA's catalog of known exploited
+            vulnerabilities.
+          type: boolean
+        epss:
+          description: "The EPSS probability that the vulnerability is exploited in\
+            \ the next 30 days, from 0 to 1. Absent when unknown."
+          type: number
+        urgent:
+          description: "Whether the vulnerability raises the alert: a scan finding\
+            \ known or likely to be exploited, or an advisory Wodby tracks itself."
+          type: boolean
       required:
       - affected
       - component
+      - exploited
       - id
+      - ignorable
+      - ignored
       - severity
       - state
       - summary
+      - urgent
+      type: object
+    ClusterVulnerabilityIgnore:
+      example:
+        reason: reason
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        vulnerabilityId: vulnerabilityId
+        id: 0
+        clusterId: 6
+      properties:
+        id:
+          type: integer
+        clusterId:
+          type: integer
+        vulnerabilityId:
+          type: string
+        reason:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - clusterId
+      - createdAt
+      - id
+      - vulnerabilityId
+      type: object
+    ClusterVulnerabilityIgnoreInput:
+      example:
+        reason: reason
+        vulnerabilityId: vulnerabilityId
+      properties:
+        vulnerabilityId:
+          description: "Vulnerability ID as listed for the cluster, such as CVE-2024-12345."
+          maxLength: 64
+          type: string
+        reason:
+          description: Why the vulnerability is accepted.
+          maxLength: 1000
+          type: string
+      required:
+      - vulnerabilityId
       type: object
     ClusterVulnerabilitySource:
       example:
@@ -18213,39 +18510,55 @@ components:
           checkedAt: 2000-01-23T04:56:07.000+00:00
           message: message
           status: checked
-        nextPage: 6
+        restartRequired: 1
+        nextPage: 5
         counts:
-          ignored: 4
-          high: 5
-          total: 3
-          critical: 1
-          low: 2
-          medium: 5
-          negligible: 7
-          fixable: 2
-          unknown: 9
-        totalCount: 0
+          ignored: 1
+          high: 2
+          total: 4
+          critical: 5
+          low: 9
+          medium: 7
+          urgent: 1
+          negligible: 3
+          fixable: 7
+          unknown: 2
+        scanning: true
+        totalCount: 1
         items:
         - summary: summary
           severity: critical
-          component: operating_system
-          action: update_kubernetes
-          id: id
-          state: not_fixed
+          ignored: true
+          epss: 6.027456183070403
           fixedIn: fixedIn
           message: message
           affected: affected
           url: url
+          ignoreId: 0
+          component: operating_system
+          exploited: true
+          action: update_kubernetes
+          id: id
+          state: not_fixed
+          ignorable: true
+          urgent: true
         - summary: summary
           severity: critical
-          component: operating_system
-          action: update_kubernetes
-          id: id
-          state: not_fixed
+          ignored: true
+          epss: 6.027456183070403
           fixedIn: fixedIn
           message: message
           affected: affected
           url: url
+          ignoreId: 0
+          component: operating_system
+          exploited: true
+          action: update_kubernetes
+          id: id
+          state: not_fixed
+          ignorable: true
+          urgent: true
+        waitingForUpstream: 6
       properties:
         items:
           items:
@@ -18261,11 +18574,29 @@ components:
           items:
             $ref: '#/components/schemas/ClusterVulnerabilitySource'
           type: array
+        scanning:
+          description: "Whether a vulnerability check of the cluster is waiting or\
+            \ running. Until it ends, the list shows the results of the checks that\
+            \ finished before it."
+          type: boolean
+        restartRequired:
+          description: "The cluster's critical and high vulnerabilities, not ignored,\
+            \ that a restart of its K3s servers fixes: the fix is installed and runs\
+            \ after the restart. Covers the whole cluster, whatever the filter."
+          type: integer
+        waitingForUpstream:
+          description: "The cluster's critical and high vulnerabilities, not ignored,\
+            \ that wait for a fix from an infrastructure image's maintainers. They\
+            \ aren't in counts. Covers the whole cluster, whatever the filter."
+          type: integer
       required:
       - counts
       - items
+      - restartRequired
+      - scanning
       - sources
       - totalCount
+      - waitingForUpstream
       type: object
     ClusterKubernetesVulnerability:
       properties:
@@ -24590,15 +24921,16 @@ components:
       description: "Findings the app ignores are counted only in ignored, never in\
         \ a severity, total or fixable."
       example:
-        ignored: 4
-        high: 5
-        total: 3
-        critical: 1
-        low: 2
-        medium: 5
-        negligible: 7
-        fixable: 2
-        unknown: 9
+        ignored: 1
+        high: 2
+        total: 4
+        critical: 5
+        low: 9
+        medium: 7
+        urgent: 1
+        negligible: 3
+        fixable: 7
+        unknown: 2
       properties:
         critical:
           type: integer
@@ -24619,6 +24951,12 @@ components:
           type: integer
         ignored:
           description: Findings the app ignores.
+          type: integer
+        urgent:
+          description: "Findings known to be exploited, or likely to be with an EPSS\
+            \ probability of at least 10%, whatever their severity, plus unresolved\
+            \ advisories Wodby tracks itself on a cluster. These raise the alert.\
+            \ Ignored ones are left out."
           type: integer
       required:
       - critical
@@ -35724,6 +36062,10 @@ components:
           description: Create a free demo cluster with limited resources.
           type: boolean
         singleNode:
+          deprecated: true
+          description: Persistent Wodby Cloud clusters can't be single-node; true
+            is refused unless demo is true. Set minNodeCount and maxNodeCount instead.
+            Demo clusters always run on one node.
           nullable: true
           type: boolean
         region:
@@ -35734,9 +36076,13 @@ components:
           nullable: true
           type: string
         minNodeCount:
+          description: "Minimum node count of a persistent cluster, at least 1. Required\
+            \ unless demo is true."
           nullable: true
           type: integer
         maxNodeCount:
+          description: Maximum node count of a persistent cluster. Required unless
+            demo is true.
           nullable: true
           type: integer
         environmentPolicy:
@@ -36114,6 +36460,19 @@ components:
           type: integer
       required:
       - maxPods
+      type: object
+    K3SServerNodesInput:
+      example:
+        nodes:
+        - nodes
+        - nodes
+      properties:
+        nodes:
+          description: "Node names from GET /cluster-k3s-nodes/{id}. Empty for the\
+            \ default nodes."
+          items:
+            type: string
+          type: array
       type: object
     ResourcePreset:
       example:
