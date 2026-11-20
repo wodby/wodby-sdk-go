@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/1.0/docs/dev"
-  version: "3.2.0"
+  version: "3.3.0"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -619,6 +619,77 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Server"
+      security:
+      - ApiKeyAuth: []
+    post:
+      tags:
+      - "Server"
+      summary: "Create server"
+      description: "Create a server with a hosting integration, such as a connected\
+        \ DigitalOcean team. The integration's provider creates the machine and Wodby\
+        \ installs its infrastructure on it."
+      operationId: "createServer"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestServerCreate"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTask"
+      security:
+      - ApiKeyAuth: []
+  /servers/integrations:
+    get:
+      tags:
+      - "Server"
+      summary: "Retrieve server integrations"
+      description: "Retrieve an organization's integrations that can create servers"
+      operationId: "getServerIntegrations"
+      parameters:
+      - name: "org_id"
+        in: "query"
+        description: "Organization ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "OrgId"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServerIntegration"
+      security:
+      - ApiKeyAuth: []
+  /servers/integrations/{id}/options:
+    get:
+      tags:
+      - "Server"
+      summary: "Retrieve server integration options"
+      description: "Retrieve the regions and server sizes a hosting integration offers"
+      operationId: "getServerIntegrationOptions"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Integration ID"
+        required: true
+        type: "string"
+        format: "uuid"
+        x-exportParamName: "Id"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServerIntegrationRegion"
       security:
       - ApiKeyAuth: []
   /servers/{id}:
@@ -1432,6 +1503,71 @@ definitions:
       version: "version"
       updated: 6
       status: "ok"
+  ServerIntegration:
+    type: "object"
+    required:
+    - "id"
+    - "org_id"
+    - "provider"
+    - "status"
+    - "title"
+    properties:
+      id:
+        type: "string"
+        title: "UUID"
+      org_id:
+        type: "string"
+        title: "UUID"
+      title:
+        type: "string"
+      provider:
+        type: "string"
+      status:
+        type: "string"
+        enum:
+        - "ok"
+        - "error"
+        - "creating"
+        - "updating"
+        - "deleting"
+        - "unknown"
+    example:
+      provider: "provider"
+      org_id: "org_id"
+      id: "id"
+      title: "title"
+      status: "ok"
+  ServerIntegrationRegion:
+    type: "object"
+    required:
+    - "available"
+    - "name"
+    - "sizes"
+    - "title"
+    properties:
+      name:
+        type: "string"
+      title:
+        type: "string"
+      available:
+        type: "boolean"
+      sizes:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServerIntegrationRegion_sizes"
+    example:
+      sizes:
+      - default: true
+        name: "name"
+        available: true
+        title: "title"
+      - default: true
+        name: "name"
+        available: true
+        title: "title"
+      name: "name"
+      available: true
+      title: "title"
   Backup:
     type: "object"
     required:
@@ -1745,6 +1881,42 @@ definitions:
       instance_id: "instance_id"
       comment: "comment"
       uuid: "uuid"
+  RequestServerCreate:
+    type: "object"
+    required:
+    - "integration_id"
+    - "options"
+    - "title"
+    properties:
+      integration_id:
+        type: "string"
+        title: "UUID"
+      title:
+        type: "string"
+        minLength: 1
+        maxLength: 255
+      environment:
+        type: "string"
+        description: "Environments the server is for; defaults to shared"
+        enum:
+        - "local"
+        - "dev"
+        - "stage"
+        - "prod"
+        - "shared"
+      options:
+        $ref: "#/definitions/RequestServerCreate_options"
+      uuid:
+        type: "string"
+        title: "UUID"
+    example:
+      environment: "local"
+      integration_id: "integration_id"
+      options:
+        preset_name: "preset_name"
+        region_name: "region_name"
+      title: "title"
+      uuid: "uuid"
   RequestInstanceCreate:
     type: "object"
     required:
@@ -1965,6 +2137,26 @@ definitions:
         ttl: 1
         updated: 5
         status: "waiting"
+  ServerIntegrationRegion_sizes:
+    required:
+    - "available"
+    - "default"
+    - "name"
+    - "title"
+    properties:
+      name:
+        type: "string"
+      title:
+        type: "string"
+      available:
+        type: "boolean"
+      default:
+        type: "boolean"
+    example:
+      default: true
+      name: "name"
+      available: true
+      title: "title"
   RequestAppCreate_services:
     required:
     - "name"
@@ -1994,6 +2186,21 @@ definitions:
     example:
       repo_id: "repo_id"
       tree_ish: "tree_ish"
+  RequestServerCreate_options:
+    required:
+    - "preset_name"
+    - "region_name"
+    properties:
+      region_name:
+        type: "string"
+        minLength: 1
+      preset_name:
+        type: "string"
+        minLength: 1
+    description: "Region and size from getServerIntegrationOptions"
+    example:
+      preset_name: "preset_name"
+      region_name: "region_name"
   RequestInstanceCreate_git:
     properties:
       tree_ish:
@@ -2002,5 +2209,5 @@ definitions:
     example:
       tree_ish: "tree_ish"
 externalDocs:
-  description: "Wodby Developer Documentation"
+  description: "Wodby 1 Developer Documentation"
   url: "https://wodby.com/docs/1.0/docs/dev"
