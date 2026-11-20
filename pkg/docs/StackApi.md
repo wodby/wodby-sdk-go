@@ -4,11 +4,40 @@ All URIs are relative to *https://api.wodby.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AddStack**](StackApi.md#AddStack) | **Post** /stacks | Add catalog stack
 [**GetStack**](StackApi.md#GetStack) | **Get** /stacks/{id} | Retrieve stack
 [**GetStacks**](StackApi.md#GetStacks) | **Get** /stacks | Retrieve stacks
 [**UpdateStackFromUpstream**](StackApi.md#UpdateStackFromUpstream) | **Post** /stacks/{id}/update | Update official stack from upstream
 [**UpdateStacksFromUpstream**](StackApi.md#UpdateStacksFromUpstream) | **Post** /stacks/update | Update official stacks from upstream
 
+
+# **AddStack**
+> ResponseTaskStack AddStack(ctx, data)
+Add catalog stack
+
+Add a catalog stack, such as WordPress, to an organization. The organization gets its own copy, which its apps are created from.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **data** | [**RequestStackAdd**](RequestStackAdd.md)|  | 
+
+### Return type
+
+[**ResponseTaskStack**](ResponseTaskStack.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetStack**
 > Stack GetStack(ctx, id)

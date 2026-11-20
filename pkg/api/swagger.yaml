@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Wodby Developer Documentation https://wodby.com/docs/1.0/docs/dev"
-  version: "3.3.0"
+  version: "3.4.0"
   title: "Wodby API Client"
   termsOfService: "https://wodby.com/legal"
 host: "api.wodby.com"
@@ -471,6 +471,28 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Stack"
+      security:
+      - ApiKeyAuth: []
+    post:
+      tags:
+      - "Stack"
+      summary: "Add catalog stack"
+      description: "Add a catalog stack, such as WordPress, to an organization. The\
+        \ organization gets its own copy, which its apps are created from."
+      operationId: "addStack"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestStackAdd"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ResponseTaskStack"
       security:
       - ApiKeyAuth: []
   /stacks/update:
@@ -1917,6 +1939,31 @@ definitions:
         region_name: "region_name"
       title: "title"
       uuid: "uuid"
+  RequestStackAdd:
+    type: "object"
+    required:
+    - "org_id"
+    - "stack_id"
+    properties:
+      org_id:
+        type: "string"
+        title: "UUID"
+      stack_id:
+        type: "string"
+        title: "UUID"
+      title:
+        type: "string"
+        description: "Defaults to the catalog stack's title"
+        minLength: 1
+        maxLength: 255
+      uuid:
+        type: "string"
+        title: "UUID"
+    example:
+      org_id: "org_id"
+      stack_id: "stack_id"
+      title: "title"
+      uuid: "uuid"
   RequestInstanceCreate:
     type: "object"
     required:
@@ -2041,6 +2088,65 @@ definitions:
       task:
         $ref: "#/definitions/Task"
     example:
+      task:
+        org_id: "org_id"
+        created: 5
+        start: 0
+        end: 6
+        id: "id"
+        title: "title"
+        ttl: 1
+        updated: 5
+        status: "waiting"
+  ResponseTaskStack:
+    type: "object"
+    required:
+    - "stack"
+    - "task"
+    properties:
+      stack:
+        $ref: "#/definitions/Stack"
+      task:
+        $ref: "#/definitions/Task"
+    example:
+      stack:
+        revision_number: 0
+        org_id: "org_id"
+        created: 6
+        id: "id"
+        new_version: "new_version"
+        services:
+        - default: true
+          name: "name"
+          id: "id"
+          title: "title"
+          required: true
+          implementations:
+          - default: true
+            name: "name"
+            title: "title"
+            docker_image: "docker_image"
+          - default: true
+            name: "name"
+            title: "title"
+            docker_image: "docker_image"
+        - default: true
+          name: "name"
+          id: "id"
+          title: "title"
+          required: true
+          implementations:
+          - default: true
+            name: "name"
+            title: "title"
+            docker_image: "docker_image"
+          - default: true
+            name: "name"
+            title: "title"
+            docker_image: "docker_image"
+        title: "title"
+        version: "version"
+        updated: 1
       task:
         org_id: "org_id"
         created: 5
