@@ -2499,6 +2499,75 @@ paths:
       summary: Update app environment settings
       tags:
       - app-environments
+  /app-environments/events/{id}:
+    get:
+      description: "Returns recent Kubernetes events in the app environment, newest\
+        \ first: for example why a pod can't be scheduled, fails its health checks,\
+        \ can't pull its image or mount a volume. Kubernetes keeps events for about\
+        \ an hour. Repeats of the same event are merged, and known secret values in\
+        \ messages are masked."
+      operationId: listAppEnvironmentEvents
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: "Only events about this app service's workloads, pods and volume\
+          \ claims."
+        explode: true
+        in: query
+        name: appServiceId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Only warnings (default true). Set to false to include normal
+          events.
+        explode: true
+        in: query
+        name: warningsOnly
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: "At most this many events, 50 by default and 200 at most."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 200
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/KubernetesEvent'
+                type: array
+          description: App environment events
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app environment events
+      tags:
+      - app-environments
   /app-environments/{id}/actions/maintenance-mode:
     put:
       description: Enables or disables the fixed maintenance response on all public
@@ -32422,6 +32491,65 @@ components:
       - expiresAt
       - url
       type: object
+    KubernetesEvent:
+      description: "A Kubernetes event in an app environment, with repeats of the\
+        \ same event merged."
+      example:
+        reason: reason
+        objectKind: objectKind
+        appServiceId: 0
+        lastSeen: 2000-01-23T04:56:07.000+00:00
+        firstSeen: 2000-01-23T04:56:07.000+00:00
+        count: 6
+        objectName: objectName
+        source: source
+        type: type
+        message: message
+      properties:
+        type:
+          description: Warning or Normal.
+          type: string
+        reason:
+          type: string
+        message:
+          description: The event's message with known secret values masked.
+          type: string
+        objectKind:
+          description: "Kind of the object the event is about, such as Pod or PersistentVolumeClaim."
+          type: string
+        objectName:
+          type: string
+        appServiceId:
+          description: "The app service the object belongs to. Null for objects no\
+            \ app service defines, or ones Wodby can't attribute."
+          nullable: true
+          type: integer
+        source:
+          description: "The component that reported the event, such as kubelet or\
+            \ default-scheduler."
+          nullable: true
+          type: string
+        count:
+          description: How many times the event occurred.
+          type: integer
+        firstSeen:
+          format: date-time
+          type: string
+        lastSeen:
+          format: date-time
+          type: string
+      required:
+      - appServiceId
+      - count
+      - firstSeen
+      - lastSeen
+      - message
+      - objectKind
+      - objectName
+      - reason
+      - source
+      - type
+      type: object
     AppServicePod:
       example:
         phase: phase
@@ -32442,40 +32570,57 @@ components:
         memoryLimit: 2
         containers:
         - reason: reason
-          cpuUsage: 3.616076749251911
-          memoryUsage: 2
-          cpuLimit: 1.2315135367772556
+          cpuUsage: 2.027123023002322
+          memoryUsage: 4
+          cpuLimit: 1.0246457001441578
+          lastExitCode: 3
           startedAt: 2000-01-23T04:56:07.000+00:00
-          memoryRequest: 7
+          memoryRequest: 1
+          lastTerminationReason: lastTerminationReason
           message: message
           restarts: 7
           finishedAt: 2000-01-23T04:56:07.000+00:00
-          cpuRequest: 4.145608029883936
+          cpuRequest: 7.386281948385884
           ready: true
           name: name
           exitCode: 9
+          lastFinishedAt: 2000-01-23T04:56:07.000+00:00
           memoryLimit: 1
           id: id
           state: state
           primary: true
         - reason: reason
-          cpuUsage: 3.616076749251911
-          memoryUsage: 2
-          cpuLimit: 1.2315135367772556
+          cpuUsage: 2.027123023002322
+          memoryUsage: 4
+          cpuLimit: 1.0246457001441578
+          lastExitCode: 3
           startedAt: 2000-01-23T04:56:07.000+00:00
-          memoryRequest: 7
+          memoryRequest: 1
+          lastTerminationReason: lastTerminationReason
           message: message
           restarts: 7
           finishedAt: 2000-01-23T04:56:07.000+00:00
-          cpuRequest: 4.145608029883936
+          cpuRequest: 7.386281948385884
           ready: true
           name: name
           exitCode: 9
+          lastFinishedAt: 2000-01-23T04:56:07.000+00:00
           memoryLimit: 1
           id: id
           state: state
           primary: true
         id: id
+        conditions:
+        - reason: reason
+          type: type
+          message: message
+          lastTransitionTime: 2000-01-23T04:56:07.000+00:00
+          status: status
+        - reason: reason
+          type: type
+          message: message
+          lastTransitionTime: 2000-01-23T04:56:07.000+00:00
+          status: status
       properties:
         id:
           type: string
@@ -32527,7 +32672,15 @@ components:
           items:
             $ref: '#/components/schemas/AppServicePodContainer'
           type: array
+        conditions:
+          description: "The pod's conditions that aren't met and say why, such as\
+            \ PodScheduled with reason Unschedulable. Known secret values in messages\
+            \ are masked."
+          items:
+            $ref: '#/components/schemas/AppServicePodCondition'
+          type: array
       required:
+      - conditions
       - containers
       - createdAt
       - id
@@ -32538,21 +32691,54 @@ components:
       - terminating
       - workload
       type: object
+    AppServicePodCondition:
+      description: A pod condition that isn't met.
+      example:
+        reason: reason
+        type: type
+        message: message
+        lastTransitionTime: 2000-01-23T04:56:07.000+00:00
+        status: status
+      properties:
+        type:
+          description: "The condition, such as PodScheduled, Initialized, ContainersReady\
+            \ or Ready."
+          type: string
+        status:
+          description: False or Unknown.
+          type: string
+        reason:
+          nullable: true
+          type: string
+        message:
+          nullable: true
+          type: string
+        lastTransitionTime:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - status
+      - type
+      type: object
     AppServicePodContainer:
       example:
         reason: reason
-        cpuUsage: 3.616076749251911
-        memoryUsage: 2
-        cpuLimit: 1.2315135367772556
+        cpuUsage: 2.027123023002322
+        memoryUsage: 4
+        cpuLimit: 1.0246457001441578
+        lastExitCode: 3
         startedAt: 2000-01-23T04:56:07.000+00:00
-        memoryRequest: 7
+        memoryRequest: 1
+        lastTerminationReason: lastTerminationReason
         message: message
         restarts: 7
         finishedAt: 2000-01-23T04:56:07.000+00:00
-        cpuRequest: 4.145608029883936
+        cpuRequest: 7.386281948385884
         ready: true
         name: name
         exitCode: 9
+        lastFinishedAt: 2000-01-23T04:56:07.000+00:00
         memoryLimit: 1
         id: id
         state: state
@@ -32584,6 +32770,22 @@ components:
           nullable: true
           type: string
         finishedAt:
+          format: date-time
+          nullable: true
+          type: string
+        lastTerminationReason:
+          description: "Why the container's previous run ended, such as OOMKilled\
+            \ or Error. Null when it hasn't restarted."
+          nullable: true
+          type: string
+        lastExitCode:
+          description: Exit code of the container's previous run. Null when it hasn't
+            restarted.
+          nullable: true
+          type: integer
+        lastFinishedAt:
+          description: When the container's previous run ended. Null when it hasn't
+            restarted.
           format: date-time
           nullable: true
           type: string

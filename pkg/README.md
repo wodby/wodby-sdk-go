@@ -128,6 +128,7 @@ Class | Method | HTTP request | Description
 *AppEnvironmentsAPI* | [**GetWorkspaceGitStatus**](docs/AppEnvironmentsAPI.md#getworkspacegitstatus) | **Get** /workspaces/{id}/git-status | Get workspace Git status
 *AppEnvironmentsAPI* | [**ListAppAccessCleanups**](docs/AppEnvironmentsAPI.md#listappaccesscleanups) | **Get** /app-access-cleanups | List Private App Access cleanups
 *AppEnvironmentsAPI* | [**ListAppAnnotations**](docs/AppEnvironmentsAPI.md#listappannotations) | **Get** /app-annotations | List app annotations
+*AppEnvironmentsAPI* | [**ListAppEnvironmentEvents**](docs/AppEnvironmentsAPI.md#listappenvironmentevents) | **Get** /app-environments/events/{id} | List app environment events
 *AppEnvironmentsAPI* | [**ListAppEnvironmentMigrations**](docs/AppEnvironmentsAPI.md#listappenvironmentmigrations) | **Get** /app-environment-migrations | List app environment migrations
 *AppEnvironmentsAPI* | [**ListAppEnvironmentVulnerabilityScans**](docs/AppEnvironmentsAPI.md#listappenvironmentvulnerabilityscans) | **Get** /app-environment-vulnerability-scans/{id} | List app environment vulnerability scans
 *AppEnvironmentsAPI* | [**ListAppEnvironments**](docs/AppEnvironmentsAPI.md#listappenvironments) | **Get** /app-environments | List app environments
@@ -631,6 +632,7 @@ Class | Method | HTTP request | Description
  - [AppServiceLinkCandidate](docs/AppServiceLinkCandidate.md)
  - [AppServiceLinkInput](docs/AppServiceLinkInput.md)
  - [AppServicePod](docs/AppServicePod.md)
+ - [AppServicePodCondition](docs/AppServicePodCondition.md)
  - [AppServicePodContainer](docs/AppServicePodContainer.md)
  - [AppServiceScalability](docs/AppServiceScalability.md)
  - [AppServiceScalabilityUpdateInput](docs/AppServiceScalabilityUpdateInput.md)
@@ -755,6 +757,7 @@ Class | Method | HTTP request | Description
  - [K3SPrivateAddress](docs/K3SPrivateAddress.md)
  - [K3SServerNodesInput](docs/K3SServerNodesInput.md)
  - [KubeVersion](docs/KubeVersion.md)
+ - [KubernetesEvent](docs/KubernetesEvent.md)
  - [KubernetesVersionUpgradePlan](docs/KubernetesVersionUpgradePlan.md)
  - [KubernetesVersionUpgradeTarget](docs/KubernetesVersionUpgradeTarget.md)
  - [LogLine](docs/LogLine.md)

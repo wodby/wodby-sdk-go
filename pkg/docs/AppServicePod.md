@@ -22,12 +22,13 @@ Name | Type | Description | Notes
 **CpuLimit** | Pointer to **NullableFloat32** |  | [optional] 
 **MemoryLimit** | Pointer to **NullableInt32** |  | [optional] 
 **Containers** | [**[]AppServicePodContainer**](AppServicePodContainer.md) |  | 
+**Conditions** | [**[]AppServicePodCondition**](AppServicePodCondition.md) | The pod&#39;s conditions that aren&#39;t met and say why, such as PodScheduled with reason Unschedulable. Known secret values in messages are masked. | 
 
 ## Methods
 
 ### NewAppServicePod
 
-`func NewAppServicePod(id string, name string, workload string, kubeWorkloadName string, phase string, ready bool, terminating bool, createdAt time.Time, containers []AppServicePodContainer, ) *AppServicePod`
+`func NewAppServicePod(id string, name string, workload string, kubeWorkloadName string, phase string, ready bool, terminating bool, createdAt time.Time, containers []AppServicePodContainer, conditions []AppServicePodCondition, ) *AppServicePod`
 
 NewAppServicePod instantiates a new AppServicePod object
 This constructor will assign default values to properties that have it defined,
@@ -535,6 +536,26 @@ and a boolean to check if the value has been set.
 `func (o *AppServicePod) SetContainers(v []AppServicePodContainer)`
 
 SetContainers sets Containers field to given value.
+
+
+### GetConditions
+
+`func (o *AppServicePod) GetConditions() []AppServicePodCondition`
+
+GetConditions returns the Conditions field if non-nil, zero value otherwise.
+
+### GetConditionsOk
+
+`func (o *AppServicePod) GetConditionsOk() (*[]AppServicePodCondition, bool)`
+
+GetConditionsOk returns a tuple with the Conditions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConditions
+
+`func (o *AppServicePod) SetConditions(v []AppServicePodCondition)`
+
+SetConditions sets Conditions field to given value.
 
 
 

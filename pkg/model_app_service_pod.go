@@ -42,6 +42,8 @@ type AppServicePod struct {
 	CpuLimit NullableFloat32 `json:"cpuLimit,omitempty"`
 	MemoryLimit NullableInt32 `json:"memoryLimit,omitempty"`
 	Containers []AppServicePodContainer `json:"containers"`
+	// The pod's conditions that aren't met and say why, such as PodScheduled with reason Unschedulable. Known secret values in messages are masked.
+	Conditions []AppServicePodCondition `json:"conditions"`
 }
 
 type _AppServicePod AppServicePod
@@ -50,7 +52,7 @@ type _AppServicePod AppServicePod
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppServicePod(id string, name string, workload string, kubeWorkloadName string, phase string, ready bool, terminating bool, createdAt time.Time, containers []AppServicePodContainer) *AppServicePod {
+func NewAppServicePod(id string, name string, workload string, kubeWorkloadName string, phase string, ready bool, terminating bool, createdAt time.Time, containers []AppServicePodContainer, conditions []AppServicePodCondition) *AppServicePod {
 	this := AppServicePod{}
 	this.Id = id
 	this.Name = name
@@ -61,6 +63,7 @@ func NewAppServicePod(id string, name string, workload string, kubeWorkloadName 
 	this.Terminating = terminating
 	this.CreatedAt = createdAt
 	this.Containers = containers
+	this.Conditions = conditions
 	return &this
 }
 
@@ -666,6 +669,30 @@ func (o *AppServicePod) SetContainers(v []AppServicePodContainer) {
 	o.Containers = v
 }
 
+// GetConditions returns the Conditions field value
+func (o *AppServicePod) GetConditions() []AppServicePodCondition {
+	if o == nil {
+		var ret []AppServicePodCondition
+		return ret
+	}
+
+	return o.Conditions
+}
+
+// GetConditionsOk returns a tuple with the Conditions field value
+// and a boolean to check if the value has been set.
+func (o *AppServicePod) GetConditionsOk() ([]AppServicePodCondition, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Conditions, true
+}
+
+// SetConditions sets field value
+func (o *AppServicePod) SetConditions(v []AppServicePodCondition) {
+	o.Conditions = v
+}
+
 func (o AppServicePod) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -712,6 +739,7 @@ func (o AppServicePod) ToMap() (map[string]interface{}, error) {
 		toSerialize["memoryLimit"] = o.MemoryLimit.Get()
 	}
 	toSerialize["containers"] = o.Containers
+	toSerialize["conditions"] = o.Conditions
 	return toSerialize, nil
 }
 
@@ -729,6 +757,7 @@ func (o *AppServicePod) UnmarshalJSON(data []byte) (err error) {
 		"terminating",
 		"createdAt",
 		"containers",
+		"conditions",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -24,6 +24,7 @@ Method | HTTP request | Description
 [**GetWorkspaceGitStatus**](AppEnvironmentsAPI.md#GetWorkspaceGitStatus) | **Get** /workspaces/{id}/git-status | Get workspace Git status
 [**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List Private App Access cleanups
 [**ListAppAnnotations**](AppEnvironmentsAPI.md#ListAppAnnotations) | **Get** /app-annotations | List app annotations
+[**ListAppEnvironmentEvents**](AppEnvironmentsAPI.md#ListAppEnvironmentEvents) | **Get** /app-environments/events/{id} | List app environment events
 [**ListAppEnvironmentMigrations**](AppEnvironmentsAPI.md#ListAppEnvironmentMigrations) | **Get** /app-environment-migrations | List app environment migrations
 [**ListAppEnvironmentVulnerabilityScans**](AppEnvironmentsAPI.md#ListAppEnvironmentVulnerabilityScans) | **Get** /app-environment-vulnerability-scans/{id} | List app environment vulnerability scans
 [**ListAppEnvironments**](AppEnvironmentsAPI.md#ListAppEnvironments) | **Get** /app-environments | List app environments
@@ -1434,6 +1435,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppAnnotation**](AppAnnotation.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppEnvironmentEvents
+
+> []KubernetesEvent ListAppEnvironmentEvents(ctx, id).AppServiceId(appServiceId).WarningsOnly(warningsOnly).Limit(limit).Execute()
+
+List app environment events
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	appServiceId := int32(56) // int32 | Only events about this app service's workloads, pods and volume claims. (optional)
+	warningsOnly := true // bool | Only warnings (default true). Set to false to include normal events. (optional) (default to true)
+	limit := int32(56) // int32 | At most this many events, 50 by default and 200 at most. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.ListAppEnvironmentEvents(context.Background(), id).AppServiceId(appServiceId).WarningsOnly(warningsOnly).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.ListAppEnvironmentEvents``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppEnvironmentEvents`: []KubernetesEvent
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.ListAppEnvironmentEvents`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppEnvironmentEventsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appServiceId** | **int32** | Only events about this app service&#39;s workloads, pods and volume claims. | 
+ **warningsOnly** | **bool** | Only warnings (default true). Set to false to include normal events. | [default to true]
+ **limit** | **int32** | At most this many events, 50 by default and 200 at most. | 
+
+### Return type
+
+[**[]KubernetesEvent**](KubernetesEvent.md)
 
 ### Authorization
 

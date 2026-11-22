@@ -156,6 +156,7 @@ docs/AppServiceLink.md
 docs/AppServiceLinkCandidate.md
 docs/AppServiceLinkInput.md
 docs/AppServicePod.md
+docs/AppServicePodCondition.md
 docs/AppServicePodContainer.md
 docs/AppServiceScalability.md
 docs/AppServiceScalabilityUpdateInput.md
@@ -292,6 +293,7 @@ docs/K3SJoinCommand.md
 docs/K3SPrivateAddress.md
 docs/K3SServerNodesInput.md
 docs/KubeVersion.md
+docs/KubernetesEvent.md
 docs/KubernetesVersionUpgradePlan.md
 docs/KubernetesVersionUpgradeTarget.md
 docs/LogLine.md
@@ -656,6 +658,7 @@ model_app_service_link.go
 model_app_service_link_candidate.go
 model_app_service_link_input.go
 model_app_service_pod.go
+model_app_service_pod_condition.go
 model_app_service_pod_container.go
 model_app_service_scalability.go
 model_app_service_scalability_update_input.go
@@ -780,6 +783,7 @@ model_k3_s_join_command.go
 model_k3_s_private_address.go
 model_k3_s_server_nodes_input.go
 model_kube_version.go
+model_kubernetes_event.go
 model_kubernetes_version_upgrade_plan.go
 model_kubernetes_version_upgrade_target.go
 model_log_line.go

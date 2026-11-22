@@ -33,6 +33,12 @@ type AppServicePodContainer struct {
 	ExitCode NullableInt32 `json:"exitCode,omitempty"`
 	StartedAt NullableTime `json:"startedAt,omitempty"`
 	FinishedAt NullableTime `json:"finishedAt,omitempty"`
+	// Why the container's previous run ended, such as OOMKilled or Error. Null when it hasn't restarted.
+	LastTerminationReason NullableString `json:"lastTerminationReason,omitempty"`
+	// Exit code of the container's previous run. Null when it hasn't restarted.
+	LastExitCode NullableInt32 `json:"lastExitCode,omitempty"`
+	// When the container's previous run ended. Null when it hasn't restarted.
+	LastFinishedAt NullableTime `json:"lastFinishedAt,omitempty"`
 	CpuUsage NullableFloat32 `json:"cpuUsage,omitempty"`
 	MemoryUsage NullableInt32 `json:"memoryUsage,omitempty"`
 	CpuRequest NullableFloat32 `json:"cpuRequest,omitempty"`
@@ -420,6 +426,132 @@ func (o *AppServicePodContainer) UnsetFinishedAt() {
 	o.FinishedAt.Unset()
 }
 
+// GetLastTerminationReason returns the LastTerminationReason field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServicePodContainer) GetLastTerminationReason() string {
+	if o == nil || IsNil(o.LastTerminationReason.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.LastTerminationReason.Get()
+}
+
+// GetLastTerminationReasonOk returns a tuple with the LastTerminationReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServicePodContainer) GetLastTerminationReasonOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastTerminationReason.Get(), o.LastTerminationReason.IsSet()
+}
+
+// HasLastTerminationReason returns a boolean if a field has been set.
+func (o *AppServicePodContainer) HasLastTerminationReason() bool {
+	if o != nil && o.LastTerminationReason.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastTerminationReason gets a reference to the given NullableString and assigns it to the LastTerminationReason field.
+func (o *AppServicePodContainer) SetLastTerminationReason(v string) {
+	o.LastTerminationReason.Set(&v)
+}
+// SetLastTerminationReasonNil sets the value for LastTerminationReason to be an explicit nil
+func (o *AppServicePodContainer) SetLastTerminationReasonNil() {
+	o.LastTerminationReason.Set(nil)
+}
+
+// UnsetLastTerminationReason ensures that no value is present for LastTerminationReason, not even an explicit nil
+func (o *AppServicePodContainer) UnsetLastTerminationReason() {
+	o.LastTerminationReason.Unset()
+}
+
+// GetLastExitCode returns the LastExitCode field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServicePodContainer) GetLastExitCode() int32 {
+	if o == nil || IsNil(o.LastExitCode.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.LastExitCode.Get()
+}
+
+// GetLastExitCodeOk returns a tuple with the LastExitCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServicePodContainer) GetLastExitCodeOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastExitCode.Get(), o.LastExitCode.IsSet()
+}
+
+// HasLastExitCode returns a boolean if a field has been set.
+func (o *AppServicePodContainer) HasLastExitCode() bool {
+	if o != nil && o.LastExitCode.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastExitCode gets a reference to the given NullableInt32 and assigns it to the LastExitCode field.
+func (o *AppServicePodContainer) SetLastExitCode(v int32) {
+	o.LastExitCode.Set(&v)
+}
+// SetLastExitCodeNil sets the value for LastExitCode to be an explicit nil
+func (o *AppServicePodContainer) SetLastExitCodeNil() {
+	o.LastExitCode.Set(nil)
+}
+
+// UnsetLastExitCode ensures that no value is present for LastExitCode, not even an explicit nil
+func (o *AppServicePodContainer) UnsetLastExitCode() {
+	o.LastExitCode.Unset()
+}
+
+// GetLastFinishedAt returns the LastFinishedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppServicePodContainer) GetLastFinishedAt() time.Time {
+	if o == nil || IsNil(o.LastFinishedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastFinishedAt.Get()
+}
+
+// GetLastFinishedAtOk returns a tuple with the LastFinishedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppServicePodContainer) GetLastFinishedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastFinishedAt.Get(), o.LastFinishedAt.IsSet()
+}
+
+// HasLastFinishedAt returns a boolean if a field has been set.
+func (o *AppServicePodContainer) HasLastFinishedAt() bool {
+	if o != nil && o.LastFinishedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastFinishedAt gets a reference to the given NullableTime and assigns it to the LastFinishedAt field.
+func (o *AppServicePodContainer) SetLastFinishedAt(v time.Time) {
+	o.LastFinishedAt.Set(&v)
+}
+// SetLastFinishedAtNil sets the value for LastFinishedAt to be an explicit nil
+func (o *AppServicePodContainer) SetLastFinishedAtNil() {
+	o.LastFinishedAt.Set(nil)
+}
+
+// UnsetLastFinishedAt ensures that no value is present for LastFinishedAt, not even an explicit nil
+func (o *AppServicePodContainer) UnsetLastFinishedAt() {
+	o.LastFinishedAt.Unset()
+}
+
 // GetCpuUsage returns the CpuUsage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *AppServicePodContainer) GetCpuUsage() float32 {
 	if o == nil || IsNil(o.CpuUsage.Get()) {
@@ -702,6 +834,15 @@ func (o AppServicePodContainer) ToMap() (map[string]interface{}, error) {
 	}
 	if o.FinishedAt.IsSet() {
 		toSerialize["finishedAt"] = o.FinishedAt.Get()
+	}
+	if o.LastTerminationReason.IsSet() {
+		toSerialize["lastTerminationReason"] = o.LastTerminationReason.Get()
+	}
+	if o.LastExitCode.IsSet() {
+		toSerialize["lastExitCode"] = o.LastExitCode.Get()
+	}
+	if o.LastFinishedAt.IsSet() {
+		toSerialize["lastFinishedAt"] = o.LastFinishedAt.Get()
 	}
 	if o.CpuUsage.IsSet() {
 		toSerialize["cpuUsage"] = o.CpuUsage.Get()

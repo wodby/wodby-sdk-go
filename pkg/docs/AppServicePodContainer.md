@@ -15,6 +15,9 @@ Name | Type | Description | Notes
 **ExitCode** | Pointer to **NullableInt32** |  | [optional] 
 **StartedAt** | Pointer to **NullableTime** |  | [optional] 
 **FinishedAt** | Pointer to **NullableTime** |  | [optional] 
+**LastTerminationReason** | Pointer to **NullableString** | Why the container&#39;s previous run ended, such as OOMKilled or Error. Null when it hasn&#39;t restarted. | [optional] 
+**LastExitCode** | Pointer to **NullableInt32** | Exit code of the container&#39;s previous run. Null when it hasn&#39;t restarted. | [optional] 
+**LastFinishedAt** | Pointer to **NullableTime** | When the container&#39;s previous run ended. Null when it hasn&#39;t restarted. | [optional] 
 **CpuUsage** | Pointer to **NullableFloat32** |  | [optional] 
 **MemoryUsage** | Pointer to **NullableInt32** |  | [optional] 
 **CpuRequest** | Pointer to **NullableFloat32** |  | [optional] 
@@ -336,6 +339,111 @@ HasFinishedAt returns a boolean if a field has been set.
 `func (o *AppServicePodContainer) UnsetFinishedAt()`
 
 UnsetFinishedAt ensures that no value is present for FinishedAt, not even an explicit nil
+### GetLastTerminationReason
+
+`func (o *AppServicePodContainer) GetLastTerminationReason() string`
+
+GetLastTerminationReason returns the LastTerminationReason field if non-nil, zero value otherwise.
+
+### GetLastTerminationReasonOk
+
+`func (o *AppServicePodContainer) GetLastTerminationReasonOk() (*string, bool)`
+
+GetLastTerminationReasonOk returns a tuple with the LastTerminationReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastTerminationReason
+
+`func (o *AppServicePodContainer) SetLastTerminationReason(v string)`
+
+SetLastTerminationReason sets LastTerminationReason field to given value.
+
+### HasLastTerminationReason
+
+`func (o *AppServicePodContainer) HasLastTerminationReason() bool`
+
+HasLastTerminationReason returns a boolean if a field has been set.
+
+### SetLastTerminationReasonNil
+
+`func (o *AppServicePodContainer) SetLastTerminationReasonNil(b bool)`
+
+ SetLastTerminationReasonNil sets the value for LastTerminationReason to be an explicit nil
+
+### UnsetLastTerminationReason
+`func (o *AppServicePodContainer) UnsetLastTerminationReason()`
+
+UnsetLastTerminationReason ensures that no value is present for LastTerminationReason, not even an explicit nil
+### GetLastExitCode
+
+`func (o *AppServicePodContainer) GetLastExitCode() int32`
+
+GetLastExitCode returns the LastExitCode field if non-nil, zero value otherwise.
+
+### GetLastExitCodeOk
+
+`func (o *AppServicePodContainer) GetLastExitCodeOk() (*int32, bool)`
+
+GetLastExitCodeOk returns a tuple with the LastExitCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastExitCode
+
+`func (o *AppServicePodContainer) SetLastExitCode(v int32)`
+
+SetLastExitCode sets LastExitCode field to given value.
+
+### HasLastExitCode
+
+`func (o *AppServicePodContainer) HasLastExitCode() bool`
+
+HasLastExitCode returns a boolean if a field has been set.
+
+### SetLastExitCodeNil
+
+`func (o *AppServicePodContainer) SetLastExitCodeNil(b bool)`
+
+ SetLastExitCodeNil sets the value for LastExitCode to be an explicit nil
+
+### UnsetLastExitCode
+`func (o *AppServicePodContainer) UnsetLastExitCode()`
+
+UnsetLastExitCode ensures that no value is present for LastExitCode, not even an explicit nil
+### GetLastFinishedAt
+
+`func (o *AppServicePodContainer) GetLastFinishedAt() time.Time`
+
+GetLastFinishedAt returns the LastFinishedAt field if non-nil, zero value otherwise.
+
+### GetLastFinishedAtOk
+
+`func (o *AppServicePodContainer) GetLastFinishedAtOk() (*time.Time, bool)`
+
+GetLastFinishedAtOk returns a tuple with the LastFinishedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastFinishedAt
+
+`func (o *AppServicePodContainer) SetLastFinishedAt(v time.Time)`
+
+SetLastFinishedAt sets LastFinishedAt field to given value.
+
+### HasLastFinishedAt
+
+`func (o *AppServicePodContainer) HasLastFinishedAt() bool`
+
+HasLastFinishedAt returns a boolean if a field has been set.
+
+### SetLastFinishedAtNil
+
+`func (o *AppServicePodContainer) SetLastFinishedAtNil(b bool)`
+
+ SetLastFinishedAtNil sets the value for LastFinishedAt to be an explicit nil
+
+### UnsetLastFinishedAt
+`func (o *AppServicePodContainer) UnsetLastFinishedAt()`
+
+UnsetLastFinishedAt ensures that no value is present for LastFinishedAt, not even an explicit nil
 ### GetCpuUsage
 
 `func (o *AppServicePodContainer) GetCpuUsage() float32`
