@@ -39,6 +39,10 @@ type Service struct {
 	AvailableToAllProjects bool `json:"availableToAllProjects"`
 	Settings *ServiceSettings `json:"settings,omitempty"`
 	Vulnerabilities *ServiceVulnerabilityHealth `json:"vulnerabilities,omitempty"`
+	// When the service was archived. Absent while the service is in use.
+	ArchivedAt *time.Time `json:"archivedAt,omitempty"`
+	// Why the service is archived: manual when someone archived it, removed_from_git when a Git update no longer found it in its repository. A removed_from_git service is unarchived and updated when it returns to the repository. Absent while the service is in use.
+	ArchiveReason *string `json:"archiveReason,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -470,6 +474,70 @@ func (o *Service) SetVulnerabilities(v ServiceVulnerabilityHealth) {
 	o.Vulnerabilities = &v
 }
 
+// GetArchivedAt returns the ArchivedAt field value if set, zero value otherwise.
+func (o *Service) GetArchivedAt() time.Time {
+	if o == nil || IsNil(o.ArchivedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ArchivedAt
+}
+
+// GetArchivedAtOk returns a tuple with the ArchivedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Service) GetArchivedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ArchivedAt) {
+		return nil, false
+	}
+	return o.ArchivedAt, true
+}
+
+// HasArchivedAt returns a boolean if a field has been set.
+func (o *Service) HasArchivedAt() bool {
+	if o != nil && !IsNil(o.ArchivedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchivedAt gets a reference to the given time.Time and assigns it to the ArchivedAt field.
+func (o *Service) SetArchivedAt(v time.Time) {
+	o.ArchivedAt = &v
+}
+
+// GetArchiveReason returns the ArchiveReason field value if set, zero value otherwise.
+func (o *Service) GetArchiveReason() string {
+	if o == nil || IsNil(o.ArchiveReason) {
+		var ret string
+		return ret
+	}
+	return *o.ArchiveReason
+}
+
+// GetArchiveReasonOk returns a tuple with the ArchiveReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Service) GetArchiveReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.ArchiveReason) {
+		return nil, false
+	}
+	return o.ArchiveReason, true
+}
+
+// HasArchiveReason returns a boolean if a field has been set.
+func (o *Service) HasArchiveReason() bool {
+	if o != nil && !IsNil(o.ArchiveReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchiveReason gets a reference to the given string and assigns it to the ArchiveReason field.
+func (o *Service) SetArchiveReason(v string) {
+	o.ArchiveReason = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Service) GetCreatedAt() time.Time {
 	if o == nil {
@@ -548,6 +616,12 @@ func (o Service) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Vulnerabilities) {
 		toSerialize["vulnerabilities"] = o.Vulnerabilities
+	}
+	if !IsNil(o.ArchivedAt) {
+		toSerialize["archivedAt"] = o.ArchivedAt
+	}
+	if !IsNil(o.ArchiveReason) {
+		toSerialize["archiveReason"] = o.ArchiveReason
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt

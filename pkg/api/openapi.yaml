@@ -10173,6 +10173,20 @@ paths:
         schema:
           type: string
         style: form
+      - description: "Which services to list: exclude lists the services in use, include\
+          \ lists every service with archived ones last, and only lists archived services."
+        explode: true
+        in: query
+        name: archived
+        required: false
+        schema:
+          default: exclude
+          enum:
+          - exclude
+          - include
+          - only
+          type: string
+        style: form
       - description: "Page number, defaults to 1"
         explode: true
         in: query
@@ -10525,6 +10539,80 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Get service
+      tags:
+      - services
+  /services/{id}/actions/archive:
+    post:
+      description: "Archives a service that only earlier stack revisions use, when\
+        \ it can no longer be deleted but is not needed. The stack revisions and environments\
+        \ that already use it keep working. Archived services are left out of service\
+        \ lists, and stacks and services cannot start using them until they are unarchived.\
+        \ Fails while the current or draft revision of a stack uses the service, or\
+        \ while a service that is not archived inherits from it."
+      operationId: archiveService
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: Archived service
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Archive service
+      tags:
+      - services
+  /services/{id}/actions/unarchive:
+    post:
+      description: "Returns an archived service to service lists, so stacks and services\
+        \ can use it again."
+      operationId: unarchiveService
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: Unarchived service
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Unarchive service
       tags:
       - services
   /services/{id}/actions/update-from-manifest:
@@ -28954,10 +29042,12 @@ components:
             enabled: true
           autoBaseRevisionUpdate:
             enabled: true
+        archiveReason: manual
         revId: 6
         title: title
         type: type
         orgId: 5
+        archivedAt: 2000-01-23T04:56:07.000+00:00
         createdAt: 2000-01-23T04:56:07.000+00:00
         external: true
         ownerProjectId: 5
@@ -29011,6 +29101,20 @@ components:
           $ref: '#/components/schemas/ServiceSettings'
         vulnerabilities:
           $ref: '#/components/schemas/ServiceVulnerabilityHealth'
+        archivedAt:
+          description: When the service was archived. Absent while the service is
+            in use.
+          format: date-time
+          type: string
+        archiveReason:
+          description: "Why the service is archived: manual when someone archived\
+            \ it, removed_from_git when a Git update no longer found it in its repository.\
+            \ A removed_from_git service is unarchived and updated when it returns\
+            \ to the repository. Absent while the service is in use."
+          enum:
+          - manual
+          - removed_from_git
+          type: string
         createdAt:
           format: date-time
           type: string
@@ -29729,10 +29833,12 @@ components:
               enabled: true
             autoBaseRevisionUpdate:
               enabled: true
+          archiveReason: manual
           revId: 6
           title: title
           type: type
           orgId: 5
+          archivedAt: 2000-01-23T04:56:07.000+00:00
           createdAt: 2000-01-23T04:56:07.000+00:00
           external: true
           ownerProjectId: 5
@@ -29758,10 +29864,12 @@ components:
               enabled: true
             autoBaseRevisionUpdate:
               enabled: true
+          archiveReason: manual
           revId: 6
           title: title
           type: type
           orgId: 5
+          archivedAt: 2000-01-23T04:56:07.000+00:00
           createdAt: 2000-01-23T04:56:07.000+00:00
           external: true
           ownerProjectId: 5

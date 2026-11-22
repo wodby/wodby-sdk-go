@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **AvailableToAllProjects** | **bool** | True when every project in the organization can use the resource without a project share. | 
 **Settings** | Pointer to [**ServiceSettings**](ServiceSettings.md) |  | [optional] 
 **Vulnerabilities** | Pointer to [**ServiceVulnerabilityHealth**](ServiceVulnerabilityHealth.md) |  | [optional] 
+**ArchivedAt** | Pointer to **time.Time** | When the service was archived. Absent while the service is in use. | [optional] 
+**ArchiveReason** | Pointer to **string** | Why the service is archived: manual when someone archived it, removed_from_git when a Git update no longer found it in its repository. A removed_from_git service is unarchived and updated when it returns to the repository. Absent while the service is in use. | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -365,6 +367,56 @@ SetVulnerabilities sets Vulnerabilities field to given value.
 `func (o *Service) HasVulnerabilities() bool`
 
 HasVulnerabilities returns a boolean if a field has been set.
+
+### GetArchivedAt
+
+`func (o *Service) GetArchivedAt() time.Time`
+
+GetArchivedAt returns the ArchivedAt field if non-nil, zero value otherwise.
+
+### GetArchivedAtOk
+
+`func (o *Service) GetArchivedAtOk() (*time.Time, bool)`
+
+GetArchivedAtOk returns a tuple with the ArchivedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArchivedAt
+
+`func (o *Service) SetArchivedAt(v time.Time)`
+
+SetArchivedAt sets ArchivedAt field to given value.
+
+### HasArchivedAt
+
+`func (o *Service) HasArchivedAt() bool`
+
+HasArchivedAt returns a boolean if a field has been set.
+
+### GetArchiveReason
+
+`func (o *Service) GetArchiveReason() string`
+
+GetArchiveReason returns the ArchiveReason field if non-nil, zero value otherwise.
+
+### GetArchiveReasonOk
+
+`func (o *Service) GetArchiveReasonOk() (*string, bool)`
+
+GetArchiveReasonOk returns a tuple with the ArchiveReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArchiveReason
+
+`func (o *Service) SetArchiveReason(v string)`
+
+SetArchiveReason sets ArchiveReason field to given value.
+
+### HasArchiveReason
+
+`func (o *Service) HasArchiveReason() bool`
+
+HasArchiveReason returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

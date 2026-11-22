@@ -4,6 +4,7 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ArchiveService**](ServicesAPI.md#ArchiveService) | **Post** /services/{id}/actions/archive | Archive service
 [**CreateServiceFromManifest**](ServicesAPI.md#CreateServiceFromManifest) | **Post** /services/actions/create-from-manifest | Create service from manifest
 [**DeleteService**](ServicesAPI.md#DeleteService) | **Delete** /services/{id} | Delete service
 [**GetService**](ServicesAPI.md#GetService) | **Get** /services/{id} | Get service
@@ -16,12 +17,83 @@ Method | HTTP request | Description
 [**ListServiceLinkCandidates**](ServicesAPI.md#ListServiceLinkCandidates) | **Get** /services/{name}/options/link-candidates | List service link candidates
 [**ListServices**](ServicesAPI.md#ListServices) | **Get** /services | List services
 [**ScaffoldServiceFromHelmChart**](ServicesAPI.md#ScaffoldServiceFromHelmChart) | **Post** /services/actions/scaffold-from-helm-chart | Scaffold service from Helm chart
+[**UnarchiveService**](ServicesAPI.md#UnarchiveService) | **Post** /services/{id}/actions/unarchive | Unarchive service
 [**UpdateServiceFromGit**](ServicesAPI.md#UpdateServiceFromGit) | **Post** /services/{id}/actions/update-from-git | Update service from Git
 [**UpdateServiceFromManifest**](ServicesAPI.md#UpdateServiceFromManifest) | **Post** /services/{id}/actions/update-from-manifest | Update service from manifest
 [**UpdateServiceSettings**](ServicesAPI.md#UpdateServiceSettings) | **Put** /services/settings/{id} | Update service settings
 [**UpdateServiceSharing**](ServicesAPI.md#UpdateServiceSharing) | **Put** /services/sharing/{id} | Update service sharing
 [**ValidateServiceManifest**](ServicesAPI.md#ValidateServiceManifest) | **Post** /services/actions/validate-manifest | Validate service manifest
 
+
+
+## ArchiveService
+
+> Service ArchiveService(ctx, id).Execute()
+
+Archive service
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.ArchiveService(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ArchiveService``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ArchiveService`: Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.ArchiveService`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiArchiveServiceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateServiceFromManifest
@@ -724,7 +796,7 @@ Name | Type | Description  | Notes
 
 ## ListServices
 
-> ServicesResponse ListServices(ctx).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
+> ServicesResponse ListServices(ctx).OrgId(orgId).ProjectIds(projectIds).Search(search).Archived(archived).Page(page).PageSize(pageSize).Execute()
 
 List services
 
@@ -746,12 +818,13 @@ func main() {
 	orgId := int32(56) // int32 | Optional for API-key requests; defaults to the API key's organization. If provided, it must match the key's organization. (optional)
 	projectIds := "projectIds_example" // string | Comma-separated project ids (optional)
 	search := "search_example" // string |  (optional)
+	archived := "archived_example" // string | Which services to list: exclude lists the services in use, include lists every service with archived ones last, and only lists archived services. (optional) (default to "exclude")
 	page := int32(56) // int32 | Page number, defaults to 1 (optional)
 	pageSize := int32(56) // int32 | Page size, defaults to 30 (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ServicesAPI.ListServices(context.Background()).OrgId(orgId).ProjectIds(projectIds).Search(search).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.ServicesAPI.ListServices(context.Background()).OrgId(orgId).ProjectIds(projectIds).Search(search).Archived(archived).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.ListServices``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -775,6 +848,7 @@ Name | Type | Description  | Notes
  **orgId** | **int32** | Optional for API-key requests; defaults to the API key&#39;s organization. If provided, it must match the key&#39;s organization. | 
  **projectIds** | **string** | Comma-separated project ids | 
  **search** | **string** |  | 
+ **archived** | **string** | Which services to list: exclude lists the services in use, include lists every service with archived ones last, and only lists archived services. | [default to &quot;exclude&quot;]
  **page** | **int32** | Page number, defaults to 1 | 
  **pageSize** | **int32** | Page size, defaults to 30 | 
 
@@ -855,6 +929,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UnarchiveService
+
+> Service UnarchiveService(ctx, id).Execute()
+
+Unarchive service
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServicesAPI.UnarchiveService(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServicesAPI.UnarchiveService``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UnarchiveService`: Service
+	fmt.Fprintf(os.Stdout, "Response from `ServicesAPI.UnarchiveService`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUnarchiveServiceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**Service**](Service.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
