@@ -332,7 +332,7 @@ func (r ApiCreateAppVulnerabilityIgnoreRequest) Execute() (*AppVulnerabilityIgno
 /*
 CreateAppVulnerabilityIgnore Ignore a vulnerability
 
-Ignores a vulnerability in one package for every build of the app, including later scans. Ignored findings are left out of vulnerability counts and reported in the ignored count instead. Needs permission to modify the app and vulnerability scanning on the organization's plan. Fails when the app already ignores the vulnerability in that package.
+Ignores a vulnerability in one package for every build of the app, including later scans. A scan lists a vulnerability once per image with every package it affects there, so ignoring it in any of those packages ignores the whole finding. Ignored findings are left out of vulnerability counts and reported in the ignored count instead. Needs permission to modify the app and vulnerability scanning on the organization's plan. Fails when the app already ignores the vulnerability in that package.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

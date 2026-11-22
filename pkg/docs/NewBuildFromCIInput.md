@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **GitCommitMessage** | Pointer to **NullableString** |  | [optional] 
 **Provider** | **string** |  | 
 **PostDeployment** | Pointer to **NullableString** |  | [optional] 
+**PreDeployment** | Pointer to **NullableString** | Content of the repository&#39;s .wodby/pre-deployment.yml. A deployment of this build runs these scripts with the new version before rolling the app service out. | [optional] 
 
 ## Methods
 
@@ -351,6 +352,41 @@ HasPostDeployment returns a boolean if a field has been set.
 `func (o *NewBuildFromCIInput) UnsetPostDeployment()`
 
 UnsetPostDeployment ensures that no value is present for PostDeployment, not even an explicit nil
+### GetPreDeployment
+
+`func (o *NewBuildFromCIInput) GetPreDeployment() string`
+
+GetPreDeployment returns the PreDeployment field if non-nil, zero value otherwise.
+
+### GetPreDeploymentOk
+
+`func (o *NewBuildFromCIInput) GetPreDeploymentOk() (*string, bool)`
+
+GetPreDeploymentOk returns a tuple with the PreDeployment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreDeployment
+
+`func (o *NewBuildFromCIInput) SetPreDeployment(v string)`
+
+SetPreDeployment sets PreDeployment field to given value.
+
+### HasPreDeployment
+
+`func (o *NewBuildFromCIInput) HasPreDeployment() bool`
+
+HasPreDeployment returns a boolean if a field has been set.
+
+### SetPreDeploymentNil
+
+`func (o *NewBuildFromCIInput) SetPreDeploymentNil(b bool)`
+
+ SetPreDeploymentNil sets the value for PreDeployment to be an explicit nil
+
+### UnsetPreDeployment
+`func (o *NewBuildFromCIInput) UnsetPreDeployment()`
+
+UnsetPreDeployment ensures that no value is present for PreDeployment, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

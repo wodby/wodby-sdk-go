@@ -83,6 +83,7 @@ docs/AppEnvironmentBackupHealth.md
 docs/AppEnvironmentCICDSettings.md
 docs/AppEnvironmentCICDSettingsInput.md
 docs/AppEnvironmentCronHealth.md
+docs/AppEnvironmentDeploymentSettings.md
 docs/AppEnvironmentHealth.md
 docs/AppEnvironmentMainRouteCert.md
 docs/AppEnvironmentMaintenanceModeInput.md
@@ -418,6 +419,7 @@ docs/ServiceRevision.md
 docs/ServiceRevisionChange.md
 docs/ServiceSettings.md
 docs/ServiceSettingsInput.md
+docs/ServiceVulnerabilityHealth.md
 docs/ServiceWorkloadDeploymentConfiguration.md
 docs/ServiceWorkloadDeploymentInput.md
 docs/ServicesAPI.md
@@ -458,6 +460,7 @@ docs/StackServiceLinkInput.md
 docs/StackServiceOption.md
 docs/StackServiceOptionInput.md
 docs/StackServiceOptionsInput.md
+docs/StackServiceSecurityFix.md
 docs/StackServiceSetting.md
 docs/StackServiceToken.md
 docs/StackServiceUpdateChangelog.md
@@ -583,6 +586,7 @@ model_app_environment_backup_health.go
 model_app_environment_cicd_settings.go
 model_app_environment_cicd_settings_input.go
 model_app_environment_cron_health.go
+model_app_environment_deployment_settings.go
 model_app_environment_health.go
 model_app_environment_main_route_cert.go
 model_app_environment_maintenance_mode_input.go
@@ -896,6 +900,7 @@ model_service_revision.go
 model_service_revision_change.go
 model_service_settings.go
 model_service_settings_input.go
+model_service_vulnerability_health.go
 model_service_workload_deployment_configuration.go
 model_service_workload_deployment_input.go
 model_services_response.go
@@ -935,6 +940,7 @@ model_stack_service_link_input.go
 model_stack_service_option.go
 model_stack_service_option_input.go
 model_stack_service_options_input.go
+model_stack_service_security_fix.go
 model_stack_service_setting.go
 model_stack_service_token.go
 model_stack_service_update_changelog.go

@@ -25,6 +25,7 @@ Method | HTTP request | Description
 [**ListAppAccessCleanups**](AppEnvironmentsAPI.md#ListAppAccessCleanups) | **Get** /app-access-cleanups | List Private App Access cleanups
 [**ListAppAnnotations**](AppEnvironmentsAPI.md#ListAppAnnotations) | **Get** /app-annotations | List app annotations
 [**ListAppEnvironmentMigrations**](AppEnvironmentsAPI.md#ListAppEnvironmentMigrations) | **Get** /app-environment-migrations | List app environment migrations
+[**ListAppEnvironmentVulnerabilityScans**](AppEnvironmentsAPI.md#ListAppEnvironmentVulnerabilityScans) | **Get** /app-environment-vulnerability-scans/{id} | List app environment vulnerability scans
 [**ListAppEnvironments**](AppEnvironmentsAPI.md#ListAppEnvironments) | **Get** /app-environments | List app environments
 [**MigrateAppEnvironment**](AppEnvironmentsAPI.md#MigrateAppEnvironment) | **Post** /app-environments/{id}/actions/migrate | Migrate app environment to another cluster
 [**PauseWorkspace**](AppEnvironmentsAPI.md#PauseWorkspace) | **Post** /workspaces/{id}/actions/pause | Pause workspace
@@ -1499,6 +1500,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]AppEnvironmentMigration**](AppEnvironmentMigration.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAppEnvironmentVulnerabilityScans
+
+> []AppServiceBuild ListAppEnvironmentVulnerabilityScans(ctx, id).Execute()
+
+List app environment vulnerability scans
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AppEnvironmentsAPI.ListAppEnvironmentVulnerabilityScans(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AppEnvironmentsAPI.ListAppEnvironmentVulnerabilityScans``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAppEnvironmentVulnerabilityScans`: []AppServiceBuild
+	fmt.Fprintf(os.Stdout, "Response from `AppEnvironmentsAPI.ListAppEnvironmentVulnerabilityScans`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAppEnvironmentVulnerabilityScansRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]AppServiceBuild**](AppServiceBuild.md)
 
 ### Authorization
 

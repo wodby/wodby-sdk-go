@@ -33,6 +33,8 @@ type NewBuildFromCIInput struct {
 	GitCommitMessage NullableString `json:"gitCommitMessage,omitempty"`
 	Provider string `json:"provider"`
 	PostDeployment NullableString `json:"postDeployment,omitempty"`
+	// Content of the repository's .wodby/pre-deployment.yml. A deployment of this build runs these scripts with the new version before rolling the app service out.
+	PreDeployment NullableString `json:"preDeployment,omitempty"`
 }
 
 type _NewBuildFromCIInput NewBuildFromCIInput
@@ -439,6 +441,48 @@ func (o *NewBuildFromCIInput) UnsetPostDeployment() {
 	o.PostDeployment.Unset()
 }
 
+// GetPreDeployment returns the PreDeployment field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NewBuildFromCIInput) GetPreDeployment() string {
+	if o == nil || IsNil(o.PreDeployment.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PreDeployment.Get()
+}
+
+// GetPreDeploymentOk returns a tuple with the PreDeployment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NewBuildFromCIInput) GetPreDeploymentOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PreDeployment.Get(), o.PreDeployment.IsSet()
+}
+
+// HasPreDeployment returns a boolean if a field has been set.
+func (o *NewBuildFromCIInput) HasPreDeployment() bool {
+	if o != nil && o.PreDeployment.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPreDeployment gets a reference to the given NullableString and assigns it to the PreDeployment field.
+func (o *NewBuildFromCIInput) SetPreDeployment(v string) {
+	o.PreDeployment.Set(&v)
+}
+// SetPreDeploymentNil sets the value for PreDeployment to be an explicit nil
+func (o *NewBuildFromCIInput) SetPreDeploymentNil() {
+	o.PreDeployment.Set(nil)
+}
+
+// UnsetPreDeployment ensures that no value is present for PreDeployment, not even an explicit nil
+func (o *NewBuildFromCIInput) UnsetPreDeployment() {
+	o.PreDeployment.Unset()
+}
+
 func (o NewBuildFromCIInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -470,6 +514,9 @@ func (o NewBuildFromCIInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["provider"] = o.Provider
 	if o.PostDeployment.IsSet() {
 		toSerialize["postDeployment"] = o.PostDeployment.Get()
+	}
+	if o.PreDeployment.IsSet() {
+		toSerialize["preDeployment"] = o.PreDeployment.Get()
 	}
 	return toSerialize, nil
 }

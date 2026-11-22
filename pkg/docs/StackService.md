@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **Outdated** | **bool** |  | 
 **Icon** | Pointer to **string** |  | [optional] 
 **Eol** | Pointer to **bool** | True when the version of the stack service&#39;s default option has reached its end of life. | [optional] 
+**SecurityFixes** | Pointer to [**[]StackServiceSecurityFix**](StackServiceSecurityFix.md) | Vulnerabilities known or likely to be exploited, or tracked by Wodby, that an image this stack service deploys has and the image of the service&#39;s latest version doesn&#39;t, so updating the stack service fixes them. Images are compared for each option version the stack service offers. Empty when the update fixes none of them or the stack service has no update: it is up to date, pinned or a derivative, or its service pulls from a private registry. Absent without vulnerability scanning. | [optional] 
 **Derivative** | Pointer to **NullableString** | The service derivative the stack service runs. Null for the service itself. | [optional] 
 **ParentStackServiceId** | Pointer to **NullableInt32** | The stack service this derivative stack service belongs to. Null for the service itself. | [optional] 
 **ServiceRevId** | **int32** |  | 
@@ -342,6 +343,41 @@ SetEol sets Eol field to given value.
 
 HasEol returns a boolean if a field has been set.
 
+### GetSecurityFixes
+
+`func (o *StackService) GetSecurityFixes() []StackServiceSecurityFix`
+
+GetSecurityFixes returns the SecurityFixes field if non-nil, zero value otherwise.
+
+### GetSecurityFixesOk
+
+`func (o *StackService) GetSecurityFixesOk() (*[]StackServiceSecurityFix, bool)`
+
+GetSecurityFixesOk returns a tuple with the SecurityFixes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecurityFixes
+
+`func (o *StackService) SetSecurityFixes(v []StackServiceSecurityFix)`
+
+SetSecurityFixes sets SecurityFixes field to given value.
+
+### HasSecurityFixes
+
+`func (o *StackService) HasSecurityFixes() bool`
+
+HasSecurityFixes returns a boolean if a field has been set.
+
+### SetSecurityFixesNil
+
+`func (o *StackService) SetSecurityFixesNil(b bool)`
+
+ SetSecurityFixesNil sets the value for SecurityFixes to be an explicit nil
+
+### UnsetSecurityFixes
+`func (o *StackService) UnsetSecurityFixes()`
+
+UnsetSecurityFixes ensures that no value is present for SecurityFixes, not even an explicit nil
 ### GetDerivative
 
 `func (o *StackService) GetDerivative() string`

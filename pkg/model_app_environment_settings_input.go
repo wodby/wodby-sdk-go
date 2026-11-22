@@ -22,6 +22,8 @@ type AppEnvironmentSettingsInput struct {
 	AutoStackUpgrade *AppEnvironmentAutoStackUpgradeSettingsInput `json:"autoStackUpgrade,omitempty"`
 	// Omit it to keep the current build image retention.
 	BuildImageCleanup *BuildImageCleanupSettingsInput `json:"buildImageCleanup,omitempty"`
+	// Omit it to keep the current deployment settings.
+	Deployment *AppEnvironmentDeploymentSettings `json:"deployment,omitempty"`
 }
 
 // NewAppEnvironmentSettingsInput instantiates a new AppEnvironmentSettingsInput object
@@ -105,6 +107,38 @@ func (o *AppEnvironmentSettingsInput) SetBuildImageCleanup(v BuildImageCleanupSe
 	o.BuildImageCleanup = &v
 }
 
+// GetDeployment returns the Deployment field value if set, zero value otherwise.
+func (o *AppEnvironmentSettingsInput) GetDeployment() AppEnvironmentDeploymentSettings {
+	if o == nil || IsNil(o.Deployment) {
+		var ret AppEnvironmentDeploymentSettings
+		return ret
+	}
+	return *o.Deployment
+}
+
+// GetDeploymentOk returns a tuple with the Deployment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppEnvironmentSettingsInput) GetDeploymentOk() (*AppEnvironmentDeploymentSettings, bool) {
+	if o == nil || IsNil(o.Deployment) {
+		return nil, false
+	}
+	return o.Deployment, true
+}
+
+// HasDeployment returns a boolean if a field has been set.
+func (o *AppEnvironmentSettingsInput) HasDeployment() bool {
+	if o != nil && !IsNil(o.Deployment) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeployment gets a reference to the given AppEnvironmentDeploymentSettings and assigns it to the Deployment field.
+func (o *AppEnvironmentSettingsInput) SetDeployment(v AppEnvironmentDeploymentSettings) {
+	o.Deployment = &v
+}
+
 func (o AppEnvironmentSettingsInput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -120,6 +154,9 @@ func (o AppEnvironmentSettingsInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BuildImageCleanup) {
 		toSerialize["buildImageCleanup"] = o.BuildImageCleanup
+	}
+	if !IsNil(o.Deployment) {
+		toSerialize["deployment"] = o.Deployment
 	}
 	return toSerialize, nil
 }

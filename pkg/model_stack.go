@@ -51,6 +51,10 @@ type Stack struct {
 	VariantDescription NullableString `json:"variantDescription,omitempty"`
 	// Variants of this stack that you can see, ordered by title. Empty for a stack that is a variant itself.
 	VariantStackIds []int32 `json:"variantStackIds"`
+	// Catalog category of the stack, such as cms for WordPress. Absent when the stack's template names none.
+	Category NullableString `json:"category,omitempty"`
+	// How many of the stack's services have an update that fixes a vulnerability known or likely to be exploited, or one Wodby tracks. Each such service lists the vulnerabilities in securityFixes. Absent without vulnerability scanning.
+	SecurityUpdates NullableInt32 `json:"securityUpdates,omitempty"`
 	OrgId int32 `json:"orgId"`
 	// org when the organization owns the resource, project when one project owns it.
 	OwnershipScope string `json:"ownershipScope"`
@@ -966,6 +970,90 @@ func (o *Stack) SetVariantStackIds(v []int32) {
 	o.VariantStackIds = v
 }
 
+// GetCategory returns the Category field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetCategory() string {
+	if o == nil || IsNil(o.Category.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Category.Get()
+}
+
+// GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetCategoryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Category.Get(), o.Category.IsSet()
+}
+
+// HasCategory returns a boolean if a field has been set.
+func (o *Stack) HasCategory() bool {
+	if o != nil && o.Category.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCategory gets a reference to the given NullableString and assigns it to the Category field.
+func (o *Stack) SetCategory(v string) {
+	o.Category.Set(&v)
+}
+// SetCategoryNil sets the value for Category to be an explicit nil
+func (o *Stack) SetCategoryNil() {
+	o.Category.Set(nil)
+}
+
+// UnsetCategory ensures that no value is present for Category, not even an explicit nil
+func (o *Stack) UnsetCategory() {
+	o.Category.Unset()
+}
+
+// GetSecurityUpdates returns the SecurityUpdates field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Stack) GetSecurityUpdates() int32 {
+	if o == nil || IsNil(o.SecurityUpdates.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.SecurityUpdates.Get()
+}
+
+// GetSecurityUpdatesOk returns a tuple with the SecurityUpdates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Stack) GetSecurityUpdatesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SecurityUpdates.Get(), o.SecurityUpdates.IsSet()
+}
+
+// HasSecurityUpdates returns a boolean if a field has been set.
+func (o *Stack) HasSecurityUpdates() bool {
+	if o != nil && o.SecurityUpdates.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSecurityUpdates gets a reference to the given NullableInt32 and assigns it to the SecurityUpdates field.
+func (o *Stack) SetSecurityUpdates(v int32) {
+	o.SecurityUpdates.Set(&v)
+}
+// SetSecurityUpdatesNil sets the value for SecurityUpdates to be an explicit nil
+func (o *Stack) SetSecurityUpdatesNil() {
+	o.SecurityUpdates.Set(nil)
+}
+
+// UnsetSecurityUpdates ensures that no value is present for SecurityUpdates, not even an explicit nil
+func (o *Stack) UnsetSecurityUpdates() {
+	o.SecurityUpdates.Unset()
+}
+
 // GetOrgId returns the OrgId field value
 func (o *Stack) GetOrgId() int32 {
 	if o == nil {
@@ -1225,6 +1313,12 @@ func (o Stack) ToMap() (map[string]interface{}, error) {
 		toSerialize["variantDescription"] = o.VariantDescription.Get()
 	}
 	toSerialize["variantStackIds"] = o.VariantStackIds
+	if o.Category.IsSet() {
+		toSerialize["category"] = o.Category.Get()
+	}
+	if o.SecurityUpdates.IsSet() {
+		toSerialize["securityUpdates"] = o.SecurityUpdates.Get()
+	}
 	toSerialize["orgId"] = o.OrgId
 	toSerialize["ownershipScope"] = o.OwnershipScope
 	if o.OwnerProjectId.IsSet() {

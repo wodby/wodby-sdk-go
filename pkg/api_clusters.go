@@ -3849,6 +3849,142 @@ func (a *ClustersAPIService) RemoveK3SClusterNodeExecute(r ApiRemoveK3SClusterNo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiRescanClusterVulnerabilitiesRequest struct {
+	ctx context.Context
+	ApiService *ClustersAPIService
+	id int32
+}
+
+func (r ApiRescanClusterVulnerabilitiesRequest) Execute() (*OperationResult, *http.Response, error) {
+	return r.ApiService.RescanClusterVulnerabilitiesExecute(r)
+}
+
+/*
+RescanClusterVulnerabilities Rescan cluster vulnerabilities
+
+Scans the cluster for vulnerabilities again now instead of on the daily schedule: the operating system packages of a K3s cluster's servers, such as after updating them outside Wodby, and the images of the apps Wodby installs on the cluster. An image scanned in the last hour keeps its result. GET /cluster-vulnerabilities/{id} shows the earlier results, with scanning true, until the scan ends. Refused while a scan of the cluster is waiting or running, and for Wodby Cloud and serverless clusters.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiRescanClusterVulnerabilitiesRequest
+*/
+func (a *ClustersAPIService) RescanClusterVulnerabilities(ctx context.Context, id int32) ApiRescanClusterVulnerabilitiesRequest {
+	return ApiRescanClusterVulnerabilitiesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return OperationResult
+func (a *ClustersAPIService) RescanClusterVulnerabilitiesExecute(r ApiRescanClusterVulnerabilitiesRequest) (*OperationResult, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OperationResult
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClustersAPIService.RescanClusterVulnerabilities")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/clusters/{id}/actions/rescan-vulnerabilities"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/problem+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-KEY"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+			var v ProblemDetails
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRestartK3SServersRequest struct {
 	ctx context.Context
 	ApiService *ClustersAPIService
@@ -3868,7 +4004,7 @@ func (r ApiRestartK3SServersRequest) Execute() (*OperationResult, *http.Response
 /*
 RestartK3SServers Restart K3s servers
 
-Restarts a K3s cluster's nodes one at a time and waits for each to come back Ready. Leave nodes empty to restart only the nodes that say a restart is pending. A node is drained first when another node can take its pods; on a cluster with one node, every app is unavailable until the node is back, usually a few minutes. New deployments wait until the restarts end. Refused while application operations are active.
+Updates the operating system packages of a K3s cluster's nodes first, as POST /clusters/{id}/actions/update-k3s-server-packages does, so one restart applies every available update; no node restarts when an update fails. Then restarts the nodes one at a time and waits for each to come back Ready. Leave nodes empty to update every node and restart only the nodes that say a restart is pending. A node is drained first when another node can take its pods; on a cluster with one node, every app is unavailable until the node is back, usually a few minutes. New deployments wait until the restarts end. Refused while application operations are active.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

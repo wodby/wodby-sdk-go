@@ -29,6 +29,8 @@ Name | Type | Description | Notes
 **VariantTitle** | Pointer to **NullableString** | Short label that tells this variant apart, such as High availability. | [optional] 
 **VariantDescription** | Pointer to **NullableString** | When to choose this stack over the other stacks of its variant family, such as building the app from your own repository to customize it. A main stack can have one too. | [optional] 
 **VariantStackIds** | **[]int32** | Variants of this stack that you can see, ordered by title. Empty for a stack that is a variant itself. | 
+**Category** | Pointer to **NullableString** | Catalog category of the stack, such as cms for WordPress. Absent when the stack&#39;s template names none. | [optional] 
+**SecurityUpdates** | Pointer to **NullableInt32** | How many of the stack&#39;s services have an update that fixes a vulnerability known or likely to be exploited, or one Wodby tracks. Each such service lists the vulnerabilities in securityFixes. Absent without vulnerability scanning. | [optional] 
 **OrgId** | **int32** |  | 
 **OwnershipScope** | **string** | org when the organization owns the resource, project when one project owns it. | 
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
@@ -781,6 +783,76 @@ and a boolean to check if the value has been set.
 SetVariantStackIds sets VariantStackIds field to given value.
 
 
+### GetCategory
+
+`func (o *Stack) GetCategory() string`
+
+GetCategory returns the Category field if non-nil, zero value otherwise.
+
+### GetCategoryOk
+
+`func (o *Stack) GetCategoryOk() (*string, bool)`
+
+GetCategoryOk returns a tuple with the Category field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategory
+
+`func (o *Stack) SetCategory(v string)`
+
+SetCategory sets Category field to given value.
+
+### HasCategory
+
+`func (o *Stack) HasCategory() bool`
+
+HasCategory returns a boolean if a field has been set.
+
+### SetCategoryNil
+
+`func (o *Stack) SetCategoryNil(b bool)`
+
+ SetCategoryNil sets the value for Category to be an explicit nil
+
+### UnsetCategory
+`func (o *Stack) UnsetCategory()`
+
+UnsetCategory ensures that no value is present for Category, not even an explicit nil
+### GetSecurityUpdates
+
+`func (o *Stack) GetSecurityUpdates() int32`
+
+GetSecurityUpdates returns the SecurityUpdates field if non-nil, zero value otherwise.
+
+### GetSecurityUpdatesOk
+
+`func (o *Stack) GetSecurityUpdatesOk() (*int32, bool)`
+
+GetSecurityUpdatesOk returns a tuple with the SecurityUpdates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecurityUpdates
+
+`func (o *Stack) SetSecurityUpdates(v int32)`
+
+SetSecurityUpdates sets SecurityUpdates field to given value.
+
+### HasSecurityUpdates
+
+`func (o *Stack) HasSecurityUpdates() bool`
+
+HasSecurityUpdates returns a boolean if a field has been set.
+
+### SetSecurityUpdatesNil
+
+`func (o *Stack) SetSecurityUpdatesNil(b bool)`
+
+ SetSecurityUpdatesNil sets the value for SecurityUpdates to be an explicit nil
+
+### UnsetSecurityUpdates
+`func (o *Stack) UnsetSecurityUpdates()`
+
+UnsetSecurityUpdates ensures that no value is present for SecurityUpdates, not even an explicit nil
 ### GetOrgId
 
 `func (o *Stack) GetOrgId() int32`

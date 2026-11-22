@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AutoStackUpgrade** | Pointer to [**AppEnvironmentAutoStackUpgradeSettings**](AppEnvironmentAutoStackUpgradeSettings.md) |  | [optional] 
 **BuildImageCleanup** | Pointer to [**BuildImageCleanupSettings**](BuildImageCleanupSettings.md) |  | [optional] 
+**Deployment** | Pointer to [**AppEnvironmentDeploymentSettings**](AppEnvironmentDeploymentSettings.md) |  | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetBuildImageCleanup sets BuildImageCleanup field to given value.
 `func (o *AppEnvironmentSettings) HasBuildImageCleanup() bool`
 
 HasBuildImageCleanup returns a boolean if a field has been set.
+
+### GetDeployment
+
+`func (o *AppEnvironmentSettings) GetDeployment() AppEnvironmentDeploymentSettings`
+
+GetDeployment returns the Deployment field if non-nil, zero value otherwise.
+
+### GetDeploymentOk
+
+`func (o *AppEnvironmentSettings) GetDeploymentOk() (*AppEnvironmentDeploymentSettings, bool)`
+
+GetDeploymentOk returns a tuple with the Deployment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeployment
+
+`func (o *AppEnvironmentSettings) SetDeployment(v AppEnvironmentDeploymentSettings)`
+
+SetDeployment sets Deployment field to given value.
+
+### HasDeployment
+
+`func (o *AppEnvironmentSettings) HasDeployment() bool`
+
+HasDeployment returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

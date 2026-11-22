@@ -31,6 +31,7 @@ Method | HTTP request | Description
 [**ListWodbyCloudMachineTypes**](ClustersAPI.md#ListWodbyCloudMachineTypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 [**RecycleClusterNodes**](ClustersAPI.md#RecycleClusterNodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
 [**RemoveK3SClusterNode**](ClustersAPI.md#RemoveK3SClusterNode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove K3s cluster node
+[**RescanClusterVulnerabilities**](ClustersAPI.md#RescanClusterVulnerabilities) | **Post** /clusters/{id}/actions/rescan-vulnerabilities | Rescan cluster vulnerabilities
 [**RestartK3SServers**](ClustersAPI.md#RestartK3SServers) | **Post** /clusters/{id}/actions/restart-k3s-servers | Restart K3s servers
 [**ScaleCluster**](ClustersAPI.md#ScaleCluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 [**SwitchK3SServerAddress**](ClustersAPI.md#SwitchK3SServerAddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch K3s server to a private address
@@ -1933,6 +1934,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RescanClusterVulnerabilities
+
+> OperationResult RescanClusterVulnerabilities(ctx, id).Execute()
+
+Rescan cluster vulnerabilities
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/wodby/wodby-sdk-go/v4/pkg"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ClustersAPI.RescanClusterVulnerabilities(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ClustersAPI.RescanClusterVulnerabilities``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RescanClusterVulnerabilities`: OperationResult
+	fmt.Fprintf(os.Stdout, "Response from `ClustersAPI.RescanClusterVulnerabilities`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRescanClusterVulnerabilitiesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**OperationResult**](OperationResult.md)
+
+### Authorization
+
+[apiKeyHeader](../README.md#apiKeyHeader)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

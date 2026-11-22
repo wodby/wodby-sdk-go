@@ -1923,7 +1923,9 @@ paths:
       - apps
     post:
       description: "Ignores a vulnerability in one package for every build of the\
-        \ app, including later scans. Ignored findings are left out of vulnerability\
+        \ app, including later scans. A scan lists a vulnerability once per image\
+        \ with every package it affects there, so ignoring it in any of those packages\
+        \ ignores the whole finding. Ignored findings are left out of vulnerability\
         \ counts and reported in the ignored count instead. Needs permission to modify\
         \ the app and vulnerability scanning on the organization's plan. Fails when\
         \ the app already ignores the vulnerability in that package."
@@ -11230,12 +11232,15 @@ paths:
       - clusters
   /clusters/{id}/actions/restart-k3s-servers:
     post:
-      description: "Restarts a K3s cluster's nodes one at a time and waits for each\
-        \ to come back Ready. Leave nodes empty to restart only the nodes that say\
-        \ a restart is pending. A node is drained first when another node can take\
-        \ its pods; on a cluster with one node, every app is unavailable until the\
-        \ node is back, usually a few minutes. New deployments wait until the restarts\
-        \ end. Refused while application operations are active."
+      description: "Updates the operating system packages of a K3s cluster's nodes\
+        \ first, as POST /clusters/{id}/actions/update-k3s-server-packages does, so\
+        \ one restart applies every available update; no node restarts when an update\
+        \ fails. Then restarts the nodes one at a time and waits for each to come\
+        \ back Ready. Leave nodes empty to update every node and restart only the\
+        \ nodes that say a restart is pending. A node is drained first when another\
+        \ node can take its pods; on a cluster with one node, every app is unavailable\
+        \ until the node is back, usually a few minutes. New deployments wait until\
+        \ the restarts end. Refused while application operations are active."
       operationId: restartK3SServers
       parameters:
       - explode: false
@@ -11271,6 +11276,46 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
           description: Error response
       summary: Restart K3s servers
+      tags:
+      - clusters
+  /clusters/{id}/actions/rescan-vulnerabilities:
+    post:
+      description: "Scans the cluster for vulnerabilities again now instead of on\
+        \ the daily schedule: the operating system packages of a K3s cluster's servers,\
+        \ such as after updating them outside Wodby, and the images of the apps Wodby\
+        \ installs on the cluster. An image scanned in the last hour keeps its result.\
+        \ GET /cluster-vulnerabilities/{id} shows the earlier results, with scanning\
+        \ true, until the scan ends. Refused while a scan of the cluster is waiting\
+        \ or running, and for Wodby Cloud and serverless clusters."
+      operationId: rescanClusterVulnerabilities
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+          description: Scan task result
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: Rescan cluster vulnerabilities
       tags:
       - clusters
   /clusters/actions/create-k3s:
@@ -16350,6 +16395,48 @@ paths:
       summary: Preview app environment stack upgrade
       tags:
       - app-environments
+  /app-environment-vulnerability-scans/{id}:
+    get:
+      description: "Lists the build images an app environment currently runs, each\
+        \ with the summary of its latest vulnerability scan, ordered by the app service\
+        \ that built them. The ID is the app environment's. An image several app services\
+        \ run is listed once. Returns null when vulnerability scanning is unavailable\
+        \ for the organization."
+      operationId: listAppEnvironmentVulnerabilityScans
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppServiceBuild'
+                nullable: true
+                type: array
+          description: "The images the app environment runs, or null when scanning\
+            \ is unavailable"
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+        "4XX":
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          description: Error response
+      summary: List app environment vulnerability scans
+      tags:
+      - app-environments
   /app-environment-accesses/{id}:
     get:
       description: Returns the Private App Access configuration of the app environment
@@ -19106,11 +19193,16 @@ components:
             services: true
             integrations: true
           enabled: true
+        deployment:
+          skipRollback: true
+          runScriptsForOlderBuilds: true
       properties:
         autoStackUpgrade:
           $ref: '#/components/schemas/AppEnvironmentAutoStackUpgradeSettings'
         buildImageCleanup:
           $ref: '#/components/schemas/BuildImageCleanupSettings'
+        deployment:
+          $ref: '#/components/schemas/AppEnvironmentDeploymentSettings'
       type: object
     AppEnvironmentSettingsInput:
       example:
@@ -19138,6 +19230,7 @@ components:
             services: true
             integrations: true
           enabled: true
+        deployment: ""
       properties:
         autoStackUpgrade:
           $ref: '#/components/schemas/AppEnvironmentAutoStackUpgradeSettingsInput'
@@ -19145,6 +19238,28 @@ components:
           allOf:
           - $ref: '#/components/schemas/BuildImageCleanupSettingsInput'
           description: Omit it to keep the current build image retention.
+        deployment:
+          allOf:
+          - $ref: '#/components/schemas/AppEnvironmentDeploymentSettings'
+          description: Omit it to keep the current deployment settings.
+      type: object
+    AppEnvironmentDeploymentSettings:
+      description: Defaults for the environment's deployments.
+      example:
+        skipRollback: true
+        runScriptsForOlderBuilds: true
+      properties:
+        runScriptsForOlderBuilds:
+          description: Run repository pre- and post-deployment scripts when a deployment
+            rolls an app service back to an older build.
+          type: boolean
+        skipRollback:
+          description: "Keep a failed rollout in place instead of restoring the previous\
+            \ release, for every deployment."
+          type: boolean
+      required:
+      - runScriptsForOlderBuilds
+      - skipRollback
       type: object
     BuildImageCleanupSettings:
       description: How long images of unused builds are kept in the Wodby container
@@ -23724,6 +23839,9 @@ components:
               services: true
               integrations: true
             enabled: true
+          deployment:
+            skipRollback: true
+            runScriptsForOlderBuilds: true
         stackId: 7
         executionMode: standard
         health:
@@ -28777,6 +28895,10 @@ components:
         public: true
         latestRevNumber: 1
         name: name
+        vulnerabilities:
+          high: 7
+          critical: 2
+          urgent: 9
         id: 0
         ownershipScope: org
         status: status
@@ -28818,6 +28940,8 @@ components:
           type: boolean
         settings:
           $ref: '#/components/schemas/ServiceSettings'
+        vulnerabilities:
+          $ref: '#/components/schemas/ServiceVulnerabilityHealth'
         createdAt:
           format: date-time
           type: string
@@ -28839,6 +28963,29 @@ components:
       - title
       - type
       - updatedAt
+      type: object
+    ServiceVulnerabilityHealth:
+      description: "Vulnerabilities in the images the latest revision of your organization's\
+        \ own service deploys, summed over its distinct images from their last successful\
+        \ scans. Absent for catalog and external services, and without vulnerability\
+        \ scanning."
+      example:
+        high: 7
+        critical: 2
+        urgent: 9
+      properties:
+        critical:
+          type: integer
+        high:
+          type: integer
+        urgent:
+          description: "Findings known or likely to be exploited, or tracked by Wodby,\
+            \ whatever their severity."
+          type: integer
+      required:
+      - critical
+      - high
+      - urgent
       type: object
     ServiceRevision:
       example:
@@ -29499,8 +29646,8 @@ components:
       type: object
     ServicesResponse:
       example:
-        nextPage: 7
-        totalCount: 2
+        nextPage: 2
+        totalCount: 3
         items:
         - availableToAllProjects: true
           settings:
@@ -29523,6 +29670,10 @@ components:
           public: true
           latestRevNumber: 1
           name: name
+          vulnerabilities:
+            high: 7
+            critical: 2
+            urgent: 9
           id: 0
           ownershipScope: org
           status: status
@@ -29548,6 +29699,10 @@ components:
           public: true
           latestRevNumber: 1
           name: name
+          vulnerabilities:
+            high: 7
+            critical: 2
+            urgent: 9
           id: 0
           ownershipScope: org
           status: status
@@ -29577,13 +29732,13 @@ components:
         variantOfStackId: 3
         title: title
         gitRepoRefType: gitRepoRefType
-        orgId: 4
+        orgId: 7
         gitRepoRemoteId: gitRepoRemoteId
         createdAt: 2000-01-23T04:56:07.000+00:00
         originStackRevStackId: 7
         gitRepoRef: gitRepoRef
         originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
-        ownerProjectId: 7
+        ownerProjectId: 1
         outdated: true
         public: true
         id: 0
@@ -29631,6 +29786,8 @@ components:
         latestRevNumber: 5
         gitRepoId: 5
         name: name
+        category: javascript
+        securityUpdates: 4
         ownershipScope: org
         status: status
       properties:
@@ -29711,6 +29868,33 @@ components:
           items:
             type: integer
           type: array
+        category:
+          description: "Catalog category of the stack, such as cms for WordPress.\
+            \ Absent when the stack's template names none."
+          enum:
+          - javascript
+          - frameworks
+          - runtimes
+          - cms
+          - databases
+          - datastores
+          - search
+          - observability
+          - data
+          - ai
+          - devtools
+          - collaboration
+          - networking
+          - platform
+          nullable: true
+          type: string
+        securityUpdates:
+          description: "How many of the stack's services have an update that fixes\
+            \ a vulnerability known or likely to be exploited, or one Wodby tracks.\
+            \ Each such service lists the vulnerabilities in securityFixes. Absent\
+            \ without vulnerability scanning."
+          nullable: true
+          type: integer
         orgId:
           type: integer
         ownershipScope:
@@ -29824,6 +30008,29 @@ components:
       type: object
     StackService:
       example:
+        securityFixes:
+        - severity: critical
+          optionVersions:
+          - optionVersions
+          - optionVersions
+          vulnerabilityId: vulnerabilityId
+          epss: 1.4658129805029452
+          exploited: true
+          packageVersion: packageVersion
+          tracked: true
+          packageName: packageName
+          url: url
+        - severity: critical
+          optionVersions:
+          - optionVersions
+          - optionVersions
+          vulnerabilityId: vulnerabilityId
+          epss: 1.4658129805029452
+          exploited: true
+          packageVersion: packageVersion
+          tracked: true
+          packageName: packageName
+          url: url
         eol: true
         basicAuthOverride: inherit
         icon: icon
@@ -29887,16 +30094,16 @@ components:
         outdated: true
         options:
         - default: true
-          stackServiceId: 7
+          stackServiceId: 9
           disabled: true
-          id: 2
+          id: 7
           version: version
         - default: true
-          stackServiceId: 7
+          stackServiceId: 9
           disabled: true
-          id: 2
+          id: 7
           version: version
-        parentStackServiceId: 1
+        parentStackServiceId: 5
         disabled: true
         id: 0
         serviceRevName: serviceRevName
@@ -29904,41 +30111,41 @@ components:
         updatedAt: 2000-01-23T04:56:07.000+00:00
         settings:
         - name: name
-          stackServiceId: 3
+          stackServiceId: 2
           hasValue: true
-          id: 9
+          id: 3
           secret: true
           value: value
         - name: name
-          stackServiceId: 3
+          stackServiceId: 2
           hasValue: true
-          id: 9
+          id: 3
           secret: true
           value: value
         replicas: 6
         serviceRevTitle: serviceRevTitle
-        buildSourceIntegrationId: 5
+        buildSourceIntegrationId: 2
         name: name
         containers:
-        - limitMem: 1
+        - limitMem: 6
           requestMem: 1
           limitCPU: 1
           name: name
           workload: workload
-          stackServiceId: 4
-          id: 2
-          requestCPU: 7
+          stackServiceId: 7
+          id: 4
+          requestCPU: 1
           gpu:
             count: 171976544
             resourceName: resourceName
-        - limitMem: 1
+        - limitMem: 6
           requestMem: 1
           limitCPU: 1
           name: name
           workload: workload
-          stackServiceId: 4
-          id: 2
-          requestCPU: 7
+          stackServiceId: 7
+          id: 4
+          requestCPU: 1
           gpu:
             count: 171976544
             resourceName: resourceName
@@ -29981,6 +30188,18 @@ components:
           description: True when the version of the stack service's default option
             has reached its end of life.
           type: boolean
+        securityFixes:
+          description: "Vulnerabilities known or likely to be exploited, or tracked\
+            \ by Wodby, that an image this stack service deploys has and the image\
+            \ of the service's latest version doesn't, so updating the stack service\
+            \ fixes them. Images are compared for each option version the stack service\
+            \ offers. Empty when the update fixes none of them or the stack service\
+            \ has no update: it is up to date, pinned or a derivative, or its service\
+            \ pulls from a private registry. Absent without vulnerability scanning."
+          items:
+            $ref: '#/components/schemas/StackServiceSecurityFix'
+          nullable: true
+          type: array
         derivative:
           description: The service derivative the stack service runs. Null for the
             service itself.
@@ -30046,6 +30265,71 @@ components:
       - type
       - updatedAt
       type: object
+    StackServiceSecurityFix:
+      description: A vulnerability that updating a stack service to its service's
+        latest version fixes.
+      example:
+        severity: critical
+        optionVersions:
+        - optionVersions
+        - optionVersions
+        vulnerabilityId: vulnerabilityId
+        epss: 1.4658129805029452
+        exploited: true
+        packageVersion: packageVersion
+        tracked: true
+        packageName: packageName
+        url: url
+      properties:
+        vulnerabilityId:
+          description: "The CVE ID when there is one, otherwise the advisory's own\
+            \ ID."
+          type: string
+        severity:
+          enum:
+          - critical
+          - high
+          - medium
+          - low
+          - negligible
+          - unknown
+          type: string
+        packageName:
+          type: string
+        packageVersion:
+          description: The vulnerable version in the image the stack service deploys
+            now.
+          type: string
+        exploited:
+          description: Whether the vulnerability is on CISA's catalog of known exploited
+            vulnerabilities.
+          type: boolean
+        epss:
+          description: "The EPSS probability that the vulnerability is exploited in\
+            \ the next 30 days, from 0 to 1. Absent when unknown."
+          type: number
+        tracked:
+          description: Whether Wodby tracks the vulnerability itself because public
+            databases don't list it yet.
+          type: boolean
+        url:
+          description: The vulnerability's public record. Absent when there is none.
+          type: string
+        optionVersions:
+          description: "The stack service's option versions whose images have the\
+            \ vulnerability, such as 8.3 and 8.4."
+          items:
+            type: string
+          type: array
+      required:
+      - exploited
+      - optionVersions
+      - packageName
+      - packageVersion
+      - severity
+      - tracked
+      - vulnerabilityId
+      type: object
     StacksResponse:
       example:
         nextPage: 1
@@ -30060,13 +30344,13 @@ components:
           variantOfStackId: 3
           title: title
           gitRepoRefType: gitRepoRefType
-          orgId: 4
+          orgId: 7
           gitRepoRemoteId: gitRepoRemoteId
           createdAt: 2000-01-23T04:56:07.000+00:00
           originStackRevStackId: 7
           gitRepoRef: gitRepoRef
           originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
-          ownerProjectId: 7
+          ownerProjectId: 1
           outdated: true
           public: true
           id: 0
@@ -30114,6 +30398,8 @@ components:
           latestRevNumber: 5
           gitRepoId: 5
           name: name
+          category: javascript
+          securityUpdates: 4
           ownershipScope: org
           status: status
         - originStackRevId: 2
@@ -30125,13 +30411,13 @@ components:
           variantOfStackId: 3
           title: title
           gitRepoRefType: gitRepoRefType
-          orgId: 4
+          orgId: 7
           gitRepoRemoteId: gitRepoRemoteId
           createdAt: 2000-01-23T04:56:07.000+00:00
           originStackRevStackId: 7
           gitRepoRef: gitRepoRef
           originStackRevCreatedAt: 2000-01-23T04:56:07.000+00:00
-          ownerProjectId: 7
+          ownerProjectId: 1
           outdated: true
           public: true
           id: 0
@@ -30179,6 +30465,8 @@ components:
           latestRevNumber: 5
           gitRepoId: 5
           name: name
+          category: javascript
+          securityUpdates: 4
           ownershipScope: org
           status: status
       properties:
@@ -30989,14 +31277,14 @@ components:
       type: object
     StackServiceContainer:
       example:
-        limitMem: 1
+        limitMem: 6
         requestMem: 1
         limitCPU: 1
         name: name
         workload: workload
-        stackServiceId: 4
-        id: 2
-        requestCPU: 7
+        stackServiceId: 7
+        id: 4
+        requestCPU: 1
         gpu:
           count: 171976544
           resourceName: resourceName
@@ -31032,9 +31320,9 @@ components:
     StackServiceOption:
       example:
         default: true
-        stackServiceId: 7
+        stackServiceId: 9
         disabled: true
-        id: 2
+        id: 7
         version: version
       properties:
         id:
@@ -31057,9 +31345,9 @@ components:
     StackServiceSetting:
       example:
         name: name
-        stackServiceId: 3
+        stackServiceId: 2
         hasValue: true
-        id: 9
+        id: 3
         secret: true
         value: value
       properties:
@@ -33576,17 +33864,18 @@ components:
       type: object
     NewBuildFromCIInput:
       example:
-        appServiceId: 0
         gitRef: gitRef
         buildNum: 6
         workflow: workflow
+        buildId: buildId
+        gitCommitAuthorName: gitCommitAuthorName
+        appServiceId: 0
         provider: provider
         gitCommitAuthorEmail: gitCommitAuthorEmail
         postDeployment: postDeployment
-        buildId: buildId
-        gitCommitAuthorName: gitCommitAuthorName
         gitCommitMessage: gitCommitMessage
         gitCommitSHA: gitCommitSHA
+        preDeployment: preDeployment
         gitRefType: gitRefType
       properties:
         appServiceId:
@@ -33616,6 +33905,12 @@ components:
         provider:
           type: string
         postDeployment:
+          nullable: true
+          type: string
+        preDeployment:
+          description: Content of the repository's .wodby/pre-deployment.yml. A deployment
+            of this build runs these scripts with the new version before rolling the
+            app service out.
           nullable: true
           type: string
       required:
@@ -34769,6 +35064,7 @@ components:
               services: true
               integrations: true
             enabled: true
+          deployment: ""
         workspace:
           homeSize: 1
           storageClassName: storageClassName
@@ -35104,6 +35400,7 @@ components:
               services: true
               integrations: true
             enabled: true
+          deployment: ""
         workspace:
           homeSize: 1
           storageClassName: storageClassName

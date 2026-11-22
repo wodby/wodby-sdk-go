@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **OwnerProjectId** | Pointer to **NullableInt32** |  | [optional] 
 **AvailableToAllProjects** | **bool** | True when every project in the organization can use the resource without a project share. | 
 **Settings** | Pointer to [**ServiceSettings**](ServiceSettings.md) |  | [optional] 
+**Vulnerabilities** | Pointer to [**ServiceVulnerabilityHealth**](ServiceVulnerabilityHealth.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -339,6 +340,31 @@ SetSettings sets Settings field to given value.
 `func (o *Service) HasSettings() bool`
 
 HasSettings returns a boolean if a field has been set.
+
+### GetVulnerabilities
+
+`func (o *Service) GetVulnerabilities() ServiceVulnerabilityHealth`
+
+GetVulnerabilities returns the Vulnerabilities field if non-nil, zero value otherwise.
+
+### GetVulnerabilitiesOk
+
+`func (o *Service) GetVulnerabilitiesOk() (*ServiceVulnerabilityHealth, bool)`
+
+GetVulnerabilitiesOk returns a tuple with the Vulnerabilities field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVulnerabilities
+
+`func (o *Service) SetVulnerabilities(v ServiceVulnerabilityHealth)`
+
+SetVulnerabilities sets Vulnerabilities field to given value.
+
+### HasVulnerabilities
+
+`func (o *Service) HasVulnerabilities() bool`
+
+HasVulnerabilities returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

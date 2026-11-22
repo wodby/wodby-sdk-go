@@ -39,6 +39,8 @@ type StackService struct {
 	Icon *string `json:"icon,omitempty"`
 	// True when the version of the stack service's default option has reached its end of life.
 	Eol *bool `json:"eol,omitempty"`
+	// Vulnerabilities known or likely to be exploited, or tracked by Wodby, that an image this stack service deploys has and the image of the service's latest version doesn't, so updating the stack service fixes them. Images are compared for each option version the stack service offers. Empty when the update fixes none of them or the stack service has no update: it is up to date, pinned or a derivative, or its service pulls from a private registry. Absent without vulnerability scanning.
+	SecurityFixes []StackServiceSecurityFix `json:"securityFixes,omitempty"`
 	// The service derivative the stack service runs. Null for the service itself.
 	Derivative NullableString `json:"derivative,omitempty"`
 	// The stack service this derivative stack service belongs to. Null for the service itself.
@@ -445,6 +447,39 @@ func (o *StackService) HasEol() bool {
 // SetEol gets a reference to the given bool and assigns it to the Eol field.
 func (o *StackService) SetEol(v bool) {
 	o.Eol = &v
+}
+
+// GetSecurityFixes returns the SecurityFixes field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *StackService) GetSecurityFixes() []StackServiceSecurityFix {
+	if o == nil {
+		var ret []StackServiceSecurityFix
+		return ret
+	}
+	return o.SecurityFixes
+}
+
+// GetSecurityFixesOk returns a tuple with the SecurityFixes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *StackService) GetSecurityFixesOk() ([]StackServiceSecurityFix, bool) {
+	if o == nil || IsNil(o.SecurityFixes) {
+		return nil, false
+	}
+	return o.SecurityFixes, true
+}
+
+// HasSecurityFixes returns a boolean if a field has been set.
+func (o *StackService) HasSecurityFixes() bool {
+	if o != nil && !IsNil(o.SecurityFixes) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecurityFixes gets a reference to the given []StackServiceSecurityFix and assigns it to the SecurityFixes field.
+func (o *StackService) SetSecurityFixes(v []StackServiceSecurityFix) {
+	o.SecurityFixes = v
 }
 
 // GetDerivative returns the Derivative field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -906,6 +941,9 @@ func (o StackService) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Eol) {
 		toSerialize["eol"] = o.Eol
+	}
+	if o.SecurityFixes != nil {
+		toSerialize["securityFixes"] = o.SecurityFixes
 	}
 	if o.Derivative.IsSet() {
 		toSerialize["derivative"] = o.Derivative.Get()

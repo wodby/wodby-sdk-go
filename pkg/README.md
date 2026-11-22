@@ -129,6 +129,7 @@ Class | Method | HTTP request | Description
 *AppEnvironmentsAPI* | [**ListAppAccessCleanups**](docs/AppEnvironmentsAPI.md#listappaccesscleanups) | **Get** /app-access-cleanups | List Private App Access cleanups
 *AppEnvironmentsAPI* | [**ListAppAnnotations**](docs/AppEnvironmentsAPI.md#listappannotations) | **Get** /app-annotations | List app annotations
 *AppEnvironmentsAPI* | [**ListAppEnvironmentMigrations**](docs/AppEnvironmentsAPI.md#listappenvironmentmigrations) | **Get** /app-environment-migrations | List app environment migrations
+*AppEnvironmentsAPI* | [**ListAppEnvironmentVulnerabilityScans**](docs/AppEnvironmentsAPI.md#listappenvironmentvulnerabilityscans) | **Get** /app-environment-vulnerability-scans/{id} | List app environment vulnerability scans
 *AppEnvironmentsAPI* | [**ListAppEnvironments**](docs/AppEnvironmentsAPI.md#listappenvironments) | **Get** /app-environments | List app environments
 *AppEnvironmentsAPI* | [**MigrateAppEnvironment**](docs/AppEnvironmentsAPI.md#migrateappenvironment) | **Post** /app-environments/{id}/actions/migrate | Migrate app environment to another cluster
 *AppEnvironmentsAPI* | [**PauseWorkspace**](docs/AppEnvironmentsAPI.md#pauseworkspace) | **Post** /workspaces/{id}/actions/pause | Pause workspace
@@ -285,6 +286,7 @@ Class | Method | HTTP request | Description
 *ClustersAPI* | [**ListWodbyCloudMachineTypes**](docs/ClustersAPI.md#listwodbycloudmachinetypes) | **Get** /wodby-cloud/machine-types | List Wodby Cloud machine types
 *ClustersAPI* | [**RecycleClusterNodes**](docs/ClustersAPI.md#recycleclusternodes) | **Post** /clusters/{id}/actions/recycle-nodes | Recycle cluster nodes
 *ClustersAPI* | [**RemoveK3SClusterNode**](docs/ClustersAPI.md#removek3sclusternode) | **Post** /clusters/{id}/actions/remove-k3s-node | Remove K3s cluster node
+*ClustersAPI* | [**RescanClusterVulnerabilities**](docs/ClustersAPI.md#rescanclustervulnerabilities) | **Post** /clusters/{id}/actions/rescan-vulnerabilities | Rescan cluster vulnerabilities
 *ClustersAPI* | [**RestartK3SServers**](docs/ClustersAPI.md#restartk3sservers) | **Post** /clusters/{id}/actions/restart-k3s-servers | Restart K3s servers
 *ClustersAPI* | [**ScaleCluster**](docs/ClustersAPI.md#scalecluster) | **Post** /clusters/{id}/actions/scale | Scale cluster nodes
 *ClustersAPI* | [**SwitchK3SServerAddress**](docs/ClustersAPI.md#switchk3sserveraddress) | **Post** /clusters/{id}/actions/switch-k3s-server-address | Switch K3s server to a private address
@@ -559,6 +561,7 @@ Class | Method | HTTP request | Description
  - [AppEnvironmentCICDSettings](docs/AppEnvironmentCICDSettings.md)
  - [AppEnvironmentCICDSettingsInput](docs/AppEnvironmentCICDSettingsInput.md)
  - [AppEnvironmentCronHealth](docs/AppEnvironmentCronHealth.md)
+ - [AppEnvironmentDeploymentSettings](docs/AppEnvironmentDeploymentSettings.md)
  - [AppEnvironmentHealth](docs/AppEnvironmentHealth.md)
  - [AppEnvironmentMainRouteCert](docs/AppEnvironmentMainRouteCert.md)
  - [AppEnvironmentMaintenanceModeInput](docs/AppEnvironmentMaintenanceModeInput.md)
@@ -872,6 +875,7 @@ Class | Method | HTTP request | Description
  - [ServiceRevisionChange](docs/ServiceRevisionChange.md)
  - [ServiceSettings](docs/ServiceSettings.md)
  - [ServiceSettingsInput](docs/ServiceSettingsInput.md)
+ - [ServiceVulnerabilityHealth](docs/ServiceVulnerabilityHealth.md)
  - [ServiceWorkloadDeploymentConfiguration](docs/ServiceWorkloadDeploymentConfiguration.md)
  - [ServiceWorkloadDeploymentInput](docs/ServiceWorkloadDeploymentInput.md)
  - [ServicesResponse](docs/ServicesResponse.md)
@@ -911,6 +915,7 @@ Class | Method | HTTP request | Description
  - [StackServiceOption](docs/StackServiceOption.md)
  - [StackServiceOptionInput](docs/StackServiceOptionInput.md)
  - [StackServiceOptionsInput](docs/StackServiceOptionsInput.md)
+ - [StackServiceSecurityFix](docs/StackServiceSecurityFix.md)
  - [StackServiceSetting](docs/StackServiceSetting.md)
  - [StackServiceToken](docs/StackServiceToken.md)
  - [StackServiceUpdateChangelog](docs/StackServiceUpdateChangelog.md)

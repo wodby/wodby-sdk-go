@@ -38,6 +38,7 @@ type Service struct {
 	// True when every project in the organization can use the resource without a project share.
 	AvailableToAllProjects bool `json:"availableToAllProjects"`
 	Settings *ServiceSettings `json:"settings,omitempty"`
+	Vulnerabilities *ServiceVulnerabilityHealth `json:"vulnerabilities,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -437,6 +438,38 @@ func (o *Service) SetSettings(v ServiceSettings) {
 	o.Settings = &v
 }
 
+// GetVulnerabilities returns the Vulnerabilities field value if set, zero value otherwise.
+func (o *Service) GetVulnerabilities() ServiceVulnerabilityHealth {
+	if o == nil || IsNil(o.Vulnerabilities) {
+		var ret ServiceVulnerabilityHealth
+		return ret
+	}
+	return *o.Vulnerabilities
+}
+
+// GetVulnerabilitiesOk returns a tuple with the Vulnerabilities field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Service) GetVulnerabilitiesOk() (*ServiceVulnerabilityHealth, bool) {
+	if o == nil || IsNil(o.Vulnerabilities) {
+		return nil, false
+	}
+	return o.Vulnerabilities, true
+}
+
+// HasVulnerabilities returns a boolean if a field has been set.
+func (o *Service) HasVulnerabilities() bool {
+	if o != nil && !IsNil(o.Vulnerabilities) {
+		return true
+	}
+
+	return false
+}
+
+// SetVulnerabilities gets a reference to the given ServiceVulnerabilityHealth and assigns it to the Vulnerabilities field.
+func (o *Service) SetVulnerabilities(v ServiceVulnerabilityHealth) {
+	o.Vulnerabilities = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value
 func (o *Service) GetCreatedAt() time.Time {
 	if o == nil {
@@ -512,6 +545,9 @@ func (o Service) ToMap() (map[string]interface{}, error) {
 	toSerialize["availableToAllProjects"] = o.AvailableToAllProjects
 	if !IsNil(o.Settings) {
 		toSerialize["settings"] = o.Settings
+	}
+	if !IsNil(o.Vulnerabilities) {
+		toSerialize["vulnerabilities"] = o.Vulnerabilities
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
